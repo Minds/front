@@ -38,7 +38,10 @@ export type StrapiAction =
   | 'scroll_to_top'
   | 'open_plus_upgrade_modal'
   | 'open_pro_upgrade_modal'
-  | 'open_register_modal';
+  | 'open_register_modal'
+  | 'networks_team_checkout'
+  | 'networks_community_checkout'
+  | 'networks_enterprise_checkout';
 
 // action button type.
 export type StrapiActionButton = {
@@ -54,6 +57,9 @@ const LOGGED_IN_ONLY_ACTIONS: StrapiAction[] = [
   'open_onchain_transfer_modal',
   'open_plus_upgrade_modal',
   'open_pro_upgrade_modal',
+  'networks_team_checkout',
+  'networks_community_checkout',
+  'networks_enterprise_checkout',
 ];
 
 /**
@@ -109,6 +115,30 @@ export class StrapiActionResolverService {
         break;
       case 'open_pro_upgrade_modal':
         this.openWireUpgradeModal('pro', extraData);
+        break;
+      case 'networks_team_checkout':
+        this.router.navigate(['/networks/checkout'], {
+          queryParams: {
+            planId: extraData?.stripeProductKey ?? 'networks:team',
+            timePeriod: extraData?.upgradeInterval,
+          },
+        });
+        break;
+      case 'networks_community_checkout':
+        this.router.navigate(['/networks/checkout'], {
+          queryParams: {
+            planId: extraData?.stripeProductKey ?? 'networks:community',
+            timePeriod: extraData?.upgradeInterval,
+          },
+        });
+        break;
+      case 'networks_enterprise_checkout':
+        this.router.navigate(['/networks/checkout'], {
+          queryParams: {
+            planId: extraData?.stripeProductKey ?? 'networks:enterprise',
+            timePeriod: extraData?.upgradeInterval,
+          },
+        });
         break;
       default:
         console.warn('Action not yet implemented: ', action);

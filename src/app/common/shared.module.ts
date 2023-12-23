@@ -1,7 +1,6 @@
 import { NgModule, PLATFORM_ID } from '@angular/core';
 import { PageLayoutService } from './layout/page-layout.service';
 import { ConfigsService } from './services/configs.service';
-import { AuthModalService } from '../modules/auth/modal/auth-modal.service';
 import { Web3ModalModule, Web3ModalService } from '@mindsorg/web3modal-angular';
 import { createWeb3ModalConfig } from '../helpers/web3modal-configuration';
 import { TransactionOverlayService } from '../modules/blockchain/transaction-overlay/transaction-overlay.service';
@@ -11,6 +10,7 @@ import { ToasterService } from './services/toaster.service';
 import { ResetPasswordModalService } from '../modules/auth/reset-password-modal/reset-password-modal.service';
 import { PermissionsService } from './services/permissions.service';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
+import { TopbarService } from './layout/topbar.service';
 
 @NgModule({
   imports: [Web3ModalModule],
@@ -18,7 +18,6 @@ import { ExperimentsService } from '../modules/experiments/experiments.service';
     ConfigsService,
     PageLayoutService,
     UniswapModalService,
-    AuthModalService,
     ResetPasswordModalService,
     {
       provide: Web3ModalService,
@@ -43,6 +42,11 @@ import { ExperimentsService } from '../modules/experiments/experiments.service';
       provide: PermissionsService,
       useFactory: (experimentsService, configsService): PermissionsService =>
         new PermissionsService(experimentsService, configsService),
+      deps: [ExperimentsService, ConfigsService],
+    },
+    {
+      provide: TopbarService,
+      useFactory: (): TopbarService => new TopbarService(),
       deps: [ExperimentsService, ConfigsService],
     },
   ],

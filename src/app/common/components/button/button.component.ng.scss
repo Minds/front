@@ -23,6 +23,10 @@
       width: 100%;
     }
 
+    &.m-button--softSquare {
+      border-radius: 4px;
+    }
+
     &.m-button--iconOnly {
       display: flex;
       align-items: center;

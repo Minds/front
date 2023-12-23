@@ -1,0 +1,50 @@
+@import 'defaults.scss';
+@import '../../stylesheets/variables.ng.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  gap: $spacing6;
+  margin: 0 auto;
+  padding: $containerOuterPadding;
+  box-sizing: border-box;
+  width: 928px;
+  max-width: 100%;
+
+  @media screen and (max-width: $collapseWidth) {
+    flex-direction: column-reverse;
+    padding: unset;
+  }
+
+  .m-networksCheckoutBase__leftContainer {
+    flex: 1;
+    height: 100%;
+    padding: $spacing4;
+    box-sizing: border-box;
+  }
+
+  .m-networksCheckoutBase__rightContainer {
+    height: fit-content;
+    width: 310px;
+
+    @media screen and (min-width: calc($collapseWidth + 1px)) {
+      position: sticky;
+      top: $containerTopPosition;
+    }
+
+    @media screen and (max-width: $collapseWidth) {
+      width: unset;
+      border-radius: 8px;
+      margin: $containerOuterPadding;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    &.m-networksCheckoutBase__rightContainer--topbarAlertShown {
+      top: calc($containerTopPosition + $topbarAlertHeight--desktop);
+    }
+  }
+}

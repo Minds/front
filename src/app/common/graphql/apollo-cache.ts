@@ -25,6 +25,12 @@ export const cache = new InMemoryCache({
         reports: relayStylePagination(['first']),
         usersByRole: relayStylePagination(['first', 'roleId']),
         invites: relayStylePagination(['first']),
+        checkoutPage: relayStylePagination([
+          'planId',
+          'page',
+          'timePeriod',
+          'addonIds',
+        ]),
       },
     },
   },

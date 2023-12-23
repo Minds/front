@@ -1,6 +1,13 @@
 <h3 class="m-networksList__title" i18n="@@NETWORKS_LIST__TITLE__YOUR_NETWORKS">
-  Your Networks
+  <span>Your Networks</span>
+  <span class="m-layout__spacer"></span>
+  <ng-container *mExperiment="'tmp-create-networks'; variation: true">
+    <m-button (click)="createNetwork()" color="blue" solid="true" size="small"
+      >Create</m-button
+    >
+  </ng-container>
 </h3>
+
 <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
 <ng-container *ngIf="!(inProgress$ | async)">
   <ng-container *ngFor="let network of list$ | async">

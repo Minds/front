@@ -46,6 +46,7 @@ query GetV2ProductPageBySlug($slug: String!) {
                     solid
                     rounded
                     navigationUrl
+                    stripeProductKey
                     action
                   }
                   perksTitle
@@ -75,6 +76,7 @@ query GetV2ProductPageBySlug($slug: String!) {
                       rounded
                       navigationUrl
                       action
+                      stripeProductKey
                   	}
                   }
                   sections {
@@ -132,6 +134,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               rounded
               navigationUrl
               action
+              stripeProductKey
             }
           }
           ... on ComponentV2ProductFeatureHighlight {
@@ -158,6 +161,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               rounded
               navigationUrl
               action
+              stripeProductKey
             }
           }
           ... on ComponentV2ProductClosingCta {
@@ -181,6 +185,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               rounded
               navigationUrl
               action
+              stripeProductKey
             }
           }
         }

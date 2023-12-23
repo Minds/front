@@ -1,0 +1,44 @@
+<div
+  class="m-networksCheckoutSummary__timePeriod"
+  *ngIf="shouldShow$(CheckoutTimePeriodEnum.Yearly) | async"
+  (click)="onTimePeriodClick(CheckoutTimePeriodEnum.Yearly)"
+  [ngClass]="{
+    'm-networksCheckoutSummary__timePeriod--active':
+      (selectedTimePeriod$ | async) === CheckoutTimePeriodEnum.Yearly,
+    'm-networksCheckoutSummary__timePeriod--disabled': onlyShowSelectedTimePeriod
+  }"
+>
+  <span
+    class="m-networksCheckoutSummary__timePeriodTitle"
+    i18n="@@CHECKOUT__TIME_PERIOD_SELECTOR__ANNUALLY"
+    >Annually</span
+  >
+  <span class="m-networksCheckoutSummary__timePeriodSubtitle"
+    >Save
+    {{
+      (totalAnnualSavingsCents$ | async) / 100
+        | currency: 'USD':'symbol':'1.0-2'
+    }}</span
+  >
+</div>
+<div
+  class="m-networksCheckoutSummary__timePeriod"
+  *ngIf="shouldShow$(CheckoutTimePeriodEnum.Monthly) | async"
+  (click)="onTimePeriodClick(CheckoutTimePeriodEnum.Monthly)"
+  [ngClass]="{
+    'm-networksCheckoutSummary__timePeriod--active':
+      (selectedTimePeriod$ | async) === CheckoutTimePeriodEnum.Monthly,
+    'm-networksCheckoutSummary__timePeriod--disabled': onlyShowSelectedTimePeriod
+  }"
+>
+  <span
+    class="m-networksCheckoutSummary__timePeriodTitle"
+    i18n="@@CHECKOUT__TIME_PERIOD_SELECTOR__MONTHLY"
+    >Monthly</span
+  >
+  <span
+    class="m-networksCheckoutSummary__timePeriodSubtitle"
+    i18n="@@CHECKOUT__TIME_PERIOD_SELECTOR__NO_DISCOUNT"
+    >No discount</span
+  >
+</div>

@@ -1,0 +1,11 @@
+query GetCheckoutLink(
+  $planId: String!,
+  $addOnIds: [String!], 
+  $timePeriod: CheckoutTimePeriodEnum!
+){
+  checkoutLink(
+    planId: $planId,
+    addOnIds: $addOnIds
+    timePeriod: $timePeriod
+  )  
+}
