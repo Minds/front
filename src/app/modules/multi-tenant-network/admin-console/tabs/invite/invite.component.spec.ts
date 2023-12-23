@@ -1,17 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InviteComponent } from './invite.component';
+import { NetworkAdminConsoleInviteComponent } from './invite.component';
+import { MultiTenantRolesService } from '../../../services/roles.service';
+import { MockService } from '../../../../../utils/mock';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('InviteComponent', () => {
-  let component: InviteComponent;
-  let fixture: ComponentFixture<InviteComponent>;
+describe('NetworkAdminConsoleInviteComponent', () => {
+  let component: NetworkAdminConsoleInviteComponent;
+  let fixture: ComponentFixture<NetworkAdminConsoleInviteComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InviteComponent],
+      imports: [RouterTestingModule],
+      declarations: [NetworkAdminConsoleInviteComponent],
+      providers: [
+        {
+          provide: MultiTenantRolesService,
+          useValue: MockService(MultiTenantRolesService),
+        },
+      ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InviteComponent);
+    fixture = TestBed.createComponent(NetworkAdminConsoleInviteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -13,8 +13,6 @@ import { BehaviorSubject, Observable, Subscription, filter, take } from 'rxjs';
 import { RoleId } from '../../../roles/roles.types';
 import { MultiTenantRolesService } from '../../../../../services/roles.service';
 import { Role } from '../../../../../../../../graphql/generated.engine';
-import { DialogService } from '../../../../../../../common/services/confirm-leave-dialog.service';
-import { CanDeactivateInterface } from '../../../../../../../interfaces/can-deactivate.interface';
 
 @Component({
   selector: 'm-networkAdminConsoleInvite__send',
@@ -62,8 +60,7 @@ export class NetworkAdminConsoleInviteSendComponent {
     protected service: InviteService,
     private rolesService: MultiTenantRolesService,
     private formBuilder: FormBuilder,
-    private toaster: ToasterService,
-    private dialogService: DialogService
+    private toaster: ToasterService
   ) {}
 
   ngOnInit(): void {
