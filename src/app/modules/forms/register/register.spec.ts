@@ -208,6 +208,7 @@ describe('RegisterForm', () => {
       referrer: undefined,
       parentId: '',
       policies: false,
+      invite_token: '',
     });
   });
 
@@ -246,6 +247,7 @@ describe('RegisterForm', () => {
       referrer: undefined,
       parentId: '',
       policies: false,
+      invite_token: '',
     });
     discardPeriodicTasks();
     flush();
