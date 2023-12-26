@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Injectable, inject } from '@angular/core';
+import { CanActivate, CanActivateFn, Router } from '@angular/router';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { Session } from '../../services/session';
 import { Location } from '@angular/common';
@@ -34,4 +34,29 @@ export class LoggedInRedirectGuard implements CanActivate {
     }
     return true;
   }
+}
+
+/**
+ * Guard function that can be used as an alternative to the class based
+ * redirect guard above. Allows the passing of a route to send the user to.
+ * @param { string } loggedOutRoute - route to send user to if not logged in.
+ * @returns { CanActivateFn } - guard function.
+ */
+export function loggedInRedirectGuard(loggedOutRoute: string): CanActivateFn {
+  return (): boolean => {
+    const router: Router = inject(Router);
+    const session: Session = inject(Session);
+    const toast: ToasterService = inject(ToasterService);
+    const loginReferrer: LoginReferrerService = inject(LoginReferrerService);
+    const location: Location = inject(Location);
+
+    if (!session.isLoggedIn()) {
+      toast.warn('Please log in before viewing this page.');
+      loginReferrer.register(location.path());
+      router.navigateByUrl(loggedOutRoute);
+      return false;
+    }
+
+    return true;
+  };
 }

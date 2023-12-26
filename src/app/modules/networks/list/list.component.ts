@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, firstValueFrom } from 'rxjs';
 import {
   CreateRootUserEventType,
   NetworksCreateRootUserModalService,
@@ -7,6 +7,7 @@ import {
 import { ConfigsService } from '../../../common/services/configs.service';
 import { QueryRef } from 'apollo-angular';
 import {
+  CreateTenantGQL,
   GetNetworksListGQL,
   GetNetworksListQuery,
   GetNetworksListQueryVariables,
@@ -15,6 +16,8 @@ import {
 import { ApolloQueryResult } from '@apollo/client';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { AutoLoginService } from '../auto-login.service';
+import { Router } from '@angular/router';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   selector: 'm-networks__list',
@@ -45,8 +48,11 @@ export class NetworksListComponent implements OnInit, OnDestroy {
   constructor(
     private createRootUserModal: NetworksCreateRootUserModalService,
     private getNetworksListGQL: GetNetworksListGQL,
+    private createTenantGQL: CreateTenantGQL,
     private autoLoginService: AutoLoginService,
-    configs: ConfigsService
+    private router: Router,
+    configs: ConfigsService,
+    private experimentsService: ExperimentsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -81,6 +87,16 @@ export class NetworksListComponent implements OnInit, OnDestroy {
 
           this.list$.next(result.data.tenants);
           this.inProgress$.next(false);
+
+          // if the list is empty, redirect to the networks marketing page.
+          // get the value from the list so that when we add pagination
+          // in future, this doesn't break.
+          if (
+            this.list$.getValue()?.length < 1 &&
+            !this.experimentsService.hasVariation('tmp-create-networks', true)
+          ) {
+            this.router.navigate(['/about/networks/']);
+          }
         }
       )
     );
@@ -122,5 +138,10 @@ export class NetworksListComponent implements OnInit, OnDestroy {
       this.inProgress$.next(true);
       this.getNetworksListQuery.refetch();
     }
+  }
+
+  async createNetwork() {
+    await firstValueFrom(this.createTenantGQL.mutate());
+    this.getNetworksListQuery.refetch();
   }
 }

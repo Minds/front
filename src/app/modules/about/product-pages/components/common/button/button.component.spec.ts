@@ -27,6 +27,7 @@ describe('ProductPageButtonComponent', () => {
     navigationUrl: '',
     solid: true,
     text: 'text',
+    stripeProductKey: null,
   };
 
   const defaultColorScheme: ColorScheme = ColorScheme.Light;
@@ -72,6 +73,7 @@ describe('ProductPageButtonComponent', () => {
     Object.defineProperty(comp, 'colorScheme', { writable: true });
 
     (comp as any).data = mockData;
+    (comp as any).data.stripeProductKey = null;
     (comp as any).colorScheme = defaultColorScheme;
     (comp as any).pricingService.selectedTimePeriod$.next(
       defaultSelectedTimePeriod
@@ -236,9 +238,9 @@ describe('ProductPageButtonComponent', () => {
       comp.data.navigationUrl = navigationUrl;
       comp.onClick();
 
-      expect((comp as any).router.navigate).toHaveBeenCalledWith([
-        navigationUrl,
-      ]);
+      expect((comp as any).router.navigateByUrl).toHaveBeenCalledWith(
+        navigationUrl
+      );
     });
 
     it('should handle button click when action is set', () => {
@@ -247,7 +249,7 @@ describe('ProductPageButtonComponent', () => {
       comp.data.navigationUrl = '';
       comp.onClick();
 
-      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).router.navigateByUrl).not.toHaveBeenCalled();
       expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
         action,
         {}
@@ -322,6 +324,126 @@ describe('ProductPageButtonComponent', () => {
         action,
         {
           upgradeInterval: 'monthly',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of yearly when action is set to NetworksCommunityCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Annually
+      );
+      const action: StrapiAction = StrapiAction.NetworksCommunityCheckout;
+      (comp as any).data.action = action;
+      (comp as any).data.stripeProductKey = 'networks:community';
+      comp.data.navigationUrl = '';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          stripeProductKey: 'networks:community',
+          upgradeInterval: 'yearly',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of monthly when action is set to NetworksCommunityCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Monthly
+      );
+      const action: StrapiAction = StrapiAction.NetworksCommunityCheckout;
+      (comp as any).data.action = action;
+      comp.data.navigationUrl = '';
+      (comp as any).data.stripeProductKey = 'networks:community';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'monthly',
+          stripeProductKey: 'networks:community',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of yearly when action is set to NetworksTeamCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Annually
+      );
+      const action: StrapiAction = StrapiAction.NetworksTeamCheckout;
+      (comp as any).data.action = action;
+      comp.data.navigationUrl = '';
+      (comp as any).data.stripeProductKey = 'networks:team';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'yearly',
+          stripeProductKey: 'networks:team',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of monthly when action is set to NetworksTeamCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Monthly
+      );
+      const action: StrapiAction = StrapiAction.NetworksTeamCheckout;
+      (comp as any).data.action = action;
+      (comp as any).data.stripeProductKey = 'networks:team';
+      comp.data.navigationUrl = '';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'monthly',
+          stripeProductKey: 'networks:team',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of yearly when action is set to NetworksEnterpriseCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Annually
+      );
+      const action: StrapiAction = StrapiAction.NetworksEnterpriseCheckout;
+      (comp as any).data.action = action;
+      comp.data.navigationUrl = '';
+      (comp as any).data.stripeProductKey = 'networks:enterprise';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'yearly',
+          stripeProductKey: 'networks:enterprise',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of monthly when action is set to NetworksEnterpriseCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Monthly
+      );
+      const action: StrapiAction = StrapiAction.NetworksEnterpriseCheckout;
+      (comp as any).data.action = action;
+      (comp as any).data.stripeProductKey = 'networks:enterprise';
+      comp.data.navigationUrl = '';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'monthly',
+          stripeProductKey: 'networks:enterprise',
         }
       );
     });

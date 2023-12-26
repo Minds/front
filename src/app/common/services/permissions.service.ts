@@ -24,10 +24,17 @@ export class PermissionsService {
 
   constructor(
     private experimentsService: ExperimentsService,
-    configs: ConfigsService
+    private configs: ConfigsService
   ) {
-    if (configs.get('permissions')) {
-      this.whitelist = Object.values(configs.get('permissions'));
+    this.initFromConfigs();
+  }
+
+  /**
+   * Loads permissions from configs
+   */
+  public initFromConfigs(): void {
+    if (this.configs.get('permissions')) {
+      this.whitelist = Object.values(this.configs.get('permissions'));
     }
   }
 

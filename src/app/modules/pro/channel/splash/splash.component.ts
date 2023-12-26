@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SiteService } from '../../../../common/services/site.service';
-import { SignupModalService } from '../../../modals/signup/service';
 import { ProChannelService } from '../channel.service';
 import { Session } from '../../../../services/session';
 import {
@@ -25,7 +24,6 @@ export class ProChannelSplashComponent implements OnInit {
 
   constructor(
     public service: ProChannelService,
-    protected modal: SignupModalService,
     protected site: SiteService,
     private authModal: AuthModalService,
     public session: Session
