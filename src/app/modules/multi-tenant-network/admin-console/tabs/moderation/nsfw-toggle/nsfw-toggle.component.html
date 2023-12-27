@@ -8,8 +8,8 @@
   Restrict or open access to NSFW content on your network site
 </p>
 <!-- <m-toggle
-  [mModel]="enabled"
-  (mModelChange)="setToggle($event)"
+  [mModel]="service.nsfwEnabled$ | async"
+  (mModelChange)="toggle($event)"
   leftValue="off"
   rightValue="on"
 ></m-toggle> -->
