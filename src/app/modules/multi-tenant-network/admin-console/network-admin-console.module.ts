@@ -20,6 +20,7 @@ import { NetworkAdminConsoleRolesComponent } from './tabs/roles/roles.component'
 import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/permissions/permissions.component';
 import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
 import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
+import { NetworkAdminConsoleNsfwToggleComponent } from './tabs/moderation/nsfw-toggle/nsfw-toggle.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -88,6 +89,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesComponent,
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
+    NetworkAdminConsoleNsfwToggleComponent,
   ],
   providers: [MultiTenantDomainService],
 })

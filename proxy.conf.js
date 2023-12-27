@@ -20,6 +20,7 @@ const PROXY_CONFIG = [
           return sc
             .split(';')
             .filter(v => v.trim().toLowerCase() !== 'secure')
+            .filter(v => v.trim().toLowerCase() !== 'samesite=none')
             .join('; ');
         });
       }

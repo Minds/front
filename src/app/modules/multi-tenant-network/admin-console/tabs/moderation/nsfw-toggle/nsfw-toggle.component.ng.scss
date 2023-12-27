@@ -1,0 +1,13 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networkAdminConsole__subtitle {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  ::ng-deep m-toggle {
+    margin: $spacing4 0;
+  }
+}

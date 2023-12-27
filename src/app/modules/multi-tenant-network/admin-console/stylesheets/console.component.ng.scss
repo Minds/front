@@ -17,7 +17,7 @@
 
   .m-networkAdminConsole__title {
     margin-top: 0;
-    @include heading4Regular;
+    @include heading3Bold;
   }
 
   .m-networkAdminConsole__subtitle {
@@ -27,6 +27,12 @@
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
+  }
+
+  .m-networkAdminConsole__secondaryTitle {
+    margin: $spacing3 0 0 0;
+
+    @include heading4Regular;
   }
 
   .m-networkAdminConsole__form {
