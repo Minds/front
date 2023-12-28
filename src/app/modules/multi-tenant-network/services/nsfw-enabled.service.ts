@@ -7,7 +7,7 @@ import { MultiTenantNetworkConfigService } from './config.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 
 /**
- * Manages whether nsfw reporting tools are enabled on tenant sites
+ * Manages whether nsfw labelling tools (e.g. mark as explicit) are enabled on tenant sites
  */
 @Injectable({ providedIn: 'root' })
 export class NsfwEnabledService {
@@ -26,7 +26,7 @@ export class NsfwEnabledService {
   }
 
   /**
-   * Toggles whether nsfw reporting tools are enabled
+   * Toggles whether nsfw labelling tools are enabled
    *
    * @returns { Promise<void> }
    */

@@ -3,6 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import { DiscoveryFeedsService } from './feeds.service';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { Modal } from '../../../services/ux/modal.service';
+import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-enabled.service';
 
 const noOp = () => {};
 
@@ -47,7 +48,8 @@ export class DiscoveryFeedsSettingsComponent implements Modal<any> {
 
   constructor(
     private service: DiscoveryFeedsService,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    protected nsfwEnabledService: NsfwEnabledService
   ) {
     this.form = fb.group({
       period: fb.control(''),

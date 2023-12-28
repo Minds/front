@@ -51,6 +51,7 @@ import { LiveStreamComponent } from '../livestream/livestream.component';
 import { LivestreamService } from '../../services/livestream.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
+import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -178,7 +179,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     public modalService: ModalService,
     private injector: Injector,
     private permissions: PermissionsService,
-    private readonly experimentService: ExperimentsService
+    private readonly experimentService: ExperimentsService,
+    protected nsfwEnabledService: NsfwEnabledService
   ) {}
 
   /**

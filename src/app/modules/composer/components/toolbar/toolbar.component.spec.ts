@@ -17,6 +17,7 @@ import { LivestreamService } from '../../../../modules/composer/services/livestr
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
+import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -149,6 +150,14 @@ describe('Composer Toolbar', () => {
           {
             provide: PermissionsService,
             useValue: MockService(PermissionsService),
+          },
+          {
+            provide: PermissionsService,
+            useValue: MockService(PermissionsService),
+          },
+          {
+            provide: NsfwEnabledService,
+            useValue: MockService(NsfwEnabledService),
           },
         ],
       }).compileComponents();
