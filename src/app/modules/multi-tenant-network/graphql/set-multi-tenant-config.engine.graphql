@@ -1,15 +1,17 @@
 mutation SetMultiTenantConfig(
-  $siteName: String,
-  $colorScheme: MultiTenantColorScheme,
-  $primaryColor: String,
+  $siteName: String
+  $colorScheme: MultiTenantColorScheme
+  $primaryColor: String
   $communityGuidelines: String
+  $nsfwEnabled: Boolean
 ) {
   multiTenantConfig(
     multiTenantConfigInput: {
-      siteName: $siteName,
-      colorScheme: $colorScheme,
-      primaryColor: $primaryColor,
+      siteName: $siteName
+      colorScheme: $colorScheme
+      primaryColor: $primaryColor
       communityGuidelines: $communityGuidelines
+      nsfwEnabled: $nsfwEnabled
     }
   )
 }

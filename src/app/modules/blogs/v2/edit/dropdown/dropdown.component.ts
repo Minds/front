@@ -4,6 +4,7 @@
 import { Component } from '@angular/core';
 import { BlogsEditService } from '../blog-edit.service';
 import { NSFW_REASONS } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
+import { NsfwEnabledService } from '../../../../multi-tenant-network/services/nsfw-enabled.service';
 
 /**
  * Dropdown menu for editing blogs.
@@ -23,7 +24,10 @@ export class BlogEditorDropdownComponent {
    */
   public reasons: typeof NSFW_REASONS = NSFW_REASONS;
 
-  constructor(private editService: BlogsEditService) {}
+  constructor(
+    private editService: BlogsEditService,
+    protected nsfwEnabledService: NsfwEnabledService
+  ) {}
 
   /**
    * Gets nsfw value from service.

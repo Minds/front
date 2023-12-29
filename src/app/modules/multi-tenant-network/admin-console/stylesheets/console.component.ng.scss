@@ -164,6 +164,17 @@
     }
   }
 
+  .m-networkAdminConsole__toggleWrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: $spacing4;
+
+    span {
+      @include body2Regular;
+    }
+  }
+
   .m-tabs__container {
     overflow-x: auto;
     padding: 0 $spacing8;

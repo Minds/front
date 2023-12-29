@@ -16,7 +16,6 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
 import { Session } from '../../../../../services/session';
 import { take } from 'rxjs/operators';
 import { PopupService } from '../../popup/popup.service';
-import { NsfwEnabledService } from '../../../../multi-tenant-network/services/nsfw-enabled.service';
 
 /**
  * A dropdown of nested menus for users to configure license/permaweb/visibility for a post
@@ -54,8 +53,7 @@ export class ComposerTitleBarDropdownComponent implements OnDestroy {
     protected service: ComposerService,
     protected toaster: ToasterService,
     protected session: Session,
-    protected popup: PopupService,
-    protected nsfwEnabledService: NsfwEnabledService
+    protected popup: PopupService
   ) {}
 
   ngOnDestroy() {
