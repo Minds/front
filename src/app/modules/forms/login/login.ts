@@ -23,6 +23,7 @@ import { AbstractSubscriberComponent } from '../../../common/components/abstract
 import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
+import { OidcUser } from '../../auth/modal/auth-modal.component';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -47,10 +48,11 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
   @Output() done: EventEmitter<any> = new EventEmitter();
   @Output() doneRegistered: EventEmitter<any> = new EventEmitter();
   @Output() showRegisterForm: EventEmitter<any> = new EventEmitter();
+  @Output() showOidcUsernameForm: EventEmitter<OidcUser> = new EventEmitter();
 
   errorMessage: string = '';
   twofactorToken: string = '';
-  hideLogin: boolean = false;
+  hideMindsForm: boolean = false;
   hideMFA: boolean = true;
   inProgress: boolean = false;
   referrer: string;
@@ -195,7 +197,7 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
    * If oidc providers are found, we will hide the login screen
    */
   public setHasOidcProviders(has: boolean): void {
-    this.hideLogin = !!has;
+    this.hideMindsForm = !!has;
     this.hasOidcProviders = has;
   }
 }

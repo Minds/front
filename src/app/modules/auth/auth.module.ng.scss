@@ -10,6 +10,7 @@
 
   .m-twoColumnLayout__leftContainer {
     padding-top: $spacing12;
+    padding-bottom: $spacing8 !important;
   }
 
   .m-twoColumnLayout__contentContainer {
@@ -67,15 +68,47 @@
     }
   }
 
+  .m-auth__oidcToggle {
+    display: flex;
+    flex-flow: column nowrap;
+    text-align: center;
+    gap: $spacing4;
+    margin-bottom: $spacing6;
+    .m-auth__oidcToggleDivider {
+      padding: $spacing6 0;
+      display: flex;
+      align-items: center;
+
+      div {
+        flex: 1;
+        height: 1px;
+        @include m-theme() {
+          background: themed($m-borderColor--primary);
+        }
+      }
+
+      span {
+        padding: 0 10px;
+      }
+    }
+    a {
+      cursor: pointer;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
   .m-auth__toggleFormMessage {
     a {
       font-weight: inherit;
-      text-decoration: none;
+      text-decoration: underline;
       display: inline-block;
       cursor: pointer;
     }
     &:not(.m-auth__toggleFormMessage--oidc) {
       a {
+        text-decoration: none;
+
         @include m-theme() {
           color: themed($m-action);
         }

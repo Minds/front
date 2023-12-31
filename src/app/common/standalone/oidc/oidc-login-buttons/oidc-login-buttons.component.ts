@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '../../../common.module';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
@@ -7,10 +7,14 @@ import {
   FetchOidcProvidersGQL,
   OidcProviderPublic,
 } from '../../../../../graphql/generated.engine';
-import { firstValueFrom, take } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { ConfigsService } from '../../../services/configs.service';
 import { UserAvatarService } from '../../../services/user-avatar.service';
 import { Session } from '../../../../services/session';
+import {
+  AuthForm,
+  OidcUser,
+} from '../../../../modules/auth/modal/auth-modal.component';
 
 /**
  * Buttons that allow users to create/discover groups
@@ -26,10 +30,18 @@ import { Session } from '../../../../services/session';
   styleUrls: ['./oidc-login-buttons.component.ng.scss'],
 })
 export class OidcLoginButtons {
+  @Input() parentForm: AuthForm = 'login';
   providers: Partial<OidcProviderPublic>[];
   @Output() hasOidcProviders: EventEmitter<boolean> = new EventEmitter();
   @Output('done') onDone: EventEmitter<boolean> = new EventEmitter();
-  hasClickedLoginMethod = false;
+  @Output('needsOidcUsername') needsUsername: EventEmitter<
+    OidcUser
+  > = new EventEmitter();
+
+  /**
+   * The id of the provider that was clicked
+   */
+  clickedProviderId: number = null;
   windowPoller;
 
   constructor(
@@ -54,13 +66,16 @@ export class OidcLoginButtons {
     }
   }
 
-  public async onLoginClick(e: MouseEvent, loginUrl: string): Promise<void> {
+  public async onLoginClick(
+    e: MouseEvent,
+    provider: OidcProviderPublic
+  ): Promise<void> {
     e.preventDefault();
-    this.hasClickedLoginMethod = true;
+    this.clickedProviderId = provider.id;
 
     if (this.windowPoller) clearInterval(this.windowPoller);
 
-    const ref = window.open(loginUrl, '_blank');
+    const ref = window.open(provider.loginUrl, '_blank');
 
     if (ref) {
       this.windowPoller = setInterval(async () => {
@@ -70,6 +85,13 @@ export class OidcLoginButtons {
 
           // Was login successful? Refetch configs.
           await this.configs.loadFromRemote();
+
+          // ojm for now assuming we figure out they need a username here,
+          // and that we are returned a $sub...
+          // if (needsUsername && sub) {
+          // this.needsUsername.emit(sub);
+          // return;
+          // }
 
           const user = this.configs.get('user');
 
@@ -87,7 +109,7 @@ export class OidcLoginButtons {
             this.onDone.emit(true);
           }
 
-          this.hasClickedLoginMethod = false;
+          this.clickedProviderId = null;
         }
       }, 500);
     }

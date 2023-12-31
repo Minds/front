@@ -1,0 +1,65 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 100%;
+  max-height: 100%;
+
+  form {
+    overflow: visible !important;
+  }
+
+  .m-form__row--label {
+    margin: 0 !important;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    label {
+      padding-bottom: $spacing2;
+    }
+  }
+
+  .m-form__input--details {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+
+  .m-login-box > div {
+    overflow: visible;
+  }
+
+  .m-oidcUsername__error {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+    font-size: 14px;
+    line-height: 20px;
+    min-height: 40px;
+
+    @include m-theme() {
+      color: themed($m-red) !important;
+    }
+  }
+
+  .ng-invalid.ng-dirty {
+    &:not(:focus) {
+      @include m-theme() {
+        border-color: themed($m-red) !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    ::ng-deep {
+      m-button,
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

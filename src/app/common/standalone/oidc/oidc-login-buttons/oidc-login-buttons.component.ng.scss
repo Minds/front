@@ -3,6 +3,23 @@
 :host {
   display: block;
   > div {
-    padding-bottom: $spacing6;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: $spacing6;
+  }
+
+  .m-oidcLoginButtons__agreement {
+    padding-bottom: $spacing3;
+    text-align: center;
+    @include body1Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    a {
+      font-weight: 400;
+      @include m-theme() {
+        color: themed($m-action);
+      }
+    }
   }
 }

@@ -9,7 +9,16 @@ import { Router } from '@angular/router';
 import { AuthModalImageService } from './auth-modal-image.service';
 import { CarouselItem } from '../../../common/components/feature-carousel/feature-carousel.component';
 
-export type AuthForm = 'register' | 'login';
+export type AuthForm = 'register' | 'login' | 'oidcUsername';
+
+/**
+ * Details for identifying an oidc user
+ * ojm maybe just do sub string bc id is in cookie
+ */
+export type OidcUser = {
+  providerId: number;
+  sub: string;
+};
 
 export type AuthModalData = {
   formDisplay?: AuthForm;
@@ -38,6 +47,12 @@ export class AuthModalComponent implements OnInit {
    * True if the auth modal was opened from the /login or /register page
    */
   standalonePage: boolean = false;
+
+  /**
+   * Identifying details of an oidc user that needs
+   * to create a username
+   */
+  oidcUser: OidcUser;
 
   /**
    * Called when user logs in
@@ -118,6 +133,18 @@ export class AuthModalComponent implements OnInit {
   }
 
   /**
+   * Shows the oidc username form
+   * @param e
+   */
+  showOidcUsernameForm(oidcUser: OidcUser): void {
+    if (!oidcUser) {
+      return;
+    }
+    this.oidcUser = oidcUser;
+    this.formDisplay = 'oidcUsername';
+  }
+
+  /**
    * Modal options
    * @param {AuthModalData} data
    */
@@ -130,6 +157,8 @@ export class AuthModalComponent implements OnInit {
     onDismissIntent,
   }: AuthModalData) {
     this.formDisplay = formDisplay;
+    this.formDisplay = 'oidcUsername';
+
     this.standalonePage = standalonePage;
     this.onLoggedIn = onLoggedIn || (() => {});
     this.onRegistered = onRegistered || (() => {});

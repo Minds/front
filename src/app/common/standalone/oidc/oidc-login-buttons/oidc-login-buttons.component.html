@@ -1,19 +1,24 @@
 <div *ngIf="providers?.length > 0">
   <ng-container *ngFor="let provider of providers">
-    <a
-      [href]="provider.loginUrl"
-      (click)="onLoginClick($event, provider.loginUrl)"
-    >
+    <a [href]="provider.loginUrl" (click)="onLoginClick($event, provider)">
       <m-button
         color="blue"
         stretch="true"
         solid="true"
-        [saving]="hasClickedLoginMethod"
+        [saving]="clickedProviderId === provider.id"
       >
-        <span>Login with {{ provider.name }}</span>
+        <span
+          >{{ parentForm === 'login' ? 'Login' : 'Join' }} with
+          {{ provider.name }}</span
+        >
       </m-button>
     </a>
   </ng-container>
 
-  <br />
+  <div class="m-oidcLoginButtons__agreement" *ngIf="parentForm === 'register'">
+    By joining the network you agree to the network
+    <a routerLink="/p/terms" target="_blank">terms and conditions</a>, as well
+    as the <a routerLink="/content-policy" target="_blank">content</a> and
+    <a routerLink="/p/privacy" target="_blank">privacy policy</a>.
+  </div>
 </div>

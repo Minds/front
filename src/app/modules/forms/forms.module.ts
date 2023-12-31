@@ -12,6 +12,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
 import { PopoverComponent } from './popover-validation/popover.component';
 import { MultiFactorAuthLazyModule } from '../auth/multi-factor-auth/multi-factor-auth-lazy.module';
 import { OidcLoginButtons } from '../../common/standalone/oidc/oidc-login-buttons/oidc-login-buttons.component';
+import { OidcUsernameFormComponent } from './oidc-username-form/oidc-username-form';
 
 @NgModule({
   imports: [
@@ -25,7 +26,17 @@ import { OidcLoginButtons } from '../../common/standalone/oidc/oidc-login-button
     MultiFactorAuthLazyModule,
     OidcLoginButtons, // standalone
   ],
-  declarations: [LoginForm, RegisterForm, PopoverComponent],
-  exports: [LoginForm, RegisterForm, PopoverComponent],
+  declarations: [
+    LoginForm,
+    RegisterForm,
+    PopoverComponent,
+    OidcUsernameFormComponent,
+  ],
+  exports: [
+    LoginForm,
+    RegisterForm,
+    PopoverComponent,
+    OidcUsernameFormComponent,
+  ],
 })
 export class MindsFormsModule {}

@@ -1,0 +1,96 @@
+<div class="m-twoColumnLayout__contentContainer">
+  <form
+    (submit)="$event.preventDefault()"
+    [formGroup]="form"
+    class="m-form m-login-box m-formWrapper"
+  >
+    <div class="m-layout__grid">
+      <!-- ------------------------------- -->
+      <!-- USERNAME FIELD -->
+      <!-- ------------------------------- -->
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__input--details">
+          <div class="m-form__row--label">
+            <label for="username" i18n="@@M__COMMON__USERNAME">Username</label>
+          </div>
+        </div>
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            id="username"
+            formControlName="username"
+            readonly
+            onfocus="this.removeAttribute('readonly');"
+            ontouchstart="this.removeAttribute('readonly');"
+            [pattern]="alphanumericPattern"
+            data-ref="data-minds-register-username-input"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------- -->
+    <!-- ERRORS(?) -->
+    <!-- ------------------------------- -->
+    <div
+      class="m-oidcUsername__error"
+      [style.visibility]="showError('username') ? 'visible' : 'hidden'"
+      aria-live="polite"
+    >
+      <ng-container
+        *ngIf="this.form.get('username').errors?.minlength"
+        i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_SHORT"
+      >
+        Must be at least 4 characters long.
+      </ng-container>
+      <ng-container
+        *ngIf="this.form.get('username').errors?.maxlength"
+        i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_LONG"
+      >
+        Cannot be longer than 50 characters.
+      </ng-container>
+      <ng-container
+        *ngIf="this.form.get('username').errors?.pattern"
+        i18n="@@MINDS__REGISTER__EXCEPTION__NOT_ALPHANUMERIC"
+      >
+        Usernames can only have letters, numbers or underscores. Special
+        characters (e.g. @^%.) and spaces are not allowed.
+      </ng-container>
+      <ng-container
+        *ngIf="username.errors?.existingUsername"
+        i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TAKEN"
+      >
+        Username already taken.
+      </ng-container>
+    </div>
+    <div
+      class="m-oidcUsername__error"
+      [style.visibility]="errorMessage ? 'visible' : 'hidden'"
+      aria-live="polite"
+    >
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>
+
+<!-- ------------------------------- -->
+<!-- FOOTER -->
+<!-- ------------------------------- -->
+<div class="m-twoColumnLayout__footer">
+  <m-button
+    [disabled]="!this.form.valid || inProgress"
+    [saving]="inProgress"
+    color="blue"
+    [solid]="true"
+    (onAction)="register($event)"
+  >
+    <ng-container i18n="@@COMMON__CONTINUE">
+      Continue
+    </ng-container>
+  </m-button>
+</div>
+
+<!-- -------------------------------->
+<!-- TEMPLATE: ERROR MESSAGES -->
+<!-- -------------------------------->
+<ng-template #errorTemplate> </ng-template>

@@ -1,7 +1,7 @@
 <div class="m-twoColumnLayout">
   <div class="m-twoColumnLayout__leftContainer">
     <div class="m-auth__titleRow">
-      <a (click)="clickedBackButton()"
+      <a (click)="clickedBackButton()" *ngIf="formDisplay !== 'oidcUsername'"
         ><i class="material-icons">chevron_left</i></a
       >
       <h2>
@@ -11,6 +11,11 @@
         <ng-container *ngIf="formDisplay === 'register'"
           >Join {{ site.title }}</ng-container
         >
+        <ng-container
+          *ngIf="formDisplay === 'oidcUsername'"
+          i18n="@@OIDC_USERNAME_FORM__CHOOSE_YOUR_USERNAME"
+          >Choose your username</ng-container
+        >
       </h2>
     </div>
     <ng-container *ngIf="formDisplay === 'register'">
@@ -18,6 +23,7 @@
         [source]="'auth-modal'"
         (done)="onRegisterDone($event)"
         (showLoginForm)="showLoginForm($event)"
+        (showOidcUsernameForm)="showOidcUsernameForm($event)"
       >
       </m-registerForm>
     </ng-container>
@@ -27,8 +33,13 @@
         (done)="onLoginDone($event)"
         (doneRegistered)="onRegisterDone($event)"
         (showRegisterForm)="showRegisterForm($event)"
+        (showOidcUsernameForm)="showOidcUsernameForm($event)"
       >
       </m-loginForm>
+    </ng-container>
+    <ng-container *ngIf="formDisplay === 'oidcUsername'">
+      <m-oidcUsernameForm [oidcUser]="oidcUser" (done)="onRegisterDone($event)">
+      </m-oidcUsernameForm>
     </ng-container>
   </div>
   <div

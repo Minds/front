@@ -33,6 +33,7 @@ import { OnboardingV5ExperimentService } from '../../experiments/sub-services/on
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { OidcUser } from '../../auth/modal/auth-modal.component';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -57,10 +58,11 @@ export class RegisterForm implements OnInit, OnDestroy {
 
   @Output() done: EventEmitter<any> = new EventEmitter();
   @Output() showLoginForm: EventEmitter<any> = new EventEmitter();
+  @Output() showOidcUsernameForm: EventEmitter<OidcUser> = new EventEmitter();
 
   errorMessage: string = '';
   twofactorToken: string = '';
-  hideLogin: boolean = false;
+  hideMindsForm: boolean = false;
   inProgress: boolean = false;
   captcha: string;
   usernameValidationTimeout: any;
@@ -70,6 +72,8 @@ export class RegisterForm implements OnInit, OnDestroy {
   alphanumericPattern = '^[a-zA-Z0-9_]+$';
 
   showFbForm: boolean = false;
+
+  hasOidcProviders: boolean = false;
 
   form: UntypedFormGroup;
   fbForm: UntypedFormGroup;
@@ -329,6 +333,7 @@ export class RegisterForm implements OnInit, OnDestroy {
   }
 
   public setHasOidcProviders(has: boolean): void {
-    this.hideLogin = !!has;
+    this.hasOidcProviders = has;
+    this.hideMindsForm = !!has;
   }
 }

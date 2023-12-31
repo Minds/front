@@ -1,19 +1,14 @@
 <div class="m-twoColumnLayout__contentContainer">
   <!-- -------------------------------->
-  <!-- OIDC BUTTON & TOGGLE -->
+  <!-- OIDC BUTTONS-->
   <!-- -------------------------------->
   <m-oidcLoginButtons
+    parentForm="login"
     (hasOidcProviders)="setHasOidcProviders($event)"
+    (needsOidcUsername)="showOidcUsernameForm.emit($event)"
     (done)="done.next($event)"
+    [hidden]="!hideMindsForm"
   ></m-oidcLoginButtons>
-
-  <div class="m-login__oidcOther" *ngIf="hasOidcProviders && hideLogin">
-    <span class="m-auth__toggleFormMessage m-auth__toggleFormMessage--oidc"
-      ><a (click)="hideLogin = false" data-ref="data-minds-oidc-other">
-        Login with username / password
-      </a></span
-    >
-  </div>
 
   <!-- -------------------------------->
   <!-- LOGIN FORM -->
@@ -22,7 +17,7 @@
     (submit)="$event.preventDefault()"
     [formGroup]="form"
     class="m-form m-login-box m-formWrapper"
-    [hidden]="hideLogin"
+    [hidden]="hideMindsForm"
   >
     <div class="m-layout__grid">
       <div class="m-form__field--text stretchedField">
@@ -95,6 +90,36 @@
       </div>
     </div>
   </form>
+  <!-- -------------------------------->
+  <!-- OIDC vs MINDS FORM TOGGLE -->
+  <!-- -------------------------------->
+
+  <div class="m-auth__oidcToggle" *ngIf="hasOidcProviders">
+    <div class="m-auth__oidcToggleDivider">
+      <div></div>
+      <span>or</span>
+      <div></div>
+    </div>
+    <span class="m-auth__toggleFormMessage m-auth__toggleFormMessage--oidc"
+      ><a
+        *ngIf="hideMindsForm; else continueWithSso"
+        (click)="hideMindsForm = false"
+        data-ref="data-minds-oidc-login-continue-with-username"
+        i18n="@@AUTH_FORM__CONTINUE_WITH_USERNAME"
+      >
+        Continue with username
+      </a>
+      <ng-template #continueWithSso>
+        <a
+          (click)="hideMindsForm = true"
+          data-ref="data-minds-oidc-login-continue-with-sso"
+          i18n="@@AUTH_FORM__CONTINUE_WITH_SSO"
+        >
+          Continue with SSO
+        </a>
+      </ng-template>
+    </span>
+  </div>
 </div>
 
 <div class="m-twoColumnLayout__footer">
@@ -105,6 +130,7 @@
     </a>
   </span>
   <m-button
+    *ngIf="!hideMindsForm"
     class="m-login__button--login"
     type="button"
     [saving]="inProgress"
