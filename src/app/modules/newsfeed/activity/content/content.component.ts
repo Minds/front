@@ -382,7 +382,7 @@ export class ActivityContentComponent
       return this.entity.message;
     }
 
-    // if not an image or vid,
+    // if not an image, vid, or rich-embed.
     return this.entity.message || this.entity.title;
   }
 
