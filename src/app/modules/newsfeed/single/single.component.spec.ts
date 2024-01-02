@@ -461,7 +461,7 @@ describe('NewsfeedSingleComponent', () => {
     const thumbsUpCount = 1;
     const ownerUsername = 'ownerUsername';
     const subtype = 'activity';
-    const perma_url: string = 'https://minds-player.withlivepeer.com?v=123456';
+    const perma_url: string = 'https://minds-player.vercel.app?v=123456';
 
     comp.activity = {
       guid: guid,
@@ -477,7 +477,7 @@ describe('NewsfeedSingleComponent', () => {
       thumbnail_src: thumbnailSrc,
       blurb: blurb,
       'thumbs:up:count': thumbsUpCount,
-      perma_url: 'https://minds-player.withlivepeer.com?v=123456',
+      perma_url: 'https://minds-player.vercel.app?v=123456',
     };
 
     (comp as any).updateMeta();
