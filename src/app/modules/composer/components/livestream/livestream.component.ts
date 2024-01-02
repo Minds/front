@@ -55,7 +55,7 @@ export class LiveStreamComponent implements OnDestroy {
       .subscribe(stream => {
         this.stream = stream;
         if (this.stream && this.stream.isActive) {
-          this.streamUrl = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+          this.streamUrl = `https://minds-player.vercel.app?v=${stream.playbackId}`;
           this.safeStreamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
             this.streamUrl
           );

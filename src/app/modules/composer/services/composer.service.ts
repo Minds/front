@@ -1174,10 +1174,10 @@ export class ComposerService implements OnDestroy {
           .subscribe(stream => {
             if (stream) {
               this.payload.is_rich = true;
-              this.payload.url = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
-              this.payload.title = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
-              this.payload.description = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
-              this.payload.thumbnail = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.payload.url = `https://minds-player.vercel.app?v=${stream.playbackId}`;
+              this.payload.title = `https://minds-player.vercel.app?v=${stream.playbackId}`;
+              this.payload.description = `https://minds-player.vercel.app?v=${stream.playbackId}`;
+              this.payload.thumbnail = `https://minds-player.vercel.app?v=${stream.playbackId}`;
               this.livestreamService.toggleRecordLivestream(stream.id, true);
             }
           });

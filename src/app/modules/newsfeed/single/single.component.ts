@@ -396,7 +396,10 @@ export class NewsfeedSingleComponent {
    */
   private isLivestream(activity: { perma_url?: string }): boolean {
     return Boolean(activity?.perma_url)
-      ? this.embedLinkWhitelist.getRegex('livepeer').test(activity.perma_url)
+      ? this.embedLinkWhitelist.getRegex('livepeer').test(activity.perma_url) ||
+          this.embedLinkWhitelist
+            .getRegex('livepeerLegacy')
+            .test(activity.perma_url)
       : false;
   }
 }
