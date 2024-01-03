@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  HostBinding,
 } from '@angular/core';
 import { PostSubscriptionsService } from '../../../notifications/post-subscriptions/post-subscriptions.service';
 import { ChannelsV2Service } from '../channels-v2.service';
@@ -22,6 +23,10 @@ export class ChannelActionsPostSubscriptionsComponent {
   channelGuid: string;
   frequency: PostSubscriptionFrequencyEnum;
   submitting = false;
+
+  @HostBinding('hidden') get isHidden(): boolean {
+    return !this.frequency;
+  }
 
   constructor(
     private channelService: ChannelsV2Service,
