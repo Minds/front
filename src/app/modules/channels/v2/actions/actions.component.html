@@ -23,6 +23,10 @@
     </m-channelActions__menu>
 
     <ng-container *ngIf="service.canInteract$ | async">
+      <ng-container *ngIf="service.isSubscribed$ | async">
+        <m-channelActions__postSubscriptions></m-channelActions__postSubscriptions>
+      </ng-container>
+
       <m-channelActions__wire *mIfTenant="false"></m-channelActions__wire>
 
       <div class="m-hideOnSmall">
