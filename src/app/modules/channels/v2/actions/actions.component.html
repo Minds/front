@@ -12,10 +12,6 @@
   <!-- CHANNEL VISITOR -->
   <!-- ------------------------------------------ -->
   <ng-template #nonOwner>
-    <ng-container *ngIf="service.isSubscribed$ | async">
-      <m-channelActions__postSubscriptions></m-channelActions__postSubscriptions>
-    </ng-container>
-
     <m-channelActions__menu>
       <m-button
         class="m-button-v2 m-button-v2--iconOnly"
@@ -27,6 +23,10 @@
     </m-channelActions__menu>
 
     <ng-container *ngIf="service.canInteract$ | async">
+      <ng-container *ngIf="service.isSubscribed$ | async">
+        <m-channelActions__postSubscriptions></m-channelActions__postSubscriptions>
+      </ng-container>
+
       <m-channelActions__wire *mIfTenant="false"></m-channelActions__wire>
 
       <div class="m-hideOnSmall">
