@@ -74,7 +74,10 @@
         ></span>
       </div>
 
-      <div class="m-notificationsNotification__actionButton">
+      <div
+        class="m-notificationsNotification__actionButton"
+        *ngIf="notification.type === 'gift_card_recipient_notified'"
+      >
         <m-button
           *ngIf="notification.type === 'gift_card_recipient_notified'"
           [size]="'xsmall'"
