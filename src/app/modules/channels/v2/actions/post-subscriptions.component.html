@@ -1,10 +1,11 @@
 <m-button
+  *ngIf="frequency"
   class="m-button-v2 m-button-v2--iconOnly"
   iconOnly="true"
   overlay="true"
   (onAction)="onClick()"
 >
   <i class="material-icons">{{
-    frequency?.valueOf() !== 'NEVER' ? 'notifications_on' : 'notifications'
+    frequency.valueOf() === 'NEVER' ? 'notifications' : 'notifications_on'
   }}</i>
 </m-button>

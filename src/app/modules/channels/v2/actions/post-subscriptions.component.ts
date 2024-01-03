@@ -37,6 +37,9 @@ export class ChannelActionsPostSubscriptionsComponent {
         channelGuid
       );
       this.frequency = postSubscription.frequency;
+
+      this.cd.markForCheck();
+      this.cd.detectChanges();
     });
   }
 
