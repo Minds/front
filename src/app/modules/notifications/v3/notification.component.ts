@@ -100,7 +100,8 @@ export class NotificationsV3NotificationComponent
       case 'supermind_accepted':
       case 'supermind_expiring_soon':
       // case 'supermind_expired':
-
+      //
+      case 'post_subscription':
       //
       case 'gift_card_recipient_notified':
       case 'gift_card_claimed_issuer_notified':
@@ -251,6 +252,8 @@ export class NotificationsV3NotificationComponent
       case 'affiliate_earnings_deposited':
       case 'referrer_affiliate_earnings_deposited':
         return `You earned $${this.data.amount_usd} from Minds Affiliate Program`;
+      case 'post_subscription':
+        return 'created a new';
     }
   }
 
@@ -288,6 +291,8 @@ export class NotificationsV3NotificationComponent
         return '';
       case 'gift_card_recipient_notified':
         return 'you';
+      case 'post_subscription':
+        return '';
     }
 
     return this.notification.entity?.owner_guid ==
@@ -339,6 +344,8 @@ export class NotificationsV3NotificationComponent
         return `gift for ${getGiftCardProductLabelEnum(
           this.notification.data.gift_card.productId
         )}`;
+      case 'post_subscription':
+        return 'post';
     }
     switch (this.notification.entity?.type) {
       case 'comment':
@@ -547,6 +554,8 @@ export class NotificationsV3NotificationComponent
       case 'gift_card_recipient_notified':
       case 'gift_card_claimed_issuer_notified':
         return 'redeem';
+      case 'post_subscription':
+        return 'notifications';
       default:
         return null;
     }
