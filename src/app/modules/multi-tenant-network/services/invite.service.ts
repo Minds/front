@@ -95,7 +95,7 @@ export class InviteService implements OnDestroy {
     return this.cancelInviteGQL.mutate(mutationVars).pipe(
       take(1),
       map((result: MutationResult<CancelInviteMutation>) => {
-        return Boolean(result?.data?.cancelInvite);
+        return 'cancelInvite' in (result?.data ?? {});
       }),
       tap(inviteCanceled => {
         if (inviteCanceled) {
@@ -126,7 +126,7 @@ export class InviteService implements OnDestroy {
     return this.resendInviteGQL.mutate(mutationVars).pipe(
       take(1),
       map((result: MutationResult<ResendInviteMutation>) => {
-        return Boolean(result?.data?.resendInvite);
+        return 'resendInvite' in (result?.data ?? {});
       }),
       tap(inviteResent => {
         if (inviteResent) {
