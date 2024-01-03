@@ -20,6 +20,7 @@
     </div>
     <ng-container *ngIf="formDisplay === 'register'">
       <m-registerForm
+        class="m-authModal__formDisplay"
         [source]="'auth-modal'"
         (done)="onRegisterDone($event)"
         (showLoginForm)="showLoginForm($event)"
@@ -29,6 +30,7 @@
     </ng-container>
     <ng-container *ngIf="formDisplay === 'login'">
       <m-loginForm
+        class="m-authModal__formDisplay"
         [source]="'auth-modal'"
         (done)="onLoginDone($event)"
         (doneRegistered)="onRegisterDone($event)"
@@ -38,7 +40,11 @@
       </m-loginForm>
     </ng-container>
     <ng-container *ngIf="formDisplay === 'oidcUsername'">
-      <m-oidcUsernameForm [oidcUser]="oidcUser" (done)="onRegisterDone($event)">
+      <m-oidcUsernameForm
+        class="m-authModal__formDisplay"
+        [oidcUser]="oidcUser"
+        (done)="onRegisterDone($event)"
+      >
       </m-oidcUsernameForm>
     </ng-container>
   </div>

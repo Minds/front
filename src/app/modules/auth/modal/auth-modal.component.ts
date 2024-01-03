@@ -157,7 +157,7 @@ export class AuthModalComponent implements OnInit {
     onDismissIntent,
   }: AuthModalData) {
     this.formDisplay = formDisplay;
-    this.formDisplay = 'oidcUsername';
+    // this.formDisplay = 'oidcUsername'; // ojm remove
 
     this.standalonePage = standalonePage;
     this.onLoggedIn = onLoggedIn || (() => {});

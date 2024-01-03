@@ -8,11 +8,6 @@
     color: themed($m-textColor--secondary);
   }
 
-  .m-twoColumnLayout__leftContainer {
-    padding-top: $spacing12;
-    padding-bottom: $spacing8 !important;
-  }
-
   .m-twoColumnLayout__contentContainer {
     margin-top: 0;
     flex-grow: 2;
@@ -37,6 +32,7 @@
     align-items: center;
     padding-left: $leftContainerPaddingX;
     padding-right: $leftContainerPaddingX;
+    margin-top: $spacing6;
 
     @include m-theme() {
       color: themed($m-textColor--primary);
