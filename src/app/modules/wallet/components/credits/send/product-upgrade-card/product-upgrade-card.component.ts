@@ -44,30 +44,31 @@ export class WalletV2CreditsProductUpgradeCardComponent {
   private readonly benefits: ProductUpgradeCardProductBenefits = {
     [GiftCardProductIdEnum.Plus]: [
       {
-        iconName: 'visibility_off',
-        text: $localize`:@@PRODUCT_UPGRADE_CARD__HIDE_BOOSTS:Hide Boosts for an ad-free Minds`,
-      },
-      {
         iconName: 'trending_up',
         text: $localize`:@@PRODUCT_UPGRADE_CARD__GET_REACH:Get more reach and engagement`,
       },
       {
         iconName: 'tips_and_updates',
-        text: $localize`:@@PRODUCT_UPGRADE_CARD__GET_SUPERMIND_OFFERS:Get exclusive Supermind offers`,
+        text: $localize`:@@PRODUCT_UPGRADE_CARD__PARTICIPATE_IN_SUPERMIND_CHALLENGES:Participate in exclusive Supermind challenges`,
+      },
+      {
+        iconName: 'visibility_off',
+        text: $localize`:@@PRODUCT_UPGRADE_CARD__HIDE_BOOSTS_AND_PERKS:Hide Boosted content, and other experience perks`,
       },
     ],
     [GiftCardProductIdEnum.Pro]: [
       {
         iconPath: 'assets/icons/binoculars.svg',
-        text: $localize`:@@PRODUCT_UPGRADE_CARD__ALL_PLUS_BENEFITS:All the benefits of Plus`,
+        text: $localize`:@@PRODUCT_UPGRADE_CARD__ALL_MINDS_PLUS_BENEFITS:All the benefits of Minds+`,
+      },
+
+      {
+        iconName: 'trending_up',
+        text: $localize`:@@PRODUCT_UPGRADE_CARD__GET_MORE_FREE_REACH:Get $50 /month (or $480 /year) in free Boost credits`,
       },
       {
         iconName: 'palette',
-        text: $localize`:@@PRODUCT_UPGRADE_CARD__CUSTOMIZE_YOUR_CHANNEL:Customize your channel with your own theme, brand and logo`,
-      },
-      {
-        iconName: 'trending_up',
-        text: $localize`:@@PRODUCT_UPGRADE_CARD__GET_MORE_REACH:Get more reach for your posts and content`,
+        text: $localize`:@@PRODUCT_UPGRADE_CARD__CUSTOMIZABLE_WEBSITE:Customizable website`,
       },
     ],
   };
