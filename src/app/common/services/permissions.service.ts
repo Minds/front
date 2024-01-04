@@ -57,7 +57,7 @@ export class PermissionsService {
    * @param permission
    * @returns whether the user has permission
    */
-  private has(permission: PermissionsEnum): boolean {
+  public has(permission: PermissionsEnum): boolean {
     // Don't implement restrictions if the experiment isn't enabled
     if (!this.isActive()) {
       return true;
@@ -94,5 +94,13 @@ export class PermissionsService {
   // Is the user allowed to assign permissions?
   public canAssignPermissions(): boolean {
     return this.has(PermissionsEnum.CanAssignPermissions);
+  }
+
+  /**
+   * Can the user use RSS sync?
+   * @returns { boolean } whether the user can use RSS sync
+   */
+  public canUseRssSync(): boolean {
+    return this.has(PermissionsEnum.CanUseRssSync);
   }
 }

@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../common/components/loading-spinner/loading-spinner.component';
 import { TwitterSyncSettingsExperimentService } from '../experiments/sub-services/twitter-sync-settings-experiment.service';
 import { IsTenantService } from '../../common/services/is-tenant.service';
+import { PermissionsService } from '../../common/services/permissions.service';
+import { PermissionsEnum } from '../../../graphql/generated.engine';
 
 describe('SettingsV2Component', () => {
   let component: SettingsV2Component;
@@ -49,6 +51,10 @@ describe('SettingsV2Component', () => {
           {
             provide: IsTenantService,
             useValue: MockService(IsTenantService),
+          },
+          {
+            provide: PermissionsService,
+            useValue: MockService(PermissionsService),
           },
         ],
         imports: [
@@ -253,6 +259,54 @@ describe('SettingsV2Component', () => {
         .items.find(x => x.id === 'twitter-sync');
 
       expect(menuItem).toBeUndefined();
+    });
+  });
+
+  it('should determine if the user has permission to use RSS sync', () => {
+    (component as any).permissionsService.has
+      .withArgs(PermissionsEnum.CanUseRssSync)
+      .and.returnValue(true);
+
+    expect((component as any).hasRssSyncPermission()).toBe(true);
+  });
+
+  it('should determine if the user does NOT have permission to use RSS sync', () => {
+    (component as any).permissionsService.has
+      .withArgs(PermissionsEnum.CanUseRssSync)
+      .and.returnValue(false);
+
+    expect((component as any).hasRssSyncPermission()).toBe(false);
+  });
+
+  describe('shouldShowContentMigrationHeader', () => {
+    it('should determine if content migration header should be shown because RSS sync option should be shown', () => {
+      (component as any).permissionsService.has
+        .withArgs(PermissionsEnum.CanUseRssSync)
+        .and.returnValue(true);
+
+      (component as any).IsTenantService.is.and.returnValue(true);
+
+      expect((component as any).shouldShowContentMigrationHeader()).toBe(true);
+    });
+
+    it('should determine if content migration header should be shown because it is not a tenant network', () => {
+      (component as any).permissionsService.has
+        .withArgs(PermissionsEnum.CanUseRssSync)
+        .and.returnValue(false);
+
+      (component as any).IsTenantService.is.and.returnValue(false);
+
+      expect((component as any).shouldShowContentMigrationHeader()).toBe(true);
+    });
+
+    it('should determine if content migration header should NOT be shown', () => {
+      (component as any).permissionsService.has
+        .withArgs(PermissionsEnum.CanUseRssSync)
+        .and.returnValue(false);
+
+      (component as any).IsTenantService.is.and.returnValue(true);
+
+      expect((component as any).shouldShowContentMigrationHeader()).toBe(false);
     });
   });
 });
