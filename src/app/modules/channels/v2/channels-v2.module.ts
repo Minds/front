@@ -45,6 +45,7 @@ import { MutualSubscriptionsComponent } from './mutual-subscriptions/mutual-subs
 import { ChannelActionsSupermindButtonComponent } from './actions/supermind/supermind-button.component';
 import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
 import { ChannelAddLinksTriggerComponent } from './about/add-links-trigger/add-links-trigger.component';
+import { ChannelActionsPostSubscriptionsComponent } from './actions/post-subscriptions.component';
 
 /**
  * Generally available components
@@ -72,6 +73,7 @@ const INTERNAL_COMPONENTS = [
   ChannelActionsMessageComponent,
   ChannelActionsWireComponent,
   ChannelActionsBoostComponent,
+  ChannelActionsPostSubscriptionsComponent,
   ChannelAdminConfirmationComponent,
   ChannelEditBioComponent,
   ChannelEditInfoComponent,

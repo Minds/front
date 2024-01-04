@@ -643,6 +643,7 @@ export type Mutation = {
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+  updatePostSubscription: PostSubscription;
 };
 
 export type MutationAssignUserToRoleArgs = {
@@ -766,6 +767,11 @@ export type MutationUpdateAccountArgs = {
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type MutationUpdatePostSubscriptionArgs = {
+  entityGuid: Scalars['String']['input'];
+  frequency: PostSubscriptionFrequencyEnum;
+};
+
 export type NewsfeedConnection = ConnectionInterface & {
   __typename?: 'NewsfeedConnection';
   edges: Array<EdgeInterface>;
@@ -857,6 +863,19 @@ export type PlanSummary = {
   oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
 };
 
+export type PostSubscription = {
+  __typename?: 'PostSubscription';
+  entityGuid: Scalars['String']['output'];
+  frequency: PostSubscriptionFrequencyEnum;
+  userGuid: Scalars['String']['output'];
+};
+
+export enum PostSubscriptionFrequencyEnum {
+  Always = 'ALWAYS',
+  Highlights = 'HIGHLIGHTS',
+  Never = 'NEVER',
+}
+
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
@@ -939,6 +958,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  postSubscription: PostSubscription;
   /** Gets reports. */
   reports: ReportsConnection;
   rssFeed: RssFeed;
@@ -1060,6 +1080,10 @@ export type QueryNewsfeedArgs = {
 
 export type QueryPaymentMethodsArgs = {
   productId?: InputMaybe<GiftCardProductIdEnum>;
+};
+
+export type QueryPostSubscriptionArgs = {
+  entityGuid: Scalars['String']['input'];
 };
 
 export type QueryReportsArgs = {
@@ -3335,6 +3359,35 @@ export type PageInfoFragment = {
   endCursor?: string | null;
 };
 
+export type GetPostSubscriptionQueryVariables = Exact<{
+  entityGuid: Scalars['String']['input'];
+}>;
+
+export type GetPostSubscriptionQuery = {
+  __typename?: 'Query';
+  postSubscription: {
+    __typename?: 'PostSubscription';
+    userGuid: string;
+    entityGuid: string;
+    frequency: PostSubscriptionFrequencyEnum;
+  };
+};
+
+export type UpdatePostSubscriptionsMutationVariables = Exact<{
+  entityGuid: Scalars['String']['input'];
+  frequency: PostSubscriptionFrequencyEnum;
+}>;
+
+export type UpdatePostSubscriptionsMutation = {
+  __typename?: 'Mutation';
+  updatePostSubscription: {
+    __typename?: 'PostSubscription';
+    userGuid: string;
+    entityGuid: string;
+    frequency: PostSubscriptionFrequencyEnum;
+  };
+};
+
 export type CompleteOnboardingStepMutationVariables = Exact<{
   stepKey: Scalars['String']['input'];
   stepType: Scalars['String']['input'];
@@ -5584,6 +5637,55 @@ export class FetchNewsfeedGQL extends Apollo.Query<
   FetchNewsfeedQueryVariables
 > {
   document = FetchNewsfeedDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetPostSubscriptionDocument = gql`
+  query GetPostSubscription($entityGuid: String!) {
+    postSubscription(entityGuid: $entityGuid) {
+      userGuid
+      entityGuid
+      frequency
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetPostSubscriptionGQL extends Apollo.Query<
+  GetPostSubscriptionQuery,
+  GetPostSubscriptionQueryVariables
+> {
+  document = GetPostSubscriptionDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdatePostSubscriptionsDocument = gql`
+  mutation UpdatePostSubscriptions(
+    $entityGuid: String!
+    $frequency: PostSubscriptionFrequencyEnum!
+  ) {
+    updatePostSubscription(entityGuid: $entityGuid, frequency: $frequency) {
+      userGuid
+      entityGuid
+      frequency
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdatePostSubscriptionsGQL extends Apollo.Mutation<
+  UpdatePostSubscriptionsMutation,
+  UpdatePostSubscriptionsMutationVariables
+> {
+  document = UpdatePostSubscriptionsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
