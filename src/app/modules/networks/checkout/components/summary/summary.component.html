@@ -1,0 +1,193 @@
+<ng-container
+  *ngIf="{
+    activePage: activePage$ | async,
+    termsMarkdown: termsMarkdown$ | async
+  } as templateVars"
+>
+  <m-networksCheckout__summaryStepper></m-networksCheckout__summaryStepper>
+
+  <ng-container
+    *ngIf="!(summaryChangeInProgress$ | async); else loadingTemplate"
+  >
+    <m-networksCheckout__timePeriodSelector
+      [onlyShowSelectedTimePeriod]="
+        templateVars.activePage === CheckoutPageKeyEnum.Confirmation
+      "
+    ></m-networksCheckout__timePeriodSelector>
+
+    <h4
+      class="m-networksCheckoutSummary__pageTitle"
+      [ngSwitch]="templateVars.activePage"
+    >
+      <ng-container
+        *ngSwitchCase="CheckoutPageKeyEnum.Addons"
+        i18n="@@CHECKOUT__SUMMARY__ORDER_SUMMARY"
+        >Order summary</ng-container
+      >
+      <ng-container
+        *ngSwitchCase="CheckoutPageKeyEnum.Confirmation"
+        i18n="@@CHECKOUT__SUMMARY__PAYMENT_SUMMARY"
+        >Payment summary</ng-container
+      >
+    </h4>
+    <div class="m-networksCheckoutSummary__body">
+      <div
+        class="m-networksCheckoutSummary__summary"
+        *ngIf="summary$ | async as summary"
+      >
+        <div class="m-networksCheckoutSummary__priceBreakdownSection">
+          <!-- Plan -->
+          <h5
+            class="m-networksCheckoutSummary__sectionTitle"
+            i18n="@@CHECKOUT__SUMMARY__PLAN"
+          >
+            Plan
+          </h5>
+          <h6 class="m-networksCheckoutSummary__sectionSubtitle">
+            {{ summary.planSummary?.name }}
+          </h6>
+          <p class="m-networksCheckoutSummary__sectionText">
+            {{
+              summary.planSummary?.monthlyFeeCents / 100
+                | currency: 'USD':'symbol':'1.2-2'
+            }}
+            / month
+          </p>
+          <p
+            *ngIf="
+              (selectedTimePeriod$ | async) === CheckoutTimePeriodEnum.Yearly
+            "
+            class="m-networksCheckoutSummary__sectionText--emphasized"
+            i18n="@@CHECKOUT__SUMMARY__12_MONTH_AGREEMENT"
+          >
+            12-month agreement
+          </p>
+
+          <!-- Add-ons -->
+          <ng-container *ngIf="summary.addonsSummary?.length">
+            <h5
+              class="m-networksCheckoutSummary__sectionTitle"
+              i18n="@@CHECKOUT__SUMMARY__ADDONS"
+            >
+              Add-ons
+            </h5>
+
+            <div
+              class="m-networksCheckoutSummary__addOnSummary"
+              *ngFor="let addon of summary.addonsSummary"
+            >
+              <h6 class="m-networksCheckoutSummary__sectionSubtitle">
+                {{ addon.name }}
+              </h6>
+              <p
+                class="m-networksCheckoutSummary__sectionText"
+                *ngIf="addon.monthlyFeeCents"
+              >
+                {{
+                  addon.monthlyFeeCents / 100 | currency: 'USD':'symbol':'1.2-2'
+                }}
+                / month
+              </p>
+              <p
+                class="m-networksCheckoutSummary__sectionText"
+                *ngIf="addon.oneTimeFeeCents"
+              >
+                {{
+                  addon.oneTimeFeeCents / 100 | currency: 'USD':'symbol':'1.2-2'
+                }}
+                / one time set-up*
+              </p>
+            </div>
+          </ng-container>
+        </div>
+        <div
+          class="m-networksCheckoutSummary__monthlyTotalContainer"
+          *ngIf="summary.totalMonthlyFeeCents"
+        >
+          <span class="m-networksCheckoutSummary__monthlyTotal"
+            >{{
+              summary.totalMonthlyFeeCents / 100
+                | currency: 'USD':'symbol':'1.2-2'
+            }}
+            USD&nbsp;</span
+          >
+          <span
+            class="m-networksCheckoutSummary__monthlyTotalTimePeriod"
+            i18n="@@CHECKOUT__SUMMARY__BILLED_MONTHLY"
+            >/ billed monthly</span
+          >
+        </div>
+
+        <p class="m-networksCheckoutSummary__totalPaidTodayTitle">
+          <ng-container [ngSwitch]="templateVars.activePage">
+            <ng-container
+              *ngSwitchCase="CheckoutPageKeyEnum.Addons"
+              i18n="@@CHECKOUT__SUMMARY__TOTAL_DUE_TODAY"
+              >Total due today</ng-container
+            >
+            <ng-container
+              *ngSwitchCase="CheckoutPageKeyEnum.Confirmation"
+              i18n="@@CHECKOUT__SUMMARY__TOTAL_PAID_TODAY"
+              >Total paid today</ng-container
+            >
+          </ng-container>
+        </p>
+        <p class="m-networksCheckoutSummary__totalPaidToday">
+          {{
+            summary.totalInitialFeeCents / 100
+              | currency: 'USD':'symbol':'1.2-2'
+          }}
+          USD
+        </p>
+      </div>
+      <div
+        class="m-networksCheckoutSummary__ctaTermsContainer"
+        [ngClass]="{
+          'm-networksCheckoutSummary__ctaTermsContainer--noText': !templateVars.termsMarkdown
+        }"
+      >
+        <markdown
+          *ngIf="!!templateVars.termsMarkdown"
+          class="m-networksCheckoutSummary__termsMarkdown"
+          [data]="templateVars.termsMarkdown"
+        ></markdown>
+
+        <m-button
+          *ngIf="{
+            navToPaymentUrlInProgress: navToPaymentUrlInProgress$ | async
+          } as checkoutButtonVars"
+          class="m-networksCheckoutSummary__checkoutButton"
+          color="black-always"
+          size="small"
+          stretch="true"
+          solid="true"
+          softSquare="true"
+          [saving]="checkoutButtonVars.navToPaymentUrlInProgress"
+          [disabled]="checkoutButtonVars.navToPaymentUrlInProgress"
+          (onAction)="onPrimaryCtaClick(templateVars.activePage)"
+        >
+          <ng-container [ngSwitch]="templateVars.activePage">
+            <ng-container
+              *ngSwitchCase="CheckoutPageKeyEnum.Addons"
+              i18n="@@CHECKOUT__SUMMARY__CHECKOUT"
+              >Checkout</ng-container
+            >
+            <ng-container
+              *ngSwitchCase="CheckoutPageKeyEnum.Confirmation"
+              i18n="@@CHECKOUT__SUMMARY__GET_STARTED"
+              >Get started</ng-container
+            >
+          </ng-container>
+        </m-button>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #loadingTemplate>
+  <m-sizeableLoadingSpinner
+    spinnerWidth="2em"
+    spinnerHeight="2rem"
+    [inProgress]="true"
+  ></m-sizeableLoadingSpinner>
+</ng-template>

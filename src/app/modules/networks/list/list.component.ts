@@ -16,6 +16,8 @@ import {
 import { ApolloQueryResult } from '@apollo/client';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { AutoLoginService } from '../auto-login.service';
+import { Router } from '@angular/router';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   selector: 'm-networks__list',
@@ -48,7 +50,9 @@ export class NetworksListComponent implements OnInit, OnDestroy {
     private getNetworksListGQL: GetNetworksListGQL,
     private createTenantGQL: CreateTenantGQL,
     private autoLoginService: AutoLoginService,
-    configs: ConfigsService
+    private router: Router,
+    configs: ConfigsService,
+    private experimentsService: ExperimentsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -83,6 +87,16 @@ export class NetworksListComponent implements OnInit, OnDestroy {
 
           this.list$.next(result.data.tenants);
           this.inProgress$.next(false);
+
+          // if the list is empty, redirect to the networks marketing page.
+          // get the value from the list so that when we add pagination
+          // in future, this doesn't break.
+          if (
+            this.list$.getValue()?.length < 1 &&
+            !this.experimentsService.hasVariation('tmp-create-networks', true)
+          ) {
+            this.router.navigate(['/about/networks/']);
+          }
         }
       )
     );

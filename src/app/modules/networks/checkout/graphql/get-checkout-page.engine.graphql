@@ -1,0 +1,55 @@
+query GetCheckoutPage(
+  $planId: String!,
+  $page: CheckoutPageKeyEnum!,
+  $timePeriod: CheckoutTimePeriodEnum!
+  $addOnIds: [String!]
+) {
+  checkoutPage(
+    planId: $planId,
+    page: $page,
+    timePeriod: $timePeriod,
+    addOnIds: $addOnIds
+  ) {
+    id
+    title
+    description
+    timePeriod
+    totalAnnualSavingsCents
+    termsMarkdown
+    plan {
+      id
+      name
+      description
+      perksTitle
+      perks
+      monthlyFeeCents
+      oneTimeFeeCents
+    }
+    addOns {
+      id
+      name
+      description
+      perksTitle
+      perks
+      monthlyFeeCents
+      oneTimeFeeCents
+      inBasket
+    }
+    summary {
+      planSummary {
+        id
+        name
+        monthlyFeeCents
+        oneTimeFeeCents
+      }
+      addonsSummary {
+        id
+        name
+        monthlyFeeCents
+        oneTimeFeeCents
+      }
+      totalInitialFeeCents
+      totalMonthlyFeeCents
+    }
+  }
+}

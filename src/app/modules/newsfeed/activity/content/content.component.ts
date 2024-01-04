@@ -377,7 +377,12 @@ export class ActivityContentComponent
       return '';
     }
 
-    // if not an image or vid,
+    // For rich-embeds we only ever want to display the message in the post body.
+    if (this.isRichEmbed) {
+      return this.entity.message;
+    }
+
+    // if not an image, vid, or rich-embed.
     return this.entity.message || this.entity.title;
   }
 
