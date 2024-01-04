@@ -103,6 +103,7 @@
             ----------------->
             <ng-template ngSwitchCase="PublisherRecsEdge">
               <m-publisherRecommendations
+                *ngIf="!exploreTabContext"
                 title="Groups"
                 location="search"
                 [dismissible]="false"
