@@ -58,7 +58,7 @@ export class RegisterForm implements OnInit, OnDestroy {
   /**
    * jwt token for users registering via an invite link
    */
-  @Input() inviteToken: string = '';
+  @Input() inviteToken?: string;
 
   @Output() done: EventEmitter<any> = new EventEmitter();
   @Output() showLoginForm: EventEmitter<any> = new EventEmitter();
