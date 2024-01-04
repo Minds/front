@@ -9,6 +9,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ButtonComponent } from '../../../common/components/button/button.component';
+import { ToasterService } from '../../../common/services/toaster.service';
+import { MockService } from '../../../utils/mock';
 
 describe('PlusVerifyModalComponent', () => {
   let comp: PlusVerifyModalComponent;
@@ -24,7 +26,10 @@ describe('PlusVerifyModalComponent', () => {
           ButtonComponent,
         ],
         imports: [RouterTestingModule, FormsModule, ReactiveFormsModule],
-        providers: [{ provide: Client, useValue: clientMock }],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: ToasterService, useValue: MockService(ToasterService) },
+        ],
       }).compileComponents();
     })
   );

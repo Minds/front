@@ -6,7 +6,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -77,24 +77,34 @@ export class SettingsV2PlusCancelComponent implements OnInit {
     this.detectChanges();
   }
 
-  async cancelSubscription() {
+  async cancelSubscription(): Promise<void> {
     if (!this.isActive || (this.isActive && !this.hasSubscription)) {
       return;
     }
-    this.dialogService.confirm(
+
+    this.confirmCancellation().subscribe(async confirmed => {
+      if (!confirmed) {
+        return;
+      }
+
+      this.error = null;
+      try {
+        await this.plusService.disable();
+        this.toasterService.success(
+          'You have successfully canceled your Minds+ subscription.'
+        );
+        this.router.navigate(['/', this.session.getLoggedInUser().username]);
+      } catch (e) {
+        this.error = e.message;
+        this.toasterService.error('Error: ' + this.error);
+      }
+    });
+  }
+
+  private confirmCancellation(): Observable<boolean> {
+    return this.dialogService.confirm(
       'Are you sure you want to cancel your Minds+ subscription?'
     );
-    this.error = null;
-    try {
-      await this.plusService.disable();
-      this.toasterService.success(
-        'You have successfully canceled your Minds+ subscription.'
-      );
-      this.router.navigate(['/', this.session.getLoggedInUser().username]);
-    } catch (e) {
-      this.error = e.message;
-      this.toasterService.error('Error: ' + this.error);
-    }
   }
 
   get expiryString(): string {
