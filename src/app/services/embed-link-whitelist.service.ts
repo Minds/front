@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 // Names of sites whitelisted.
-type EmbeddableSite = 'odysee' | 'rumble' | 'livepeer';
+type EmbeddableSite = 'odysee' | 'rumble' | 'livepeer' | 'livepeerLegacy';
 
 // Struct of key, val regex map.
 type EmbedLinkMap = {
@@ -18,7 +18,8 @@ export class EmbedLinkWhitelistService {
   private regexMap: EmbedLinkMap = {
     odysee: /^(?:https?:\/\/)?(?:www\.)?odysee\.com\/\$\/embed\/((.+)\/.+)/i,
     rumble: /^(?:https?:\/\/)?(?:www\.)?rumble\.com\/\embed\/([\w\d]+)/i,
-    livepeer: /^(http(s)?:\/\/)?(www\.)?minds-player\.withlivepeer\.com\?v=([a-zA-Z0-9]+)$/,
+    livepeerLegacy: /^(http(s)?:\/\/)?(www\.)?minds-player\.withlivepeer\.com\?v=([a-zA-Z0-9]+)$/,
+    livepeer: /^(http(s)?:\/\/)?(www\.)?minds-player\.vercel\.app\?v=([a-zA-Z0-9]+)$/,
   };
 
   /**
