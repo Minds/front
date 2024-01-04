@@ -1,9 +1,9 @@
 import {
   ComponentFixture,
-  TestBed,
   discardPeriodicTasks,
   fakeAsync,
   flush,
+  TestBed,
   tick,
 } from '@angular/core/testing';
 import {
@@ -21,10 +21,9 @@ import { UsernameValidator } from '../username.validator';
 import { PasswordRiskValidator } from '../password-risk.validator';
 import { AnalyticsService } from './../../../services/analytics';
 import { RegisterForm } from './register';
-import { MockService, MockComponent } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { FormInputCheckboxComponent } from '../../../common/components/forms/checkbox/checkbox.component';
-import { Input, forwardRef } from '@angular/core';
-import { Component } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { OnboardingV5ExperimentService } from '../../experiments/sub-services/onboarding-v5-experiment.service';
 import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
@@ -208,7 +207,7 @@ describe('RegisterForm', () => {
       referrer: undefined,
       parentId: '',
       policies: false,
-      invite_token: '',
+      invite_token: undefined,
     });
   });
 
@@ -247,7 +246,7 @@ describe('RegisterForm', () => {
       referrer: undefined,
       parentId: '',
       policies: false,
-      invite_token: '',
+      invite_token: undefined,
     });
     discardPeriodicTasks();
     flush();
