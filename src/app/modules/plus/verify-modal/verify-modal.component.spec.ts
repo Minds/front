@@ -1,40 +1,24 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  Component,
-  DebugElement,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
-import { PlusVerifyComponent } from './verify.component';
+import { PlusVerifyModalComponent } from './verify-modal.component';
 import { TooltipComponentMock } from '../../../mocks/common/components/tooltip/tooltip.component';
 import { ModalMock } from '../../../mocks/common/components/modal/modal';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 
-describe('PlusVerifyComponent', () => {
-  let comp: PlusVerifyComponent;
-  let fixture: ComponentFixture<PlusVerifyComponent>;
+describe('PlusVerifyModalComponent', () => {
+  let comp: PlusVerifyModalComponent;
+  let fixture: ComponentFixture<PlusVerifyModalComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [
-          PlusVerifyComponent,
+          PlusVerifyModalComponent,
           TooltipComponentMock,
           ModalMock,
           ButtonComponent,
@@ -49,7 +33,7 @@ describe('PlusVerifyComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    fixture = TestBed.createComponent(PlusVerifyComponent);
+    fixture = TestBed.createComponent(PlusVerifyModalComponent);
     comp = fixture.componentInstance;
 
     // Set up mock HTTP client
