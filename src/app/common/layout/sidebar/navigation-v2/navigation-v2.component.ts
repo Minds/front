@@ -293,4 +293,12 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     }
     return this.tenantConfigImageService.horizontalLogoPath$;
   }
+
+  /**
+   * Whether the user is logged in.
+   * @returns { boolean } true if user is logged in.
+   */
+  public isLoggedIn(): boolean {
+    return this.session.isLoggedIn();
+  }
 }

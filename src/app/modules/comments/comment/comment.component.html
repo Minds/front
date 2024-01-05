@@ -189,11 +189,11 @@
               </span>
             </div>
 
-            <minds-rich-embed
+            <m-richEmbed
               [src]="comment"
               [maxheight]="240"
               [cropImage]="true"
-            ></minds-rich-embed>
+            ></m-richEmbed>
           </div>
 
           <!-- Custom type ::  video -->
@@ -431,11 +431,11 @@
             "
             >
               <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
-                <minds-rich-embed
+                <m-richEmbed
                   [preview]="attachment.getMeta()"
                   [cropImage]="true"
                   [maxheight]="240"
-                ></minds-rich-embed>
+                ></m-richEmbed>
                 <div class="attachment-preview-delete" (click)="resetPreview()">
                   <i class="material-icons">clear</i>
                 </div>

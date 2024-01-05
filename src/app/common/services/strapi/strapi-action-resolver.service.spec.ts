@@ -2,7 +2,10 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Session } from '../../../services/session';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { BlockchainMarketingLinksService } from '../../../modules/blockchain/marketing/v2/blockchain-marketing-links.service';
-import { StrapiActionResolverService } from './strapi-action-resolver.service';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from './strapi-action-resolver.service';
 import { MockService } from '../../../utils/mock';
 import { ModalService } from '../../../services/ux/modal.service';
 import { WirePaymentHandlersService } from '../../../modules/wire/wire-payment-handlers.service';
@@ -198,6 +201,72 @@ describe('StrapiActionResolverService', () => {
     expect(console.warn).toHaveBeenCalledWith(
       'Action not yet implemented: ',
       action
+    );
+  });
+
+  it('should checkout for networks team', () => {
+    (service as any).session.isLoggedIn.and.returnValue(true);
+
+    const action: StrapiAction = 'networks_team_checkout';
+    const extraData: any = {
+      stripeProductKey: 'stripeProductKey',
+      upgradeInterval: 'monthly',
+    };
+
+    service.resolve(action as StrapiAction, extraData);
+
+    expect((service as any).router.navigate).toHaveBeenCalledWith(
+      ['/networks/checkout'],
+      {
+        queryParams: {
+          planId: extraData.stripeProductKey,
+          timePeriod: extraData.upgradeInterval,
+        },
+      }
+    );
+  });
+
+  it('should checkout for networks team', () => {
+    (service as any).session.isLoggedIn.and.returnValue(true);
+
+    const action: StrapiAction = 'networks_community_checkout';
+    const extraData: any = {
+      stripeProductKey: 'stripeProductKey',
+      upgradeInterval: 'monthly',
+    };
+
+    service.resolve(action as StrapiAction, extraData);
+
+    expect((service as any).router.navigate).toHaveBeenCalledWith(
+      ['/networks/checkout'],
+      {
+        queryParams: {
+          planId: extraData.stripeProductKey,
+          timePeriod: extraData.upgradeInterval,
+        },
+      }
+    );
+  });
+
+  it('should checkout for networks team', () => {
+    (service as any).session.isLoggedIn.and.returnValue(true);
+
+    const action: StrapiAction = 'networks_enterprise_checkout';
+    const extraData: any = {
+      stripeProductKey: 'stripeProductKey',
+      upgradeInterval: 'monthly',
+    };
+
+    service.resolve(action as StrapiAction, extraData);
+
+    expect((service as any).router.navigate).toHaveBeenCalledWith(
+      ['/networks/checkout'],
+      {
+        queryParams: {
+          planId: extraData.stripeProductKey,
+          timePeriod: extraData.upgradeInterval,
+        },
+      }
     );
   });
 });

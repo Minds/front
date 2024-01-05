@@ -1,0 +1,30 @@
+<div
+  class="m-networksCheckoutSummary__stepperItem"
+  [ngClass]="{
+    'm-networksCheckoutSummary__stepperItem--active':
+      (activePage$ | async) === CheckoutPageKeyEnum.Addons
+  }"
+>
+  <div class="m-networksCheckoutSummary__stepperItemNumber">1</div>
+  <div
+    class="m-networksCheckoutSummary__stepperItemText"
+    i18n="@@CHECKOUT__STEPPER__ADDONS"
+  >
+    Add-ons
+  </div>
+</div>
+<div
+  class="m-networksCheckoutSummary__stepperItem"
+  [ngClass]="{
+    'm-networksCheckoutSummary__stepperItem--active':
+      (activePage$ | async) === CheckoutPageKeyEnum.Confirmation
+  }"
+>
+  <div class="m-networksCheckoutSummary__stepperItemNumber">2</div>
+  <div
+    class="m-networksCheckoutSummary__stepperItemText"
+    i18n="@@CHECKOUT__STEPPER__CONFIRMATION"
+  >
+    Confirmation
+  </div>
+</div>

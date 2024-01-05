@@ -13,6 +13,7 @@ import {
 import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
 import { ToasterService } from '../../../../common/services/toaster.service';
+import { Session } from '../../../../services/session';
 
 /**
  * Settings form with a button for deactivating account
@@ -31,7 +32,8 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     public client: Client,
     public router: Router,
-    protected toasterService: ToasterService
+    protected toasterService: ToasterService,
+    private session: Session
   ) {}
 
   ngOnInit() {
@@ -49,7 +51,9 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
     this.client
       .delete('api/v1/channel')
       .then((response: any) => {
-        this.router.navigate(['/logout']);
+        this.toasterService.success('Successfully deactivated channel');
+        this.session.logout();
+        this.router.navigateByUrl('/login');
       })
       .catch((e: any) => {
         this.toasterService.error('Sorry, we could not disable your account');

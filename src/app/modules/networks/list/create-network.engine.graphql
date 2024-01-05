@@ -1,0 +1,5 @@
+mutation CreateTenant {
+  createTenant(tenant: {}) {
+    id
+  }
+}

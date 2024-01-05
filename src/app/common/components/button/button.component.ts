@@ -76,6 +76,11 @@ export class ButtonComponent implements AfterViewChecked {
   @Input() stretch: boolean = false;
 
   /**
+   * Make the button a "soft" square (4px border radius).
+   */
+  @Input() softSquare: boolean = false;
+
+  /**
    * Handles width for buttons that are not visible onInit
    */
   _saving: boolean = false;

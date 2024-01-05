@@ -77,6 +77,7 @@ import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logge
 import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 import { SettingsV2RssSyncComponent } from './other/rss-sync/rss-sync.component';
 import { LoggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
+import { SettingsV2EmbeddedCommentsComponent } from './other/embedded-comments/embedded-comments.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -353,6 +354,7 @@ const SETTINGS_V2_ROUTES: Routes = [
       {
         path: 'payments',
         component: SettingsV2Component,
+        canActivate: [TenantRedirectGuard],
         data: {
           isMenu: true,
           title: 'Billing Settings',
@@ -507,6 +509,15 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
+            path: 'embedded-comments',
+            component: SettingsV2EmbeddedCommentsComponent,
+            canActivate: [LoggedInRedirectGuard],
+            data: {
+              title: 'Embedded Comments',
+              standardHeader: false,
+            },
+          },
+          {
             path: 'twitter-sync',
             canActivate: [
               TenantRedirectGuard,
@@ -626,6 +637,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2MessengerComponent,
     SettingsV2WalletComponent,
     SettingsV2RssSyncComponent,
+    SettingsV2EmbeddedCommentsComponent,
     SettingsV2NostrComponent,
     SettingsV2AffiliatesComponent,
   ],

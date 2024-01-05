@@ -42,7 +42,7 @@
         *ngIf="authModalImageService.inProgress$ | async"
         inProgress="true"
       ></m-loadingSpinner>
-      <ng-container *ngIf="(carouselItems$ | async).length">
+      <ng-container *ngIf="(carouselItems$ | async)?.length > 0">
         <m-featureCarousel [carouselItems$]="carouselItems$">
         </m-featureCarousel>
       </ng-container>

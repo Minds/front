@@ -63,7 +63,7 @@ export class ProductPageButtonComponent {
       if (this.data.navigationUrl.startsWith('http')) {
         window.open(this.data.navigationUrl, '_blank');
       } else {
-        this.router.navigate([this.data.navigationUrl]);
+        this.router.navigateByUrl(this.data.navigationUrl);
       }
       return;
     }
@@ -77,13 +77,20 @@ export class ProductPageButtonComponent {
 
     if (
       this.data.action === StrapiAction.OpenPlusUpgradeModal ||
-      this.data.action === StrapiAction.OpenProUpgradeModal
+      this.data.action === StrapiAction.OpenProUpgradeModal ||
+      this.data.action === StrapiAction.NetworksCommunityCheckout ||
+      this.data.action === StrapiAction.NetworksTeamCheckout ||
+      this.data.action === StrapiAction.NetworksEnterpriseCheckout
     ) {
       extraData.upgradeInterval =
         this.pricingService.selectedTimePeriod$.getValue() ===
         ProductPageUpgradeTimePeriod.Annually
           ? 'yearly'
           : 'monthly';
+    }
+
+    if (this.data.stripeProductKey) {
+      extraData.stripeProductKey = this.data.stripeProductKey;
     }
 
     this.strapiActionResolver.resolve(this.data.action, extraData);

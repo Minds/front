@@ -1,0 +1,38 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: $spacing3;
+
+  .m-networksCheckoutSummary__timePeriod {
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 1;
+    padding: $spacing4;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+
+    @include unselectable;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+
+      &--active {
+        background-color: themed($m-bgColor--secondary);
+      }
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+    }
+
+    .m-networksCheckoutSummary__timePeriodTitle {
+      @include body2Bold;
+    }
+    .m-networksCheckoutSummary__timePeriodSubtitle {
+      @include body2Medium;
+    }
+  }
+}

@@ -4,6 +4,7 @@
   <!-- -------------------------------->
   <m-oidcLoginButtons
     (hasOidcProviders)="setHasOidcProviders($event)"
+    (done)="done.next($event)"
   ></m-oidcLoginButtons>
 
   <div class="m-login__oidcOther" *ngIf="hasOidcProviders && hideLogin">
@@ -88,7 +89,7 @@
             Forgot Password?
           </ng-container>
         </a>
-        <div class="m-login__formError" *ngIf="errorMessage">
+        <div class="m-login__formError" [hidden]="!errorMessage">
           <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
         </div>
       </div>
