@@ -158,7 +158,7 @@ describe('MindsRichEmbed', () => {
   describe('livepeer', () => {
     it('should have autoplay false when user is not logged in', () => {
       comp.src = {
-        perma_url: 'https://minds-player.withlivepeer.com?v=1234567890',
+        perma_url: 'https://minds-player.vercel.app?v=1234567890',
       };
       (comp as any).session.getLoggedInUser.and.returnValue(null);
 
@@ -167,14 +167,14 @@ describe('MindsRichEmbed', () => {
         className:
           'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
         html:
-          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.withlivepeer.com/?v=1234567890&autoplay=false" frameborder="0" allowfullscreen></iframe>',
+          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.vercel.app/?v=1234567890&autoplay=false" frameborder="0" allowfullscreen></iframe>',
         playable: true,
       });
     });
 
     it('should have autoplay true when user has not disabled autoplay', () => {
       comp.src = {
-        perma_url: 'https://minds-player.withlivepeer.com?v=1234567890',
+        perma_url: 'https://minds-player.vercel.app?v=1234567890',
       };
       (comp as any).session.getLoggedInUser.and.returnValue({
         ...userMock,
@@ -186,14 +186,14 @@ describe('MindsRichEmbed', () => {
         className:
           'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
         html:
-          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.withlivepeer.com/?v=1234567890&autoplay=true" frameborder="0" allowfullscreen></iframe>',
+          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.vercel.app/?v=1234567890&autoplay=true" frameborder="0" allowfullscreen></iframe>',
         playable: true,
       });
     });
 
     it('should have autoplay false when user has disabled autoplay', () => {
       comp.src = {
-        perma_url: 'https://minds-player.withlivepeer.com?v=1234567890',
+        perma_url: 'https://minds-player.vercel.app?v=1234567890',
       };
       (comp as any).session.getLoggedInUser.and.returnValue({
         ...userMock,
@@ -205,7 +205,7 @@ describe('MindsRichEmbed', () => {
         className:
           'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
         html:
-          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.withlivepeer.com/?v=1234567890&autoplay=false" frameborder="0" allowfullscreen></iframe>',
+          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.vercel.app/?v=1234567890&autoplay=false" frameborder="0" allowfullscreen></iframe>',
         playable: true,
       });
     });
