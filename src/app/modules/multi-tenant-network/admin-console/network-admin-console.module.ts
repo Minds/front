@@ -5,7 +5,7 @@ import { NetworkAdminConsoleComponent } from './console.component';
 import { PathMatch } from '../../../common/types/angular.types';
 import { RouterModule, Routes } from '@angular/router';
 import { NetworkAdminConsoleTabsComponent } from './tabs/tabs.component';
-import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.component';
+import { NetworkAdminConsoleFederationSettingsComponent } from './tabs/general/federation-settings/federation-settings.component';
 import { NetworkAdminConsoleAppearanceComponent } from './tabs/appearance/appearance.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetworkSettingsAuthGuard } from './guards/network-settings-auth.guard';
@@ -20,6 +20,7 @@ import { NetworkAdminConsoleRolesComponent } from './tabs/roles/roles.component'
 import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/permissions/permissions.component';
 import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
 import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
+import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -88,6 +89,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesComponent,
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
+    NetworkAdminConsoleFederationSettingsComponent,
   ],
   providers: [MultiTenantDomainService],
 })

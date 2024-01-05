@@ -536,6 +536,7 @@ export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
   colorScheme?: Maybe<MultiTenantColorScheme>;
   communityGuidelines?: Maybe<Scalars['String']['output']>;
+  federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
@@ -546,6 +547,7 @@ export type MultiTenantConfig = {
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+  federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
@@ -604,6 +606,7 @@ export type Mutation = {
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+  updatePostSubscription: PostSubscription;
 };
 
 export type MutationAssignUserToRoleArgs = {
@@ -712,6 +715,11 @@ export type MutationUpdateAccountArgs = {
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type MutationUpdatePostSubscriptionArgs = {
+  entityGuid: Scalars['String']['input'];
+  frequency: PostSubscriptionFrequencyEnum;
+};
+
 export type NewsfeedConnection = ConnectionInterface & {
   __typename?: 'NewsfeedConnection';
   edges: Array<EdgeInterface>;
@@ -803,6 +811,19 @@ export type PlanSummary = {
   oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
 };
 
+export type PostSubscription = {
+  __typename?: 'PostSubscription';
+  entityGuid: Scalars['String']['output'];
+  frequency: PostSubscriptionFrequencyEnum;
+  userGuid: Scalars['String']['output'];
+};
+
+export enum PostSubscriptionFrequencyEnum {
+  Always = 'ALWAYS',
+  Highlights = 'HIGHLIGHTS',
+  Never = 'NEVER',
+}
+
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
@@ -883,6 +904,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  postSubscription: PostSubscription;
   /** Gets reports. */
   reports: ReportsConnection;
   rssFeed: RssFeed;
@@ -994,6 +1016,10 @@ export type QueryNewsfeedArgs = {
 
 export type QueryPaymentMethodsArgs = {
   productId?: InputMaybe<GiftCardProductIdEnum>;
+};
+
+export type QueryPostSubscriptionArgs = {
+  entityGuid: Scalars['String']['input'];
 };
 
 export type QueryReportsArgs = {
@@ -2103,6 +2129,7 @@ export type GetMultiTenantConfigQuery = {
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
     communityGuidelines?: string | null;
+    federationDisabled?: boolean | null;
   } | null;
 };
 
@@ -2173,6 +2200,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+  federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -4726,6 +4754,7 @@ export const GetMultiTenantConfigDocument = gql`
       colorScheme
       primaryColor
       communityGuidelines
+      federationDisabled
     }
   }
 `;
@@ -4821,6 +4850,7 @@ export const SetMultiTenantConfigDocument = gql`
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
     $communityGuidelines: String
+    $federationDisabled: Boolean
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
@@ -4828,6 +4858,7 @@ export const SetMultiTenantConfigDocument = gql`
         colorScheme: $colorScheme
         primaryColor: $primaryColor
         communityGuidelines: $communityGuidelines
+        federationDisabled: $federationDisabled
       }
     )
   }

@@ -2,14 +2,16 @@ mutation SetMultiTenantConfig(
   $siteName: String,
   $colorScheme: MultiTenantColorScheme,
   $primaryColor: String,
-  $communityGuidelines: String
+  $communityGuidelines: String,
+  $federationDisabled: Boolean
 ) {
   multiTenantConfig(
     multiTenantConfigInput: {
       siteName: $siteName,
       colorScheme: $colorScheme,
       primaryColor: $primaryColor,
-      communityGuidelines: $communityGuidelines
+      communityGuidelines: $communityGuidelines,
+      federationDisabled: $federationDisabled
     }
   )
 }
