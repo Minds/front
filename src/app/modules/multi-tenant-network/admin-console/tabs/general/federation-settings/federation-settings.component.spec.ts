@@ -1,84 +1,129 @@
-// import {
-//   ComponentFixture,
-//   TestBed,
-//   fakeAsync,
-//   tick,
-// } from '@angular/core/testing';
-// import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-// import { MockService } from '../../../../../utils/mock';
-// import { MultiTenantNetworkConfigService } from '../../../services/config.service';
-// import { ToasterService } from '../../../../../common/services/toaster.service';
-// import { MetaService } from '../../../../../common/services/meta.service';
-// import { multiTenantConfigMock } from '../../../../../mocks/responses/multi-tenant-config.mock';
-// import { NetworkAdminConsoleGeneralComponent } from './federation-settings.component';
-// import { ConfigsService } from '../../../../../common/services/configs.service';
-// import { BehaviorSubject, of } from 'rxjs';
-// import { MultiTenantConfig } from '../../../../../../graphql/generated.engine';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BehaviorSubject, of } from 'rxjs';
+import { NetworkAdminConsoleFederationSettingsComponent } from './federation-settings.component';
+import { MultiTenantNetworkConfigService } from '../../../../services/config.service';
+import { MockComponent, MockService } from '../../../../../../utils/mock';
+import { MultiTenantConfig } from '../../../../../../../graphql/generated.engine';
+import { multiTenantConfigMock } from '../../../../../../mocks/responses/multi-tenant-config.mock';
+import { ToasterService } from '../../../../../../common/services/toaster.service';
 
-// describe('NetworkAdminConsoleGeneralComponent', () => {
-//   let comp: NetworkAdminConsoleGeneralComponent;
-//   let fixture: ComponentFixture<NetworkAdminConsoleGeneralComponent>;
+describe('NetworkAdminConsoleFederationSettingsComponent', () => {
+  let comp: NetworkAdminConsoleFederationSettingsComponent;
+  let fixture: ComponentFixture<NetworkAdminConsoleFederationSettingsComponent>;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [NetworkAdminConsoleGeneralComponent],
-//       imports: [ReactiveFormsModule],
-//       providers: [
-//         {
-//           provide: MultiTenantNetworkConfigService,
-//           useValue: MockService(MultiTenantNetworkConfigService, {
-//             has: ['config$'],
-//             props: {
-//               config$: {
-//                 get: () =>
-//                   new BehaviorSubject<MultiTenantConfig>(multiTenantConfigMock),
-//               },
-//             },
-//           }),
-//         },
-//         FormBuilder,
-//         { provide: ToasterService, useValue: MockService(ToasterService) },
-//         { provide: MetaService, useValue: MockService(MetaService) },
-//         { provide: ConfigsService, useValue: MockService(ConfigsService) },
-//       ],
-//     });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        NetworkAdminConsoleFederationSettingsComponent,
+        MockComponent({
+          selector: 'm-toggle',
+          inputs: ['mModel', 'leftValue', 'rightValue', 'offState'],
+          outputs: ['mModelChange'],
+        }),
+      ],
+      providers: [
+        {
+          provide: MultiTenantNetworkConfigService,
+          useValue: MockService(MultiTenantNetworkConfigService, {
+            has: ['config$'],
+            props: {
+              config$: {
+                get: () =>
+                  new BehaviorSubject<MultiTenantConfig>(multiTenantConfigMock),
+              },
+            },
+          }),
+        },
+        { provide: ToasterService, useValue: MockService(ToasterService) },
+      ],
+    });
 
-//     fixture = TestBed.createComponent(NetworkAdminConsoleGeneralComponent);
-//     comp = fixture.componentInstance;
+    fixture = TestBed.createComponent(
+      NetworkAdminConsoleFederationSettingsComponent
+    );
+    comp = fixture.componentInstance;
 
-//     (comp as any).multiTenantConfigService.config$.next(multiTenantConfigMock);
-//   });
+    (comp as any).multiTenantConfigService.config$.next(multiTenantConfigMock);
+  });
 
-//   it('should create the component', fakeAsync(() => {
-//     expect(comp).toBeTruthy();
-//     comp.ngOnInit();
-//     tick();
+  it('should init', () => {
+    expect(comp).toBeTruthy();
+  });
 
-//     expect(comp.networkNameFormControl.getRawValue()).toBe(
-//       multiTenantConfigMock.siteName
-//     );
-//   }));
+  describe('ngOnInit', () => {
+    it('should set toggle state to not enabled on init when disabled', () => {
+      (comp as any).multiTenantConfigService.config$.next({
+        ...multiTenantConfigMock,
+        federationDisabled: true,
+      });
 
-//   describe('onSubmit', () => {
-//     it('should submit changes', fakeAsync(() => {
-//       const siteName: string = 'Test site 2';
-//       comp.networkNameFormControl.setValue(siteName);
+      comp.ngOnInit();
 
-//       (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
-//         of(true)
-//       );
+      expect(comp.enabledToggleState).toBe('off');
+    });
 
-//       comp.onSubmit();
-//       tick();
+    it('should set toggle state to enabled on init when not disabled', () => {
+      (comp as any).multiTenantConfigService.config$.next({
+        ...multiTenantConfigMock,
+        federationDisabled: false,
+      });
 
-//       expect((comp as any).configs.set).toHaveBeenCalledWith(
-//         'site_name',
-//         siteName
-//       );
-//       expect((comp as any).metaService.reset).toHaveBeenCalled();
-//       expect((comp as any).toaster.success).toHaveBeenCalledWith(
-//         'Successfully updated settings.'
-//       );
-//     }));
-//   });
-// });
+      comp.ngOnInit();
+
+      expect(comp.enabledToggleState).toBe('on');
+    });
+
+    it('should set toggle state to enabled on init when value is null', () => {
+      (comp as any).multiTenantConfigService.config$.next({
+        ...multiTenantConfigMock,
+        federationDisabled: null,
+      });
+
+      comp.ngOnInit();
+
+      expect(comp.enabledToggleState).toBe('on');
+    });
+  });
+
+  describe('onEnabledToggle', () => {
+    it('should set toggle state to enabled when successful', async () => {
+      (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
+        of(true)
+      );
+
+      await comp.onEnabledToggle('on');
+
+      expect(comp.enabledToggleState).toBe('on');
+    });
+
+    it('should set toggle state to disabled when successful', async () => {
+      (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
+        of(true)
+      );
+
+      await comp.onEnabledToggle('off');
+
+      expect(comp.enabledToggleState).toBe('off');
+    });
+
+    it('should set toggle state to enabled when unsuccessful', async () => {
+      (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
+        of(true)
+      );
+
+      await comp.onEnabledToggle('on');
+
+      expect(comp.enabledToggleState).toBe('on');
+    });
+
+    it('should set toggle state to disabled when unsuccessful', async () => {
+      (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
+        of(true)
+      );
+
+      await comp.onEnabledToggle('off');
+
+      expect(comp.enabledToggleState).toBe('off');
+    });
+  });
+});

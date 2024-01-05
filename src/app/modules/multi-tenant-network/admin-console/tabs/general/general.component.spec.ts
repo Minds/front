@@ -5,7 +5,7 @@ import {
   tick,
 } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MockService } from '../../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../../utils/mock';
 import { MultiTenantNetworkConfigService } from '../../../services/config.service';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { MetaService } from '../../../../../common/services/meta.service';
@@ -21,7 +21,13 @@ describe('NetworkAdminConsoleGeneralComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NetworkAdminConsoleGeneralComponent],
+      declarations: [
+        NetworkAdminConsoleGeneralComponent,
+        MockComponent({
+          selector: 'm-networkAdminConsole__federationSettings',
+        }),
+        MockComponent({ selector: 'm-networkAdminConsole__featured' }),
+      ],
       imports: [ReactiveFormsModule],
       providers: [
         {
