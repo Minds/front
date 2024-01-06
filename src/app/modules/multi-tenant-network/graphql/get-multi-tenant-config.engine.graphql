@@ -1,9 +1,14 @@
-query GetMultiTenantConfig{
+query GetMultiTenantConfig {
   multiTenantConfig {
-    siteName,
-    siteEmail,
-    colorScheme,
-    primaryColor,
+    siteName
+    siteEmail
+    colorScheme
+    primaryColor
+    privacyPolicyUrl
+    privacyPolicy
+    termsOfServiceUrl
+    termsOfService
+    communityGuidelinesUrl
     communityGuidelines
   }
 }

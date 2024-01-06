@@ -1,0 +1,30 @@
+<div
+  *ngIf="!(loading$ | async); else loadingSpinnerTemplate"
+  class="m-customPolicy__wrapper"
+>
+  <h1 *ngIf="policyId" [ngSwitch]="policyId">
+    <ng-container
+      *ngSwitchCase="CustomPolicyId.PRIVACY"
+      i18n="@@POLICIES__TITLE__PRIVACY_POLICY"
+      >Privacy Policy</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="CustomPolicyId.TERMS_OF_SERVICE"
+      i18n="@@POLICIES__TITLE__TERMS_OF_SERVICE"
+      >Terms of Service</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="CustomPolicyId.COMMUNITY_GUIDELINES"
+      i18n="@@POLICIES__TITLE__COMMUNITY_GUIDELINES"
+      >Community Guidelines</ng-container
+    >
+  </h1>
+  <p *ngIf="!policyText" i18n="@@POLICIES__NOTICE__POLICY_NOT_FOUND">
+    Policy not found.
+  </p>
+</div>
+
+<!-- --------------------------- -->
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

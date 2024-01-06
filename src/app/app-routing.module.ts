@@ -22,7 +22,7 @@ import { PathMatch } from './common/types/angular.types';
 import { UpgradeModuleLazyRoutes } from './modules/upgrade/upgrade-lazy';
 import { NetworksModuleLazyRoutes } from './modules/networks/networks.lazy';
 import { NetworkAdminConsoleModuleLazyRoutes } from './modules/multi-tenant-network/admin-console/network-admin-console.lazy';
-import { TenantRedirectGuard } from './common/guards/tenant-redirect.guard';
+import { MindsOnlyRedirectGuard } from './common/guards/minds-only-redirect.guard';
 
 const routes: Routes = [
   AnalyticsModuleLazyRoutes,
@@ -63,6 +63,9 @@ const routes: Routes = [
     }),
   ],
   exports: [RouterModule],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/' }, TenantRedirectGuard],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/' },
+    MindsOnlyRedirectGuard,
+  ],
 })
 export class AppRoutingModule {}

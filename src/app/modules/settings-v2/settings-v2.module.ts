@@ -74,7 +74,7 @@ import { AffiliatesModule } from '../affiliates/affiliates.module';
 import { SettingsV2AffiliatesComponent } from './affiliates/affiliates.component';
 import { experimentVariationGuard } from '../experiments/experiment-variation.guard';
 import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
-import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
+import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
 import { SettingsV2RssSyncComponent } from './other/rss-sync/rss-sync.component';
 import { LoggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
 import { SettingsV2EmbeddedCommentsComponent } from './other/embedded-comments/embedded-comments.component';
@@ -202,7 +202,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'messenger',
             component: SettingsV2MessengerComponent,
-            canActivate: [TenantRedirectGuard],
+            canActivate: [MindsOnlyRedirectGuard],
             data: {
               title: 'Messenger',
               description:
@@ -227,7 +227,7 @@ const SETTINGS_V2_ROUTES: Routes = [
       {
         path: 'pro_canary/:user',
         component: SettingsV2Component,
-        canActivate: [TenantRedirectGuard],
+        canActivate: [MindsOnlyRedirectGuard],
         data: {
           isMenu: true,
           title: 'Pro Settings',
@@ -354,7 +354,7 @@ const SETTINGS_V2_ROUTES: Routes = [
       {
         path: 'payments',
         component: SettingsV2Component,
-        canActivate: [TenantRedirectGuard],
+        canActivate: [MindsOnlyRedirectGuard],
         data: {
           isMenu: true,
           title: 'Billing Settings',
@@ -375,7 +375,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'payment-history',
             component: SettingsV2PaymentHistoryComponent,
-            canActivate: [TenantRedirectGuard],
+            canActivate: [MindsOnlyRedirectGuard],
             data: {
               title: 'Payment History',
               description: 'Track payments you make on Minds',
@@ -385,7 +385,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'recurring-payments',
             component: SettingsV2RecurringPaymentsComponent,
-            canActivate: [TenantRedirectGuard],
+            canActivate: [MindsOnlyRedirectGuard],
             data: {
               title: 'Recurring Payments',
               description:
@@ -396,7 +396,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'supermind',
             component: SettingsV2SupermindComponent,
-            canActivate: [TenantRedirectGuard],
+            canActivate: [MindsOnlyRedirectGuard],
             data: {
               title: 'Supermind',
               description: 'Manage Supermind settings',
@@ -408,7 +408,7 @@ const SETTINGS_V2_ROUTES: Routes = [
       {
         path: 'affiliates-program',
         component: SettingsV2Component,
-        canActivate: [TenantRedirectGuard, loggedOutExplainerScreenGuard()],
+        canActivate: [MindsOnlyRedirectGuard, loggedOutExplainerScreenGuard()],
         data: {
           isMenu: false,
           singleLevelMenuId: 'affiliates-program',
@@ -433,7 +433,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'wallet',
             component: SettingsV2WalletComponent,
-            canActivate: [TenantRedirectGuard],
+            canActivate: [MindsOnlyRedirectGuard],
             data: {
               title: 'Wallet',
               description: 'Your wallet privacy settings',
@@ -471,7 +471,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'subscription-tiers',
             component: SettingsV2SubscriptionTiersComponent,
-            canActivate: [TenantRedirectGuard],
+            canActivate: [MindsOnlyRedirectGuard],
             data: {
               title: 'Subscription Tiers',
               description:
@@ -482,7 +482,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'youtube-migration',
             component: YoutubeMigrationComponent,
-            canActivate: [TenantRedirectGuard],
+            canActivate: [MindsOnlyRedirectGuard],
             data: {
               title: 'Youtube Migration',
               standardHeader: false,
@@ -520,7 +520,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'twitter-sync',
             canActivate: [
-              TenantRedirectGuard,
+              MindsOnlyRedirectGuard,
               experimentVariationGuard('front-6032-twitter-sync-settings'),
             ],
             loadChildren: () =>

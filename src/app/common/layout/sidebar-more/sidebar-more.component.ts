@@ -15,6 +15,7 @@ import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.servic
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../services/configs.service';
 import { IsTenantService } from '../../services/is-tenant.service';
+import { MultiTenantNetworkConfigService } from '../../../modules/multi-tenant-network/services/config.service';
 
 @Component({
   selector: 'm-sidebarMore',
@@ -40,7 +41,8 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     private sidebarNavigationService: SidebarNavigationService,
     private helpdeskRedirectService: HelpdeskRedirectService,
     private router: Router,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private multiTenantConfigService: MultiTenantNetworkConfigService
   ) {
     this.chatUrl = this.configs.get('matrix')?.chat_url;
   }
@@ -51,6 +53,9 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
+
+    // ojm need to implement
+    // this.multiTenantConfigService.fetchConfig();
   }
 
   getCurrentUser(): MindsUser {

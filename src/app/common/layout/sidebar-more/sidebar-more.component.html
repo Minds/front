@@ -122,6 +122,27 @@
         i18n="@@COMMON__PRIVACY"
         >Privacy</a
       >
+      <!-- ojm this is just a gist . Need to handle minds.com always have p/privacy link-->
+      <!-- <a
+        *ngIf="privacyPolicyImplementation === 'external'"
+        [href]="privacyPolicyUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-ref="sidebarmore-footer-privacy"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__PRIVACY"
+        >Privacy</a
+      >
+
+      <a
+        *ngIf="privacyPolicyImplementation !== 'external'"
+        [routerLink]="privacyPolicyUrl"
+        data-ref="sidebarmore-footer-privacy"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__PRIVACY"
+        >Privacy</a
+      > -->
+
       <ng-container *ngIf="getCurrentUser()">
         <a
           *mIfTenant="false"

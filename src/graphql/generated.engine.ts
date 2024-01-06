@@ -536,19 +536,29 @@ export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
   colorScheme?: Maybe<MultiTenantColorScheme>;
   communityGuidelines?: Maybe<Scalars['String']['output']>;
+  communityGuidelinesUrl?: Maybe<Scalars['String']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
+  privacyPolicy?: Maybe<Scalars['String']['output']>;
+  privacyPolicyUrl?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
+  termsOfService?: Maybe<Scalars['String']['output']>;
+  termsOfServiceUrl?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
 };
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+  communityGuidelinesUrl?: InputMaybe<Scalars['String']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+  privacyPolicy?: InputMaybe<Scalars['String']['input']>;
+  privacyPolicyUrl?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
+  termsOfService?: InputMaybe<Scalars['String']['input']>;
+  termsOfServiceUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MultiTenantDomain = {
@@ -2126,6 +2136,11 @@ export type GetMultiTenantConfigQuery = {
     siteEmail?: string | null;
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
+    privacyPolicyUrl?: string | null;
+    privacyPolicy?: string | null;
+    termsOfServiceUrl?: string | null;
+    termsOfService?: string | null;
+    communityGuidelinesUrl?: string | null;
     communityGuidelines?: string | null;
   } | null;
 };
@@ -2196,6 +2211,11 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   siteName?: InputMaybe<Scalars['String']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+  privacyPolicyUrl?: InputMaybe<Scalars['String']['input']>;
+  privacyPolicy?: InputMaybe<Scalars['String']['input']>;
+  termsOfServiceUrl?: InputMaybe<Scalars['String']['input']>;
+  termsOfService?: InputMaybe<Scalars['String']['input']>;
+  communityGuidelinesUrl?: InputMaybe<Scalars['String']['input']>;
   communityGuidelines?: InputMaybe<Scalars['String']['input']>;
 }>;
 
@@ -4778,6 +4798,11 @@ export const GetMultiTenantConfigDocument = gql`
       siteEmail
       colorScheme
       primaryColor
+      privacyPolicyUrl
+      privacyPolicy
+      termsOfServiceUrl
+      termsOfService
+      communityGuidelinesUrl
       communityGuidelines
     }
   }
@@ -4873,6 +4898,11 @@ export const SetMultiTenantConfigDocument = gql`
     $siteName: String
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
+    $privacyPolicyUrl: String
+    $privacyPolicy: String
+    $termsOfServiceUrl: String
+    $termsOfService: String
+    $communityGuidelinesUrl: String
     $communityGuidelines: String
   ) {
     multiTenantConfig(
@@ -4880,6 +4910,11 @@ export const SetMultiTenantConfigDocument = gql`
         siteName: $siteName
         colorScheme: $colorScheme
         primaryColor: $primaryColor
+        privacyPolicyUrl: $privacyPolicyUrl
+        privacyPolicy: $privacyPolicy
+        termsOfServiceUrl: $termsOfServiceUrl
+        termsOfService: $termsOfService
+        communityGuidelinesUrl: $communityGuidelinesUrl
         communityGuidelines: $communityGuidelines
       }
     )

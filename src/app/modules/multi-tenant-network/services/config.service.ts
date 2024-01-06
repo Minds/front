@@ -21,6 +21,7 @@ import {
 } from 'rxjs';
 import { ThemeColorChangeService } from '../../../common/services/theme-color-change.service';
 import { ThemeService } from '../../../common/services/theme.service';
+import { CustomPolicyImplementation } from '../../policies/policies.types';
 
 /**
  * Service for fetching and updating multi-tenant network config.
@@ -38,6 +39,17 @@ export class MultiTenantNetworkConfigService implements OnDestroy {
   >(false);
 
   private configFetchSubscription: Subscription;
+  private configSubscription: Subscription;
+
+  public readonly privacyPolicyImplementation$ = new BehaviorSubject<
+    CustomPolicyImplementation
+  >(CustomPolicyImplementation.DEFAULT);
+  public readonly termsOfServiceImplementation$ = new BehaviorSubject<
+    CustomPolicyImplementation
+  >(CustomPolicyImplementation.DEFAULT);
+  public readonly communityGuidelinesImplementation$ = new BehaviorSubject<
+    CustomPolicyImplementation
+  >(CustomPolicyImplementation.DEFAULT);
 
   constructor(
     private getMultiTenantConfigGQL: GetMultiTenantConfigGQL,
@@ -48,6 +60,7 @@ export class MultiTenantNetworkConfigService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.configFetchSubscription?.unsubscribe();
+    this.configSubscription?.unsubscribe();
   }
 
   /**
@@ -67,6 +80,10 @@ export class MultiTenantNetworkConfigService implements OnDestroy {
         this.config$.next(config);
       }
     );
+
+    this.configSubscription = this.config$.subscribe(config => {
+      this.updatePolicyImplementations(config);
+    });
   }
 
   /**
@@ -137,5 +154,48 @@ export class MultiTenantNetworkConfigService implements OnDestroy {
         values.colorScheme === MultiTenantColorScheme.Dark
       );
     }
+  }
+
+  /**
+   * Updates the local policy implementations based on the config.
+   * @param config The current MultiTenantConfig
+   */
+  private updatePolicyImplementations(config: MultiTenantConfig): void {
+    this.privacyPolicyImplementation$.next(
+      this.determineImplementation(
+        config.privacyPolicy,
+        config.privacyPolicyUrl
+      )
+    );
+    this.termsOfServiceImplementation$.next(
+      this.determineImplementation(
+        config.termsOfService,
+        config.termsOfServiceUrl
+      )
+    );
+    this.communityGuidelinesImplementation$.next(
+      this.determineImplementation(
+        config.communityGuidelines,
+        config.communityGuidelinesUrl
+      )
+    );
+  }
+
+  /**
+   * Determines the policy implementation type based on policy text and URL.
+   * @param policyText The policy text.
+   * @param policyUrl The policy URL.
+   * @returns The CustomPolicyImplementation type.
+   */
+  private determineImplementation(
+    policyText: string | null,
+    policyUrl: string | null
+  ): CustomPolicyImplementation {
+    if (policyText && !policyUrl) {
+      return CustomPolicyImplementation.CUSTOM;
+    } else if (!policyText && policyUrl) {
+      return CustomPolicyImplementation.EXTERNAL;
+    }
+    return CustomPolicyImplementation.DEFAULT;
   }
 }

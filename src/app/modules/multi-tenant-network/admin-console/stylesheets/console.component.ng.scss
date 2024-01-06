@@ -173,4 +173,33 @@
       }
     }
   }
+
+  // ************************************
+  // Policy Forms
+  // ************************************
+  .m-networkAdminConsolePolicyForm__wrapper {
+    padding: $spacing7 $spacing8 !important;
+    max-width: 860px;
+    @media screen and (min-width: $min-desktop) {
+      padding-right: $spacing32;
+    }
+
+    .m-networkAdminConsole__title {
+      margin-bottom: unset;
+    }
+
+    .m-networkAdminConsole__subtitle {
+      margin: $spacing1 0 $spacing4 0;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      a {
+        @include m-theme() {
+          color: themed($m-action);
+        }
+      }
+    }
+  }
 }
