@@ -429,7 +429,17 @@ export class MindsRichEmbed implements OnDestroy {
     }
 
     // Livepeer
+
+    // Patch legacy livepeer URLs.
+    if (this.embedLinkWhitelist.getRegex('livepeerLegacy').test(url)) {
+      url = url.replace(
+        'minds-player.withlivepeer.com',
+        'minds-player.vercel.app'
+      );
+    }
+
     const livepeer: RegExp = this.embedLinkWhitelist.getRegex('livepeer');
+
     if ((matches = livepeer.exec(url)) !== null) {
       if (matches[0]) {
         this.mediaSource = 'livepeer';
