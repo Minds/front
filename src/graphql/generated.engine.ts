@@ -250,6 +250,7 @@ export type EmbeddedCommentsSettings = {
 export type FeaturedEntity = FeaturedEntityInterface &
   NodeInterface & {
     __typename?: 'FeaturedEntity';
+    autoPostSubscription: Scalars['Boolean']['output'];
     autoSubscribe: Scalars['Boolean']['output'];
     entityGuid: Scalars['String']['output'];
     id: Scalars['ID']['output'];
@@ -263,7 +264,7 @@ export type FeaturedEntityConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'FeaturedEntityConnection';
     /** Gets connections edges. */
-    edges: Array<EdgeInterface>;
+    edges: Array<FeaturedEntityEdge>;
     /** ID for GraphQL. */
     id: Scalars['ID']['output'];
     pageInfo: PageInfo;
@@ -276,18 +277,20 @@ export type FeaturedEntityEdge = EdgeInterface & {
   /** Gets ID for GraphQL. */
   id: Scalars['ID']['output'];
   /** Gets node - can be either a FeaturedUser or FeaturedGroup. */
-  node?: Maybe<NodeInterface>;
+  node: FeaturedEntityInterface;
   /** Gets type for GraphQL. */
   type: Scalars['String']['output'];
 };
 
 export type FeaturedEntityInput = {
+  autoPostSubscription?: InputMaybe<Scalars['Boolean']['input']>;
   autoSubscribe?: InputMaybe<Scalars['Boolean']['input']>;
   entityGuid: Scalars['String']['input'];
   recommended?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type FeaturedEntityInterface = {
+  autoPostSubscription: Scalars['Boolean']['output'];
   autoSubscribe: Scalars['Boolean']['output'];
   entityGuid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -305,6 +308,7 @@ export enum FeaturedEntityTypeEnum {
 export type FeaturedGroup = FeaturedEntityInterface &
   NodeInterface & {
     __typename?: 'FeaturedGroup';
+    autoPostSubscription: Scalars['Boolean']['output'];
     autoSubscribe: Scalars['Boolean']['output'];
     entityGuid: Scalars['String']['output'];
     id: Scalars['ID']['output'];
@@ -319,6 +323,7 @@ export type FeaturedGroup = FeaturedEntityInterface &
 export type FeaturedUser = FeaturedEntityInterface &
   NodeInterface & {
     __typename?: 'FeaturedUser';
+    autoPostSubscription: Scalars['Boolean']['output'];
     autoSubscribe: Scalars['Boolean']['output'];
     entityGuid: Scalars['String']['output'];
     id: Scalars['ID']['output'];
@@ -522,6 +527,42 @@ export enum IllegalSubReasonEnum {
   Trafficking = 'TRAFFICKING',
 }
 
+export type Invite = NodeInterface & {
+  __typename?: 'Invite';
+  bespokeMessage: Scalars['String']['output'];
+  createdTimestamp: Scalars['Int']['output'];
+  email: Scalars['String']['output'];
+  groups?: Maybe<Array<Scalars['Int']['output']>>;
+  id: Scalars['ID']['output'];
+  inviteId: Scalars['Int']['output'];
+  roles?: Maybe<Array<Role>>;
+  sendTimestamp?: Maybe<Scalars['Int']['output']>;
+  status: InviteEmailStatusEnum;
+};
+
+export type InviteConnection = ConnectionInterface &
+  NodeInterface & {
+    __typename?: 'InviteConnection';
+    edges: Array<InviteEdge>;
+    id: Scalars['ID']['output'];
+    pageInfo: PageInfo;
+  };
+
+export type InviteEdge = EdgeInterface & {
+  __typename?: 'InviteEdge';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Invite>;
+};
+
+export enum InviteEmailStatusEnum {
+  Accepted = 'ACCEPTED',
+  Cancelled = 'CANCELLED',
+  Failed = 'FAILED',
+  Pending = 'PENDING',
+  Sending = 'SENDING',
+  Sent = 'SENT',
+}
+
 export type KeyValuePairInput = {
   key: Scalars['String']['input'];
   value: Scalars['String']['input'];
@@ -571,6 +612,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Assigns a user to a role */
   assignUserToRole: Role;
+  cancelInvite?: Maybe<Scalars['Void']['output']>;
   claimGiftCard: GiftCardNode;
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
@@ -587,12 +629,14 @@ export type Mutation = {
   deleteFeaturedEntity: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
+  invite?: Maybe<Scalars['Void']['output']>;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
   provideVerdict: Scalars['Boolean']['output'];
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
+  resendInvite?: Maybe<Scalars['Void']['output']>;
   /** Creates a comment on a remote url */
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
@@ -610,6 +654,10 @@ export type Mutation = {
 export type MutationAssignUserToRoleArgs = {
   roleId: Scalars['Int']['input'];
   userGuid: Scalars['String']['input'];
+};
+
+export type MutationCancelInviteArgs = {
+  inviteId: Scalars['Int']['input'];
 };
 
 export type MutationClaimGiftCardArgs = {
@@ -665,6 +713,13 @@ export type MutationDismissArgs = {
   key: Scalars['String']['input'];
 };
 
+export type MutationInviteArgs = {
+  bespokeMessage: Scalars['String']['input'];
+  emails: Scalars['String']['input'];
+  groups?: InputMaybe<Array<Scalars['Int']['input']>>;
+  roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
 export type MutationMultiTenantConfigArgs = {
   multiTenantConfigInput: MultiTenantConfigInput;
 };
@@ -679,6 +734,10 @@ export type MutationRefreshRssFeedArgs = {
 
 export type MutationRemoveRssFeedArgs = {
   feedId: Scalars['String']['input'];
+};
+
+export type MutationResendInviteArgs = {
+  inviteId: Scalars['Int']['input'];
 };
 
 export type MutationSetEmbeddedCommentsSettingsArgs = {
@@ -891,6 +950,8 @@ export type Query = {
   giftCardsBalance: Scalars['Float']['output'];
   /** The available balances of each gift card types */
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
+  invite: Invite;
+  invites: InviteConnection;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
   multiTenantDomain: MultiTenantDomain;
@@ -1001,6 +1062,16 @@ export type QueryGiftCardsArgs = {
   ordering?: InputMaybe<GiftCardOrderingEnum>;
   productId?: InputMaybe<GiftCardProductIdEnum>;
   statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
+};
+
+export type QueryInviteArgs = {
+  inviteId: Scalars['Int']['input'];
+};
+
+export type QueryInvitesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryNewsfeedArgs = {
@@ -1594,155 +1665,31 @@ export type GetFeaturedEntitiesQuery = {
   __typename?: 'Query';
   featuredEntities: {
     __typename?: 'FeaturedEntityConnection';
-    id: string;
-    edges: Array<
-      | {
-          __typename?: 'ActivityEdge';
-          cursor: string;
-          node: { __typename?: 'ActivityNode'; id: string };
-        }
-      | {
-          __typename?: 'BoostEdge';
-          cursor: string;
-          node: { __typename?: 'BoostNode'; id: string };
-        }
-      | {
-          __typename?: 'CommentEdge';
-          cursor: string;
-          node: { __typename?: 'CommentNode'; id: string };
-        }
-      | {
-          __typename?: 'EdgeImpl';
-          cursor: string;
-          node?:
-            | { __typename?: 'ActivityNode'; id: string }
-            | { __typename?: 'BoostNode'; id: string }
-            | { __typename?: 'CommentNode'; id: string }
-            | { __typename?: 'FeaturedEntity'; id: string }
-            | { __typename?: 'FeaturedEntityConnection'; id: string }
-            | {
-                __typename: 'FeaturedGroup';
-                entityGuid: string;
-                id: string;
-                autoSubscribe: boolean;
-                name: string;
-                membersCount: number;
-              }
-            | {
-                __typename: 'FeaturedUser';
-                entityGuid: string;
-                id: string;
-                autoSubscribe: boolean;
-                name: string;
-                username?: string | null;
-              }
-            | { __typename?: 'FeedExploreTagNode'; id: string }
-            | { __typename?: 'FeedHeaderNode'; id: string }
-            | { __typename?: 'FeedHighlightsConnection'; id: string }
-            | { __typename?: 'FeedNoticeNode'; id: string }
-            | { __typename?: 'GiftCardNode'; id: string }
-            | { __typename?: 'GiftCardTransaction'; id: string }
-            | { __typename?: 'GroupNode'; id: string }
-            | { __typename?: 'NodeImpl'; id: string }
-            | { __typename?: 'PublisherRecsConnection'; id: string }
-            | { __typename?: 'Report'; id: string }
-            | { __typename?: 'UserNode'; id: string }
-            | null;
-        }
-      | {
-          __typename?: 'FeaturedEntityEdge';
-          cursor: string;
-          node?:
-            | { __typename?: 'ActivityNode'; id: string }
-            | { __typename?: 'BoostNode'; id: string }
-            | { __typename?: 'CommentNode'; id: string }
-            | { __typename?: 'FeaturedEntity'; id: string }
-            | { __typename?: 'FeaturedEntityConnection'; id: string }
-            | {
-                __typename: 'FeaturedGroup';
-                entityGuid: string;
-                id: string;
-                autoSubscribe: boolean;
-                name: string;
-                membersCount: number;
-              }
-            | {
-                __typename: 'FeaturedUser';
-                entityGuid: string;
-                id: string;
-                autoSubscribe: boolean;
-                name: string;
-                username?: string | null;
-              }
-            | { __typename?: 'FeedExploreTagNode'; id: string }
-            | { __typename?: 'FeedHeaderNode'; id: string }
-            | { __typename?: 'FeedHighlightsConnection'; id: string }
-            | { __typename?: 'FeedNoticeNode'; id: string }
-            | { __typename?: 'GiftCardNode'; id: string }
-            | { __typename?: 'GiftCardTransaction'; id: string }
-            | { __typename?: 'GroupNode'; id: string }
-            | { __typename?: 'NodeImpl'; id: string }
-            | { __typename?: 'PublisherRecsConnection'; id: string }
-            | { __typename?: 'Report'; id: string }
-            | { __typename?: 'UserNode'; id: string }
-            | null;
-        }
-      | {
-          __typename?: 'FeedExploreTagEdge';
-          cursor: string;
-          node: { __typename?: 'FeedExploreTagNode'; id: string };
-        }
-      | {
-          __typename?: 'FeedHeaderEdge';
-          cursor: string;
-          node: { __typename?: 'FeedHeaderNode'; id: string };
-        }
-      | {
-          __typename?: 'FeedHighlightsEdge';
-          cursor: string;
-          node: { __typename?: 'FeedHighlightsConnection'; id: string };
-        }
-      | {
-          __typename?: 'FeedNoticeEdge';
-          cursor: string;
-          node: { __typename?: 'FeedNoticeNode'; id: string };
-        }
-      | {
-          __typename?: 'GiftCardEdge';
-          cursor: string;
-          node: { __typename?: 'GiftCardNode'; id: string };
-        }
-      | {
-          __typename?: 'GiftCardTransactionEdge';
-          cursor: string;
-          node: { __typename?: 'GiftCardTransaction'; id: string };
-        }
-      | {
-          __typename?: 'GroupEdge';
-          cursor: string;
-          node: { __typename?: 'GroupNode'; id: string };
-        }
-      | {
-          __typename?: 'PublisherRecsEdge';
-          cursor: string;
-          node: { __typename?: 'PublisherRecsConnection'; id: string };
-        }
-      | {
-          __typename?: 'ReportEdge';
-          cursor: string;
-          node?: { __typename?: 'Report'; id: string } | null;
-        }
-      | {
-          __typename?: 'UserEdge';
-          cursor: string;
-          node: { __typename?: 'UserNode'; id: string };
-        }
-      | {
-          __typename?: 'UserRoleEdge';
-          cursor: string;
-          node: { __typename?: 'UserNode'; id: string };
-        }
-    >;
+    edges: Array<{
+      __typename?: 'FeaturedEntityEdge';
+      id: string;
+      cursor: string;
+      node:
+        | { __typename?: 'FeaturedEntity'; id: string }
+        | {
+            __typename: 'FeaturedGroup';
+            entityGuid: string;
+            id: string;
+            autoSubscribe: boolean;
+            autoPostSubscription: boolean;
+            name: string;
+            membersCount: number;
+          }
+        | {
+            __typename: 'FeaturedUser';
+            entityGuid: string;
+            id: string;
+            autoSubscribe: boolean;
+            autoPostSubscription: boolean;
+            name: string;
+            username?: string | null;
+          };
+    }>;
     pageInfo: {
       __typename?: 'PageInfo';
       hasNextPage: boolean;
@@ -1765,6 +1712,7 @@ export type DeleteFeaturedEntityMutation = {
 export type StoreFeaturedEntityMutationVariables = Exact<{
   entityGuid: Scalars['String']['input'];
   autoSubscribe?: InputMaybe<Scalars['Boolean']['input']>;
+  autoPostSubscription?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type StoreFeaturedEntityMutation = {
@@ -1772,21 +1720,27 @@ export type StoreFeaturedEntityMutation = {
   storeFeaturedEntity:
     | {
         __typename?: 'FeaturedEntity';
+        id: string;
         tenantId: string;
         entityGuid: string;
         autoSubscribe: boolean;
+        autoPostSubscription: boolean;
       }
     | {
         __typename?: 'FeaturedGroup';
+        id: string;
         tenantId: string;
         entityGuid: string;
         autoSubscribe: boolean;
+        autoPostSubscription: boolean;
       }
     | {
         __typename?: 'FeaturedUser';
+        id: string;
         tenantId: string;
         entityGuid: string;
         autoSubscribe: boolean;
+        autoPostSubscription: boolean;
       };
 };
 
@@ -1848,6 +1802,8 @@ export type GetReportsQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | { __typename?: 'PublisherRecsConnection'; id: string }
             | {
@@ -1897,66 +1853,10 @@ export type GetReportsQuery = {
       | {
           __typename?: 'FeaturedEntityEdge';
           cursor: string;
-          node?:
-            | { __typename?: 'ActivityNode'; id: string }
-            | { __typename?: 'BoostNode'; id: string }
-            | { __typename?: 'CommentNode'; id: string }
+          node:
             | { __typename?: 'FeaturedEntity'; id: string }
-            | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
-            | { __typename?: 'FeaturedUser'; id: string }
-            | { __typename?: 'FeedExploreTagNode'; id: string }
-            | { __typename?: 'FeedHeaderNode'; id: string }
-            | { __typename?: 'FeedHighlightsConnection'; id: string }
-            | { __typename?: 'FeedNoticeNode'; id: string }
-            | { __typename?: 'GiftCardNode'; id: string }
-            | { __typename?: 'GiftCardTransaction'; id: string }
-            | { __typename?: 'GroupNode'; id: string }
-            | { __typename?: 'NodeImpl'; id: string }
-            | { __typename?: 'PublisherRecsConnection'; id: string }
-            | {
-                __typename?: 'Report';
-                tenantId?: string | null;
-                reportGuid?: string | null;
-                entityUrn: string;
-                entityGuid?: string | null;
-                reportedByGuid?: string | null;
-                moderatedByGuid?: string | null;
-                createdTimestamp: number;
-                reason: ReportReasonEnum;
-                nsfwSubReason?: NsfwSubReasonEnum | null;
-                illegalSubReason?: IllegalSubReasonEnum | null;
-                securitySubReason?: SecuritySubReasonEnum | null;
-                id: string;
-                reportedByUserEdge?: {
-                  __typename?: 'UserEdge';
-                  node: {
-                    __typename?: 'UserNode';
-                    guid: string;
-                    username: string;
-                  };
-                } | null;
-                entityEdge?:
-                  | {
-                      __typename?: 'ActivityEdge';
-                      node: { __typename?: 'ActivityNode'; legacy: string };
-                    }
-                  | {
-                      __typename?: 'CommentEdge';
-                      node: { __typename?: 'CommentNode'; legacy: string };
-                    }
-                  | {
-                      __typename?: 'GroupEdge';
-                      node: { __typename?: 'GroupNode'; legacy: string };
-                    }
-                  | {
-                      __typename?: 'UserEdge';
-                      node: { __typename?: 'UserNode'; legacy: string };
-                    }
-                  | null;
-              }
-            | { __typename?: 'UserNode'; id: string }
-            | null;
+            | { __typename?: 'FeaturedUser'; id: string };
         }
       | {
           __typename?: 'FeedExploreTagEdge';
@@ -1992,6 +1892,11 @@ export type GetReportsQuery = {
           __typename?: 'GroupEdge';
           cursor: string;
           node: { __typename?: 'GroupNode'; id: string };
+        }
+      | {
+          __typename?: 'InviteEdge';
+          cursor: string;
+          node?: { __typename?: 'Invite'; id: string } | null;
         }
       | {
           __typename?: 'PublisherRecsEdge';
@@ -2084,6 +1989,27 @@ export type AssignUserToRoleMutation = {
   };
 };
 
+export type CancelInviteMutationVariables = Exact<{
+  inviteId: Scalars['Int']['input'];
+}>;
+
+export type CancelInviteMutation = {
+  __typename?: 'Mutation';
+  cancelInvite?: any | null;
+};
+
+export type CreateInviteMutationVariables = Exact<{
+  emails: Scalars['String']['input'];
+  bespokeMessage: Scalars['String']['input'];
+  roles?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  groups?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+}>;
+
+export type CreateInviteMutation = {
+  __typename?: 'Mutation';
+  invite?: any | null;
+};
+
 export type GetRolesAndPermissionsQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -2112,6 +2038,73 @@ export type GetAssignedRolesQuery = {
     name: string;
     permissions: Array<PermissionsEnum>;
   }>;
+};
+
+export type GetInviteQueryVariables = Exact<{
+  inviteId: Scalars['Int']['input'];
+}>;
+
+export type GetInviteQuery = {
+  __typename?: 'Query';
+  invite: {
+    __typename?: 'Invite';
+    inviteId: number;
+    email: string;
+    status: InviteEmailStatusEnum;
+    bespokeMessage: string;
+    createdTimestamp: number;
+    sendTimestamp?: number | null;
+    id: string;
+    groups?: Array<number> | null;
+    roles?: Array<{
+      __typename?: 'Role';
+      id: number;
+      name: string;
+      permissions: Array<PermissionsEnum>;
+    }> | null;
+  };
+};
+
+export type GetInvitesQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetInvitesQuery = {
+  __typename?: 'Query';
+  invites: {
+    __typename?: 'InviteConnection';
+    id: string;
+    edges: Array<{
+      __typename?: 'InviteEdge';
+      cursor: string;
+      node?: {
+        __typename?: 'Invite';
+        inviteId: number;
+        email: string;
+        status: InviteEmailStatusEnum;
+        bespokeMessage: string;
+        createdTimestamp: number;
+        sendTimestamp?: number | null;
+        id: string;
+        groups?: Array<number> | null;
+        roles?: Array<{
+          __typename?: 'Role';
+          id: number;
+          name: string;
+          permissions: Array<PermissionsEnum>;
+        }> | null;
+      } | null;
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
 };
 
 export type GetMultiTenantConfigQueryVariables = Exact<{
@@ -2190,6 +2183,15 @@ export type GetUsersByRoleQuery = {
       }>;
     }>;
   };
+};
+
+export type ResendInviteMutationVariables = Exact<{
+  inviteId: Scalars['Int']['input'];
+}>;
+
+export type ResendInviteMutation = {
+  __typename?: 'Mutation';
+  resendInvite?: any | null;
 };
 
 export type SetMultiTenantConfigMutationVariables = Exact<{
@@ -2454,6 +2456,8 @@ export type FetchNewsfeedQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | {
                 __typename?: 'PublisherRecsConnection';
@@ -2510,6 +2514,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | { __typename?: 'Report'; id: string }
@@ -2522,44 +2528,10 @@ export type FetchNewsfeedQuery = {
                     }
                   | {
                       __typename?: 'FeaturedEntityEdge';
-                      publisherNode?:
-                        | { __typename?: 'ActivityNode'; id: string }
-                        | {
-                            __typename?: 'BoostNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'CommentNode'; id: string }
+                      publisherNode:
                         | { __typename?: 'FeaturedEntity'; id: string }
-                        | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
                         | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
-                        | {
-                            __typename?: 'UserNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | null;
+                        | { __typename?: 'FeaturedUser'; id: string };
                     }
                   | {
                       __typename?: 'FeedExploreTagEdge';
@@ -2610,6 +2582,13 @@ export type FetchNewsfeedQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'InviteEdge';
+                      publisherNode?: {
+                        __typename?: 'Invite';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
@@ -2657,250 +2636,10 @@ export type FetchNewsfeedQuery = {
       | {
           __typename?: 'FeaturedEntityEdge';
           cursor: string;
-          node?:
-            | { __typename?: 'ActivityNode'; legacy: string; id: string }
-            | {
-                __typename?: 'BoostNode';
-                goalButtonUrl?: string | null;
-                goalButtonText?: number | null;
-                legacy: string;
-                id: string;
-              }
-            | { __typename?: 'CommentNode'; id: string }
+          node:
             | { __typename?: 'FeaturedEntity'; id: string }
-            | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
-            | { __typename?: 'FeaturedUser'; id: string }
-            | { __typename?: 'FeedExploreTagNode'; tag: string; id: string }
-            | { __typename?: 'FeedHeaderNode'; text: string; id: string }
-            | {
-                __typename?: 'FeedHighlightsConnection';
-                id: string;
-                edges: Array<{
-                  __typename?: 'ActivityEdge';
-                  node: {
-                    __typename?: 'ActivityNode';
-                    id: string;
-                    legacy: string;
-                  };
-                }>;
-                pageInfo: {
-                  __typename?: 'PageInfo';
-                  hasPreviousPage: boolean;
-                  hasNextPage: boolean;
-                  startCursor?: string | null;
-                  endCursor?: string | null;
-                };
-              }
-            | {
-                __typename?: 'FeedNoticeNode';
-                location: string;
-                key: string;
-                dismissible: boolean;
-                id: string;
-              }
-            | { __typename?: 'GiftCardNode'; id: string }
-            | { __typename?: 'GiftCardTransaction'; id: string }
-            | { __typename?: 'GroupNode'; id: string }
-            | { __typename?: 'NodeImpl'; id: string }
-            | {
-                __typename?: 'PublisherRecsConnection';
-                dismissible: boolean;
-                id: string;
-                edges: Array<
-                  | {
-                      __typename?: 'ActivityEdge';
-                      publisherNode: {
-                        __typename?: 'ActivityNode';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'BoostEdge';
-                      publisherNode: {
-                        __typename?: 'BoostNode';
-                        legacy: string;
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'CommentEdge';
-                      publisherNode: { __typename?: 'CommentNode'; id: string };
-                    }
-                  | {
-                      __typename?: 'EdgeImpl';
-                      publisherNode?:
-                        | { __typename?: 'ActivityNode'; id: string }
-                        | {
-                            __typename?: 'BoostNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
-                        | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
-                        | {
-                            __typename?: 'UserNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | null;
-                    }
-                  | {
-                      __typename?: 'FeaturedEntityEdge';
-                      publisherNode?:
-                        | { __typename?: 'ActivityNode'; id: string }
-                        | {
-                            __typename?: 'BoostNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
-                        | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
-                        | {
-                            __typename?: 'UserNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | null;
-                    }
-                  | {
-                      __typename?: 'FeedExploreTagEdge';
-                      publisherNode: {
-                        __typename?: 'FeedExploreTagNode';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'FeedHeaderEdge';
-                      publisherNode: {
-                        __typename?: 'FeedHeaderNode';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'FeedHighlightsEdge';
-                      publisherNode: {
-                        __typename?: 'FeedHighlightsConnection';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'FeedNoticeEdge';
-                      publisherNode: {
-                        __typename?: 'FeedNoticeNode';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'GiftCardEdge';
-                      publisherNode: {
-                        __typename?: 'GiftCardNode';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'GiftCardTransactionEdge';
-                      publisherNode: {
-                        __typename?: 'GiftCardTransaction';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'GroupEdge';
-                      publisherNode: {
-                        __typename?: 'GroupNode';
-                        legacy: string;
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'PublisherRecsEdge';
-                      publisherNode: {
-                        __typename?: 'PublisherRecsConnection';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'ReportEdge';
-                      publisherNode?: {
-                        __typename?: 'Report';
-                        id: string;
-                      } | null;
-                    }
-                  | {
-                      __typename?: 'UserEdge';
-                      publisherNode: {
-                        __typename?: 'UserNode';
-                        legacy: string;
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'UserRoleEdge';
-                      publisherNode: {
-                        __typename?: 'UserNode';
-                        legacy: string;
-                        id: string;
-                      };
-                    }
-                >;
-                pageInfo: {
-                  __typename?: 'PageInfo';
-                  hasPreviousPage: boolean;
-                  hasNextPage: boolean;
-                  startCursor?: string | null;
-                  endCursor?: string | null;
-                };
-              }
-            | { __typename?: 'Report'; id: string }
-            | { __typename?: 'UserNode'; id: string }
-            | null;
+            | { __typename?: 'FeaturedUser'; id: string };
         }
       | {
           __typename?: 'FeedExploreTagEdge';
@@ -2958,6 +2697,11 @@ export type FetchNewsfeedQuery = {
           node: { __typename?: 'GroupNode'; id: string };
         }
       | {
+          __typename?: 'InviteEdge';
+          cursor: string;
+          node?: { __typename?: 'Invite'; id: string } | null;
+        }
+      | {
           __typename?: 'PublisherRecsEdge';
           cursor: string;
           node: {
@@ -2998,6 +2742,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'Invite'; id: string }
+                    | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'Report'; id: string }
@@ -3006,26 +2752,10 @@ export type FetchNewsfeedQuery = {
                 }
               | {
                   __typename?: 'FeaturedEntityEdge';
-                  publisherNode?:
-                    | { __typename?: 'ActivityNode'; id: string }
-                    | { __typename?: 'BoostNode'; legacy: string; id: string }
-                    | { __typename?: 'CommentNode'; id: string }
+                  publisherNode:
                     | { __typename?: 'FeaturedEntity'; id: string }
-                    | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
-                    | { __typename?: 'FeaturedUser'; id: string }
-                    | { __typename?: 'FeedExploreTagNode'; id: string }
-                    | { __typename?: 'FeedHeaderNode'; id: string }
-                    | { __typename?: 'FeedHighlightsConnection'; id: string }
-                    | { __typename?: 'FeedNoticeNode'; id: string }
-                    | { __typename?: 'GiftCardNode'; id: string }
-                    | { __typename?: 'GiftCardTransaction'; id: string }
-                    | { __typename?: 'GroupNode'; legacy: string; id: string }
-                    | { __typename?: 'NodeImpl'; id: string }
-                    | { __typename?: 'PublisherRecsConnection'; id: string }
-                    | { __typename?: 'Report'; id: string }
-                    | { __typename?: 'UserNode'; legacy: string; id: string }
-                    | null;
+                    | { __typename?: 'FeaturedUser'; id: string };
                 }
               | {
                   __typename?: 'FeedExploreTagEdge';
@@ -3067,6 +2797,10 @@ export type FetchNewsfeedQuery = {
                     legacy: string;
                     id: string;
                   };
+                }
+              | {
+                  __typename?: 'InviteEdge';
+                  publisherNode?: { __typename?: 'Invite'; id: string } | null;
                 }
               | {
                   __typename?: 'PublisherRecsEdge';
@@ -3304,6 +3038,8 @@ export type FetchSearchQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; legacy: string; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | {
                 __typename?: 'PublisherRecsConnection';
@@ -3359,6 +3095,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | { __typename?: 'Report'; id: string }
@@ -3371,44 +3109,10 @@ export type FetchSearchQuery = {
                     }
                   | {
                       __typename?: 'FeaturedEntityEdge';
-                      publisherNode?:
-                        | { __typename?: 'ActivityNode'; id: string }
-                        | {
-                            __typename?: 'BoostNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'CommentNode'; id: string }
+                      publisherNode:
                         | { __typename?: 'FeaturedEntity'; id: string }
-                        | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
                         | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
-                        | {
-                            __typename?: 'UserNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | null;
+                        | { __typename?: 'FeaturedUser'; id: string };
                     }
                   | {
                       __typename?: 'FeedExploreTagEdge';
@@ -3459,6 +3163,13 @@ export type FetchSearchQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'InviteEdge';
+                      publisherNode?: {
+                        __typename?: 'Invite';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
@@ -3506,230 +3217,10 @@ export type FetchSearchQuery = {
       | {
           __typename?: 'FeaturedEntityEdge';
           cursor: string;
-          node?:
-            | { __typename?: 'ActivityNode'; legacy: string; id: string }
-            | {
-                __typename?: 'BoostNode';
-                goalButtonUrl?: string | null;
-                goalButtonText?: number | null;
-                legacy: string;
-                id: string;
-              }
-            | { __typename?: 'CommentNode'; id: string }
+          node:
             | { __typename?: 'FeaturedEntity'; id: string }
-            | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
-            | { __typename?: 'FeaturedUser'; id: string }
-            | { __typename?: 'FeedExploreTagNode'; id: string }
-            | { __typename?: 'FeedHeaderNode'; id: string }
-            | { __typename?: 'FeedHighlightsConnection'; id: string }
-            | {
-                __typename?: 'FeedNoticeNode';
-                location: string;
-                key: string;
-                id: string;
-              }
-            | { __typename?: 'GiftCardNode'; id: string }
-            | { __typename?: 'GiftCardTransaction'; id: string }
-            | { __typename?: 'GroupNode'; legacy: string; id: string }
-            | { __typename?: 'NodeImpl'; id: string }
-            | {
-                __typename?: 'PublisherRecsConnection';
-                id: string;
-                edges: Array<
-                  | {
-                      __typename?: 'ActivityEdge';
-                      publisherNode: {
-                        __typename?: 'ActivityNode';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'BoostEdge';
-                      publisherNode: {
-                        __typename?: 'BoostNode';
-                        legacy: string;
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'CommentEdge';
-                      publisherNode: { __typename?: 'CommentNode'; id: string };
-                    }
-                  | {
-                      __typename?: 'EdgeImpl';
-                      publisherNode?:
-                        | { __typename?: 'ActivityNode'; id: string }
-                        | {
-                            __typename?: 'BoostNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
-                        | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
-                        | {
-                            __typename?: 'UserNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | null;
-                    }
-                  | {
-                      __typename?: 'FeaturedEntityEdge';
-                      publisherNode?:
-                        | { __typename?: 'ActivityNode'; id: string }
-                        | {
-                            __typename?: 'BoostNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
-                        | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
-                        | {
-                            __typename?: 'UserNode';
-                            legacy: string;
-                            id: string;
-                          }
-                        | null;
-                    }
-                  | {
-                      __typename?: 'FeedExploreTagEdge';
-                      publisherNode: {
-                        __typename?: 'FeedExploreTagNode';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'FeedHeaderEdge';
-                      publisherNode: {
-                        __typename?: 'FeedHeaderNode';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'FeedHighlightsEdge';
-                      publisherNode: {
-                        __typename?: 'FeedHighlightsConnection';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'FeedNoticeEdge';
-                      publisherNode: {
-                        __typename?: 'FeedNoticeNode';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'GiftCardEdge';
-                      publisherNode: {
-                        __typename?: 'GiftCardNode';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'GiftCardTransactionEdge';
-                      publisherNode: {
-                        __typename?: 'GiftCardTransaction';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'GroupEdge';
-                      publisherNode: {
-                        __typename?: 'GroupNode';
-                        legacy: string;
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'PublisherRecsEdge';
-                      publisherNode: {
-                        __typename?: 'PublisherRecsConnection';
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'ReportEdge';
-                      publisherNode?: {
-                        __typename?: 'Report';
-                        id: string;
-                      } | null;
-                    }
-                  | {
-                      __typename?: 'UserEdge';
-                      publisherNode: {
-                        __typename?: 'UserNode';
-                        legacy: string;
-                        id: string;
-                      };
-                    }
-                  | {
-                      __typename?: 'UserRoleEdge';
-                      publisherNode: {
-                        __typename?: 'UserNode';
-                        legacy: string;
-                        id: string;
-                      };
-                    }
-                >;
-                pageInfo: {
-                  __typename?: 'PageInfo';
-                  hasPreviousPage: boolean;
-                  hasNextPage: boolean;
-                  startCursor?: string | null;
-                  endCursor?: string | null;
-                };
-              }
-            | { __typename?: 'Report'; id: string }
-            | { __typename?: 'UserNode'; legacy: string; id: string }
-            | null;
+            | { __typename?: 'FeaturedUser'; id: string };
         }
       | {
           __typename?: 'FeedExploreTagEdge';
@@ -3772,6 +3263,11 @@ export type FetchSearchQuery = {
           node: { __typename?: 'GroupNode'; legacy: string; id: string };
         }
       | {
+          __typename?: 'InviteEdge';
+          cursor: string;
+          node?: { __typename?: 'Invite'; id: string } | null;
+        }
+      | {
           __typename?: 'PublisherRecsEdge';
           cursor: string;
           node: {
@@ -3811,6 +3307,8 @@ export type FetchSearchQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'Invite'; id: string }
+                    | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'Report'; id: string }
@@ -3819,26 +3317,10 @@ export type FetchSearchQuery = {
                 }
               | {
                   __typename?: 'FeaturedEntityEdge';
-                  publisherNode?:
-                    | { __typename?: 'ActivityNode'; id: string }
-                    | { __typename?: 'BoostNode'; legacy: string; id: string }
-                    | { __typename?: 'CommentNode'; id: string }
+                  publisherNode:
                     | { __typename?: 'FeaturedEntity'; id: string }
-                    | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
-                    | { __typename?: 'FeaturedUser'; id: string }
-                    | { __typename?: 'FeedExploreTagNode'; id: string }
-                    | { __typename?: 'FeedHeaderNode'; id: string }
-                    | { __typename?: 'FeedHighlightsConnection'; id: string }
-                    | { __typename?: 'FeedNoticeNode'; id: string }
-                    | { __typename?: 'GiftCardNode'; id: string }
-                    | { __typename?: 'GiftCardTransaction'; id: string }
-                    | { __typename?: 'GroupNode'; legacy: string; id: string }
-                    | { __typename?: 'NodeImpl'; id: string }
-                    | { __typename?: 'PublisherRecsConnection'; id: string }
-                    | { __typename?: 'Report'; id: string }
-                    | { __typename?: 'UserNode'; legacy: string; id: string }
-                    | null;
+                    | { __typename?: 'FeaturedUser'; id: string };
                 }
               | {
                   __typename?: 'FeedExploreTagEdge';
@@ -3880,6 +3362,10 @@ export type FetchSearchQuery = {
                     legacy: string;
                     id: string;
                   };
+                }
+              | {
+                  __typename?: 'InviteEdge';
+                  publisherNode?: { __typename?: 'Invite'; id: string } | null;
                 }
               | {
                   __typename?: 'PublisherRecsEdge';
@@ -4485,6 +3971,7 @@ export const GetFeaturedEntitiesDocument = gql`
   ) {
     featuredEntities(type: $type, after: $after, first: $first) {
       edges {
+        id
         node {
           id
           ... on FeaturedUser {
@@ -4492,6 +3979,7 @@ export const GetFeaturedEntitiesDocument = gql`
             entityGuid
             id
             autoSubscribe
+            autoPostSubscription
             name
             username
           }
@@ -4500,6 +3988,7 @@ export const GetFeaturedEntitiesDocument = gql`
             entityGuid
             id
             autoSubscribe
+            autoPostSubscription
             name
             membersCount
           }
@@ -4512,7 +4001,6 @@ export const GetFeaturedEntitiesDocument = gql`
         startCursor
         endCursor
       }
-      id
     }
   }
 `;
@@ -4550,13 +4038,23 @@ export class DeleteFeaturedEntityGQL extends Apollo.Mutation<
   }
 }
 export const StoreFeaturedEntityDocument = gql`
-  mutation StoreFeaturedEntity($entityGuid: String!, $autoSubscribe: Boolean) {
+  mutation StoreFeaturedEntity(
+    $entityGuid: String!
+    $autoSubscribe: Boolean
+    $autoPostSubscription: Boolean
+  ) {
     storeFeaturedEntity(
-      featuredEntity: { entityGuid: $entityGuid, autoSubscribe: $autoSubscribe }
+      featuredEntity: {
+        entityGuid: $entityGuid
+        autoSubscribe: $autoSubscribe
+        autoPostSubscription: $autoPostSubscription
+      }
     ) {
+      id
       tenantId
       entityGuid
       autoSubscribe
+      autoPostSubscription
     }
   }
 `;
@@ -4723,6 +4221,54 @@ export class AssignUserToRoleGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const CancelInviteDocument = gql`
+  mutation cancelInvite($inviteId: Int!) {
+    cancelInvite(inviteId: $inviteId)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CancelInviteGQL extends Apollo.Mutation<
+  CancelInviteMutation,
+  CancelInviteMutationVariables
+> {
+  document = CancelInviteDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateInviteDocument = gql`
+  mutation createInvite(
+    $emails: String!
+    $bespokeMessage: String!
+    $roles: [Int!]
+    $groups: [Int!]
+  ) {
+    invite(
+      emails: $emails
+      bespokeMessage: $bespokeMessage
+      roles: $roles
+      groups: $groups
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateInviteGQL extends Apollo.Mutation<
+  CreateInviteMutation,
+  CreateInviteMutationVariables
+> {
+  document = CreateInviteDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetRolesAndPermissionsDocument = gql`
   query GetRolesAndPermissions {
     allRoles {
@@ -4766,6 +4312,84 @@ export class GetAssignedRolesGQL extends Apollo.Query<
   GetAssignedRolesQueryVariables
 > {
   document = GetAssignedRolesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetInviteDocument = gql`
+  query getInvite($inviteId: Int!) {
+    invite(inviteId: $inviteId) {
+      inviteId
+      email
+      status
+      bespokeMessage
+      createdTimestamp
+      sendTimestamp
+      id
+      roles {
+        id
+        name
+        permissions
+      }
+      groups
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetInviteGQL extends Apollo.Query<
+  GetInviteQuery,
+  GetInviteQueryVariables
+> {
+  document = GetInviteDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetInvitesDocument = gql`
+  query getInvites($first: Int!, $after: String, $search: String) {
+    invites(first: $first, after: $after, search: $search) {
+      edges {
+        node {
+          inviteId
+          email
+          status
+          bespokeMessage
+          createdTimestamp
+          sendTimestamp
+          id
+          roles {
+            id
+            name
+            permissions
+          }
+          groups
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetInvitesGQL extends Apollo.Query<
+  GetInvitesQuery,
+  GetInvitesQueryVariables
+> {
+  document = GetInvitesDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -4863,6 +4487,25 @@ export class GetUsersByRoleGQL extends Apollo.Query<
   GetUsersByRoleQueryVariables
 > {
   document = GetUsersByRoleDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ResendInviteDocument = gql`
+  mutation resendInvite($inviteId: Int!) {
+    resendInvite(inviteId: $inviteId)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ResendInviteGQL extends Apollo.Mutation<
+  ResendInviteMutation,
+  ResendInviteMutationVariables
+> {
+  document = ResendInviteDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

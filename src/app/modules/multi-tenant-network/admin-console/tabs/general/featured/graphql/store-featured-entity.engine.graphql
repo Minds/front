@@ -1,13 +1,17 @@
 mutation StoreFeaturedEntity(
   $entityGuid: String!,
   $autoSubscribe: Boolean,
+  $autoPostSubscription: Boolean
 ){
   storeFeaturedEntity(featuredEntity: {
     entityGuid: $entityGuid
     autoSubscribe: $autoSubscribe
+    autoPostSubscription: $autoPostSubscription
   })  {
+    id
     tenantId,
     entityGuid,
     autoSubscribe
+    autoPostSubscription
   }
 }

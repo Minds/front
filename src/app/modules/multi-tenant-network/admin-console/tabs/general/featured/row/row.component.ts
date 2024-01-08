@@ -4,6 +4,7 @@ import {
   DeleteFeaturedEntityMutation,
   FeaturedGroup,
   FeaturedUser,
+  StoreFeaturedEntityGQL,
 } from '../../../../../../../../graphql/generated.engine';
 import { MutationResult } from 'apollo-angular';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
@@ -37,13 +38,19 @@ export class NetworkAdminConsoleFeaturedEntityRowComponent {
   /** Enum for consumption in template. */
   public readonly FeaturedEntityRowOption: typeof FeaturedEntityRowOption = FeaturedEntityRowOption;
 
-  /** Whether action is in progres. */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
+  /** Whether update action is in progres. */
+  public readonly isUpdating$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /** Whether delete action is in progres. */
+  public readonly isDeleting$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
 
   constructor(
     private deleteFeaturedEntityGQL: DeleteFeaturedEntityGQL,
+    private storeFeaturedEntityGQL: StoreFeaturedEntityGQL,
     private toaster: ToasterService
   ) {}
 
@@ -60,6 +67,28 @@ export class NetworkAdminConsoleFeaturedEntityRowComponent {
   }
 
   /**
+   * Called when the bell icon is pressed.
+   * New users will be automatically opted in to post notifications from these channels.
+   */
+  public async onPostSubscripionClick(): Promise<void> {
+    try {
+      this.isUpdating$.next(true);
+      const result = await lastValueFrom(
+        this.storeFeaturedEntityGQL.mutate({
+          entityGuid: this.featuredEntity.entityGuid,
+          autoSubscribe: this.featuredEntity.autoSubscribe,
+          autoPostSubscription: !this.featuredEntity.autoPostSubscription,
+        })
+      );
+    } catch (e) {
+      console.error(e);
+      this.toaster.error(e?.message ?? 'Please try again later.');
+    } finally {
+      this.isUpdating$.next(false);
+    }
+  }
+
+  /**
    * Called on delete clicked on row. Will delete the entity from the DB.
    * In future we may want to make this function work with different chip badges
    * such that you can "delete" featured entities OR recommended entities.
@@ -67,7 +96,7 @@ export class NetworkAdminConsoleFeaturedEntityRowComponent {
    */
   public async onDeleteClicked(): Promise<void> {
     try {
-      this.inProgress$.next(true);
+      this.isDeleting$.next(true);
       const result: MutationResult<DeleteFeaturedEntityMutation> = await lastValueFrom(
         this.deleteFeaturedEntityGQL.mutate({
           entityGuid: this.featuredEntity.entityGuid,
@@ -83,7 +112,7 @@ export class NetworkAdminConsoleFeaturedEntityRowComponent {
       console.error(e);
       this.toaster.error(e?.message ?? 'Please try again later.');
     } finally {
-      this.inProgress$.next(false);
+      this.isDeleting$.next(false);
     }
   }
 

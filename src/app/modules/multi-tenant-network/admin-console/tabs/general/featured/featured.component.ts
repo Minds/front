@@ -128,10 +128,11 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
    * Loads next entities.
    * @returns { void }
    */
-  public fetchMore(): void {
+  public async fetchMore(): Promise<void> {
+    if (this.inProgress$.getValue()) return;
     this.inProgress$.next(true);
 
-    this.getFeaturedEntitiesQuery.fetchMore({
+    await this.getFeaturedEntitiesQuery.fetchMore({
       variables: {
         after: this.endCursor,
       },
@@ -143,7 +144,7 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
    * @returns { string } Unique track by key.
    */
   public trackBy(featuredEntity: FeaturedEntity): string {
-    return featuredEntity?.entityGuid;
+    return featuredEntity.id;
   }
 
   /**
@@ -206,7 +207,7 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
   private handleQueryResult(
     result: ApolloQueryResult<GetFeaturedEntitiesQuery>
   ): void {
-    const featuredEntities: FeaturedEntity[] = this.featuredEntities$.getValue();
+    const featuredEntities: FeaturedEntity[] = [];
 
     for (let edge of result?.data?.featuredEntities?.edges ?? []) {
       featuredEntities.push(edge.node as FeaturedEntity);
@@ -233,16 +234,6 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
     }
 
     if (await this.autoSubscribeToEntityByGuid(user.guid)) {
-      this.addFeaturedEntityToList({
-        __typename: 'FeaturedUser',
-        id: user.guid,
-        entityGuid: user.guid,
-        username: user.username,
-        name: user.name,
-        autoSubscribe: true,
-        recommended: false,
-        tenantId: null,
-      });
     }
   }
 
@@ -258,16 +249,6 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
     }
 
     if (await this.autoSubscribeToEntityByGuid(group.guid)) {
-      this.addFeaturedEntityToList({
-        __typename: 'FeaturedGroup',
-        id: group.guid,
-        entityGuid: group.guid,
-        name: group.name,
-        membersCount: group['members:count'] ?? 0,
-        autoSubscribe: true,
-        recommended: false,
-        tenantId: null,
-      });
     }
   }
 
@@ -284,6 +265,7 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
           autoSubscribe: true,
         })
       );
+      await this.getFeaturedEntitiesQuery.refetch();
       return true;
     } catch (e) {
       console.error(e);
@@ -292,19 +274,6 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
       );
       return false;
     }
-  }
-
-  /**
-   * Add a featured entity to the list.
-   * @param { void } featuredEntity - featuredEntity to add.
-   */
-  private addFeaturedEntityToList(
-    featuredEntity: FeaturedGroup | FeaturedUser
-  ): void {
-    this.featuredEntities$.next([
-      featuredEntity as any,
-      ...this.featuredEntities$.getValue(),
-    ]);
   }
 
   /**

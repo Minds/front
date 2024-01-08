@@ -1,0 +1,22 @@
+@import 'defaults.scss';
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  @media screen and (max-width: $min-tablet) {
+    margin-top: $spacing4;
+    margin-left: $spacing8;
+  }
+
+  .m-roleAggregator__additionalRoleCount {
+    display: inline-block;
+    margin-left: $spacing2;
+    width: $spacing14;
+    cursor: default;
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}
