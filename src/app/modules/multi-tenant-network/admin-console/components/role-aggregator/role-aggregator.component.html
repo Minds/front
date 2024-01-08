@@ -1,0 +1,12 @@
+<ng-container *ngIf="roles.length > 0">
+  <!-- put an edit button here, if desired -->
+  <ng-content></ng-content>
+  <m-role__chip [role]="featuredRole"></m-role__chip>
+
+  <span
+    *ngIf="roles.length > 1"
+    class="m-roleAggregator__additionalRoleCount"
+    [title]="aggregatedRoleHoverText | titlecase"
+    >+{{ roles.length - 1 }} {{ roles.length === 2 ? 'role' : 'roles' }}</span
+  >
+</ng-container>

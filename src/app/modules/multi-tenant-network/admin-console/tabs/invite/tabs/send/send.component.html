@@ -1,0 +1,183 @@
+<ng-container *ngIf="!(loading$ | async); else loadingSpinnerTemplate">
+  <form
+    *ngIf="formGroup"
+    [formGroup]="formGroup"
+    class="m-networkAdminConsole__form"
+  >
+    <!-- ------------------------------ -->
+    <!-- EMAILS -->
+    <!-- ------------------------------ -->
+    <div class="m-networkAdminConsoleInviteSendField--emails">
+      <div class="m-networkAdminConsole__numberedFormInputHeader ">
+        <span class="m-networkAdminConsoleNumberedFormInputHeader__number">
+          1
+        </span>
+        <div class="m-networkAdminConsoleNumberedFormInputHeader__labelCol">
+          <span
+            class="m-networkAdminConsole__formLabel"
+            i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__ADD_EMAILS_TITLE"
+            >Add emails</span
+          ><span
+            class="m-networkAdminConsole__formLabel--secondary"
+            i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__ADD_EMAILS_DESC"
+            >Add a single email address, or copy and paste multiple email
+            addresses.</span
+          >
+        </div>
+      </div>
+      <div class="m-networkAdminConsole__formInputContainer">
+        <label
+          class="m-networkAdminConsole__formLabel--alt"
+          i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__ADD_EMAILS_LABEL"
+          >Email address list</label
+        >
+        <textarea
+          class="m-networkAdminConsole__formTextAreaInput"
+          id="emails"
+          name="emails"
+          formControlName="emails"
+          autocomplete="off"
+          data-ref="network-admin-invite-emails-input"
+          rows="4"
+        ></textarea>
+      </div>
+    </div>
+    <!-- ------------------------------ -->
+    <!-- ROLES -->
+    <!-- ------------------------------ -->
+    <div class="m-networkAdminConsoleInviteSendField--roles">
+      <div class="m-networkAdminConsole__numberedFormInputHeader">
+        <span class="m-networkAdminConsoleNumberedFormInputHeader__number">
+          2
+        </span>
+        <div class="m-networkAdminConsoleNumberedFormInputHeader__labelCol">
+          <label
+            class="m-networkAdminConsole__formLabel"
+            i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__ROLES_LABEL"
+            >Set user roles</label
+          ><span
+            class="m-networkAdminConsole__formLabel--secondary"
+            i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__ROLES_DESC"
+            >What role(s) would you like the user(s) to have?</span
+          >
+        </div>
+      </div>
+      <div class="m-networkAdminConsole__formInputContainer">
+        <fieldset class="m-networkAdminConsole__checkboxesWrapper">
+          <div
+            class="m-networkAdminConsole__checkboxesContainer"
+            formArrayName="roles"
+          >
+            <ng-container
+              *ngFor="let role of rolesService.allRoles$ | async; let i = index"
+            >
+              <div class="m-networkAdminConsole__checkboxRow">
+                <div class="m-networkAdminConsole__checkboxWrapper">
+                  <div class="m-networkAdminConsole__checkboxLabel">
+                    <m-networkAdminConsoleRole__icon
+                      [roleId]="role.id"
+                      scale="0.9"
+                    ></m-networkAdminConsoleRole__icon>
+                    <label [for]="'role-' + role.id">{{
+                      role.name | titlecase
+                    }}</label>
+                  </div>
+                  <m-formInput__checkbox
+                    [formControlName]="i"
+                    [value]="role.id"
+                  ></m-formInput__checkbox>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    <!-- ------------------------------ -->
+    <!-- BESPOKE MESSAGE -->
+    <!-- ------------------------------ -->
+    <div class="m-networkAdminConsoleInviteSendField--bespokeMessage">
+      <div class="m-networkAdminConsole__numberedFormInputHeader">
+        <span class="m-networkAdminConsoleNumberedFormInputHeader__number">
+          3
+        </span>
+        <div class="m-networkAdminConsoleNumberedFormInputHeader__labelCol">
+          <label
+            class="m-networkAdminConsole__formLabel"
+            i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__BESPOKE_MESSAGE_LABEL"
+            >Send a personalized invite message
+            (<strong>optional</strong>)</label
+          >
+          <p class="m-networkAdminConsole__formLabel--secondary">
+            <span
+              i18n="
+
+                @@NETWORK_ADMIN_CONSOLE_INVITE__BESPOKE_MESSAGE_DESC_CUSTOM_MESSAGE
+
+              "
+              >Optionally add a custom message to the invite to tell your
+              contacts why they should join your network.</span
+            >
+            <span
+              [ngClass]="{'m-networkAdminConsole__formText--error': formGroup.get('bespokeMessage').errors?.['maxlength']}"
+              i18n="
+                 @@NETWORK_ADMIN_CONSOLE_INVITE__BESPOKE_MESSAGE_DESC_MAX_LENGTH
+
+              "
+            >
+              Make sure that your email message is under 500 characters.</span
+            >
+          </p>
+        </div>
+      </div>
+      <div class="m-networkAdminConsole__formInputContainer">
+        <label
+          class="m-networkAdminConsole__formLabel--alt"
+          i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__BESPOKE_MESSAGE_LABEL"
+          >Invite message</label
+        >
+        <textarea
+          class="m-networkAdminConsole__formTextAreaInput"
+          id="bespokeMessage"
+          name="bespokeMessage"
+          formControlName="bespokeMessage"
+          autocomplete="off"
+          rows="4"
+          data-ref="network-admin-invite-bespoke-message-input"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- ------------------------------ -->
+    <!-- SUBMIT BUTTON -->
+    <!-- ------------------------------ -->
+    <div class="m-networkAdminConsoleInviteSend__footer">
+      <m-button
+        *ngIf="{
+          inProgress: savingInProgress$ | async
+        } as buttonTemplateVariables"
+        color="blue"
+        size="medium"
+        [solid]="true"
+        [disabled]="
+          !formGroup.valid ||
+          !formGroup.dirty ||
+          buttonTemplateVariables.inProgress
+        "
+        [saving]="buttonTemplateVariables.inProgress"
+        (onAction)="onSubmit()"
+        ><ng-container i18n="@@COMMON__SEND">Send</ng-container></m-button
+      >
+      <a
+        class="m-networkAdminConsoleInviteSendFooter__link"
+        routerLink="../invitations"
+        ><span i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__VIEW_INVITES"
+          >View invites</span
+        ><i class="material-icons">arrow_forward</i></a
+      >
+    </div>
+  </form>
+</ng-container>
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

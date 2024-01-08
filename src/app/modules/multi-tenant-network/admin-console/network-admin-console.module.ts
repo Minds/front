@@ -21,6 +21,11 @@ import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/
 import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
 import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
 import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.component';
+import { NetworkAdminConsoleInviteComponent } from './tabs/invite/invite.component';
+import { NetworkAdminConsoleInviteSendComponent } from './tabs/invite/tabs/send/send.component';
+import { NetworkAdminConsoleInviteInvitationsComponent } from './tabs/invite/tabs/invitations/invitations.component';
+import { RoleChipComponent } from './components/role-chip/role-chip.component';
+import { RoleAggregatorComponent } from './components/role-aggregator/role-aggregator.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -62,6 +67,15 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
         path: 'roles/:view',
         component: NetworkAdminConsoleRolesComponent,
       },
+      {
+        path: 'invite',
+        redirectTo: 'invite/send',
+        pathMatch: 'full' as PathMatch,
+      },
+      {
+        path: 'invite/:view',
+        component: NetworkAdminConsoleInviteComponent,
+      },
     ],
   },
 ];
@@ -90,6 +104,11 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
     NetworkAdminConsoleFederationSettingsComponent,
+    NetworkAdminConsoleInviteComponent,
+    NetworkAdminConsoleInviteSendComponent,
+    NetworkAdminConsoleInviteInvitationsComponent,
+    RoleChipComponent,
+    RoleAggregatorComponent,
   ],
   providers: [MultiTenantDomainService],
 })

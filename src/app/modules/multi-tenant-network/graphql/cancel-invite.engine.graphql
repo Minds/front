@@ -1,0 +1,3 @@
+mutation cancelInvite($inviteId: Int!) {
+  cancelInvite(inviteId: $inviteId)
+}

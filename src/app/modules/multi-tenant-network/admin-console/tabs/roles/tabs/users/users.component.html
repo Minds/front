@@ -1,12 +1,12 @@
 <div
-  class="m-networkAdminConsoleRolesUsers__headerRow m-networkAdminConsoleRolesUsers__row"
+  class="m-networkAdminConsoleList__row--header m-networkAdminConsoleList__row"
 >
   <div><span i18n="@@COMMON_USER">User</span></div>
   <!-- ------------------------------------------- -->
   <!-- ROLE FILTER  -->
   <!-- ------------------------------------------- -->
-  <div class="m-networkAdminConsoleRolesUsersHeaderRow__filtersWrapper">
-    <div class="m-networkAdminConsoleRolesUsersHeaderRow__filter--dropdown">
+  <div class="m-networkAdminConsoleListHeaderRow__filtersWrapper">
+    <div class="m-networkAdminConsoleListHeaderRow__filter--dropdown">
       <m-dropdownSelector
         *ngIf="filter.options.length > 0"
         [filter]="filter"
@@ -17,7 +17,7 @@
     <!-- ------------------------------------------- -->
     <!-- SEARCH BAR (DISABLED) -->
     <!-- ------------------------------------------- -->
-    <!-- <div class="m-networkAdminConsoleRolesUsersHeaderRow__filter--search">
+    <!-- <div class="m-networkAdminConsoleListHeaderRow__filter--search">
       <input
         name="q"
         type="text"
@@ -35,11 +35,11 @@
 <!-- ------------------------------------------- -->
 <ng-container *ngFor="let user of users$ | async">
   <div
-    class="m-networkAdminConsoleRolesUsers__userRow m-networkAdminConsoleRolesUsers__row"
+    class="m-networkAdminConsoleList__row--item m-networkAdminConsoleList__row"
   >
-    <div class="m-networkAdminConsoleRolesUserRow__userWrapper">
+    <div class="m-networkAdminConsoleListRow__userWrapper">
       <m-hovercard
-        class="m-networkAdminConsoleRolesUserRow__avatarWrapper"
+        class="m-networkAdminConsoleListRow__avatarWrapper"
         [publisher]="user.node.legacy"
         [offset]="[0, 15]"
       >
@@ -47,33 +47,19 @@
           <img [src]="getUserAvatarUrl(user.node)" />
         </a>
       </m-hovercard>
-      <div class="m-networkAdminConsoleRolesUserRow__namesContainer">
+      <div class="m-networkAdminConsoleListRow__namesContainer">
         <span>{{ user.node.name }}</span> <span>@{{ user.node.username }}</span>
       </div>
     </div>
-    <div class="m-networkAdminConsoleRolesUserRow__roles">
+    <m-role__aggregator [roles]="user.roles">
       <m-button
+        class="m-networkAdminConsoleRolesUsers__editButton"
         (onAction)="onAssignRolesClick(user)"
         iconOnly="true"
         title="Assign roles"
         ><i class="material-icons">edit</i></m-button
-      >
-      <div
-        class="m-networkAdminConsoleRolesUserRow__role"
-        *ngFor="let role of user.roles | slice: -1"
-      >
-        <m-networkAdminConsoleRole__icon
-          [roleId]="role.id"
-        ></m-networkAdminConsoleRole__icon>
-        <span>{{ role.name | titlecase }}</span>
-      </div>
-      <span
-        *ngIf="user.roles.length > 1"
-        class="m-networkAdminConsoleRolesUserRow__additionalRoleCount"
-        >+{{ user.roles.length - 1 }}
-        {{ user.roles.length === 2 ? 'role' : 'roles' }}</span
-      >
-    </div>
+      ></m-role__aggregator
+    >
   </div>
 </ng-container>
 <infinite-scroll
@@ -85,7 +71,7 @@
 ></infinite-scroll>
 
 <span
-  class="m-networkAdminConsoleRoles__noResultsNotice"
+  class="m-networkAdminConsoleList__noResultsNotice"
   *ngIf="
     !(inProgress$ | async) &&
     (users$ | async).length < 1 &&

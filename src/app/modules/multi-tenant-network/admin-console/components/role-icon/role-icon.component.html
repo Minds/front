@@ -6,9 +6,7 @@
   <i
     *ngIf="roleId !== RoleId.DEFAULT"
     class="material-icons"
-    [ngClass]="{
-      pushDown: roleId === roleId.OWNER
-    }"
+    [ngClass]="{ pushDown: roleId === RoleId.OWNER }"
     >{{ rolesService.getIconByRoleId(roleId) }}</i
   >
 
