@@ -45,38 +45,45 @@
     }
   }
 
-  .m-featuredEntityRow__chipBadge {
+  .m-featuredEntityRow__actions {
     display: flex;
     align-items: center;
     gap: $spacing2;
     box-sizing: border-box;
-    padding: $spacing2 $spacing2 $spacing2 $spacing4;
     border-radius: 24px;
     max-height: 36px;
 
-    @include m-theme() {
-      border: 1px solid themed($m-borderColor--primary);
-    }
     .m-featuredEntityRow__chipBadgeText {
       @include body2Regular;
     }
 
-    .m-featuredEntityRow__deleteIcon {
+    .m-featuredEntityRowActions__action {
       display: flex;
       width: 16px;
       height: 16px;
       justify-content: center;
       align-items: center;
       border-radius: 50%;
+      padding: $spacing2;
       cursor: pointer;
 
-      @include body3Medium;
-
       @include m-theme() {
-        background-color: themed($m-borderColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
         color: themed($m-textColor--primary);
       }
 
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-borderColor--primary);
+        }
+      }
+
+      .m-featuredEntityRowActions__icon {
+        @include body1Medium;
+      }
+    }
+
+    .m-featuredEntityRowActions__action--delete {
       &:hover {
         @include m-theme() {
           background-color: themed($m-alert);
@@ -89,6 +96,12 @@
         @include m-on-theme(dark) {
           color: color-by-theme($m-black-always, 'dark');
         }
+      }
+    }
+
+    .m-featuredEntityRowActions__action--active {
+      @include m-theme() {
+        background-color: themed($m-borderColor--primary);
       }
     }
   }
