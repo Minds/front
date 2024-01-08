@@ -31,24 +31,49 @@
   </div>
 </div>
 
-<div class="m-featuredEntityRow__chipBadge">
-  <span
-    class="m-featuredEntityRow__chipBadgeText"
-    i18n="featured user|@@NETWORK_ADMIN_CONSOLE__FEATURED_ENTITY__FEATURED"
-    >Featured</span
+<div class="m-featuredEntityRow__actions">
+  <div
+    class="m-featuredEntityRowActions__action"
+    [class.m-featuredEntityRowActions__action--active]="
+      featuredEntity.autoPostSubscription
+    "
   >
-  <ng-container *ngIf="!(inProgress$ | async); else deleteInProgressTemplate">
-    <i
-      class="material-icons m-featuredEntityRow__deleteIcon"
-      (click)="onDeleteClicked()"
-      >close</i
-    >
-  </ng-container>
-  <ng-template #deleteInProgressTemplate>
-    <m-sizeableLoadingSpinner
-      [inProgress]="true"
-      [spinnerHeight]="16"
-      [spinnerWidth]="16"
-    ></m-sizeableLoadingSpinner>
-  </ng-template>
+    <ng-container *ngIf="!(isUpdating$ | async); else updateInProgressTemplate">
+      <i
+        class="material-icons m-featuredEntityRowActions__icon"
+        (click)="onPostSubscripionClick()"
+        >{{
+          featuredEntity.autoPostSubscription
+            ? 'notifications_on'
+            : 'notifications'
+        }}</i
+      >
+    </ng-container>
+    <ng-template #updateInProgressTemplate>
+      <m-sizeableLoadingSpinner
+        [inProgress]="true"
+        [spinnerHeight]="16"
+        [spinnerWidth]="16"
+      ></m-sizeableLoadingSpinner>
+    </ng-template>
+  </div>
+
+  <div
+    class="m-featuredEntityRowActions__action m-featuredEntityRowActions__action--delete"
+  >
+    <ng-container *ngIf="!(isDeleting$ | async); else deleteInProgressTemplate">
+      <i
+        class="material-icons m-featuredEntityRowActions__icon"
+        (click)="onDeleteClicked()"
+        >close</i
+      >
+    </ng-container>
+    <ng-template #deleteInProgressTemplate>
+      <m-sizeableLoadingSpinner
+        [inProgress]="true"
+        [spinnerHeight]="16"
+        [spinnerWidth]="16"
+      ></m-sizeableLoadingSpinner>
+    </ng-template>
+  </div>
 </div>
