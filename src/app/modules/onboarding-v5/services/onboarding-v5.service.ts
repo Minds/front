@@ -3,10 +3,10 @@ import {
   ComponentOnboardingV5CarouselItem,
   ComponentOnboardingV5CompletionStep,
   ComponentOnboardingV5OnboardingStep,
+  FetchMinimalOnboardingV5VersionsGQL,
+  FetchMinimalOnboardingV5VersionsQuery,
   FetchOnboardingV5VersionsGQL,
   FetchOnboardingV5VersionsQuery,
-  FetchTenantOnboardingV5VersionsGQL,
-  FetchTenantOnboardingV5VersionsQuery,
   OnboardingV5Version,
   OnboardingV5VersionStepsDynamicZone,
 } from '../../../../graphql/generated.strapi';
@@ -43,7 +43,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { OnboardingV5CompletionStorageService } from './onboarding-v5-completion-storage.service';
 import { Session } from '../../../services/session';
-import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { OnboardingV5MinimalModeService } from './onboarding-v5-minimal-mode.service';
 
 /**
  * Service for the management of the onboarding (v5) process.
@@ -126,20 +126,20 @@ export class OnboardingV5Service implements OnDestroy {
   /**
    * Tenant users end onboarding after this step is completed
    */
-  private finalStepKeyForTenantUsers: string = 'verify_email';
+  private finalStepKeyForMinimalMode: string = 'verify_email';
 
   constructor(
     private authRedirect: AuthRedirectService,
     private fetchOnboardingV5VersionsGql: FetchOnboardingV5VersionsGQL,
-    private fetchTenantOnboardingV5VersionsGql: FetchTenantOnboardingV5VersionsGQL,
+    private fetchMinimalOnboardingV5VersionsGql: FetchMinimalOnboardingV5VersionsGQL,
     private getOnboardingStateGQL: GetOnboardingStateGQL,
     private setOnboardingStateGQL: SetOnboardingStateGQL,
     private getOnboardingStepProgressGQL: GetOnboardingStepProgressGQL,
     private completeOnboardingStepGQL: CompleteOnboardingStepGQL,
     private completionStorage: OnboardingV5CompletionStorageService,
+    private onboardingMinimalMode: OnboardingV5MinimalModeService,
     private configs: ConfigsService,
     private session: Session,
-    private isTenant: IsTenantService,
     @Inject(STRAPI_URL) public strapiUrl: string
   ) {
     this.releaseTimestamp =
@@ -253,10 +253,10 @@ export class OnboardingV5Service implements OnDestroy {
 
       // get steps from CMS.
       const stepsResponse: ApolloQueryResult<
-        FetchOnboardingV5VersionsQuery | FetchTenantOnboardingV5VersionsQuery
+        FetchOnboardingV5VersionsQuery | FetchMinimalOnboardingV5VersionsQuery
       > = await firstValueFrom(
-        this.isTenant.is()
-          ? this.fetchTenantOnboardingV5VersionsGql.fetch()
+        this.onboardingMinimalMode.shouldShow()
+          ? this.fetchMinimalOnboardingV5VersionsGql.fetch()
           : this.fetchOnboardingV5VersionsGql.fetch()
       );
 
@@ -308,8 +308,8 @@ export class OnboardingV5Service implements OnDestroy {
         steps[i].completed = true;
 
         const isFinalTenantStep =
-          this.isTenant.is() &&
-          currentlyActiveStep.data.stepKey === this.finalStepKeyForTenantUsers;
+          this.onboardingMinimalMode.shouldShow() &&
+          currentlyActiveStep.data.stepKey === this.finalStepKeyForMinimalMode;
 
         if (!steps?.[i + 1] || isFinalTenantStep) {
           this.finishOnboarding();
