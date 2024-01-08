@@ -10,6 +10,7 @@
   box-sizing: border-box;
   padding-left: $leftContainerPaddingX;
   padding-right: $leftContainerPaddingX;
+  margin-top: $leftContainerPaddingY;
 
   .m-onboardingStepper__circle {
     display: flex;

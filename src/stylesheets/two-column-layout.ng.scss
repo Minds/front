@@ -21,6 +21,10 @@ $leftContainerPaddingX: $spacing12;
       min-width: $minLeftContainerWidth;
       max-width: 35%;
       width: 35%;
+      height: 100%;
+      display: flex;
+      flex-flow: column nowrap;
+      overflow-y: scroll;
 
       @include m-theme() {
         background-color: themed($m-bgColor--primary);
@@ -28,8 +32,6 @@ $leftContainerPaddingX: $spacing12;
       }
 
       flex-grow: 1;
-      padding-top: $leftContainerPaddingY;
-      padding-bottom: $leftContainerPaddingY;
 
       @media screen and (max-width: $mobileCollapseWidth) {
         min-width: unset;
@@ -67,7 +69,6 @@ $leftContainerPaddingX: $spacing12;
     margin-top: $leftContainerPaddingY;
     padding-left: $leftContainerPaddingX;
     padding-right: $leftContainerPaddingX;
-    overflow-y: auto;
     @include vertical-scroll;
 
     @include vertical-scroll(
