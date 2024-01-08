@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { MultiTenantRolesService } from '../../../../services/roles.service';
-import { RoleId } from '../roles.types';
+import { Component, Input, OnInit } from '@angular/core';
+import { MultiTenantRolesService } from '../../../services/roles.service';
+import { RoleId } from '../../tabs/roles/roles.types';
 
 @Component({
   selector: 'm-networkAdminConsoleRole__icon',

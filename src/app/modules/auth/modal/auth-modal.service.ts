@@ -19,13 +19,18 @@ export class AuthModalService {
   ) {}
 
   /**
-   * Standlone pages are at /login and /register. Setting this to true will set the
+   * Standalone pages are at /login and /register. Setting this to true will set the
    * back button location to the guest mode landing page
    */
   async open(
-    opts: { formDisplay: AuthForm; standalonePage?: boolean } = {
+    opts: {
+      formDisplay: AuthForm;
+      standalonePage?: boolean;
+      inviteToken?: string;
+    } = {
       formDisplay: 'register',
       standalonePage: false,
+      inviteToken: null,
     }
   ): Promise<MindsUser> {
     if (this.session.isLoggedIn()) {
@@ -40,6 +45,7 @@ export class AuthModalService {
       data: {
         formDisplay: opts.formDisplay,
         standalonePage: opts.standalonePage,
+        inviteToken: opts.inviteToken,
         onLoggedIn: () => {
           this.onLoggedIn$.next(true);
         },

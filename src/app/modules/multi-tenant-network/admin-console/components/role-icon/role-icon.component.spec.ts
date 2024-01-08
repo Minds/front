@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NetworkAdminConsoleRoleIconComponent } from './role-icon.component';
-import { MultiTenantRolesService } from '../../../../services/roles.service';
-import { MockService } from '../../../../../../utils/mock';
+import { MultiTenantRolesService } from '../../../services/roles.service';
+import { MockService } from '../../../../../utils/mock';
 
 describe('NetworkAdminConsoleRoleIconComponent', () => {
   let component: NetworkAdminConsoleRoleIconComponent;

@@ -16,49 +16,6 @@
 
     .m-modalV2__body {
       overflow-y: visible;
-
-      .m-assignRoles__checkboxesWrapper {
-        display: flex;
-        flex-flow: column;
-        margin-bottom: $spacing10;
-
-        .m-assignRoles__checkboxesContainer {
-          display: flex;
-          flex-flow: column nowrap;
-          gap: $spacing1;
-
-          .m-assignRoles__checkboxRow {
-            display: flex;
-            flex-flow: row nowrap;
-            padding: $spacing4 0;
-
-            &.m-assignRoles__checkboxRow--disabled {
-              opacity: 0.5;
-            }
-
-            .m-assignRoles__checkboxWrapper {
-              display: flex;
-              flex-flow: row nowrap;
-
-              justify-content: space-between;
-              align-items: center;
-              width: 100%;
-
-              .m-assignRoles__checkboxLabel {
-                display: flex;
-                flex-flow: row nowrap;
-                align-items: center;
-                gap: $spacing2;
-                span {
-                  @include body2Regular;
-                  display: inline-block;
-                  margin-right: $spacing2;
-                }
-              }
-            }
-          }
-        }
-      }
     }
   }
 }
