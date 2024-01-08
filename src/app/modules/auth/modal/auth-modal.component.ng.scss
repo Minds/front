@@ -102,4 +102,8 @@
     padding: $spacing10;
     box-sizing: border-box;
   }
+
+  .m-authModal__formDisplay {
+    overflow-y: scroll;
+  }
 }
