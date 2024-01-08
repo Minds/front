@@ -55,6 +55,7 @@ describe('NetworkAdminConsoleFederationSettingsComponent', () => {
       (comp as any).multiTenantConfigService.config$.next({
         ...multiTenantConfigMock,
         federationDisabled: true,
+        canEnableFederation: true,
       });
 
       comp.ngOnInit();
@@ -66,6 +67,7 @@ describe('NetworkAdminConsoleFederationSettingsComponent', () => {
       (comp as any).multiTenantConfigService.config$.next({
         ...multiTenantConfigMock,
         federationDisabled: false,
+        canEnableFederation: true,
       });
 
       comp.ngOnInit();
@@ -77,16 +79,30 @@ describe('NetworkAdminConsoleFederationSettingsComponent', () => {
       (comp as any).multiTenantConfigService.config$.next({
         ...multiTenantConfigMock,
         federationDisabled: null,
+        canEnableFederation: true,
       });
 
       comp.ngOnInit();
 
       expect(comp.enabledToggleState).toBe('on');
     });
+
+    it('should set toggle state to disabled on init when federation cannot be enabled', () => {
+      (comp as any).multiTenantConfigService.config$.next({
+        ...multiTenantConfigMock,
+        federationDisabled: null,
+        canEnableFederation: false,
+      });
+
+      comp.ngOnInit();
+
+      expect(comp.enabledToggleState).toBe('off');
+    });
   });
 
   describe('onEnabledToggle', () => {
     it('should set toggle state to enabled when successful', async () => {
+      (comp as any).canEnableFederation = true;
       (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
         of(true)
       );
@@ -97,6 +113,7 @@ describe('NetworkAdminConsoleFederationSettingsComponent', () => {
     });
 
     it('should set toggle state to disabled when successful', async () => {
+      (comp as any).canEnableFederation = true;
       (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
         of(true)
       );
@@ -107,6 +124,7 @@ describe('NetworkAdminConsoleFederationSettingsComponent', () => {
     });
 
     it('should set toggle state to enabled when unsuccessful', async () => {
+      (comp as any).canEnableFederation = true;
       (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
         of(true)
       );
@@ -117,6 +135,7 @@ describe('NetworkAdminConsoleFederationSettingsComponent', () => {
     });
 
     it('should set toggle state to disabled when unsuccessful', async () => {
+      (comp as any).canEnableFederation = true;
       (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
         of(true)
       );
@@ -125,5 +144,20 @@ describe('NetworkAdminConsoleFederationSettingsComponent', () => {
 
       expect(comp.enabledToggleState).toBe('off');
     });
+  });
+
+  it('should set NOT allow toggle when federation cannot be enabled', async () => {
+    (comp as any).canEnableFederation = false;
+    (comp as any).enabledToggleState = 'off';
+
+    await comp.onEnabledToggle('on');
+
+    expect((comp as any).toaster.warn).toHaveBeenCalledWith(
+      'Only networks with custom domains can enable federation'
+    );
+    expect(
+      (comp as any).multiTenantConfigService.updateConfig
+    ).not.toHaveBeenCalled();
+    expect(comp.enabledToggleState).toBe('off');
   });
 });

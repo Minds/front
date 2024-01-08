@@ -534,6 +534,8 @@ export enum MultiTenantColorScheme {
 
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
+  /** Undocumented function */
+  canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
   communityGuidelines?: Maybe<Scalars['String']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
@@ -2129,6 +2131,7 @@ export type GetMultiTenantConfigQuery = {
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
     communityGuidelines?: string | null;
+    canEnableFederation?: boolean | null;
     federationDisabled?: boolean | null;
   } | null;
 };
@@ -4783,6 +4786,7 @@ export const GetMultiTenantConfigDocument = gql`
       colorScheme
       primaryColor
       communityGuidelines
+      canEnableFederation
       federationDisabled
     }
   }

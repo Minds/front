@@ -19,6 +19,9 @@ export class NetworkAdminConsoleFederationSettingsComponent
   /** Enabled toggle state. */
   public enabledToggleState: OnOffToggleValue = 'on';
 
+  /** Whether federation can be enabled. */
+  public canEnableFederation: boolean = false;
+
   // subscriptions.
   private configLoadSubscription: Subscription;
 
@@ -31,6 +34,13 @@ export class NetworkAdminConsoleFederationSettingsComponent
     this.configLoadSubscription = this.multiTenantConfigService.config$
       .pipe(filter(Boolean), take(1))
       .subscribe((config: MultiTenantConfig): void => {
+        this.canEnableFederation = config?.canEnableFederation;
+
+        if (!this.canEnableFederation) {
+          this.enabledToggleState = 'off';
+          return;
+        }
+
         // engine setting is DISABLED, this UI toggle is for ENABLED state.
         this.enabledToggleState = config.federationDisabled ? 'off' : 'on';
       });
@@ -47,6 +57,13 @@ export class NetworkAdminConsoleFederationSettingsComponent
   public async onEnabledToggle(
     newToggleState: OnOffToggleValue
   ): Promise<void> {
+    if (!this.canEnableFederation) {
+      this.toaster.warn(
+        'Only networks with custom domains can enable federation'
+      );
+      return;
+    }
+
     const previousToggleState: OnOffToggleValue = this.enabledToggleState;
     this.enabledToggleState = newToggleState;
 

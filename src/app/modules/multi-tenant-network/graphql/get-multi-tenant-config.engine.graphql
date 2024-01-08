@@ -5,6 +5,7 @@ query GetMultiTenantConfig{
     colorScheme,
     primaryColor,
     communityGuidelines,
+    canEnableFederation,
     federationDisabled
   }
 }

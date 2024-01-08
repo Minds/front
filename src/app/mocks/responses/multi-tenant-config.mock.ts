@@ -10,4 +10,5 @@ export const multiTenantConfigMock: MultiTenantConfig = {
   primaryColor: '#ff0000',
   communityGuidelines: 'Community Guidelines Test',
   federationDisabled: true,
+  canEnableFederation: true,
 };
