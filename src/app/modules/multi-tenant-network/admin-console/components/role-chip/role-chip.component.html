@@ -1,0 +1,6 @@
+<ng-container *ngIf="role"
+  ><m-networkAdminConsoleRole__icon
+    [roleId]="role.id"
+  ></m-networkAdminConsoleRole__icon>
+  <span>{{ role.name | titlecase }}</span>
+</ng-container>

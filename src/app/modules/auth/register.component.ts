@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -36,6 +36,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   videoError: boolean = false;
   referrer: string;
+
+  /**
+   * jwt token for users registering via an invite link
+   */
+  inviteToken: string;
 
   @HostBinding('class.m-register__iosFallback')
   iosFallback: boolean = false;
@@ -96,7 +101,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.authModal.open({ formDisplay: 'register', standalonePage: true });
+    this.inviteToken = this.route.snapshot.queryParams['invite_token'];
+
+    this.authModal.open({
+      formDisplay: 'register',
+      standalonePage: true,
+      inviteToken: this.inviteToken,
+    });
 
     this.topbarService.toggleVisibility(false);
     this.iosFallback = iOSVersion() !== null;
@@ -116,6 +127,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
       if (params['redirectUrl']) {
         this.redirectTo = decodeURI(params['redirectUrl']);
+      }
+      if (params['invite_token']) {
+        this.inviteToken = params['invite_token'];
       }
     });
 

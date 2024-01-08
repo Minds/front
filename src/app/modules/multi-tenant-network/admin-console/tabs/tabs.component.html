@@ -19,6 +19,15 @@
   </div>
   <div class="m-tabs__tab">
     <a
+      [routerLink]="['/network/admin/invite']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-tab-invite"
+      i18n="@@COMMON__INVITE"
+      >Invite</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
       [routerLink]="['/network/admin/appearance']"
       [routerLinkActive]="'m-tabs__tab--selected'"
       data-ref="network-admin-console-tab-appearance"

@@ -1,0 +1,44 @@
+@import 'defaults.scss';
+@import '../../../../../../../common/layout/layout.scss';
+
+:host {
+  padding: 0 !important;
+  .m-networkAdminConsoleList__row--item {
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      flex-flow: column nowrap;
+      gap: $spacing4;
+    }
+    .m-networkAdminConsoleInvitations__nameCol {
+      display: flex;
+      flex-flow: row nowrap;
+      width: 100%;
+      flex: 0 0 70%;
+
+      white-space: nowrap;
+      overflow: hidden;
+
+      @media screen and (max-width: $layoutMin3ColWidth) {
+        flex-flow: column nowrap;
+        align-items: start;
+        gap: $spacing4;
+      }
+
+      > * {
+        flex: 1;
+      }
+
+      ::ng-deep m-role__aggregator {
+        justify-content: flex-start;
+        width: 1px; // this makes the column left-aligned
+
+        @media screen and (max-width: $layoutMin3ColWidth) {
+          margin: 0 !important;
+        }
+      }
+    }
+    .m-networkAdminConsoleInvitations__statusCol {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}
