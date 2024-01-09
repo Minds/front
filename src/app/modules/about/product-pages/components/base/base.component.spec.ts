@@ -15,6 +15,7 @@ import {
 import { ProductPageDynamicComponent } from '../../product-pages.types';
 import { By } from '@angular/platform-browser';
 import { TopbarService } from '../../../../../common/layout/topbar.service';
+import { PLATFORM_ID } from '@angular/core';
 
 describe('ProductPageBaseComponent', () => {
   let comp: ProductPageBaseComponent;
@@ -183,6 +184,7 @@ describe('ProductPageBaseComponent', () => {
             },
           },
           { provide: Router, useValue: MockService(Router) },
+          { provide: PLATFORM_ID, value: 'browser' },
         ],
       }).compileComponents();
     })
