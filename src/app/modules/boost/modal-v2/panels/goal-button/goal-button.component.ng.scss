@@ -112,7 +112,7 @@
         cursor: pointer;
 
         @include m-theme() {
-          accent-color: themed($m-link-text);
+          accent-color: themed($m-action);
           background-color: themed($m-white-always);
         }
       }

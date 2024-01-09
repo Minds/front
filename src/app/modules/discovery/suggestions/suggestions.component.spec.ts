@@ -15,6 +15,10 @@ import { DiscoverySuggestionsComponent } from './suggestions.component';
 import { DiscoveryService } from '../discovery.service';
 import { EventEmitter } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { ToasterService } from '../../../common/services/toaster.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 describe('DiscoverySuggestionsComponent', () => {
   let comp: DiscoverySuggestionsComponent;
@@ -53,6 +57,19 @@ describe('DiscoverySuggestionsComponent', () => {
             provide: AuthModalService,
             useValue: MockService(AuthModalService),
           },
+          {
+            provide: IsTenantService,
+            useValue: MockService(IsTenantService),
+          },
+          {
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
+          },
+          {
+            provide: PermissionsService,
+            useValue: MockService(PermissionsService),
+          },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
         ],
       })
         .overrideProvider(SuggestionsService, {

@@ -1,0 +1,46 @@
+@import 'defaults.scss';
+
+:host {
+  .m-notice {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing4;
+    padding: $spacing4 $spacing8;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: $spacing4;
+    }
+  }
+
+  .m-notice__icon {
+    padding: 2px $spacing2;
+    font-size: $spacing6;
+  }
+
+  .m-notice__contentWrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: $spacing3;
+    .m-notice__textWrapper {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: $spacing1;
+      .m-notice__title {
+        @include heading4Bold;
+        word-break: break-word;
+      }
+      .m-notice__description {
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    .m-notice__actions {
+      display: flex;
+      flex-flow: row wrap;
+      gap: $spacing3;
+    }
+  }
+}

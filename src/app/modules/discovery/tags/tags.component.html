@@ -1,6 +1,9 @@
 <m-discovery__tabs></m-discovery__tabs>
 <m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
 
+<!-- --------------------------  -->
+<!-- YOUR TAGS  -->
+<!-- --------------------------  -->
 <section
   class="m-discoveryTags__section"
   *ngIf="(route.params | async)?.type === 'your'"
@@ -37,41 +40,83 @@
     </li>
   </ul>
 </section>
-
-<section
-  class="m-discoveryTags__section"
-  *ngIf="(route.params | async)?.type === 'trending'"
->
-  <ul class="m-discoveryTags__list m-discoveryTags__list--trending">
-    <li class="m-discoveryTrends__trend" *ngFor="let tag of trending$ | async">
-      <a
-        [routerLink]="parentPath + '/search'"
-        [queryParams]="{ q: '#' + tag.value, f: 'top', t: 'all' }"
+<!-- --------------------------  -->
+<!-- TRENDING  -->
+<!-- --------------------------  -->
+<ng-container *ngIf="(route.params | async)?.type === 'trending'">
+  <section
+    class="m-discoveryTags__section"
+    *ngIf="(trending$ | async).length > 0; else noTags"
+  >
+    <ul class="m-discoveryTags__list m-discoveryTags__list--trending">
+      <li
+        class="m-discoveryTrends__trend"
+        *ngFor="let tag of trending$ | async"
       >
-        <div>
-          <h4>#{{ tag.value }}</h4>
-          <div class="m-discoveryTrendListItem__supportingText--below">
-            <span>{{ tag.posts_count }} posts</span>
-            <span>{{ tag.votes_count }} votes</span>
+        <a
+          [routerLink]="parentPath + '/search'"
+          [queryParams]="{ q: '#' + tag.value, f: 'top', t: 'all' }"
+        >
+          <div>
+            <h4>#{{ tag.value }}</h4>
+            <div class="m-discoveryTrendListItem__supportingText--below">
+              <span>{{ tag.posts_count }} posts</span>
+              <span>{{ tag.votes_count }} votes</span>
+            </div>
           </div>
-        </div>
-        <i class="m-discoveryTrendListItem__chevron material-icons">
-          chevron_right
-        </i>
-      </a>
-    </li>
-    <li
-      class="m-discoveryTrends__trend m-discoverTrends__trend--feedLink"
-      *ngIf="(trending$ | async).length"
-    >
-      <a [routerLink]="parentPath + '/feeds/trending'"
-        ><div>
-          <h4 i18n="@@DISCOVERY_TAGS__SEE_TRENDING_FEED">See trending feed</h4>
-        </div>
-        <i class="m-discoveryTrendListItem__chevron material-icons">
-          chevron_right
-        </i></a
+          <i class="m-discoveryTrendListItem__chevron material-icons">
+            chevron_right
+          </i>
+        </a>
+      </li>
+      <li
+        class="m-discoveryTrends__trend m-discoverTrends__trend--feedLink"
+        *ngIf="(trending$ | async).length"
       >
-    </li>
-  </ul>
-</section>
+        <a [routerLink]="parentPath + '/feeds/trending'"
+          ><div>
+            <h4 i18n="@@DISCOVERY_TAGS__SEE_TRENDING_FEED">
+              See trending feed
+            </h4>
+          </div>
+          <i class="m-discoveryTrendListItem__chevron material-icons">
+            chevron_right
+          </i></a
+        >
+      </li>
+    </ul>
+  </section>
+</ng-container>
+<!-- --------------------------  -->
+<!-- NO TAGS  -->
+<!-- --------------------------  -->
+<ng-template #noTags>
+  <ng-container
+    *ngIf="session.getLoggedInUser(); else loggedOutEmptyFeedNotice"
+  >
+    <m-notice iconId="tag" *ngIf="!(inProgress$ | async)">
+      <span m-notice__title i18n="@@DISCOVERY_TAGS__EMPTY_NOTICE_TITLE"
+        >Explore topics that are heating up</span
+      >
+      <span m-notice__description i18n="@@DISCOVERY_TAGS__EMPTY_NOTICE_DESC"
+        >The most frequently-used tags on the network will appear here.</span
+      >
+      <ng-container m-notice__actions>
+        <m-button
+          *ngIf="!(inProgress$ | async) && permissions.canCreatePost()"
+          (onAction)="openComposerModal()"
+          [solid]="true"
+          color="blue"
+          i18n="@@COMMON__CREATE_A_TAG__ACTION"
+          data-ref="sidebar-tags-create-a-tag-button"
+          >Create a tag</m-button
+        >
+      </ng-container>
+    </m-notice></ng-container
+  >
+  <ng-template #loggedOutEmptyFeedNotice>
+    <m-discovery__emptyGuestFeedNotice
+      *ngIf="!(inProgress$ | async)"
+    ></m-discovery__emptyGuestFeedNotice>
+  </ng-template>
+</ng-template>
