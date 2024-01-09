@@ -25,7 +25,7 @@ import {
   interval,
   of,
 } from 'rxjs';
-import { filter, startWith, tap, delayWhen, map } from 'rxjs/operators';
+import { filter, startWith, tap, delayWhen, map, reduce } from 'rxjs/operators';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ToasterService } from '../../../common/services/toaster.service';
@@ -49,6 +49,8 @@ import { FeedAlgorithm } from '../../../common/services/feeds.service';
 import { FeedNoticeDismissalService } from '../../notices/services/feed-notice-dismissal.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { Session } from '../../../services/session';
 
 const PAGE_SIZE = 12;
 
@@ -61,7 +63,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
    * Posts that will display above the feed.
    * Eg. new posts made via the composer
    */
-  prepended: Array<any> = [];
+  prepended$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   /**
    * Will toggle the boost rotator on or off
@@ -78,7 +80,9 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   /**
    * The chosen algorithm, set by the router
    */
-  algorithm: FeedAlgorithm;
+  algorithm$: BehaviorSubject<FeedAlgorithm> = new BehaviorSubject<
+    FeedAlgorithm
+  >(null);
 
   /**
    * Active subscriptions that should be unsubscribed from on destroy
@@ -101,8 +105,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   isPublisherRecommendationsDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
-
-  newsfeedEndText = $localize`:@@COMMON__FEED_END:End of your newsfeed`;
 
   /**
    * The page size will be PAGE_SIZE on init
@@ -140,6 +142,14 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   totalEdgeCount$: Observable<number>;
 
   /**
+   * True if we have at least one activity edge in memory
+   * (used to determine whether we have an empty feed)
+   */
+  hasActivityEdges$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
    * Connection pagination information.
    * Contains the most recent cursors and paging stats
    */
@@ -150,6 +160,18 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
    * Combines the inmemory buffer and remote fetching
    */
   canShowMoreEdges$: Observable<boolean>;
+
+  /**
+   * True after the first load has been completed
+   */
+  init$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  /**
+   * Show a notice when the feed is empty
+   */
+  showEmptyFeedNotice$: Observable<boolean>;
+
+  siteUrl: string;
 
   constructor(
     public navigation: NavigationService,
@@ -168,18 +190,22 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     protected boostFeedService: BoostFeedService,
     protected experimentsService: ExperimentsService,
     protected permissions: PermissionsService,
-    protected isTenant: IsTenantService
+    protected isTenant: IsTenantService,
+    protected session: Session,
+    configs: ConfigsService
   ) {
     if (isPlatformServer(this.platformId)) return;
 
+    this.siteUrl = configs.get('site_url');
+
     const storedfeedAlgorithm = this.feedAlgorithmHistory.lastAlgorithm;
     if (storedfeedAlgorithm) {
-      this.algorithm = storedfeedAlgorithm;
+      this.algorithm$.next(storedfeedAlgorithm);
     }
 
     this.feedQuery = this.fetchNewsfeed.watch(
       {
-        algorithm: this.algorithm,
+        algorithm: this.algorithm$.getValue(),
         limit: PAGE_SIZE,
         inFeedNoticesDelivered: this.getDismissedFeedNoticeIds(),
       },
@@ -206,7 +232,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!result.data?.newsfeed) {
           return [];
         }
-
         const edges = _.cloneDeep(result.data.newsfeed.edges); // Clone as we need to modify the data (apollo wont let us do this)
 
         for (let edge of edges) {
@@ -215,6 +240,8 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
             edge.node.__typename === 'ActivityNode' ||
             edge.node.__typename === 'BoostNode'
           ) {
+            this.hasActivityEdges$.next(true);
+
             try {
               if (typeof edge.node.legacy === 'string') {
                 edge.node.legacy = JSON.parse(edge.node.legacy);
@@ -225,10 +252,14 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           }
         }
+        this.init$.next(true);
 
         return edges;
       }),
-      tap(() => (this.isFirstRun = false)) // Do not delay on future runs
+      tap(() => {
+        // Do not delay on future runs
+        this.isFirstRun = false;
+      })
     );
 
     this.totalEdgeCount$ = this.feedData.pipe(
@@ -277,6 +308,19 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
         ];
       })
     );
+
+    this.showEmptyFeedNotice$ = combineLatest([
+      this.init$,
+      this.hasActivityEdges$,
+      this.prepended$,
+      this.algorithm$,
+    ]).pipe(
+      map(([init, hasActivityEdges, prepended, algorithm]) => {
+        const hasVisiblePrepended =
+          algorithm === 'latest' && prepended.length > 0;
+        return init && !hasActivityEdges && !hasVisiblePrepended;
+      })
+    );
   }
 
   ngOnInit() {
@@ -310,7 +354,9 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
           if (Object.values(FeedAlgorithm).includes(params['algorithm'])) {
             this.changeFeedAlgorithm(params['algorithm']);
           } else {
-            this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
+            this.router.navigate([
+              `/newsfeed/subscriptions/${this.algorithm$.getValue()}`,
+            ]);
           }
         }
       }),
@@ -342,7 +388,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }),
       /**
-       * Subscribe for new psots
+       * Subscribe for new posts
        */
       this.feedsUpdate.postEmitter.subscribe(newPost => {
         this.prepend(newPost);
@@ -423,17 +469,26 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
-    this.prepended.unshift(activity);
+    const current = this.prepended$.value;
+
+    const prepended = [activity, ...current];
+
+    this.prepended$.next(prepended);
   }
 
+  /**
+   * Removes a deleted activity from the prepended array,
+   * if applicable
+   * @param activity
+   */
   delete(activity) {
-    let i: any;
+    const prepended = this.prepended$.value;
+    const index = prepended.findIndex(item => item.guid === activity.guid);
 
-    for (i in this.prepended) {
-      if (this.prepended[i] === activity) {
-        this.prepended.splice(i, 1);
-        return;
-      }
+    if (index !== -1) {
+      prepended.splice(index, 1);
+
+      this.prepended$.next([...prepended]);
     }
   }
 
@@ -447,7 +502,10 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
    * change feed algorithm
    **/
   changeFeedAlgorithm(algo: FeedAlgorithm) {
-    this.algorithm = algo;
+    this.init$.next(false);
+    this.hasActivityEdges$.next(false);
+
+    this.algorithm$.next(algo);
     this.feedAlgorithmHistory.lastAlgorithm = algo;
 
     // Hide the boost rotator
@@ -459,11 +517,11 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     // Fetch new data
     this.feedQuery.refetch({
       limit: PAGE_SIZE,
-      algorithm: this.algorithm,
+      algorithm: algo,
     });
 
     // Reset any prepended posts
-    this.prepended = [];
+    this.prepended$.next([]);
   }
 
   /**
@@ -520,5 +578,55 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private getDismissedFeedNoticeIds(): string[] {
     return this.feedNoticeDismissalService.getAllDismissedNoticeIds() ?? [];
+  }
+
+  /**
+   * Copy invite link to clipboard
+   */
+  protected copyInviteLinkToClipboard(): void {
+    const url = this.isTenant.is()
+      ? this.siteUrl
+      : `${this.siteUrl}?referrer=${this.session.getLoggedInUser().username}`;
+
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = url;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+
+    this.toast.success('Link copied to clipboard');
+  }
+
+  /**
+   * Redirect to discovery channel suggestions list
+   */
+  protected clickedDiscoverChannels(): void {
+    this.router.navigate(['/discovery/suggestions/user'], {
+      queryParams: { explore: true },
+    });
+  }
+
+  /**
+   * Redirect to discovery group suggestions list
+   */
+  protected clickedDiscoverGroups(): void {
+    this.router.navigate(['/discovery/suggestions/group'], {
+      queryParams: { explore: true },
+    });
+  }
+
+  /**
+   * Redirect to group create page
+   */
+  protected clickedCreateGroup(): void {
+    this.router.navigate(['/groups/create'], {
+      queryParams: { explore: true },
+    });
   }
 }

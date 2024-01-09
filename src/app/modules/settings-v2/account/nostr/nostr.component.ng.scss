@@ -28,7 +28,7 @@
   a {
     cursor: pointer;
     @include m-theme() {
-      color: themed($m-link-text);
+      color: themed($m-action);
     }
 
     &:hover {

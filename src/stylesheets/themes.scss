@@ -184,9 +184,6 @@ $themes: (
     m-action--contrast:
       color-mix(in srgb, var(--primary-action-light), #000 20%),
     m-action-text: $white,
-    m-link-text: $blue,
-    m-link-text-contrast: $blue-light,
-    m-sidebar-nav-item: $blue,
     //rotator button token
       m-rotator-action: #43434d,
     m-counter-action: #43434d,
@@ -262,12 +259,9 @@ $themes: (
     m-action: var(--primary-action-dark),
     m-action--contrast: color-mix(in srgb, var(--primary-action-dark), #000 20%),
     m-action-text: $grey-900,
-    m-link-text: $yellow-500,
-    m-link-text-contrast: $yellow-400,
-    m-sidebar-nav-item: $grey-50,
     //rotator button token
       m-rotator-action: $grey-50,
-    m-counter-action: $yellow-500,
+    m-counter-action: var(--primary-action-dark),
     // legacy colors
       m-grey-900: $grey-100,
     m-grey-800: $grey-200,
@@ -346,11 +340,9 @@ $m-blue: 'm-blue';
 $m-action-text: 'm-action-text';
 $m-rotator-action: 'm-rotator-action';
 $m-counter-action: 'm-counter-action';
-$m-link-text: 'm-link-text';
-$m-link-text-contrast: 'm-link-text-contrast';
 $m-aqua: 'm-aqua';
 $m-action: 'm-action';
-$m-sidebar-nav-item: 'm-sidebar-nav-item';
+$m-action--contrast: 'm-action';
 $m-green-dark: 'm-green-dark';
 $m-green: 'm-green';
 $m-green-light: 'm-green-light';
