@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   DeleteFeaturedEntityGQL,
   FeaturedUser,
+  StoreFeaturedEntityGQL,
 } from '../../../../../../../../graphql/generated.engine';
 import { ToasterService } from '../../../../../../../common/services/toaster.service';
 import { MindsAvatarObject } from '../../../../../../../common/components/avatar/avatar';
@@ -19,6 +20,7 @@ describe('NetworkAdminConsoleFeaturedEntityRowComponent', () => {
     username: 'testusername',
     name: 'testuser',
     autoSubscribe: null,
+    autoPostSubscription: null,
     id: null,
     recommended: null,
     tenantId: null,
@@ -49,6 +51,10 @@ describe('NetworkAdminConsoleFeaturedEntityRowComponent', () => {
           useValue: jasmine.createSpyObj('DeleteFeaturedEntityGQL', ['mutate']),
         },
         {
+          provide: StoreFeaturedEntityGQL,
+          useValue: jasmine.createSpyObj('StoreFeaturedEntityGQL', ['mutate']),
+        },
+        {
           provide: ToasterService,
           useValue: MockService(ToasterService),
         },
@@ -76,7 +82,7 @@ describe('NetworkAdminConsoleFeaturedEntityRowComponent', () => {
     });
   });
 
-  describe('onOptionToggle', () => {
+  describe('onDeleteToggle', () => {
     it('should emit onDeletion event when onDeleteClicked is called', async () => {
       (comp as any).deleteFeaturedEntityGQL.mutate.and.returnValue(
         of({
@@ -100,6 +106,13 @@ describe('NetworkAdminConsoleFeaturedEntityRowComponent', () => {
       expect((comp as any).toaster.error).toHaveBeenCalledWith(
         'Failed to make entity non-featured.'
       );
+    });
+  });
+
+  describe('onPostSubscriptionToggle', () => {
+    it('should emit onPostSubscription event when onPostSubscripionClick is called', async () => {
+      await comp.onPostSubscripionClick();
+      expect((comp as any).storeFeaturedEntityGQL.mutate).toHaveBeenCalled();
     });
   });
 
