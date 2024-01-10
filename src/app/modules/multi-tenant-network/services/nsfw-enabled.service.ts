@@ -11,7 +11,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
  */
 @Injectable({ providedIn: 'root' })
 export class NsfwEnabledService {
-  /** Subject to store whether config has been loaded. */
+  /** Subject to store whether nsfw is enabled. */
   public readonly nsfwEnabled$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(true);
