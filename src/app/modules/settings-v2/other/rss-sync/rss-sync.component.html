@@ -36,6 +36,7 @@
   <m-button
     color="blue"
     (onAction)="createRssFeed()"
+    [saving]="inProgress"
     [disabled]="!form.valid || inProgress"
   >
     <ng-container i18n="@@SETTINGS_V2_RSS_SYNC_BUTTONS__ADD_FEED">

@@ -847,6 +847,7 @@ export enum PermissionsEnum {
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
+  CanUseRssSync = 'CAN_USE_RSS_SYNC',
 }
 
 export type Plan = {
