@@ -21,7 +21,7 @@ export class NsfwEnabledService {
     private toaster: ToasterService,
     configs: ConfigsService
   ) {
-    const nsfwEnabled = configs.get('nsfw_enabled') || true;
+    const nsfwEnabled = configs.get('nsfw_enabled') ?? true;
     this.nsfwEnabled$.next(nsfwEnabled);
   }
 
@@ -30,13 +30,11 @@ export class NsfwEnabledService {
    *
    * @returns { Promise<void> }
    */
-  public async toggle(newValue: GenericToggleValue): Promise<void> {
-    const newVal = newValue === 'off' ? false : true;
-
+  public async toggle(newValue: boolean): Promise<void> {
     try {
       const success: boolean = await lastValueFrom(
         this.multiTenantConfigService.updateConfig({
-          nsfwEnabled: newVal,
+          nsfwEnabled: newValue,
         })
       );
 
@@ -49,6 +47,6 @@ export class NsfwEnabledService {
       return;
     }
 
-    this.nsfwEnabled$.next(newVal);
+    this.nsfwEnabled$.next(newValue);
   }
 }

@@ -9,8 +9,8 @@
 </p>
 <div class="m-networkAdminConsole__toggleWrapper">
   <m-toggle
-    [mModel]="(service.nsfwEnabled$ | async) ? 'on' : 'off'"
-    (mModelChange)="service.toggle($event)"
+    [mModel]="nsfwToggleVal$ | async"
+    (mModelChange)="toggle($event)"
     leftValue="off"
     rightValue="on"
     offState="off"
