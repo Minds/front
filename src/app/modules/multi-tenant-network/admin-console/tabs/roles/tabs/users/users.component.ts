@@ -15,6 +15,7 @@ import { MultiTenantRolesService } from '../../../../../services/roles.service';
 import { Filter } from '../../../../../../../interfaces/dashboard';
 import { ConfigsService } from '../../../../../../../common/services/configs.service';
 import { Session } from '../../../../../../../services/session';
+import * as _ from 'lodash';
 
 /**
  * List of tenant users and their roles. Allows changing the roles for a given user via the AssignRolesModal
@@ -22,7 +23,10 @@ import { Session } from '../../../../../../../services/session';
 @Component({
   selector: 'm-networkAdminConsoleRoles__users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.ng.scss'],
+  styleUrls: [
+    './users.component.ng.scss',
+    '../../../../stylesheets/console.component.ng.scss',
+  ],
 })
 export class NetworkAdminConsoleRolesUsersComponent
   implements OnInit, OnDestroy {
@@ -142,18 +146,14 @@ export class NetworkAdminConsoleRolesUsersComponent
     // Append new users to the existing list
     const users: UserRoleEdge[] = this.users$.getValue();
 
-    for (let edge of result?.data?.usersByRole?.edges.slice(users.length) ??
-      []) {
+    const edges = _.cloneDeep(
+      result?.data?.usersByRole?.edges.slice(users.length)
+    ); // Clone as we need to modify the data (Apollo won't let us do this)
+
+    for (let edge of edges ?? []) {
       if (edge && typeof edge.node.legacy === 'string') {
-        // Create a new object with parsed legacy property
-        const newNode = {
-          ...edge.node,
-          legacy: JSON.parse(edge.node.legacy),
-        };
-        edge = {
-          ...edge,
-          node: newNode,
-        };
+        // Modify the cloned edge with parsed legacy property
+        edge.node.legacy = JSON.parse(edge.node.legacy);
       }
 
       users.push(edge as UserRoleEdge);

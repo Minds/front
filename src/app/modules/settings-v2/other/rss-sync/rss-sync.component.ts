@@ -166,6 +166,7 @@ export class SettingsV2RssSyncComponent implements OnInit, OnDestroy {
 
   private handleError(e: ApolloError): Observable<never> {
     this.toast.error(e.message);
+    this.inProgress = false;
     return EMPTY;
   }
 }

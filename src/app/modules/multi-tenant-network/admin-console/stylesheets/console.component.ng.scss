@@ -41,50 +41,92 @@
       display: flex;
       flex-flow: column nowrap;
       padding: $spacing4 0;
+    }
+    .m-networkAdminConsole__formLabel {
+      margin-bottom: $spacing1;
+      @include body1Medium;
+    }
 
-      .m-networkAdminConsole__formLabel {
-        margin-bottom: 4px;
-        @include body1Regular;
+    .m-networkAdminConsole__formLabel--alt {
+      margin-bottom: $spacing1;
+      @include body1Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
       }
+    }
 
-      .m-networkAdminConsole__formLabel--secondary {
-        margin-bottom: 4px;
+    .m-networkAdminConsole__formLabel--secondary {
+      margin-bottom: $spacing1;
 
-        @include body3Regular;
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
-        }
+      @include body3Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
       }
+    }
 
-      .m-networkAdminConsole__formTextInput {
-        padding: $spacing3 $spacing4;
-        max-width: 475px;
-        border-radius: 3px;
-        outline: none;
-        @include body1Regular;
+    .m-networkAdminConsole__formTextInput {
+      padding: $spacing3 $spacing4;
+      max-width: 475px;
+      border-radius: 3px;
+      outline: none;
+      @include body1Regular;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        background-color: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .m-networkAdminConsole__formTextAreaInput {
+      padding: $spacing3 $spacing4;
+      border-radius: 3px;
+      outline: none;
+      @include body1Regular;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        background-color: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .m-networkAdminConsole__formErrorWrapper {
+      min-height: $spacing10;
+    }
+
+    .m-networkAdminConsole__formText--error {
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
+    // Numbered form input header
+    .m-networkAdminConsole__numberedFormInputHeader {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: $spacing4;
+
+      .m-networkAdminConsoleNumberedFormInputHeader__number {
+        display: flex;
+        border-radius: 50%;
+        height: $spacing12;
+        width: $spacing12;
+        min-width: $spacing12;
+        justify-content: center;
+        align-items: center;
+
+        @include body2Bold;
 
         @include m-theme() {
           color: themed($m-textColor--primary);
-          background-color: themed($m-bgColor--primary);
           border: 1px solid themed($m-borderColor--primary);
         }
       }
 
-      .m-networkAdminConsole__formTextAreaInput {
-        padding: $spacing3 $spacing4;
-        border-radius: 3px;
-        outline: none;
-        @include body1Regular;
-
-        @include m-theme() {
-          color: themed($m-textColor--primary);
-          background-color: themed($m-bgColor--primary);
-          border: 1px solid themed($m-borderColor--primary);
-        }
-      }
-
-      .m-networkAdminConsole__formErrorWrapper {
-        min-height: $spacing10;
+      .m-networkAdminConsoleNumberedFormInputHeader__labelCol {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: $spacing2;
       }
     }
 
@@ -175,6 +217,49 @@
     }
   }
 
+  .m-networkAdminConsole__checkboxesWrapper {
+    display: flex;
+    flex-flow: column;
+    margin-bottom: $spacing10;
+
+    .m-networkAdminConsole__checkboxesContainer {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: $spacing1;
+
+      .m-networkAdminConsole__checkboxRow {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: $spacing4 0;
+
+        &.m-networkAdminConsole__checkboxRow--disabled {
+          opacity: 0.5;
+        }
+
+        .m-networkAdminConsole__checkboxWrapper {
+          display: flex;
+          flex-flow: row nowrap;
+
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+
+          .m-networkAdminConsole__checkboxLabel {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            gap: $spacing2;
+            span {
+              @include body2Regular;
+              display: inline-block;
+              margin-right: $spacing2;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .m-tabs__container {
     overflow-x: auto;
     padding: 0 $spacing8;
@@ -189,5 +274,220 @@
         }
       }
     }
+  }
+
+  // ---------------------------
+  // LIST
+  // ---------------------------
+  .m-networkAdminConsoleList__row {
+    padding: $spacing4 $spacing8;
+    @include borderBottom;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: $spacing4;
+    }
+  }
+
+  .m-networkAdminConsoleList__row--header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    div:first-child {
+      span {
+        @include body1Bold;
+      }
+    }
+
+    .m-networkAdminConsoleListHeaderRow__filtersWrapper {
+      display: flex;
+      .m-networkAdminConsoleListHeaderRow__filter--dropdown {
+        display: flex;
+        align-items: center;
+        span:first-child {
+          @include body3Regular;
+        }
+        ::ng-deep m-dropdownSelector {
+          margin: 0;
+          .m-dropdownSelector__wrapper.expanded {
+            .m-dropdownSelector__header {
+              border-bottom-right-radius: 0;
+              border-bottom-left-radius: 0;
+            }
+          }
+          .m-dropdownSelector__header {
+            border-radius: $spacing1;
+          }
+          .m-dropdownSelector__option {
+            border-radius: $spacing1;
+          }
+        }
+      }
+
+      .m-networkAdminConsoleListHeaderRow__filter--search {
+        display: flex;
+        align-items: center;
+        @include border;
+        border-radius: $spacing1;
+        margin-left: $spacing4;
+        padding: $spacing1 $spacing1 $spacing1 $spacing3;
+
+        input {
+          border: none;
+          background-color: transparent;
+          font-size: 14px;
+          outline: none;
+
+          ::placeholder {
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+        }
+        .material-icons {
+          margin: $spacing1;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .m-networkAdminConsoleList__row--item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media screen and (max-width: $min-tablet) {
+      flex-flow: column nowrap;
+      align-items: flex-start;
+    }
+    .m-networkAdminConsoleListRow__singleLineTextWrapper {
+      display: flex;
+      flex-flow: row nowrap;
+      white-space: nowrap;
+      overflow: hidden;
+
+      .m-networkAdminConsoleListRow__singleLineTextContainer {
+        display: flex;
+        flex-flow: column nowrap;
+        white-space: nowrap;
+        overflow: hidden;
+
+        span {
+          @include body2Regular;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+    .m-networkAdminConsoleListRow__userWrapper {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: $spacing2;
+      white-space: nowrap;
+      overflow: hidden;
+
+      @media screen and (max-width: $min-tablet) {
+        width: 100%;
+      }
+      .m-networkAdminConsoleListRow__avatarWrapper {
+        img {
+          border-radius: 50%;
+          object-fit: cover;
+          box-sizing: border-box;
+          @include border;
+          @include m-theme() {
+            background: themed($m-textColor--secondary);
+          }
+          width: $activityAvatarWidth;
+          height: $activityAvatarWidth;
+        }
+      }
+      .m-networkAdminConsoleListRow__namesContainer {
+        display: flex;
+        flex-flow: column nowrap;
+        white-space: nowrap;
+        overflow: hidden;
+
+        span {
+          @include body1Bold;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          &:last-child {
+            @include body2Regular;
+          }
+        }
+      }
+    }
+  }
+
+  .m-networkAdminConsoleListRow__col {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > * {
+      margin: 0 $spacing3 0 0;
+      &:not(:first-child) {
+        margin: 0 $spacing3;
+      }
+    }
+  }
+
+  .m-networkAdminConsoleListRow__statusText {
+    @include body3Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &.m-networkAdminConsoleListRow__statusText--error {
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
+  }
+
+  .m-networkAdminConsoleListRow__ctaIcon {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: $spacing7;
+    width: $spacing7;
+    min-width: $spacing7;
+    cursor: pointer;
+    border-radius: 50%;
+    @include m-theme() {
+      background-color: themed($m-borderColor--primary);
+      color: themed($m-textColor--primary);
+    }
+
+    &:hover {
+      @include m-theme() {
+        background-color: themed($m-borderColor--secondary);
+      }
+    }
+
+    i {
+      font-size: $spacing5;
+    }
+  }
+
+  .m-networkAdminConsoleListRow__ctaText {
+    @include body2Bold;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .m-networkAdminConsoleList__noResultsNotice {
+    @include body2Regular;
+    display: flex;
+    justify-content: space-around;
+    margin: $spacing12;
   }
 }

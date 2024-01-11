@@ -23,7 +23,10 @@ export type AssignRolesModalInputParams = {
 @Component({
   selector: 'm-networkAdminConsole__assignRolesModal',
   templateUrl: './assign-roles-modal.component.html',
-  styleUrls: ['./assign-roles-modal.component.ng.scss'],
+  styleUrls: [
+    './assign-roles-modal.component.ng.scss',
+    '../../../../../stylesheets/console.component.ng.scss',
+  ],
 })
 export class AssignRolesModalComponent implements OnInit, OnDestroy {
   public userWithRoles: UserRoleEdge;

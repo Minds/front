@@ -14,7 +14,7 @@ m-settingsV2__paymentMethods {
     cursor: pointer;
     text-decoration: underline;
     @include m-theme() {
-      color: themed($m-link-text);
+      color: themed($m-action);
     }
   }
 

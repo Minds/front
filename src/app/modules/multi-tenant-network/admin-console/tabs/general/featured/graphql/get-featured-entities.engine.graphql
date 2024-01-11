@@ -5,6 +5,7 @@ query GetFeaturedEntities(
 ) {
   featuredEntities(type: $type, after: $after, first: $first) {
     edges {
+      id
       node {
         id
         ... on FeaturedUser {
@@ -12,6 +13,7 @@ query GetFeaturedEntities(
           entityGuid
           id
           autoSubscribe
+          autoPostSubscription
           name
           username
         }
@@ -20,6 +22,7 @@ query GetFeaturedEntities(
           entityGuid
           id 
           autoSubscribe
+          autoPostSubscription
           name
           membersCount
         }
@@ -32,6 +35,5 @@ query GetFeaturedEntities(
       startCursor
       endCursor
     }
-    id
   }
 }

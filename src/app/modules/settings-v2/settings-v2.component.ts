@@ -9,6 +9,8 @@ import { ProService } from '../pro/pro.service';
 import { Subscription } from 'rxjs';
 import { TwitterSyncSettingsExperimentService } from '../experiments/sub-services/twitter-sync-settings-experiment.service';
 import { IsTenantService } from '../../common/services/is-tenant.service';
+import { PermissionsService } from '../../common/services/permissions.service';
+import { PermissionsEnum } from '../../../graphql/generated.engine';
 
 /**
  * Container that determines what form/menu(s)
@@ -315,6 +317,7 @@ export class SettingsV2Component implements OnInit {
           label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__HEADER__LABEL:Content Migration`,
           id: 'content-migration',
         },
+        shouldShow: this.shouldShowContentMigrationHeader.bind(this),
         items: [
           {
             label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__YOUTUBE__LABEL:Youtube`,
@@ -324,6 +327,7 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__RSS_SYNC__LABEL:RSS Sync`,
             id: 'rss-sync',
+            shouldShow: this.hasRssSyncPermission.bind(this),
           },
         ],
       },
@@ -366,7 +370,8 @@ export class SettingsV2Component implements OnInit {
     protected proService: ProService,
     protected toasterService: ToasterService,
     private twitterSyncSettingsExperiment: TwitterSyncSettingsExperimentService,
-    private IsTenantService: IsTenantService
+    private IsTenantService: IsTenantService,
+    private permissionsService: PermissionsService
   ) {}
 
   ngOnInit() {
@@ -522,6 +527,22 @@ export class SettingsV2Component implements OnInit {
 
   isNotNetwork(): boolean {
     return !this.isTenant;
+  }
+
+  /**
+   * Whether the user can access RSS Sync settings.
+   * @returns { boolean } - whether the user can access RSS Sync settings.
+   */
+  private hasRssSyncPermission(): boolean {
+    return this.permissionsService.has(PermissionsEnum.CanUseRssSync);
+  }
+
+  /**
+   * Whether the user should be shown the content migration header.
+   * @returns { boolean } - true if the user should be shown the content migration header.
+   */
+  private shouldShowContentMigrationHeader(): boolean {
+    return this.hasRssSyncPermission() || this.isNotNetwork();
   }
 
   /**

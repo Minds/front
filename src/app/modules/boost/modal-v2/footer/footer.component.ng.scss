@@ -31,7 +31,7 @@
         text-decoration: none;
 
         @include m-theme() {
-          color: themed($m-link-text);
+          color: themed($m-action);
         }
       }
     }

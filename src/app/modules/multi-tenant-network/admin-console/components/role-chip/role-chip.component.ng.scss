@@ -1,0 +1,13 @@
+@import 'defaults.scss';
+:host {
+  display: flex;
+  border-radius: $spacing6;
+  gap: $spacing2;
+  @include border;
+  padding: $spacing2 $spacing4;
+  cursor: default;
+  span {
+    display: inline-block;
+    margin-left: $spacing2;
+  }
+}

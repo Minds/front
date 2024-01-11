@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NetworkAdminConsoleRoleIconComponent } from './tabs/roles/role-icon/role-icon.component';
+import { NetworkAdminConsoleRoleIconComponent } from './components/role-icon/role-icon.component';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
 @NgModule({

@@ -3,65 +3,73 @@
 <div class="m-defaultFeed__feed">
   <m-feedNotice__outlet location="top"></m-feedNotice__outlet>
   <ng-container
-    *ngFor="let activity$ of feedsService.feed | async; let i = index"
+    *ngIf="(feedsService.feed | async).length; else loggedOutEmptyFeedNotice"
   >
-    <m-valueProp__cardOutlet
-      *ngIf="canShowValuePropCard(i)"
-      [showBorderTop]="i > 0"
-    ></m-valueProp__cardOutlet>
-    <ng-container *mIfTenant="false">
-      <m-exploreFeedItem
-        *ngIf="!isLoggedIn() && i === 0"
-        titleText="Minds Mobile"
-      >
-        <m-button
-          explore-feed-item-button
-          size="small"
-          (onAction)="openAppDownloadModal($event)"
-          ><ng-container i18n="@@DEFAULT_FEED__GET_APP"
-            >Get app</ng-container
-          ></m-button
+    <ng-container
+      *ngFor="let activity$ of feedsService.feed | async; let i = index"
+    >
+      <m-valueProp__cardOutlet
+        *ngIf="canShowValuePropCard(i)"
+        [showBorderTop]="i > 0"
+      ></m-valueProp__cardOutlet>
+      <ng-container *mIfTenant="false">
+        <m-exploreFeedItem
+          *ngIf="!isLoggedIn() && i === 0"
+          titleText="Minds Mobile"
         >
-      </m-exploreFeedItem>
-    </ng-container>
-    <m-feedNotice__outlet
-      *ngIf="isLoggedIn() && i > 0 && i % 6 === 0"
-      location="inline"
-    ></m-feedNotice__outlet>
-    <ng-container *mIfTenant="false">
-      <m-featured-content
-        *ngIf="shouldShowBoostInPosition(i)"
-        [slot]="i + 1"
+          <m-button
+            explore-feed-item-button
+            size="small"
+            (onAction)="openAppDownloadModal($event)"
+            ><ng-container i18n="@@DEFAULT_FEED__GET_APP"
+              >Get app</ng-container
+            ></m-button
+          >
+        </m-exploreFeedItem>
+      </ng-container>
+      <m-feedNotice__outlet
+        *ngIf="isLoggedIn() && i > 0 && i % 6 === 0"
+        location="inline"
+      ></m-feedNotice__outlet>
+      <ng-container *mIfTenant="false">
+        <m-featured-content
+          *ngIf="shouldShowBoostInPosition(i)"
+          [slot]="i + 1"
+          [displayOptions]="{
+            showOnlyCommentsInput: true,
+            isFeed: true
+          }"
+        ></m-featured-content
+      ></ng-container>
+      <m-activity
+        *ngIf="shouldShowActivity(activity$ | async)"
+        [entity]="activity$ | async"
         [displayOptions]="{
-          showOnlyCommentsInput: true,
-          isFeed: true
+          showComments: true,
+          isFeed: true,
+          hasLoadingPriority: i < 2
         }"
-      ></m-featured-content
-    ></ng-container>
-    <m-activity
-      *ngIf="shouldShowActivity(activity$ | async)"
-      [entity]="activity$ | async"
-      [displayOptions]="{
-        showComments: true,
-        isFeed: true,
-        hasLoadingPriority: i < 2
-      }"
-      class="m-defaultFeed__activity"
-    ></m-activity>
-    <m-publisherRecommendations
-      [location]="location"
-      [dismissible]="true"
-      *ngIf="
-        shouldShowPublisherRecommendations(i) &&
-        !(isPublisherRecommendationsDismissed$ | async)
-      "
-      [publisherType]="recommendationsPublisherType"
-    ></m-publisherRecommendations>
+        class="m-defaultFeed__activity"
+      ></m-activity>
+      <m-publisherRecommendations
+        [location]="location"
+        [dismissible]="true"
+        *ngIf="
+          shouldShowPublisherRecommendations(i) &&
+          !(isPublisherRecommendationsDismissed$ | async)
+        "
+        [publisherType]="recommendationsPublisherType"
+      ></m-publisherRecommendations>
+    </ng-container>
   </ng-container>
+  <ng-template #loggedOutEmptyFeedNotice>
+    <m-discovery__emptyGuestFeedNotice></m-discovery__emptyGuestFeedNotice>
+  </ng-template>
 
   <infinite-scroll
     (load)="loadNext()"
     [moreData]="feedsService.hasMore | async"
     [inProgress]="feedsService.inProgress | async"
+    hideManual="true"
   ></infinite-scroll>
 </div>

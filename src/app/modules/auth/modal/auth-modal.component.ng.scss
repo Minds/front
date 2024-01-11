@@ -68,7 +68,7 @@
       text-decoration: underline;
       cursor: pointer;
       @include m-theme() {
-        color: themed($m-link-text);
+        color: themed($m-action);
       }
     }
   }
@@ -101,5 +101,9 @@
     max-width: 100%;
     padding: $spacing10;
     box-sizing: border-box;
+  }
+
+  .m-authModal__formDisplay {
+    overflow-y: scroll;
   }
 }
