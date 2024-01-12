@@ -34,6 +34,7 @@ import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { PermissionsService } from '../../../common/services/permissions.service';
+import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-enabled.service';
 
 describe('CommentComponentV2', () => {
   let comp: CommentComponentV2;
@@ -175,6 +176,10 @@ describe('CommentComponentV2', () => {
           {
             provide: PermissionsService,
             useValue: MockService(PermissionsService),
+          },
+          {
+            provide: NsfwEnabledService,
+            useValue: MockService(NsfwEnabledService),
           },
         ],
       })

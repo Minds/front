@@ -41,6 +41,7 @@
   <!-- NSFW -->
   <!----------------------------------------------->
   <a
+    *ngIf="nsfwEnabledService.nsfwEnabled$ | async"
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="(nsfw$ | async)?.length"
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"

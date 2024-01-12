@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BlogsEditService } from '../blog-edit.service';
 import { BehaviorSubject } from 'rxjs';
-import { ToasterService } from '../../../../../common/services/toaster.service';
+import { NsfwEnabledService } from '../../../../multi-tenant-network/services/nsfw-enabled.service';
 
 const license$ = new BehaviorSubject<string>('');
 
@@ -47,6 +47,10 @@ describe('BlogEditorDropdownComponent', () => {
         imports: [RouterTestingModule, NgCommonModule, FormsModule],
         providers: [
           { provide: BlogsEditService, useValue: blogsEditServiceMock },
+          {
+            provide: NsfwEnabledService,
+            useValue: MockService(NsfwEnabledService),
+          },
         ],
       }).compileComponents();
     })
