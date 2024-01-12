@@ -126,7 +126,10 @@
     <!-- ----------------------------- -->
     <ng-container *ngIf="session.isAdmin()">
       <m-dropdownMenu__item
-        *ngIf="!(service.mature$ | async)"
+        *ngIf="
+          !(service.mature$ | async) &&
+          (nsfwEnabledService.nsfwEnabled$ | async)
+        "
         red="true"
         (click)="toggleExplicit(true)"
         i18n="@@M__ACTION__SET_EXPLICIT"

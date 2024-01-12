@@ -578,6 +578,7 @@ export type MultiTenantConfig = {
   colorScheme?: Maybe<MultiTenantColorScheme>;
   communityGuidelines?: Maybe<Scalars['String']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
+  nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
@@ -587,6 +588,7 @@ export type MultiTenantConfig = {
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+  nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
@@ -2200,6 +2202,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+  nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -4518,6 +4521,7 @@ export const SetMultiTenantConfigDocument = gql`
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
     $communityGuidelines: String
+    $nsfwEnabled: Boolean
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
@@ -4525,6 +4529,7 @@ export const SetMultiTenantConfigDocument = gql`
         colorScheme: $colorScheme
         primaryColor: $primaryColor
         communityGuidelines: $communityGuidelines
+        nsfwEnabled: $nsfwEnabled
       }
     )
   }

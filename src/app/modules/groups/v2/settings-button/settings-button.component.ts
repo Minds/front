@@ -7,6 +7,7 @@ import { BoostGroupExperimentService } from '../../../experiments/sub-services/b
 import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { GroupService } from '../group.service';
 import { Subscription } from 'rxjs';
+import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
 
 /**
  * Dropdown menu with options to change various group behaviors.
@@ -30,7 +31,8 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
     private injector: Injector,
     public modalService: ModalService,
     private boostModal: BoostModalV2LazyService,
-    private boostGroupsExperiment: BoostGroupExperimentService
+    private boostGroupsExperiment: BoostGroupExperimentService,
+    protected nsfwEnabledService: NsfwEnabledService
   ) {}
 
   ngOnInit(): void {
