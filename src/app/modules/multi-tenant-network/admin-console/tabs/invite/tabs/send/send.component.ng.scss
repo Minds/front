@@ -1,0 +1,57 @@
+@import 'defaults.scss';
+@import '../../../../../../../common/layout/layout.scss';
+
+:host {
+  margin: $spacing8 0;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: $spacing6;
+
+  .m-networkAdminConsoleInviteSendField--emails {
+    margin-bottom: $spacing2;
+  }
+
+  .m-networkAdminConsole__numberedFormInputHeader {
+    margin-bottom: $spacing3;
+  }
+
+  .m-networkAdminConsole__checkboxesWrapper {
+    margin-bottom: $spacing4 !important;
+
+    @media screen and (min-width: $layoutMin3ColWidth + 1) {
+      max-width: 500px;
+    }
+
+    .m-networkAdminConsole__checkboxRow {
+      &:first-child {
+        padding-top: 0;
+      }
+    }
+  }
+
+  .m-networkAdminConsoleInviteSend__footer {
+    display: flex;
+    gap: $spacing8;
+    align-items: center;
+    margin-top: $spacing4;
+
+    .m-networkAdminConsoleInviteSendFooter__link {
+      display: flex;
+      text-decoration: none;
+      cursor: pointer;
+      align-items: center;
+      gap: $spacing1;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      span {
+        @include body2Regular;
+        text-decoration: underline;
+      }
+      i {
+        font-size: $spacing4;
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ExperimentsService } from '../../modules/experiments/experiments.service';
 import { ConfigsService } from './configs.service';
 import { PermissionsService } from './permissions.service';
+import { PermissionsEnum } from '../../../graphql/generated.engine';
 
 describe('PermissionsService', () => {
   let service: PermissionsService;
@@ -47,5 +48,17 @@ describe('PermissionsService', () => {
     configsServiceSpy.get.and.returnValue(['CAN_COMMENT']);
     experimentsServiceSpy.hasVariation.and.returnValue(false);
     expect(service.canCreatePost()).toBe(true);
+  });
+
+  it('should determine if the user can use RSS sync', () => {
+    experimentsServiceSpy.hasVariation.and.returnValue(true);
+    service.setWhitelist([PermissionsEnum.CanUseRssSync]);
+    expect(service.canUseRssSync()).toBe(true);
+  });
+
+  it('should determine if the user can NOT use RSS sync', () => {
+    experimentsServiceSpy.hasVariation.and.returnValue(true);
+    service.setWhitelist([]);
+    expect(service.canUseRssSync()).toBe(false);
   });
 });

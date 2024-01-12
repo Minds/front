@@ -612,7 +612,7 @@
       line-height: inherit;
       font-weight: 500;
       @include m-theme() {
-        color: themed($m-link-text);
+        color: themed($m-action);
       }
 
       text-decoration: none;

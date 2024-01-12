@@ -14,6 +14,7 @@ export type AuthForm = 'register' | 'login';
 export type AuthModalData = {
   formDisplay?: AuthForm;
   standalonePage?: boolean;
+  inviteToken?: string;
   onLoggedIn?: () => any;
   onRegistered?: () => any;
   onComplete?: (any) => any;
@@ -38,6 +39,8 @@ export class AuthModalComponent implements OnInit {
    * True if the auth modal was opened from the /login or /register page
    */
   standalonePage: boolean = false;
+
+  inviteToken?: string = null;
 
   /**
    * Called when user logs in
@@ -124,6 +127,7 @@ export class AuthModalComponent implements OnInit {
   setModalData({
     formDisplay,
     standalonePage,
+    inviteToken,
     onLoggedIn,
     onRegistered,
     onComplete,
@@ -131,6 +135,7 @@ export class AuthModalComponent implements OnInit {
   }: AuthModalData) {
     this.formDisplay = formDisplay;
     this.standalonePage = standalonePage;
+    this.inviteToken = inviteToken;
     this.onLoggedIn = onLoggedIn || (() => {});
     this.onRegistered = onRegistered || (() => {});
     this.onComplete = onComplete || (() => {});

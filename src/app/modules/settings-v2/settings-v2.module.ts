@@ -78,6 +78,8 @@ import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.
 import { SettingsV2RssSyncComponent } from './other/rss-sync/rss-sync.component';
 import { LoggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
 import { SettingsV2EmbeddedCommentsComponent } from './other/embedded-comments/embedded-comments.component';
+import { permissionGuard } from '../../common/guards/permission.guard';
+import { PermissionsEnum } from '../../../graphql/generated.engine';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -502,7 +504,10 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'rss-sync',
             component: SettingsV2RssSyncComponent,
-            canActivate: [LoggedInRedirectGuard],
+            canActivate: [
+              LoggedInRedirectGuard,
+              permissionGuard(PermissionsEnum.CanUseRssSync),
+            ],
             data: {
               title: 'RSS Sync',
               standardHeader: false,

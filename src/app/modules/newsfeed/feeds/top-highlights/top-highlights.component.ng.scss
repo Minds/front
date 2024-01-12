@@ -78,12 +78,12 @@
       font-size: 16px;
 
       @include m-theme() {
-        color: themed($m-link-text) !important;
+        color: themed($m-action) !important;
       }
 
       &:hover {
         @include m-theme() {
-          color: themed($m-link-text-contrast) !important;
+          color: themed($m-action--contrast) !important;
         }
       }
     }

@@ -1,0 +1,113 @@
+<!-- ------------------------------------------- -->
+<!-- HEADER ROW (ENABLE WHEN SEARCH IS READY)-->
+<!-- ------------------------------------------- -->
+<!-- <div
+  class="m-networkAdminConsoleList__row--header m-networkAdminConsoleList__row"
+>
+  <div><span i18n="@@COMMON_EMAIL">Email</span></div> -->
+
+<!-- <div class="m-networkAdminConsoleListHeaderRow__filtersWrapper"> -->
+<!-- ------------------------------------------- -->
+<!-- SEARCH (DISABLED)-->
+<!-- ------------------------------------------- -->
+<!-- <div class="m-networkAdminConsoleListHeaderRow__filter--search">
+      <input
+        name="q"
+        type="text"
+        id="search"
+        placeholder="Search"
+        i18n-placeholder="@@COMMON__SEARCH"
+        #searchInput
+      />
+      <i class="material-icons">search</i>
+    </div>
+  </div> -->
+<!-- </div> -->
+<!-- ------------------------------------------- -->
+<!-- INVITES  -->
+<!-- ------------------------------------------- -->
+<ng-container *ngFor="let invite of invites$ | async">
+  <div
+    class="m-networkAdminConsoleList__row--item m-networkAdminConsoleList__row"
+  >
+    <div
+      class="m-networkAdminConsoleListRow__col m-networkAdminConsoleInvitations__nameCol"
+    >
+      <div class="m-networkAdminConsoleListRow__singleLineTextWrapper">
+        <div class="m-networkAdminConsoleListRow__singleLineTextContainer">
+          <span>{{ invite.node.email }}</span>
+        </div>
+      </div>
+      <m-role__aggregator [roles]="invite.node?.roles"> </m-role__aggregator>
+    </div>
+    <div
+      class="m-networkAdminConsoleListRow__col m-networkAdminConsoleInvitations__statusCol"
+    >
+      <span
+        class="m-networkAdminConsoleListRow__statusText"
+        [ngClass]="{
+          'm-networkAdminConsoleListRow__statusText--error':
+            invite.node.status === InviteStatus.Failed
+        }"
+        [ngSwitch]="invite.node.status"
+      >
+        <ng-container *ngSwitchCase="InviteStatus.Sent"
+          >Sent {{ invite.node?.sentTimestamp * 1000 | date: 'MMM d, y' }}
+        </ng-container>
+        <ng-container *ngSwitchCase="InviteStatus.Pending"
+          >Pending
+        </ng-container>
+        <ng-container *ngSwitchCase="InviteStatus.Sending"
+          >Sending
+        </ng-container>
+        <ng-container *ngSwitchCase="InviteStatus.Failed"
+          >Failed to send</ng-container
+        >
+      </span>
+
+      <div
+        class="m-networkAdminConsoleListRow__ctaIcon"
+        (click)="resendInvite(invite)"
+        title="Resend"
+        i18n-title="@@COMMON_RESEND"
+      >
+        <i class="material-icons">refresh</i>
+      </div>
+      <div
+        class="m-networkAdminConsoleListRow__ctaIcon"
+        (click)="cancelInvite(invite)"
+        title="Cancel"
+        i18n-title="@@COMMON_CANCEL"
+      >
+        <i class="material-icons">close</i>
+      </div>
+      <!-- <span
+    class="m-networkAdminConsoleListRow__ctaText"
+    (click)="resendInvite(invite)"
+    i18n="@@COMMON_RESEND"
+    >Resend</span
+  >
+  <span
+    class="m-networkAdminConsoleListRow__ctaText"
+    (click)="cancelInvite(invite)"
+    i18n="@@COMMON_CANCEL"
+    >Cancel</span
+  > -->
+    </div>
+  </div>
+</ng-container>
+
+<infinite-scroll
+  *ngIf="hasNextPage$ | async"
+  (load)="fetchMore()"
+  [moreData]="hasNextPage$ | async"
+  [inProgress]="inProgress$ | async"
+  [hideManual]="true"
+></infinite-scroll>
+
+<span
+  class="m-networkAdminConsoleList__noResultsNotice"
+  *ngIf="!(inProgress$ | async) && (invites$ | async).length < 1"
+>
+  No invitations
+</span>

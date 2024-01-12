@@ -327,7 +327,7 @@ body.m-theme-in-transition *:after {
 }
 
 // Helper classes
-.m-hideOnSmall {
+.m-hideOnMobile {
   @media screen and (max-width: $max-mobile) {
     display: none;
   }

@@ -28,6 +28,19 @@
     }
   }
 
+  .m-discoverySidebarTags__emptyStateTag {
+    > div {
+      padding: $spacing2 0;
+      h4 {
+        @include body1Medium;
+      }
+      .m-discoveryTrendListItem__supportingText--below {
+        @include body3Regular;
+        margin-top: $spacing1;
+      }
+    }
+  }
+
   ::ng-deep m-loadingSpinner {
     @media screen and (max-width: $max-mobile) {
       display: none;
