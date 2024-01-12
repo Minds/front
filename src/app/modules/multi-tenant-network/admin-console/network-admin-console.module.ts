@@ -20,7 +20,7 @@ import { NetworkAdminConsoleRolesComponent } from './tabs/roles/roles.component'
 import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/permissions/permissions.component';
 import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
 import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
-import { NetworkAdminConsolePolicyFormComponent } from './components/policy-form/policy-form.component';
+import { NetworkAdminConsoleCustomPageFormComponent } from './components/custom-page-form/custom-page-form.component';
 import { NetworkAdminConsoleModerationPrivacyPolicyComponent } from './tabs/moderation/privacy-policy/privacy-policy.component';
 import { NetworkAdminConsoleModerationTermsOfServiceComponent } from './tabs/moderation/terms-of-service/terms-of-service.component';
 import { NetworkAdminConsoleInviteComponent } from './tabs/invite/invite.component';
@@ -115,12 +115,12 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesComponent,
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
-    NetworkAdminConsolePolicyFormComponent,
     NetworkAdminConsoleInviteComponent,
     NetworkAdminConsoleInviteSendComponent,
     NetworkAdminConsoleInviteInvitationsComponent,
     RoleChipComponent,
     RoleAggregatorComponent,
+    NetworkAdminConsoleCustomPageFormComponent,
   ],
   providers: [MultiTenantDomainService],
 })

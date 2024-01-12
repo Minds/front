@@ -205,6 +205,26 @@ export enum CustomHostnameStatusEnum {
   TestPending = 'TEST_PENDING',
 }
 
+export type CustomPage = NodeInterface & {
+  __typename?: 'CustomPage';
+  content: Scalars['String']['output'];
+  externalLink: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  pageType: CustomPageTypesEnum;
+};
+
+export type CustomPageEdge = EdgeInterface & {
+  __typename?: 'CustomPageEdge';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<CustomPage>;
+};
+
+export enum CustomPageTypesEnum {
+  CommunityGuidelines = 'COMMUNITY_GUIDELINES',
+  PrivacyPolicy = 'PRIVACY_POLICY',
+  TermsOfService = 'TERMS_OF_SERVICE',
+}
+
 export type Dismissal = {
   __typename?: 'Dismissal';
   dismissalTimestamp: Scalars['Int']['output'];
@@ -576,30 +596,18 @@ export enum MultiTenantColorScheme {
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
   colorScheme?: Maybe<MultiTenantColorScheme>;
-  communityGuidelines?: Maybe<Scalars['String']['output']>;
-  communityGuidelinesUrl?: Maybe<Scalars['String']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
-  privacyPolicy?: Maybe<Scalars['String']['output']>;
-  privacyPolicyUrl?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
-  termsOfService?: Maybe<Scalars['String']['output']>;
-  termsOfServiceUrl?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
 };
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
-  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
-  communityGuidelinesUrl?: InputMaybe<Scalars['String']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
-  privacyPolicy?: InputMaybe<Scalars['String']['input']>;
-  privacyPolicyUrl?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
-  termsOfService?: InputMaybe<Scalars['String']['input']>;
-  termsOfServiceUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MultiTenantDomain = {
@@ -647,6 +655,7 @@ export type Mutation = {
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   resendInvite?: Maybe<Scalars['Void']['output']>;
+  setCustomPage: CustomPage;
   /** Creates a comment on a remote url */
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
@@ -748,6 +757,12 @@ export type MutationRemoveRssFeedArgs = {
 
 export type MutationResendInviteArgs = {
   inviteId: Scalars['Int']['input'];
+};
+
+export type MutationSetCustomPageArgs = {
+  content: Scalars['String']['input'];
+  externalLink: Scalars['String']['input'];
+  pageType: Scalars['Int']['input'];
 };
 
 export type MutationSetEmbeddedCommentsSettingsArgs = {
@@ -928,6 +943,7 @@ export type Query = {
   boosts: BoostsConnection;
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
+  customPage: CustomPage;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
@@ -1019,6 +1035,10 @@ export type QueryCheckoutPageArgs = {
   page: CheckoutPageKeyEnum;
   planId: Scalars['String']['input'];
   timePeriod: CheckoutTimePeriodEnum;
+};
+
+export type QueryCustomPageArgs = {
+  pageType: Scalars['Int']['input'];
 };
 
 export type QueryDismissalByKeyArgs = {
@@ -1796,12 +1816,18 @@ export type GetReportsQuery = {
           node: { __typename?: 'CommentNode'; id: string };
         }
       | {
+          __typename?: 'CustomPageEdge';
+          cursor: string;
+          node?: { __typename?: 'CustomPage'; id: string } | null;
+        }
+      | {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
             | { __typename?: 'ActivityNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -2051,6 +2077,20 @@ export type GetAssignedRolesQuery = {
   }>;
 };
 
+export type GetCustomPageQueryVariables = Exact<{
+  pageType: Scalars['Int']['input'];
+}>;
+
+export type GetCustomPageQuery = {
+  __typename?: 'Query';
+  customPage: {
+    __typename?: 'CustomPage';
+    pageType: CustomPageTypesEnum;
+    content: string;
+    externalLink: string;
+  };
+};
+
 export type GetInviteQueryVariables = Exact<{
   inviteId: Scalars['Int']['input'];
 }>;
@@ -2130,12 +2170,6 @@ export type GetMultiTenantConfigQuery = {
     siteEmail?: string | null;
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
-    privacyPolicyUrl?: string | null;
-    privacyPolicy?: string | null;
-    termsOfServiceUrl?: string | null;
-    termsOfService?: string | null;
-    communityGuidelinesUrl?: string | null;
-    communityGuidelines?: string | null;
   } | null;
 };
 
@@ -2210,16 +2244,26 @@ export type ResendInviteMutation = {
   resendInvite?: any | null;
 };
 
+export type SetCustomPageMutationVariables = Exact<{
+  pageType: Scalars['Int']['input'];
+  content: Scalars['String']['input'];
+  externalLink: Scalars['String']['input'];
+}>;
+
+export type SetCustomPageMutation = {
+  __typename?: 'Mutation';
+  setCustomPage: {
+    __typename?: 'CustomPage';
+    pageType: CustomPageTypesEnum;
+    content: string;
+    externalLink: string;
+  };
+};
+
 export type SetMultiTenantConfigMutationVariables = Exact<{
   siteName?: InputMaybe<Scalars['String']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
-  privacyPolicyUrl?: InputMaybe<Scalars['String']['input']>;
-  privacyPolicy?: InputMaybe<Scalars['String']['input']>;
-  termsOfServiceUrl?: InputMaybe<Scalars['String']['input']>;
-  termsOfService?: InputMaybe<Scalars['String']['input']>;
-  communityGuidelinesUrl?: InputMaybe<Scalars['String']['input']>;
-  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -2430,6 +2474,11 @@ export type FetchNewsfeedQuery = {
           node: { __typename?: 'CommentNode'; id: string };
         }
       | {
+          __typename?: 'CustomPageEdge';
+          cursor: string;
+          node?: { __typename?: 'CustomPage'; id: string } | null;
+        }
+      | {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
@@ -2442,6 +2491,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -2505,6 +2555,13 @@ export type FetchNewsfeedQuery = {
                       publisherNode: { __typename?: 'CommentNode'; id: string };
                     }
                   | {
+                      __typename?: 'CustomPageEdge';
+                      publisherNode?: {
+                        __typename?: 'CustomPage';
+                        id: string;
+                      } | null;
+                    }
+                  | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
                         | { __typename?: 'ActivityNode'; id: string }
@@ -2514,6 +2571,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -2747,11 +2805,19 @@ export type FetchNewsfeedQuery = {
                   publisherNode: { __typename?: 'CommentNode'; id: string };
                 }
               | {
+                  __typename?: 'CustomPageEdge';
+                  publisherNode?: {
+                    __typename?: 'CustomPage';
+                    id: string;
+                  } | null;
+                }
+              | {
                   __typename?: 'EdgeImpl';
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -3031,6 +3097,11 @@ export type FetchSearchQuery = {
           node: { __typename?: 'CommentNode'; id: string };
         }
       | {
+          __typename?: 'CustomPageEdge';
+          cursor: string;
+          node?: { __typename?: 'CustomPage'; id: string } | null;
+        }
+      | {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
@@ -3043,6 +3114,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -3086,6 +3158,13 @@ export type FetchSearchQuery = {
                       publisherNode: { __typename?: 'CommentNode'; id: string };
                     }
                   | {
+                      __typename?: 'CustomPageEdge';
+                      publisherNode?: {
+                        __typename?: 'CustomPage';
+                        id: string;
+                      } | null;
+                    }
+                  | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
                         | { __typename?: 'ActivityNode'; id: string }
@@ -3095,6 +3174,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -3312,11 +3392,19 @@ export type FetchSearchQuery = {
                   publisherNode: { __typename?: 'CommentNode'; id: string };
                 }
               | {
+                  __typename?: 'CustomPageEdge';
+                  publisherNode?: {
+                    __typename?: 'CustomPage';
+                    id: string;
+                  } | null;
+                }
+              | {
                   __typename?: 'EdgeImpl';
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -4338,6 +4426,29 @@ export class GetAssignedRolesGQL extends Apollo.Query<
     super(apollo);
   }
 }
+export const GetCustomPageDocument = gql`
+  query GetCustomPage($pageType: Int!) {
+    customPage(pageType: $pageType) {
+      pageType
+      content
+      externalLink
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetCustomPageGQL extends Apollo.Query<
+  GetCustomPageQuery,
+  GetCustomPageQueryVariables
+> {
+  document = GetCustomPageDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetInviteDocument = gql`
   query getInvite($inviteId: Int!) {
     invite(inviteId: $inviteId) {
@@ -4423,12 +4534,6 @@ export const GetMultiTenantConfigDocument = gql`
       siteEmail
       colorScheme
       primaryColor
-      privacyPolicyUrl
-      privacyPolicy
-      termsOfServiceUrl
-      termsOfService
-      communityGuidelinesUrl
-      communityGuidelines
     }
   }
 `;
@@ -4537,29 +4642,48 @@ export class ResendInviteGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const SetCustomPageDocument = gql`
+  mutation SetCustomPage(
+    $pageType: Int!
+    $content: String!
+    $externalLink: String!
+  ) {
+    setCustomPage(
+      pageType: $pageType
+      content: $content
+      externalLink: $externalLink
+    ) {
+      pageType
+      content
+      externalLink
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetCustomPageGQL extends Apollo.Mutation<
+  SetCustomPageMutation,
+  SetCustomPageMutationVariables
+> {
+  document = SetCustomPageDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const SetMultiTenantConfigDocument = gql`
   mutation SetMultiTenantConfig(
     $siteName: String
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
-    $privacyPolicyUrl: String
-    $privacyPolicy: String
-    $termsOfServiceUrl: String
-    $termsOfService: String
-    $communityGuidelinesUrl: String
-    $communityGuidelines: String
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
         siteName: $siteName
         colorScheme: $colorScheme
         primaryColor: $primaryColor
-        privacyPolicyUrl: $privacyPolicyUrl
-        privacyPolicy: $privacyPolicy
-        termsOfServiceUrl: $termsOfServiceUrl
-        termsOfService: $termsOfService
-        communityGuidelinesUrl: $communityGuidelinesUrl
-        communityGuidelines: $communityGuidelines
       }
     )
   }

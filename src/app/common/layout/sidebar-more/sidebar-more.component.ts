@@ -41,8 +41,7 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     private sidebarNavigationService: SidebarNavigationService,
     private helpdeskRedirectService: HelpdeskRedirectService,
     private router: Router,
-    private configs: ConfigsService,
-    private multiTenantConfigService: MultiTenantNetworkConfigService
+    private configs: ConfigsService
   ) {
     this.chatUrl = this.configs.get('matrix')?.chat_url;
   }
@@ -53,9 +52,6 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
-
-    // ojm need to implement
-    // this.multiTenantConfigService.fetchConfig();
   }
 
   getCurrentUser(): MindsUser {

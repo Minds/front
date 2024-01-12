@@ -2,24 +2,12 @@ mutation SetMultiTenantConfig(
   $siteName: String
   $colorScheme: MultiTenantColorScheme
   $primaryColor: String
-  $privacyPolicyUrl: String
-  $privacyPolicy: String
-  $termsOfServiceUrl: String
-  $termsOfService: String
-  $communityGuidelinesUrl: String
-  $communityGuidelines: String
 ) {
   multiTenantConfig(
     multiTenantConfigInput: {
       siteName: $siteName
       colorScheme: $colorScheme
       primaryColor: $primaryColor
-      privacyPolicyUrl: $privacyPolicyUrl
-      privacyPolicy: $privacyPolicy
-      termsOfServiceUrl: $termsOfServiceUrl
-      termsOfService: $termsOfService
-      communityGuidelinesUrl: $communityGuidelinesUrl
-      communityGuidelines: $communityGuidelines
     }
   )
 }

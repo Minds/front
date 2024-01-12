@@ -4,11 +4,5 @@ query GetMultiTenantConfig {
     siteEmail
     colorScheme
     primaryColor
-    privacyPolicyUrl
-    privacyPolicy
-    termsOfServiceUrl
-    termsOfService
-    communityGuidelinesUrl
-    communityGuidelines
   }
 }

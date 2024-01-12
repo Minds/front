@@ -4,6 +4,7 @@ import { MarkdownService } from 'ngx-markdown';
 import { Session } from '../../../services/session';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
+// ojm use this for markdown rendering
 /**
  * Modal that shows explainers for various parts of the site.
  * Intended to be triggered via CMS.
