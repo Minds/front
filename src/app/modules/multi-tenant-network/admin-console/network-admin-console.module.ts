@@ -21,6 +21,7 @@ import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/
 import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
 import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
 import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.component';
+import { NetworkAdminConsoleNsfwToggleComponent } from './tabs/moderation/nsfw-toggle/nsfw-toggle.component';
 import { NetworkAdminConsoleInviteComponent } from './tabs/invite/invite.component';
 import { NetworkAdminConsoleInviteSendComponent } from './tabs/invite/tabs/send/send.component';
 import { NetworkAdminConsoleInviteInvitationsComponent } from './tabs/invite/tabs/invitations/invitations.component';
@@ -104,6 +105,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
     NetworkAdminConsoleFederationSettingsComponent,
+    NetworkAdminConsoleNsfwToggleComponent,
     NetworkAdminConsoleInviteComponent,
     NetworkAdminConsoleInviteSendComponent,
     NetworkAdminConsoleInviteInvitationsComponent,

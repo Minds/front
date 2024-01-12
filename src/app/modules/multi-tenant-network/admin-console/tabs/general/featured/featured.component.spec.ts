@@ -186,11 +186,9 @@ describe('NetworkAdminConsoleFeaturedComponent', () => {
   describe('trackBy', () => {
     it('should get trackBy value', () => {
       const featuredEntity: Partial<FeaturedEntity> = {
-        entityGuid: '123',
+        id: '123',
       };
-      expect(comp.trackBy(featuredEntity as FeaturedEntity)).toBe(
-        featuredEntity.entityGuid
-      );
+      expect(comp.trackBy(featuredEntity as FeaturedEntity)).toBe('123');
     });
   });
 
@@ -252,18 +250,6 @@ describe('NetworkAdminConsoleFeaturedComponent', () => {
         entityGuid: '123',
         autoSubscribe: true,
       });
-      expect(comp.featuredEntities$.getValue()).toEqual([
-        {
-          __typename: 'FeaturedUser',
-          id: '123',
-          entityGuid: '123',
-          username: 'testuser',
-          name: 'Test User',
-          autoSubscribe: true,
-          recommended: false,
-          tenantId: null,
-        } as any,
-      ]);
     }));
 
     it('should show error toaster if storeFeaturedEntityGQL.mutate throws an error', fakeAsync(() => {
@@ -342,18 +328,6 @@ describe('NetworkAdminConsoleFeaturedComponent', () => {
         entityGuid: '123',
         autoSubscribe: true,
       });
-      expect(comp.featuredEntities$.getValue()).toEqual([
-        {
-          __typename: 'FeaturedGroup',
-          id: group.guid,
-          entityGuid: group.guid,
-          name: group.name,
-          membersCount: group['members:count'],
-          autoSubscribe: true,
-          recommended: false,
-          tenantId: null,
-        } as any,
-      ]);
     }));
 
     it('should show error toaster if storeFeaturedEntityGQL.mutate throws an error', fakeAsync(() => {

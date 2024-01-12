@@ -344,6 +344,7 @@
                     <!-- Mark as explicit -->
                     <!-- --------------------- -->
                     <m-dropdownMenu__item
+                      *ngIf="nsfwEnabledService.nsfwEnabled$ | async"
                       (click)="toggleExplicit($event)"
                       icon="explicit"
                       [red]="attachment.isMature()"

@@ -33,6 +33,7 @@ import {
   PermissionsService,
 } from '../../../common/services/permissions.service';
 import { ToasterService } from '../../../common/services/toaster.service';
+import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-enabled.service';
 
 @Component({
   selector: 'm-comment__poster',
@@ -92,7 +93,8 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     public elRef: ElementRef,
     public supermindBannerPopup: SupermindBannerPopupService,
     protected permissions: PermissionsService,
-    protected toaster: ToasterService
+    protected toaster: ToasterService,
+    protected nsfwEnabledService: NsfwEnabledService
   ) {}
 
   ngOnInit() {

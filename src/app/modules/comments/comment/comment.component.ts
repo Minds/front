@@ -46,6 +46,7 @@ import { ShareModalComponent } from '../../modals/share/share';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { PermissionsService } from '../../../common/services/permissions.service';
+import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-enabled.service';
 
 @Component({
   selector: 'm-comment',
@@ -153,6 +154,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     public suggestions: AutocompleteSuggestionsService,
     private clientMetaService: ClientMetaService,
     protected permissions: PermissionsService,
+    protected nsfwEnabledService: NsfwEnabledService,
     @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective
   ) {
     this.cdnUrl = configs.get('cdn_url');

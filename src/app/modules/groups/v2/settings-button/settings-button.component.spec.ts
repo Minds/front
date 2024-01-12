@@ -18,6 +18,7 @@ import { sessionMock } from '../../../../services/session-mock';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../../tests/modal-service-mock.spec';
 import { BehaviorSubject } from 'rxjs';
+import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
 
 let groupServiceMock: any = MockService(GroupService, {
   has: ['group$'],
@@ -95,6 +96,10 @@ describe('GroupSettingsButton', () => {
           {
             provide: GroupEditModalService,
             useValue: MockService(GroupEditModalService),
+          },
+          {
+            provide: NsfwEnabledService,
+            useValue: MockService(NsfwEnabledService),
           },
         ],
       }).compileComponents();

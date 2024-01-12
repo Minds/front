@@ -1,0 +1,18 @@
+<div class="m-notice">
+  <div *ngIf="iconId" class="m-notice__icon">
+    <i class="material-icons">{{ iconId }}</i>
+  </div>
+  <div class="m-notice__contentWrapper">
+    <div class="m-notice__textWrapper">
+      <div class="m-notice__title">
+        <ng-content select="[m-notice__title]"></ng-content>
+      </div>
+      <div class="m-notice__description">
+        <ng-content select="[m-notice__description]"></ng-content>
+      </div>
+    </div>
+    <div class="m-notice__actions">
+      <ng-content select="[m-notice__actions]"></ng-content>
+    </div>
+  </div>
+</div>
