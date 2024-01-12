@@ -10,6 +10,7 @@ import {
 export type ToggleDirection = 'left' | 'right';
 export type ToggleSize = 'small' | 'large';
 export type GenericToggleValue = 'off' | 'on';
+
 @Component({
   selector: 'm-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,

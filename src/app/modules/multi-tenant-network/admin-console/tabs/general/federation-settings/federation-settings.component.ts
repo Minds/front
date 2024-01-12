@@ -3,7 +3,7 @@ import { MultiTenantNetworkConfigService } from '../../../../services/config.ser
 import { ToasterService } from '../../../../../../common/services/toaster.service';
 import { Subscription, filter, lastValueFrom, take } from 'rxjs';
 import { MultiTenantConfig } from '../../../../../../../graphql/generated.engine';
-import { OnOffToggleValue } from '../../../../../../common/components/toggle/toggle.component';
+import { GenericToggleValue } from '../../../../../../common/components/toggle/toggle.component';
 
 /**
  * Federation settings component for networks admin console.
@@ -17,7 +17,7 @@ import { OnOffToggleValue } from '../../../../../../common/components/toggle/tog
 export class NetworkAdminConsoleFederationSettingsComponent
   implements OnInit, OnDestroy {
   /** Enabled toggle state. */
-  public enabledToggleState: OnOffToggleValue = 'on';
+  public enabledToggleState: GenericToggleValue = 'on';
 
   /** Whether federation can be enabled. */
   public canEnableFederation: boolean = false;
@@ -55,7 +55,7 @@ export class NetworkAdminConsoleFederationSettingsComponent
    * @returns { Promise<void> }
    */
   public async onEnabledToggle(
-    newToggleState: OnOffToggleValue
+    newToggleState: GenericToggleValue
   ): Promise<void> {
     if (!this.canEnableFederation) {
       this.toaster.warn(
@@ -64,7 +64,7 @@ export class NetworkAdminConsoleFederationSettingsComponent
       return;
     }
 
-    const previousToggleState: OnOffToggleValue = this.enabledToggleState;
+    const previousToggleState: GenericToggleValue = this.enabledToggleState;
     this.enabledToggleState = newToggleState;
 
     let success: boolean = false;
