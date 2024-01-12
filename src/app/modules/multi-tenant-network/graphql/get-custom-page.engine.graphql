@@ -1,0 +1,7 @@
+query GetCustomPage($pageType: Int!) {
+  customPage(pageType: $pageType) {
+    pageType
+    content
+    externalLink
+  }
+}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CustomPageType } from '../../../../../custom-pages/custom-pages.types';
 /**
  * Allows a user to configure the terms of service for a network.
  */
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
   templateUrl: './terms-of-service.component.html',
   styleUrls: ['../../../stylesheets/console.component.ng.scss'],
 })
-export class NetworkAdminConsoleModerationTermsOfServiceComponent {}
+export class NetworkAdminConsoleTermsOfServiceComponent {
+  /**
+   * Allows us to use enum in the template
+   */
+  public CustomPageType: typeof CustomPageType = CustomPageType;
+}

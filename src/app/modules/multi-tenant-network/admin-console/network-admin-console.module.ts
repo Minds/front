@@ -15,14 +15,14 @@ import { NetworkAdminConsoleDomainComponent } from './tabs/domain/domain.compone
 import { NetworkAdminConsoleEditDomainModalComponent } from './tabs/domain/edit-domain-modal/edit-domain-modal.component';
 import { MultiTenantDomainService } from '../services/domain.service';
 import { NetworkAdminConsoleModerationComponent } from './tabs/moderation/moderation.component';
-import { NetworkAdminConsoleModerationCommunityGuidelinesComponent } from './tabs/moderation/community-guidelines/community-guidelines.component';
+import { NetworkAdminConsoleCommunityGuidelinesComponent } from './tabs/moderation/community-guidelines/community-guidelines.component';
 import { NetworkAdminConsoleRolesComponent } from './tabs/roles/roles.component';
 import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/permissions/permissions.component';
 import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
 import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
 import { NetworkAdminConsoleCustomPageFormComponent } from './components/custom-page-form/custom-page-form.component';
-import { NetworkAdminConsoleModerationPrivacyPolicyComponent } from './tabs/moderation/privacy-policy/privacy-policy.component';
-import { NetworkAdminConsoleModerationTermsOfServiceComponent } from './tabs/moderation/terms-of-service/terms-of-service.component';
+import { NetworkAdminConsolePrivacyPolicyComponent } from './tabs/moderation/privacy-policy/privacy-policy.component';
+import { NetworkAdminConsoleTermsOfServiceComponent } from './tabs/moderation/terms-of-service/terms-of-service.component';
 import { NetworkAdminConsoleInviteComponent } from './tabs/invite/invite.component';
 import { NetworkAdminConsoleInviteSendComponent } from './tabs/invite/tabs/send/send.component';
 import { NetworkAdminConsoleInviteInvitationsComponent } from './tabs/invite/tabs/invitations/invitations.component';
@@ -50,15 +50,15 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
           },
           {
             path: 'privacy-policy',
-            component: NetworkAdminConsoleModerationPrivacyPolicyComponent,
+            component: NetworkAdminConsolePrivacyPolicyComponent,
           },
           {
             path: 'terms-of-service',
-            component: NetworkAdminConsoleModerationTermsOfServiceComponent,
+            component: NetworkAdminConsoleTermsOfServiceComponent,
           },
           {
             path: 'community-guidelines',
-            component: NetworkAdminConsoleModerationCommunityGuidelinesComponent,
+            component: NetworkAdminConsoleCommunityGuidelinesComponent,
           },
           {
             path: 'reports',
@@ -109,9 +109,9 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleDomainComponent,
     NetworkAdminConsoleEditDomainModalComponent,
     NetworkAdminConsoleModerationComponent,
-    NetworkAdminConsoleModerationPrivacyPolicyComponent,
-    NetworkAdminConsoleModerationTermsOfServiceComponent,
-    NetworkAdminConsoleModerationCommunityGuidelinesComponent,
+    NetworkAdminConsolePrivacyPolicyComponent,
+    NetworkAdminConsoleTermsOfServiceComponent,
+    NetworkAdminConsoleCommunityGuidelinesComponent,
     NetworkAdminConsoleRolesComponent,
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,

@@ -1,0 +1,18 @@
+@import 'defaults.scss';
+
+:host {
+  .m-customPage__wrapper {
+    h1 {
+      margin: 0;
+      @include heading1Medium;
+    }
+    p {
+      @include body1Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    // ojm update with additional aux page styles after markdown enabled
+  }
+}

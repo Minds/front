@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CustomPageType } from '../../../../../custom-pages/custom-pages.types';
 /**
  * Network admin console community guidelines subsection.
  * Allows a user to configure the community guidelines for a network.
@@ -8,4 +9,9 @@ import { Component } from '@angular/core';
   templateUrl: './community-guidelines.component.html',
   styleUrls: ['../../../stylesheets/console.component.ng.scss'],
 })
-export class NetworkAdminConsoleModerationCommunityGuidelinesComponent {}
+export class NetworkAdminConsoleCommunityGuidelinesComponent {
+  /**
+   * Allows us to use enum in the template
+   */
+  public CustomPageType: typeof CustomPageType = CustomPageType;
+}
