@@ -235,9 +235,20 @@ export class AnalyticsService implements OnDestroy {
   /**
    * Set a psuedonymous id, if one is available
    * This one-way id is created on login and only available to user
+   * Note: tenants will set their user id
    */
   initPseudoId(): void {
-    if (this.pseudoId) snowplow.setUserId(this.pseudoId);
+    let userId;
+
+    if (this.configService.get('is_tenant')) {
+      userId = this.sessionService.getLoggedInUser().guid;
+    } else if (this.pseudoId) {
+      userId = this.pseudoId;
+    }
+
+    if (userId) {
+      snowplow.setUserId(userId);
+    }
   }
 
   /**
