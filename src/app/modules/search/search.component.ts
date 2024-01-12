@@ -49,6 +49,7 @@ import { FeedsService } from '../../common/services/feeds.service';
 import { PermissionsService } from '../../common/services/permissions.service';
 import { ComposerModalService } from '../composer/components/modal/modal.service';
 import { SiteService } from '../../common/services/site.service';
+import { Session } from '../../services/session';
 
 const PAGE_SIZE = 12;
 
@@ -172,7 +173,8 @@ export class SearchComponent {
     protected permissions: PermissionsService,
     private composerModal: ComposerModalService,
     private injector: Injector,
-    private site: SiteService
+    private site: SiteService,
+    protected session: Session
   ) {
     this.cdnUrl = configs.get('cdn_url');
 
