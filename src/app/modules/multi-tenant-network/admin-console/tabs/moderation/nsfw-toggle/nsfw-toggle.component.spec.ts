@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NetworkAdminConsoleNsfwToggleComponent } from './nsfw-toggle.component';
 import { NsfwEnabledService } from '../../../../services/nsfw-enabled.service';
 import { MockService } from '../../../../../../utils/mock';
+import { EventEmitter } from '@angular/core';
 
 describe('NetworkAdminConsoleNsfwToggleComponent', () => {
   let component: NetworkAdminConsoleNsfwToggleComponent;
@@ -14,7 +15,12 @@ describe('NetworkAdminConsoleNsfwToggleComponent', () => {
       providers: [
         {
           provide: NsfwEnabledService,
-          useValue: MockService(NsfwEnabledService),
+          useValue: MockService(NsfwEnabledService, {
+            has: ['nsfwEnabled$'],
+            props: {
+              nsfwEnabled$: { get: () => new EventEmitter<boolean>() },
+            },
+          }),
         },
       ],
     }).compileComponents();
