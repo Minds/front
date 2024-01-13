@@ -7,6 +7,8 @@ import { CommonModule } from '../../common/common.module';
 import { PathMatch } from '../../common/types/angular.types';
 import { CustomPageComponent } from './custom-page/custom-page.component';
 import { TenantOnlyRedirectGuard } from '../../common/guards/tenant-only-redirect.guard';
+import { MarkdownModule } from 'ngx-markdown';
+import { CustomPageType } from './custom-pages.types';
 
 const routes: Routes = [
   {
@@ -21,16 +23,17 @@ const routes: Routes = [
       {
         path: 'privacy-policy',
         component: CustomPageComponent,
-        data: { pageType: 'privacyPolicy' },
+        data: { pageType: CustomPageType.PRIVACY_POLICY },
       },
       {
         path: 'terms-of-service',
         component: CustomPageComponent,
-        data: { pageType: 'termsOfService' },
+        data: { pageType: CustomPageType.TERMS_OF_SERVICE },
       },
       {
         path: 'community-guidelines',
-        data: { pageType: 'communityGuidelines' },
+        component: CustomPageComponent,
+        data: { pageType: CustomPageType.COMMUNITY_GUIDELINES },
       },
     ],
   },
@@ -42,6 +45,7 @@ const routes: Routes = [
     RouterModule,
     CommonModule,
     RouterModule.forChild(routes),
+    MarkdownModule.forChild(),
   ],
   declarations: [CustomPageComponent],
 })

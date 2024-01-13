@@ -1,12 +1,11 @@
 <div
-  *ngIf="!(loading$ | async); else loadingSpinnerTemplate"
+  *ngIf="
+    !(loading$ | async) || !customPage?.externalLink;
+    else loadingSpinnerTemplate
+  "
   class="m-customPage__wrapper"
 >
-  <h1 *ngIf="displayName">{{ displayName }}</h1>
-  <p *ngIf="!content" i18n="@@CUSTOM_PAGE__NOTICE__POLICY_NOT_FOUND">
-    Policy not found.
-  </p>
-  <div>{{ content }}</div>
+  <markdown ngPreserveWhitespaces [data]="displayContent"></markdown>
 </div>
 
 <!-- --------------------------- -->

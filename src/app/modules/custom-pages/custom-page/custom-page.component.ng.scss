@@ -1,18 +1,18 @@
 @import 'defaults.scss';
 
 :host {
-  .m-customPage__wrapper {
-    h1 {
-      margin: 0;
-      @include heading1Medium;
-    }
-    p {
-      @include body1Regular;
+  display: block;
+  padding: $spacing7 $spacing10 $spacing12;
+
+  @media screen and (max-width: $max-mobile) {
+    padding: $spacing7 $spacing7 $spacing10;
+  }
+
+  ::ng-deep markdown {
+    a {
       @include m-theme() {
-        color: themed($m-textColor--secondary);
+        color: themed($m-action);
       }
     }
-
-    // ojm update with additional aux page styles after markdown enabled
   }
 }

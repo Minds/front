@@ -4,7 +4,6 @@ import {
   Observable,
   Subscription,
   catchError,
-  filter,
   map,
   of,
   take,
@@ -54,33 +53,31 @@ export class CustomPageService implements OnDestroy {
    */
   public fetchCustomPage(pageType: CustomPageType): void {
     this.subscriptions.push(
-      this.getCustomPage(pageType)
-        .pipe(filter(Boolean), take(1))
-        .subscribe(
-          (customPage: CustomPage | null): void => {
-            const implementation: CustomPageImplementation = this.getImplementation(
-              customPage
-            );
-            const displayName = this.getDisplayName(customPage.pageType);
-            const displayContent = this.getDisplayContent(
-              customPage,
-              implementation
-            );
+      this.getCustomPage(pageType).subscribe(
+        (customPage: CustomPage | null): void => {
+          const implementation: CustomPageImplementation = this.getImplementation(
+            customPage
+          );
+          const displayName = this.getDisplayName(customPage.pageType);
+          const displayContent = this.getDisplayContent(
+            customPage,
+            implementation
+          );
 
-            const customPageExtended = {
-              ...customPage,
-              implementation: implementation,
-              displayName: displayName,
-              displayContent: displayContent,
-            };
+          const customPageExtended = {
+            ...customPage,
+            implementation: implementation,
+            displayName: displayName,
+            displayContent: displayContent,
+          };
 
-            this.customPage$.next(customPageExtended);
-          },
-          (error: any): void => {
-            console.error('Error fetching custom page:', error);
-            this.customPage$.next(null);
-          }
-        )
+          this.customPage$.next(customPageExtended);
+        },
+        (error: any): void => {
+          console.error('Error fetching custom page:', error);
+          this.customPage$.next(null);
+        }
+      )
     );
   }
 
@@ -92,7 +89,7 @@ export class CustomPageService implements OnDestroy {
   ): Observable<CustomPage | null> {
     return this.getCustomPageGQL.fetch({ pageType }).pipe(
       map((result: ApolloQueryResult<any>): CustomPage | null => {
-        return result.data?.getCustomPage || null;
+        return result.data?.customPage || null;
       }),
       catchError(
         (e: unknown): Observable<null> => {
@@ -118,21 +115,31 @@ export class CustomPageService implements OnDestroy {
       externalLink: externalLink,
     };
 
-    return this.setCustomPageGQL.mutate(mutationVars).pipe(
-      take(1),
-      map((result: MutationResult<SetCustomPageMutation>) => {
-        return Boolean(result?.data?.setCustomPage);
-      }),
-      catchError(
-        (e: any): Observable<boolean> => {
-          if (e?.errors[0] && e.errors[0].message) {
-            this.toaster.error(e.errors[0].message);
+    // Refresh cache after mutation
+    return this.setCustomPageGQL
+      .mutate(mutationVars, {
+        refetchQueries: [
+          {
+            query: this.getCustomPageGQL.document,
+            variables: { pageType: pageType },
+          },
+        ],
+      })
+      .pipe(
+        take(1),
+        map((result: MutationResult<SetCustomPageMutation>) => {
+          return Boolean(result?.data?.setCustomPage);
+        }),
+        catchError(
+          (e: any): Observable<boolean> => {
+            if (e?.errors[0] && e.errors[0].message) {
+              this.toaster.error(e.errors[0].message);
+            }
+            console.error(e);
+            return of(false);
           }
-          console.error(e);
-          return of(false);
-        }
-      )
-    );
+        )
+      );
   }
 
   public getDisplayName(pageType: CustomPageTypesEnum): string {
@@ -153,9 +160,9 @@ export class CustomPageService implements OnDestroy {
    * @returns The CustomPageImplementation type.
    */
   public getImplementation(customPage: CustomPage): CustomPageImplementation {
-    if (customPage.content && !customPage.externalLink) {
+    if (customPage?.content && !customPage?.externalLink) {
       return CustomPageImplementation.CUSTOM;
-    } else if (!customPage.content && customPage.externalLink) {
+    } else if (!customPage?.content && customPage?.externalLink) {
       return CustomPageImplementation.EXTERNAL;
     }
     return CustomPageImplementation.DEFAULT;

@@ -27,10 +27,6 @@ export class CustomPageComponent implements OnInit, OnDestroy {
    * */
   protected pageType: CustomPageType;
 
-  protected implementation: CustomPageImplementation;
-
-  protected displayName: string;
-
   protected customPage: CustomPage;
 
   /**
@@ -45,7 +41,6 @@ export class CustomPageComponent implements OnInit, OnDestroy {
     true
   );
 
-  // ojm this needs to handle markdown as well
   constructor(
     private service: CustomPageService,
     private route: ActivatedRoute
@@ -62,14 +57,14 @@ export class CustomPageComponent implements OnInit, OnDestroy {
     // Get custom page from server to populate page
     this.subscriptions.push(
       this.service.customPage$.subscribe(customPage => {
-        this.customPage = customPage;
-        this.displayName = customPage.displayName;
-        this.implementation = customPage.implementation;
-        this.displayContent = customPage.displayContent;
-        if (!this.displayContent) {
-          this.redirectToExternalLink();
+        if (customPage) {
+          this.customPage = customPage;
+          this.displayContent = customPage.displayContent;
+          if (!this.displayContent) {
+            this.redirectToExternalLink();
+          }
+          this.loading$.next(false);
         }
-        this.loading$.next(false);
       })
     );
 

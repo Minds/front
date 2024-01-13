@@ -16,6 +16,8 @@ import {
 } from 'rxjs';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { CustomPageService } from '../../../services/custom-page.service';
+import { ModalService } from '../../../../../services/ux/modal.service';
+import { CustomPageFormContentPreviewModalComponent } from './content-preview-modal/content-preview-modal.component';
 
 /**
  * Allows tenant admins to manage their custom pages
@@ -27,8 +29,7 @@ import { CustomPageService } from '../../../services/custom-page.service';
   templateUrl: './custom-page-form.component.html',
   styleUrls: ['./custom-page-form.component.ng.scss'],
 })
-export class NetworkAdminConsoleCustomPageFormComponent
-  implements OnInit, OnDestroy {
+export class CustomPageFormComponent implements OnInit, OnDestroy {
   @Input() pageType: CustomPageType;
 
   protected form: FormGroup;
@@ -38,6 +39,8 @@ export class NetworkAdminConsoleCustomPageFormComponent
   protected displayName: string;
 
   protected customPage: CustomPageExtended;
+
+  protected defaultContent: string;
 
   /** Whether loading is in progress. */
   public loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
@@ -59,7 +62,8 @@ export class NetworkAdminConsoleCustomPageFormComponent
   constructor(
     private fb: FormBuilder,
     private toaster: ToasterService,
-    private service: CustomPageService
+    private service: CustomPageService,
+    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -70,10 +74,15 @@ export class NetworkAdminConsoleCustomPageFormComponent
     // Get custom page from server to populate form
     this.subscriptions.push(
       this.service.customPage$.subscribe(customPage => {
-        this.customPage = customPage;
-        this.displayName = customPage.displayName;
-        this.setUpForm();
-        this.loading$.next(false);
+        if (customPage) {
+          this.customPage = customPage;
+          this.displayName = customPage.displayName;
+          this.defaultContent = this.service.getDefaultContent(
+            this.customPage.pageType
+          );
+          this.setUpForm();
+          this.loading$.next(false);
+        }
       })
     );
 
@@ -81,9 +90,11 @@ export class NetworkAdminConsoleCustomPageFormComponent
   }
 
   setUpForm(): void {
+    const initialContent = this.customPage?.content || this.defaultContent;
+
     this.form = this.fb.group({
       implementation: [this.customPage.implementation],
-      content: [this.customPage?.content],
+      content: [initialContent],
       externalLink: [this.customPage?.externalLink],
     });
 
@@ -119,8 +130,7 @@ export class NetworkAdminConsoleCustomPageFormComponent
 
     this.savingInProgress$.next(true);
 
-    const customPageImplementation = this.form.get('customPageImplementation')
-      .value;
+    const implementation = this.form.get('implementation').value;
     const content = this.form.get('content').value;
     const externalLink = this.form.get('externalLink').value;
 
@@ -132,10 +142,10 @@ export class NetworkAdminConsoleCustomPageFormComponent
 
     // Determine what needs to be saved, based on the selected implementation.
     // Send a null value for the field(s) that are not related to the chosen implementation
-    if (customPageImplementation === CustomPageImplementation.CUSTOM) {
+    if (implementation === CustomPageImplementation.CUSTOM) {
       payload.content = content;
       payload.externalLink = null;
-    } else if (customPageImplementation === CustomPageImplementation.EXTERNAL) {
+    } else if (implementation === CustomPageImplementation.EXTERNAL) {
       payload.content = null;
       payload.externalLink = externalLink;
     } else {
@@ -159,12 +169,6 @@ export class NetworkAdminConsoleCustomPageFormComponent
 
       this.toaster.success('Changes saved');
 
-      // Clear implementation-irrelevant values from form
-      this.form.patchValue({
-        content: payload.content,
-        externalLink: payload.externalLink,
-      });
-
       this.form.markAsPristine();
     } catch (e) {
       console.error(e);
@@ -172,6 +176,19 @@ export class NetworkAdminConsoleCustomPageFormComponent
     } finally {
       this.savingInProgress$.next(false);
     }
+  }
+
+  openContentPreviewModal(showDefaultContent: boolean = true): Promise<void> {
+    return this.modalService.present(
+      CustomPageFormContentPreviewModalComponent,
+      {
+        data: {
+          content: showDefaultContent
+            ? this.defaultContent
+            : this.form.get('content').value,
+        },
+      }
+    ).result;
   }
 
   get showDefaultLink(): boolean {

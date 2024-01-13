@@ -1,10 +1,13 @@
 import { CustomPage } from '../../../graphql/generated.engine';
 
-/** Different types of custom pages that we allow */
+/**
+ * Different types of custom pages that we allow
+ * Starts with 1 to avoid misinterpretations of 0 as falsy
+ */
 export enum CustomPageType {
-  PRIVACY_POLICY = 0,
-  TERMS_OF_SERVICE = 1,
-  COMMUNITY_GUIDELINES = 2,
+  PRIVACY_POLICY = 1,
+  TERMS_OF_SERVICE = 2,
+  COMMUNITY_GUIDELINES = 3,
 }
 
 /**

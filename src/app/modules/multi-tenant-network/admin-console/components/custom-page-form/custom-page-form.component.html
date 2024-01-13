@@ -1,5 +1,5 @@
 <ng-container *ngIf="!(loading$ | async); else loadingSpinnerTemplate">
-  <div class="m-formWrapper">
+  <div class="m-formWrapper" *ngIf="form">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- -------------------- -->
       <!-- IMPLEMENTATION SELECTION RADIO -->
@@ -79,7 +79,8 @@
             class="m-form__row--label m-customPageForm__label--secondary m-customPageForm__label--reviewDefault"
           >
             <label
-              >Review the <a href="todoojm">default</a> {{ displayName }}</label
+              >Review the <a (click)="openContentPreviewModal()">default</a>
+              {{ displayName }}</label
             >
           </div>
         </ng-container>
@@ -115,6 +116,15 @@
                 Maximum {{ contentMaxLength }} characters allowed.
               </p>
             </div>
+          </div>
+
+          <div
+            class="m-form__row--label m-customPageForm__label--secondary m-customPageForm__label--reviewDefault"
+          >
+            <label
+              >See a <a (click)="openContentPreviewModal(false)">preview</a> of
+              your custom {{ displayName }} formatted in markdown</label
+            >
           </div>
         </ng-container>
         <!-- -------------------- -->

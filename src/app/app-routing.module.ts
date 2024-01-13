@@ -24,6 +24,7 @@ import { NetworksModuleLazyRoutes } from './modules/networks/networks.lazy';
 import { NetworkAdminConsoleModuleLazyRoutes } from './modules/multi-tenant-network/admin-console/network-admin-console.lazy';
 import { MindsOnlyRedirectGuard } from './common/guards/minds-only-redirect.guard';
 import { CustomPagesModuleLazyRoutes } from './modules/custom-pages/custom-pages.module.lazy';
+import { TenantOnlyRedirectGuard } from './common/guards/tenant-only-redirect.guard';
 
 const routes: Routes = [
   AnalyticsModuleLazyRoutes,
@@ -68,6 +69,7 @@ const routes: Routes = [
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
     MindsOnlyRedirectGuard,
+    TenantOnlyRedirectGuard,
   ],
 })
 export class AppRoutingModule {}

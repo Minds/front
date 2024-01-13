@@ -1,15 +1,11 @@
 mutation SetCustomPage(
   $pageType: Int!
-  $content: String!
-  $externalLink: String!
+  $content: String
+  $externalLink: String
 ) {
   setCustomPage(
     pageType: $pageType
     content: $content
     externalLink: $externalLink
-  ) {
-    pageType
-    content
-    externalLink
-  }
+  )
 }

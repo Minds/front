@@ -207,8 +207,8 @@ export enum CustomHostnameStatusEnum {
 
 export type CustomPage = NodeInterface & {
   __typename?: 'CustomPage';
-  content: Scalars['String']['output'];
-  externalLink: Scalars['String']['output'];
+  content?: Maybe<Scalars['String']['output']>;
+  externalLink?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   pageType: CustomPageTypesEnum;
 };
@@ -655,7 +655,7 @@ export type Mutation = {
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   resendInvite?: Maybe<Scalars['Void']['output']>;
-  setCustomPage: CustomPage;
+  setCustomPage: Scalars['Boolean']['output'];
   /** Creates a comment on a remote url */
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
@@ -760,8 +760,8 @@ export type MutationResendInviteArgs = {
 };
 
 export type MutationSetCustomPageArgs = {
-  content: Scalars['String']['input'];
-  externalLink: Scalars['String']['input'];
+  content?: InputMaybe<Scalars['String']['input']>;
+  externalLink?: InputMaybe<Scalars['String']['input']>;
   pageType: Scalars['Int']['input'];
 };
 
@@ -2086,8 +2086,8 @@ export type GetCustomPageQuery = {
   customPage: {
     __typename?: 'CustomPage';
     pageType: CustomPageTypesEnum;
-    content: string;
-    externalLink: string;
+    content?: string | null;
+    externalLink?: string | null;
   };
 };
 
@@ -2246,18 +2246,13 @@ export type ResendInviteMutation = {
 
 export type SetCustomPageMutationVariables = Exact<{
   pageType: Scalars['Int']['input'];
-  content: Scalars['String']['input'];
-  externalLink: Scalars['String']['input'];
+  content?: InputMaybe<Scalars['String']['input']>;
+  externalLink?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type SetCustomPageMutation = {
   __typename?: 'Mutation';
-  setCustomPage: {
-    __typename?: 'CustomPage';
-    pageType: CustomPageTypesEnum;
-    content: string;
-    externalLink: string;
-  };
+  setCustomPage: boolean;
 };
 
 export type SetMultiTenantConfigMutationVariables = Exact<{
@@ -4645,18 +4640,14 @@ export class ResendInviteGQL extends Apollo.Mutation<
 export const SetCustomPageDocument = gql`
   mutation SetCustomPage(
     $pageType: Int!
-    $content: String!
-    $externalLink: String!
+    $content: String
+    $externalLink: String
   ) {
     setCustomPage(
       pageType: $pageType
       content: $content
       externalLink: $externalLink
-    ) {
-      pageType
-      content
-      externalLink
-    }
+    )
   }
 `;
 
