@@ -11,6 +11,7 @@ import { OnboardingV5LazyModule } from '../onboarding-v5-modal-lazy.module';
 import { isPlatformBrowser } from '@angular/common';
 import { UpgradeModalService } from '../../upgrade/upgrade-modal.service';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
+import { OnboardingV5MinimalModeService } from './onboarding-v5-minimal-mode.service';
 
 /**
  * Service for opening the onboarding v5 modal and lazy loading in needed components..
@@ -19,6 +20,7 @@ import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injec
 export class OnboardingV5ModalLazyService {
   constructor(
     private modalService: ModalService,
+    private onboardingMinimalMode: OnboardingV5MinimalModeService,
     private injector: Injector,
     private upgradeModal: UpgradeModalService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean,
@@ -65,7 +67,10 @@ export class OnboardingV5ModalLazyService {
    * who just finished onboarding
    */
   private async openUpgradeModal() {
-    if (isPlatformBrowser(this.platformId)) {
+    if (
+      isPlatformBrowser(this.platformId) &&
+      !this.onboardingMinimalMode.shouldShow()
+    ) {
       setTimeout(() => this.upgradeModal.open(), 800);
     }
   }
