@@ -1,4 +1,4 @@
-query FetchTenantOnboardingV5Versions {
+query FetchMinimalOnboardingV5Versions {
   onboardingV5Versions {
     data {
       attributes {

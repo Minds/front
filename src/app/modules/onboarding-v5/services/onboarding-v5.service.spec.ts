@@ -11,8 +11,8 @@ import { AuthRedirectService } from '../../../common/services/auth-redirect.serv
 import {
   ComponentOnboardingV5CompletionStep,
   ComponentOnboardingV5OnboardingStep,
+  FetchMinimalOnboardingV5VersionsGQL,
   FetchOnboardingV5VersionsGQL,
-  FetchTenantOnboardingV5VersionsGQL,
 } from '../../../../graphql/generated.strapi';
 import {
   CompleteOnboardingStepGQL,
@@ -32,7 +32,7 @@ import {
   mockOnboardingV5VersionsData,
   mockTenantOnboardingV5VersionsData,
 } from './mocks/onboardingV5Versions.mock';
-import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { OnboardingV5MinimalModeService } from './onboarding-v5-minimal-mode.service';
 
 const mockActiveStep: OnboardingStep = {
   completed: true,
@@ -62,8 +62,8 @@ describe('OnboardingV5Service', () => {
           ]),
         },
         {
-          provide: FetchTenantOnboardingV5VersionsGQL,
-          useValue: jasmine.createSpyObj<FetchTenantOnboardingV5VersionsGQL>([
+          provide: FetchMinimalOnboardingV5VersionsGQL,
+          useValue: jasmine.createSpyObj<FetchMinimalOnboardingV5VersionsGQL>([
             'fetch',
           ]),
         },
@@ -90,16 +90,16 @@ describe('OnboardingV5Service', () => {
           useValue: MockService(OnboardingV5CompletionStorageService),
         },
         {
+          provide: OnboardingV5MinimalModeService,
+          useValue: MockService(OnboardingV5MinimalModeService),
+        },
+        {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
         {
           provide: Session,
           useValue: MockService(Session),
-        },
-        {
-          provide: IsTenantService,
-          useValue: MockService(IsTenantService),
         },
         {
           provide: STRAPI_URL,
@@ -116,7 +116,6 @@ describe('OnboardingV5Service', () => {
     (service as any).session.getLoggedInUser.and.returnValue(userMock);
     (service as any).completionStorage.isCompleted.and.returnValue(false);
     (service as any).firstLoad = false;
-    (service as any).isTenant.is.and.returnValue(false);
   });
 
   afterEach(() => {
@@ -373,7 +372,7 @@ describe('OnboardingV5Service', () => {
 
   describe('start - non-tenant', () => {
     beforeEach(() => {
-      (service as any).isTenant.is.and.returnValue(false);
+      (service as any).onboardingMinimalMode.shouldShow.and.returnValue(false);
     });
 
     it('should start onboarding when progress check is not skipped and user has no onboarding progress', async () => {
@@ -665,7 +664,7 @@ describe('OnboardingV5Service', () => {
 
   describe('start - tenant', () => {
     beforeEach(() => {
-      (service as any).isTenant.is.and.returnValue(true);
+      (service as any).onboardingMinimalMode.shouldShow.and.returnValue(true);
     });
 
     it('should start onboarding when progress check is not skipped and user has no onboarding progress', async () => {
@@ -676,7 +675,7 @@ describe('OnboardingV5Service', () => {
           },
         })
       );
-      (service as any).fetchTenantOnboardingV5VersionsGql.fetch.and.returnValue(
+      (service as any).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockTenantOnboardingV5VersionsData)
       );
       (service as any).firstLoad = false;
@@ -721,7 +720,7 @@ describe('OnboardingV5Service', () => {
           },
         })
       );
-      (service as any).fetchTenantOnboardingV5VersionsGql.fetch.and.returnValue(
+      (service as any).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockTenantOnboardingV5VersionsData)
       );
       (service as any).firstLoad = false;
@@ -752,7 +751,7 @@ describe('OnboardingV5Service', () => {
     });
 
     it('should start onboarding when progress check IS skipped and user has no onboarding progress', async () => {
-      (service as any).fetchTenantOnboardingV5VersionsGql.fetch.and.returnValue(
+      (service as any).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockTenantOnboardingV5VersionsData)
       );
       (service as any).firstLoad = true;
@@ -787,7 +786,7 @@ describe('OnboardingV5Service', () => {
       (service as any).getOnboardingStepProgressGQL.fetch.and.returnValue(
         throwError(() => new Error('error'))
       );
-      (service as any).fetchTenantOnboardingV5VersionsGql.fetch.and.returnValue(
+      (service as any).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockTenantOnboardingV5VersionsData)
       );
       (service as any).firstLoad = false;
