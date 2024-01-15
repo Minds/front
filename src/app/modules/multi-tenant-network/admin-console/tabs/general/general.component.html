@@ -48,12 +48,13 @@
       [saving]="buttonTemplateVariables.inProgress"
       [solid]="false"
       (onAction)="onSubmit()"
-      ><ng-container
-        i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__SAVE_GENERAL_SETTINGS"
-        >Save general settings</ng-container
+      ><ng-container i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__SAVE_NETWORK_NAME"
+        >Save network name</ng-container
       ></m-button
     >
   </form>
+
+  <m-networkAdminConsole__federationSettings></m-networkAdminConsole__federationSettings>
 
   <!-- Copy link container -->
   <!-- <div class="m-networkAdminGeneral__copyInviteLinkContainer">

@@ -4,6 +4,8 @@ query GetMultiTenantConfig{
     siteEmail,
     colorScheme,
     primaryColor,
-    communityGuidelines
+    communityGuidelines,
+    canEnableFederation,
+    federationDisabled
   }
 }
