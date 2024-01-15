@@ -575,8 +575,11 @@ export enum MultiTenantColorScheme {
 
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
+  /** Whether federation can be enabled. */
+  canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
   communityGuidelines?: Maybe<Scalars['String']['output']>;
+  federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
@@ -588,6 +591,7 @@ export type MultiTenantConfig = {
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+  federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
@@ -2123,6 +2127,8 @@ export type GetMultiTenantConfigQuery = {
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
     communityGuidelines?: string | null;
+    canEnableFederation?: boolean | null;
+    federationDisabled?: boolean | null;
   } | null;
 };
 
@@ -2202,6 +2208,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+  federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
@@ -4407,6 +4414,8 @@ export const GetMultiTenantConfigDocument = gql`
       colorScheme
       primaryColor
       communityGuidelines
+      canEnableFederation
+      federationDisabled
     }
   }
 `;
@@ -4521,6 +4530,7 @@ export const SetMultiTenantConfigDocument = gql`
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
     $communityGuidelines: String
+    $federationDisabled: Boolean
     $nsfwEnabled: Boolean
   ) {
     multiTenantConfig(
@@ -4529,6 +4539,7 @@ export const SetMultiTenantConfigDocument = gql`
         colorScheme: $colorScheme
         primaryColor: $primaryColor
         communityGuidelines: $communityGuidelines
+        federationDisabled: $federationDisabled
         nsfwEnabled: $nsfwEnabled
       }
     )

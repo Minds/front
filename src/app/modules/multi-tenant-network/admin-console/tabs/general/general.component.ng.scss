@@ -9,8 +9,10 @@
     @include horizontalPadding;
   }
 
-  .m-networkAdminConsole__form {
-    margin-bottom: $spacing14;
+  .m-networkAdminConsole__form,
+  m-networkAdminConsole__federationSettings {
+    margin-bottom: $spacing8;
+    max-width: 700px;
   }
 
   .m-networkAdminGeneral__copyInviteLinkContainer {
