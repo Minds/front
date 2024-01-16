@@ -32,15 +32,15 @@ import { CustomPageFormContentPreviewModalComponent } from './content-preview-mo
 export class CustomPageFormComponent implements OnInit, OnDestroy {
   @Input() pageType: CustomPageType;
 
-  protected form: FormGroup;
+  form: FormGroup;
 
-  protected contentMaxLength: number = 65000;
+  contentMaxLength: number = 65000;
 
-  protected displayName: string;
+  displayName: string;
 
-  protected customPage: CustomPageExtended;
+  customPage: CustomPageExtended;
 
-  protected defaultContent: string;
+  defaultContent: string;
 
   /** Whether loading is in progress. */
   public loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(

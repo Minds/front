@@ -64,7 +64,7 @@ export class CustomPageService implements OnDestroy {
             implementation
           );
 
-          const customPageExtended = {
+          const customPageExtended: CustomPageExtended = {
             ...customPage,
             implementation: implementation,
             displayName: displayName,
