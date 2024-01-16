@@ -110,14 +110,6 @@ export class SearchComponent {
   totalEdgeCount$: Observable<number>;
 
   /**
-   * True if we have at least one activity edge in memory
-   * (used to determine whether we have an empty feed)
-   */
-  hasActivityEdges$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-
-  /**
    * Connection pagination information.
    * Contains the most recent cursors and paging stats
    */
@@ -156,11 +148,6 @@ export class SearchComponent {
    */
   showEmptyFeedNotice$: Observable<boolean>;
 
-  /**
-   * True after the first load has been completed
-   */
-  init$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
   constructor(
     private fetchSearch: FetchSearchGQL,
     private countSearch: CountSearchGQL,
@@ -177,15 +164,6 @@ export class SearchComponent {
     protected session: Session
   ) {
     this.cdnUrl = configs.get('cdn_url');
-
-    this.showEmptyFeedNotice$ = combineLatest([
-      this.init$,
-      this.hasActivityEdges$,
-    ]).pipe(
-      map(([init, hasActivityEdges]) => {
-        return init && !hasActivityEdges;
-      })
-    );
   }
 
   ngOnInit() {
@@ -245,11 +223,16 @@ export class SearchComponent {
             }
           }
         }
-        this.init$.next(true);
 
         return edges;
       }),
       tap(() => (this.isFirstRun = false)) // Do not delay on future runs
+    );
+
+    this.showEmptyFeedNotice$ = this.edges$.pipe(
+      map(edges => {
+        return !this.inProgress && edges?.length === 0;
+      })
     );
 
     this.searchData = this.searchQuery.valueChanges.pipe(
@@ -290,7 +273,7 @@ export class SearchComponent {
       })
     );
 
-    if (this.route.snapshot.data['explore']) {
+    if (this.route.snapshot?.data && this.route.snapshot.data['explore']) {
       this.exploreTabContext = true;
     }
 
@@ -319,7 +302,6 @@ export class SearchComponent {
           this.legacyDiscoveryFeedsService.type$.next(this.mediaType);
 
           this.isFirstRun = true;
-          this.init$.next(false);
 
           this.searchQuery.refetch({
             ...this.searchQuery.variables,
