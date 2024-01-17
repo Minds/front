@@ -3,6 +3,7 @@
   [anchorPosition]="{ top: 0, right: 'calc(100% - 4px)' }"
 >
   <m-dropdownMenu
+    *ngIf="nsfwEnabledService.nsfwEnabled$ | async"
     [menu]="nsfwSubmenu"
     [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
     data-ref="meatball-menu-nsfw"

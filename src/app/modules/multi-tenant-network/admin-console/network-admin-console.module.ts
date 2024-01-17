@@ -5,7 +5,7 @@ import { NetworkAdminConsoleComponent } from './console.component';
 import { PathMatch } from '../../../common/types/angular.types';
 import { RouterModule, Routes } from '@angular/router';
 import { NetworkAdminConsoleTabsComponent } from './tabs/tabs.component';
-import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.component';
+import { NetworkAdminConsoleFederationSettingsComponent } from './tabs/general/federation-settings/federation-settings.component';
 import { NetworkAdminConsoleAppearanceComponent } from './tabs/appearance/appearance.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetworkSettingsAuthGuard } from './guards/network-settings-auth.guard';
@@ -23,6 +23,8 @@ import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.
 import { CustomPageFormComponent } from './components/custom-page-form/custom-page-form.component';
 import { NetworkAdminConsolePrivacyPolicyComponent } from './tabs/moderation/privacy-policy/privacy-policy.component';
 import { NetworkAdminConsoleTermsOfServiceComponent } from './tabs/moderation/terms-of-service/terms-of-service.component';
+import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.component';
+import { NetworkAdminConsoleNsfwToggleComponent } from './tabs/moderation/nsfw-toggle/nsfw-toggle.component';
 import { NetworkAdminConsoleInviteComponent } from './tabs/invite/invite.component';
 import { NetworkAdminConsoleInviteSendComponent } from './tabs/invite/tabs/send/send.component';
 import { NetworkAdminConsoleInviteInvitationsComponent } from './tabs/invite/tabs/invitations/invitations.component';
@@ -118,6 +120,8 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesComponent,
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
+    NetworkAdminConsoleFederationSettingsComponent,
+    NetworkAdminConsoleNsfwToggleComponent,
     NetworkAdminConsoleInviteComponent,
     NetworkAdminConsoleInviteSendComponent,
     NetworkAdminConsoleInviteInvitationsComponent,

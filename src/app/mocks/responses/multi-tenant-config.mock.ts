@@ -8,4 +8,6 @@ export const multiTenantConfigMock: MultiTenantConfig = {
   siteEmail: 'noreply@minds.com',
   colorScheme: MultiTenantColorScheme.Dark,
   primaryColor: '#ff0000',
+  federationDisabled: true,
+  canEnableFederation: true,
 };

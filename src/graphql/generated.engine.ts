@@ -595,8 +595,12 @@ export enum MultiTenantColorScheme {
 
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
+  /** Whether federation can be enabled. */
+  canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
+  federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
+  nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
@@ -605,6 +609,8 @@ export type MultiTenantConfig = {
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
+  nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
@@ -2170,6 +2176,8 @@ export type GetMultiTenantConfigQuery = {
     siteEmail?: string | null;
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
+    canEnableFederation?: boolean | null;
+    federationDisabled?: boolean | null;
   } | null;
 };
 
@@ -2259,6 +2267,8 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   siteName?: InputMaybe<Scalars['String']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+  federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
+  nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -4529,6 +4539,8 @@ export const GetMultiTenantConfigDocument = gql`
       siteEmail
       colorScheme
       primaryColor
+      canEnableFederation
+      federationDisabled
     }
   }
 `;
@@ -4669,12 +4681,16 @@ export const SetMultiTenantConfigDocument = gql`
     $siteName: String
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
+    $federationDisabled: Boolean
+    $nsfwEnabled: Boolean
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
         siteName: $siteName
         colorScheme: $colorScheme
         primaryColor: $primaryColor
+        federationDisabled: $federationDisabled
+        nsfwEnabled: $nsfwEnabled
       }
     )
   }

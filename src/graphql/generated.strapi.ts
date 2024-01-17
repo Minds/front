@@ -1000,6 +1000,7 @@ export enum Enum_Feattablecolumn_Tier {
 
 export enum Enum_Productaddon_Key {
   MobileApp = 'mobile_app',
+  MobileAppSetup = 'mobile_app_setup',
   Moderation = 'moderation',
   TechnicalSupport = 'technical_support',
 }
@@ -2130,7 +2131,7 @@ export type ProductAddOn = {
   description: Scalars['String']['output'];
   key?: Maybe<Enum_Productaddon_Key>;
   name: Scalars['String']['output'];
-  perks: Array<Maybe<ComponentV2ProductPerk>>;
+  perks?: Maybe<Array<Maybe<ComponentV2ProductPerk>>>;
   perksTitle: Scalars['String']['output'];
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -3683,6 +3684,67 @@ export type TwitterSyncTweetMessageQuery = {
   } | null;
 };
 
+export type FetchMinimalOnboardingV5VersionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type FetchMinimalOnboardingV5VersionsQuery = {
+  __typename?: 'Query';
+  onboardingV5Versions?: {
+    __typename?: 'OnboardingV5VersionEntityResponseCollection';
+    data: Array<{
+      __typename?: 'OnboardingV5VersionEntity';
+      attributes?: {
+        __typename?: 'OnboardingV5Version';
+        publishedAt?: any | null;
+        steps: Array<
+          | {
+              __typename: 'ComponentOnboardingV5OnboardingStep';
+              id: string;
+              title: string;
+              description: string;
+              stepKey: string;
+              stepType: Enum_Componentonboardingv5Onboardingstep_Steptype;
+              verifyEmailForm?: {
+                __typename: 'ComponentOnboardingV5VerifyEmailStep';
+                id: string;
+                inputLabel: string;
+                inputPlaceholder?: string | null;
+                resendCodeText: string;
+                resendCodeActionText: string;
+                changeEmailActionText: string;
+                changeEmailTitle: string;
+                changeEmailDescription: string;
+                changeEmailInputLabel: string;
+                changeEmailInputPlaceholder?: string | null;
+                changeEmailActionButton: {
+                  __typename: 'ComponentOnboardingV5ActionButton';
+                  id: string;
+                  text: string;
+                  dataRef?: string | null;
+                };
+              } | null;
+              actionButton?: {
+                __typename: 'ComponentOnboardingV5ActionButton';
+                id: string;
+                text: string;
+                dataRef?: string | null;
+              } | null;
+              skipButton?: {
+                __typename: 'ComponentOnboardingV5SkipButton';
+                id: string;
+                text: string;
+                dataRef?: string | null;
+              } | null;
+            }
+          | { __typename: 'Error' }
+          | null
+        >;
+      } | null;
+    }>;
+  } | null;
+};
+
 export type FetchOnboardingV5VersionsQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -3806,67 +3868,6 @@ export type FetchOnboardingV5VersionsQuery = {
             } | null;
           } | null;
         };
-      } | null;
-    }>;
-  } | null;
-};
-
-export type FetchTenantOnboardingV5VersionsQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type FetchTenantOnboardingV5VersionsQuery = {
-  __typename?: 'Query';
-  onboardingV5Versions?: {
-    __typename?: 'OnboardingV5VersionEntityResponseCollection';
-    data: Array<{
-      __typename?: 'OnboardingV5VersionEntity';
-      attributes?: {
-        __typename?: 'OnboardingV5Version';
-        publishedAt?: any | null;
-        steps: Array<
-          | {
-              __typename: 'ComponentOnboardingV5OnboardingStep';
-              id: string;
-              title: string;
-              description: string;
-              stepKey: string;
-              stepType: Enum_Componentonboardingv5Onboardingstep_Steptype;
-              verifyEmailForm?: {
-                __typename: 'ComponentOnboardingV5VerifyEmailStep';
-                id: string;
-                inputLabel: string;
-                inputPlaceholder?: string | null;
-                resendCodeText: string;
-                resendCodeActionText: string;
-                changeEmailActionText: string;
-                changeEmailTitle: string;
-                changeEmailDescription: string;
-                changeEmailInputLabel: string;
-                changeEmailInputPlaceholder?: string | null;
-                changeEmailActionButton: {
-                  __typename: 'ComponentOnboardingV5ActionButton';
-                  id: string;
-                  text: string;
-                  dataRef?: string | null;
-                };
-              } | null;
-              actionButton?: {
-                __typename: 'ComponentOnboardingV5ActionButton';
-                id: string;
-                text: string;
-                dataRef?: string | null;
-              } | null;
-              skipButton?: {
-                __typename: 'ComponentOnboardingV5SkipButton';
-                id: string;
-                text: string;
-                dataRef?: string | null;
-              } | null;
-            }
-          | { __typename: 'Error' }
-          | null
-        >;
       } | null;
     }>;
   } | null;
@@ -4277,6 +4278,72 @@ export class TwitterSyncTweetMessageGQL extends Apollo.Query<
     super(apollo);
   }
 }
+export const FetchMinimalOnboardingV5VersionsDocument = gql`
+  query FetchMinimalOnboardingV5Versions {
+    onboardingV5Versions {
+      data {
+        attributes {
+          publishedAt
+          steps {
+            __typename
+            ... on ComponentOnboardingV5OnboardingStep {
+              id
+              title
+              description
+              stepKey
+              stepType
+              verifyEmailForm {
+                id
+                __typename
+                inputLabel
+                inputPlaceholder
+                resendCodeText
+                resendCodeActionText
+                changeEmailActionText
+                changeEmailTitle
+                changeEmailDescription
+                changeEmailInputLabel
+                changeEmailInputPlaceholder
+                changeEmailActionButton {
+                  id
+                  __typename
+                  text
+                  dataRef
+                }
+              }
+              actionButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+              skipButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchMinimalOnboardingV5VersionsGQL extends Apollo.Query<
+  FetchMinimalOnboardingV5VersionsQuery,
+  FetchMinimalOnboardingV5VersionsQueryVariables
+> {
+  document = FetchMinimalOnboardingV5VersionsDocument;
+  client = 'strapi';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const FetchOnboardingV5VersionsDocument = gql`
   query FetchOnboardingV5Versions {
     onboardingV5Versions {
@@ -4399,72 +4466,6 @@ export class FetchOnboardingV5VersionsGQL extends Apollo.Query<
   FetchOnboardingV5VersionsQueryVariables
 > {
   document = FetchOnboardingV5VersionsDocument;
-  client = 'strapi';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const FetchTenantOnboardingV5VersionsDocument = gql`
-  query FetchTenantOnboardingV5Versions {
-    onboardingV5Versions {
-      data {
-        attributes {
-          publishedAt
-          steps {
-            __typename
-            ... on ComponentOnboardingV5OnboardingStep {
-              id
-              title
-              description
-              stepKey
-              stepType
-              verifyEmailForm {
-                id
-                __typename
-                inputLabel
-                inputPlaceholder
-                resendCodeText
-                resendCodeActionText
-                changeEmailActionText
-                changeEmailTitle
-                changeEmailDescription
-                changeEmailInputLabel
-                changeEmailInputPlaceholder
-                changeEmailActionButton {
-                  id
-                  __typename
-                  text
-                  dataRef
-                }
-              }
-              actionButton {
-                id
-                __typename
-                text
-                dataRef
-              }
-              skipButton {
-                id
-                __typename
-                text
-                dataRef
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class FetchTenantOnboardingV5VersionsGQL extends Apollo.Query<
-  FetchTenantOnboardingV5VersionsQuery,
-  FetchTenantOnboardingV5VersionsQueryVariables
-> {
-  document = FetchTenantOnboardingV5VersionsDocument;
   client = 'strapi';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
