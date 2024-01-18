@@ -1,9 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ApiService } from '../../../../common/api/api.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../group.service';
 import {
   DEFAULT_GROUP_FEED_ALGORITHM,
@@ -12,6 +12,7 @@ import {
   GroupFeedTypeFilter,
   isOfTypeGroupFeedAlgorithm,
 } from '../group.types';
+import { Client } from '../../../../services/api';
 
 // Compare objs
 const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
@@ -31,11 +32,6 @@ export class GroupFeedService implements OnDestroy {
   >(DEFAULT_GROUP_FEED_TYPE_FILTER);
 
   /**
-   * Filter change subscription
-   */
-  protected filterChangeSubscription: Subscription;
-
-  /**
    * Sorting algorithm
    */
   sort$: Observable<GroupFeedAlgorithm> = this.groupService.view$.pipe(
@@ -48,54 +44,135 @@ export class GroupFeedService implements OnDestroy {
     })
   );
 
+  /**
+   * How many posts are scheduled
+   */
+  readonly scheduledCount$: BehaviorSubject<number> = new BehaviorSubject<
+    number
+  >(0);
+
+  /**
+   * True if the user wants to see scheduled posts instead of the feed
+   */
+  readonly viewScheduled$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
   constructor(
     public service: FeedsService,
     protected api: ApiService,
     protected router: Router,
-    protected groupService: GroupService
+    protected route: ActivatedRoute,
+    protected groupService: GroupService,
+    private client: Client
   ) {
-    // Fetch when group or filter changes
-    this.filterChangeSubscription = combineLatest([
-      this.groupService.group$,
-      this.sort$,
-      this.type$,
-      this.groupService.query$,
-    ])
-      .pipe(distinctUntilChanged(deepDiff))
-      .subscribe(([group, sort, type, query]) => {
-        this.service.clear();
-
-        const endpoint = `api/v2/feeds/container`;
-
-        const params: any = {
-          query: query ? query : '',
-        };
-
+    this.subscriptions.push(
+      this.groupService.query$.subscribe(query => {
+        // Reset scheduled filter
         if (query) {
-          params['all'] = 1;
-          params['period'] = 'all';
-          params['sync'] = 1;
-          params['force_public'] = 1;
-        } else {
-          // Ignore sort algorithm for search query posts
-          params['algorithm'] = sort === 'top' ? 'groupTop' : sort;
+          if (this.viewScheduled$.getValue()) {
+            this.viewScheduled$.next(false);
+          }
         }
+      }),
+      this.type$.subscribe(type => {
+        // Reset scheduled filter
+        if (type !== DEFAULT_GROUP_FEED_TYPE_FILTER) {
+          if (this.viewScheduled$.getValue()) {
+            this.viewScheduled$.next(false);
+          }
+        }
+      }),
+      this.viewScheduled$.subscribe(viewScheduled => {
+        // Scheduled doesn't go with query or type filter
+        if (viewScheduled) {
+          if (this.groupService.query$.getValue()) {
+            this.groupService.query$.next('');
+          }
+          if (this.type$.getValue() !== DEFAULT_GROUP_FEED_TYPE_FILTER) {
+            this.type$.next(DEFAULT_GROUP_FEED_TYPE_FILTER);
+            this.onTypeChange(DEFAULT_GROUP_FEED_TYPE_FILTER);
+          }
+        }
+      }),
+      combineLatest([
+        this.groupService.group$,
+        this.sort$,
+        this.type$,
+        this.groupService.query$,
+        this.viewScheduled$,
+      ])
+        .pipe(debounceTime(0), distinctUntilChanged(deepDiff))
+        .subscribe(([group, sort, type, query, viewScheduled]) => {
+          this.service.clear();
 
-        this.service.setParams(params);
+          const params: any = {
+            query: query ? query : '',
+          };
 
-        this.service
-          .setEndpoint(`${endpoint}/${group.guid}/${type}`)
-          .setLimit(12)
-          .fetch();
-      });
+          // Reset some params if there's a search query
+          if (query) {
+            params['all'] = 1;
+            params['period'] = 'all';
+            params['sync'] = 1;
+            params['force_public'] = 1;
+          } else {
+            // Only explicitly set algorithm when there's not a search query
+            params['algorithm'] = sort === 'top' ? 'groupTop' : sort;
+          }
+
+          let endpoint = `api/v2/feeds/container`;
+
+          if (viewScheduled) {
+            endpoint = 'api/v2/feeds/scheduled';
+          }
+
+          this.service.setParams(params);
+
+          this.service
+            .setEndpoint(`${endpoint}/${group.guid}/${type}`)
+            .setLimit(12)
+            .fetch();
+
+          if (this.groupService.isMember$.getValue()) {
+            this.getScheduledCount();
+          }
+        })
+    );
+  }
+
+  /**
+   * Toggle view scheduled posts
+   */
+  toggleScheduled(): void {
+    this.viewScheduled$.next(!this.viewScheduled$.getValue());
+  }
+
+  /**
+   * Type changes change the route
+   * @param type
+   */
+  onTypeChange(type: GroupFeedTypeFilter) {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        filter: type,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  /**
+   * Get count of scheduled posts
+   */
+  async getScheduledCount() {
+    const url = `api/v2/feeds/scheduled/${this.groupService.guid$.getValue()}/count`;
+    const response: any = await this.client.get(url);
+    this.scheduledCount$.next(response?.count || 0);
   }
 
   ngOnDestroy() {
-    if (this.filterChangeSubscription) {
-      this.filterChangeSubscription.unsubscribe();
-    }
-
-    for (const subscription of this.subscriptions) {
+    for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
   }

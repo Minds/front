@@ -185,7 +185,7 @@ export class GroupService implements OnDestroy {
     protected router: Router,
     protected isTenant: IsTenantService
   ) {
-    this.listenForLogin(); //0jm
+    this.listenForLogin();
     // Set canReview observable
     this.canReview$ = combineLatest([this.isOwner$, this.isModerator$]).pipe(
       map(([isOwner, isModerator]) => isOwner || isModerator)
