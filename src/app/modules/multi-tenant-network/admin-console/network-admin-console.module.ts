@@ -27,6 +27,7 @@ import { NetworkAdminConsoleInviteSendComponent } from './tabs/invite/tabs/send/
 import { NetworkAdminConsoleInviteInvitationsComponent } from './tabs/invite/tabs/invitations/invitations.component';
 import { RoleChipComponent } from './components/role-chip/role-chip.component';
 import { RoleAggregatorComponent } from './components/role-aggregator/role-aggregator.component';
+import { NetworkAdminConsoleImageInputComponent } from './components/image-uploader/image-input.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -60,6 +61,12 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
         ],
       },
       {
+        path: 'mobile',
+        loadChildren: async () =>
+          (await import('./tabs/mobile/mobile-lazy.module'))
+            .NetworkAdminMobileLazyModule,
+      },
+      {
         path: 'roles',
         redirectTo: 'roles/permissions',
         pathMatch: 'full' as PathMatch,
@@ -89,6 +96,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(NETWORK_ADMIN_CONSOLE_ROUTES),
     NetworkAdminConsoleSharedModule,
+    NetworkAdminConsoleImageInputComponent,
   ],
   declarations: [
     NetworkAdminConsoleComponent,

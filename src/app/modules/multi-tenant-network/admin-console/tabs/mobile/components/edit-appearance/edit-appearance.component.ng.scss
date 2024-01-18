@@ -1,0 +1,17 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  margin-bottom: $spacing6;
+
+  .m-networkAdminMobile__subtitle {
+    margin-bottom: $spacing1 !important;
+  }
+
+  .m-networkAdminEditAppearance__link {
+    @include body1Bold;
+    @include m-theme() {
+      color: themed($m-action);
+    }
+  }
+}

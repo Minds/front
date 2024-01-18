@@ -1,0 +1,8 @@
+query GetMobileConfig {
+    mobileConfig {
+        splashScreenType
+        welcomeScreenLogoType
+        previewStatus
+        previewQRCode
+    }
+}

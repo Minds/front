@@ -1,0 +1,138 @@
+<h4
+  class="m-networkAdminMobile__title"
+  i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__TITLE"
+>
+  App assets
+</h4>
+<p
+  class="m-networkAdminMobile__subtitle"
+  i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__SUBTEXT"
+>
+  Upload your app icons and splash photo
+</p>
+
+<div class="m-networkAdminMobile__imageUploadInputs">
+  <div class="m-networkAdminMobile__imageUploadInputContainer">
+    <!-- Icon upload -->
+    <label
+      class="m-networkAdminMobile__imageUploadLabelTitle"
+      for="iconLogoUpload"
+      i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__ICON_IMAGE_TITLE"
+      >Icon</label
+    >
+    <label
+      class="m-networkAdminMobile__imageUploadLabelSubtitle"
+      for="iconLogoUpload"
+    >
+      <span i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__MINIMUM_OF_1000PX"
+        >Upload must be at least 1000x1000</span
+      >
+      <br />
+      <strong i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__MUST_BE_PNG"
+        >Must be a PNG file.</strong
+      >
+    </label>
+    <m-networkAdminConsole__imageInput
+      id="iconLogoUpload"
+      [image]="'url(' + (iconFilePath$ | async) + ')'"
+      [type]="ImageInputOrientationEnum.Square"
+      [inProgress]="iconUploadInProgress$ | async"
+      (onFileChange)="onImageChange($event, MobileConfigImageTypeEnum.Icon)"
+    ></m-networkAdminConsole__imageInput>
+  </div>
+
+  <!-- Splash upload -->
+  <div class="m-networkAdminMobile__imageUploadInputContainer">
+    <label
+      class="m-networkAdminMobile__imageUploadLabelTitle"
+      for="splashLogoUpload"
+      i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__SPLASH_IMAGE_TITLE"
+      >Splash</label
+    >
+    <label
+      class="m-networkAdminMobile__imageUploadLabelSubtitle"
+      for="splashLogoUpload"
+    >
+      <span
+        i18n="
+           @@NETWORK_ADMIN_CONSOLE_MOBILE__THAT_IS_A_MINIMUM_OF_2048PX_ONE_SIDE
+        "
+        >Upload must be at least 2048px on one side</span
+      >
+      <br />
+      <strong i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__MUST_BE_PNG"
+        >Must be a PNG file.</strong
+      >
+    </label>
+    <m-networkAdminConsole__imageInput
+      id="splashLogoUpload"
+      [image]="'url(' + (splashFilePath$ | async) + ')'"
+      [type]="ImageInputOrientationEnum.Square"
+      [inProgress]="splashUploadInProgress$ | async"
+      (onFileChange)="onImageChange($event, MobileConfigImageTypeEnum.Splash)"
+    ></m-networkAdminConsole__imageInput>
+  </div>
+
+  <!-- Square logo upload -->
+  <div class="m-networkAdminMobile__imageUploadInputContainer">
+    <label
+      class="m-networkAdminMobile__imageUploadLabelTitle"
+      for="squareLogoLogoUpload"
+      i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__SQUARE_LOGO_IMAGE_TITLE"
+      >Square logo</label
+    >
+    <label
+      class="m-networkAdminMobile__imageUploadLabelSubtitle"
+      for="squareLogoUpload"
+    >
+      <span i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__MUST_BE_ATLEAST_256_X_256_PX"
+        >Upload must be at least 256x256</span
+      >
+      <br />
+      <strong i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__MUST_BE_PNG"
+        >Must be a PNG file.</strong
+      >
+    </label>
+    <m-networkAdminConsole__imageInput
+      id="squareLogoUpload"
+      [image]="'url(' + (squareLogoFilePath$ | async) + ')'"
+      [type]="ImageInputOrientationEnum.Square"
+      [inProgress]="squareLogoUploadInProgress$ | async"
+      (onFileChange)="
+        onImageChange($event, MobileConfigImageTypeEnum.SquareLogo)
+      "
+    ></m-networkAdminConsole__imageInput>
+  </div>
+
+  <!-- Horizontal logo upload -->
+  <div class="m-networkAdminMobile__imageUploadInputContainer">
+    <label
+      class="m-networkAdminMobile__imageUploadLabelTitle"
+      for="horizontalLogoLogoUpload"
+      i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__HORIZONTAL_LOGO_IMAGE_TITLE"
+      >Horizontal logo</label
+    >
+    <label
+      class="m-networkAdminMobile__imageUploadLabelSubtitle"
+      for="horizontalLogoUpload"
+    >
+      <span i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__MUST_BE_ATLEAST_572_X_180_PX"
+        >Upload should at least be 572x180 where width is greater than
+        height.</span
+      >
+      <br />
+      <strong i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__MUST_BE_PNG"
+        >Must be a PNG file.</strong
+      >
+    </label>
+    <m-networkAdminConsole__imageInput
+      id="horizontalLogoUpload"
+      [image]="'url(' + (horizontalLogoFilePath$ | async) + ')'"
+      [type]="ImageInputOrientationEnum.Horizontal"
+      [inProgress]="horizontalLogoUploadInProgress$ | async"
+      (onFileChange)="
+        onImageChange($event, MobileConfigImageTypeEnum.HorizontalLogo)
+      "
+    ></m-networkAdminConsole__imageInput>
+  </div>
+</div>
