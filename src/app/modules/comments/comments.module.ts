@@ -18,6 +18,7 @@ import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
 import { CommentsEntityOutletV2Component } from './entity-outlet-v2/entity-outlet.component';
 import { SupermindSharedModule } from '../supermind/supermind-shared.module';
+import { ReadMoreModule } from '../../common/read-more/v2/read-more.module';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { SupermindSharedModule } from '../supermind/supermind-shared.module';
     CodeHighlightModule,
     EmojiPickerModule,
     SupermindSharedModule,
+    ReadMoreModule,
   ],
   declarations: [
     CommentsScrollDirective,
