@@ -44,7 +44,7 @@ export class NetworkAdminConsoleMobileAssetsComponent implements OnDestroy {
   public readonly horizontalLogoFilePath$: Observable<string> = this
     .MobileAppBuildImageService.horizontalLogoPath$;
 
-  // in progrress variables for different files.
+  // in progress variables for different files.
   public readonly splashUploadInProgress$: BehaviorSubject<
     boolean
   > = new BehaviorSubject<boolean>(false);

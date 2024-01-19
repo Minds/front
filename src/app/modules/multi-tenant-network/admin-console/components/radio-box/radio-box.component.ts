@@ -28,7 +28,6 @@ import { Subscription } from 'rxjs';
 export class NetworkAdminConsoleRadioBoxComponent<T>
   implements ControlValueAccessor, OnInit, OnDestroy {
   /** Title of box. */
-
   @Input() public title: string;
 
   /** Subtitle of box. */

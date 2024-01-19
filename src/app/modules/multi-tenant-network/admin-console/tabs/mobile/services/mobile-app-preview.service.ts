@@ -54,7 +54,6 @@ export class MobileAppPreviewService implements OnDestroy {
   > = new BehaviorSubject<boolean>(true);
 
   /** Whether set mobile config request is in progress. */
-
   public readonly setMobileConfigInProgress$: BehaviorSubject<
     boolean
   > = new BehaviorSubject<boolean>(false);
