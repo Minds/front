@@ -1,4 +1,4 @@
-query GetCustomPage($pageType: Int!) {
+query GetCustomPage($pageType: String!) {
   customPage(pageType: $pageType) {
     pageType
     content
