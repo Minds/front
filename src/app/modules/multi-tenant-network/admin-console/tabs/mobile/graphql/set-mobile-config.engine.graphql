@@ -8,6 +8,7 @@ mutation SetMobileConfig (
         mobileSplashScreenType: $mobileSplashScreenType,
         mobilePreviewStatus: $mobilePreviewStatus
     ) {
+        id
         splashScreenType
         welcomeScreenLogoType
         previewStatus

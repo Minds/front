@@ -1,5 +1,6 @@
 query GetMobileConfigPreviewState {
     mobileConfig {
+        id
         previewStatus
         previewQRCode
     }

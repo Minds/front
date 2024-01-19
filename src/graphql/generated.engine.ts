@@ -605,6 +605,7 @@ export type KeyValueType = {
 
 export type MobileConfig = {
   __typename?: 'MobileConfig';
+  id: Scalars['ID']['output'];
   previewQRCode?: Maybe<Scalars['String']['output']>;
   previewStatus: MobilePreviewStatusEnum;
   splashScreenType?: Maybe<MobileSplashScreenTypeEnum>;
@@ -1850,6 +1851,7 @@ export type GetMobileConfigPreviewStateQuery = {
   __typename?: 'Query';
   mobileConfig: {
     __typename?: 'MobileConfig';
+    id: string;
     previewStatus: MobilePreviewStatusEnum;
     previewQRCode?: string | null;
   };
@@ -1861,6 +1863,7 @@ export type GetMobileConfigQuery = {
   __typename?: 'Query';
   mobileConfig: {
     __typename?: 'MobileConfig';
+    id: string;
     splashScreenType?: MobileSplashScreenTypeEnum | null;
     welcomeScreenLogoType?: MobileWelcomeScreenLogoTypeEnum | null;
     previewStatus: MobilePreviewStatusEnum;
@@ -1878,6 +1881,7 @@ export type SetMobileConfigMutation = {
   __typename?: 'Mutation';
   mobileConfig: {
     __typename?: 'MobileConfig';
+    id: string;
     splashScreenType?: MobileSplashScreenTypeEnum | null;
     welcomeScreenLogoType?: MobileWelcomeScreenLogoTypeEnum | null;
     previewStatus: MobilePreviewStatusEnum;
@@ -4864,6 +4868,7 @@ export class StoreFeaturedEntityGQL extends Apollo.Mutation<
 export const GetMobileConfigPreviewStateDocument = gql`
   query GetMobileConfigPreviewState {
     mobileConfig {
+      id
       previewStatus
       previewQRCode
     }
@@ -4886,6 +4891,7 @@ export class GetMobileConfigPreviewStateGQL extends Apollo.Query<
 export const GetMobileConfigDocument = gql`
   query GetMobileConfig {
     mobileConfig {
+      id
       splashScreenType
       welcomeScreenLogoType
       previewStatus
@@ -4918,6 +4924,7 @@ export const SetMobileConfigDocument = gql`
       mobileSplashScreenType: $mobileSplashScreenType
       mobilePreviewStatus: $mobilePreviewStatus
     ) {
+      id
       splashScreenType
       welcomeScreenLogoType
       previewStatus
