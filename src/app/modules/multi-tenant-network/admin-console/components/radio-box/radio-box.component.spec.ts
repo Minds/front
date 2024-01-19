@@ -62,10 +62,10 @@ describe('NetworkAdminConsoleRadioBoxComponent', () => {
 
   describe('onClick', () => {
     it('should fire onchange function on click', () => {
+      spyOn(comp, 'onChange');
       comp.saving = false;
       comp.controlValue = true;
       comp.inputValue = false;
-      comp.onChange = jasmine.createSpy('onChange');
 
       comp.onClick();
 
@@ -73,10 +73,10 @@ describe('NetworkAdminConsoleRadioBoxComponent', () => {
     });
 
     it('should NOT fire onchange function on click when saving', () => {
+      spyOn(comp, 'onChange');
       comp.saving = true;
       comp.controlValue = true;
       comp.inputValue = false;
-      comp.onChange = jasmine.createSpy('onChange');
 
       comp.onClick();
 
@@ -84,10 +84,10 @@ describe('NetworkAdminConsoleRadioBoxComponent', () => {
     });
 
     it('should NOT fire onchange function on click when control value and input value match', () => {
+      spyOn(comp, 'onChange');
       comp.saving = false;
       comp.controlValue = true;
       comp.inputValue = true;
-      comp.onChange = jasmine.createSpy('onChange');
 
       comp.onClick();
 
