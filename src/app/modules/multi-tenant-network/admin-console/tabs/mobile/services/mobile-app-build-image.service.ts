@@ -16,7 +16,7 @@ export enum MobileConfigImageTypeEnum {
 
 /** Base path for mobile app config image urls. */
 export const IMAGE_URL_BASE_PATH: string =
-  'api/v3/multi-tenant/mobile-configs/image/';
+  '/api/v3/multi-tenant/mobile-configs/image/';
 
 /** Default path for mobile app build icon image. */
 export const ICON_PATH: string = `${IMAGE_URL_BASE_PATH}icon`;
