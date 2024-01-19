@@ -19,7 +19,6 @@ import { NetworkAdminConsoleModerationGuidelinesComponent } from './tabs/moderat
 import { NetworkAdminConsoleRolesComponent } from './tabs/roles/roles.component';
 import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/permissions/permissions.component';
 import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
-import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
 import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.component';
 import { NetworkAdminConsoleNsfwToggleComponent } from './tabs/moderation/nsfw-toggle/nsfw-toggle.component';
 import { NetworkAdminConsoleInviteComponent } from './tabs/invite/invite.component';
@@ -27,6 +26,8 @@ import { NetworkAdminConsoleInviteSendComponent } from './tabs/invite/tabs/send/
 import { NetworkAdminConsoleInviteInvitationsComponent } from './tabs/invite/tabs/invitations/invitations.component';
 import { RoleChipComponent } from './components/role-chip/role-chip.component';
 import { RoleAggregatorComponent } from './components/role-aggregator/role-aggregator.component';
+import { AssignRolesModalComponent } from './tabs/roles/tabs/users/assign-roles-modal/assign-roles-modal.component';
+import { NetworkAdminConsoleRoleIconComponent } from './components/role-icon/role-icon.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -88,7 +89,6 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(NETWORK_ADMIN_CONSOLE_ROUTES),
-    NetworkAdminConsoleSharedModule,
   ],
   declarations: [
     NetworkAdminConsoleComponent,
@@ -111,6 +111,8 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleInviteInvitationsComponent,
     RoleChipComponent,
     RoleAggregatorComponent,
+    AssignRolesModalComponent,
+    NetworkAdminConsoleRoleIconComponent,
   ],
   providers: [MultiTenantDomainService],
 })
