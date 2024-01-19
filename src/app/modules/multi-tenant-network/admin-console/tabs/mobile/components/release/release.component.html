@@ -12,14 +12,16 @@
   Google Play store. To purchase the add-on, contact the Minds support team
   below.
 </p>
-<m-button
-  class="m-networkAppRelease__contactSupportButton"
-  color="primary"
-  stretch="true"
-  [solid]="false"
-  (onAction)="onContactSupportClick()"
->
-  <ng-container i18n="@@NETWORK_ADMIN__RELEASE_YOUR_APP__CONTACT_SUPPORT_ACTION"
-    >Contact support for next steps</ng-container
+<a [href]="contactSupportUrl" target="_blank">
+  <m-button
+    class="m-networkAppRelease__contactSupportButton"
+    color="primary"
+    stretch="true"
+    [solid]="false"
   >
-</m-button>
+    <ng-container
+      i18n="@@NETWORK_ADMIN__RELEASE_YOUR_APP__CONTACT_SUPPORT_ACTION"
+      >Contact support for next steps</ng-container
+    >
+  </m-button>
+</a>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ChatwootWidgetService } from '../../../../../../../common/components/chatwoot-widget/chatwoot-widget.service';
+import { ConfigsService } from '../../../../../../../common/services/configs.service';
 
 /**
  * Release section of mobile admin console.
@@ -13,13 +13,12 @@ import { ChatwootWidgetService } from '../../../../../../../common/components/ch
   ],
 })
 export class NetworkAdminConsoleMobileReleaseComponent {
-  constructor(private chatwootWidgetService: ChatwootWidgetService) {}
+  /** URL to contact support. */
+  public readonly contactSupportUrl: string;
 
-  /**
-   * Toggle chatwoot window on contact support button click.
-   * @returns { void }
-   */
-  public onContactSupportClick(): void {
-    this.chatwootWidgetService.toggleChatWindow();
+  constructor(private configs: ConfigsService) {
+    this.contactSupportUrl = `https://mindsdotcom.typeform.com/networks-vip#tenant_id=${this.configs.get(
+      'tenant_id'
+    )}&tenant_name=${this.configs.get('site_name')}`;
   }
 }
