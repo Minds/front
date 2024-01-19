@@ -61,10 +61,6 @@ describe('NetworkAdminConsoleRadioBoxComponent', () => {
   }));
 
   describe('onClick', () => {
-    beforeAll(() => {
-      comp.onChange = jasmine.createSpy('onChange');
-    });
-
     it('should fire onchange function on click', () => {
       comp.saving = false;
       comp.controlValue = true;
