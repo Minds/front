@@ -201,13 +201,22 @@
         >Because</ng-container
       >
       you’re using a sub-domain or directory, you’ll need to configure a
-      <strong>CNAME</strong> record in your DNS settings, like this
+      <strong>CNAME</strong> record in your DNS settings, like this. For address
+      values, you do NOT need to include https:// or www.
     </p>
 
     <div class="m-networkAdminDomain__record">
       <div><span>Type</span><span>CNAME</span></div>
-      <div><span>Name</span><span>mystore.com</span></div>
-      <div><span>Value</span><span>customers.saasprovider.com</span></div>
+      <div>
+        <span>Name</span
+        ><span>{{ domain?.dnsRecord?.name ?? 'mystore.com' }}</span>
+      </div>
+      <div>
+        <span>Value</span
+        ><span
+          >{{ domain?.dnsRecord?.value ?? 'customers.saasprovider.com' }}</span
+        >
+      </div>
     </div>
   </div>
   <div
@@ -231,8 +240,18 @@
 
     <div class="m-networkAdminDomain__record">
       <div><span>Type</span><span>TXT</span></div>
-      <div><span>Name</span><span>mystore.com</span></div>
-      <div><span>Value</span><span>abcdef-1234-5678</span></div>
+      <div>
+        <span>Name</span
+        ><span
+          >{{ domain?.ownershipVerificationDnsRecord?.name ?? 'mystore.com' }}</span
+        >
+      </div>
+      <div>
+        <span>Value</span
+        ><span
+          >{{ domain?.ownershipVerificationDnsRecord?.value ?? 'abcdef-1234-5678' }}</span
+        >
+      </div>
     </div>
   </div>
 </ng-container>
