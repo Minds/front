@@ -192,9 +192,7 @@ build:review:
   except:
     refs:
       - master
-      - production
-      - test/gitlab-ci
-      - feat/1732-block-refactor
+      # - test/gitlab-ci
     variables:
       - $CI_NIGHTLY_TESTS == "true"
   tags:
@@ -220,9 +218,7 @@ build:production:bundles:
   only:
     refs:
       - master
-      - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
