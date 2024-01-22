@@ -7,6 +7,9 @@ export interface Toast {
   dismissed?: boolean;
 }
 
+/** Default error message text. */
+export const DEFAULT_ERROR_MESSAGE: string = 'An unknown error has occurred';
+
 @Injectable()
 export class ToasterService {
   toasts: Toast[] = [];
@@ -27,11 +30,26 @@ export class ToasterService {
     this.trigger(toast);
   }
 
-  error(message: string) {
+  /**
+   * Handle an error message or object.
+   * @param { string | any } error - error message or object. String messages
+   * will be displayed directly, error objects will be parsed.
+   * @returns { void }
+   */
+  error(error: string | any): void {
+    let message: string = DEFAULT_ERROR_MESSAGE;
+
+    if (typeof error === 'string') {
+      message = error;
+    } else if (typeof error === 'object') {
+      message = this.parseErrorObject(error);
+    }
+
     const toast: Toast = {
       message: message,
       type: 'error',
     };
+
     this.trigger(toast);
   }
 
@@ -64,5 +82,24 @@ export class ToasterService {
         value => value.message === message && !value.dismissed
       ) !== -1
     );
+  }
+
+  /**
+   * Parse an error object for its message.
+   * @param { any } errorObject - error object to parse.
+   * @returns { string } - error message.
+   */
+  private parseErrorObject(errorObject: any): string {
+    if (errorObject?.error?.errors?.length) {
+      // handle GraphQL errors.
+      return errorObject?.error?.errors[0]?.message;
+    } else {
+      // handle general errors.
+      return (
+        errorObject?.error?.message ??
+        errorObject?.message ??
+        DEFAULT_ERROR_MESSAGE
+      );
+    }
   }
 }
