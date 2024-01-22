@@ -246,13 +246,14 @@ build:production:bundles:
 
 prepare:review:
   stage: prepare
-  image: minds/ci:latest
-  services:
-    - docker:dind
+  image:
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [""]
   script:
-    - docker login -u $CI_REGISTRY_USER -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-    - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
-    - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}/dist"
+      --dockerfile "${CI_PROJECT_DIR}/containers/server/Dockerfile
+      --destination "${CI_REGISTRY_IMAGE}/server:$CI_PIPELINE_ID"
   dependencies:
     - build:review
   except:
@@ -281,15 +282,14 @@ prepare:review:sentry:
 
 prepare:production:
   stage: prepare
-  image: minds/ci:latest
-  services:
-    - docker:dind
+  image:
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [""]
   script:
-    - docker login -u $CI_REGISTRY_USER -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-    - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
-    - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
-    - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $CI_REGISTRY_IMAGE/server:latest
-    - docker push $CI_REGISTRY_IMAGE/server:latest
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}/dist"
+      --dockerfile "${CI_PROJECT_DIR}/containers/server/Dockerfile
+      --destination "${CI_REGISTRY_IMAGE}/server:$CI_PIPELINE_ID"
   only:
     refs:
       - master
@@ -428,24 +428,16 @@ review:stop:
 
 .deploy: &deploy
   image: minds/ci:latest
-  services:
-    - docker:dind
   script:
     ## Sync assets with CDN
     - aws s3 sync dist $S3_REPOSITORY_URL/$IMAGE_LABEL --cache-control max-age=31536000
     - $(aws ecr get-login --no-include-email --region us-east-1)
     ## Update docker server container
-    - docker login -u $CI_REGISTRY_USER -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-    - docker pull $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
-    - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $CI_REGISTRY_IMAGE/server:$IMAGE_LABEL
-    - docker push $CI_REGISTRY_IMAGE/server:$IMAGE_LABEL
-    # Update EKS role
-#    - aws eks --region us-east-1 update-kubeconfig --name $AWS_EKS_CLUSTER_NAME --role-arn=$AWS_IAM_ROLE_ARN
-#    # Update the image tags
-#    - kubectl rollout restart deployment minds-front-$IMAGE_LABEL
+    - crane auth login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - crane tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $IMAGE_LABEL
     # OKE Deploy
     - *oci_prepare
-    - kubectl rollout restart deployment minds-front-$IMAGE_LABEL
+    - kubectl -n default rollout restart deployment minds-front-$IMAGE_LABEL
     ## Update sentry
     - sentry-cli releases deploys $CI_PIPELINE_ID new -e $IMAGE_LABEL
   dependencies:
@@ -453,6 +445,8 @@ review:stop:
 
 staging:fpm:
   <<: *deploy
+  after_script:
+    - crane tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID latest
   stage: deploy:staging
   variables:
     IMAGE_LABEL: 'staging'
