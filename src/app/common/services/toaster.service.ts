@@ -92,7 +92,7 @@ export class ToasterService {
   private parseErrorObject(errorObject: any): string {
     if (errorObject?.error?.errors?.length) {
       // handle directly passed GraphQL errors.
-      return errorObject?.error?.errors[0]?.message;
+      return errorObject?.error?.errors[0]?.message ?? DEFAULT_ERROR_MESSAGE;
     } else {
       // handle general errors.
       return (
