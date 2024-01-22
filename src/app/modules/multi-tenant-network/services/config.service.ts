@@ -38,6 +38,7 @@ export class MultiTenantNetworkConfigService implements OnDestroy {
   >(false);
 
   private configFetchSubscription: Subscription;
+  private configSubscription: Subscription;
 
   constructor(
     private getMultiTenantConfigGQL: GetMultiTenantConfigGQL,
@@ -48,6 +49,7 @@ export class MultiTenantNetworkConfigService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.configFetchSubscription?.unsubscribe();
+    this.configSubscription?.unsubscribe();
   }
 
   /**

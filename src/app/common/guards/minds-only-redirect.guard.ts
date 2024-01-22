@@ -14,7 +14,7 @@ import { IsTenantService } from '../services/is-tenant.service';
  * routes that are only relevant on minds.com
  */
 @Injectable()
-export class TenantRedirectGuard implements CanActivate {
+export class MindsOnlyRedirectGuard implements CanActivate {
   constructor(private isTenant: IsTenantService, private router: Router) {}
 
   canActivate(
