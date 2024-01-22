@@ -30,7 +30,7 @@ describe('ToasterService', () => {
       });
     });
 
-    it('should handle GraphQL error objects', () => {
+    it('should handle validation error collection error objects', () => {
       (service as any).subject = new BehaviorSubject<string>(null);
 
       const errorMessage: string = 'test error';
