@@ -440,6 +440,7 @@ staging:fpm:
   only:
     refs:
       - master
+      - test/gitlab-ci
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -457,6 +458,7 @@ deploy:canary:
   only:
     refs:
       - master
+      - test/gitlab-ci
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
