@@ -98,8 +98,8 @@ export class NetworkAdminConsoleEditDomainModalComponent {
       return null;
     }
 
-    // Don't allow spaces
-    const urlPattern = /^\S*$/;
+    // Regex pattern for domain validation
+    const urlPattern = /^(?!.*\.\.)((?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{1,})$/i;
 
     if (!urlPattern.test(control.value)) {
       return {
