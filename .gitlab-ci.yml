@@ -255,9 +255,7 @@ prepare:review:
   except:
     refs:
       - master
-      - production
-      - test/gitlab-ci
-      - feat/1732-block-refactor
+      # - test/gitlab-ci
     variables:
       - $CI_NIGHTLY_TESTS == "true"
 
@@ -268,9 +266,7 @@ prepare:review:sentry:
   except:
     refs:
       - master
-      - production
-      - test/gitlab-ci
-      - feat/1732-block-refactor
+      # - test/gitlab-ci
     variables:
       - $CI_NIGHTLY_TESTS == "true"
   dependencies:
@@ -289,9 +285,7 @@ prepare:production:
   only:
     refs:
       - master
-      - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -305,9 +299,7 @@ prepare:production:sentry:
   only:
     refs:
       - master
-      - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -357,9 +349,7 @@ dependency_scanning:
   except:
     refs:
       - master
-      - production
-      - test/gitlab-ci
-      - feat/1732-block-refactor
+      # - test/gitlab-ci
     variables:
       - $CI_NIGHTLY_TESTS == "true"
 
@@ -402,9 +392,7 @@ review:start:
   except:
     refs:
       - master
-      - production
-      - test/gitlab-ci
-      - feat/1732-block-refactor
+      # - test/gitlab-ci
     variables:
       - $CI_NIGHTLY_TESTS == "true"
 
