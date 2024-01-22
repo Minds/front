@@ -19,7 +19,6 @@ const PROXY_CONFIG = [
         proxyRes.headers['set-cookie'] = sc.map(sc => {
           return sc
             .split(';')
-            .filter(v => v.trim().toLowerCase() !== 'secure')
             .filter(v => v.trim().toLowerCase() !== 'samesite=none')
             .join('; ');
         });

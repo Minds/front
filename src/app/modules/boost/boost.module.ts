@@ -19,13 +19,13 @@ import { NoticesModule } from '../notices/notices.module';
 import { MarkdownModule } from 'ngx-markdown';
 import { BoostConsoleFeedComponent } from './console-v2/feed/feed.component';
 import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
-import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
+import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
 
 const boostRoutes: Routes = [
   {
     path: 'boost/boost-console',
     component: BoostConsoleV2Component,
-    canActivate: [TenantRedirectGuard, loggedOutExplainerScreenGuard()],
+    canActivate: [MindsOnlyRedirectGuard, loggedOutExplainerScreenGuard()],
     data: {
       title: 'Boost Console',
       description: 'Manage and monitor your boosts',
