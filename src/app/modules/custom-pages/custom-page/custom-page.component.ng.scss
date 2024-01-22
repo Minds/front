@@ -1,0 +1,18 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  padding: $spacing7 $spacing10 $spacing12;
+
+  @media screen and (max-width: $max-mobile) {
+    padding: $spacing7 $spacing7 $spacing10;
+  }
+
+  ::ng-deep markdown {
+    a {
+      @include m-theme() {
+        color: themed($m-action);
+      }
+    }
+  }
+}

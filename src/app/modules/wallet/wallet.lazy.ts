@@ -1,8 +1,8 @@
 import { Route } from '@angular/router';
-import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
+import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
 
 export const WalletModuleLazyRoutes: Route = {
   path: 'wallet',
   loadChildren: () => import('./wallet.module').then(m => m.WalletModule),
-  canActivate: [TenantRedirectGuard],
+  canActivate: [MindsOnlyRedirectGuard],
 };

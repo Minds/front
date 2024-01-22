@@ -15,11 +15,14 @@ import { NetworkAdminConsoleDomainComponent } from './tabs/domain/domain.compone
 import { NetworkAdminConsoleEditDomainModalComponent } from './tabs/domain/edit-domain-modal/edit-domain-modal.component';
 import { MultiTenantDomainService } from '../services/domain.service';
 import { NetworkAdminConsoleModerationComponent } from './tabs/moderation/moderation.component';
-import { NetworkAdminConsoleModerationGuidelinesComponent } from './tabs/moderation/moderation-guidelines/moderation-guidelines.component';
+import { NetworkAdminConsoleCommunityGuidelinesComponent } from './tabs/moderation/community-guidelines/community-guidelines.component';
 import { NetworkAdminConsoleRolesComponent } from './tabs/roles/roles.component';
 import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/permissions/permissions.component';
 import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
 import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
+import { CustomPageFormComponent } from './components/custom-page-form/custom-page-form.component';
+import { NetworkAdminConsolePrivacyPolicyComponent } from './tabs/moderation/privacy-policy/privacy-policy.component';
+import { NetworkAdminConsoleTermsOfServiceComponent } from './tabs/moderation/terms-of-service/terms-of-service.component';
 import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.component';
 import { NetworkAdminConsoleNsfwToggleComponent } from './tabs/moderation/nsfw-toggle/nsfw-toggle.component';
 import { NetworkAdminConsoleInviteComponent } from './tabs/invite/invite.component';
@@ -28,6 +31,8 @@ import { NetworkAdminConsoleInviteInvitationsComponent } from './tabs/invite/tab
 import { RoleChipComponent } from './components/role-chip/role-chip.component';
 import { RoleAggregatorComponent } from './components/role-aggregator/role-aggregator.component';
 import { NetworkAdminConsoleImageInputComponent } from './components/image-uploader/image-input.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { CustomPageFormContentPreviewModalComponent } from './components/custom-page-form/content-preview-modal/content-preview-modal.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -45,12 +50,20 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'guidelines',
+            redirectTo: 'reports',
             pathMatch: 'full' as PathMatch,
           },
           {
-            path: 'guidelines',
-            component: NetworkAdminConsoleModerationGuidelinesComponent,
+            path: 'privacy-policy',
+            component: NetworkAdminConsolePrivacyPolicyComponent,
+          },
+          {
+            path: 'terms-of-service',
+            component: NetworkAdminConsoleTermsOfServiceComponent,
+          },
+          {
+            path: 'community-guidelines',
+            component: NetworkAdminConsoleCommunityGuidelinesComponent,
           },
           {
             path: 'reports',
@@ -97,6 +110,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     RouterModule.forChild(NETWORK_ADMIN_CONSOLE_ROUTES),
     NetworkAdminConsoleSharedModule,
     NetworkAdminConsoleImageInputComponent,
+    MarkdownModule.forChild(),
   ],
   declarations: [
     NetworkAdminConsoleComponent,
@@ -108,7 +122,9 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleDomainComponent,
     NetworkAdminConsoleEditDomainModalComponent,
     NetworkAdminConsoleModerationComponent,
-    NetworkAdminConsoleModerationGuidelinesComponent,
+    NetworkAdminConsolePrivacyPolicyComponent,
+    NetworkAdminConsoleTermsOfServiceComponent,
+    NetworkAdminConsoleCommunityGuidelinesComponent,
     NetworkAdminConsoleRolesComponent,
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
@@ -119,6 +135,8 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleInviteInvitationsComponent,
     RoleChipComponent,
     RoleAggregatorComponent,
+    CustomPageFormComponent,
+    CustomPageFormContentPreviewModalComponent,
   ],
   providers: [MultiTenantDomainService],
 })

@@ -1,0 +1,11 @@
+mutation SetCustomPage(
+  $pageType: String!
+  $content: String
+  $externalLink: String
+) {
+  setCustomPage(
+    pageType: $pageType
+    content: $content
+    externalLink: $externalLink
+  )
+}
