@@ -1,8 +1,8 @@
 import { Route } from '@angular/router';
-import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
+import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
 
 export const CanaryModuleLazyRoutes: Route = {
   path: 'canary',
   loadChildren: () => import('./canary.module').then(m => m.CanaryModule),
-  canActivate: [TenantRedirectGuard],
+  canActivate: [MindsOnlyRedirectGuard],
 };

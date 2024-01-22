@@ -1,7 +1,7 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
-  schema: 'http://localhost:8080/api/graphql',
+  schema: 'https://olivia.oke.minds.io/api/graphql',
   documents: './src/**/*.engine.graphql',
   generates: {
     './src/graphql/generated.engine.ts': {
