@@ -1,0 +1,14 @@
+<div
+  *ngIf="
+    !(loading$ | async) || !customPage?.externalLink;
+    else loadingSpinnerTemplate
+  "
+  class="m-customPage__wrapper"
+>
+  <markdown ngPreserveWhitespaces [data]="displayContent"></markdown>
+</div>
+
+<!-- --------------------------- -->
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
