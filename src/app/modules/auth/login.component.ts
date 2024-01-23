@@ -14,6 +14,7 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { AuthModalService } from './modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
+import { OnboardingV5Service } from '../onboarding-v5/services/onboarding-v5.service';
 
 /**
  * Standalone login page
@@ -58,7 +59,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private navigationService: SidebarNavigationService,
     private pageLayoutService: PageLayoutService,
     private authModal: AuthModalService,
-    private authRedirectService: AuthRedirectService
+    private authRedirectService: AuthRedirectService,
+    private onboardingV5Service: OnboardingV5Service
   ) {}
 
   ngOnInit() {
@@ -73,7 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.loggedin();
         }
       }),
-      this.authModal.onRegistered$.subscribe(registered => {
+      this.onboardingV5Service.onboardingCompleted$.subscribe(registered => {
         if (registered) {
           this.registered();
         }
@@ -105,7 +107,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    this.paramsSubscription?.unsubscribe();
+    for (let subscription of this.subscriptions) {
+      subscription?.unsubscribe();
+    }
     this.topbarService.toggleVisibility(true);
 
     this.navigationService.setVisible(true);
