@@ -15,6 +15,7 @@ import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.servic
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../services/configs.service';
 import { IsTenantService } from '../../services/is-tenant.service';
+import { MultiTenantNetworkConfigService } from '../../../modules/multi-tenant-network/services/config.service';
 
 @Component({
   selector: 'm-sidebarMore',
