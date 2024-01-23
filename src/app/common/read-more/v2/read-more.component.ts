@@ -52,7 +52,7 @@ export class ReadMoreComponent {
   showAll = false;
 
   /**
-   * whether the read-more can be expaned
+   * whether the read-more can be expanded
    */
   @Input() disabled = false;
 
