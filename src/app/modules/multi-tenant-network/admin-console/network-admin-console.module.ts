@@ -27,6 +27,7 @@ import { NetworkAdminConsoleInviteSendComponent } from './tabs/invite/tabs/send/
 import { NetworkAdminConsoleInviteInvitationsComponent } from './tabs/invite/tabs/invitations/invitations.component';
 import { RoleChipComponent } from './components/role-chip/role-chip.component';
 import { RoleAggregatorComponent } from './components/role-aggregator/role-aggregator.component';
+import { NetworkAdminConsoleReplyEmailSettingsComponent } from './tabs/general/reply-email-settings/reply-email-settings.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -105,6 +106,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
     NetworkAdminConsoleFederationSettingsComponent,
+    NetworkAdminConsoleReplyEmailSettingsComponent,
     NetworkAdminConsoleNsfwToggleComponent,
     NetworkAdminConsoleInviteComponent,
     NetworkAdminConsoleInviteSendComponent,

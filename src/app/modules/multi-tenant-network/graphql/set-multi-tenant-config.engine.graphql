@@ -4,6 +4,7 @@ mutation SetMultiTenantConfig(
   $primaryColor: String
   $communityGuidelines: String
   $federationDisabled: Boolean
+  $replyEmail: String
   $nsfwEnabled: Boolean
 ) {
   multiTenantConfig(
@@ -13,6 +14,7 @@ mutation SetMultiTenantConfig(
       primaryColor: $primaryColor
       communityGuidelines: $communityGuidelines
       federationDisabled: $federationDisabled
+      replyEmail: $replyEmail
       nsfwEnabled: $nsfwEnabled
     }
   )

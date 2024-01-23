@@ -1,11 +1,12 @@
-query GetMultiTenantConfig{
+query GetMultiTenantConfig {
   multiTenantConfig {
-    siteName,
-    siteEmail,
-    colorScheme,
-    primaryColor,
-    communityGuidelines,
-    canEnableFederation,
+    siteName
+    siteEmail
+    colorScheme
+    primaryColor
+    communityGuidelines
+    canEnableFederation
     federationDisabled
+    replyEmail
   }
 }
