@@ -495,7 +495,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   ngDoCheck() {
     this.changesDetected = false;
-    if (this.comment.error != this.error) {
+    if (Boolean(this.comment.error) && this.comment.error != this.error) {
       this.error = this.comment.error;
       this.toasterService.error(this.error);
       this.changesDetected = true;
