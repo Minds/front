@@ -23,6 +23,7 @@ import { MetaService } from '../../common/services/meta.service';
 import { IsTenantService } from '../../common/services/is-tenant.service';
 import { SiteService } from '../../common/services/site.service';
 import { PagesService } from '../../common/services/pages.service';
+import { WINDOW } from '../../common/injection-tokens/common-injection-tokens';
 
 describe('RegisterComponent', () => {
   let comp: RegisterComponent;
@@ -101,6 +102,14 @@ describe('RegisterComponent', () => {
             },
           }),
         },
+        {
+          provide: WINDOW,
+          useValue: {
+            location: {
+              href: '',
+            },
+          },
+        },
       ],
     });
 
@@ -157,7 +166,7 @@ describe('RegisterComponent', () => {
       (comp as any).onboardingV5Service.onboardingCompleted$.next(true);
       tick();
 
-      expect(window.location.href).toEqual(redirectTo);
+      expect((comp as any).window.location.href).toEqual(redirectTo);
     }));
 
     it('should navigate to auth redirect service url on register, when no redirectTo is set', fakeAsync(() => {
