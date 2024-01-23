@@ -73,11 +73,9 @@ describe('NetworkAdminConsoleReplyEmailSettingsComponent', () => {
       comp.onSubmit();
       tick();
 
-      expect((comp as any).configs.set).toHaveBeenCalledWith(
-        'reply_email',
-        replyEmail
-      );
-      expect((comp as any).metaService.reset).toHaveBeenCalled();
+      expect(
+        (comp as any).multiTenantConfigService.updateConfig
+      ).toHaveBeenCalledWith({ replyEmail: replyEmail });
       expect((comp as any).toaster.success).toHaveBeenCalledWith(
         'Updated reply-to email.'
       );
