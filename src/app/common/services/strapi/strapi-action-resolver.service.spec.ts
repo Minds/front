@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { ToasterService } from '../toaster.service';
 import userMock from '../../../mocks/responses/user.mock';
 import { WireCreatorComponent } from '../../../modules/wire/v2/creator/wire-creator.component';
+import { OnboardingV5Service } from '../../../modules/onboarding-v5/services/onboarding-v5.service';
+import { BehaviorSubject } from 'rxjs';
 
 describe('StrapiActionResolverService', () => {
   let service: StrapiActionResolverService;
@@ -30,6 +32,17 @@ describe('StrapiActionResolverService', () => {
         {
           provide: WirePaymentHandlersService,
           useValue: MockService(WirePaymentHandlersService),
+        },
+        {
+          provide: OnboardingV5Service,
+          useValue: MockService(OnboardingV5Service, {
+            has: ['onboardingCompleted$'],
+            props: {
+              onboardingCompleted$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+            },
+          }),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: Router, useValue: MockService(Router) },
@@ -268,5 +281,46 @@ describe('StrapiActionResolverService', () => {
         },
       }
     );
+  });
+
+  describe('Auth handling', () => {
+    it('should retry action on user login from auth modal', fakeAsync(() => {
+      const action = 'open_composer';
+      (service as any).session.isLoggedIn.and.returnValues(false, true);
+      (service as any).authModal.open.and.returnValue({
+        ...userMock,
+        email_confirmed: true,
+      });
+
+      service.resolve(action);
+      tick();
+
+      expect((service as any).authModal.open).toHaveBeenCalledWith({
+        formDisplay: 'register',
+      });
+      expect((service as any).links.openComposerModal).toHaveBeenCalled();
+    }));
+
+    it('should retry action on user onboarding completion', fakeAsync(() => {
+      const action = 'open_composer';
+      (service as any).session.isLoggedIn.and.returnValues(false, true);
+      (service as any).authModal.open.and.returnValue({
+        ...userMock,
+        email_confirmed: false,
+      });
+
+      service.resolve(action);
+      tick();
+
+      expect((service as any).authModal.open).toHaveBeenCalledWith({
+        formDisplay: 'register',
+      });
+      expect((service as any).links.openComposerModal).not.toHaveBeenCalled();
+
+      (service as any).onboardingV5Service.onboardingCompleted$.next(true);
+      tick();
+
+      expect((service as any).links.openComposerModal).toHaveBeenCalled();
+    }));
   });
 });
