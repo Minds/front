@@ -37,6 +37,10 @@ export class ToasterService {
    * @returns { void }
    */
   error(error: string | any): void {
+    if (!error) {
+      return;
+    }
+
     let message: string = DEFAULT_ERROR_MESSAGE;
 
     if (typeof error === 'string') {

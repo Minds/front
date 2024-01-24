@@ -92,11 +92,20 @@ describe('ToasterService', () => {
       });
     });
 
-    it('should handle null error objects with default error message', () => {
+    it('should NOT handle null error parameters', () => {
+      (service as any).subject = new BehaviorSubject<string>(null);
+
+      const error: string | any = null;
+      service.error(error);
+
+      expect((service as any).subject.getValue()).toEqual(null);
+    });
+
+    it('should handle error parameters of unexpected types with default error message', () => {
       (service as any).subject = new BehaviorSubject<string>(null);
 
       const errorMessage: string = DEFAULT_ERROR_MESSAGE;
-      const error: string | any = null;
+      const error: string | any = 123;
       service.error(error);
 
       expect((service as any).subject.getValue()).toEqual({
