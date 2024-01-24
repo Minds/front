@@ -131,8 +131,12 @@ h1 {
       border-right: unset;
 
       .m-topbar__logo--full {
-        display: block;
         margin-bottom: $spacing1;
+      }
+
+      .m-topbar__logo--bulb {
+        margin-bottom: $spacing2;
+        :q ;
       }
 
       .m-topbarNav__item--hamburger {
