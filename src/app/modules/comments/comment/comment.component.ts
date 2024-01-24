@@ -497,7 +497,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.changesDetected = false;
     if (this.comment.error != this.error) {
       this.error = this.comment.error;
-      this.toasterService.error(this.error);
+      if (Boolean(this.error)) {
+        this.toasterService.error(this.error);
+      }
       this.changesDetected = true;
     }
 
