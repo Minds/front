@@ -98,8 +98,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.authModal.onLoggedIn$.subscribe(loggedIn => {
         if (loggedIn) {
-          this.loginReferrer.register('/newsfeed');
-          this.loginReferrer.navigate();
+          this.loggedin();
         }
       }),
       this.onboardingV5Service.onboardingCompleted$.subscribe(registered => {
@@ -201,6 +200,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
         width: 1200,
         height: 1200,
       });
+    }
+  }
+
+  /**
+   * On user logged in.
+   * @returns { void }
+   */
+  public loggedin(): void {
+    if (this.referrer) {
+      this.router.navigateByUrl(this.referrer);
+    } else if (this.redirectTo) {
+      this.navigateToRedirection();
+    } else {
+      this.loginReferrer.navigate();
     }
   }
 
