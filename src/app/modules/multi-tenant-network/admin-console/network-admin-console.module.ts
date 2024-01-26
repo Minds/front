@@ -32,6 +32,7 @@ import { RoleChipComponent } from './components/role-chip/role-chip.component';
 import { RoleAggregatorComponent } from './components/role-aggregator/role-aggregator.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { CustomPageFormContentPreviewModalComponent } from './components/custom-page-form/content-preview-modal/content-preview-modal.component';
+import { GroupAggregatorComponent } from './components/group-aggregator/group-aggregator.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -127,6 +128,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleInviteInvitationsComponent,
     RoleChipComponent,
     RoleAggregatorComponent,
+    GroupAggregatorComponent,
     CustomPageFormComponent,
     CustomPageFormContentPreviewModalComponent,
   ],

@@ -244,6 +244,10 @@ textarea {
 
 .m-scroll__thin {
   scrollbar-width: thin; // firefox only
+  @include m-theme() {
+    scrollbar-color: rgba(themed($m-borderColor--primary), 0.7)
+      themed($m-bgColor--primary); // firefox only, thumb and track color
+  }
 }
 
 .m-scroll__thin::-webkit-scrollbar,
@@ -252,14 +256,22 @@ textarea {
 }
 
 .m-scroll__thin::-webkit-scrollbar-track {
+  border-radius: 10px;
   @include m-theme() {
-    background-color: rgba(themed($m-grey-50), 0.7);
+    background: themed($m-bgColor--primary);
   }
 }
 
 .m-scroll__thin::-webkit-scrollbar-thumb {
+  border-radius: 10px;
   @include m-theme() {
-    background-color: themed($m-grey-100);
+    background: rgba(themed($m-borderColor--primary), 0.7);
+  }
+}
+
+.m-scroll__thin::-webkit-scrollbar-thumb:hover {
+  @include m-theme() {
+    background: themed($m-borderColor--primary);
   }
 }
 

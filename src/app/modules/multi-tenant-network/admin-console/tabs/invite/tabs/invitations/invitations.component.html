@@ -38,7 +38,9 @@
           <span>{{ invite.node.email }}</span>
         </div>
       </div>
-      <m-role__aggregator [roles]="invite.node?.roles"> </m-role__aggregator>
+      <m-role__aggregator [roles]="invite.node?.roles"></m-role__aggregator>
+      <m-group__aggregator [groups]="invite.node?.groups">
+      </m-group__aggregator>
     </div>
     <div
       class="m-networkAdminConsoleListRow__col m-networkAdminConsoleInvitations__statusCol"
@@ -81,18 +83,6 @@
       >
         <i class="material-icons">close</i>
       </div>
-      <!-- <span
-    class="m-networkAdminConsoleListRow__ctaText"
-    (click)="resendInvite(invite)"
-    i18n="@@COMMON_RESEND"
-    >Resend</span
-  >
-  <span
-    class="m-networkAdminConsoleListRow__ctaText"
-    (click)="cancelInvite(invite)"
-    i18n="@@COMMON_CANCEL"
-    >Cancel</span
-  > -->
     </div>
   </div>
 </ng-container>

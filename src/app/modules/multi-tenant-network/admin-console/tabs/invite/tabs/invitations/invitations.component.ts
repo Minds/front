@@ -123,9 +123,16 @@ export class NetworkAdminConsoleInviteInvitationsComponent
     const edges = _.cloneDeep(result?.data?.invites?.edges); // Clone as we need to modify the data (apollo wont let us do this)
 
     for (let edge of edges ?? []) {
+      // Check if the edge node has groups and if each group has a legacy property
+      if (edge.node.groups && edge.node.groups.length > 0) {
+        edge.node.groups.forEach(group => {
+          if (typeof group.legacy === 'string') {
+            group.legacy = JSON.parse(group.legacy);
+          }
+        });
+      }
       invites.push(edge as InviteEdge);
     }
-
     this.invites$.next(invites);
 
     // Handle paging

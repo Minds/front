@@ -1,9 +1,14 @@
-import { Component, ElementRef, Input, Self, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  Self,
+  ViewChild,
+} from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
-  firstValueFrom,
-  from,
   Observable,
   of,
   ReplaySubject,
@@ -14,6 +19,7 @@ import {
   debounceTime,
   distinctUntilChanged,
   filter,
+  finalize,
   map,
   share,
   switchMap,
@@ -51,13 +57,19 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
   public readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum = AutoCompleteEntityTypeEnum;
 
   /** Placeholder of the input (optional). */
-  @Input() placeholder: string;
+  @Input() placeholder: string = '';
 
   /** Whether empty state is allowed (optional). */
   @Input() allowEmpty: boolean = false;
 
   /** Limit of users to return. */
   @Input() limit: number = 8;
+
+  /** If true, resets the input field after a selection is made */
+  @Input() clearAfterSelection: boolean = false;
+
+  /** Array of guids to exclude from the popout list of matched entities */
+  @Input() excludeGuids: string[] = [];
 
   /** Entity type to search for. */
   @Input() entityType: AutoCompleteEntityTypeEnum =
@@ -68,36 +80,48 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
 
   /** Type-ahead matches from server. */
   matchedEntitiesList$: Observable<AutoCompleteEntity[]> = this.entityRef$.pipe(
-    // Wait until the is a valid entityRef
-    filter(entityRef => Boolean(entityRef)),
     // debounce request to throttle server requests
     debounceTime(100),
     // if there is no change, do nothing.
     distinctUntilChanged(),
-    // replace outputted observable with the result of a server call for matches.
-    switchMap(searchTerm => {
-      this.inProgress$.next(true);
-      return this.api.get(
-        `api/v2/search/suggest/${
-          this.entityType === AutoCompleteEntityTypeEnum.Group
-            ? 'group'
-            : 'user'
-        }`,
-        {
-          q: searchTerm,
-          limit: this.limit,
-          hydrate: 1,
-        }
-      );
-    }),
-    // on error.
-    catchError(e => {
-      console.error(e);
-      return of([]);
-    }),
-    map((apiResponse: any) => {
-      this.inProgress$.next(false);
-      return apiResponse.entities;
+    // replace outputted observable with the result of a server call for matches or an empty array.
+    switchMap(entityRef => {
+      // Check if the entityRef is a non-empty string
+      if (typeof entityRef === 'string' && entityRef.trim().length > 0) {
+        this.inProgress$.next(true);
+        return this.api
+          .get(
+            `api/v2/search/suggest/${
+              this.entityType === AutoCompleteEntityTypeEnum.Group
+                ? 'group'
+                : 'user'
+            }`,
+            {
+              q: entityRef,
+              limit: this.limit,
+              hydrate: 1,
+            }
+          )
+          .pipe(
+            // on success.
+            map((apiResponse: any) => {
+              // Filter out the entities that are in the excludeGuid array
+              return apiResponse.entities.filter(
+                entity => !this.excludeGuids.includes(entity.guid)
+              );
+            }),
+            // on error.
+            catchError(e => {
+              console.error(e);
+              return of([]);
+            }),
+            // Always turn off the loader.
+            finalize(() => this.inProgress$.next(false))
+          );
+      } else {
+        // If entityRef is not a non-empty string, clear the list
+        return of([]);
+      }
     }),
     share()
   );
@@ -123,6 +147,17 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
     })
   );
 
+  inputDisplayValue$: Observable<string> = this.entityRef$.pipe(
+    map(entityRef => {
+      if (typeof entityRef === 'object') {
+        return this.entityType === AutoCompleteEntityTypeEnum.Group
+          ? entityRef.name
+          : entityRef.username;
+      }
+      return entityRef ?? '';
+    })
+  );
+
   /**
    * Matches popout - note this will be destroyed when there are no matches.
    * Subscriptions will have to be set-up again on change and you should make sure that it exists before using.
@@ -134,28 +169,20 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
   /** The subscription to the entityRef. */
   entityRefSubscription: Subscription;
 
-  constructor(@Self() private control: NgControl, private api: ApiService) {
+  constructor(
+    @Self() private control: NgControl,
+    private api: ApiService,
+    private cd: ChangeDetectorRef
+  ) {
     this.control.valueAccessor = this;
   }
 
   ngOnInit() {
     /** This subscription emits out the entity to the form parent */
     this.entityRefSubscription = this.entityRef$
-      .pipe(
-        filter(entityRef => this.allowEmpty || Boolean(entityRef)),
-        switchMap(
-          (
-            entityRef: AutoCompleteEntity | string
-          ): Observable<AutoCompleteEntity> => {
-            // if we have a string identifier, use that to grab the entity from the matches list.
-            return typeof entityRef === 'string'
-              ? from(this.getEntityFromMatchesByIdentifier(entityRef))
-              : of(entityRef);
-          }
-        )
-      )
-      .subscribe(entity => {
-        this.propagateChange(entity);
+      .pipe(filter(entityRef => this.allowEmpty || Boolean(entityRef)))
+      .subscribe(entityRef => {
+        this.propagateChange(entityRef);
       });
   }
 
@@ -223,8 +250,12 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
    */
   public onEntitySelect(entity: AutoCompleteEntity | string): void {
     this.entityRef$.next(entity);
-  }
+    this.propagateChange(entity);
 
+    if (this.clearAfterSelection) {
+      this.entityRef$.next(''); // Reset the internal state
+    }
+  }
   /**
    * Mark the input as focused
    * @param { InputEvent } e - input event.
@@ -241,25 +272,5 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
   public onInputBlur(e: InputEvent) {
     setTimeout(() => this.isFocused$.next(false), 300);
     this.propagateTouched();
-  }
-
-  /**
-   * Gets entity from matches list by identifier.
-   * @param { string } identifier - identifier of entity to get.
-   * @returns { Promise<AutoCompleteEntity> } - entity.
-   */
-  private async getEntityFromMatchesByIdentifier(
-    identifier: string
-  ): Promise<AutoCompleteEntity> {
-    const matchedEntities: AutoCompleteEntity[] =
-      (await firstValueFrom(this.matchedEntitiesList$)) ?? [];
-
-    return (
-      matchedEntities.find(e => {
-        return this.entityType === AutoCompleteEntityTypeEnum.Group
-          ? e.name.toLowerCase() === identifier.toLowerCase()
-          : e.username.toLowerCase() === identifier.toLowerCase();
-      }) ?? null
-    );
   }
 }
