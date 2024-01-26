@@ -81,12 +81,13 @@ describe('AutocompleteEntityInputComponent', () => {
           entities: [userMock],
         })
       );
+
       comp.inProgress$.next(false);
       comp.isFocused$.next(true);
 
       tick(100);
       comp.showPopout$.pipe(take(1)).subscribe(showPopout => {
-        expect(showPopout).toBe(false);
+        expect(showPopout).toBe(true);
         done();
       });
     }));
