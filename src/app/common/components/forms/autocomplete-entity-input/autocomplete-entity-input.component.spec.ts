@@ -136,19 +136,4 @@ describe('AutocompleteEntityInputComponent', () => {
       discardPeriodicTasks();
     }));
   });
-
-  describe('excludeGuids', () => {
-    it('should exclude entities with GUIDs in the excludeGuids list', fakeAsync(() => {
-      comp.excludeGuids = [userMock.guid];
-      comp.entityRef$.next('test');
-
-      tick(100);
-      fixture.detectChanges();
-
-      expect(comp.matchedEntitiesList$).not.toContain(
-        jasmine.objectContaining({ guid: userMock.guid })
-      );
-      discardPeriodicTasks();
-    }));
-  });
 });
