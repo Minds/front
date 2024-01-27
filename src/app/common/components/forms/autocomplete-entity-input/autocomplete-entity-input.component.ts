@@ -149,12 +149,15 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
 
   inputDisplayValue$: Observable<string> = this.entityRef$.pipe(
     map(entityRef => {
-      if (typeof entityRef === 'object') {
+      if (typeof entityRef === 'object' && entityRef !== null) {
+        // If entity is selected, get its name/username from the entity based on the entityType
         return this.entityType === AutoCompleteEntityTypeEnum.Group
-          ? entityRef.name
-          : entityRef.username;
+          ? entityRef.name || ''
+          : entityRef.username || '';
+      } else if (typeof entityRef === 'string') {
+        return entityRef;
       }
-      return entityRef ?? '';
+      return '';
     })
   );
 
