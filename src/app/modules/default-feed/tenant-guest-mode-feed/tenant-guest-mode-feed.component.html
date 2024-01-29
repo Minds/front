@@ -25,10 +25,14 @@
   </ng-container>
 
   <infinite-scroll
+    *ngIf="!(showEmptyFeedNotice$ | async)"
     (load)="fetchMore()"
     [moreData]="canShowMoreEdges$ | async"
     [inProgress]="inProgress"
     [endText]="newsfeedEndText"
   >
   </infinite-scroll>
+  <m-discovery__emptyGuestFeedNotice
+    *ngIf="showEmptyFeedNotice$ | async"
+  ></m-discovery__emptyGuestFeedNotice>
 </div>
