@@ -1,5 +1,5 @@
 <div class="m-tabs__container">
-  <div class="m-tabs__tab">
+  <div class="m-tabs__tab" *ngIf="session.isAdmin()">
     <a
       [routerLink]="['/network/admin/general']"
       [routerLinkActive]="'m-tabs__tab--selected'"
@@ -8,7 +8,7 @@
       >General</a
     >
   </div>
-  <div class="m-tabs__tab">
+  <div class="m-tabs__tab" *ngIf="session.isAdmin()">
     <a
       [routerLink]="['/network/admin/domain']"
       [routerLinkActive]="'m-tabs__tab--selected'"
@@ -17,7 +17,7 @@
       >Domain</a
     >
   </div>
-  <div class="m-tabs__tab">
+  <div class="m-tabs__tab" *ngIf="session.isAdmin()">
     <a
       [routerLink]="['/network/admin/invite']"
       [routerLinkActive]="'m-tabs__tab--selected'"
@@ -26,7 +26,7 @@
       >Invite</a
     >
   </div>
-  <div class="m-tabs__tab">
+  <div class="m-tabs__tab" *ngIf="session.isAdmin()">
     <a
       [routerLink]="['/network/admin/appearance']"
       [routerLinkActive]="'m-tabs__tab--selected'"
@@ -35,7 +35,7 @@
       >Appearance</a
     >
   </div>
-  <div class="m-tabs__tab">
+  <div class="m-tabs__tab" *ngIf="session.isAdmin()">
     <a
       [routerLink]="['/network/admin/roles']"
       [routerLinkActive]="'m-tabs__tab--selected'"
@@ -44,7 +44,10 @@
       >Roles</a
     >
   </div>
-  <div class="m-tabs__tab">
+  <div
+    class="m-tabs__tab"
+    *ngIf="session.isAdmin() || permissions.canModerateContent()"
+  >
     <a
       [routerLink]="['/network/admin/moderation']"
       [routerLinkActive]="'m-tabs__tab--selected'"

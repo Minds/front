@@ -886,6 +886,7 @@ export enum PermissionsEnum {
   CanCreateGroup = 'CAN_CREATE_GROUP',
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
+  CanModerateContent = 'CAN_MODERATE_CONTENT',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
   CanUseRssSync = 'CAN_USE_RSS_SYNC',
 }
@@ -1352,6 +1353,7 @@ export type Tenant = {
   domain?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   ownerGuid?: Maybe<Scalars['String']['output']>;
+  plan: TenantPlanEnum;
   rootUserGuid?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1360,6 +1362,12 @@ export type TenantInput = {
   domain?: InputMaybe<Scalars['String']['input']>;
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
 };
+
+export enum TenantPlanEnum {
+  Community = 'COMMUNITY',
+  Enterprise = 'ENTERPRISE',
+  Team = 'TEAM',
+}
 
 export type TenantUser = {
   __typename?: 'TenantUser';

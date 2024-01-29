@@ -103,4 +103,12 @@ export class PermissionsService {
   public canUseRssSync(): boolean {
     return this.has(PermissionsEnum.CanUseRssSync);
   }
+
+  /**
+   * Can the user moderate content?
+   * @returns { boolean } whether the user can moderate content
+   */
+  public canModerateContent(): boolean {
+    return this.has(PermissionsEnum.CanModerateContent);
+  }
 }
