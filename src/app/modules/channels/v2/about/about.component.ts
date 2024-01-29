@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
-import { MindsUser } from '../../../../interfaces/entities';
 import { Session } from '../../../../services/session';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Channel About component
@@ -18,5 +18,9 @@ export class ChannelAboutComponent {
    * @param service
    * @param session
    */
-  constructor(public service: ChannelsV2Service, public session: Session) {}
+  constructor(
+    public service: ChannelsV2Service,
+    public session: Session,
+    @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
+  ) {}
 }
