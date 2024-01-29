@@ -53,7 +53,7 @@ export class FormErrorComponent {
 
   /**
    * Stringify validation errors into a human readable comma separated string.
-   * @param { ValidationErrors } errors - valiation errors to be parsed.
+   * @param { ValidationErrors } errors - validation errors to be parsed.
    * @returns { string } concatenated, parsed string for end-user consumption.
    */
   private stringifyValidationErrors(errors: ValidationErrors): string {
@@ -76,6 +76,9 @@ export class FormErrorComponent {
       errorStrings.push(
         `Must be at most ${errors.maxlength.requiredLength} characters long`
       );
+    }
+    if (errors.email) {
+      errorStrings.push('Invalid email address');
     }
 
     // Custom messages - note multiple custom validators all passing "message"

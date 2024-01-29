@@ -9,5 +9,6 @@ export const multiTenantConfigMock: MultiTenantConfig = {
   colorScheme: MultiTenantColorScheme.Dark,
   primaryColor: '#ff0000',
   federationDisabled: true,
+  replyEmail: 'some@email.com',
   canEnableFederation: true,
 };

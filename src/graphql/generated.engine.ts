@@ -611,6 +611,7 @@ export type MultiTenantConfig = {
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
+  replyEmail?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
@@ -621,6 +622,7 @@ export type MultiTenantConfigInput = {
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+  replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
@@ -2258,6 +2260,7 @@ export type GetMultiTenantConfigQuery = {
     primaryColor?: string | null;
     canEnableFederation?: boolean | null;
     federationDisabled?: boolean | null;
+    replyEmail?: string | null;
   } | null;
 };
 
@@ -2348,6 +2351,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
+  replyEmail?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
@@ -5179,6 +5183,7 @@ export const GetMultiTenantConfigDocument = gql`
       primaryColor
       canEnableFederation
       federationDisabled
+      replyEmail
     }
   }
 `;
@@ -5320,6 +5325,7 @@ export const SetMultiTenantConfigDocument = gql`
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
     $federationDisabled: Boolean
+    $replyEmail: String
     $nsfwEnabled: Boolean
   ) {
     multiTenantConfig(
@@ -5328,6 +5334,7 @@ export const SetMultiTenantConfigDocument = gql`
         colorScheme: $colorScheme
         primaryColor: $primaryColor
         federationDisabled: $federationDisabled
+        replyEmail: $replyEmail
         nsfwEnabled: $nsfwEnabled
       }
     )
