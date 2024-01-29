@@ -1,0 +1,44 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+
+  .m-networkAdmin__imageUploadInput {
+    display: none;
+  }
+
+  .m-networkAdmin__imageInputArea {
+    align-self: center;
+    cursor: pointer;
+    background-size: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    &--square {
+      height: 132px;
+      width: 132px;
+    }
+
+    &--horizontal {
+      height: 132px;
+      width: 255px;
+    }
+
+    .m-networkAdmin__imageInputUploadLogo {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: $spacing2;
+    }
+
+    m-sizeableLoadingSpinner {
+      width: auto;
+    }
+  }
+}

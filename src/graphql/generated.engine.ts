@@ -88,6 +88,20 @@ export type AddOnSummary = {
   oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
 };
 
+export type AppReadyMobileConfig = {
+  __typename?: 'AppReadyMobileConfig';
+  ACCENT_COLOR_DARK: Scalars['String']['output'];
+  ACCENT_COLOR_LIGHT: Scalars['String']['output'];
+  API_URL: Scalars['String']['output'];
+  APP_HOST: Scalars['String']['output'];
+  APP_NAME: Scalars['String']['output'];
+  APP_SPLASH_RESIZE: Scalars['String']['output'];
+  TENANT_ID: Scalars['Int']['output'];
+  THEME: Scalars['String']['output'];
+  WELCOME_LOGO: Scalars['String']['output'];
+  assets: Array<KeyValueType>;
+};
+
 export type AssetConnection = ConnectionInterface & {
   __typename?: 'AssetConnection';
   edges: Array<EdgeInterface>;
@@ -597,6 +611,39 @@ export type KeyValuePairInput = {
   value: Scalars['String']['input'];
 };
 
+export type KeyValueType = {
+  __typename?: 'KeyValueType';
+  key: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type MobileConfig = {
+  __typename?: 'MobileConfig';
+  id: Scalars['ID']['output'];
+  previewQRCode: Scalars['String']['output'];
+  previewStatus: MobilePreviewStatusEnum;
+  splashScreenType: MobileSplashScreenTypeEnum;
+  updateTimestamp: Scalars['Int']['output'];
+  welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+};
+
+export enum MobilePreviewStatusEnum {
+  Error = 'ERROR',
+  NoPreview = 'NO_PREVIEW',
+  Pending = 'PENDING',
+  Ready = 'READY',
+}
+
+export enum MobileSplashScreenTypeEnum {
+  Contain = 'CONTAIN',
+  Cover = 'COVER',
+}
+
+export enum MobileWelcomeScreenLogoTypeEnum {
+  Horizontal = 'HORIZONTAL',
+  Square = 'SQUARE',
+}
+
 export enum MultiTenantColorScheme {
   Dark = 'DARK',
   Light = 'LIGHT',
@@ -665,6 +712,7 @@ export type Mutation = {
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
+  mobileConfig: MobileConfig;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
@@ -754,6 +802,12 @@ export type MutationInviteArgs = {
   emails: Scalars['String']['input'];
   groups?: InputMaybe<Array<Scalars['Int']['input']>>;
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export type MutationMobileConfigArgs = {
+  mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
+  mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
+  mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
 };
 
 export type MutationMultiTenantConfigArgs = {
@@ -952,6 +1006,7 @@ export type Query = {
   allPermissions: Array<PermissionsEnum>;
   /** Returns all roles that exist on the site and their permission assignments */
   allRoles: Array<Role>;
+  appReadyMobileConfig: AppReadyMobileConfig;
   /** Returns the permissions that the current session holds */
   assignedPermissions: Array<PermissionsEnum>;
   /** Returns the roles the session holds */
@@ -996,6 +1051,7 @@ export type Query = {
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   invite: Invite;
   invites: InviteConnection;
+  mobileConfig: MobileConfig;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
   multiTenantDomain: MultiTenantDomain;
@@ -1024,6 +1080,10 @@ export type Query = {
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryAppReadyMobileConfigArgs = {
+  tenantId: Scalars['Int']['input'];
 };
 
 export type QueryAssignedRolesArgs = {
@@ -1808,6 +1868,53 @@ export type StoreFeaturedEntityMutation = {
         autoSubscribe: boolean;
         autoPostSubscription: boolean;
       };
+};
+
+export type GetMobileConfigPreviewStateQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetMobileConfigPreviewStateQuery = {
+  __typename?: 'Query';
+  mobileConfig: {
+    __typename?: 'MobileConfig';
+    id: string;
+    previewStatus: MobilePreviewStatusEnum;
+    previewQRCode: string;
+  };
+};
+
+export type GetMobileConfigQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetMobileConfigQuery = {
+  __typename?: 'Query';
+  mobileConfig: {
+    __typename?: 'MobileConfig';
+    id: string;
+    splashScreenType: MobileSplashScreenTypeEnum;
+    welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+    previewStatus: MobilePreviewStatusEnum;
+    previewQRCode: string;
+  };
+};
+
+export type SetMobileConfigMutationVariables = Exact<{
+  mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
+  mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
+  mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
+}>;
+
+export type SetMobileConfigMutation = {
+  __typename?: 'Mutation';
+  mobileConfig: {
+    __typename?: 'MobileConfig';
+    id: string;
+    splashScreenType: MobileSplashScreenTypeEnum;
+    welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+    previewStatus: MobilePreviewStatusEnum;
+    previewQRCode: string;
+    updateTimestamp: number;
+  };
 };
 
 export type CreateNewReportMutationVariables = Exact<{
@@ -4823,6 +4930,88 @@ export class StoreFeaturedEntityGQL extends Apollo.Mutation<
   StoreFeaturedEntityMutationVariables
 > {
   document = StoreFeaturedEntityDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetMobileConfigPreviewStateDocument = gql`
+  query GetMobileConfigPreviewState {
+    mobileConfig {
+      id
+      previewStatus
+      previewQRCode
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetMobileConfigPreviewStateGQL extends Apollo.Query<
+  GetMobileConfigPreviewStateQuery,
+  GetMobileConfigPreviewStateQueryVariables
+> {
+  document = GetMobileConfigPreviewStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetMobileConfigDocument = gql`
+  query GetMobileConfig {
+    mobileConfig {
+      id
+      splashScreenType
+      welcomeScreenLogoType
+      previewStatus
+      previewQRCode
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetMobileConfigGQL extends Apollo.Query<
+  GetMobileConfigQuery,
+  GetMobileConfigQueryVariables
+> {
+  document = GetMobileConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetMobileConfigDocument = gql`
+  mutation SetMobileConfig(
+    $mobileWelcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum
+    $mobileSplashScreenType: MobileSplashScreenTypeEnum
+    $mobilePreviewStatus: MobilePreviewStatusEnum
+  ) {
+    mobileConfig(
+      mobileWelcomeScreenLogoType: $mobileWelcomeScreenLogoType
+      mobileSplashScreenType: $mobileSplashScreenType
+      mobilePreviewStatus: $mobilePreviewStatus
+    ) {
+      id
+      splashScreenType
+      welcomeScreenLogoType
+      previewStatus
+      previewQRCode
+      updateTimestamp
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetMobileConfigGQL extends Apollo.Mutation<
+  SetMobileConfigMutation,
+  SetMobileConfigMutationVariables
+> {
+  document = SetMobileConfigDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

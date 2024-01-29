@@ -1,0 +1,45 @@
+@import 'defaults.scss';
+@import '../../../../../../../common/layout/layout.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-bottom: $spacing8;
+
+  .m-networkAdminMobile__imageUploadInputs {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    gap: $spacing8 $spacing40;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      gap: $spacing8;
+    }
+
+    .m-networkAdminMobile__imageUploadInputContainer {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: flex-start;
+
+      .m-networkAdminMobile__imageUploadLabelTitle {
+        display: block;
+        margin-bottom: $spacing2;
+        @include body1Regular;
+      }
+
+      .m-networkAdminMobile__imageUploadLabelSubtitle {
+        display: block;
+        margin-bottom: $spacing6;
+        @include body3Regular;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        strong {
+          @include body3Medium;
+        }
+      }
+    }
+  }
+}
