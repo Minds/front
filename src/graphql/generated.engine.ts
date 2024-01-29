@@ -727,6 +727,8 @@ export type Mutation = {
   setOnboardingState: OnboardingState;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
+  /** Set the stripe keys for the network */
+  setStripeKeys: Scalars['Boolean']['output'];
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
   /** Un-ssigns a user to a role */
@@ -850,6 +852,11 @@ export type MutationSetRolePermissionArgs = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   permission: PermissionsEnum;
   roleId: Scalars['Int']['input'];
+};
+
+export type MutationSetStripeKeysArgs = {
+  pubKey: Scalars['String']['input'];
+  secKey: Scalars['String']['input'];
 };
 
 export type MutationStoreFeaturedEntityArgs = {
@@ -1070,6 +1077,8 @@ export type Query = {
   rssFeed: RssFeed;
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
+  /** Returns the stripe keys */
+  stripeKeys: StripeKeysType;
   tenantAssets: AssetConnection;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
@@ -1400,6 +1409,12 @@ export type SearchResultsCount = {
 export enum SecuritySubReasonEnum {
   HackedAccount = 'HACKED_ACCOUNT',
 }
+
+export type StripeKeysType = {
+  __typename?: 'StripeKeysType';
+  pubKey: Scalars['String']['output'];
+  secKey: Scalars['String']['output'];
+};
 
 export type Summary = {
   __typename?: 'Summary';
