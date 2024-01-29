@@ -1,0 +1,159 @@
+<ng-container
+  *ngIf="{
+    previewStatus: previewStatus$ | async
+  } as templateVars"
+>
+  <h4
+    class="m-networkPreviewBuilder__title"
+    i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__TITLE"
+  >
+    Get a preview build on your device
+  </h4>
+  <p class="m-networkPreviewBuilder__subtitle">{{ siteName }}</p>
+
+  <div class="m-networkPreviewBuilder__statusContainer">
+    <div
+      class="m-networkPreviewBuilder__statusMarker"
+      [ngClass]="{
+        'm-networkPreviewBuilder__statusMarker--noPreview':
+          templateVars.previewStatus === MobilePreviewStatusEnum.NoPreview,
+        'm-networkPreviewBuilder__statusMarker--pending':
+          templateVars.previewStatus === MobilePreviewStatusEnum.Pending,
+        'm-networkPreviewBuilder__statusMarker--ready':
+          templateVars.previewStatus === MobilePreviewStatusEnum.Ready,
+        'm-networkPreviewBuilder__statusMarker--error':
+          templateVars.previewStatus === MobilePreviewStatusEnum.Error
+      }"
+    ></div>
+    <ng-container [ngSwitch]="templateVars.previewStatus">
+      <span
+        *ngSwitchCase="MobilePreviewStatusEnum.NoPreview"
+        i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__NO_PREVIEW_BUILD_GENERATED"
+        >No preview build generated</span
+      >
+      <span
+        *ngSwitchCase="MobilePreviewStatusEnum.Pending"
+        i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__GENERATING_PREVIEW"
+        >Generating preview</span
+      >
+      <span
+        *ngSwitchCase="MobilePreviewStatusEnum.Ready"
+        i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__PREVIEW_BUILD_IS_READY"
+        >Your preview build is ready</span
+      >
+      <span
+        *ngSwitchCase="MobilePreviewStatusEnum.Error"
+        i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__PREVIEW_BUILD_FAILED"
+        >Your preview build failed</span
+      >
+    </ng-container>
+  </div>
+
+  <ng-container [ngSwitch]="templateVars.previewStatus">
+    <div
+      *ngSwitchCase="MobilePreviewStatusEnum.Pending"
+      class="m-networkPreviewBuilder__descriptionContainer"
+    >
+      <p>
+        <span
+          i18n="
+             @@NETWORK_ADMIN__PREVIEW_BUILDER__CURRENTLY_GENERATING_A_PREVIEW
+          "
+          >We are currently generating a preview for you to view soon. In the
+          meantime, download our previewer app</span
+        >
+        <span>
+          on
+          <ng-container *ngTemplateOutlet="iOSHref"></ng-container> or
+          <ng-container *ngTemplateOutlet="androidHref"></ng-container>.
+        </span>
+      </p>
+    </div>
+    <div
+      *ngSwitchCase="MobilePreviewStatusEnum.Ready"
+      class="m-networkPreviewBuilder__descriptionContainer"
+    >
+      <p>
+        <span i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__GET_APP_ON_IOS_OR_ANDROID"
+          >To view the preview of your network site, first get the Minds
+          previewer app on
+        </span>
+        <span>
+          <ng-container *ngTemplateOutlet="iOSHref"></ng-container> or
+          <ng-container *ngTemplateOutlet="androidHref"></ng-container>.
+        </span>
+      </p>
+      <p i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__ONCE_YOURE_DONE_SCAN_QR">
+        Once you've done that, go ahead and scan the QR code provided below.
+      </p>
+    </div>
+  </ng-container>
+
+  <div
+    *ngIf="templateVars.previewStatus === MobilePreviewStatusEnum.Ready"
+    class="m-networkPreviewBuilder__qrContainer"
+  >
+    <m-qr-code
+      *ngIf="previewQRCode$ | async as previewQRCode"
+      [data]="previewQRCode"
+      width="156"
+    ></m-qr-code>
+  </div>
+
+  <m-button
+    class="m-networkPreviewBuilder__button"
+    [color]="
+      templateVars.previewStatus === MobilePreviewStatusEnum.Pending
+        ? 'grey'
+        : 'blue'
+    "
+    [solid]="templateVars.previewStatus !== MobilePreviewStatusEnum.Pending"
+    [disabled]="
+      templateVars.previewStatus === MobilePreviewStatusEnum.Pending ||
+      (setMobileConfigInProgress$ | async)
+    "
+    [saving]="setMobileConfigInProgress$ | async"
+    size="small"
+    (onAction)="onBuildClick(templateVars.previewStatus)"
+  >
+    <ng-container [ngSwitch]="templateVars.previewStatus">
+      <ng-container
+        *ngSwitchCase="MobilePreviewStatusEnum.Pending"
+        i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__BUILDING_PREVIEW_BUTTON"
+        >Building preview</ng-container
+      >
+      <ng-container
+        *ngSwitchCase="MobilePreviewStatusEnum.Ready"
+        i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__BUILD_NEW_PREVIEW_BUTTON"
+        >Build a new preview</ng-container
+      >
+      <ng-container
+        *ngSwitchCase="MobilePreviewStatusEnum.Error"
+        i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__REBUILD_PREVIEW_BUTTON"
+        >Rebuild preview</ng-container
+      >
+      <ng-container
+        *ngSwitchDefault
+        i18n="@@NETWORK_ADMIN__PREVIEW_BUILDER__BUILD_PREVIEW_BUTTON"
+        >Build preview</ng-container
+      >
+    </ng-container>
+  </m-button>
+</ng-container>
+
+<ng-template #iOSHref
+  ><a
+    class="m-networkPreviewBuilder__iosLink"
+    href="https://apps.apple.com/us/app/networks-previewer/id6473803640"
+    target="_blank"
+    >iOS</a
+  ></ng-template
+>
+<ng-template #androidHref
+  ><a
+    class="m-networkPreviewBuilder__androidLink"
+    href="https://play.google.com/store/apps/details?id=com.minds.mobilepreview"
+    target="_blank"
+    >Android</a
+  ></ng-template
+>

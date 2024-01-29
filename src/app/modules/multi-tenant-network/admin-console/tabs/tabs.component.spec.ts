@@ -58,6 +58,7 @@ describe('NetworkAdminConsoleTabsComponent', () => {
         'appearance',
         'roles',
         'moderation',
+        'mobile',
       ];
       tabs.forEach(tab =>
         testTabVisibility(`network-admin-console-tab-${tab}`, true)
@@ -72,7 +73,14 @@ describe('NetworkAdminConsoleTabsComponent', () => {
     });
 
     it('should display only the moderation tab', () => {
-      const tabs = ['general', 'domain', 'invite', 'appearance', 'roles'];
+      const tabs = [
+        'general',
+        'domain',
+        'invite',
+        'appearance',
+        'roles',
+        'mobile',
+      ];
       tabs.forEach(tab =>
         testTabVisibility(`network-admin-console-tab-${tab}`, false)
       );

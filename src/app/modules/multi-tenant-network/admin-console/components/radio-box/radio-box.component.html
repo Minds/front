@@ -1,0 +1,22 @@
+<div class="m-radioBox__topContainer">
+  <div class="m-radioBox__headerContainer">
+    <h5 *ngIf="title" class="m-radioBox__title">{{ title }}</h5>
+    <p *ngIf="subtitle" class="m-radioBox__subtitle">{{ subtitle }}</p>
+  </div>
+
+  <div class="m-radioBox__radioButton">
+    <fieldset>
+      <input
+        class="m-radioBox__radioButtonInput"
+        type="radio"
+        [value]="inputValue"
+        [id]="inputValue"
+        [name]="inputValue"
+        [checked]="controlValue === inputValue"
+      />
+    </fieldset>
+  </div>
+</div>
+<div class="m-radioBox__bottomContainer">
+  <ng-content></ng-content>
+</div>

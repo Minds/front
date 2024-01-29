@@ -9,7 +9,7 @@ import {
 } from '../../../../../../../../graphql/generated.engine';
 import { QueryRef } from 'apollo-angular';
 import { ApolloQueryResult } from '@apollo/client';
-import { AssignRolesModalLazyService } from './assign-roles-modal/assign-roles-modal-lazy.service';
+import { AssignRolesModalService } from './assign-roles-modal/assign-roles-modal.service';
 import { RoleId } from '../../roles.types';
 import { MultiTenantRolesService } from '../../../../../services/roles.service';
 import { Filter } from '../../../../../../../interfaces/dashboard';
@@ -79,7 +79,7 @@ export class NetworkAdminConsoleRolesUsersComponent
 
   constructor(
     private service: MultiTenantRolesService,
-    private assignRolesModal: AssignRolesModalLazyService,
+    private assignRolesModal: AssignRolesModalService,
     private getUsersByRoleGQL: GetUsersByRoleGQL,
     protected configs: ConfigsService,
     private session: Session
