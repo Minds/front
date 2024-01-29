@@ -1,0 +1,59 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  cursor: pointer;
+  padding: $spacing4 $spacing4 $spacing6 $spacing4;
+  box-sizing: border-box;
+  border-radius: 4px;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  &.m-radioBox__host--inProgress {
+    cursor: wait;
+  }
+
+  .m-radioBox__topContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    gap: $spacing1;
+
+    .m-radioBox__headerContainer {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .m-radioBox__title {
+        @include body2Bold;
+        margin: 0 0 $spacing1 0;
+      }
+
+      .m-radioBox__subtitle {
+        @include body3Regular;
+        margin: 0 0 $spacing10 0;
+      }
+    }
+
+    .m-radioBox__radioButtonInput {
+      display: flex;
+      align-self: flex-start;
+      min-width: 22px;
+      min-height: 22px;
+      cursor: pointer;
+
+      @include m-theme() {
+        accent-color: themed($m-action);
+        background-color: themed($m-white-always);
+      }
+    }
+  }
+
+  .m-radioBox__bottomContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+  }
+}
