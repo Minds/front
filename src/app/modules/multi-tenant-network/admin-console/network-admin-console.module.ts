@@ -19,7 +19,6 @@ import { NetworkAdminConsoleCommunityGuidelinesComponent } from './tabs/moderati
 import { NetworkAdminConsoleRolesComponent } from './tabs/roles/roles.component';
 import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/permissions/permissions.component';
 import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
-import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
 import { CustomPageFormComponent } from './components/custom-page-form/custom-page-form.component';
 import { NetworkAdminConsolePrivacyPolicyComponent } from './tabs/moderation/privacy-policy/privacy-policy.component';
 import { NetworkAdminConsoleTermsOfServiceComponent } from './tabs/moderation/terms-of-service/terms-of-service.component';
@@ -31,6 +30,9 @@ import { NetworkAdminConsoleInviteInvitationsComponent } from './tabs/invite/tab
 import { RoleChipComponent } from './components/role-chip/role-chip.component';
 import { RoleAggregatorComponent } from './components/role-aggregator/role-aggregator.component';
 import { NetworkAdminConsoleImageInputComponent } from './components/image-uploader/image-input.component';
+import { NetworkAdminConsoleReplyEmailSettingsComponent } from './tabs/general/reply-email-settings/reply-email-settings.component';
+import { AssignRolesModalComponent } from './tabs/roles/tabs/users/assign-roles-modal/assign-roles-modal.component';
+import { NetworkAdminConsoleRoleIconComponent } from './components/role-icon/role-icon.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { CustomPageFormContentPreviewModalComponent } from './components/custom-page-form/content-preview-modal/content-preview-modal.component';
 
@@ -108,7 +110,6 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(NETWORK_ADMIN_CONSOLE_ROUTES),
-    NetworkAdminConsoleSharedModule,
     NetworkAdminConsoleImageInputComponent,
     MarkdownModule.forChild(),
   ],
@@ -129,12 +130,15 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
     NetworkAdminConsoleFederationSettingsComponent,
+    NetworkAdminConsoleReplyEmailSettingsComponent,
     NetworkAdminConsoleNsfwToggleComponent,
     NetworkAdminConsoleInviteComponent,
     NetworkAdminConsoleInviteSendComponent,
     NetworkAdminConsoleInviteInvitationsComponent,
     RoleChipComponent,
     RoleAggregatorComponent,
+    AssignRolesModalComponent,
+    NetworkAdminConsoleRoleIconComponent,
     CustomPageFormComponent,
     CustomPageFormContentPreviewModalComponent,
   ],

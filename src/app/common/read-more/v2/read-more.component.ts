@@ -5,6 +5,7 @@ import {
   EventEmitter,
   HostBinding,
   Input,
+  Optional,
   Output,
   SkipSelf,
 } from '@angular/core';
@@ -52,7 +53,7 @@ export class ReadMoreComponent {
   showAll = false;
 
   /**
-   * whether the read-more can be expaned
+   * whether the read-more can be expanded
    */
   @Input() disabled = false;
 
@@ -61,7 +62,7 @@ export class ReadMoreComponent {
   constructor(
     private cd: ChangeDetectorRef,
     private clientMetaService: ClientMetaService,
-    private activityService: ActivityService,
+    @Optional() private activityService: ActivityService,
     @SkipSelf() private parentClientMeta: ClientMetaDirective
   ) {}
 
@@ -75,7 +76,10 @@ export class ReadMoreComponent {
    * @returns { Promise<void> }
    */
   public async onOutputTextClick($event: MouseEvent): Promise<void> {
-    if (($event.target as HTMLElement).tagName === 'A') {
+    if (
+      this.activityService &&
+      ($event.target as HTMLElement).tagName === 'A'
+    ) {
       const activity: any = await this.activityService.entity$.getValue();
 
       let opts: Partial<ClientMetaData> = {};
