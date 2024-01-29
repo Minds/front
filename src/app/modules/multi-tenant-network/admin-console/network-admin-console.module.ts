@@ -29,6 +29,7 @@ import { NetworkAdminConsoleInviteSendComponent } from './tabs/invite/tabs/send/
 import { NetworkAdminConsoleInviteInvitationsComponent } from './tabs/invite/tabs/invitations/invitations.component';
 import { RoleChipComponent } from './components/role-chip/role-chip.component';
 import { RoleAggregatorComponent } from './components/role-aggregator/role-aggregator.component';
+import { NetworkAdminConsoleReplyEmailSettingsComponent } from './tabs/general/reply-email-settings/reply-email-settings.component';
 import { AssignRolesModalComponent } from './tabs/roles/tabs/users/assign-roles-modal/assign-roles-modal.component';
 import { NetworkAdminConsoleRoleIconComponent } from './components/role-icon/role-icon.component';
 import { MarkdownModule } from 'ngx-markdown';
@@ -121,6 +122,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
     NetworkAdminConsoleFederationSettingsComponent,
+    NetworkAdminConsoleReplyEmailSettingsComponent,
     NetworkAdminConsoleNsfwToggleComponent,
     NetworkAdminConsoleInviteComponent,
     NetworkAdminConsoleInviteSendComponent,
