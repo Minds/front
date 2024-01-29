@@ -249,7 +249,11 @@
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
         >
           <a
-            [routerLink]="['/network/admin']"
+            [routerLink]="
+              isAdmin()
+                ? ['/network/admin']
+                : ['/network/admin/moderation/reports']
+            "
             (click)="toggle()"
             data-ref="sidenav-network-admin"
           >
