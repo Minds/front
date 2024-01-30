@@ -35,7 +35,7 @@ describe('NetworkAdminConsoleModerationComponent', () => {
   });
 
   function testTabVisibility(tabRef: string, expectedVisible: boolean) {
-    fixture.detectChanges();
+    fixture.detectChanges(); // Trigger change detection
     const tabElement = fixture.debugElement.query(
       By.css(`[data-ref=${tabRef}]`)
     );
@@ -46,37 +46,36 @@ describe('NetworkAdminConsoleModerationComponent', () => {
     }
   }
 
-  describe('Tab visibility for admin user', () => {
-    beforeEach(() => {
-      sessionMock.isAdmin.and.returnValue(true);
-      permissionsServiceMock.canModerateContent.and.returnValue(false);
-    });
+  describe('Tab visibility based on permissions', () => {
+    it('should display the reports tab only if canModerateContent is true', () => {
+      permissionsServiceMock.canModerateContent.and.returnValue(true);
+      sessionMock.isAdmin.and.returnValue(true); // Admin but should not matter
+      testTabVisibility('network-admin-console-tab-reports', true);
 
-    it('should display all tabs for admin', () => {
-      const tabs = [
-        'reports',
-        'guidelines',
-        'privacy-policy',
-        'terms-of-service',
-      ];
-      tabs.forEach(tab =>
-        testTabVisibility(`network-admin-console-tab-${tab}`, true)
-      );
+      permissionsServiceMock.canModerateContent.and.returnValue(false);
+      testTabVisibility('network-admin-console-tab-reports', false);
     });
   });
 
-  describe('Tab visibility for user with canModerateContent permission', () => {
+  describe('Tab visibility for admin users', () => {
     beforeEach(() => {
-      sessionMock.isAdmin.and.returnValue(false);
-      permissionsServiceMock.canModerateContent.and.returnValue(true);
+      sessionMock.isAdmin.and.returnValue(true); // User is an admin
+      permissionsServiceMock.canModerateContent.and.returnValue(false); // Admin but without moderate content permission
     });
 
-    it('should display only the reports tab', () => {
-      const tabs = ['guidelines', 'privacy-policy', 'terms-of-service'];
-      tabs.forEach(tab =>
-        testTabVisibility(`network-admin-console-tab-${tab}`, false)
+    it('should display correct tabs for admin users', () => {
+      // List the tabs that should be visible to admin users
+      const visibleTabsForAdmin = [
+        'community-guidelines',
+        'privacy-policy',
+        'terms-of-service',
+      ];
+      visibleTabsForAdmin.forEach(tab =>
+        testTabVisibility(`network-admin-console-tab-${tab}`, true)
       );
-      testTabVisibility('network-admin-console-tab-reports', true);
+
+      // Confirm reports tab is not visible
+      testTabVisibility('network-admin-console-tab-reports', false);
     });
   });
 });

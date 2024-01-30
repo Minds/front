@@ -2649,6 +2649,7 @@ export type GetNetworksListQuery = {
     domain?: string | null;
     ownerGuid?: string | null;
     rootUserGuid?: string | null;
+    plan: TenantPlanEnum;
     config?: {
       __typename?: 'MultiTenantConfig';
       siteName?: string | null;

@@ -265,7 +265,7 @@ export class MultiTenantRolesService implements OnDestroy {
   }
 
   /**
-   * Return all the permissions in allPermissions that are also toggleable.
+   * Return all the permissions in allPermissions that are also toggleable, in the order we want to display them
    * @param allPermissions
    */
   private getToggleablePermissions(
@@ -279,6 +279,7 @@ export class MultiTenantRolesService implements OnDestroy {
       PermissionsEnum.CanCreateGroup,
       PermissionsEnum.CanUploadVideo,
       PermissionsEnum.CanUseRssSync,
+      PermissionsEnum.CanModerateContent,
     ];
 
     return toggleablePermissions.filter(permission =>
@@ -300,6 +301,8 @@ export class MultiTenantRolesService implements OnDestroy {
         return 'Vote and remind';
       case PermissionsEnum.CanUseRssSync:
         return 'Sync RSS';
+      case PermissionsEnum.CanModerateContent:
+        return 'Moderate content';
       // The remaining PermissionsEnum values aren't displayed anywhere
     }
 
