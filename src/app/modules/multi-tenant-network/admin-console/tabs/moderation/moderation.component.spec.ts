@@ -46,36 +46,66 @@ describe('NetworkAdminConsoleModerationComponent', () => {
     }
   }
 
-  describe('Tab visibility based on permissions', () => {
-    it('should display the reports tab only if canModerateContent is true', () => {
-      permissionsServiceMock.canModerateContent.and.returnValue(true);
-      sessionMock.isAdmin.and.returnValue(true); // Admin but should not matter
-      testTabVisibility('network-admin-console-tab-reports', true);
-
-      permissionsServiceMock.canModerateContent.and.returnValue(false);
-      testTabVisibility('network-admin-console-tab-reports', false);
-    });
-  });
+  function testNsfwToggleVisibility(expectedVisible: boolean) {
+    fixture.detectChanges(); // Trigger change detection
+    const nsfwToggleElement = fixture.debugElement.query(
+      By.css('m-networkAdminConsole__nsfwToggle')
+    );
+    if (expectedVisible) {
+      expect(nsfwToggleElement).toBeTruthy();
+    } else {
+      expect(nsfwToggleElement).toBeNull();
+    }
+  }
 
   describe('Tab visibility for admin users', () => {
     beforeEach(() => {
       sessionMock.isAdmin.and.returnValue(true); // User is an admin
-      permissionsServiceMock.canModerateContent.and.returnValue(false); // Admin but without moderate content permission
+      permissionsServiceMock.canModerateContent.and.returnValue(false); // Admin does not have moderate content permission
     });
 
-    it('should display correct tabs for admin users', () => {
-      // List the tabs that should be visible to admin users
-      const visibleTabsForAdmin = [
-        'community-guidelines',
-        'privacy-policy',
-        'terms-of-service',
-      ];
-      visibleTabsForAdmin.forEach(tab =>
-        testTabVisibility(`network-admin-console-tab-${tab}`, true)
-      );
+    it('should display admin specific tabs', () => {
+      testTabVisibility('network-admin-console-tab-community-guidelines', true); // Admin-specific tabs should be visible
+      testTabVisibility('network-admin-console-tab-privacy-policy', true);
+      testTabVisibility('network-admin-console-tab-terms-of-service', true);
+      testTabVisibility('network-admin-console-tab-reports', false); // Reports tab should not be visible
+    });
+  });
 
-      // Confirm reports tab is not visible
-      testTabVisibility('network-admin-console-tab-reports', false);
+  describe('Tab visibility for user with canModerateContent permission', () => {
+    beforeEach(() => {
+      sessionMock.isAdmin.and.returnValue(false); // User is not an admin
+      permissionsServiceMock.canModerateContent.and.returnValue(true); // User can moderate content
+    });
+
+    it('should display only the reports tab', () => {
+      testTabVisibility('network-admin-console-tab-reports', true); // Reports tab should be visible
+      testTabVisibility(
+        'network-admin-console-tab-community-guidelines',
+        false
+      ); // Other tabs should not be visible
+      testTabVisibility('network-admin-console-tab-privacy-policy', false);
+      testTabVisibility('network-admin-console-tab-terms-of-service', false);
+    });
+  });
+
+  describe('NSFW Toggle visibility for admin user', () => {
+    beforeEach(() => {
+      sessionMock.isAdmin.and.returnValue(true); // User is an admin
+    });
+
+    it('should display NSFW Toggle for admin users', () => {
+      testNsfwToggleVisibility(true);
+    });
+  });
+
+  describe('NSFW Toggle visibility for non-admin user', () => {
+    beforeEach(() => {
+      sessionMock.isAdmin.and.returnValue(false); // User is not an admin
+    });
+
+    it('should not display NSFW Toggle for non-admin users', () => {
+      testNsfwToggleVisibility(false);
     });
   });
 });
