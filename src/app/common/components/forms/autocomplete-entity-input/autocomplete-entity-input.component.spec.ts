@@ -15,6 +15,7 @@ import { MockService } from '../../../../utils/mock';
 import userMock from '../../../../mocks/responses/user.mock';
 import { of, take } from 'rxjs';
 import { groupMock } from '../../../../mocks/responses/group.mock';
+import { flush } from '@sentry/node';
 
 describe('AutocompleteEntityInputComponent', () => {
   let comp: AutocompleteEntityInputComponent;
@@ -73,9 +74,9 @@ describe('AutocompleteEntityInputComponent', () => {
   });
 
   describe('showPopout$', () => {
-    it('should show popout because focused and has entities', fakeAsync((
-      done: DoneFn
-    ) => {
+    it('should show popout because focused and has entities', fakeAsync(() => {
+      comp.entityRef$.next('abc');
+
       (comp as any).api.get.and.returnValue(
         of({
           entities: [userMock],
@@ -86,10 +87,12 @@ describe('AutocompleteEntityInputComponent', () => {
       comp.isFocused$.next(true);
 
       tick(100);
+
       comp.showPopout$.pipe(take(1)).subscribe(showPopout => {
         expect(showPopout).toBe(true);
-        done();
       });
+
+      discardPeriodicTasks();
     }));
   });
 
