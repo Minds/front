@@ -56,7 +56,7 @@
       >Moderation</a
     >
   </div>
-  <div class="m-tabs__tab" ngIf="session.isAdmin()">
+  <div class="m-tabs__tab" *ngIf="session.isAdmin()">
     <a
       [routerLink]="['/network/admin/mobile']"
       [routerLinkActive]="'m-tabs__tab--selected'"

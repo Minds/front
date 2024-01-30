@@ -3,6 +3,8 @@ import { NetworkAdminConsoleTabsComponent } from './tabs.component';
 import { By } from '@angular/platform-browser';
 import { Session } from '../../../../services/session';
 import { PermissionsService } from '../../../../common/services/permissions.service';
+import { CommonModule } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NetworkAdminConsoleTabsComponent', () => {
   let comp: NetworkAdminConsoleTabsComponent;
@@ -17,6 +19,7 @@ describe('NetworkAdminConsoleTabsComponent', () => {
     ]);
 
     TestBed.configureTestingModule({
+      imports: [CommonModule, RouterTestingModule],
       declarations: [NetworkAdminConsoleTabsComponent],
       providers: [
         { provide: Session, useValue: sessionMock },
