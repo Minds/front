@@ -1,0 +1,43 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+
+  .m-networkAdminSplashConfig__form {
+    max-width: 772px;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing8;
+    margin-bottom: unset;
+
+    @media screen and (max-width: $min-desktop) {
+      flex-flow: column nowrap;
+    }
+
+    .m-networkAdminSplashConfig__radioImageSelector {
+      flex: 1;
+      margin-bottom: $spacing6;
+    }
+  }
+
+  .m-networkAdminMobile__subtitle {
+    margin-bottom: $spacing2 !important;
+
+    strong {
+      @include body1Bold;
+    }
+  }
+
+  .m-networkAdminSplashConfig__requiredFieldLabel {
+    margin-bottom: $spacing6;
+
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-action);
+    }
+
+    strong {
+      @include body2Bold;
+    }
+  }
+}

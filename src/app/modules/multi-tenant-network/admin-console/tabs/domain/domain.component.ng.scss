@@ -107,7 +107,7 @@
     flex-flow: row nowrap;
     gap: $spacing6;
     border-radius: $spacing1;
-    overflow-x: scroll;
+    overflow-x: auto;
 
     @media screen and (max-width: $min-tablet) {
       gap: $spacing3;

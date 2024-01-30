@@ -1,24 +1,17 @@
-import {
-  createNgModule,
-  Inject,
-  Injectable,
-  Injector,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Inject, Injectable, Injector, PLATFORM_ID } from '@angular/core';
 import {
   ModalRef,
   ModalService,
 } from '../../../../../../../../services/ux/modal.service';
 import { UserRoleEdge } from '../../../../../../../../../graphql/generated.engine';
 import { AssignRolesModalComponent } from './assign-roles-modal.component';
-import { AssignRolesModalLazyModule } from './assign-roles-modal-lazy.module';
 import { BehaviorSubject } from 'rxjs';
 
 /**
- * Service for loading the modal for adding featured entities lazily.
+ * Service for loading the modal for adding featured entities.
  */
 @Injectable({ providedIn: 'root' })
-export class AssignRolesModalLazyService {
+export class AssignRolesModalService {
   /**
    * Emits when a user's roles have been changed
    */
@@ -33,15 +26,14 @@ export class AssignRolesModalLazyService {
   ) {}
 
   /**
-   * Lazy load module and open modal.
+   * Open modal.
    * @param { UserRoleEdge } userWithRoles - the target user and their current roles
    * @returns { Promise<ModalRef<AssignRolesModalComponent>> } - modal reference.
    */
   public async open(
     userWithRoles: UserRoleEdge
   ): Promise<ModalRef<AssignRolesModalComponent>> {
-    const componentRef: typeof AssignRolesModalComponent = await this.getComponentRef();
-    const modal = this.modalService.present(componentRef, {
+    const modal = this.modalService.present(AssignRolesModalComponent, {
       size: 'md',
       data: {
         userWithRoles: userWithRoles,
@@ -53,17 +45,5 @@ export class AssignRolesModalLazyService {
       },
     });
     return modal;
-  }
-
-  /**
-   * Gets reference to component to load.
-   * @returns { Promise<typeof AssignRolesModalComponent> } modal component.
-   */
-  private async getComponentRef(): Promise<typeof AssignRolesModalComponent> {
-    return createNgModule<AssignRolesModalLazyModule>(
-      (await import('./assign-roles-modal-lazy.module'))
-        .AssignRolesModalLazyModule,
-      this.injector
-    ).instance.resolveComponent();
   }
 }

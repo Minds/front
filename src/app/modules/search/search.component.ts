@@ -231,7 +231,9 @@ export class SearchComponent {
 
     this.showEmptyFeedNotice$ = this.edges$.pipe(
       map(edges => {
-        return !this.inProgress && edges?.length === 0;
+        const hasActivityEdge =
+          edges && edges.some(edge => edge.__typename === 'ActivityEdge');
+        return !this.inProgress && !hasActivityEdge;
       })
     );
 

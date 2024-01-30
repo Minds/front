@@ -76,6 +76,11 @@ export class TenantGuestModeFeedComponent implements OnInit {
    */
   canShowMoreEdges$: Observable<boolean>;
 
+  /**
+   * Show a notice when the feed is empty
+   */
+  showEmptyFeedNotice$: Observable<boolean>;
+
   constructor(
     @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean,
     private fetchNewsfeed: FetchNewsfeedGQL
@@ -169,6 +174,14 @@ export class TenantGuestModeFeedComponent implements OnInit {
         }
 
         return pageInfo.hasNextPage;
+      })
+    );
+
+    this.showEmptyFeedNotice$ = this.edges$.pipe(
+      map(edges => {
+        const hasActivityEdge =
+          edges && edges.some(edge => edge.__typename === 'ActivityEdge');
+        return !this.inProgress && !hasActivityEdge;
       })
     );
   }
