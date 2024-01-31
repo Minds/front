@@ -21,6 +21,7 @@ import { ProductPageClosingCtaComponent } from './product-pages/components/closi
 import { NoRouteReuseStrategy } from '../../common/routerReuseStrategies/no-route-reuse.strategy';
 import { PathMatch } from '../../common/types/angular.types';
 import { MarketingModule } from '../marketing/marketing.module';
+import { ProductPageImageCardComponent } from './product-pages/components/image-card/image-card.component';
 
 const routes: Routes = [
   {
@@ -80,6 +81,11 @@ const routes: Routes = [
     redirectTo: '/about/token',
     pathMatch: 'full' as PathMatch,
   },
+  {
+    path: 'bubbles',
+    redirectTo: '/about/bubbles',
+    pathMatch: 'full' as PathMatch,
+  },
   // Note: Pro route handled in pro module.
 ];
 
@@ -103,6 +109,7 @@ const routes: Routes = [
     ProductPageBasicExplainerComponent,
     ProductPageFeatureHighlightComponent,
     ProductPageClosingCtaComponent,
+    ProductPageImageCardComponent,
   ],
 })
 export class AboutModule {}

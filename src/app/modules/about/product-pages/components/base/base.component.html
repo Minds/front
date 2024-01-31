@@ -4,6 +4,10 @@
       *ngSwitchCase="'ComponentV2ProductHero'"
       [text]="component.text"
     ></m-productPage__hero>
+    <m-productPage__imageCard
+      *ngSwitchCase="'ComponentV2ProductImageCard'"
+      [image]="component.image"
+    ></m-productPage__imageCard>
     <m-productPage__pricingCards
       *ngSwitchCase="'ComponentV2ProductPricingCards'"
       [savingsText]="component.savingsText"

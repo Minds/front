@@ -70,6 +70,7 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log('ojm loading base');
     if (isPlatformBrowser(this.platformId)) {
       // force scroll to top for when the component reloads with a different slug.
       window.scroll(0, 0);
@@ -92,6 +93,8 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
         const data: V2ProductPage = result?.v2ProductPages?.data?.[0]
           ?.attributes as V2ProductPage;
         const components: ProductPageDynamicComponent[] = data?.productPage as ProductPageDynamicComponent[];
+
+        console.log('ojm data', data, components);
 
         if (!components?.length) {
           return this.handleLoadFailure(slug);
