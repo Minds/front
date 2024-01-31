@@ -45,6 +45,41 @@
       }
     }
 
+    .m-groupFeed__toolbar {
+      display: flex;
+      justify-content: space-between;
+
+      .m-groupFeedFilter__scheduledToggle {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 19px;
+        text-decoration: none;
+        @include m-theme {
+          color: themed($m-textColor--primary);
+        }
+        &.selected {
+          @include m-theme {
+            color: themed($m-action);
+          }
+          ::ng-deep m-tooltip i {
+            @include m-theme {
+              color: themed($m-action);
+            }
+          }
+        }
+        ::ng-deep m-tooltip i {
+          @include m-theme {
+            color: themed($m-textColor--secondary);
+          }
+          font-size: 19px;
+          margin: 0 $spacing2 0 $spacing5;
+        }
+      }
+    }
+
     .m-groupFeed__searchDisplay {
       font-size: 14px;
 
