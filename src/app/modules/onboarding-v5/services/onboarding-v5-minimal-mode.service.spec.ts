@@ -50,6 +50,16 @@ describe('OnboardingV5MinimalModeService', () => {
       expect(service.shouldShow()).toBeTrue();
     });
 
+    it('should determine if minimal mode should show because the route INCLUDES a forced route', () => {
+      (service as any).isTenantNetwork = false;
+      (service as any).location.path.and.returnValue(
+        (service as any).forcedMinimalModeRoutes[0] +
+          '?queryParam1=true&queryParam2=false'
+      );
+
+      expect(service.shouldShow()).toBeTrue();
+    });
+
     it('should determine if minimal mode should NOT show', () => {
       (service as any).isTenantNetwork = false;
       (service as any).location.path.and.returnValue('/');
