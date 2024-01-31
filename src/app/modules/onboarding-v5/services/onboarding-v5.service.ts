@@ -312,7 +312,7 @@ export class OnboardingV5Service implements OnDestroy {
           currentlyActiveStep.data.stepKey === this.finalStepKeyForMinimalMode;
 
         if (!steps?.[i + 1] || isFinalTenantStep) {
-          this.finishOnboarding();
+          this.finishOnboarding(); // async
         } else {
           this.activeStep$.next(steps[i + 1]);
         }
@@ -326,10 +326,10 @@ export class OnboardingV5Service implements OnDestroy {
    * Call to finish onboarding - will show completion step and then dismiss modal after fixed times.
    * @returns { void  }
    */
-  public finishOnboarding(): void {
+  public async finishOnboarding(): Promise<void> {
     this.completionInProgress$.next(true);
     try {
-      this.setOnboardingCompletedState(true);
+      await this.setOnboardingCompletedState(true);
     } catch (e) {
       console.error(e);
     }
@@ -337,6 +337,7 @@ export class OnboardingV5Service implements OnDestroy {
     if (!this.completionStep$.getValue()) {
       this.completionInProgress$.next(false);
       this.dismiss$.next(true);
+      this.onboardingCompleted$.next(true);
       return;
     }
 

@@ -1,8 +1,12 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { Subscription } from 'rxjs';
-
 import { Navigation as NavigationService } from '../../services/navigation';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
@@ -19,6 +23,8 @@ import { AuthModalService } from './modal/auth-modal.service';
 import { IsTenantService } from '../../common/services/is-tenant.service';
 import { SiteService } from '../../common/services/site.service';
 import { HORIZONTAL_LOGO_PATH as TENANT_HORIZONTAL_LOGO } from '../multi-tenant-network/services/config-image.service';
+import { OnboardingV5Service } from '../onboarding-v5/services/onboarding-v5.service';
+import { WINDOW } from '../../common/injection-tokens/common-injection-tokens';
 
 /**
  * Standalone register page for new users to sign up
@@ -69,9 +75,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService,
     private authRedirectService: AuthRedirectService,
+    private onboardingV5Service: OnboardingV5Service,
     private authModal: AuthModalService,
     private isTenant: IsTenantService,
-    private site: SiteService
+    private site: SiteService,
+    @Inject(WINDOW) private window: Window
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -94,7 +102,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.loginReferrer.navigate();
         }
       }),
-      this.authModal.onRegistered$.subscribe(registered => {
+      this.onboardingV5Service.onboardingCompleted$.subscribe(registered => {
         if (registered) {
           this.registered();
         }
@@ -239,7 +247,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     // If this is an api redirect, we need to redirect outside of angular router
     if (uri[0].indexOf(this.configs.get('site_url') + 'api/') === 0) {
-      window.location.href = this.redirectTo;
+      this.window.location.href = this.redirectTo;
     } else {
       this.router.navigate([uri[0]], extras);
     }

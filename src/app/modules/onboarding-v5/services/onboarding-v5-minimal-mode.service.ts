@@ -9,7 +9,10 @@ import { Location } from '@angular/common';
 @Injectable({ providedIn: 'root' })
 export class OnboardingV5MinimalModeService {
   /** Routes that should always force minimal mode to be used. */
-  private readonly forcedMinimalModeRoutes: string[] = ['/about/networks'];
+  private readonly forcedMinimalModeRoutes: string[] = [
+    '/about/networks',
+    '/networks/checkout',
+  ];
 
   constructor(
     private location: Location,
@@ -21,9 +24,17 @@ export class OnboardingV5MinimalModeService {
    * @returns { boolean } whether minimal mode should be shown.
    */
   public shouldShow(): boolean {
-    return (
-      this.isTenantNetwork ||
-      this.forcedMinimalModeRoutes.includes(this.location.path())
-    );
+    if (this.isTenantNetwork) {
+      return true;
+    }
+
+    const currentPath: string = this.location.path();
+    for (const route of this.forcedMinimalModeRoutes) {
+      if (currentPath.includes(route)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

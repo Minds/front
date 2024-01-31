@@ -3,7 +3,10 @@
 >
   <div
     class="m-twoColumnLayout"
-    *ngIf="!(onboardingCompleted$ | async); else completionSplashTemplate"
+    *ngIf="
+      !(onboardingCompleted$ | async) || isOnboardingMinimalMode;
+      else completionSplashTemplate
+    "
   >
     <div
       class="m-twoColumnLayout__leftContainer"
