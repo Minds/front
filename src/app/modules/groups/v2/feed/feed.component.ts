@@ -134,6 +134,13 @@ export class GroupFeedComponent implements OnDestroy, OnInit {
   }
 
   /**
+   * Toggle view scheduled
+   */
+  toggleScheduled(): void {
+    this.feedService.toggleScheduled();
+  }
+
+  /**
    * Destroy lifecycle hook
    */
   ngOnDestroy(): void {
@@ -147,13 +154,7 @@ export class GroupFeedComponent implements OnDestroy, OnInit {
    * @param type
    */
   onTypeChange(type: GroupFeedTypeFilter) {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: {
-        filter: type,
-      },
-      queryParamsHandling: 'merge',
-    });
+    this.feedService.onTypeChange(type);
   }
 
   /**
@@ -199,5 +200,14 @@ export class GroupFeedComponent implements OnDestroy, OnInit {
       return this.composer.canDeactivate();
     }
     return true;
+  }
+
+  /**
+   * Determines whether the post is scheduled.
+   * (Removes pinned posts from scheduled post feed)
+   * @returns true if post is scheduled.
+   */
+  activityIsScheduled(entity): boolean {
+    return entity.time_created && entity.time_created * 1000 > Date.now();
   }
 }

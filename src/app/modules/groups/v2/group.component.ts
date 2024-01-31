@@ -71,8 +71,9 @@ export class GroupComponent implements OnInit, OnDestroy {
         if (params.has('query')) {
           query = decodeURIComponent(params.get('query'));
         }
-
-        this.service.query$.next(query);
+        if (query !== this.service.query$.getValue()) {
+          this.service.query$.next(query);
+        }
       }),
 
       this.service.query$.subscribe(query => {
