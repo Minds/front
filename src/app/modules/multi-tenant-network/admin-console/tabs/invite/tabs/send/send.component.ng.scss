@@ -29,6 +29,22 @@
     }
   }
 
+  .m-networkAdminConsoleInviteSend__autocompleteEntityInput,
+  .m-networkAdminConsoleInviteSendField--groupsList {
+    @media screen and (min-width: $layoutMin3ColWidth + 1) {
+      max-width: 500px;
+    }
+  }
+
+  ::ng-deep m-publisherList {
+    margin-bottom: $spacing6;
+
+    .m-publisherList {
+      max-height: 290px;
+      overflow: auto;
+    }
+  }
+
   .m-networkAdminConsoleInviteSend__footer {
     display: flex;
     gap: $spacing8;

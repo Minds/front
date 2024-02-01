@@ -1,0 +1,48 @@
+<ul class="m-publisherList m-scroll__thin" *ngIf="publishers?.length > 0">
+  <li
+    *ngFor="let publisher of publishers; let i = index"
+    class="m-publisherlist__item"
+  >
+    <div class="m-publisherlist__infoWrapper">
+      <minds-avatar
+        class="m-publisherlist__avatar"
+        [object]="publisher"
+      ></minds-avatar>
+      <div class="m-publisherlist__info">
+        <ng-container *ngIf="isGroup(publisher)">
+          <div class="m-publisherlist__row">
+            <span class="m-publisherlistRow--primary">{{
+              publisher.name
+            }}</span>
+          </div>
+          <div class="m-publisherlist__row">
+            <span
+              *ngIf="publisher['members:count']"
+              class="m-publisherlistRow--secondary"
+              >{{ publisher['members:count'] }} { publisher['members:count'],
+              plural, =1 {member} other {members} }</span
+            >
+          </div>
+        </ng-container>
+        <ng-container *ngIf="isUser(publisher)">
+          <div class="m-publisherlist__row">
+            <span class="m-publisherlistRow--primary">{{
+              publisher.name
+            }}</span>
+          </div>
+          <!-- <div class="m-publisherlist__row">
+          <span class="m-publisherlistRow--secondary"
+            >&nbsp;·&nbsp;@{{ publisher.username }}</span
+          ></div> -->
+        </ng-container>
+      </div>
+    </div>
+    <div
+      class="m-publisherlist__removeBtn"
+      type="button"
+      (click)="removePublisher(i)"
+    >
+      <i class="material-icons">close</i>
+    </div>
+  </li>
+</ul>

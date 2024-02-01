@@ -110,8 +110,8 @@ describe('NetworkAdminConsoleFeaturedEntityRowComponent', () => {
   });
 
   describe('onPostSubscriptionToggle', () => {
-    it('should emit onPostSubscription event when onPostSubscripionClick is called', async () => {
-      await comp.onPostSubscripionClick();
+    it('should emit onPostSubscription event when onPostSubscriptionClick is called', async () => {
+      await comp.onPostSubscriptionClick();
       expect((comp as any).storeFeaturedEntityGQL.mutate).toHaveBeenCalled();
     });
   });
