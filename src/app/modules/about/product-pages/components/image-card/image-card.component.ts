@@ -4,21 +4,21 @@ import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection
 
 /**
  * Image card component.
- * Just shows an image.
+ * Just shows an image. It has margins on all sides except bottom.
  */
 @Component({
   selector: 'm-productPage__imageCard',
   template: `
-    <div class="m-productPageImageCard__container">
+    <div class="m-productPageImageCard__container" *ngIf="image">
       <img
         [src]="strapiUrl + image.url"
         class="m-productPageImageCard__image"
-        [alt]="image.alternativeText ?? 'Feature image'"
+        [alt]="image.alternativeText ?? 'Image card'"
       />
     </div>
   `,
   styleUrls: [
-    'hero.component.ng.scss',
+    'image-card.component.ng.scss',
     '../../stylesheets/product.pages.ng.scss',
   ],
 })
