@@ -191,6 +191,7 @@ import { NoticeComponent } from './components/notice/notice.component';
 import { FeatureCarouselComponent } from './components/feature-carousel/feature-carousel.component';
 import { PlanCardComponent } from './components/plan-card/plan-card.component';
 import { AutocompleteEntityInputComponent } from './components/forms/autocomplete-entity-input/autocomplete-entity-input.component';
+import { PublisherListComponent } from './components/publisher-list/publisher-list.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -258,6 +259,7 @@ const MINDS_COMMON_COMPONENTS = [
   PhoneInputV2Component,
   PoweredByComponent,
   PublisherCardComponent,
+  PublisherListComponent,
   PublisherSearchModalComponent,
   QRCodeComponent,
   QualityScoreComponent,

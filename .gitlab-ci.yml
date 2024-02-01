@@ -339,7 +339,7 @@ dependency_scanning:
   image: minds/ci:latest
   script:
     - *oci_prepare
-    - helm del $CI_COMMIT_REF_SLUG
+    - helm -n default del $CI_COMMIT_REF_SLUG
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://$CI_COMMIT_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN

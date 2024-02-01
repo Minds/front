@@ -575,7 +575,7 @@ export type Invite = NodeInterface & {
   bespokeMessage: Scalars['String']['output'];
   createdTimestamp: Scalars['Int']['output'];
   email: Scalars['String']['output'];
-  groups?: Maybe<Array<Scalars['Int']['output']>>;
+  groups?: Maybe<Array<GroupNode>>;
   id: Scalars['ID']['output'];
   inviteId: Scalars['Int']['output'];
   roles?: Maybe<Array<Role>>;
@@ -800,7 +800,7 @@ export type MutationDismissArgs = {
 export type MutationInviteArgs = {
   bespokeMessage: Scalars['String']['input'];
   emails: Scalars['String']['input'];
-  groups?: InputMaybe<Array<Scalars['Int']['input']>>;
+  groups?: InputMaybe<Array<Scalars['String']['input']>>;
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
@@ -2234,7 +2234,9 @@ export type CreateInviteMutationVariables = Exact<{
   emails: Scalars['String']['input'];
   bespokeMessage: Scalars['String']['input'];
   roles?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
-  groups?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  groups?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
 }>;
 
 export type CreateInviteMutation = {
@@ -2286,31 +2288,6 @@ export type GetCustomPageQuery = {
   };
 };
 
-export type GetInviteQueryVariables = Exact<{
-  inviteId: Scalars['Int']['input'];
-}>;
-
-export type GetInviteQuery = {
-  __typename?: 'Query';
-  invite: {
-    __typename?: 'Invite';
-    inviteId: number;
-    email: string;
-    status: InviteEmailStatusEnum;
-    bespokeMessage: string;
-    createdTimestamp: number;
-    sendTimestamp?: number | null;
-    id: string;
-    groups?: Array<number> | null;
-    roles?: Array<{
-      __typename?: 'Role';
-      id: number;
-      name: string;
-      permissions: Array<PermissionsEnum>;
-    }> | null;
-  };
-};
-
 export type GetInvitesQueryVariables = Exact<{
   first: Scalars['Int']['input'];
   after?: InputMaybe<Scalars['String']['input']>;
@@ -2334,13 +2311,13 @@ export type GetInvitesQuery = {
         createdTimestamp: number;
         sendTimestamp?: number | null;
         id: string;
-        groups?: Array<number> | null;
         roles?: Array<{
           __typename?: 'Role';
           id: number;
           name: string;
           permissions: Array<PermissionsEnum>;
         }> | null;
+        groups?: Array<{ __typename?: 'GroupNode'; legacy: string }> | null;
       } | null;
     }>;
     pageInfo: {
@@ -5190,7 +5167,7 @@ export const CreateInviteDocument = gql`
     $emails: String!
     $bespokeMessage: String!
     $roles: [Int!]
-    $groups: [Int!]
+    $groups: [String!]
   ) {
     invite(
       emails: $emails
@@ -5285,39 +5262,6 @@ export class GetCustomPageGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const GetInviteDocument = gql`
-  query getInvite($inviteId: Int!) {
-    invite(inviteId: $inviteId) {
-      inviteId
-      email
-      status
-      bespokeMessage
-      createdTimestamp
-      sendTimestamp
-      id
-      roles {
-        id
-        name
-        permissions
-      }
-      groups
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetInviteGQL extends Apollo.Query<
-  GetInviteQuery,
-  GetInviteQueryVariables
-> {
-  document = GetInviteDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
 export const GetInvitesDocument = gql`
   query getInvites($first: Int!, $after: String, $search: String) {
     invites(first: $first, after: $after, search: $search) {
@@ -5335,7 +5279,9 @@ export const GetInvitesDocument = gql`
             name
             permissions
           }
-          groups
+          groups {
+            legacy
+          }
         }
         cursor
       }

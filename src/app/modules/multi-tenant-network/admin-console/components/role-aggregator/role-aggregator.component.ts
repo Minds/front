@@ -39,7 +39,7 @@ export class RoleAggregatorComponent implements OnInit {
   }
 
   /**
-   * Show this text when user hovers over additionanl role aggregation
+   * Show this text when user hovers over additional role aggregation
    */
   private getAggregatedRoleHoverText(): void {
     if (this.aggregatedRoles.length === 0) {

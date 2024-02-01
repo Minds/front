@@ -1,55 +1,54 @@
-<input
-  [ngModel]="
-    entityType === AutoCompleteEntityTypeEnum.Group
-      ? (entityRef$ | async)?.name
-      : (entityRef$ | async)?.username
-  "
-  (ngModelChange)="setEntityRef($event)"
-  type="text"
-  (focus)="onInputFocus($event)"
-  (blur)="onInputBlur($event)"
-  [placeholder]="placeholder"
-  [class.ng-invalid]="isInvalid"
-  autocomplete="off"
-  #input
-/>
-<ul
-  [hidden]="!(showPopout$ | async)"
-  class="m-formInputAutocompleteEntityInput__popout"
-  #matchesPopout
-  @fastFade
->
-  <li
-    *ngFor="let entity of matchedEntitiesList$ | async"
-    class="m-formInputAutocompleteEntityInput__entityItem"
-    [hidden]="inProgress$ | async"
+<div class="m-formInputAutocompleteEntityInput__wrapper">
+  <input
+    [ngModel]="inputDisplayValue$ | async"
+    (ngModelChange)="setEntityRef($event)"
+    type="text"
+    (focus)="onInputFocus($event)"
+    (blur)="onInputBlur($event)"
+    [placeholder]="placeholder"
+    [class.ng-invalid]="isInvalid"
+    [class.hasPopout]="showPopout$ | async"
+    autocomplete="off"
+    #input
+  />
+  <ul
+    [hidden]="!(showPopout$ | async)"
+    class="m-formInputAutocompleteEntityInput__popout"
+    #matchesPopout
     @fastFade
-    (click)="onEntitySelect(entity)"
   >
-    <minds-avatar
-      class="m-formInputAutocompleteUserInputEntityItem__avatar"
-      [object]="entity"
-    ></minds-avatar>
-    <ng-container
-      *ngIf="
-        entityType === AutoCompleteEntityTypeEnum.Group;
-        else userBodyTemplate
-      "
+    <li
+      *ngFor="let entity of matchedEntitiesList$ | async"
+      class="m-formInputAutocompleteEntityInput__entityItem"
+      [hidden]="inProgress$ | async"
+      @fastFade
+      (click)="onEntitySelect(entity)"
     >
-      <span class="m-formInputAutocompleteEntityInputGroupItem__name">{{
-        entity.name
-      }}</span>
-    </ng-container>
-    <ng-template #userBodyTemplate>
-      <span class="m-formInputAutocompleteEntityInputUserItem__name">{{
-        entity.name
-      }}</span>
-      <span class="m-formInputAutocompleteEntityInputUserItem__username"
-        >&nbsp;·&nbsp;@{{ entity.username }}</span
+      <minds-avatar
+        class="m-formInputAutocompleteUserInputEntityItem__avatar"
+        [object]="entity"
+      ></minds-avatar>
+      <ng-container
+        *ngIf="
+          entityType === AutoCompleteEntityTypeEnum.Group;
+          else userBodyTemplate
+        "
       >
-    </ng-template>
-  </li>
-  <li *ngIf="inProgress$ | async">
-    <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
-  </li>
-</ul>
+        <span class="m-formInputAutocompleteEntityInputGroupItem__name">{{
+          entity.name
+        }}</span>
+      </ng-container>
+      <ng-template #userBodyTemplate>
+        <span class="m-formInputAutocompleteEntityInputUserItem__name">{{
+          entity.name
+        }}</span>
+        <span class="m-formInputAutocompleteEntityInputUserItem__username"
+          >&nbsp;·&nbsp;@{{ entity.username }}</span
+        >
+      </ng-template>
+    </li>
+    <li *ngIf="inProgress$ | async">
+      <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+    </li>
+  </ul>
+</div>

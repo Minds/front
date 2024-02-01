@@ -41,7 +41,7 @@
     <ng-container *ngIf="!(isUpdating$ | async); else updateInProgressTemplate">
       <i
         class="material-icons m-featuredEntityRowActions__icon"
-        (click)="onPostSubscripionClick()"
+        (click)="onPostSubscriptionClick()"
         >{{
           featuredEntity.autoPostSubscription
             ? 'notifications_on'

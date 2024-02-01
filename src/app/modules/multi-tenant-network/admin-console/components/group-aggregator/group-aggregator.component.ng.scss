@@ -1,0 +1,54 @@
+@import 'defaults.scss';
+@import '../../../../../common/layout/layout.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  @media screen and (max-width: $min-tablet) {
+    margin-top: $spacing4;
+    margin-left: $spacing8;
+  }
+
+  .m-groupAggregator__featuredGroup {
+    display: flex;
+    flex-direction: row;
+    gap: $spacing2;
+    align-items: center;
+    .m-groupAggregatorFeaturedGroup__name {
+      @include body1Medium;
+      max-width: 90px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      @media screen and (max-width: $layoutMin3ColWidth) {
+        max-width: 150px;
+      }
+    }
+    .m-groupAggregatorFeaturedGroup__avatar ::ng-deep .minds-avatar {
+      border-radius: 50%;
+      width: $spacing6;
+      height: $spacing6;
+
+      background-position: center;
+      background-size: cover;
+      margin-left: 0;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  .m-groupAggregator__additionalGroupCount {
+    display: inline-block;
+    margin-left: $spacing2;
+    width: $spacing14;
+    cursor: default;
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}
