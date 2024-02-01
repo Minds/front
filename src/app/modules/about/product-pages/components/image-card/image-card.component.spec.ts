@@ -54,7 +54,7 @@ describe('ProductPageImageCardComponent', () => {
     expect(comp).toBeTruthy();
 
     const imageElement: DebugElement = fixture.debugElement.query(
-      By.css('.m-productPageImageCard__image img')
+      By.css('.m-productPageImageCard__image')
     );
 
     expect(imageElement.nativeElement.src).toBe(
