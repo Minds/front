@@ -279,6 +279,7 @@ export class MultiTenantRolesService implements OnDestroy {
       PermissionsEnum.CanCreateGroup,
       PermissionsEnum.CanUploadVideo,
       PermissionsEnum.CanUseRssSync,
+      PermissionsEnum.CanCreatePaywall,
     ];
 
     return toggleablePermissions.filter(permission =>
@@ -300,6 +301,8 @@ export class MultiTenantRolesService implements OnDestroy {
         return 'Vote and remind';
       case PermissionsEnum.CanUseRssSync:
         return 'Sync RSS';
+      case PermissionsEnum.CanCreatePaywall:
+        return 'Create membership posts';
       // The remaining PermissionsEnum values aren't displayed anywhere
     }
 
