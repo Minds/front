@@ -24,11 +24,8 @@ export class CanModerateContentGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
     if (this.permissions.canModerateContent()) {
-      console.log('ojm i can moderate content');
       return true;
     } else {
-      console.log('ojm i cannot moderate content');
-
       this.router.navigate(['/network/admin/moderation/community-guidelines']); // Redirect to community guidelines
       return false;
     }
