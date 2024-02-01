@@ -54,7 +54,7 @@ describe('CanModerateContentGuard', () => {
     permissions.canModerateContent.and.returnValue(false);
     guard.canActivate(routeMock, stateMock);
     expect(router.navigate).toHaveBeenCalledWith([
-      '/moderation/community-guidelines',
+      '/network/admin/moderation/community-guidelines',
     ]);
   });
 });
