@@ -14,7 +14,7 @@ import { markedOptionsFactory } from '../../../../../helpers/marked-options-fact
 import { NetworkAdminMonetizationGroupsListComponent } from './components/memberships/groups-list/groups-list.component';
 import { NetworkAdminMonetizationMembershipFormComponent } from './components/memberships/form/form.component';
 import { CanDeactivateGuardService } from '../../../../../services/can-deactivate-guard';
-import { NetworkAdminConsoleSharedModule } from '../../network-admin-console-shared.module';
+import { NetworkAdminConsoleModule } from '../../network-admin-console.module';
 
 /**
  * Routes for the network admin monetization console.
@@ -51,7 +51,7 @@ const routes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    NetworkAdminConsoleSharedModule,
+    NetworkAdminConsoleModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,

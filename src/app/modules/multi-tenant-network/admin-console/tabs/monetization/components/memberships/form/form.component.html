@@ -388,6 +388,8 @@
         placeholder="Group name"
         limit="6"
         [allowEmpty]="true"
+        [clearAfterSelection]="true"
+        [excludeGuids]="selectedGroupGuids$ | async"
         [entityType]="AutoCompleteEntityTypeEnum.Group"
       ></m-formInput__autocompleteEntityInput>
     </div>

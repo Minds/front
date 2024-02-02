@@ -151,5 +151,6 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     CustomPageFormContentPreviewModalComponent,
   ],
   providers: [MultiTenantDomainService],
+  exports: [NetworkAdminConsoleRoleIconComponent],
 })
 export class NetworkAdminConsoleModule {}

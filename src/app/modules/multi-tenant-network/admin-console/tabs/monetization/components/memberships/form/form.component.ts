@@ -21,6 +21,7 @@ import {
   BehaviorSubject,
   Observable,
   Subscription,
+  distinctUntilChanged,
   filter,
   lastValueFrom,
   map,
@@ -85,6 +86,15 @@ export class NetworkAdminMonetizationMembershipFormComponent
           )
         : [];
     })
+  );
+
+  /** Currently selected group guids. */
+  public readonly selectedGroupGuids$: Observable<
+    string[]
+  > = this.selectedGroups$.pipe(
+    map((groups: MindsGroup[]): string[] =>
+      groups.map((group: MindsGroup): string => group?.guid)
+    )
   );
 
   /** Form group for membership details. */
@@ -451,15 +461,14 @@ export class NetworkAdminMonetizationMembershipFormComponent
           this.priceFormControl.setValue(Math.floor(value * 100) / 100);
         }
       }),
-      this.currentGroupSelectionFormControl.valueChanges.subscribe(
-        (group: MindsGroup): void => {
+      this.currentGroupSelectionFormControl.valueChanges
+        .pipe(distinctUntilChanged())
+        .subscribe((group: MindsGroup): void => {
+          if (!group || !group.name) return;
           this.currentGroupSelectionFormControl.markAsUntouched();
           this.currentGroupSelectionFormControl.markAsPristine();
-
-          if (!group || !group.name) return;
           this.addGroup(group);
-        }
-      )
+        })
     );
   }
 
