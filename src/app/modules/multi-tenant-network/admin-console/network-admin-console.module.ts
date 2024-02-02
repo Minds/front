@@ -36,6 +36,7 @@ import { NetworkAdminConsoleRoleIconComponent } from './components/role-icon/rol
 import { MarkdownModule } from 'ngx-markdown';
 import { CustomPageFormContentPreviewModalComponent } from './components/custom-page-form/content-preview-modal/content-preview-modal.component';
 import { GroupAggregatorComponent } from './components/group-aggregator/group-aggregator.component';
+import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -116,6 +117,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NetworkAdminConsoleSharedModule,
     RouterModule.forChild(NETWORK_ADMIN_CONSOLE_ROUTES),
     NetworkAdminConsoleImageInputComponent,
     MarkdownModule.forChild(),
@@ -146,11 +148,9 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     RoleAggregatorComponent,
     GroupAggregatorComponent,
     AssignRolesModalComponent,
-    NetworkAdminConsoleRoleIconComponent,
     CustomPageFormComponent,
     CustomPageFormContentPreviewModalComponent,
   ],
   providers: [MultiTenantDomainService],
-  exports: [NetworkAdminConsoleRoleIconComponent],
 })
 export class NetworkAdminConsoleModule {}
