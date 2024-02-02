@@ -1,0 +1,99 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 485px;
+  padding: $spacing6;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin-bottom: $spacing6;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-networkPreviewBuilder__title {
+    margin: 0 0 $spacing1 0;
+    @include heading4Bold;
+  }
+
+  .m-networkPreviewBuilder__subtitle {
+    margin: 0 0 $spacing1 0;
+    @include body2Medium;
+  }
+
+  .m-networkPreviewBuilder__statusContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: $spacing2;
+    margin-bottom: $spacing4;
+
+    .m-networkPreviewBuilder__statusMarker {
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+
+      &--noPreview {
+        @include m-theme() {
+          background-color: themed($m-borderColor--primary);
+        }
+      }
+
+      &--pending {
+        background-color: $purple-400;
+      }
+
+      &--ready {
+        background-color: $green-600;
+      }
+
+      &--error {
+        @include m-theme() {
+          background-color: themed($m-alert);
+        }
+      }
+    }
+
+    span {
+      @include body3Regular;
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+  }
+
+  .m-networkPreviewBuilder__descriptionContainer {
+    p {
+      margin: unset;
+      margin-bottom: $spacing3;
+
+      @include body3Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    a {
+      @include body3Bold;
+      @include m-theme() {
+        color: themed($m-action);
+      }
+    }
+  }
+
+  .m-networkPreviewBuilder__qrContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    padding: $spacing3;
+  }
+
+  .m-networkPreviewBuilder__button {
+    display: block;
+    margin-top: $spacing4;
+  }
+}

@@ -1,0 +1,58 @@
+<h4
+  class="m-networkAdminReplyEmailSettings__title"
+  i18n="@@NETWORK_ADMIN_REPLY_EMAIL_SETTINGS__TITLE"
+>
+  Reply-to email
+</h4>
+<p
+  class="m-networkAdminReplyEmailSettings__body"
+  i18n="@@NETWORK_ADMIN_REPLY_EMAIL_SETTINGS__DESCRIPTION"
+>
+  When users reply to automated emails from your network, this address is where
+  those replies will go.
+</p>
+<form [formGroup]="formGroup" class="m-networkAdminConsole__form">
+  <!-- Email address input -->
+  <div class="m-networkAdminConsole__formInputContainer">
+    <label
+      class="m-networkAdminConsole__formLabel"
+      i18n="@@NETWORK_ADMIN_CONSOLE__REPLY_EMAIL_INPUT_LABEL"
+      for="replyEmail"
+      >Email address</label
+    >
+    <input
+      class="m-networkAdminConsole__formTextInput"
+      id="replyEmail"
+      formControlName="replyEmail"
+      placeholder="Email address"
+      autocomplete="off"
+      data-ref="network-admin-general-reply-email-input"
+    />
+    <div class="m-networkAdminConsole__formErrorWrapper">
+      <m-formError
+        *ngIf="replyEmailFormControl && replyEmailFormControl.dirty"
+        [errors]="replyEmailFormControl?.errors"
+      >
+      </m-formError>
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <m-button
+    *ngIf="{
+      inProgress: savingInProgress$ | async
+    } as buttonTemplateVariables"
+    class="m-networkAdminGeneral__saveButton"
+    color="blue"
+    size="large"
+    [disabled]="
+      !formGroup.valid || !formGroup.dirty || buttonTemplateVariables.inProgress
+    "
+    [saving]="buttonTemplateVariables.inProgress"
+    [solid]="false"
+    (onAction)="onSubmit()"
+    ><ng-container i18n="@@NETWORK_ADMIN_CONSOLE__SAVE_EMAIL"
+      >Save email</ng-container
+    ></m-button
+  >
+</form>

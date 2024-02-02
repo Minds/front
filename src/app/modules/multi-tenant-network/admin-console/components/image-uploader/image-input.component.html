@@ -1,0 +1,32 @@
+<input
+  class="m-networkAdmin__imageUploadInput"
+  type="file"
+  accept="image/*"
+  id="imageUploadInput"
+  [multiple]="false"
+  (change)="upload($event.target.files[0])"
+  #imageUploadInput
+/>
+<div
+  class="m-networkAdmin__imageInputArea"
+  (click)="imageUploadInput.click()"
+  [ngStyle]="{ backgroundImage: image }"
+  [ngClass]="{
+    'm-networkAdmin__imageInputArea--square':
+      type === ImageInputOrientationEnum.Square,
+    'm-networkAdmin__imageInputArea--horizontal':
+      type === ImageInputOrientationEnum.Horizontal
+  }"
+>
+  <ng-container *ngIf="!inProgress; else inProgressTemplate">
+    <i class="material-icons m-networkAdmin__imageInputUploadLogo">upload</i>
+  </ng-container>
+  <ng-template #inProgressTemplate>
+    <m-sizeableLoadingSpinner
+      class="m-networkAdmin__imageInputUploadLogo"
+      [inProgress]="true"
+      spinnerWidth="20px"
+      spinnerHeight="20px"
+    ></m-sizeableLoadingSpinner>
+  </ng-template>
+</div>

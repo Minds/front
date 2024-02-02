@@ -1,0 +1,22 @@
+@import 'defaults.scss';
+@import '../../../stylesheets/console.component.ng.scss';
+
+:host {
+  margin-top: $spacing8;
+  padding-bottom: 0;
+
+  .m-networkAdminReplyEmailSettings__title {
+    @include heading4Regular;
+    margin: 0 0 $spacing1 0;
+  }
+
+  .m-networkAdminReplyEmailSettings__body {
+    margin-bottom: $spacing4;
+    margin-right: $spacing2;
+
+    @include body1Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

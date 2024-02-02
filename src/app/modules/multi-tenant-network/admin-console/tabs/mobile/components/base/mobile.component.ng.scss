@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+:host {
+  padding: $spacing7 0;
+  max-width: 928px;
+
+  & > * {
+    margin-right: $spacing8;
+    margin-left: $spacing8;
+  }
+}

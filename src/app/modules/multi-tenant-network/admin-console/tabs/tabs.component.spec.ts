@@ -35,7 +35,7 @@ describe('NetworkAdminConsoleTabsComponent', () => {
     ).toBeTruthy();
   });
 
-  it('should have an moderation tab', () => {
+  it('should have a moderation tab', () => {
     expect(
       fixture.debugElement.query(
         By.css('[data-ref=network-admin-console-tab-moderation]')
@@ -47,6 +47,14 @@ describe('NetworkAdminConsoleTabsComponent', () => {
     expect(
       fixture.debugElement.query(
         By.css('[data-ref=network-admin-console-tab-monetization]')
+      )
+    );
+  });
+
+  it('should have a mobile tab', () => {
+    expect(
+      fixture.debugElement.query(
+        By.css('[data-ref=network-admin-console-tab-mobile]')
       )
     ).toBeTruthy();
   });

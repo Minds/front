@@ -577,7 +577,7 @@ export type Invite = NodeInterface & {
   bespokeMessage: Scalars['String']['output'];
   createdTimestamp: Scalars['Int']['output'];
   email: Scalars['String']['output'];
-  groups?: Maybe<Array<Scalars['Int']['output']>>;
+  groups?: Maybe<Array<GroupNode>>;
   id: Scalars['ID']['output'];
   inviteId: Scalars['Int']['output'];
   roles?: Maybe<Array<Role>>;
@@ -811,7 +811,7 @@ export type MutationDismissArgs = {
 export type MutationInviteArgs = {
   bespokeMessage: Scalars['String']['input'];
   emails: Scalars['String']['input'];
-  groups?: InputMaybe<Array<Scalars['Int']['input']>>;
+  groups?: InputMaybe<Array<Scalars['String']['input']>>;
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
@@ -1957,6 +1957,53 @@ export type StoreFeaturedEntityMutation = {
       };
 };
 
+export type GetMobileConfigPreviewStateQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetMobileConfigPreviewStateQuery = {
+  __typename?: 'Query';
+  mobileConfig: {
+    __typename?: 'MobileConfig';
+    id: string;
+    previewStatus: MobilePreviewStatusEnum;
+    previewQRCode: string;
+  };
+};
+
+export type GetMobileConfigQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetMobileConfigQuery = {
+  __typename?: 'Query';
+  mobileConfig: {
+    __typename?: 'MobileConfig';
+    id: string;
+    splashScreenType: MobileSplashScreenTypeEnum;
+    welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+    previewStatus: MobilePreviewStatusEnum;
+    previewQRCode: string;
+  };
+};
+
+export type SetMobileConfigMutationVariables = Exact<{
+  mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
+  mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
+  mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
+}>;
+
+export type SetMobileConfigMutation = {
+  __typename?: 'Mutation';
+  mobileConfig: {
+    __typename?: 'MobileConfig';
+    id: string;
+    splashScreenType: MobileSplashScreenTypeEnum;
+    welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+    previewStatus: MobilePreviewStatusEnum;
+    previewQRCode: string;
+    updateTimestamp: number;
+  };
+};
+
 export type CreateNewReportMutationVariables = Exact<{
   entityUrn: Scalars['String']['input'];
   reason: ReportReasonEnum;
@@ -2422,7 +2469,9 @@ export type CreateInviteMutationVariables = Exact<{
   emails: Scalars['String']['input'];
   bespokeMessage: Scalars['String']['input'];
   roles?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
-  groups?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  groups?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
 }>;
 
 export type CreateInviteMutation = {
@@ -2474,31 +2523,6 @@ export type GetCustomPageQuery = {
   };
 };
 
-export type GetInviteQueryVariables = Exact<{
-  inviteId: Scalars['Int']['input'];
-}>;
-
-export type GetInviteQuery = {
-  __typename?: 'Query';
-  invite: {
-    __typename?: 'Invite';
-    inviteId: number;
-    email: string;
-    status: InviteEmailStatusEnum;
-    bespokeMessage: string;
-    createdTimestamp: number;
-    sendTimestamp?: number | null;
-    id: string;
-    groups?: Array<number> | null;
-    roles?: Array<{
-      __typename?: 'Role';
-      id: number;
-      name: string;
-      permissions: Array<PermissionsEnum>;
-    }> | null;
-  };
-};
-
 export type GetInvitesQueryVariables = Exact<{
   first: Scalars['Int']['input'];
   after?: InputMaybe<Scalars['String']['input']>;
@@ -2522,13 +2546,13 @@ export type GetInvitesQuery = {
         createdTimestamp: number;
         sendTimestamp?: number | null;
         id: string;
-        groups?: Array<number> | null;
         roles?: Array<{
           __typename?: 'Role';
           id: number;
           name: string;
           permissions: Array<PermissionsEnum>;
         }> | null;
+        groups?: Array<{ __typename?: 'GroupNode'; legacy: string }> | null;
       } | null;
     }>;
     pageInfo: {
@@ -2555,6 +2579,7 @@ export type GetMultiTenantConfigQuery = {
     primaryColor?: string | null;
     canEnableFederation?: boolean | null;
     federationDisabled?: boolean | null;
+    replyEmail?: string | null;
   } | null;
 };
 
@@ -2645,6 +2670,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
+  replyEmail?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
@@ -5122,6 +5148,88 @@ export class StoreFeaturedEntityGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const GetMobileConfigPreviewStateDocument = gql`
+  query GetMobileConfigPreviewState {
+    mobileConfig {
+      id
+      previewStatus
+      previewQRCode
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetMobileConfigPreviewStateGQL extends Apollo.Query<
+  GetMobileConfigPreviewStateQuery,
+  GetMobileConfigPreviewStateQueryVariables
+> {
+  document = GetMobileConfigPreviewStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetMobileConfigDocument = gql`
+  query GetMobileConfig {
+    mobileConfig {
+      id
+      splashScreenType
+      welcomeScreenLogoType
+      previewStatus
+      previewQRCode
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetMobileConfigGQL extends Apollo.Query<
+  GetMobileConfigQuery,
+  GetMobileConfigQueryVariables
+> {
+  document = GetMobileConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetMobileConfigDocument = gql`
+  mutation SetMobileConfig(
+    $mobileWelcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum
+    $mobileSplashScreenType: MobileSplashScreenTypeEnum
+    $mobilePreviewStatus: MobilePreviewStatusEnum
+  ) {
+    mobileConfig(
+      mobileWelcomeScreenLogoType: $mobileWelcomeScreenLogoType
+      mobileSplashScreenType: $mobileSplashScreenType
+      mobilePreviewStatus: $mobilePreviewStatus
+    ) {
+      id
+      splashScreenType
+      welcomeScreenLogoType
+      previewStatus
+      previewQRCode
+      updateTimestamp
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetMobileConfigGQL extends Apollo.Mutation<
+  SetMobileConfigMutation,
+  SetMobileConfigMutationVariables
+> {
+  document = SetMobileConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const CreateNewReportDocument = gql`
   mutation CreateNewReport(
     $entityUrn: String!
@@ -5541,7 +5649,7 @@ export const CreateInviteDocument = gql`
     $emails: String!
     $bespokeMessage: String!
     $roles: [Int!]
-    $groups: [Int!]
+    $groups: [String!]
   ) {
     invite(
       emails: $emails
@@ -5636,39 +5744,6 @@ export class GetCustomPageGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const GetInviteDocument = gql`
-  query getInvite($inviteId: Int!) {
-    invite(inviteId: $inviteId) {
-      inviteId
-      email
-      status
-      bespokeMessage
-      createdTimestamp
-      sendTimestamp
-      id
-      roles {
-        id
-        name
-        permissions
-      }
-      groups
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetInviteGQL extends Apollo.Query<
-  GetInviteQuery,
-  GetInviteQueryVariables
-> {
-  document = GetInviteDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
 export const GetInvitesDocument = gql`
   query getInvites($first: Int!, $after: String, $search: String) {
     invites(first: $first, after: $after, search: $search) {
@@ -5686,7 +5761,9 @@ export const GetInvitesDocument = gql`
             name
             permissions
           }
-          groups
+          groups {
+            legacy
+          }
         }
         cursor
       }
@@ -5723,6 +5800,7 @@ export const GetMultiTenantConfigDocument = gql`
       primaryColor
       canEnableFederation
       federationDisabled
+      replyEmail
     }
   }
 `;
@@ -5864,6 +5942,7 @@ export const SetMultiTenantConfigDocument = gql`
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
     $federationDisabled: Boolean
+    $replyEmail: String
     $nsfwEnabled: Boolean
   ) {
     multiTenantConfig(
@@ -5872,6 +5951,7 @@ export const SetMultiTenantConfigDocument = gql`
         colorScheme: $colorScheme
         primaryColor: $primaryColor
         federationDisabled: $federationDisabled
+        replyEmail: $replyEmail
         nsfwEnabled: $nsfwEnabled
       }
     )

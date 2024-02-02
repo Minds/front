@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BlockchainMarketingLinksService } from '../../../modules/blockchain/marketing/v2/blockchain-marketing-links.service';
 import { Session } from '../../../services/session';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
 import { WireCreatorComponent } from '../../../modules/wire/v2/creator/wire-creator.component';
 import { ToasterService } from '../toaster.service';
+import { OnboardingV5Service } from '../../../modules/onboarding-v5/services/onboarding-v5.service';
+import { Subscription, filter, take } from 'rxjs';
 
 export const STRAPI_ACTION_BUTTON_ATTRIBUTES = `
   text
@@ -67,16 +69,24 @@ const LOGGED_IN_ONLY_ACTIONS: StrapiAction[] = [
  * Strapi - this service then performs the correct action based upon that.
  */
 @Injectable({ providedIn: 'root' })
-export class StrapiActionResolverService {
+export class StrapiActionResolverService implements OnDestroy {
+  // subscription for onboarding completion.
+  private onboardingCompletedSubscription: Subscription;
+
   constructor(
     private session: Session,
     private authModal: AuthModalService,
     private links: BlockchainMarketingLinksService,
     private modalService: ModalService,
     private wirePaymentHandlers: WirePaymentHandlersService,
+    private onboardingV5Service: OnboardingV5Service,
     private toaster: ToasterService,
     private router: Router
   ) {}
+
+  ngOnDestroy(): void {
+    this.onboardingCompletedSubscription?.unsubscribe();
+  }
 
   /**
    * Perform the related programmatic action for a given StrapiAction.
@@ -86,7 +96,7 @@ export class StrapiActionResolverService {
    */
   public resolve(action: StrapiAction, extraData: any = null): void {
     if (LOGGED_IN_ONLY_ACTIONS.includes(action) && !this.session.isLoggedIn()) {
-      this.authModal.open({ formDisplay: 'register' });
+      this.handleAuthentication(action, extraData);
       return;
     }
 
@@ -189,5 +199,38 @@ export class StrapiActionResolverService {
         },
       }
     );
+  }
+
+  /**
+   * Handle authentication by waiting for user login, or onboarding completion
+   * and recursively calling the action handled when authenticated.
+   * @param { StrapiAction } action - strapi action.
+   * @param { any } extraData - extra data to pass to the action handler.
+   * @returns { void }
+   */
+  private async handleAuthentication(
+    action: StrapiAction,
+    extraData: any = null
+  ): Promise<void> {
+    const result: MindsUser = await this.authModal.open({
+      formDisplay: 'register',
+    });
+
+    // modal closed.
+    if (!result) return;
+
+    // on login, if email is already confirmed, call the action again.
+    if (result.email_confirmed) {
+      return this.resolve(action, extraData);
+    }
+
+    // on register, unsubscribe from any existing subscription to avoid duplication.
+    // listen for onboarding handler and call the action again on completion.
+    this.onboardingCompletedSubscription?.unsubscribe();
+    this.onboardingCompletedSubscription = this.onboardingV5Service.onboardingCompleted$
+      .pipe(filter(Boolean), take(1))
+      .subscribe((completed: boolean): void => {
+        this.resolve(action, extraData);
+      });
   }
 }

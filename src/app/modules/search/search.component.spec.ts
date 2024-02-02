@@ -190,7 +190,42 @@ describe('SearchComponent', () => {
     tick(1000);
   }));
 
-  it('should NOT display empty feed notice when no edges', fakeAsync(async () => {
+  it('should display empty feed notice when no activity edges', fakeAsync(async () => {
+    const queryResult = {
+      loading: false,
+      data: {
+        search: {
+          edges: [
+            {
+              __typename: 'PublisherRecsEdge',
+              node: {
+                __typename: 'PublisherRecsConnection',
+              },
+            },
+          ],
+          pageInfo: {
+            hasNextPage: false,
+            endCursor: null,
+          },
+        },
+      },
+    };
+
+    (comp as any).fetchSearch.watch.and.returnValue({
+      valueChanges: new BehaviorSubject(queryResult),
+      refetch: async () => {},
+    });
+
+    comp.ngOnInit();
+
+    tick(1000);
+
+    expectAsync(lastValueFrom(comp.showEmptyFeedNotice$)).toBeResolvedTo(true);
+
+    tick(1000);
+  }));
+
+  it('should NOT display empty feed notice when activity edges', fakeAsync(async () => {
     const queryResult = {
       loading: false,
       data: {

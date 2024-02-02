@@ -94,9 +94,9 @@
       </div>
     </div>
     <!-- ------------------------------ -->
-    <!-- BESPOKE MESSAGE -->
+    <!-- GROUPS -->
     <!-- ------------------------------ -->
-    <div class="m-networkAdminConsoleInviteSendField--bespokeMessage">
+    <div class="m-networkAdminConsoleInviteSendField--groups">
       <div class="m-networkAdminConsole__numberedFormInputHeader">
         <span class="m-networkAdminConsoleNumberedFormInputHeader__number">
           3
@@ -104,9 +104,55 @@
         <div class="m-networkAdminConsoleNumberedFormInputHeader__labelCol">
           <label
             class="m-networkAdminConsole__formLabel"
+            i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__GROUPS_LABEL"
+            >Invite to groups</label
+          ><span
+            class="m-networkAdminConsole__formLabel--secondary"
+            i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__GROUPS_DESC"
+            >Optionally, what groups would you like the user(s) to join?</span
+          >
+        </div>
+      </div>
+      <div class="m-networkAdminConsole__formInputContainer">
+        <label
+          class="m-networkAdminConsole__formLabel--alt"
+          i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__GROUP_NAME_LABEL"
+          >Group name</label
+        >
+        <m-formInput__autocompleteEntityInput
+          class="m-networkAdminConsoleInviteSend__autocompleteEntityInput"
+          formControlName="groupSelector"
+          [entityType]="AutoCompleteEntityTypeEnum.Group"
+          [allowEmpty]="true"
+          [clearAfterSelection]="true"
+          [excludeGuids]="selectedGroupGuids"
+          placeholder="Group name"
+          limit="6"
+        ></m-formInput__autocompleteEntityInput>
+      </div>
+    </div>
+    <div
+      class="m-networkAdminConsoleInviteSendField--groupsList"
+      *ngIf="groups.value"
+    >
+      <m-publisherList
+        [publishers]="groups.value"
+        (publisherRemovedAtIndex)="removeGroup($event)"
+      ></m-publisherList>
+    </div>
+    <!-- ------------------------------ -->
+    <!-- BESPOKE MESSAGE -->
+    <!-- ------------------------------ -->
+    <div class="m-networkAdminConsoleInviteSendField--bespokeMessage">
+      <div class="m-networkAdminConsole__numberedFormInputHeader">
+        <span class="m-networkAdminConsoleNumberedFormInputHeader__number">
+          4
+        </span>
+        <div class="m-networkAdminConsoleNumberedFormInputHeader__labelCol">
+          <label
+            class="m-networkAdminConsole__formLabel"
             i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__BESPOKE_MESSAGE_LABEL"
-            >Send a personalized invite message
-            (<strong>optional</strong>)</label
+            >Send a personalized invite message</label
           >
           <p class="m-networkAdminConsole__formLabel--secondary">
             <span
@@ -115,8 +161,7 @@
                 @@NETWORK_ADMIN_CONSOLE_INVITE__BESPOKE_MESSAGE_DESC_CUSTOM_MESSAGE
 
               "
-              >Optionally add a custom message to the invite to tell your
-              contacts why they should join your network.</span
+              >Personalize your invite email message (optional).</span
             >
             <span
               [ngClass]="{'m-networkAdminConsole__formText--error': formGroup.get('bespokeMessage').errors?.['maxlength']}"
