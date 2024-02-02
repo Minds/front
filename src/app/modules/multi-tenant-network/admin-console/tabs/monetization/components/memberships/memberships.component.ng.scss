@@ -1,0 +1,41 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: $spacing8;
+
+  .m-networkAdminMemberships__title {
+    margin: unset;
+    @include heading3Bold;
+  }
+
+  .m-networkAdminMemberships__description {
+    margin: unset;
+    @include body2Medium;
+
+    &--bold {
+      @include body2Bold;
+    }
+
+    margin-bottom: $spacing3;
+  }
+
+  .m-networkAdminMemberships__createButtonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: $spacing4 0;
+    box-sizing: border-box;
+  }
+
+  m-networkAdminMonetization__membershipAccordian {
+    margin-bottom: $spacing6;
+  }
+
+  .m-networkAdminMemberships__notFoundText {
+    text-align: center;
+    padding: $spacing8 0;
+    @include heading4Bold;
+  }
+}

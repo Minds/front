@@ -1,0 +1,394 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0 $spacing8;
+  box-sizing: border-box;
+  margin-bottom: $spacing20;
+
+  .m-adminMembershipCreateForm__header {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-bottom: $spacing2;
+
+    .m-adminMembershipCreateForm__headerTitleRow {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: $spacing3;
+
+      .m-adminMembershipCreateForm__headerIcon {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .m-adminMembershipCreateForm__headerTitle {
+        margin: 0;
+        @include heading3Bold;
+      }
+    }
+
+    .m-adminMembershipCreateForm__headerDescription {
+      margin: 0;
+
+      @include body2Medium;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-adminMembershipCreateForm__form {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .m-adminMembershipCreateForm__editInfo {
+      display: flex;
+      flex-flow: row nowrap;
+      margin-bottom: $spacing4;
+      gap: $spacing4;
+      width: 508px;
+      max-width: 100%;
+
+      i {
+        font-size: 20px;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      p {
+        margin: unset;
+
+        @include body3Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    .m-adminMembershipCreateForm__sectionHeader {
+      display: flex;
+      flex-flow: column nowrap;
+      margin-bottom: $spacing6;
+      margin-top: 32px;
+
+      .m-adminMembershipCreateForm__sectionHeaderMainRow {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: $spacing4;
+
+        .m-adminMembershipCreateForm__sectionHeaderNumber {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 48px;
+          width: 48px;
+          min-width: 48px;
+          min-height: 48px;
+          border-radius: 50%;
+
+          @include body2Bold;
+          @include m-theme() {
+            border: 1px solid themed($m-borderColor--primary);
+          }
+        }
+
+        .m-adminMembershipCreateForm__sectionInfo {
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content: center;
+          gap: $spacing2;
+
+          .m-adminMembershipCreateForm__sectionTitle {
+            @include body1Medium;
+            margin-bottom: 0;
+          }
+
+          .m-adminMembershipCreateForm__sectionDescription {
+            @include body3Regular;
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .m-adminMembershipCreateForm__sectionHeader--optional {
+        @include body3Regular;
+      }
+    }
+
+    .m-adminMembershipCreateForm__formField {
+      display: flex;
+      flex-flow: column nowrap;
+      margin-bottom: $spacing4;
+
+      .m-adminMembershipCreateForm__formLabel {
+        @include body2Regular;
+        margin-bottom: $spacing1;
+
+        &.m-adminMembershipCreateForm__formLabel--secondary {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        &.m-adminMembershipCreateForm__formLabel--secondaryBottom {
+          margin-top: $spacing1;
+
+          @include body3Regular;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
+      .m-adminMembershipCreateForm__formInput--text {
+        width: 350px;
+        padding: $spacing2 $spacing4;
+        border-radius: 3px;
+        max-width: 100%;
+
+        @include body1Regular;
+        @include m-theme() {
+          background-color: themed($m-bgColor--primary);
+          color: themed($m-textColor--primary);
+          border: 1px solid themed($m-borderColor--primary);
+        }
+      }
+
+      .m-adminMembershipCreateForm__formInput--textArea {
+        width: 594px;
+        max-width: 100%;
+        margin-bottom: $spacing1;
+        padding: $spacing2 $spacing4;
+        border-radius: 3px;
+        resize: none;
+
+        @include body1Regular;
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+      }
+
+      .m-adminMembershipCreateForm__fieldset {
+        display: flex;
+        flex-flow: row wrap;
+        padding: $spacing3 0;
+
+        .m-adminMembershipCreateForm__radioButtonInputContainer {
+          display: flex;
+          align-items: center;
+          flex-flow: row nowrap;
+          margin-right: $spacing4;
+
+          .m-adminMembershipCreateForm__radioButtonInput {
+            height: 22px;
+            width: 22px;
+            vertical-align: middle;
+            opacity: 0;
+            position: absolute;
+
+            @include m-theme() {
+              accent-color: themed($m-action);
+            }
+          }
+
+          .m-adminMembershipCreateForm__radioButtonLabel {
+            margin-left: $spacing2;
+
+            @include body3Regular;
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
+
+          .m-adminMembershipCreateForm__radioButtonInput,
+          .m-adminMembershipCreateForm__radioButtonInputLabel--hidden {
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+          }
+
+          .m-adminMembershipCreateForm__radioButtonInput
+            + .m-adminMembershipCreateForm__radioButtonInputLabel--hidden:before {
+            content: '';
+            border-radius: 50%;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            width: 22px;
+            height: 22px;
+
+            @include m-theme() {
+              background: themed($m-bgColor--primary);
+              border: 1px solid themed($m-borderColor--primary);
+            }
+          }
+
+          .m-adminMembershipCreateForm__radioButtonInput:checked
+            + .m-adminMembershipCreateForm__radioButtonInputLabel--hidden:before {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            content: '\ef4a';
+            font-family: 'Material Icons';
+            border: 1px solid unset;
+
+            @include m-theme() {
+              color: themed($m-action);
+              border: 1px solid themed($m-action);
+            }
+          }
+
+          .m-adminMembershipCreateForm__radioButtonInputLabel--disabled:before {
+            cursor: not-allowed !important;
+
+            @include m-theme() {
+              color: themed($m-borderColor--secondary) !important;
+              border: 1px solid themed($m-borderColor--secondary) !important;
+            }
+          }
+        }
+      }
+
+      .m-adminMembershipCreateForm__formInput--priceInput {
+        width: 168px;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        padding: $spacing2 $spacing4;
+        border-radius: 3px;
+
+        @include body1Regular;
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+
+        &:focus {
+          outline: 1rem solid;
+        }
+
+        &--disabled,
+        &--disabled input {
+          cursor: not-allowed;
+
+          @include m-theme() {
+            color: themed($m-borderColor--secondary) !important;
+          }
+        }
+
+        input {
+          border: 0px;
+          outline: none;
+          max-width: inherit;
+
+          @include body1Regular;
+          @include m-theme() {
+            background-color: themed($m-bgColor--primary);
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+
+      .m-adminMembershipCreateForm__formInput--selectBox {
+        width: 202px;
+        min-width: 202px;
+        max-width: 100%;
+        padding: $spacing3 $spacing4;
+        box-sizing: border-box;
+        border-radius: 3px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+          background-color: themed($m-bgColor--primary);
+          border: 1px solid themed($m-borderColor--primary);
+        }
+
+        &--disabled {
+          cursor: not-allowed;
+
+          @include m-theme() {
+            color: themed($m-borderColor--secondary) !important;
+          }
+        }
+      }
+    }
+
+    .m-adminMembershipCreateForm__roleSelectorContainer {
+      display: flex;
+      flex-flow: column nowrap;
+      width: 492px;
+      max-width: 100%;
+
+      .m-adminMembershipCreateForm__roleSelectorRow {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: $spacing3 0;
+        box-sizing: border-box;
+        margin-bottom: $spacing2;
+        cursor: pointer;
+
+        .m-adminMembershipCreateForm__roleSelectorRowLeft {
+          display: flex;
+          align-items: center;
+          gap: $spacing2;
+
+          i {
+            font-size: 20px;
+          }
+
+          span {
+            @include body2Regular;
+          }
+        }
+      }
+    }
+
+    .m-adminMembershipCreateForm__groupInputContainer {
+      display: flex;
+      flex-flow: column;
+      position: relative;
+      margin-bottom: $spacing3;
+
+      .m-adminMembershipCreateForm__groupInput {
+        display: block;
+        position: relative;
+        width: 488px;
+        max-width: 100%;
+
+        ::ng-deep input {
+          max-width: 100%;
+          width: 100%;
+          outline: none;
+          padding: $spacing2 $spacing4;
+
+          @include body1Regular;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+            background-color: themed($m-bgColor--primary);
+            border: 1px solid themed($m-borderColor--primary);
+          }
+        }
+
+        ::ng-deep .m-formInputAutocompleteEntityInput__popout {
+          margin-top: 0;
+        }
+      }
+    }
+
+    m-networkAdminMonetization__groupsList {
+      width: 800px;
+      max-width: 100%;
+    }
+  }
+
+  .m-adminMembershipCreateForm__submitButton {
+    margin-top: $spacing6;
+  }
+}

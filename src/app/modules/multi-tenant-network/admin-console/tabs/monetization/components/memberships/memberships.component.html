@@ -1,0 +1,61 @@
+<h3
+  class="m-networkAdminMemberships__title"
+  i18n="@@NETWORK_ADMIN_MEMBERSHIPS__MEMBERSHIP_TITLE"
+>
+  Memberships
+</h3>
+
+<p class="m-networkAdminMemberships__description">
+  <span i18n="@@NETWORK_ADMIN_MEMBERSHIPS__CREATE_MEMBERSHIP_DESCRIPTION"
+    >Create a membership for members of your community to join to get extra
+    perks and benefits.</span
+  >
+  <br />
+  <span
+    *ngIf="maxMembershipsString"
+    class="m-networkAdminMemberships__description--bold"
+    >{{ maxMembershipsString }}</span
+  >
+</p>
+
+<div class="m-networkAdminMemberships__createButtonContainer">
+  <m-button
+    color="blue"
+    size="xsmall"
+    solid="true"
+    [disabled]="
+      (membershipLoadInProgress$ | async) || !(hasSetStripeKeys$ | async)
+    "
+    (onAction)="onCreateButtonClick()"
+  >
+    <ng-container i18n="@@NETWORK_ADMIN_MEMBERSHIPS__CREATE_MEMBERSHIP"
+      >Create membership</ng-container
+    >
+  </m-button>
+</div>
+
+<ng-container
+  *ngIf="!(membershipLoadInProgress$ | async); else loadingSpinnerTemplate"
+>
+  <ng-container
+    *ngIf="(memberships$ | async)?.length; else noActiveMembershipsTemplate"
+  >
+    <m-networkAdminMonetization__membershipAccordian
+      *ngFor="let membership of memberships$ | async"
+      [membership]="membership"
+      (onArchive)="removeMembership($event)"
+    ></m-networkAdminMonetization__membershipAccordian>
+  </ng-container>
+  <ng-template #noActiveMembershipsTemplate>
+    <p
+      class="m-networkAdminMemberships__notFoundText"
+      i18n="@@NETWORK_ADMIN_MEMBERSHIPS__NO_ACTIVE_MEMBERSHIPS"
+    >
+      No active memberships
+    </p>
+  </ng-template>
+</ng-container>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

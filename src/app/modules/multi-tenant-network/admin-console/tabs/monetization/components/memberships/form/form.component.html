@@ -1,0 +1,434 @@
+<ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
+  <div class="m-adminMembershipCreateForm__header">
+    <div class="m-adminMembershipCreateForm__headerTitleRow">
+      <i
+        class="material-icons m-adminMembershipCreateForm__headerIcon"
+        routerLink="/network/admin/monetization/memberships"
+        >arrow_back</i
+      >
+      <h3 class="m-adminMembershipCreateForm__headerTitle">
+        <ng-container
+          *ngIf="!editMode; else editModeTitleTemplate"
+          i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__CREATE_MEMBERSHIP_TITLE"
+          >Create membership</ng-container
+        >
+        <ng-template
+          #editModeTitleTemplate
+          i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EDIT_MEMBERSHIP_TITLE"
+          >Edit membership</ng-template
+        >
+      </h3>
+    </div>
+    <p class="m-adminMembershipCreateForm__headerDescription">
+      <ng-container
+        *ngIf="!editMode; else editModeDescriptionTemplate"
+        i18n="
+           @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__CREATE_MEMBERSHIP_DESCRIPTION
+
+        "
+        >Create a membership for members of your community to join to get extra
+        perks and benefits</ng-container
+      >
+      <ng-template
+        #editModeDescriptionTemplate
+        i18n="
+           @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EDIT_MEMBERSHIP_DESCRIPTION
+        "
+        >A membership is for members of your community to join to get extra
+        perks and benefits</ng-template
+      >
+    </p>
+  </div>
+
+  <form [formGroup]="formGroup" class="m-adminMembershipCreateForm__form">
+    <div class="m-adminMembershipCreateForm__sectionHeader">
+      <div class="m-adminMembershipCreateForm__sectionHeaderMainRow">
+        <div class="m-adminMembershipCreateForm__sectionHeaderNumber">1</div>
+        <div class="m-adminMembershipCreateForm__sectionInfo">
+          <p
+            class="m-adminMembershipCreateForm__sectionTitle"
+            i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__DETAILS_TITLE"
+          >
+            Membership details
+          </p>
+          <p
+            class="m-adminMembershipCreateForm__sectionDescription"
+            i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__DETAILS_DESCRIPTION"
+          >
+            Add the necessary details required for your membership
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="editMode" class="m-adminMembershipCreateForm__editInfo">
+      <i class="material-icons">info_outline</i>
+      <p i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EDIT_INFO">
+        You can only edit a limited set of fields for an existing membership. To
+        make other changes, create a new membership.
+      </p>
+    </div>
+
+    <!-- Membership name input -->
+    <div class="m-adminMembershipCreateForm__formField">
+      <label
+        class="m-adminMembershipCreateForm__formLabel"
+        for="name"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__MEMBERSHIP_NAME"
+        >Membership Name</label
+      >
+      <input
+        class="m-adminMembershipCreateForm__formInput--text"
+        type="text"
+        formControlName="name"
+        name="name"
+        id="name"
+      />
+      <m-formError
+        *ngIf="formGroup.get('name')?.dirty"
+        [errors]="formGroup.get('name')?.errors"
+      ></m-formError>
+    </div>
+
+    <!-- Membership description input -->
+    <div class="m-adminMembershipCreateForm__formField">
+      <label
+        class="m-adminMembershipCreateForm__formLabel"
+        for="description"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__DESCRIPTION_TITLE"
+        >Membership Description</label
+      >
+      <label
+        class="m-adminMembershipCreateForm__formLabel m-adminMembershipCreateForm__formLabel--secondary"
+        for="description"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__DESCRIPTION_DESCRIPTION"
+        >The description appears at checkout and on the customer portal.
+        Markdown supported.</label
+      >
+      <textarea
+        class="m-adminMembershipCreateForm__formInput--textArea"
+        formControlName="description"
+        name="description"
+        id="description"
+        rows="6"
+      ></textarea>
+      <m-formError
+        *ngIf="formGroup.get('description')?.dirty"
+        [errors]="formGroup.get('description')?.errors"
+      ></m-formError>
+      <p
+        class="m-adminMembershipCreateForm__formLabel"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__OPTIONAL"
+      >
+        (*) Optional
+      </p>
+    </div>
+
+    <!-- Membership price model radio buttons -->
+    <div class="m-adminMembershipCreateForm__formField">
+      <label
+        class="m-adminMembershipCreateForm__formLabel"
+        for="pricingModel"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__PRICING_MODEL_TITLE"
+        >Pricing Model</label
+      >
+      <fieldset class="m-adminMembershipCreateForm__fieldset">
+        <div
+          class="m-adminMembershipCreateForm__radioButtonInputContainer"
+          (click)="
+            onRadioButtonContainerClick(SiteMembershipPricingModelEnum.OneTime)
+          "
+        >
+          <input
+            class="m-adminMembershipCreateForm__radioButtonInput"
+            name="pricingModel"
+            type="radio"
+            id="pricingModel"
+            formControlName="pricingModel"
+            [value]="SiteMembershipPricingModelEnum.OneTime"
+          />
+          <label
+            class="m-adminMembershipCreateForm__radioButtonInputLabel--hidden"
+            [ngClass]="{
+              'm-adminMembershipCreateForm__radioButtonInputLabel--disabled': editMode
+            }"
+            ><!--Icon positioning element--></label
+          >
+          <label
+            class="m-adminMembershipCreateForm__radioButtonLabel"
+            i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__ONE_TIME"
+            >One-time</label
+          >
+        </div>
+
+        <div
+          class="m-adminMembershipCreateForm__radioButtonInputContainer"
+          (click)="
+            onRadioButtonContainerClick(
+              SiteMembershipPricingModelEnum.Recurring
+            )
+          "
+        >
+          <input
+            class="m-adminMembershipCreateForm__radioButtonInput"
+            name="pricingModel"
+            type="radio"
+            id="pricingModel"
+            formControlName="pricingModel"
+            [value]="SiteMembershipPricingModelEnum.Recurring"
+          />
+          <label
+            class="m-adminMembershipCreateForm__radioButtonInputLabel--hidden"
+            [ngClass]="{
+              'm-adminMembershipCreateForm__radioButtonInputLabel--disabled': editMode
+            }"
+            ><!--Icon positioning element--></label
+          >
+          <label
+            class="m-adminMembershipCreateForm__radioButtonLabel"
+            i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__RECURRING"
+            >Recurring</label
+          >
+        </div>
+      </fieldset>
+      <label
+        class="m-adminMembershipCreateForm__formLabel m-adminMembershipCreateForm__formLabel--secondaryBottom"
+        for="price"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__RADIO_DESCRIPTION_CREATE"
+        >To change the pricing model, you will need to a create a new
+        membership.</label
+      >
+    </div>
+
+    <!-- Membership price input -->
+    <div class="m-adminMembershipCreateForm__formField">
+      <label
+        class="m-adminMembershipCreateForm__formLabel"
+        for="price"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__PRICE_TITLE"
+        >Membership Price</label
+      >
+      <span
+        class="m-adminMembershipCreateForm__formInput--priceInput"
+        [ngClass]="{
+          'm-adminMembershipCreateForm__formInput--priceInput--disabled': editMode
+        }"
+        >$<input
+          type="number"
+          formControlName="price"
+          name="price"
+          id="price"
+          step="0.01"
+          pattern="[0-9\.]+"
+        />
+      </span>
+      <label
+        class="m-adminMembershipCreateForm__formLabel m-adminMembershipCreateForm__formLabel--secondaryBottom"
+        for="price"
+      >
+        <ng-container
+          *ngIf="!editMode; else editModeChangePriceTemplate"
+          i18n="
+             @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__PRICE_DESCRIPTION_CREATE
+          "
+          >To change this price in the future you will need to create a new
+          membership.</ng-container
+        >
+        <ng-template
+          #editModeChangePriceTemplate
+          i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__PRICE_DESCRIPTION_EDIT"
+          >To change the price, you will need to a create a new
+          membership.</ng-template
+        >
+      </label>
+      <m-formError
+        *ngIf="formGroup.get('price')?.dirty"
+        [errors]="formGroup.get('price')?.errors"
+        currencySymbol="$"
+      ></m-formError>
+    </div>
+
+    <!-- Membership Billing Period -->
+    <div class="m-adminMembershipCreateForm__formField">
+      <label
+        class="m-adminMembershipCreateForm__formLabel"
+        for="billingPeriod"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__BILLING_PERIOD_TITLE"
+        >Billing Period</label
+      >
+      <select
+        class="m-adminMembershipCreateForm__formInput--selectBox"
+        name="billingPeriod"
+        id="billingPeriod"
+        formControlName="billingPeriod"
+        [ngClass]="{
+          'm-adminMembershipCreateForm__formInput--selectBox--disabled': editMode
+        }"
+      >
+        <option [value]="SiteMembershipBillingPeriodEnum.Monthly"
+          >Monthly</option
+        >
+        <option [value]="SiteMembershipBillingPeriodEnum.Yearly">Yearly</option>
+      </select>
+      <label
+        class="m-adminMembershipCreateForm__formLabel m-adminMembershipCreateForm__formLabel--secondaryBottom"
+        for="price"
+        i18n="
+
+          @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__BILLING_PERIOD_DESCRIPTION_CREATE
+
+        "
+      >
+        To change the billing period, you will need to a create a new
+        membership.
+      </label>
+    </div>
+
+    <!-- User roles -->
+    <div class="m-adminMembershipCreateForm__sectionHeader">
+      <div class="m-adminMembershipCreateForm__sectionHeaderMainRow">
+        <div class="m-adminMembershipCreateForm__sectionHeaderNumber">2</div>
+        <div class="m-adminMembershipCreateForm__sectionInfo">
+          <p
+            class="m-adminMembershipCreateForm__sectionTitle"
+            i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__USER_ROLES_TITLE"
+          >
+            User roles
+          </p>
+          <p
+            class="m-adminMembershipCreateForm__sectionDescription"
+            i18n="
+               @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__USER_ROLES_DESCRIPTION
+            "
+          >
+            What roles would you like the membership owner(s) to have?
+          </p>
+          <p
+            class="m-adminMembershipCreateForm__sectionHeader--optional"
+            i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__OPTIONAL"
+          >
+            (*) Optional
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="m-adminMembershipCreateForm__roleSelectorContainer"
+      *ngIf="!(loadingRolesInProgress$ | async); else loadingSpinnerTemplate"
+    >
+      <div
+        class="m-adminMembershipCreateForm__roleSelectorRow"
+        *ngFor="let role of roles$ | async"
+        (click)="onRoleToggle(role)"
+      >
+        <div class="m-adminMembershipCreateForm__roleSelectorRowLeft">
+          <m-networkAdminConsoleRole__icon
+            [roleId]="role.id"
+            scale="0.9"
+          ></m-networkAdminConsoleRole__icon>
+          <span>{{ getRoleLabelByRoleId(role.id) }}</span>
+        </div>
+        <m-formInput__checkbox
+          class="m-adminMembershipCreateForm__roleSelectorRowRight"
+          [formControlName]="'user_role:' + role.name"
+        ></m-formInput__checkbox>
+      </div>
+    </div>
+
+    <!-- Groups -->
+    <div class="m-adminMembershipCreateForm__sectionHeader">
+      <div class="m-adminMembershipCreateForm__sectionHeaderMainRow">
+        <div class="m-adminMembershipCreateForm__sectionHeaderNumber">3</div>
+        <div class="m-adminMembershipCreateForm__sectionInfo">
+          <p
+            class="m-adminMembershipCreateForm__sectionTitle"
+            i18n="
+               @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EXCLUSIVE_GROUPS_TITLE
+            "
+          >
+            Exclusive groups
+          </p>
+          <p
+            class="m-adminMembershipCreateForm__sectionDescription"
+            i18n="
+
+              @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EXCLUSIVE_GROUPS_DESCRIPTION
+
+            "
+          >
+            Optionally, what private groups would you like the membership
+            owner(s) to be added to?
+          </p>
+          <p
+            class="m-adminMembershipCreateForm__sectionHeader--optional"
+            i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__OPTIONAL"
+          >
+            (*) Optional
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="m-adminMembershipCreateForm__groupInputContainer m-adminMembershipCreateForm__formField"
+    >
+      <label
+        class="m-adminMembershipCreateForm__formLabel m-adminMembershipCreateForm__formLabel--secondary"
+        for="currentGroupSelection"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__GROUP_NAME_TITLE"
+        >Group Name</label
+      >
+
+      <m-formInput__autocompleteEntityInput
+        class="m-adminMembershipCreateForm__groupInput"
+        name="currentGroupSelection"
+        formControlName="currentGroupSelection"
+        id="currentGroupSelection"
+        placeholder="Group name"
+        limit="6"
+        [allowEmpty]="true"
+        [entityType]="AutoCompleteEntityTypeEnum.Group"
+      ></m-formInput__autocompleteEntityInput>
+    </div>
+
+    <ng-container *ngIf="selectedGroups$ | async as groups">
+      <m-networkAdminMonetization__groupsList
+        *ngIf="groups?.length"
+        [groups]="groups"
+        [showDeleteButton]="true"
+        (onDeleteClick)="removeGroup($event)"
+      ></m-networkAdminMonetization__groupsList>
+    </ng-container>
+  </form>
+
+  <m-button
+    *ngIf="{ submitInProgress: submitInProgress$ | async } as buttonVariables"
+    class="m-adminMembershipCreateForm__submitButton"
+    color="blue"
+    solid="true"
+    size="medium"
+    [disabled]="
+      formGroup.pristine ||
+      formGroup.invalid ||
+      buttonVariables.submitInProgress
+    "
+    [saving]="buttonVariables.submitInProgress"
+    (onAction)="onSubmit()"
+  >
+    <ng-container
+      *ngIf="editMode; else createModeSaveButtonTemplate"
+      i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__SAVE_FORM_ACTION"
+      >Save</ng-container
+    >
+    <ng-template
+      #createModeSaveButtonTemplate
+      i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__CREATE_FORM_ACTION"
+      >Create</ng-template
+    >
+  </m-button>
+</ng-container>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

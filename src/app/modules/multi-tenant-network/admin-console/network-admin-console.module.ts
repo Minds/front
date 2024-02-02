@@ -44,6 +44,12 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
       { path: 'appearance', component: NetworkAdminConsoleAppearanceComponent },
       { path: 'domain', component: NetworkAdminConsoleDomainComponent },
       {
+        path: 'monetization',
+        loadChildren: async () =>
+          (await import('./tabs/monetization/monetization-lazy.module'))
+            .NetworkAdminMonetizationLazyModule,
+      },
+      {
         path: 'moderation',
         component: NetworkAdminConsoleModerationComponent,
         children: [

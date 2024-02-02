@@ -321,4 +321,25 @@ export class MultiTenantRolesService implements OnDestroy {
         return '';
     }
   }
+
+  /**
+   * Get the label for a role id.
+   * @param { RoleId } roleId - Role id to get label for.
+   * @returns { string } - Label name.
+   */
+  public getLabelByRoleId(roleId: RoleId): string {
+    switch (roleId) {
+      case RoleId.OWNER:
+        return 'Owner';
+      case RoleId.ADMIN:
+        return 'Admin';
+      case RoleId.MODERATOR:
+        return 'Moderator';
+      case RoleId.VERIFIED:
+        return 'Verified';
+      case RoleId.DEFAULT:
+      default:
+        return '';
+    }
+  }
 }

@@ -42,4 +42,12 @@ describe('NetworkAdminConsoleTabsComponent', () => {
       )
     ).toBeTruthy();
   });
+
+  it('should have a monetization tab', () => {
+    expect(
+      fixture.debugElement.query(
+        By.css('[data-ref=network-admin-console-tab-monetization]')
+      )
+    ).toBeTruthy();
+  });
 });

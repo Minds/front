@@ -14,6 +14,7 @@
 </div>
 <div class="m-confirmationModal__buttonWrapper">
   <m-button
+    *ngIf="showCancelButton"
     class="m-confirmationModal__cancelButton"
     (onAction)="onDismiss()"
     data-ref="data-minds-confirmation-modal-cancel-button"
@@ -27,7 +28,7 @@
     (onAction)="onConfirm()"
     data-ref="data-minds-confirmation-modal-confirm-button"
   >
-    Confirm
+    {{ confirmButtonText }}
   </m-button>
 </div>
 

@@ -88,6 +88,20 @@ export type AddOnSummary = {
   oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
 };
 
+export type AppReadyMobileConfig = {
+  __typename?: 'AppReadyMobileConfig';
+  ACCENT_COLOR_DARK: Scalars['String']['output'];
+  ACCENT_COLOR_LIGHT: Scalars['String']['output'];
+  API_URL: Scalars['String']['output'];
+  APP_HOST: Scalars['String']['output'];
+  APP_NAME: Scalars['String']['output'];
+  APP_SPLASH_RESIZE: Scalars['String']['output'];
+  TENANT_ID: Scalars['Int']['output'];
+  THEME: Scalars['String']['output'];
+  WELCOME_LOGO: Scalars['String']['output'];
+  assets: Array<KeyValueType>;
+};
+
 export type AssetConnection = ConnectionInterface & {
   __typename?: 'AssetConnection';
   edges: Array<EdgeInterface>;
@@ -537,6 +551,8 @@ export type GroupNode = NodeInterface & {
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   legacy: Scalars['String']['output'];
+  membersCount: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   nsfw: Array<Scalars['Int']['output']>;
   nsfwLock: Array<Scalars['Int']['output']>;
   /** Unix timestamp representation of time created */
@@ -597,6 +613,39 @@ export type KeyValuePairInput = {
   value: Scalars['String']['input'];
 };
 
+export type KeyValueType = {
+  __typename?: 'KeyValueType';
+  key: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type MobileConfig = {
+  __typename?: 'MobileConfig';
+  id: Scalars['ID']['output'];
+  previewQRCode: Scalars['String']['output'];
+  previewStatus: MobilePreviewStatusEnum;
+  splashScreenType: MobileSplashScreenTypeEnum;
+  updateTimestamp: Scalars['Int']['output'];
+  welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+};
+
+export enum MobilePreviewStatusEnum {
+  Error = 'ERROR',
+  NoPreview = 'NO_PREVIEW',
+  Pending = 'PENDING',
+  Ready = 'READY',
+}
+
+export enum MobileSplashScreenTypeEnum {
+  Contain = 'CONTAIN',
+  Cover = 'COVER',
+}
+
+export enum MobileWelcomeScreenLogoTypeEnum {
+  Horizontal = 'HORIZONTAL',
+  Square = 'SQUARE',
+}
+
 export enum MultiTenantColorScheme {
   Dark = 'DARK',
   Light = 'LIGHT',
@@ -611,6 +660,7 @@ export type MultiTenantConfig = {
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
+  replyEmail?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
@@ -621,6 +671,7 @@ export type MultiTenantConfigInput = {
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+  replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
@@ -643,6 +694,7 @@ export type MultiTenantDomainDnsRecord = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  archiveSiteMembership: Scalars['Boolean']['output'];
   /** Assigns a user to a role */
   assignUserToRole: Role;
   cancelInvite?: Maybe<Scalars['Void']['output']>;
@@ -663,6 +715,7 @@ export type Mutation = {
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
+  mobileConfig: MobileConfig;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
@@ -677,12 +730,20 @@ export type Mutation = {
   setOnboardingState: OnboardingState;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
+  /** Set the stripe keys for the network */
+  setStripeKeys: Scalars['Boolean']['output'];
+  siteMembership: SiteMembership;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
   updatePostSubscription: PostSubscription;
+  updateSiteMembership: SiteMembership;
+};
+
+export type MutationArchiveSiteMembershipArgs = {
+  siteMembershipGuid: Scalars['String']['input'];
 };
 
 export type MutationAssignUserToRoleArgs = {
@@ -754,6 +815,12 @@ export type MutationInviteArgs = {
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
+export type MutationMobileConfigArgs = {
+  mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
+  mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
+  mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
+};
+
 export type MutationMultiTenantConfigArgs = {
   multiTenantConfigInput: MultiTenantConfigInput;
 };
@@ -796,6 +863,15 @@ export type MutationSetRolePermissionArgs = {
   roleId: Scalars['Int']['input'];
 };
 
+export type MutationSetStripeKeysArgs = {
+  pubKey: Scalars['String']['input'];
+  secKey: Scalars['String']['input'];
+};
+
+export type MutationSiteMembershipArgs = {
+  siteMembershipInput: SiteMembershipInput;
+};
+
 export type MutationStoreFeaturedEntityArgs = {
   featuredEntity: FeaturedEntityInput;
 };
@@ -815,6 +891,10 @@ export type MutationUpdateAccountArgs = {
 export type MutationUpdatePostSubscriptionArgs = {
   entityGuid: Scalars['String']['input'];
   frequency: PostSubscriptionFrequencyEnum;
+};
+
+export type MutationUpdateSiteMembershipArgs = {
+  siteMembershipInput: SiteMembershipUpdateInput;
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -950,6 +1030,7 @@ export type Query = {
   allPermissions: Array<PermissionsEnum>;
   /** Returns all roles that exist on the site and their permission assignments */
   allRoles: Array<Role>;
+  appReadyMobileConfig: AppReadyMobileConfig;
   /** Returns the permissions that the current session holds */
   assignedPermissions: Array<PermissionsEnum>;
   /** Returns the roles the session holds */
@@ -994,6 +1075,7 @@ export type Query = {
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   invite: Invite;
   invites: InviteConnection;
+  mobileConfig: MobileConfig;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
   multiTenantDomain: MultiTenantDomain;
@@ -1011,6 +1093,10 @@ export type Query = {
   rssFeed: RssFeed;
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
+  siteMembership: SiteMembership;
+  siteMemberships: Array<SiteMembership>;
+  /** Returns the stripe keys */
+  stripeKeys: StripeKeysType;
   tenantAssets: AssetConnection;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
@@ -1022,6 +1108,10 @@ export type Query = {
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryAppReadyMobileConfigArgs = {
+  tenantId: Scalars['Int']['input'];
 };
 
 export type QueryAssignedRolesArgs = {
@@ -1156,6 +1246,10 @@ export type QuerySearchArgs = {
   mediaType: SearchMediaTypeEnum;
   nsfw?: InputMaybe<Array<SearchNsfwEnum>>;
   query: Scalars['String']['input'];
+};
+
+export type QuerySiteMembershipArgs = {
+  membershipGuid: Scalars['String']['input'];
 };
 
 export type QueryTenantAssetsArgs = {
@@ -1338,6 +1432,54 @@ export enum SecuritySubReasonEnum {
   HackedAccount = 'HACKED_ACCOUNT',
 }
 
+export type SiteMembership = {
+  __typename?: 'SiteMembership';
+  groups?: Maybe<Array<GroupNode>>;
+  id: Scalars['ID']['output'];
+  membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+  membershipDescription?: Maybe<Scalars['String']['output']>;
+  membershipGuid: Scalars['String']['output'];
+  membershipName: Scalars['String']['output'];
+  membershipPriceInCents: Scalars['Int']['output'];
+  membershipPricingModel: SiteMembershipPricingModelEnum;
+  priceCurrency: Scalars['String']['output'];
+  roles?: Maybe<Array<Role>>;
+};
+
+export enum SiteMembershipBillingPeriodEnum {
+  Monthly = 'MONTHLY',
+  Yearly = 'YEARLY',
+}
+
+export type SiteMembershipInput = {
+  groups?: InputMaybe<Array<Scalars['String']['input']>>;
+  membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+  membershipDescription?: InputMaybe<Scalars['String']['input']>;
+  membershipName: Scalars['String']['input'];
+  membershipPriceInCents: Scalars['Int']['input'];
+  membershipPricingModel: SiteMembershipPricingModelEnum;
+  roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export enum SiteMembershipPricingModelEnum {
+  OneTime = 'ONE_TIME',
+  Recurring = 'RECURRING',
+}
+
+export type SiteMembershipUpdateInput = {
+  groups?: InputMaybe<Array<Scalars['String']['input']>>;
+  membershipDescription?: InputMaybe<Scalars['String']['input']>;
+  membershipGuid: Scalars['String']['input'];
+  membershipName: Scalars['String']['input'];
+  roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export type StripeKeysType = {
+  __typename?: 'StripeKeysType';
+  pubKey: Scalars['String']['output'];
+  secKey: Scalars['String']['output'];
+};
+
 export type Summary = {
   __typename?: 'Summary';
   addonsSummary: Array<AddOn>;
@@ -1352,6 +1494,7 @@ export type Tenant = {
   domain?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   ownerGuid?: Maybe<Scalars['String']['output']>;
+  plan: TenantPlanEnum;
   rootUserGuid?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1360,6 +1503,12 @@ export type TenantInput = {
   domain?: InputMaybe<Scalars['String']['input']>;
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
 };
+
+export enum TenantPlanEnum {
+  Community = 'COMMUNITY',
+  Enterprise = 'ENTERPRISE',
+  Team = 'TEAM',
+}
 
 export type TenantUser = {
   __typename?: 'TenantUser';
@@ -2097,6 +2246,154 @@ export type ProvideVerdictMutation = {
   provideVerdict: boolean;
 };
 
+export type ArchiveSiteMembershipMutationVariables = Exact<{
+  siteMembershipGuid: Scalars['String']['input'];
+}>;
+
+export type ArchiveSiteMembershipMutation = {
+  __typename?: 'Mutation';
+  archiveSiteMembership: boolean;
+};
+
+export type GetSiteMembershipQueryVariables = Exact<{
+  membershipGuid: Scalars['String']['input'];
+}>;
+
+export type GetSiteMembershipQuery = {
+  __typename?: 'Query';
+  siteMembership: {
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipDescription?: string | null;
+    membershipPriceInCents: number;
+    priceCurrency: string;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      guid: string;
+      name: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  };
+};
+
+export type GetSiteMembershipsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetSiteMembershipsQuery = {
+  __typename?: 'Query';
+  siteMemberships: Array<{
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipDescription?: string | null;
+    membershipPriceInCents: number;
+    priceCurrency: string;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      guid: string;
+      name: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  }>;
+};
+
+export type GetStripeKeysQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetStripeKeysQuery = {
+  __typename?: 'Query';
+  stripeKeys: { __typename?: 'StripeKeysType'; pubKey: string; secKey: string };
+};
+
+export type SetSiteMembershipMutationVariables = Exact<{
+  membershipName: Scalars['String']['input'];
+  membershipPriceInCents: Scalars['Int']['input'];
+  membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+  membershipPricingModel: SiteMembershipPricingModelEnum;
+  membershipDescription?: InputMaybe<Scalars['String']['input']>;
+  roles?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  groups?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
+}>;
+
+export type SetSiteMembershipMutation = {
+  __typename?: 'Mutation';
+  siteMembership: {
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipPriceInCents: number;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    membershipDescription?: string | null;
+    priceCurrency: string;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      id: string;
+      name: string;
+      guid: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  };
+};
+
+export type SetStripeKeysMutationVariables = Exact<{
+  pubKey: Scalars['String']['input'];
+  secKey: Scalars['String']['input'];
+}>;
+
+export type SetStripeKeysMutation = {
+  __typename?: 'Mutation';
+  setStripeKeys: boolean;
+};
+
+export type UpdateSiteMembershipMutationVariables = Exact<{
+  membershipGuid: Scalars['String']['input'];
+  membershipName: Scalars['String']['input'];
+  membershipDescription?: InputMaybe<Scalars['String']['input']>;
+  roles?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  groups?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
+}>;
+
+export type UpdateSiteMembershipMutation = {
+  __typename?: 'Mutation';
+  updateSiteMembership: {
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipPriceInCents: number;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    membershipDescription?: string | null;
+    priceCurrency: string;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      id: string;
+      name: string;
+      guid: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  };
+};
+
 export type AssignUserToRoleMutationVariables = Exact<{
   userGuid: Scalars['String']['input'];
   roleId: Scalars['Int']['input'];
@@ -2515,6 +2812,7 @@ export type GetNetworksListQuery = {
     domain?: string | null;
     ownerGuid?: string | null;
     rootUserGuid?: string | null;
+    plan: TenantPlanEnum;
     config?: {
       __typename?: 'MultiTenantConfig';
       siteName?: string | null;
@@ -4950,6 +5248,252 @@ export class ProvideVerdictGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const ArchiveSiteMembershipDocument = gql`
+  mutation archiveSiteMembership($siteMembershipGuid: String!) {
+    archiveSiteMembership(siteMembershipGuid: $siteMembershipGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ArchiveSiteMembershipGQL extends Apollo.Mutation<
+  ArchiveSiteMembershipMutation,
+  ArchiveSiteMembershipMutationVariables
+> {
+  document = ArchiveSiteMembershipDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetSiteMembershipDocument = gql`
+  query GetSiteMembership($membershipGuid: String!) {
+    siteMembership(membershipGuid: $membershipGuid) {
+      id
+      membershipGuid
+      membershipName
+      membershipDescription
+      membershipPriceInCents
+      priceCurrency
+      membershipBillingPeriod
+      membershipPricingModel
+      roles {
+        id
+        name
+      }
+      groups {
+        guid
+        name
+        membersCount
+        legacy
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetSiteMembershipGQL extends Apollo.Query<
+  GetSiteMembershipQuery,
+  GetSiteMembershipQueryVariables
+> {
+  document = GetSiteMembershipDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetSiteMembershipsDocument = gql`
+  query GetSiteMemberships {
+    siteMemberships {
+      id
+      membershipGuid
+      membershipName
+      membershipDescription
+      membershipPriceInCents
+      priceCurrency
+      membershipBillingPeriod
+      membershipPricingModel
+      roles {
+        id
+        name
+      }
+      groups {
+        guid
+        name
+        membersCount
+        legacy
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetSiteMembershipsGQL extends Apollo.Query<
+  GetSiteMembershipsQuery,
+  GetSiteMembershipsQueryVariables
+> {
+  document = GetSiteMembershipsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetStripeKeysDocument = gql`
+  query GetStripeKeys {
+    stripeKeys {
+      pubKey
+      secKey
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetStripeKeysGQL extends Apollo.Query<
+  GetStripeKeysQuery,
+  GetStripeKeysQueryVariables
+> {
+  document = GetStripeKeysDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetSiteMembershipDocument = gql`
+  mutation SetSiteMembership(
+    $membershipName: String!
+    $membershipPriceInCents: Int!
+    $membershipBillingPeriod: SiteMembershipBillingPeriodEnum!
+    $membershipPricingModel: SiteMembershipPricingModelEnum!
+    $membershipDescription: String
+    $roles: [Int!]
+    $groups: [String!]
+  ) {
+    siteMembership(
+      siteMembershipInput: {
+        membershipName: $membershipName
+        membershipPriceInCents: $membershipPriceInCents
+        membershipBillingPeriod: $membershipBillingPeriod
+        membershipPricingModel: $membershipPricingModel
+        membershipDescription: $membershipDescription
+        roles: $roles
+        groups: $groups
+      }
+    ) {
+      id
+      membershipGuid
+      membershipName
+      membershipPriceInCents
+      membershipBillingPeriod
+      membershipPricingModel
+      membershipDescription
+      priceCurrency
+      roles {
+        id
+        name
+      }
+      groups {
+        id
+        name
+        guid
+        membersCount
+        legacy
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetSiteMembershipGQL extends Apollo.Mutation<
+  SetSiteMembershipMutation,
+  SetSiteMembershipMutationVariables
+> {
+  document = SetSiteMembershipDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetStripeKeysDocument = gql`
+  mutation SetStripeKeys($pubKey: String!, $secKey: String!) {
+    setStripeKeys(pubKey: $pubKey, secKey: $secKey)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetStripeKeysGQL extends Apollo.Mutation<
+  SetStripeKeysMutation,
+  SetStripeKeysMutationVariables
+> {
+  document = SetStripeKeysDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdateSiteMembershipDocument = gql`
+  mutation UpdateSiteMembership(
+    $membershipGuid: String!
+    $membershipName: String!
+    $membershipDescription: String
+    $roles: [Int!]
+    $groups: [String!]
+  ) {
+    updateSiteMembership(
+      siteMembershipInput: {
+        membershipGuid: $membershipGuid
+        membershipName: $membershipName
+        membershipDescription: $membershipDescription
+        roles: $roles
+        groups: $groups
+      }
+    ) {
+      id
+      membershipGuid
+      membershipName
+      membershipPriceInCents
+      membershipBillingPeriod
+      membershipPricingModel
+      membershipDescription
+      priceCurrency
+      roles {
+        id
+        name
+      }
+      groups {
+        id
+        name
+        guid
+        membersCount
+        legacy
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdateSiteMembershipGQL extends Apollo.Mutation<
+  UpdateSiteMembershipMutation,
+  UpdateSiteMembershipMutationVariables
+> {
+  document = UpdateSiteMembershipDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const AssignUserToRoleDocument = gql`
   mutation AssignUserToRole($userGuid: String!, $roleId: Int!) {
     assignUserToRole(userGuid: $userGuid, roleId: $roleId) {
@@ -5573,6 +6117,7 @@ export const GetNetworksListDocument = gql`
       domain
       ownerGuid
       rootUserGuid
+      plan
       config {
         siteName
       }

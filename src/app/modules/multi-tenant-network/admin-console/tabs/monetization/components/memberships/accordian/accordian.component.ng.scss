@@ -1,0 +1,149 @@
+@import 'defaults.scss';
+
+@mixin horizontalPadding {
+  padding-left: $spacing8;
+  padding-right: $spacing8;
+  box-sizing: border-box;
+}
+
+@mixin verticalPadding {
+  padding-top: $spacing4;
+  padding-bottom: $spacing4;
+}
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  border-radius: 4px;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-networkMembershipAccordian__topContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    @include horizontalPadding;
+    @include verticalPadding;
+
+    .m-networkMembershipAccordian__topContainerLeft {
+      display: flex;
+      flex-flow: column nowrap;
+      overflow-x: hidden;
+      white-space: nowrap;
+
+      .m-networkMembershipAccordian__title {
+        margin: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        @include body1Bold;
+
+        &--thin {
+          @include body1Regular;
+        }
+      }
+    }
+
+    .m-networkMembershipAccordian__topContainerRight {
+      i {
+        font-size: 32px;
+      }
+    }
+  }
+
+  .m-networkMembershipAccordian__sectionTitle {
+    margin-top: unset;
+    margin-bottom: $spacing4;
+    @include body2Bold;
+  }
+
+  .m-networkMembershipAccordian__expandedContainer {
+    .m-networkMembershipAccordian__summaryRow {
+      margin-bottom: $spacing6;
+      @include horizontalPadding;
+
+      .m-networkMembershipAccordian__summaryValue {
+        margin: unset;
+        @include body2Regular;
+      }
+    }
+  }
+
+  .m-networkMembershipAccordian__descriptionContainer {
+    @include horizontalPadding;
+    margin-bottom: $spacing6;
+
+    ::ng-deep markdown {
+      * {
+        @include body3Regular;
+      }
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      a {
+        @include m-theme() {
+          color: themed($m-action);
+        }
+      }
+
+      *:last-child {
+        margin-bottom: unset;
+      }
+    }
+  }
+
+  .m-networkMembershipAccordian__rolesContainer {
+    padding-top: $spacing6;
+    padding-bottom: $spacing6;
+
+    @include horizontalPadding;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-networkMembershipAccordian__roleRow {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      gap: $spacing2;
+      margin-bottom: $spacing4;
+
+      i {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .m-networkMembershipAccordian__groupsContainer {
+    padding-top: $spacing6;
+    padding-bottom: $spacing3;
+
+    @include horizontalPadding;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-networkMembershipAccordian__sectionTitle {
+      margin-bottom: $spacing2;
+    }
+  }
+
+  .m-networkMembershipAccordian__actionButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    padding: $spacing8;
+    box-sizing: border-box;
+    gap: $spacing4;
+
+    @include horizontalPadding;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+  }
+}
