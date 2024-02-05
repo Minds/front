@@ -727,6 +727,8 @@ export type Mutation = {
   setOnboardingState: OnboardingState;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
+  /** Set the stripe keys for the network */
+  setStripeKeys: Scalars['Boolean']['output'];
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
   /** Un-ssigns a user to a role */
@@ -852,6 +854,11 @@ export type MutationSetRolePermissionArgs = {
   roleId: Scalars['Int']['input'];
 };
 
+export type MutationSetStripeKeysArgs = {
+  pubKey: Scalars['String']['input'];
+  secKey: Scalars['String']['input'];
+};
+
 export type MutationStoreFeaturedEntityArgs = {
   featuredEntity: FeaturedEntityInput;
 };
@@ -940,6 +947,7 @@ export enum PermissionsEnum {
   CanBoost = 'CAN_BOOST',
   CanComment = 'CAN_COMMENT',
   CanCreateGroup = 'CAN_CREATE_GROUP',
+  CanCreatePaywall = 'CAN_CREATE_PAYWALL',
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
@@ -1069,6 +1077,8 @@ export type Query = {
   rssFeed: RssFeed;
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
+  /** Returns the stripe keys */
+  stripeKeys: StripeKeysType;
   tenantAssets: AssetConnection;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
@@ -1400,6 +1410,12 @@ export enum SecuritySubReasonEnum {
   HackedAccount = 'HACKED_ACCOUNT',
 }
 
+export type StripeKeysType = {
+  __typename?: 'StripeKeysType';
+  pubKey: Scalars['String']['output'];
+  secKey: Scalars['String']['output'];
+};
+
 export type Summary = {
   __typename?: 'Summary';
   addonsSummary: Array<AddOn>;
@@ -1414,6 +1430,7 @@ export type Tenant = {
   domain?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   ownerGuid?: Maybe<Scalars['String']['output']>;
+  plan: TenantPlanEnum;
   rootUserGuid?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1422,6 +1439,12 @@ export type TenantInput = {
   domain?: InputMaybe<Scalars['String']['input']>;
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
 };
+
+export enum TenantPlanEnum {
+  Community = 'COMMUNITY',
+  Enterprise = 'ENTERPRISE',
+  Team = 'TEAM',
+}
 
 export type TenantUser = {
   __typename?: 'TenantUser';
@@ -2603,6 +2626,7 @@ export type GetNetworksListQuery = {
     domain?: string | null;
     ownerGuid?: string | null;
     rootUserGuid?: string | null;
+    plan: TenantPlanEnum;
     config?: {
       __typename?: 'MultiTenantConfig';
       siteName?: string | null;
@@ -5715,6 +5739,7 @@ export const GetNetworksListDocument = gql`
       domain
       ownerGuid
       rootUserGuid
+      plan
       config {
         siteName
       }
