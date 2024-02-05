@@ -103,4 +103,11 @@ export class PermissionsService {
   public canUseRssSync(): boolean {
     return this.has(PermissionsEnum.CanUseRssSync);
   }
+
+  /**
+   * Can the user create paywalled posts, gated by memberships?
+   */
+  public canCreatePaywall(): boolean {
+    return this.has(PermissionsEnum.CanCreatePaywall);
+  }
 }

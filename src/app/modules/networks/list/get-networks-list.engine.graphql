@@ -4,6 +4,7 @@ query GetNetworksList($first: Int!, $last: Int!) {
     domain
     ownerGuid
     rootUserGuid
+    plan
     config {
       siteName
     }

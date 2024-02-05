@@ -61,4 +61,16 @@ describe('PermissionsService', () => {
     service.setWhitelist([]);
     expect(service.canUseRssSync()).toBe(false);
   });
+
+  it('should determine if the user can create paywalled membership posts', () => {
+    experimentsServiceSpy.hasVariation.and.returnValue(true);
+    service.setWhitelist([PermissionsEnum.CanCreatePaywall]);
+    expect(service.canCreatePaywall()).toBe(true);
+  });
+
+  it('should determine if the user can NOT create paywalled membership posts', () => {
+    experimentsServiceSpy.hasVariation.and.returnValue(true);
+    service.setWhitelist([]);
+    expect(service.canCreatePaywall()).toBe(false);
+  });
 });
