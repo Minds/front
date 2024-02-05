@@ -964,6 +964,7 @@ export enum PermissionsEnum {
   CanBoost = 'CAN_BOOST',
   CanComment = 'CAN_COMMENT',
   CanCreateGroup = 'CAN_CREATE_GROUP',
+  CanCreatePaywall = 'CAN_CREATE_PAYWALL',
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
