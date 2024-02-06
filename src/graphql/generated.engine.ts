@@ -551,6 +551,8 @@ export type GroupNode = NodeInterface & {
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   legacy: Scalars['String']['output'];
+  membersCount: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   nsfw: Array<Scalars['Int']['output']>;
   nsfwLock: Array<Scalars['Int']['output']>;
   /** Unix timestamp representation of time created */
@@ -692,6 +694,7 @@ export type MultiTenantDomainDnsRecord = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  archiveSiteMembership: Scalars['Boolean']['output'];
   /** Assigns a user to a role */
   assignUserToRole: Role;
   cancelInvite?: Maybe<Scalars['Void']['output']>;
@@ -729,12 +732,18 @@ export type Mutation = {
   setRolePermission: Role;
   /** Set the stripe keys for the network */
   setStripeKeys: Scalars['Boolean']['output'];
+  siteMembership: SiteMembership;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
   updatePostSubscription: PostSubscription;
+  updateSiteMembership: SiteMembership;
+};
+
+export type MutationArchiveSiteMembershipArgs = {
+  siteMembershipGuid: Scalars['String']['input'];
 };
 
 export type MutationAssignUserToRoleArgs = {
@@ -859,6 +868,10 @@ export type MutationSetStripeKeysArgs = {
   secKey: Scalars['String']['input'];
 };
 
+export type MutationSiteMembershipArgs = {
+  siteMembershipInput: SiteMembershipInput;
+};
+
 export type MutationStoreFeaturedEntityArgs = {
   featuredEntity: FeaturedEntityInput;
 };
@@ -878,6 +891,10 @@ export type MutationUpdateAccountArgs = {
 export type MutationUpdatePostSubscriptionArgs = {
   entityGuid: Scalars['String']['input'];
   frequency: PostSubscriptionFrequencyEnum;
+};
+
+export type MutationUpdateSiteMembershipArgs = {
+  siteMembershipInput: SiteMembershipUpdateInput;
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -950,6 +967,7 @@ export enum PermissionsEnum {
   CanCreatePaywall = 'CAN_CREATE_PAYWALL',
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
+  CanModerateContent = 'CAN_MODERATE_CONTENT',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
   CanUseRssSync = 'CAN_USE_RSS_SYNC',
 }
@@ -1077,6 +1095,8 @@ export type Query = {
   rssFeed: RssFeed;
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
+  siteMembership: SiteMembership;
+  siteMemberships: Array<SiteMembership>;
   /** Returns the stripe keys */
   stripeKeys: StripeKeysType;
   tenantAssets: AssetConnection;
@@ -1228,6 +1248,10 @@ export type QuerySearchArgs = {
   mediaType: SearchMediaTypeEnum;
   nsfw?: InputMaybe<Array<SearchNsfwEnum>>;
   query: Scalars['String']['input'];
+};
+
+export type QuerySiteMembershipArgs = {
+  membershipGuid: Scalars['String']['input'];
 };
 
 export type QueryTenantAssetsArgs = {
@@ -1409,6 +1433,48 @@ export type SearchResultsCount = {
 export enum SecuritySubReasonEnum {
   HackedAccount = 'HACKED_ACCOUNT',
 }
+
+export type SiteMembership = {
+  __typename?: 'SiteMembership';
+  groups?: Maybe<Array<GroupNode>>;
+  id: Scalars['ID']['output'];
+  membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+  membershipDescription?: Maybe<Scalars['String']['output']>;
+  membershipGuid: Scalars['String']['output'];
+  membershipName: Scalars['String']['output'];
+  membershipPriceInCents: Scalars['Int']['output'];
+  membershipPricingModel: SiteMembershipPricingModelEnum;
+  priceCurrency: Scalars['String']['output'];
+  roles?: Maybe<Array<Role>>;
+};
+
+export enum SiteMembershipBillingPeriodEnum {
+  Monthly = 'MONTHLY',
+  Yearly = 'YEARLY',
+}
+
+export type SiteMembershipInput = {
+  groups?: InputMaybe<Array<Scalars['String']['input']>>;
+  membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+  membershipDescription?: InputMaybe<Scalars['String']['input']>;
+  membershipName: Scalars['String']['input'];
+  membershipPriceInCents: Scalars['Int']['input'];
+  membershipPricingModel: SiteMembershipPricingModelEnum;
+  roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export enum SiteMembershipPricingModelEnum {
+  OneTime = 'ONE_TIME',
+  Recurring = 'RECURRING',
+}
+
+export type SiteMembershipUpdateInput = {
+  groups?: InputMaybe<Array<Scalars['String']['input']>>;
+  membershipDescription?: InputMaybe<Scalars['String']['input']>;
+  membershipGuid: Scalars['String']['input'];
+  membershipName: Scalars['String']['input'];
+  roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
 
 export type StripeKeysType = {
   __typename?: 'StripeKeysType';
