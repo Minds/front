@@ -71,7 +71,11 @@ import {
 } from '../common/injection-tokens/url-injection-tokens';
 import { APOLLO_PROIVDERS } from '../common/graphql/apollo-providers';
 import { IS_TENANT_NETWORK } from '../common/injection-tokens/tenant-injection-tokens';
-import { SITE_NAME } from '../common/injection-tokens/common-injection-tokens';
+import {
+  SITE_NAME,
+  WINDOW,
+} from '../common/injection-tokens/common-injection-tokens';
+import { DOCUMENT } from '@angular/common';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -277,6 +281,11 @@ export const MINDS_PROVIDERS: any[] = [
     provide: SITE_NAME,
     useFactory: configs => configs.get('site_name') ?? 'Minds',
     deps: [ConfigsService],
+  },
+  {
+    provide: WINDOW,
+    useFactory: (_document: Document): Window => _document.defaultView,
+    deps: [DOCUMENT],
   },
   {
     provide: IMAGE_CONFIG,

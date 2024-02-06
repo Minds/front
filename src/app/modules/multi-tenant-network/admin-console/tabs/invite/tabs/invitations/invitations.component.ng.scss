@@ -12,7 +12,7 @@
       display: flex;
       flex-flow: row nowrap;
       width: 100%;
-      flex: 0 0 70%;
+      flex: 0 0 75%;
 
       white-space: nowrap;
       overflow: hidden;
@@ -34,6 +34,11 @@
         @media screen and (max-width: $layoutMin3ColWidth) {
           margin: 0 !important;
         }
+      }
+
+      ::ng-deep m-group__aggregator {
+        width: 1px; // this makes the column left-aligned
+        margin: 0 !important;
       }
     }
     .m-networkAdminConsoleInvitations__statusCol {

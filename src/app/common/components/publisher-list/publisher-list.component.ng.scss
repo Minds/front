@@ -1,0 +1,80 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  .m-publisherList {
+    border-radius: $spacing1;
+    padding: 0;
+    margin: 0;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: $spacing4 $spacing8;
+      &:not(:first-child) {
+        @include m-theme() {
+          border-top: 1px solid themed($m-borderColor--primary);
+        }
+      }
+    }
+    &__infoWrapper {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      overflow: hidden;
+    }
+    &__avatar ::ng-deep .minds-avatar {
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+
+      background-position: center;
+      background-size: cover;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    &__info {
+      margin-left: $spacing2;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: $spacing1;
+      overflow: hidden;
+    }
+    &__row {
+      flex-grow: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    &Row--primary {
+      @include body1Bold;
+    }
+
+    &Row--secondary {
+      @include body2Regular;
+    }
+
+    &__removeBtn {
+      border-radius: 50%;
+      padding: $spacing2;
+      cursor: pointer;
+      flex-shrink: 0;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+        color: themed($m-textColor--primary);
+      }
+      i {
+        font-size: $spacing4;
+      }
+    }
+  }
+}

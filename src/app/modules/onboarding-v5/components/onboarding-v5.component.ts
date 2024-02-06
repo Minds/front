@@ -13,6 +13,7 @@ import { isIos } from '../../../helpers/is-mobile-or-tablet';
 import isMobile from '../../../helpers/is-mobile';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 import { MultiTenantConfigImageService } from '../../multi-tenant-network/services/config-image.service';
+import { OnboardingV5MinimalModeService } from '../services/onboarding-v5-minimal-mode.service';
 
 /**
  * Onboarding V5 component. Acts as a root container that handles the layout and internal
@@ -53,18 +54,23 @@ export class OnboardingV5Component implements OnInit, OnDestroy {
   /** Subscription to popstate. */
   private popStateSubscription: Subscription;
 
+  /** Whether onboarding is in minimal mode. */
+  public isOnboardingMinimalMode: boolean = false;
+
   @HostBinding('class.m-onboardingV5--isIosMobile')
   isIosMobile: boolean = false;
 
   constructor(
     private service: OnboardingV5Service,
     private tenantConfigImageService: MultiTenantConfigImageService,
+    private onboardingMinimalModeService: OnboardingV5MinimalModeService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {}
 
   ngOnInit(): void {
     this.isIosMobile = isIos() && isMobile();
     this.service.start();
+    this.isOnboardingMinimalMode = this.onboardingMinimalModeService.shouldShow();
     this.disableBackNavigation();
   }
 

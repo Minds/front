@@ -111,4 +111,11 @@ export class PermissionsService {
   public canModerateContent(): boolean {
     return this.has(PermissionsEnum.CanModerateContent);
   }
+
+  /**
+   * Can the user create paywalled posts, gated by memberships?
+   */
+  public canCreatePaywall(): boolean {
+    return this.has(PermissionsEnum.CanCreatePaywall);
+  }
 }
