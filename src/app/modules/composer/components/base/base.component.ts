@@ -7,6 +7,7 @@ import {
   Injector,
   Input,
   OnDestroy,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -38,6 +39,8 @@ import { ClientMetaData } from '../../../../common/services/client-meta.service'
 import { ComposerModalService } from '../modal/modal.service';
 import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
 import { ComposerAudienceSelectorService } from '../../services/audience.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
+import { ComposerSiteMembershipsService } from '../../services/site-memberships.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -49,7 +52,7 @@ import { ComposerAudienceSelectorService } from '../../services/audience.service
   templateUrl: 'base.component.html',
   providers: [PopupService],
 })
-export class BaseComponent implements AfterViewInit, OnDestroy {
+export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Post event emitter
    */
@@ -121,7 +124,9 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
     protected blogPreloadService: BlogPreloadService,
     private composerModal: ComposerModalService,
     configs: ConfigsService,
-    protected uploaderService: UploaderService
+    protected uploaderService: UploaderService,
+    protected permissions: PermissionsService,
+    protected siteMembershipsService: ComposerSiteMembershipsService
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
 
@@ -130,6 +135,12 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
         this.service.removeAttachment();
       }
     });
+  }
+
+  ngOnInit(): void {
+    if (this.permissions.canCreatePaywall()) {
+      this.siteMembershipsService.fetchMemberships();
+    }
   }
 
   /**

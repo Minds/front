@@ -42,6 +42,7 @@ import { ComposerAudienceSelectorButtonComponent } from './components/audience-s
 import { ComposerAudienceSelectorService } from './services/audience.service';
 import { ComposerAudienceSelectorPanelComponent } from './components/popup/audience-selector/audience-selector.component';
 import { LiveStreamComponent } from './components/livestream/livestream.component';
+import { ComposerSiteMembershipSelectorComponent } from './components/popup/site-membership-selector/site-membership-selector.component';
 /**
  * Exported components
  */
@@ -78,6 +79,7 @@ const INTERNAL_COMPONENTS = [
   ComposerCoverPhotoSelectorComponent,
   ComposerSupermindComponent,
   ComposerAudienceSelectorPanelComponent,
+  ComposerSiteMembershipSelectorComponent,
 ];
 
 const PROVIDERS = [

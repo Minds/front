@@ -111,6 +111,11 @@ export type SupermindRequestSubjectValue = SupermindComposerPayloadType | null;
 export type SupermindReplySubjectValue = Supermind | null;
 
 /**
+ * Site membership guids subject value
+ */
+export type SiteMembershipGuidsSubjectValue = string[] | [-1] | null;
+
+/**
  * The size of the composer modal
  */
 export type ComposerSize = 'compact' | 'full';
@@ -134,5 +139,6 @@ export interface Data {
   remind: RemindSubjectValue;
   supermindRequest: SupermindRequestSubjectValue;
   supermindReply: SupermindReplySubjectValue;
+  siteMembershipGuids: SiteMembershipGuidsSubjectValue;
   container: ActivityContainer;
 }

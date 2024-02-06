@@ -48,6 +48,7 @@ import {
   RichEmbedMetadataMappedValue,
   RichEmbedSubjectValue,
   ScheduleSubjectValue,
+  SiteMembershipGuidsSubjectValue,
   SupermindReplySubjectValue,
   SupermindRequestSubjectValue,
   TagsSubjectValue,
@@ -60,7 +61,7 @@ import {
   ComposerAudienceSelectorService,
 } from './audience.service';
 import { LivestreamService } from './livestream.service';
-import { VIDEO_PERMISSIONS_ERROR_MESSAGE } from '../../../common/services/permissions.service';
+import { SiteMembership } from '../../../../graphql/generated.engine';
 
 /**
  * Default values
@@ -74,6 +75,7 @@ export const DEFAULT_RICH_EMBED_VALUE: RichEmbedSubjectValue = null;
 export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
 export const DEFAULT_POST_TO_PERMAWEB_VALUE: PostToPermawebSubjectValue = false;
 export const DEFAULT_MONETIZATION_VALUE: MonetizationSubjectValue = null;
+export const DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE: SiteMembershipGuidsSubjectValue = null;
 export const DEFAULT_PENDING_MONETIZATION_VALUE: PendingMonetizationSubjectValue = null;
 export const DEFAULT_TAGS_VALUE: TagsSubjectValue = [];
 export const DEFAULT_SCHEDULE_VALUE: ScheduleSubjectValue = null;
@@ -125,6 +127,17 @@ export class ComposerService implements OnDestroy {
     PendingMonetizationSubjectValue
   > = new BehaviorSubject<PendingMonetizationSubjectValue>(
     DEFAULT_PENDING_MONETIZATION_VALUE
+  );
+
+  /**
+   * Memberships subject
+   * For tenant membership posts
+   * might need to change this to membershipGuids$
+   */
+  siteMembershipGuids$: BehaviorSubject<
+    SiteMembershipGuidsSubjectValue
+  > = new BehaviorSubject<SiteMembershipGuidsSubjectValue>(
+    DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE
   );
 
   /**
@@ -439,6 +452,7 @@ export class ComposerService implements OnDestroy {
         RemindSubjectValue,
         SupermindRequestSubjectValue,
         SupermindReplySubjectValue,
+        SiteMembershipGuidsSubjectValue,
         ActivityContainer
       ]
     >([
@@ -529,6 +543,7 @@ export class ComposerService implements OnDestroy {
       this.remind$.pipe(distinctUntilChanged()),
       this.supermindRequest$.pipe(distinctUntilChanged()),
       this.supermindReply$.pipe(distinctUntilChanged()),
+      this.siteMembershipGuids$.pipe(distinctUntilChanged()),
       this.audienceSelectorService.selectedAudience$.pipe(
         distinctUntilChanged()
       ),
@@ -551,6 +566,7 @@ export class ComposerService implements OnDestroy {
           remind,
           supermindRequest,
           supermindReply,
+          siteMembershipGuids,
           container,
         ]) => ({
           message,
@@ -568,6 +584,7 @@ export class ComposerService implements OnDestroy {
           remind,
           supermindRequest,
           supermindReply,
+          siteMembershipGuids,
           container,
         })
       ),
@@ -660,7 +677,9 @@ export class ComposerService implements OnDestroy {
               data.supermindRequest !== null ||
               data.tags !== DEFAULT_TAGS_VALUE ||
               data.title !== DEFAULT_TITLE_VALUE ||
-              data.videoPoster !== DEFAULT_VIDEOPOSTER_VALUE
+              data.videoPoster !== DEFAULT_VIDEOPOSTER_VALUE ||
+              JSON.stringify(data.siteMembershipGuids) !==
+                JSON.stringify(DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE)
           );
           return dirty;
         }
@@ -943,6 +962,7 @@ export class ComposerService implements OnDestroy {
     this.schedule$.next(schedule);
     this.accessId$.next(accessId);
     this.license$.next(license);
+    // ojm todo apply siteMembershipGuids$
 
     // Define container
 
@@ -1049,6 +1069,8 @@ export class ComposerService implements OnDestroy {
    * @param remind
    * @param supermindRequest
    * @param supermindReply
+   * @param siteMembershipGuids
+   * @param container
    */
   buildPayload({
     message,
@@ -1066,6 +1088,7 @@ export class ComposerService implements OnDestroy {
     remind,
     supermindRequest,
     supermindReply,
+    siteMembershipGuids,
     container,
   }: Data): any {
     if (this.container && this.container.guid) {
@@ -1132,6 +1155,10 @@ export class ComposerService implements OnDestroy {
 
     if (videoPoster && videoPoster.fileBase64) {
       this.payload.video_poster = videoPoster.fileBase64;
+    }
+
+    if (siteMembershipGuids) {
+      this.payload.site_membership_guids = siteMembershipGuids;
     }
   }
 

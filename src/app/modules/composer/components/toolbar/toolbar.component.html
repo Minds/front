@@ -90,6 +90,38 @@
     </a>
   </ng-container>
   <!----------------------------------------------->
+  <!-- SITE MEMBERSHIP POST  -->
+  <!----------------------------------------------->
+  <ng-container *mIfTenant="true">
+    <!-- ojm if not allowed to change after the post has been submitted, what is the experience? Can they see the button? Or click on it? What about scheduled posts? -->
+    <ng-container
+      *ngIf="
+        permissions.canCreatePaywall() &&
+        (siteMembershipsService.allMemberships$ | async)?.length > 0
+      "
+    >
+      <a
+        *ngIf="!(remind$ | async)"
+        class="m-composerToolbar__item"
+        [class.m-composerToolbar__item--active]="
+          (service.siteMembershipGuids$ | async)?.length > 0
+        "
+        [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+        [class.m-composerToolbar__item--small]="isCompactMode$ | async"
+        (click)="onSiteMembershipClick($event)"
+        data-ref="site-membership-button"
+      >
+        <m-icon class="m-composerToolbarItem__icon" iconId="verified"></m-icon>
+        <span
+          class="m-composerToolbarItem__label"
+          [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+          i18n="@@COMMON__MEMBERSHIP"
+          >Membership</span
+        >
+      </a>
+    </ng-container>
+  </ng-container>
+  <!----------------------------------------------->
   <!-- TAGS  -->
   <!----------------------------------------------->
 

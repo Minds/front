@@ -17,6 +17,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
 import { ComposerAudienceSelectorService } from '../../services/audience.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 describe('BaseComponent', () => {
   let comp: BaseComponent;
@@ -116,6 +117,10 @@ describe('BaseComponent', () => {
         {
           provide: ComposerModalService,
           useValue: MockService(ComposerModalService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
         },
       ],
     })
