@@ -190,6 +190,24 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   }
 
   /**
+   * @returns {boolean} true if tenant user is admin or has moderation permission
+   */
+  public showTenantAdminLink(): boolean {
+    return (
+      this.isTenantNetwork &&
+      (this.isAdmin() || this.permissions.canModerateContent())
+    );
+  }
+
+  public getTenantAdminRouterLink(): string[] {
+    if (this.isAdmin()) {
+      return ['/network/admin'];
+    } else {
+      return ['/network/admin/moderation/reports'];
+    }
+  }
+
+  /**
    * Toggles sidebar being open on mobile.
    * @returns { void }
    */
