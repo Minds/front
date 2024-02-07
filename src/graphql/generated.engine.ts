@@ -950,6 +950,7 @@ export enum PermissionsEnum {
   CanCreatePaywall = 'CAN_CREATE_PAYWALL',
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
+  CanModerateContent = 'CAN_MODERATE_CONTENT',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
   CanUseRssSync = 'CAN_USE_RSS_SYNC',
 }
