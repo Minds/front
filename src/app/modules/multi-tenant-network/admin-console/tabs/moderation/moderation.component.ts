@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Session } from '../../../../../services/session';
+import { PermissionsService } from '../../../../../common/services/permissions.service';
 
 /**
  * Network admin console moderation section. Contains sub-tabs
@@ -12,4 +14,9 @@ import { Component } from '@angular/core';
     '../../stylesheets/console.component.ng.scss',
   ],
 })
-export class NetworkAdminConsoleModerationComponent {}
+export class NetworkAdminConsoleModerationComponent {
+  constructor(
+    public session: Session,
+    public permissions: PermissionsService
+  ) {}
+}

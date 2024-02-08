@@ -37,6 +37,9 @@ export class Session {
     return false;
   }
 
+  /**
+   * True if the currently loggedin user is an admin
+   */
   isAdmin() {
     if (!this.isLoggedIn) return false;
     if (this.configs.get('Admin')) return true;
