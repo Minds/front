@@ -332,8 +332,4 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   public isLoggedIn(): boolean {
     return this.session.isLoggedIn();
   }
-
-  public shouldShowNetworkMembershipsLink(): boolean {
-    return this.isTenantNetwork; // && hasMemberships
-  }
 }
