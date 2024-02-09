@@ -6,7 +6,6 @@ import {
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
 import { HomepageV3Module } from '../homepage-v3/homepage-v3.module';
-import { HomepageV3Component } from '../homepage-v3/homepage-v3.component';
 import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
 import { ProductPageBaseComponent } from './product-pages/components/base/base.component';
 import { ProductPageHeroComponent } from './product-pages/components/hero/hero.component';
@@ -21,6 +20,7 @@ import { ProductPageClosingCtaComponent } from './product-pages/components/closi
 import { NoRouteReuseStrategy } from '../../common/routerReuseStrategies/no-route-reuse.strategy';
 import { PathMatch } from '../../common/types/angular.types';
 import { MarketingModule } from '../marketing/marketing.module';
+import { ProductPageImageCardComponent } from './product-pages/components/image-card/image-card.component';
 
 const routes: Routes = [
   {
@@ -31,14 +31,8 @@ const routes: Routes = [
   },
   {
     path: 'about',
-    component: HomepageV3Component,
-    canActivate: [MindsOnlyRedirectGuard],
-    data: {
-      title: 'About',
-      description:
-        'Free your mind and get paid for creating content, driving traffic and referring friends. A place to have open conversations and bring people together.',
-      canonicalUrl: '/about',
-    },
+    redirectTo: '/about/minds',
+    pathMatch: 'full' as PathMatch,
   },
   {
     path: 'upgrades',
@@ -103,6 +97,8 @@ const routes: Routes = [
     ProductPageBasicExplainerComponent,
     ProductPageFeatureHighlightComponent,
     ProductPageClosingCtaComponent,
+    ProductPageImageCardComponent,
   ],
+  exports: [ProductPageBaseComponent],
 })
 export class AboutModule {}
