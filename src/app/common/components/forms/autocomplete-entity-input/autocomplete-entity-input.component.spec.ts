@@ -3,6 +3,7 @@ import {
   TestBed,
   discardPeriodicTasks,
   fakeAsync,
+  flush,
   tick,
 } from '@angular/core/testing';
 import { FormControl, FormsModule, NgControl } from '@angular/forms';
