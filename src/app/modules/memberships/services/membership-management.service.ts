@@ -16,7 +16,7 @@ export class MembershipManagementService {
   /**
    * Open checkout page for a membership.
    * @param { string } siteMembershipGuid - The site membership guid.
-   * @param { string } redirectUrl - The redirect url for after checkout.
+   * @param { string } redirectUri - The redirect url for after checkout.
    * @returns { Promise<boolean> } - true on success.
    */
   public async navigateToCheckout(
@@ -44,7 +44,7 @@ export class MembershipManagementService {
   /**
    * Open manage plan page for a membership.
    * @param { string } subscriptionId - The GUID of the subscription that we want to navigate to..
-   * @param { string } redirectUrl - The redirect url for after manage plan.
+   * @param { string } redirectUri - The redirect url for after manage plan.
    * @returns { Promise<boolean> } - true on success.
    */
   public async navigateToManagePlan(
