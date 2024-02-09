@@ -33,7 +33,8 @@ export const ojmFakeMembershipsQuery = {
         __typename: 'SiteMembership',
         id: '2',
         membershipGuid: 'guid-67890',
-        membershipName: 'Premium Plan',
+        membershipName:
+          'Premium PlanPremium PlanPremium PlanPremium PlanPremium PlanPremium PlanPremium PlanPremium Plan',
         membershipDescription: 'Access to all premium features.',
         membershipPriceInCents: 19900,
         priceCurrency: 'USD',

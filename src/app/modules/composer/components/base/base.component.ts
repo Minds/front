@@ -6,9 +6,11 @@ import {
   EventEmitter,
   Injector,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { UniqueId } from '../../../../helpers/unique-id.helper';
@@ -29,6 +31,7 @@ import {
   BehaviorSubject,
   Observable,
   Subscription,
+  combineLatest,
   firstValueFrom,
 } from 'rxjs';
 import { BlogPreloadService } from '../../../blogs/v2/edit/blog-preload.service';
@@ -52,7 +55,8 @@ import { ComposerSiteMembershipsService } from '../../services/site-memberships.
   templateUrl: 'base.component.html',
   providers: [PopupService],
 })
-export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
+export class BaseComponent
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   /**
    * Post event emitter
    */
@@ -64,6 +68,17 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() isModal: boolean = false;
 
   /**
+   * We use this to ensure we don't show the preview pane in the composer preview trigger
+   */
+  private isModalSubject = new BehaviorSubject<boolean>(this.isModal);
+
+  /**
+   * If we should show the default composer pane,
+   * or the membership preview pane that comes afterwards
+   */
+  showMembershipPreviewPane$: Observable<boolean>;
+
+  /**
    * Popup component ref
    */
   @ViewChild('popupComponent', { static: true }) popupComponent: PopupComponent;
@@ -71,7 +86,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Text area component ref
    */
-  @ViewChild('textAreaComponent', { static: true })
+  @ViewChild('textAreaComponent', { static: false })
   textAreaComponent: TextAreaComponent;
 
   /**
@@ -141,6 +156,22 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.permissions.canCreatePaywall()) {
       this.siteMembershipsService.fetchMemberships();
     }
+
+    // Show the preview pane only if we're in a modal (i.e. not embedded)
+    this.showMembershipPreviewPane$ = combineLatest([
+      this.service.showSiteMembershipPostPreview$,
+      this.isModalSubject.asObservable(),
+    ]).pipe(map(([showPreview, isModal]) => showPreview && isModal));
+  }
+
+  /**
+   * Whenever isModal changes, update its BehaviorSubject
+   * @param changes
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.isModal) {
+      this.isModalSubject.next(this.isModal);
+    }
   }
 
   /**
@@ -167,6 +198,12 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
         this.isDirty = isDirty;
       })
     );
+
+    if (this.isModal) {
+      setTimeout(() => {
+        this.focus();
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -225,7 +262,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
    * Focuses the main text area
    */
   focus() {
-    this.textAreaComponent.focus();
+    setTimeout(() => {
+      this.textAreaComponent.focus();
+    }, 100);
   }
 
   /**

@@ -15,8 +15,14 @@ import {
   PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime, map, take } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  Subscription,
+  combineLatest,
+} from 'rxjs';
+import { debounceTime, map, take, tap } from 'rxjs/operators';
 import {
   ComposerService,
   ComposerSize,
@@ -157,6 +163,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   public readonly canCreateSupermindRequest$ = this.service
     .canCreateSupermindRequest$;
 
+  // Whether "Post" button should be disabled
+  isPostButtonDisabled$: Observable<boolean>;
+
+  // Whether "Next" button should be disabled
+  isNextButtonDisabled$: Observable<boolean>;
+
   /**
    * Constructor
    * @param service
@@ -225,6 +237,22 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       })
     );
+
+    this.isPostButtonDisabled$ = combineLatest([
+      this.canPost$,
+      this.inProgress$,
+      this.isPosting$,
+    ]).pipe(
+      map(
+        ([canPost, inProgress, isPosting]) =>
+          !canPost || inProgress || isPosting
+      )
+    );
+
+    this.isNextButtonDisabled$ = combineLatest([
+      this.canPost$,
+      this.inProgress$,
+    ]).pipe(map(([canPost, inProgress]) => !canPost || inProgress));
   }
 
   /**
@@ -334,6 +362,13 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   get canPost$() {
     return this.service.canPost$;
+  }
+
+  /**
+   * siteMembershipGuids subject from service
+   */
+  get siteMembershipGuids$() {
+    return this.service.siteMembershipGuids$;
   }
 
   public get shouldShowLivestreamButton(): boolean {
@@ -471,6 +506,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   onPost($event: MouseEvent): void {
+    if (this.service.siteMembershipGuids$.getValue()) {
+      return;
+    }
+
     // Get confirmation before posting a supermind offer
     if (this.isSupermindRequest) {
       this.openSupermindConfirmationModal($event);
@@ -567,6 +606,13 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         windowClass: 'm-modalV2__mobileFullCover',
       }
     );
+  }
+
+  /**
+   * When the user clicks 'next' on a site membership post
+   */
+  onClickNext(): void {
+    this.service.showSiteMembershipPostPreview$.next(true);
   }
 
   /**

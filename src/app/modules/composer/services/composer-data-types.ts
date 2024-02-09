@@ -121,6 +121,15 @@ export type SiteMembershipGuidsSubjectValue = string[] | [-1] | null;
 export type ComposerSize = 'compact' | 'full';
 
 /**
+ * Thumbnail image for site membership posts
+ */
+export interface PaywallThumbnail {
+  url: string;
+  file?: File;
+  fileBase64?: string;
+}
+
+/**
  * Payload data object. Used to build the DTO
  */
 export interface Data {
@@ -134,7 +143,7 @@ export interface Data {
   license: LicenseSubjectValue;
   attachmentGuids: AttachmentsMetadataMappedValue;
   richEmbed: RichEmbedMetadataMappedValue;
-  videoPoster: VideoPoster;
+  paywallThumbnail: PaywallThumbnail;
   postToPermaweb: PostToPermawebSubjectValue;
   remind: RemindSubjectValue;
   supermindRequest: SupermindRequestSubjectValue;

@@ -12,8 +12,17 @@
       the post in a locked paywall form that encourages them to upgrade.
     </p>
 
-    <form [formGroup]="membershipsForm" (ngSubmit)="onSubmit()" *ngIf="init">
-      <div formArrayName="memberships">
+    <form
+      [formGroup]="membershipsForm"
+      (ngSubmit)="onSubmit()"
+      *ngIf="membershipsForm"
+      class="m-scroll__thin"
+      (click)="formClicked()"
+    >
+      <div
+        formArrayName="memberships"
+        class="m-siteMembershipSelector__membershipCheckboxes"
+      >
         <ng-container
           *ngFor="
             let membership of siteMembershipsService.allMemberships$ | async;
@@ -21,18 +30,30 @@
           "
         >
           <m-formInput__checkbox
+            class="m-siteMembershipSelector__membershipCheckbox"
             [formControlName]="i"
             [customId]="'membership-' + i"
+            [disabled]="composerService.isEditing$ | async"
           >
-            {{ membership.membershipName }}
-            {{ membership.membershipPriceInCents / 100 | currency }}
+            <span>{{ membership.membershipName }}</span>
+            <span
+              >{{ membership.membershipPriceInCents / 100 | currency }} /
+              {{
+                membership.membershipBillingPeriod ===
+                SiteMembershipBillingPeriodEnum.Monthly
+                  ? 'month'
+                  : 'year'
+              }}
+            </span>
           </m-formInput__checkbox>
         </ng-container>
       </div>
 
       <m-formInput__checkbox
-        formControlName="selectAllMemberships"
-        customId="selectAllMemberships"
+        class="m-siteMembershipSelector__membershipCheckbox"
+        formControlName="selectAllCheckbox"
+        customId="selectAllCheckbox"
+        [disabled]="composerService.isEditing$ | async"
       >
         All Memberships
       </m-formInput__checkbox>
@@ -43,10 +64,11 @@
     <m-button
       class="m-composerPopup__save"
       (onAction)="onSubmit()"
-      data-ref="tags-save-button"
+      data-ref="composer-site-membership-selector-save-button"
       i18n="@@COMMON__SAVE"
       size="small"
       color="blue"
+      [disabled]="composerService.isEditing$ | async"
     >
       Save
     </m-button>

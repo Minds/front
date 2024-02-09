@@ -18,6 +18,9 @@ import { Router } from '@angular/router';
 import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
 import { ComposerAudienceSelectorService } from '../../services/audience.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
+import { ComposerSiteMembershipsService } from '../../services/site-memberships.service';
+import { ApolloTestingModule } from 'apollo-angular/testing';
+import { SiteMembership } from '../../../../../graphql/generated.engine';
 
 describe('BaseComponent', () => {
   let comp: BaseComponent;
@@ -25,6 +28,7 @@ describe('BaseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [ApolloTestingModule],
       declarations: [
         BaseComponent,
         MockDirective({
@@ -121,6 +125,17 @@ describe('BaseComponent', () => {
         {
           provide: PermissionsService,
           useValue: MockService(PermissionsService),
+        },
+        {
+          provide: ComposerSiteMembershipsService,
+          useValue: MockService(ComposerSiteMembershipsService, {
+            has: ['allMemberships$'],
+            props: {
+              allMemberships$: {
+                get: () => new BehaviorSubject<SiteMembership[]>([]),
+              },
+            },
+          }),
         },
       ],
     })

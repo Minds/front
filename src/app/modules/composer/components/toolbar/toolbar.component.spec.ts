@@ -18,6 +18,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
+import { ComposerSiteMembershipsService } from '../../services/site-memberships.service';
+import { ApolloTestingModule } from 'apollo-angular/testing';
+import { SiteMembership } from '../../../../../graphql/generated.engine';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -100,7 +103,7 @@ describe('Composer Toolbar', () => {
       );
 
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
+        imports: [HttpClientTestingModule, ApolloTestingModule],
 
         declarations: [
           ToolbarComponent,
@@ -158,6 +161,17 @@ describe('Composer Toolbar', () => {
           {
             provide: NsfwEnabledService,
             useValue: MockService(NsfwEnabledService),
+          },
+          {
+            provide: ComposerSiteMembershipsService,
+            useValue: MockService(ComposerSiteMembershipsService, {
+              has: ['allMemberships$'],
+              props: {
+                allMemberships$: {
+                  get: () => new BehaviorSubject<SiteMembership[]>([]),
+                },
+              },
+            }),
           },
         ],
       }).compileComponents();

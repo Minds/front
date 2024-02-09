@@ -5,11 +5,18 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { ComposerService } from '../../../services/composer.service';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import {
+  ComposerService,
+  SiteMembershipGuidsSubjectValue,
+} from '../../../services/composer.service';
 import { ComposerSiteMembershipsService } from '../../../services/site-memberships.service';
-import { SiteMembership } from '../../../../../../graphql/generated.engine';
+import {
+  SiteMembership,
+  SiteMembershipBillingPeriodEnum,
+} from '../../../../../../graphql/generated.engine';
 import { Subscription } from 'rxjs';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-composer__siteMembershipSelector',
@@ -23,150 +30,121 @@ export class ComposerSiteMembershipSelectorComponent
    */
   @Output() dismissIntent: EventEmitter<any> = new EventEmitter<any>();
 
-  init = false;
   membershipsForm: FormGroup;
   subscriptions: Subscription[] = [];
 
+  /**
+   * Allows us to use roleId enums in the template
+   */
+  public SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum = SiteMembershipBillingPeriodEnum;
+
   constructor(
     private fb: FormBuilder,
-    private composerService: ComposerService,
-    protected siteMembershipsService: ComposerSiteMembershipsService
+    protected composerService: ComposerService,
+    protected siteMembershipsService: ComposerSiteMembershipsService,
+    protected toaster: ToasterService
   ) {
     this.membershipsForm = this.fb.group({
       memberships: new FormArray([]),
-      selectAllMemberships: [false],
+      selectAllCheckbox: new FormControl<boolean>(false),
     });
-  }
-
-  get membershipsFormArray() {
-    return this.membershipsForm.controls.memberships as FormArray;
   }
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.siteMembershipsService.allMemberships$.subscribe(allMemberships => {
-        const membershipsArray = this.membershipsForm.get(
-          'memberships'
-        ) as FormArray;
-        // Clear the form array before adding new controls
-        membershipsArray.clear();
-        // Add a new control for each membership
-        allMemberships.forEach((membership, index) => {
-          const control = this.fb.control(false); // Initialize control unchecked
-          membershipsArray.push(control);
+        this.setUpFormControls(allMemberships);
 
-          // Subscribe to the value changes of each individual membership checkbox
-          // Here we call handleMembershipChange method whenever a checkbox value changes
-          this.subscriptions.push(
-            control.valueChanges.subscribe(value => {
-              this.handleMembershipChange(index, value);
-            })
-          );
-        });
-
-        this.init = true; // ojm remove/
-
-        // ojm keep or no?
-        // this.applyInitialSelection();
-      }),
-      this.membershipsForm
-        .get('selectAllMemberships')
-        ?.valueChanges.subscribe(value => {
-          this.membershipsFormArray.controls.forEach(control =>
-            control.setValue(value)
-          );
-        })
+        this.subscriptions.push(
+          this.composerService.siteMembershipGuids$.subscribe(guids => {
+            this.checkSelectedMemberships(guids, allMemberships);
+          })
+        );
+      })
     );
 
-    // Listen for changes in the "Select All Memberships" checkbox
-    this.membershipsForm
-      .get('selectAllMemberships')
-      ?.valueChanges.subscribe(value => {
-        if (value) {
-          this.membershipsFormArray.controls.forEach(control =>
-            control.setValue(true)
-          );
-        }
-      });
-
     this.siteMembershipsService.fetchMemberships();
+  }
+
+  /**
+   * Ensure previously-made selections are displayed
+   * @param guids
+   * @param allMemberships
+   */
+  private checkSelectedMemberships(
+    guids: SiteMembershipGuidsSubjectValue,
+    allMemberships: SiteMembership[]
+  ): void {
+    const membershipsArray = this.membershipsForm.get(
+      'memberships'
+    ) as FormArray;
+
+    // Reset all checkboxes to false initially
+    membershipsArray.controls.forEach(control =>
+      control.setValue(false, { emitEvent: false })
+    );
+    this.selectAllCheckbox.setValue(false, { emitEvent: false });
+
+    // Process previous selections
+    if (Array.isArray(guids)) {
+      if (guids.length === 1 && guids[0] === -1) {
+        // If guids is [-1], select all memberships
+        membershipsArray.controls.forEach(control =>
+          control.setValue(true, { emitEvent: false })
+        );
+        this.selectAllCheckbox.setValue(true, { emitEvent: false });
+      } else {
+        const stringGuids: string[] = guids as string[];
+        allMemberships.forEach((membership, index) => {
+          if (stringGuids.includes(membership.membershipGuid)) {
+            membershipsArray.at(index).setValue(true, { emitEvent: false });
+          }
+        });
+
+        // Check if all memberships are selected and update 'Select All' checkbox
+        const allSelected = membershipsArray.value.every(value => value);
+        this.selectAllCheckbox.setValue(allSelected, { emitEvent: false });
+      }
+    }
+  }
+
+  private setUpFormControls(allMemberships: SiteMembership[]) {
+    const membershipsArray = this.membershipsForm.get(
+      'memberships'
+    ) as FormArray;
+    membershipsArray.clear();
+
+    allMemberships.forEach(() => membershipsArray.push(this.fb.control(false)));
+
+    this.subscriptions.push(
+      // Subscribe to changes in individual checkboxes to update 'Select All'
+      membershipsArray.valueChanges.subscribe(values => {
+        const allChecked = values.every(value => value);
+        this.selectAllCheckbox.setValue(allChecked, { emitEvent: false });
+      }),
+
+      // Handle 'Select All' changes
+      this.selectAllCheckbox.valueChanges.subscribe(value => {
+        membershipsArray.controls.forEach(control => control.setValue(value));
+      })
+    );
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  // ojm keep or no?
-  // applyInitialSelection() {
-  //   const initialSelections: SiteMembershipGuidsSubjectValue = this.composerService.siteMembershipGuids$.getValue();
-  //   const allMemberships: SiteMembership[] = this.siteMembershipsService.allMemberships$.getValue();
-  //   const membershipsArray = this.membershipsForm.get(
-  //     'memberships'
-  //   ) as FormArray;
-
-  //   allMemberships.forEach((membership, index) => {
-  //     const isSelected = initialSelections.some(
-  //       selectedMembership =>
-  //         selectedMembership.membershipGuid === membership.membershipGuid
-  //     );
-  //     membershipsArray.at(index).setValue(isSelected, { emitEvent: false });
-  //   });
-
-  //   // After applying initial selections, check if all memberships are selected to update 'Select All' checkbox
-  //   const allSelected = allMemberships.every(membership =>
-  //     initialSelections.some(
-  //       selectedMembership =>
-  //         selectedMembership.membershipGuid === membership.membershipGuid
-  //     )
-  //   );
-  //   this.membershipsForm
-  //     .get('selectAllMemberships')
-  //     ?.setValue(allSelected, { emitEvent: false });
-  // }
-
-  /**
-   * Make sure the 'All memberships' checkbox is accurate when the individual membership checkboxes change
-   * @param index
-   */
-  private handleMembershipChange(index: number, value: boolean): void {
-    // Logic when an individual membership checkbox changes
-    // Uncheck 'Select All' if any checkbox is unchecked
-    if (!value) {
-      this.membershipsForm.get('selectAllMemberships')?.setValue(false);
-    } else {
-      // Check if all checkboxes are now checked
-      const allChecked = this.membershipsFormArray.controls.every(
-        control => control.value
-      );
-      this.membershipsForm.get('selectAllMemberships')?.setValue(allChecked);
-    }
-  }
-
-  /**
-   * When 'selectAllMemberships' is checked/unchecked, update all individual checkboxes accordingly
-   */
-  onSelectAllChange() {
-    const selectAll = this.membershipsForm.get('selectAllMemberships')?.value;
-
-    this.membershipsFormArray.controls.forEach(control => {
-      control.setValue(selectAll);
-    });
-  }
-
   /**
    * Update the composer service with the new value and close the popup
-   *
-   * If 'all memberships' was selected, return -1
+   * If 'all memberships' was selected, return [-1]
    */
   onSubmit() {
     // Check if the 'all memberships' checkbox is checked
-    const selectAll = this.membershipsForm.get('selectAllMemberships')?.value;
+    const selectAll = this.membershipsForm.get('selectAllCheckbox').value;
 
     if (selectAll) {
-      // If 'all memberships' is checked, set -1 to indicate all memberships are selected
       this.composerService.siteMembershipGuids$.next([-1]);
     } else {
-      // Otherwise, proceed to collect selected membership GUIDs
       const selectedMembershipGuids = this.membershipsFormArray.value
         .map((checked: boolean, i: number) =>
           checked
@@ -176,11 +154,35 @@ export class ComposerSiteMembershipSelectorComponent
         )
         .filter((v: string | null) => v !== null);
 
-      // Update the service with the selected membership GUIDs
-      this.composerService.siteMembershipGuids$.next(selectedMembershipGuids);
+      // Explicitly set to null if no checkboxes are checked
+      if (selectedMembershipGuids.length === 0) {
+        this.composerService.siteMembershipGuids$.next(null);
+        //Ensure paywall-related post properties are reset
+        this.composerService.paywallThumbnail$.next(null);
+        if (!this.composerService.attachments$.getValue()) {
+          this.composerService.title$.next(null);
+        }
+      } else {
+        // Proceed with selected GUIDs
+        this.composerService.siteMembershipGuids$.next(selectedMembershipGuids);
+      }
     }
 
     // Emit event to close the popup
     this.dismissIntent.emit();
+  }
+
+  formClicked(): void {
+    if (this.composerService.isEditing$.getValue()) {
+      this.toaster.error('Memberships are no longer editable on this post');
+    }
+  }
+
+  get membershipsFormArray() {
+    return this.membershipsForm.controls.memberships as FormArray;
+  }
+
+  get selectAllCheckbox() {
+    return this.membershipsForm.get('selectAllCheckbox');
   }
 }

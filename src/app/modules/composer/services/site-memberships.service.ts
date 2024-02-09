@@ -13,7 +13,6 @@ import {
   ToasterService,
 } from '../../../common/services/toaster.service';
 
-// ojm move this to common?
 @Injectable({
   providedIn: 'root',
 })

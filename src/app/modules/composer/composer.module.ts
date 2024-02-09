@@ -24,7 +24,6 @@ import { TagsComponent } from './components/popup/tags/tags.component';
 import { ScheduleComponent } from './components/popup/schedule/schedule.component';
 import { PermawebTermsComponent } from './components/popup/permaweb/permaweb-terms.component';
 import { TextAreaComponent } from './components/text-area/text-area.component';
-import { ComposerCoverPhotoSelectorComponent } from './components/cover-photo-selector/cover-photo-selector.component';
 import { ComposerMonetizeV2PlusComponent } from './components/popup/monetize/v2/components/plus/plus.component';
 import { ComposerMonetizeV2MembershipsComponent } from './components/popup/monetize/v2/components/memberships/memberships.component';
 import { ComposerMonetizeV2Component } from './components/popup/monetize/v2/components/monetize.component';
@@ -43,6 +42,7 @@ import { ComposerAudienceSelectorService } from './services/audience.service';
 import { ComposerAudienceSelectorPanelComponent } from './components/popup/audience-selector/audience-selector.component';
 import { LiveStreamComponent } from './components/livestream/livestream.component';
 import { ComposerSiteMembershipSelectorComponent } from './components/popup/site-membership-selector/site-membership-selector.component';
+import { ComposerSiteMembershipPostPreview } from './components/site-membership-post-preview/site-membership-post-preview.component';
 /**
  * Exported components
  */
@@ -76,10 +76,10 @@ const INTERNAL_COMPONENTS = [
   LiveStreamComponent,
   PopupComponent,
   TextAreaComponent,
-  ComposerCoverPhotoSelectorComponent,
   ComposerSupermindComponent,
   ComposerAudienceSelectorPanelComponent,
   ComposerSiteMembershipSelectorComponent,
+  ComposerSiteMembershipPostPreview,
 ];
 
 const PROVIDERS = [

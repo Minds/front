@@ -23,7 +23,6 @@ import { ActivityEntity } from '../../newsfeed/activity/activity.service';
 import { RichEmbed, RichEmbedService } from './rich-embed.service';
 import { Attachment, AttachmentService } from './attachment.service';
 import { AttachmentPreviewResource, PreviewService } from './preview.service';
-import { VideoPoster } from './video-poster.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { HashtagsFromStringService } from '../../../common/services/parse-hashtags.service';
 import {
@@ -53,6 +52,7 @@ import {
   SupermindRequestSubjectValue,
   TagsSubjectValue,
   TitleSubjectValue,
+  PaywallThumbnail,
 } from './composer-data-types';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ClientMetaData } from '../../../common/services/client-meta.service';
@@ -61,7 +61,6 @@ import {
   ComposerAudienceSelectorService,
 } from './audience.service';
 import { LivestreamService } from './livestream.service';
-import { SiteMembership } from '../../../../graphql/generated.engine';
 
 /**
  * Default values
@@ -70,7 +69,7 @@ export const DEFAULT_MESSAGE_VALUE: MessageSubjectValue = '';
 export const DEFAULT_TITLE_VALUE: TitleSubjectValue = null;
 export const DEFAULT_REMIND_VALUE: RemindSubjectValue = null;
 export const DEFAULT_ATTACHMENT_VALUE: AttachmentSubjectValue = null;
-export const DEFAULT_VIDEOPOSTER_VALUE: VideoPoster = null;
+export const DEFAULT_PAYWALL_THUMBNAIL_VALUE: PaywallThumbnail = null;
 export const DEFAULT_RICH_EMBED_VALUE: RichEmbedSubjectValue = null;
 export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
 export const DEFAULT_POST_TO_PERMAWEB_VALUE: PostToPermawebSubjectValue = false;
@@ -141,6 +140,13 @@ export class ComposerService implements OnDestroy {
   );
 
   /**
+   * Whether the prevew pane (where users set title/thumbnail for site membership posts) is visible - instead of the normal composer base
+   */
+  showSiteMembershipPostPreview$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
+  /**
    * Tags subject
    */
   readonly tags$: BehaviorSubject<TagsSubjectValue> = new BehaviorSubject<
@@ -183,9 +189,11 @@ export class ComposerService implements OnDestroy {
   > = new BehaviorSubject<AttachmentSubjectValue>(DEFAULT_ATTACHMENT_VALUE);
 
   /**
-   * Video Poster subject
+   * Paywall Thumbnail subject
    */
-  videoPoster$: BehaviorSubject<VideoPoster> = new BehaviorSubject(null);
+  paywallThumbnail$: BehaviorSubject<PaywallThumbnail> = new BehaviorSubject(
+    null
+  );
 
   /**
    * Rich embed subject
@@ -447,7 +455,7 @@ export class ComposerService implements OnDestroy {
         LicenseSubjectValue,
         AttachmentsMetadataMappedValue,
         RichEmbedMetadataMappedValue,
-        VideoPoster,
+        PaywallThumbnail,
         PostToPermawebSubjectValue,
         RemindSubjectValue,
         SupermindRequestSubjectValue,
@@ -538,7 +546,7 @@ export class ComposerService implements OnDestroy {
 
         // Value will be either a RichEmbed interface object or null
       ),
-      this.videoPoster$.pipe(distinctUntilChanged()),
+      this.paywallThumbnail$.pipe(distinctUntilChanged()),
       this.postToPermaweb$,
       this.remind$.pipe(distinctUntilChanged()),
       this.supermindRequest$.pipe(distinctUntilChanged()),
@@ -561,7 +569,7 @@ export class ComposerService implements OnDestroy {
           license,
           attachmentGuids,
           richEmbed,
-          videoPoster,
+          paywallThumbnail,
           postToPermaweb,
           remind,
           supermindRequest,
@@ -579,7 +587,7 @@ export class ComposerService implements OnDestroy {
           license,
           attachmentGuids,
           richEmbed,
-          videoPoster,
+          paywallThumbnail,
           postToPermaweb,
           remind,
           supermindRequest,
@@ -677,7 +685,7 @@ export class ComposerService implements OnDestroy {
               data.supermindRequest !== null ||
               data.tags !== DEFAULT_TAGS_VALUE ||
               data.title !== DEFAULT_TITLE_VALUE ||
-              data.videoPoster !== DEFAULT_VIDEOPOSTER_VALUE ||
+              data.paywallThumbnail !== DEFAULT_PAYWALL_THUMBNAIL_VALUE ||
               JSON.stringify(data.siteMembershipGuids) !==
                 JSON.stringify(DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE)
           );
@@ -846,7 +854,7 @@ export class ComposerService implements OnDestroy {
     this.license$.next(DEFAULT_LICENSE_VALUE);
     this.attachments$.next(DEFAULT_ATTACHMENT_VALUE);
     this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
-    this.videoPoster$.next(DEFAULT_VIDEOPOSTER_VALUE);
+    this.paywallThumbnail$.next(DEFAULT_PAYWALL_THUMBNAIL_VALUE);
     this.remind$.next(DEFAULT_REMIND_VALUE);
 
     // Reset state
@@ -876,7 +884,12 @@ export class ComposerService implements OnDestroy {
     this.audienceSelectorService.selectedAudience$.next(null);
     this.audienceSelectorService.shareToGroupMode$.next(false);
 
+    // Reset livestream
     this.livestreamService.setStream(null);
+
+    // Reset site membership
+    this.siteMembershipGuids$.next(null);
+    this.showSiteMembershipPostPreview$.next(false);
 
     // Reset original source
     this.entity = null;
@@ -912,12 +925,14 @@ export class ComposerService implements OnDestroy {
         ? activity.access_id
         : DEFAULT_ACCESS_ID_VALUE;
     const license = activity.license || DEFAULT_LICENSE_VALUE;
+    const siteMembershipGuids =
+      activity.site_membership_guids || DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE;
 
     // Build attachment and rich embed data structure
 
     let attachments: AttachmentSubjectValue = DEFAULT_ATTACHMENT_VALUE;
     let richEmbed: RichEmbedSubjectValue = DEFAULT_RICH_EMBED_VALUE;
-    let videoPoster: VideoPoster;
+    let paywallThumbnail: PaywallThumbnail = DEFAULT_PAYWALL_THUMBNAIL_VALUE;
 
     if (activity.custom_type === 'batch') {
       attachments = activity.custom_data.map(item => {
@@ -933,7 +948,6 @@ export class ComposerService implements OnDestroy {
           guid: activity.entity_guid,
         } as Attachment,
       ];
-      videoPoster = { url: activity.custom_data.thumbnail_src };
     } else if (activity.entity_guid || activity.perma_url) {
       // Rich embeds (blogs included)
       richEmbed = {
@@ -943,6 +957,13 @@ export class ComposerService implements OnDestroy {
         description: activity.blurb || '',
         thumbnail: activity.thumbnail_src || '',
       };
+    } else if (
+      siteMembershipGuids &&
+      activity?.custom_data?.paywall_thumbnail
+    ) {
+      paywallThumbnail = {
+        url: activity.custom_data.paywall_thumbnail,
+      };
     }
 
     // Priority service state elements
@@ -950,7 +971,7 @@ export class ComposerService implements OnDestroy {
     this.remind$.next(activity.remind_object || null);
     this.attachments$.next(attachments);
     this.richEmbed$.next(richEmbed);
-    this.videoPoster$.next(videoPoster);
+    this.paywallThumbnail$.next(paywallThumbnail);
 
     // Apply them to the service state
 
@@ -962,7 +983,8 @@ export class ComposerService implements OnDestroy {
     this.schedule$.next(schedule);
     this.accessId$.next(accessId);
     this.license$.next(license);
-    // ojm todo apply siteMembershipGuids$
+    this.siteMembershipGuids$.next(siteMembershipGuids);
+    this.paywallThumbnail$.next(paywallThumbnail);
 
     // Define container
 
@@ -1012,7 +1034,7 @@ export class ComposerService implements OnDestroy {
     }
 
     this.attachments$.next(null);
-    this.videoPoster$.next(null);
+    this.paywallThumbnail$.next(null);
     this.title$.next(null);
   }
 
@@ -1064,7 +1086,7 @@ export class ComposerService implements OnDestroy {
    * @param license
    * @param schedule
    * @param richEmbed
-   * @param videoPoster
+   * @param paywallThumbnail
    * @param postToPermaweb
    * @param remind
    * @param supermindRequest
@@ -1083,7 +1105,7 @@ export class ComposerService implements OnDestroy {
     license,
     attachmentGuids,
     richEmbed,
-    videoPoster,
+    paywallThumbnail,
     postToPermaweb,
     remind,
     supermindRequest,
@@ -1153,8 +1175,8 @@ export class ComposerService implements OnDestroy {
       this.payload.container_guid = container.guid;
     }
 
-    if (videoPoster && videoPoster.fileBase64) {
-      this.payload.video_poster = videoPoster.fileBase64;
+    if (paywallThumbnail && paywallThumbnail.fileBase64) {
+      this.payload.paywall_thumbnail = paywallThumbnail.fileBase64;
     }
 
     if (siteMembershipGuids) {
