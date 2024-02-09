@@ -231,9 +231,11 @@ export class NetworkAdminMonetizationMembershipFormComponent
   /**
    * Handles toggling of selection of a role by inverting form control value.
    * @param { RoleId } roleId - Role id.
+   * @param { MouseEvent } $event - triggering mouse event.
    * @returns { void }
    */
-  public onRoleToggle(role: Role): void {
+  public onRoleToggle(role: Role, $event: MouseEvent = null): void {
+    $event?.preventDefault();
     const formControl: AbstractControl<boolean> = this.formGroup.get(
       'user_role:' + role.name
     );

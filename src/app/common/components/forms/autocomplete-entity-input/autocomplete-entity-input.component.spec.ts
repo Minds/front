@@ -3,6 +3,7 @@ import {
   TestBed,
   discardPeriodicTasks,
   fakeAsync,
+  flush,
   tick,
 } from '@angular/core/testing';
 import { FormControl, FormsModule, NgControl } from '@angular/forms';
@@ -15,7 +16,6 @@ import { MockService } from '../../../../utils/mock';
 import userMock from '../../../../mocks/responses/user.mock';
 import { of, take } from 'rxjs';
 import { groupMock } from '../../../../mocks/responses/group.mock';
-import { flush } from '@sentry/node';
 
 describe('AutocompleteEntityInputComponent', () => {
   let comp: AutocompleteEntityInputComponent;

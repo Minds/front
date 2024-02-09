@@ -77,7 +77,6 @@
         *ngIf="activePanel === 'enterUsername' || activePanel === 'emailSent'"
         (onAction)="request()"
         [saving]="inProgress"
-        [disabled]="!canSubmit"
         solid="true"
         color="blue"
         data-ref="data-minds-forgot-password-submit"

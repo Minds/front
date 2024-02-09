@@ -265,13 +265,13 @@
         </li>
       </ng-container>
       <!-- Network admin (on tenant sites) -->
-      <ng-container *ngIf="isAdmin() && isTenantNetwork">
+      <ng-container *ngIf="showTenantAdminLink()">
         <li
           class="m-sidebarNavigation__item m-sidebarNavigation__item--network"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
         >
           <a
-            [routerLink]="['/network/admin']"
+            [routerLink]="getTenantAdminRouterLink()"
             (click)="toggle()"
             data-ref="sidenav-network-admin"
           >
