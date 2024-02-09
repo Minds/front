@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MetaService } from '../../common/services/meta.service';
-import { GuestModeExperimentService } from '../experiments/sub-services/guest-mode-experiment.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ResetPasswordModalService } from '../auth/reset-password-modal/reset-password-modal.service';
 import { SiteService } from '../../common/services/site.service';
@@ -18,7 +17,6 @@ import { Session } from '../../services/session';
 export class HomepageContainerComponent implements OnInit {
   constructor(
     private metaService: MetaService,
-    private guestModeExperiment: GuestModeExperimentService,
     private route: ActivatedRoute,
     private router: Router,
     private resetPasswordModal: ResetPasswordModalService,
@@ -26,8 +24,6 @@ export class HomepageContainerComponent implements OnInit {
     private isTenant: IsTenantService,
     private session: Session
   ) {}
-
-  isGuestMode: boolean;
 
   queryParams;
 
@@ -69,8 +65,6 @@ export class HomepageContainerComponent implements OnInit {
       .setDescription(siteDescription)
       .setCanonicalUrl('/')
       .setOgUrl('/');
-
-    this.isGuestMode = this.guestModeExperiment.isActive();
   }
 
   /**

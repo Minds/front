@@ -2,6 +2,7 @@ import {
   Component,
   HostBinding,
   Inject,
+  Input,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
@@ -31,6 +32,8 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['base.component.ng.scss'],
 })
 export class ProductPageBaseComponent implements OnInit, OnDestroy {
+  @Input() slugOverride: string;
+
   /** Host classes  - force light mode. */
   @HostBinding('class')
   get classes(): Record<string, boolean> {
@@ -79,7 +82,8 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
     this.pageLayoutService.useFullWidth();
     this.topbarService.isMinimalLightMode$.next(true);
 
-    const slug: string = this.route.snapshot.paramMap.get('slug') ?? null;
+    const slug: string =
+      (this.slugOverride || this.route.snapshot.paramMap.get('slug')) ?? null;
 
     if (!slug) {
       return this.handleLoadFailure(slug);
