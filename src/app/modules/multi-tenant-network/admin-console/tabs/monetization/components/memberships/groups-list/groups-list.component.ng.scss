@@ -1,0 +1,88 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  max-height: 286px;
+  width: 489px;
+  max-width: 100%;
+  overflow-y: scroll;
+  border-radius: 4px;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-networkMembershipAccordian__groupRow {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: $spacing4 $spacing4 $spacing4 $spacing8;
+    box-sizing: border-box;
+
+    &:not(:last-child) {
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .m-networkMembershipAccordian__groupContainerLeft {
+      display: flex;
+      flex-flow: row nowrap;
+
+      ::ng-deep .minds-avatar {
+        margin: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-position: center;
+        background-size: cover;
+        margin-right: $spacing2;
+        cursor: pointer;
+      }
+
+      .m-networkMembershipAccordian__groupInfo {
+        display: flex;
+        flex-flow: column nowrap;
+
+        .m-networkMembershipAccordian__groupName {
+          @include body1Bold;
+          cursor: pointer;
+        }
+
+        .m-networkMembershipAccordian__groupMembers {
+          @include body2Regular;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .m-networkMembershipAccordian__groupContainerRight {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .m-networkMembershipAccordian__groupRemoveIcon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
+        font-weight: 400;
+        border-radius: 50%;
+        cursor: pointer;
+
+        @include unselectable;
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
+      }
+    }
+  }
+}
