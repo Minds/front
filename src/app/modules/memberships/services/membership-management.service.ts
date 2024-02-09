@@ -43,7 +43,7 @@ export class MembershipManagementService {
 
   /**
    * Open manage plan page for a membership.
-   * @param { string } subscriptionId - The GUID of the subscription that we want to navigate to..
+   * @param { string } subscriptionId - The GUID of the subscription that we want to navigate to.
    * @param { string } redirectUri - The redirect url for after manage plan.
    * @returns { Promise<boolean> } - true on success.
    */
