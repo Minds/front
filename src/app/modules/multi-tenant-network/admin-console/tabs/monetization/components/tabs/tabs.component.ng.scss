@@ -1,0 +1,22 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+
+  .m-tabs__container {
+    width: 100%;
+    padding-right: $spacing8;
+    padding-left: $spacing8;
+
+    .m-tabs__tab {
+      &--selected {
+        border-width: 5px;
+      }
+
+      a {
+        padding: 8px 0;
+      }
+    }
+  }
+}
