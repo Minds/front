@@ -967,6 +967,7 @@ export enum PermissionsEnum {
   CanCreatePaywall = 'CAN_CREATE_PAYWALL',
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
+  CanModerateContent = 'CAN_MODERATE_CONTENT',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
   CanUseRssSync = 'CAN_USE_RSS_SYNC',
 }
@@ -1095,6 +1096,7 @@ export type Query = {
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
   siteMembership: SiteMembership;
+  siteMembershipSubscriptions: Array<SiteMembershipSubscription>;
   siteMemberships: Array<SiteMembership>;
   /** Returns the stripe keys */
   stripeKeys: StripeKeysType;
@@ -1466,6 +1468,15 @@ export enum SiteMembershipPricingModelEnum {
   OneTime = 'ONE_TIME',
   Recurring = 'RECURRING',
 }
+
+export type SiteMembershipSubscription = {
+  __typename?: 'SiteMembershipSubscription';
+  autoRenew: Scalars['Boolean']['output'];
+  membershipGuid: Scalars['String']['output'];
+  membershipSubscriptionId: Scalars['Int']['output'];
+  validFromTimestamp: Scalars['Int']['output'];
+  validToTimestamp?: Maybe<Scalars['Int']['output']>;
+};
 
 export type SiteMembershipUpdateInput = {
   groups?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -1849,6 +1860,57 @@ export type GetGiftCardsQuery = {
       endCursor?: string | null;
     };
   };
+};
+
+export type GetSiteMembershipsAndSubscriptionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSiteMembershipsAndSubscriptionsQuery = {
+  __typename?: 'Query';
+  siteMemberships: Array<{
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipDescription?: string | null;
+    membershipPriceInCents: number;
+    priceCurrency: string;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      guid: string;
+      name: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  }>;
+  siteMembershipSubscriptions: Array<{
+    __typename?: 'SiteMembershipSubscription';
+    membershipGuid: string;
+    membershipSubscriptionId: number;
+    autoRenew: boolean;
+    validFromTimestamp: number;
+    validToTimestamp?: number | null;
+  }>;
+};
+
+export type GetSiteMembershipSubscriptionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSiteMembershipSubscriptionsQuery = {
+  __typename?: 'Query';
+  siteMembershipSubscriptions: Array<{
+    __typename?: 'SiteMembershipSubscription';
+    membershipGuid: string;
+    membershipSubscriptionId: number;
+    autoRenew: boolean;
+    validFromTimestamp: number;
+    validToTimestamp?: number | null;
+  }>;
 };
 
 export type GetFeaturedEntitiesQueryVariables = Exact<{
@@ -5035,6 +5097,76 @@ export class GetGiftCardsGQL extends Apollo.Query<
   GetGiftCardsQueryVariables
 > {
   document = GetGiftCardsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetSiteMembershipsAndSubscriptionsDocument = gql`
+  query GetSiteMembershipsAndSubscriptions {
+    siteMemberships {
+      id
+      membershipGuid
+      membershipName
+      membershipDescription
+      membershipPriceInCents
+      priceCurrency
+      membershipBillingPeriod
+      membershipPricingModel
+      roles {
+        id
+        name
+      }
+      groups {
+        guid
+        name
+        membersCount
+        legacy
+      }
+    }
+    siteMembershipSubscriptions {
+      membershipGuid
+      membershipSubscriptionId
+      autoRenew
+      validFromTimestamp
+      validToTimestamp
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetSiteMembershipsAndSubscriptionsGQL extends Apollo.Query<
+  GetSiteMembershipsAndSubscriptionsQuery,
+  GetSiteMembershipsAndSubscriptionsQueryVariables
+> {
+  document = GetSiteMembershipsAndSubscriptionsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetSiteMembershipSubscriptionsDocument = gql`
+  query GetSiteMembershipSubscriptions {
+    siteMembershipSubscriptions {
+      membershipGuid
+      membershipSubscriptionId
+      autoRenew
+      validFromTimestamp
+      validToTimestamp
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetSiteMembershipSubscriptionsGQL extends Apollo.Query<
+  GetSiteMembershipSubscriptionsQuery,
+  GetSiteMembershipSubscriptionsQueryVariables
+> {
+  document = GetSiteMembershipSubscriptionsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

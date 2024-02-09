@@ -16,6 +16,7 @@ import { siteMembershipMock } from '../../../../../../../../mocks/site-membershi
 import { RoleId } from '../../../../roles/roles.types';
 import { ConfirmV2Component } from '../../../../../../../modals/confirm-v2/confirm.component';
 import { of } from 'rxjs';
+import { MembershipsCountService } from '../../../../../../../memberships/services/membership-count.service';
 
 describe('NetworkAdminMonetizationMembershipAccordianComponent', () => {
   let comp: NetworkAdminMonetizationMembershipAccordianComponent;
@@ -55,6 +56,10 @@ describe('NetworkAdminMonetizationMembershipAccordianComponent', () => {
         {
           provide: ArchiveSiteMembershipGQL,
           useValue: jasmine.createSpyObj<ArchiveSiteMembershipGQL>(['mutate']),
+        },
+        {
+          provide: MembershipsCountService,
+          useValue: MockService(MembershipsCountService),
         },
         {
           provide: ToasterService,
@@ -144,6 +149,9 @@ describe('NetworkAdminMonetizationMembershipAccordianComponent', () => {
       expect((comp as any).toaster.success).toHaveBeenCalledWith(
         'Successfully archived membership.'
       );
+      expect(
+        (comp as any).membershipCountService.decrementMembershipCount
+      ).toHaveBeenCalled();
     }));
   });
 

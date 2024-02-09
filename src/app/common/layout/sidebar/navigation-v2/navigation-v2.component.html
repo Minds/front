@@ -58,7 +58,9 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        [routerLinkActiveOptions]="{ exact: plusPageActive }"
+        [routerLinkActiveOptions]="{
+          exact: plusPageActive || (!user && isTenantNetwork)
+        }"
       >
         <a
           [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
@@ -215,7 +217,7 @@
       </ng-container>
 
       <!-- Memberships -->
-      <ng-container *ngIf="shouldShowNetworkMembershipsLink()">
+      <ng-container *ngIf="shouldShowMembershipsLink$ | async">
         <li
           class="m-sidebarNavigation__item m-sidebarNavigation__item--memberships"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"

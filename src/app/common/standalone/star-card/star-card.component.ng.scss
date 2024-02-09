@@ -1,0 +1,62 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  position: relative;
+  border-radius: 24px;
+  padding: $spacing6 $spacing24;
+
+  @media screen and (max-width: $min-tablet) {
+    padding: $spacing6 $spacing12;
+  }
+
+  @include m-theme() {
+    border: 4px solid themed($m-black);
+  }
+
+  h2,
+  p {
+    text-align: center;
+  }
+
+  .m-starCard__title {
+    @include heading2Bold;
+    margin-top: unset;
+    margin-bottom: $spacing2;
+  }
+
+  .m-starCard__description {
+    @include body3Regular;
+    margin-bottom: unset;
+  }
+
+  .m-starCard__starIcon {
+    position: absolute;
+
+    path {
+      @include m-theme() {
+        fill: themed($m-black);
+      }
+    }
+
+    &--top {
+      top: $spacing6;
+      left: $spacing4;
+
+      @media screen and (max-width: $max-mobile) {
+        top: $spacing3;
+        left: $spacing3;
+      }
+    }
+
+    &--bottom {
+      bottom: $spacing6;
+      right: $spacing4;
+
+      @media screen and (max-width: $max-mobile) {
+        bottom: $spacing3;
+        right: $spacing3;
+      }
+    }
+  }
+}
