@@ -36,6 +36,7 @@ describe('ProductPageBaseComponent', () => {
                 id: '0',
                 __typename: 'ComponentV2ProductHero',
                 text: 'text',
+                buttons: null,
               },
               {
                 id: '1',
@@ -110,7 +111,11 @@ describe('ProductPageBaseComponent', () => {
           ProductPageBaseComponent,
           MockComponent({
             selector: 'm-productPage__hero',
-            inputs: ['text'],
+            inputs: ['text', 'buttons'],
+          }),
+          MockComponent({
+            selector: 'm-productPage__imageCard',
+            inputs: ['image'],
           }),
           MockComponent({
             selector: 'm-productPage__pricingCards',

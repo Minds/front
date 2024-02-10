@@ -1,0 +1,40 @@
+<div
+  class="m-networkMembershipAccordian__groupRow"
+  *ngFor="let group of groups"
+>
+  <div class="m-networkMembershipAccordian__groupContainerLeft">
+    <minds-avatar
+      [routerLink]="'/group/' + group.guid + '/latest'"
+      [object]="{
+        guid: group.guid,
+        type: 'group'
+      }"
+    ></minds-avatar>
+    <div class="m-networkMembershipAccordian__groupInfo">
+      <span
+        class="m-networkMembershipAccordian__groupName"
+        [routerLink]="'/group/' + group.guid + '/latest'"
+        >{{ group.name | truncate: 30 }}</span
+      >
+      <span
+        class="m-networkMembershipAccordian__groupMembers"
+        [routerLink]="'/group/' + group.guid + '/latest'"
+        >{{ group.membersCount ?? 0 }}
+        <span>&nbsp;</span>
+        <span i18n="@@NETWORK_ADMIN_GROUP_LIST_MEMBERSHIP__MEMBERS"
+          >members</span
+        ></span
+      >
+    </div>
+  </div>
+  <div
+    *ngIf="showDeleteButton"
+    class="m-networkMembershipAccordian__groupContainerRight"
+  >
+    <i
+      class="material-icons m-networkMembershipAccordian__groupRemoveIcon"
+      (click)="onDeleteClickEmitter.emit(group)"
+      >close</i
+    >
+  </div>
+</div>

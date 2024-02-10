@@ -34,9 +34,13 @@ import { groupMock } from '../../../../../../../mocks/responses/group.mock';
       multi: true,
     },
   ],
+  template: '',
 })
-class MockAutocompleteEntityInputComponent extends DefaultValueAccessor {
+export class MockAutocompleteEntityInputComponent extends DefaultValueAccessor {
   @Input() entityType: any;
+  @Input() placeholder: string;
+  @Input() allowEmpty: boolean = false;
+  @Input() limit: number = 8;
 }
 
 describe('AddFeaturedEntityModalComponent', () => {
