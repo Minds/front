@@ -21,6 +21,11 @@ import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-
 import { ComposerSiteMembershipsService } from '../../services/site-memberships.service';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { SiteMembership } from '../../../../../graphql/generated.engine';
+import { By } from '@angular/platform-browser';
+import { IfTenantDirective } from '../../../../common/directives/if-tenant.directive';
+
+// ojm todo
+// Add more tests for do not show monetization button when tenant,, when to show the next button instead of the post button, when next button should be enabled
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -52,6 +57,10 @@ describe('Composer Toolbar', () => {
 
   const canCreateSupermindRequest$ = new BehaviorSubject(true);
 
+  const canPost$ = new BehaviorSubject<boolean>(true);
+  const inProgress$ = new BehaviorSubject<boolean>(false);
+  const isPosting$ = new BehaviorSubject<boolean>(false);
+
   const composerServiceMock: any = MockService(ComposerService, {
     has: [
       'attachment$',
@@ -65,6 +74,9 @@ describe('Composer Toolbar', () => {
       'supermindRequest$',
       'isSupermindReply$',
       'supermindReply$',
+      'canPost$',
+      'inProgress$',
+      'isPosting$',
     ],
     props: {
       attachment$: { get: () => attachment$ },
@@ -78,6 +90,9 @@ describe('Composer Toolbar', () => {
       supermindRequest$: { get: () => canCreateSupermindRequest$ },
       isSupermindReply$: { get: () => canCreateSupermindRequest$ },
       supermindReply$: { get: () => canCreateSupermindRequest$ },
+      canPost$: { get: () => canPost$ },
+      inProgress$: { get: () => inProgress$ },
+      isPosting$: { get: () => isPosting$ },
     },
   });
 
@@ -120,6 +135,7 @@ describe('Composer Toolbar', () => {
             selector: 'm-icon',
             inputs: ['from', 'iconId', 'sizeFactor'],
           }),
+          IfTenantDirective,
         ],
         providers: [
           {
@@ -266,5 +282,27 @@ describe('Composer Toolbar', () => {
       ComposerSupermindComponent
     );
     expect(popupServiceMock.present).toHaveBeenCalled();
+  });
+
+  it('should enable the post button when canPost is true, not inProgress, and not isPosting', () => {
+    canPost$.next(true);
+    inProgress$.next(false);
+    isPosting$.next(false);
+    fixture.detectChanges();
+
+    const postButton = fixture.debugElement.query(
+      By.css('.m-composerToolbar__action--post')
+    );
+    expect(postButton.nativeElement.disabled).toBeFalse();
+  });
+
+  it('should disable the post button when canPost is false', () => {
+    canPost$.next(false);
+    fixture.detectChanges();
+
+    const postButton = fixture.debugElement.query(
+      By.css('.m-composerToolbar__action--post')
+    );
+    expect(postButton.nativeElement.disabled).toBeTrue();
   });
 });
