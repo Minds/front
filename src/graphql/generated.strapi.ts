@@ -881,21 +881,8 @@ export type ComponentV2ProductFeatureTableHeaderInput = {
 
 export type ComponentV2ProductHero = {
   __typename?: 'ComponentV2ProductHero';
-  buttons?: Maybe<Array<Maybe<ComponentCommonActionButton>>>;
   id: Scalars['ID']['output'];
   text: Scalars['String']['output'];
-};
-
-export type ComponentV2ProductHeroButtonsArgs = {
-  filters?: InputMaybe<ComponentCommonActionButtonFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type ComponentV2ProductImageCard = {
-  __typename?: 'ComponentV2ProductImageCard';
-  id: Scalars['ID']['output'];
-  image: UploadFileEntityResponse;
 };
 
 export type ComponentV2ProductPerk = {
@@ -1465,7 +1452,6 @@ export type GenericMorph =
   | ComponentV2ProductFeatureTable
   | ComponentV2ProductFeatureTableHeader
   | ComponentV2ProductHero
-  | ComponentV2ProductImageCard
   | ComponentV2ProductPerk
   | ComponentV2ProductPricingCards
   | ExplainerScreenMobile
@@ -2767,7 +2753,6 @@ export type UpgradePage = {
   iconSource?: Maybe<Enum_Upgradepage_Iconsource>;
   locale?: Maybe<Scalars['String']['output']>;
   localizations?: Maybe<UpgradePageRelationResponseCollection>;
-  mobileIconId?: Maybe<Scalars['String']['output']>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   rowType: Enum_Upgradepage_Rowtype;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -2808,7 +2793,6 @@ export type UpgradePageFiltersInput = {
   id?: InputMaybe<IdFilterInput>;
   locale?: InputMaybe<StringFilterInput>;
   localizations?: InputMaybe<UpgradePageFiltersInput>;
-  mobileIconId?: InputMaybe<StringFilterInput>;
   not?: InputMaybe<UpgradePageFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<UpgradePageFiltersInput>>>;
   publishedAt?: InputMaybe<DateTimeFilterInput>;
@@ -2822,7 +2806,6 @@ export type UpgradePageInput = {
   displayText?: InputMaybe<Scalars['String']['input']>;
   iconId?: InputMaybe<Scalars['String']['input']>;
   iconSource?: InputMaybe<Enum_Upgradepage_Iconsource>;
-  mobileIconId?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   rowType?: InputMaybe<Enum_Upgradepage_Rowtype>;
 };
@@ -3256,7 +3239,6 @@ export type V2ProductPageProductPageDynamicZone =
   | ComponentV2ProductFeatureShowcase
   | ComponentV2ProductFeatureTable
   | ComponentV2ProductHero
-  | ComponentV2ProductImageCard
   | ComponentV2ProductPricingCards
   | Error;
 
@@ -3522,37 +3504,7 @@ export type GetV2ProductPageBySlugQuery = {
                 }>;
               } | null;
             }
-          | {
-              __typename: 'ComponentV2ProductHero';
-              id: string;
-              text: string;
-              buttons?: Array<{
-                __typename?: 'ComponentCommonActionButton';
-                id: string;
-                text: string;
-                action?: Enum_Componentcommonactionbutton_Action | null;
-                navigationUrl?: string | null;
-                dataRef?: string | null;
-                solid?: boolean | null;
-              } | null> | null;
-            }
-          | {
-              __typename: 'ComponentV2ProductImageCard';
-              id: string;
-              image: {
-                __typename?: 'UploadFileEntityResponse';
-                data?: {
-                  __typename?: 'UploadFileEntity';
-                  attributes?: {
-                    __typename?: 'UploadFile';
-                    url: string;
-                    height?: number | null;
-                    width?: number | null;
-                    alternativeText?: string | null;
-                  } | null;
-                } | null;
-              };
-            }
+          | { __typename: 'ComponentV2ProductHero'; id: string; text: string }
           | {
               __typename: 'ComponentV2ProductPricingCards';
               id: string;
@@ -4001,27 +3953,6 @@ export const GetV2ProductPageBySlugDocument = gql`
             ... on ComponentV2ProductHero {
               id
               text
-              buttons {
-                id
-                text
-                action
-                navigationUrl
-                dataRef
-                solid
-              }
-            }
-            ... on ComponentV2ProductImageCard {
-              id
-              image {
-                data {
-                  attributes {
-                    url
-                    height
-                    width
-                    alternativeText
-                  }
-                }
-              }
             }
             ... on ComponentV2ProductPricingCards {
               id
