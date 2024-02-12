@@ -4,7 +4,7 @@ import { FormsModule as NgFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { DefaultFeedComponent } from './feed/feed.component';
-import { DefaultFeedContainerComponent } from './container.component';
+import { DefaultFeedContainerComponent } from './default-feed-container.component';
 import { DiscoveryDisclaimerModule } from '../discovery/disclaimer/disclaimer.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';

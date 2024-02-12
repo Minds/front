@@ -11,8 +11,8 @@ import { Session } from '../../services/session';
  */
 @Component({
   selector: 'm-homepageContainer',
-  templateUrl: 'container.component.html',
-  styleUrls: ['container.component.ng.scss'],
+  templateUrl: 'homepage-container.component.html',
+  styleUrls: ['homepage-container.component.ng.scss'],
 })
 export class HomepageContainerComponent implements OnInit {
   constructor(
