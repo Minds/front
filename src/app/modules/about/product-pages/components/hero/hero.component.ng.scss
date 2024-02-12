@@ -5,9 +5,6 @@
   margin: $spacing24 0 $spacing10 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: $spacing12;
 
   padding: 0 $spacing30;
 
@@ -17,7 +14,6 @@
 
   @media screen and (max-width: $min-tablet) {
     margin: $spacing7 0;
-    gap: $spacing9;
   }
 
   markdown {
@@ -31,31 +27,6 @@
       h4 {
         padding: 0 $spacing8;
       }
-    }
-  }
-
-  .m-productPageHero__buttonsContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: $spacing10;
-
-    @media screen and (max-width: $min-tablet) {
-      gap: $spacing8;
-    }
-    @media screen and (max-width: $max-mobile) {
-      flex-direction: column;
-      gap: $spacing6;
-    }
-  }
-
-  m-productPage__button {
-    display: block;
-    max-width: 300px;
-    width: fit-content;
-    @media screen and (max-width: $max-mobile) {
-      width: 100%;
-      gap: $spacing6;
     }
   }
 }

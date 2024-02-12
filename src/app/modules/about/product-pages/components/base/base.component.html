@@ -3,12 +3,7 @@
     <m-productPage__hero
       *ngSwitchCase="'ComponentV2ProductHero'"
       [text]="component.text"
-      [buttons]="component?.buttons"
     ></m-productPage__hero>
-    <m-productPage__imageCard
-      *ngSwitchCase="'ComponentV2ProductImageCard'"
-      [image]="component.image.data?.attributes"
-    ></m-productPage__imageCard>
     <m-productPage__pricingCards
       *ngSwitchCase="'ComponentV2ProductPricingCards'"
       [savingsText]="component.savingsText"
