@@ -37,6 +37,7 @@ import {
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client';
 import { MindsGroup } from '../../../../../../../groups/v2/group.model';
+import { MembershipsCountService } from '../../../../../../../memberships/services/membership-count.service';
 
 /**
  * Form for creating and editing membership details.
@@ -115,6 +116,7 @@ export class NetworkAdminMonetizationMembershipFormComponent
     private getSiteMembershipGQL: GetSiteMembershipGQL,
     private setSiteMembershipGQL: SetSiteMembershipGQL,
     private updateSiteMembershipGQL: UpdateSiteMembershipGQL,
+    private membershipCountService: MembershipsCountService,
     private toasterService: ToasterService,
     private router: Router,
     private route: ActivatedRoute
@@ -325,6 +327,7 @@ export class NetworkAdminMonetizationMembershipFormComponent
       this.toasterService.success('Membership successfully saved');
       this.formGroup.markAsUntouched();
       this.formGroup.markAsPristine();
+      this.membershipCountService.incrementMembershipCount();
       this.router.navigateByUrl('/network/admin/monetization/memberships');
     } catch (e) {
       this.toasterService.error(e);

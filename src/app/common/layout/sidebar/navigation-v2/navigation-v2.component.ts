@@ -19,7 +19,7 @@ import { SidebarNavigationService } from '../navigation.service';
 import { ConfigsService } from '../../../services/configs.service';
 import { Observable, Subscription, of } from 'rxjs';
 import { Router, NavigationEnd, Event } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { ComposerModalService } from '../../../../modules/composer/components/modal/modal.service';
 import { ThemeService } from '../../../services/theme.service';
@@ -29,6 +29,7 @@ import { ExperimentsService } from '../../../../modules/experiments/experiments.
 import { IS_TENANT_NETWORK } from '../../../injection-tokens/tenant-injection-tokens';
 import { PermissionsService } from '../../../services/permissions.service';
 import { MultiTenantConfigImageService } from '../../../../modules/multi-tenant-network/services/config-image.service';
+import { MembershipsCountService } from '../../../../modules/memberships/services/membership-count.service';
 
 /**
  * V2 version of sidebar component.
@@ -78,6 +79,17 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   /** Whether experiment controlling reorganization of menu items variation is active */
   public showReorgVariation: boolean = false;
 
+  /** Whether memberships link should be shown. */
+  public readonly shouldShowMembershipsLink$: Observable<boolean> = !this
+    .isTenantNetwork
+    ? of(false)
+    : this.membershipsCountService.count$.pipe(
+        distinctUntilChanged(),
+        map((count: number) => {
+          return this.isTenantNetwork && count > 0;
+        })
+      );
+
   /**
    * Sets display mode on resize.
    */
@@ -114,6 +126,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private authModal: AuthModalService,
     private experiments: ExperimentsService,
     private tenantConfigImageService: MultiTenantConfigImageService,
+    private membershipsCountService: MembershipsCountService,
     protected permissions: PermissionsService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {

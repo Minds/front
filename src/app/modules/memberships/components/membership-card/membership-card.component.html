@@ -1,0 +1,79 @@
+<div class="m-membershipCard__content">
+  <h4 class="m-membershipCard__membershipName">{{ name }}</h4>
+  <p class="m-membershipCard__pricingPeriod">
+    <strong>{{
+      priceInCents / 100 | currency: priceCurrencyCode:'symbol':'1.0-2'
+    }}</strong>
+    <span>&nbsp;</span>
+    <ng-container
+      *ngIf="
+        pricingModel === SiteMembershipPricingModelEnum.OneTime;
+        else billingPeriodTemplate
+      "
+      i18n="@@MEMBERSHIPS_CARD__ONE_TIME_PAYMENT"
+    >
+      / One-time payment
+    </ng-container>
+    <ng-template #billingPeriodTemplate>
+      <ng-container [ngSwitch]="billingPeriod">
+        <ng-container
+          *ngSwitchCase="SiteMembershipBillingPeriodEnum.Yearly"
+          i18n="@@MEMBERSHIPS_CARD__PER_YEAR"
+          >/ year</ng-container
+        >
+        <ng-container
+          *ngSwitchCase="SiteMembershipBillingPeriodEnum.Monthly"
+          i18n="@@MEMBERSHIPS_CARD__PER_MONTH"
+          >/ month</ng-container
+        >
+      </ng-container>
+    </ng-template>
+  </p>
+  <p class="m-membershipCard__description">{{ description }}</p>
+
+  <div class="m-membershipCard__footer">
+    <ng-container *ngIf="!isMember; else managePlanButtonTemplate">
+      <m-button
+        class="m-membershipCard__actionButton"
+        color="blue"
+        solid="true"
+        size="xsmall"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        (onAction)="joinMembershipClickEmitter.emit(membership)"
+        ><ng-container i18n="@@MEMBERSHIP_CARD__JOIN_MEMBERSHIP"
+          >Join membership</ng-container
+        ></m-button
+      >
+    </ng-container>
+    <ng-template #managePlanButtonTemplate>
+      <ng-container [ngSwitch]="pricingModel">
+        <m-button
+          *ngSwitchCase="SiteMembershipPricingModelEnum.Recurring"
+          class="m-membershipCard__actionButton"
+          color="blue"
+          size="xsmall"
+          [solid]="false"
+          [disabled]="inProgress"
+          [saving]="inProgress"
+          (onAction)="managePlanClickEmitter.emit(membership)"
+        >
+          <ng-container i18n="@@MEMBERSHIP_CARD__MANAGER_PLAN"
+            >Manage plan</ng-container
+          ></m-button
+        >
+        <m-button
+          *ngSwitchDefault
+          class="m-membershipCard__actionButton"
+          color="blue"
+          size="xsmall"
+          [solid]="false"
+          [disabled]="true"
+          ><ng-container i18n="@@MEMBERSHIP_CARD__PURCHASED"
+            >Purchased</ng-container
+          ></m-button
+        >
+      </ng-container>
+    </ng-template>
+  </div>
+</div>
