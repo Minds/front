@@ -5,42 +5,40 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  OnDestroy,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
-import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import * as moment from 'moment';
+import { PlusService } from '../../../plus/plus.service';
 
 /**
- * Settings form cancelling Pro subscription
- * (or upgrading to Pro, if you don't have it yet)
+ * Settings form cancelling Plus subscription
  */
 @Component({
-  selector: 'm-settingsV2Pro__cancel',
+  selector: 'm-settingsV2Plus__cancel',
   templateUrl: './cancel.component.html',
   styleUrls: ['./cancel.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2ProCancelComponent implements OnInit {
+export class SettingsV2PlusCancelComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
   protected paramMap$: Subscription;
   user: string | null = null;
   error: string = '';
-
-  isActive: boolean = false;
+  isActive: boolean = true;
   hasSubscription: boolean = false;
+  canBeCancelled: boolean = false;
   expires: number = 0;
 
   constructor(
     protected cd: ChangeDetectorRef,
     private session: Session,
-    protected proService: ProService,
+    protected plusService: PlusService,
     private dialogService: DialogService,
     protected router: Router,
     protected route: ActivatedRoute,
@@ -64,9 +62,10 @@ export class SettingsV2ProCancelComponent implements OnInit {
     this.detectChanges();
 
     try {
-      this.isActive = await this.proService.isActive();
-      this.hasSubscription = await this.proService.hasSubscription();
-      this.expires = await this.proService.expires();
+      this.isActive = await this.plusService.isActive();
+      this.hasSubscription = await this.plusService.hasSubscription();
+      this.canBeCancelled = await this.plusService.canBeCancelled();
+      this.expires = await this.plusService.expires();
     } catch (e) {
       this.error = (e && e.message) || 'Unknown error';
       this.toasterService.error('Error: ' + this.error);
@@ -78,10 +77,11 @@ export class SettingsV2ProCancelComponent implements OnInit {
     this.detectChanges();
   }
 
-  async cancelSubscription() {
+  async cancelSubscription(): Promise<void> {
     if (!this.isActive || (this.isActive && !this.hasSubscription)) {
       return;
     }
+
     this.confirmCancellation().subscribe(async confirmed => {
       if (!confirmed) {
         return;
@@ -89,9 +89,9 @@ export class SettingsV2ProCancelComponent implements OnInit {
 
       this.error = null;
       try {
-        await this.proService.disable();
+        await this.plusService.disable();
         this.toasterService.success(
-          'You have successfully canceled your Minds Pro subscription.'
+          'You have successfully canceled your Minds+ subscription.'
         );
         this.router.navigate(['/', this.session.getLoggedInUser().username]);
       } catch (e) {
@@ -103,7 +103,7 @@ export class SettingsV2ProCancelComponent implements OnInit {
 
   private confirmCancellation(): Observable<boolean> {
     return this.dialogService.confirm(
-      'Are you sure you want to cancel your Pro subscription?'
+      'Are you sure you want to cancel your Minds+ subscription?'
     );
   }
 
