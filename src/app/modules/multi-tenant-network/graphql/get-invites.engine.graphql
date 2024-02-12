@@ -14,7 +14,9 @@ query getInvites($first: Int!, $after: String, $search: String) {
           name
           permissions
         }
-        groups
+        groups {
+          legacy
+        }
       }
       cursor
     }

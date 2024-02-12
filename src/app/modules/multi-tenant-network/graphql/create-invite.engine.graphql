@@ -2,7 +2,7 @@ mutation createInvite(
   $emails: String!
   $bespokeMessage: String!
   $roles: [Int!]
-  $groups: [Int!]
+  $groups: [String!]
 ) {
   invite(
     emails: $emails

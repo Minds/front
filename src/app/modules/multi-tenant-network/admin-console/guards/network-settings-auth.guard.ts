@@ -8,10 +8,11 @@ import {
 import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 /**
  * Auth guard for network settings pages. Ensures we ARE on a tenant network
- * and the user IS an admin.
+ * and the user IS an admin. (Or if we can moderate, if going to a moderation route)
  */
 @Injectable({ providedIn: 'root' })
 export class NetworkSettingsAuthGuard implements CanActivate {
@@ -19,7 +20,8 @@ export class NetworkSettingsAuthGuard implements CanActivate {
     protected configs: ConfigsService,
     private session: Session,
     private router: Router,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private permissions: PermissionsService
   ) {}
 
   /**
@@ -33,9 +35,21 @@ export class NetworkSettingsAuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if (this.session.isAdmin() && this.configs.get<boolean>('is_tenant')) {
-      return true;
+    const isModerationRoute = state.url.includes('/moderation/reports');
+
+    // Make sure we're on a tenant site
+    if (this.configs.get<boolean>('is_tenant')) {
+      // Allow access if user is an admin
+      if (this.session.isAdmin()) {
+        return true;
+      }
+
+      // Allow access to moderation reports if the user can moderate
+      if (isModerationRoute && this.permissions.canModerateContent()) {
+        return true;
+      }
     }
+
     this.toaster.warn('You do not have permission to access this route.');
     this.router.navigate(['/']);
     return false;

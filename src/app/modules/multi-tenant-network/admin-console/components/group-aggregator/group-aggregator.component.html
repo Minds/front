@@ -1,0 +1,21 @@
+<ng-container *ngIf="groups.length > 0">
+  <!-- put an edit button here, if desired -->
+  <ng-content></ng-content>
+
+  <div class="m-groupAggregator__featuredGroup">
+    <minds-avatar
+      class="m-groupAggregatorFeaturedGroup__avatar"
+      [object]="featuredGroup.legacy"
+    ></minds-avatar>
+    <span class="m-groupAggregatorFeaturedGroup__name">{{
+      featuredGroup.legacy.name
+    }}</span>
+  </div>
+  <span
+    *ngIf="groups.length > 1"
+    class="m-groupAggregator__additionalGroupCount"
+    [title]="aggregatedGroupHoverText"
+    >+{{ groups.length - 1 }}
+    {{ groups.length === 2 ? 'group' : 'groups' }}</span
+  >
+</ng-container>

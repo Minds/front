@@ -1,0 +1,26 @@
+@import 'defaults.scss';
+
+:host {
+  padding: $spacing8 0;
+
+  .m-networkAdminMonetization__horizontalMargin {
+    margin-right: $spacing8;
+    margin-left: $spacing8;
+  }
+
+  .m-networkAdminMonetization__title {
+    margin-top: unset;
+    margin-bottom: unset;
+
+    @include heading3Bold;
+  }
+
+  .m-networkAdminMonetization__description {
+    margin-bottom: $spacing4;
+
+    @include body2Medium;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

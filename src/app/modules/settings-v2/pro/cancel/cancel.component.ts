@@ -82,20 +82,29 @@ export class SettingsV2ProCancelComponent implements OnInit {
     if (!this.isActive || (this.isActive && !this.hasSubscription)) {
       return;
     }
-    this.dialogService.confirm(
+    this.confirmCancellation().subscribe(async confirmed => {
+      if (!confirmed) {
+        return;
+      }
+
+      this.error = null;
+      try {
+        await this.proService.disable();
+        this.toasterService.success(
+          'You have successfully canceled your Minds Pro subscription.'
+        );
+        this.router.navigate(['/', this.session.getLoggedInUser().username]);
+      } catch (e) {
+        this.error = e.message;
+        this.toasterService.error('Error: ' + this.error);
+      }
+    });
+  }
+
+  private confirmCancellation(): Observable<boolean> {
+    return this.dialogService.confirm(
       'Are you sure you want to cancel your Pro subscription?'
     );
-    this.error = null;
-    try {
-      await this.proService.disable();
-      this.toasterService.success(
-        'You have successfully canceled your Minds Pro subscription.'
-      );
-      this.router.navigate(['/', this.session.getLoggedInUser().username]);
-    } catch (e) {
-      this.error = e.message;
-      this.toasterService.error('Error: ' + this.error);
-    }
   }
 
   get expiryString(): string {

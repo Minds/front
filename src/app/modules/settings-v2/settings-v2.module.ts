@@ -78,6 +78,8 @@ import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.
 import { SettingsV2RssSyncComponent } from './other/rss-sync/rss-sync.component';
 import { LoggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
 import { SettingsV2EmbeddedCommentsComponent } from './other/embedded-comments/embedded-comments.component';
+import { SettingsV2PlusCancelComponent } from './plus/cancel/cancel.component';
+import { SettingsV2PlusVerifyComponent } from './plus/verify/verify.component';
 import { permissionGuard } from '../../common/guards/permission.guard';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
 
@@ -224,6 +226,34 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
 
           { path: '**', redirectTo: 'account' },
+        ],
+      },
+      {
+        path: 'plus',
+        component: SettingsV2Component,
+        canActivate: [MindsOnlyRedirectGuard],
+        data: {
+          isMenu: true,
+          title: 'Minds+ Settings',
+          description: 'Manage your Minds+ subscription',
+        },
+        children: [
+          {
+            path: 'verify',
+            component: SettingsV2PlusVerifyComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Verify Channel',
+            },
+          },
+          {
+            path: 'cancel',
+            component: SettingsV2PlusCancelComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Cancel Minds+ Subscription',
+            },
+          },
         ],
       },
       {
@@ -645,6 +675,8 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2EmbeddedCommentsComponent,
     SettingsV2NostrComponent,
     SettingsV2AffiliatesComponent,
+    SettingsV2PlusCancelComponent,
+    SettingsV2PlusVerifyComponent,
   ],
   providers: [SettingsV2Service, WalletV2Service],
   exports: [SettingsV2Component],

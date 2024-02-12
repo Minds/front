@@ -24,6 +24,11 @@ export class ConfirmV2Component {
   public body: string = DEFAULT_BODY;
 
   /**
+   * Text of confirm button.
+   */
+  public confirmButtonText: string = 'Confirm';
+
+  /**
    * Colour of confirm button.
    */
   public confirmButtonColor: string = 'blue';
@@ -32,6 +37,11 @@ export class ConfirmV2Component {
    * Whether confirm button is solid.
    */
   public confirmButtonSolid: boolean = false;
+
+  /**
+   * Whether confirm button is solid.
+   */
+  public showCancelButton: boolean = true;
 
   /**
    * Triggered on confirm click
@@ -49,6 +59,8 @@ export class ConfirmV2Component {
    * @param { string } body - text body of the component.
    * @param { string } confirmButtonColor - color of the confirm button.
    * @param { string } confirmButtonSolid - whether confirm button is solid.
+   * @param { string } confirmButtonText - text of the confirm button.
+   * @param { string } showCancelButton - whether cancel button is shown.
    * @param { function } onConfirm - callback on call for confirmation.
    * @param { function } onDismiss - callback on call to dismiss modal.
    */
@@ -57,6 +69,8 @@ export class ConfirmV2Component {
     body,
     confirmButtonColor,
     confirmButtonSolid = false,
+    confirmButtonText = 'Confirm',
+    showCancelButton = true,
     onConfirm,
     onDismiss,
   }) {
@@ -64,6 +78,8 @@ export class ConfirmV2Component {
     this.body = body || DEFAULT_BODY;
     this.confirmButtonColor = confirmButtonColor || 'blue';
     this.confirmButtonSolid = confirmButtonSolid || false;
+    this.confirmButtonText = confirmButtonText ?? 'Confirm';
+    this.showCancelButton = showCancelButton ?? true;
     this.onConfirm = onConfirm || noOp;
     this.onDismiss = onDismiss || noOp;
   }

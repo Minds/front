@@ -1,0 +1,3 @@
+mutation archiveSiteMembership($siteMembershipGuid: String!) {
+    archiveSiteMembership(siteMembershipGuid: $siteMembershipGuid)
+}

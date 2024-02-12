@@ -70,7 +70,7 @@ export class NetworkAdminConsoleFeaturedEntityRowComponent {
    * Called when the bell icon is pressed.
    * New users will be automatically opted in to post notifications from these channels.
    */
-  public async onPostSubscripionClick(): Promise<void> {
+  public async onPostSubscriptionClick(): Promise<void> {
     try {
       this.isUpdating$.next(true);
       const result = await lastValueFrom(

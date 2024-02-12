@@ -61,6 +61,28 @@ describe('FormErrorComponent', () => {
       });
   });
 
+  it('should display error for max', (done: DoneFn) => {
+    comp.errors = { max: { max: 10 } };
+
+    (comp as any).errorString$
+      .pipe(take(1))
+      .subscribe((errorString: string) => {
+        expect(errorString).toBe('Must not be more than 10.');
+        done();
+      });
+  });
+
+  it('should display error for min', (done: DoneFn) => {
+    comp.errors = { min: { min: 10 } };
+
+    (comp as any).errorString$
+      .pipe(take(1))
+      .subscribe((errorString: string) => {
+        expect(errorString).toBe('Must not be less than 10.');
+        done();
+      });
+  });
+
   it('should display custom error message', (done: DoneFn) => {
     const errorMessage: string = 'Custom error message';
     comp.errors = { customMessage: errorMessage };

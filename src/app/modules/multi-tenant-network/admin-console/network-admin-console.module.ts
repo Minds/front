@@ -35,6 +35,9 @@ import { AssignRolesModalComponent } from './tabs/roles/tabs/users/assign-roles-
 import { NetworkAdminConsoleRoleIconComponent } from './components/role-icon/role-icon.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { CustomPageFormContentPreviewModalComponent } from './components/custom-page-form/content-preview-modal/content-preview-modal.component';
+import { CanModerateContentGuard } from './guards/can-moderate-content.guard';
+import { GroupAggregatorComponent } from './components/group-aggregator/group-aggregator.component';
+import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -46,6 +49,12 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
       { path: 'general', component: NetworkAdminConsoleGeneralComponent },
       { path: 'appearance', component: NetworkAdminConsoleAppearanceComponent },
       { path: 'domain', component: NetworkAdminConsoleDomainComponent },
+      {
+        path: 'monetization',
+        loadChildren: async () =>
+          (await import('./tabs/monetization/monetization-lazy.module'))
+            .NetworkAdminMonetizationLazyModule,
+      },
       {
         path: 'moderation',
         component: NetworkAdminConsoleModerationComponent,
@@ -72,6 +81,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
             loadChildren: async () =>
               (await import('./tabs/moderation/reports/reports-lazy.module'))
                 .NetworkAdminReportLazyModule,
+            canActivate: [CanModerateContentGuard],
           },
         ],
       },
@@ -109,6 +119,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NetworkAdminConsoleSharedModule,
     RouterModule.forChild(NETWORK_ADMIN_CONSOLE_ROUTES),
     NetworkAdminConsoleImageInputComponent,
     MarkdownModule.forChild(),
@@ -137,8 +148,8 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleInviteInvitationsComponent,
     RoleChipComponent,
     RoleAggregatorComponent,
+    GroupAggregatorComponent,
     AssignRolesModalComponent,
-    NetworkAdminConsoleRoleIconComponent,
     CustomPageFormComponent,
     CustomPageFormContentPreviewModalComponent,
   ],
