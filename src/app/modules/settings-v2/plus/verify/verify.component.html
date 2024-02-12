@@ -1,0 +1,33 @@
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__PLUS__VERIFY__LABEL">Verify your account</span>
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PLUS__VERIFY__DESCRIPTION">
+    Confirm your identity, get a badge.
+  </div>
+</m-settingsV2__header>
+
+<div class="m-formLayout--buttonLeft">
+  <div class="m-form__buttonsContainer">
+    <m-button
+      [disabled]="!isActive || isVerified || (verifyModal.onComplete$ | async)"
+      (onAction)="openVerifyModal()"
+      i18n="@@COMMON__VERIFY"
+      color="blue"
+    >
+      Verify
+    </m-button>
+  </div>
+</div>
+<span
+  class="m-settingV2__plusVerifiedNotice m-settingV2__plusVerifiedNotice--verified"
+  i18n="@@SETTINGS__PLUS__VERIFY__CHANNEL_IS_VERIFIED"
+  *ngIf="isVerified"
+  ><i class="material-icons">check</i>Your channel is verified</span
+>
+<span
+  *ngIf="verifyModal.onComplete$ | async"
+  class="m-settingV2__plusVerifiedNotice m-settingV2__plusVerifiedNotice--pending"
+  i18n="@@SETTINGS__PLUS__VERIFY__CHANNEL_IS_VERIFIED"
+  >Verification pending</span
+>

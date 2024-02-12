@@ -1,3 +1,4 @@
+<h3 i18n="@@COMMON__VERIFY">Verify</h3>
 <form
   (submit)="submit($event)"
   [formGroup]="form"
@@ -6,10 +7,12 @@
 >
   <ul>
     <p i18n="@@PLUS__VERIFY__LINKS_INPUT_LABEL">
-      Please post your Minds channel page (eg. https://minds.com/YourUsername)
-      on two other social media sites where you own the same username to verify
-      yourself. They must link back to your Minds channel so we know it is you.
+      Please post a link to your Minds channel page (e.g.
+      https://minds.com/YourUsername) on two other social media sites where you
+      own the same username to verify yourself. They must link back to your
+      Minds channel so we know it is you.
     </p>
+
     <li>
       <input
         type="text"
@@ -35,15 +38,17 @@
     <li><textarea formControlName="description"></textarea></li>
   </ul>
 
-  <m-button
-    color="blue"
-    type="submit"
-    [disabled]="!f.form.valid"
-    [saving]="inProgress"
-    i18n="@@PLUS__VERIFY__SUBMIT_ACTION"
-  >
-    Submit
-  </m-button>
+  <div class="m-plusVerifyModal__buttonContainer">
+    <m-button
+      color="blue"
+      type="submit"
+      [disabled]="!f.form.valid"
+      [saving]="inProgress"
+      i18n="@@PLUS__VERIFY__SUBMIT_ACTION"
+    >
+      Submit
+    </m-button>
+  </div>
 </form>
 
 <m-modalCloseButton></m-modalCloseButton>
