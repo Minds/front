@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ResetPasswordModalService } from '../auth/reset-password-modal/reset-password-modal.service';
 import { SiteService } from '../../common/services/site.service';
 import { IsTenantService } from '../../common/services/is-tenant.service';
+import { Session } from '../../services/session';
 
 /**
  * Routes users to a "homepage" depending on active experiments.
@@ -22,7 +23,8 @@ export class HomepageContainerComponent implements OnInit {
     private router: Router,
     private resetPasswordModal: ResetPasswordModalService,
     private site: SiteService,
-    private isTenant: IsTenantService
+    private isTenant: IsTenantService,
+    private session: Session
   ) {}
 
   isGuestMode: boolean;
@@ -30,6 +32,11 @@ export class HomepageContainerComponent implements OnInit {
   queryParams;
 
   ngOnInit(): void {
+    if (this.session.isLoggedIn()) {
+      this.router.navigate(['/newsfeed']);
+      return;
+    }
+
     this.route.queryParams.subscribe(params => {
       // open reset password modal
       if (params['resetPassword']) {

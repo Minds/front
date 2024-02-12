@@ -1,0 +1,25 @@
+@import 'defaults.scss';
+
+:host {
+  .m-settingV2__plusVerifiedNotice {
+    display: flex;
+    align-items: center;
+    gap: $spacing1;
+    @include body1Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &.m-settingV2__plusVerifiedNotice--verified {
+      i {
+        @include m-theme() {
+          color: themed($m-green);
+        }
+      }
+    }
+  }
+
+  .m-form__buttonsContainer {
+    margin-bottom: $spacing5 !important;
+  }
+}

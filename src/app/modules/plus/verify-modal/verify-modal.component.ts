@@ -2,8 +2,6 @@ import {
   Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 import {
   UntypedFormGroup,
@@ -12,26 +10,28 @@ import {
 } from '@angular/forms';
 
 import { Client } from '../../../common/api/client.service';
-
+import { ToasterService } from '../../../common/services/toaster.service';
 /**
  * Opens a modal with a form for Minds+ users to get verified.
  *
- * See it on the /plus marketing page of a user who isn't verified yet.
+ * See it in settings > plus > verify
  */
 @Component({
-  selector: 'm-plus--verify',
-  templateUrl: 'verify.component.html',
+  selector: 'm-plusVerifyModal',
+  templateUrl: 'verify-modal.component.html',
+  styleUrls: ['verify-modal.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlusVerifyComponent {
+export class PlusVerifyModalComponent {
   form: UntypedFormGroup;
-  onDismiss: () => void;
+  onCompleted: () => void;
   inProgress: boolean = false;
 
   constructor(
     private client: Client,
     private cd: ChangeDetectorRef,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    private toaster: ToasterService
   ) {}
 
   ngOnInit() {
@@ -49,11 +49,14 @@ export class PlusVerifyComponent {
       .post('api/v1/plus/verify', this.form.value)
       .then(() => {
         this.inProgress = false;
-        this.onDismiss?.();
+        this.toaster.success('Your verification request has been submitted');
+
+        this.onCompleted?.();
         this.detectChanges();
       })
       .catch(() => {
         this.inProgress = false;
+        this.toaster.error('Sorry, something went wrong');
         this.detectChanges();
       });
   }
@@ -65,10 +68,10 @@ export class PlusVerifyComponent {
 
   /**
    * Modal options
-   * @param onApply
-   * @param onDismissIntent
+   * @param onCompleted
+   * @returns { void }
    */
-  setModalData({ onDismiss }) {
-    this.onDismiss = onDismiss;
+  public setModalData({ onCompleted }): void {
+    this.onCompleted = onCompleted;
   }
 }

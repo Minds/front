@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+:host {
+  .m-settingV2__plusCancelNotice {
+    font-size: 14px;
+    line-height: 18px;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+}
