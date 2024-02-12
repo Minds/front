@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { ChannelsV2Service } from '../channels-v2.service';
 import { PostMenuService } from '../../../../common/components/post-menu/post-menu.service';
 import { ActivityService } from '../../../../common/services/activity.service';
@@ -9,6 +14,9 @@ import { AdminSupersetLinkService } from '../../../../common/services/admin-supe
 import { ChannelActionsMenuComponent } from './menu.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { BehaviorSubject } from 'rxjs';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
+import { PermissionsService } from '../../../../common/services/permissions.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 describe('ChannelActionsMenuComponent', () => {
   let comp: ChannelActionsMenuComponent;
@@ -50,6 +58,11 @@ describe('ChannelActionsMenuComponent', () => {
           provide: AdminSupersetLinkService,
           useValue: MockService(AdminSupersetLinkService),
         },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+        { provide: IS_TENANT_NETWORK, useValue: true },
       ],
     })
       .overrideProvider(PostMenuService, {
@@ -64,6 +77,9 @@ describe('ChannelActionsMenuComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChannelActionsMenuComponent);
     comp = fixture.componentInstance;
+
+    Object.defineProperty(comp, 'isTenantNetwork', { writable: true });
+
     fixture.detectChanges();
   });
 
@@ -81,5 +97,44 @@ describe('ChannelActionsMenuComponent', () => {
     expect(
       (comp as any).adminSupersetLink.getUserOverviewUrl
     ).toHaveBeenCalledOnceWith('123');
+  });
+
+  describe('ban', () => {
+    it('should call to ban user', fakeAsync(() => {
+      (comp as any).postMenu.setEntity.and.returnValue((comp as any).postMenu);
+
+      comp.ban();
+      tick();
+
+      expect((comp as any).service.setChannel).toHaveBeenCalled();
+      expect((comp as any).postMenu.setEntity).toHaveBeenCalled();
+      expect((comp as any).postMenu.ban).toHaveBeenCalled();
+    }));
+  });
+
+  describe('shouldShowTenantModerationOptions', () => {
+    it('should determine to show tenant moderation options', () => {
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(true);
+      (comp as any).isTenantNetwork = true;
+      expect(comp.shouldShowTenantModerationOptions()).toBe(true);
+    });
+
+    it('should determine NOT to show tenant moderation options because the user has no permission', () => {
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(false);
+      (comp as any).isTenantNetwork = true;
+      expect(comp.shouldShowTenantModerationOptions()).toBe(false);
+    });
+
+    it('should determine NOT to show tenant moderation options because the user is not on a tenant network', () => {
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(true);
+      (comp as any).isTenantNetwork = false;
+      expect(comp.shouldShowTenantModerationOptions()).toBe(false);
+    });
   });
 });

@@ -710,6 +710,8 @@ export type Mutation = {
   createNewReport: Scalars['Boolean']['output'];
   createRssFeed: RssFeed;
   createTenant: Tenant;
+  /** Delete an entity. */
+  deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
@@ -732,6 +734,8 @@ export type Mutation = {
   setRolePermission: Role;
   /** Set the stripe keys for the network */
   setStripeKeys: Scalars['Boolean']['output'];
+  /** Ban or unban a given user. */
+  setUserBanState: Scalars['Boolean']['output'];
   siteMembership: SiteMembership;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
@@ -800,6 +804,10 @@ export type MutationCreateTenantArgs = {
   tenant?: InputMaybe<TenantInput>;
 };
 
+export type MutationDeleteEntityArgs = {
+  subjectUrn: Scalars['String']['input'];
+};
+
 export type MutationDeleteFeaturedEntityArgs = {
   entityGuid: Scalars['String']['input'];
 };
@@ -866,6 +874,11 @@ export type MutationSetRolePermissionArgs = {
 export type MutationSetStripeKeysArgs = {
   pubKey: Scalars['String']['input'];
   secKey: Scalars['String']['input'];
+};
+
+export type MutationSetUserBanStateArgs = {
+  banState: Scalars['Boolean']['input'];
+  subjectGuid: Scalars['String']['input'];
 };
 
 export type MutationSiteMembershipArgs = {
@@ -1663,6 +1676,25 @@ export type AdminUpdateAccountMutationVariables = Exact<{
 export type AdminUpdateAccountMutation = {
   __typename?: 'Mutation';
   updateAccount: Array<string>;
+};
+
+export type ModerationSetUserBanStateMutationVariables = Exact<{
+  subjectGuid: Scalars['String']['input'];
+  banState: Scalars['Boolean']['input'];
+}>;
+
+export type ModerationSetUserBanStateMutation = {
+  __typename?: 'Mutation';
+  setUserBanState: boolean;
+};
+
+export type ModerationDeleteEntityMutationVariables = Exact<{
+  subjectUrn: Scalars['String']['input'];
+}>;
+
+export type ModerationDeleteEntityMutation = {
+  __typename?: 'Mutation';
+  deleteEntity: boolean;
 };
 
 export type GetBoostFeedQueryVariables = Exact<{
@@ -4743,6 +4775,47 @@ export class AdminUpdateAccountGQL extends Apollo.Mutation<
   AdminUpdateAccountMutationVariables
 > {
   document = AdminUpdateAccountDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ModerationSetUserBanStateDocument = gql`
+  mutation ModerationSetUserBanState(
+    $subjectGuid: String!
+    $banState: Boolean!
+  ) {
+    setUserBanState(subjectGuid: $subjectGuid, banState: $banState)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ModerationSetUserBanStateGQL extends Apollo.Mutation<
+  ModerationSetUserBanStateMutation,
+  ModerationSetUserBanStateMutationVariables
+> {
+  document = ModerationSetUserBanStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ModerationDeleteEntityDocument = gql`
+  mutation ModerationDeleteEntity($subjectUrn: String!) {
+    deleteEntity(subjectUrn: $subjectUrn)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ModerationDeleteEntityGQL extends Apollo.Mutation<
+  ModerationDeleteEntityMutation,
+  ModerationDeleteEntityMutationVariables
+> {
+  document = ModerationDeleteEntityDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

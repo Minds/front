@@ -47,6 +47,9 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-enabled.service';
+import { PermissionsEnum } from '../../../../graphql/generated.engine';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
+import { ModerationActionGqlService } from '../../admin/moderation/services/moderation-action-gql.service';
 
 @Component({
   selector: 'm-comment',
@@ -155,7 +158,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     private clientMetaService: ClientMetaService,
     protected permissions: PermissionsService,
     protected nsfwEnabledService: NsfwEnabledService,
-    @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective
+    private moderationActionsGql: ModerationActionGqlService,
+    @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective,
+    @Inject(IS_TENANT_NETWORK) private isTenantNetwork: boolean
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -297,7 +302,11 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     }
 
     try {
-      await this.client.delete('api/v1/comments/' + this.comment.guid);
+      if (!this.isTenantNetwork || this.isOwner) {
+        await this.client.delete('api/v1/comments/' + this.comment.guid);
+      } else {
+        await this.moderationActionsGql.deleteEntity(this.comment.urn);
+      }
     } catch (e) {
       this.toasterService.error(e.message);
       console.error(e);
@@ -559,6 +568,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
     return (
       this.session.isAdmin() ||
+      this.permissions.has(PermissionsEnum.CanModerateContent) ||
       this.canDelete ||
       this.comment.owner_guid == loggedInUserGuid ||
       this.entity.owner_guid == loggedInUserGuid ||

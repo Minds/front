@@ -9,6 +9,8 @@ import { ConfigsService } from '../../../../common/services/configs.service';
 import { ChannelContentService } from './content.service';
 import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
+import { PermissionsService } from '../../../../common/services/permissions.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 /**
  * A container for channel loading errors.
@@ -42,6 +44,7 @@ export class ChannelContentComponent implements OnInit, OnDestroy {
   constructor(
     public content: ChannelContentService,
     public session: Session,
+    private permissions: PermissionsService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -57,5 +60,16 @@ export class ChannelContentComponent implements OnInit, OnDestroy {
     if (this.stateSubscription) {
       this.stateSubscription.unsubscribe();
     }
+  }
+
+  /**
+   * Whether account banned section can be shown.
+   * @returns { boolean }
+   */
+  public canShowAccountBannedSection(): boolean {
+    return (
+      !this.session.isAdmin() &&
+      !this.permissions.has(PermissionsEnum.CanModerateContent)
+    );
   }
 }

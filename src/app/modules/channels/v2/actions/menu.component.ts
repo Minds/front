@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Inject,
   Input,
   OnInit,
 } from '@angular/core';
@@ -12,6 +13,9 @@ import { Client } from '../../../../services/api/client';
 import { ChannelAdminConfirmationService } from './admin-confirmation/admin-confirmation.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { AdminSupersetLinkService } from '../../../../common/services/admin-superset-link.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 export interface ProToggleResponse {
   status?: string;
@@ -44,7 +48,9 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
     private client: Client,
     private adminConfirmation: ChannelAdminConfirmationService,
     activity: ActivityService,
-    private adminSupersetLink: AdminSupersetLinkService
+    private adminSupersetLink: AdminSupersetLinkService,
+    private permissions: PermissionsService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {
     super();
   }
@@ -107,6 +113,20 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
     this.service.setChannel({ ...channel });
 
     this.service.onSubscriptionChanged.emit(false);
+  }
+
+  /**
+   * Ban the user.
+   * @returns { Promise<void> }
+   */
+  public async ban(): Promise<void> {
+    // Shallow clone current user
+    const channel = { ...this.service.channel$.getValue() };
+
+    // Optimistic mutation
+    this.service.setChannel({ ...channel, banned: 'yes', subscribed: false });
+
+    await this.postMenu.setEntity({ ownerObj: channel }).ban();
   }
 
   /**
@@ -307,6 +327,17 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
   public getUserSupersetUrl(): string {
     return this.adminSupersetLink.getUserOverviewUrl(
       this.service.channel$.getValue().guid
+    );
+  }
+
+  /**
+   * Whether tenant moderation options should be shown.
+   * @returns { boolean } - true if tenant moderation options should be shown.
+   */
+  public shouldShowTenantModerationOptions(): boolean {
+    return (
+      this.isTenantNetwork &&
+      this.permissions.has(PermissionsEnum.CanModerateContent)
     );
   }
 }

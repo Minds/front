@@ -11,6 +11,7 @@ import { Session } from '../../../../services/session';
 import { PostMenuService } from '../post-menu.service';
 import { AdminSupersetLinkService } from '../../../services/admin-superset-link.service';
 import { PermissionsService } from '../../../services/permissions.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 type Option =
   | 'edit'
@@ -111,8 +112,13 @@ export class PostMenuV2Component implements OnInit {
       this.entity.owner_guid === this.session.getLoggedInUser().guid;
 
     const isSiteAdmin = this.session.isAdmin();
+    const hasModerationPermission: boolean = this.permissions.has(
+      PermissionsEnum.CanModerateContent
+    );
 
-    return isPostOwner || isSiteAdmin || this.canDelete;
+    return (
+      isPostOwner || isSiteAdmin || hasModerationPermission || this.canDelete
+    );
   }
 
   shouldShowUndoRemind(): boolean {

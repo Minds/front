@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   Injector,
   Input,
   OnDestroy,
@@ -22,6 +23,9 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 import { DownloadActivityMediaService } from '../../../../common/services/download-activity-media.service';
 import { WireModalService } from '../../../wire/wire-modal.service';
 import { ApiService } from '../../../../common/api/api.service';
+import { ModerationActionGqlService } from '../../../admin/moderation/services/moderation-action-gql.service';
+import { Session } from '../../../../services/session';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Options for the activity's meatball menu (different options show for owners).
@@ -52,7 +56,10 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     public translationService: TranslationService,
     private toasterService: ToasterService,
     public downloadActivityMediaService: DownloadActivityMediaService,
-    private wireModalService: WireModalService
+    private wireModalService: WireModalService,
+    private session: Session,
+    private moderationActionsGql: ModerationActionGqlService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork
   ) {}
 
   ngOnInit() {
@@ -130,7 +137,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         break;
       case 'delete':
         try {
-          await this.client.delete(`api/v1/newsfeed/${this.entity.guid}`);
+          await this.deleteActivity();
           this.service.onDelete();
         } catch (e) {
           this.toasterService.error(e.message);
@@ -161,6 +168,21 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
       case 'wire':
         await this.wireModalService.present(this.entity);
         break;
+    }
+  }
+
+  /**
+   * Handle activity deletion.
+   * @returns { Promise<void> }
+   */
+  private async deleteActivity(): Promise<void> {
+    if (
+      !this.isTenantNetwork ||
+      this.entity.ownerObj.guid === this.session.getLoggedInUser().guid
+    ) {
+      await this.client.delete(`api/v1/newsfeed/${this.entity.guid}`);
+    } else {
+      await this.moderationActionsGql.deleteEntity(this.entity.urn);
     }
   }
 }

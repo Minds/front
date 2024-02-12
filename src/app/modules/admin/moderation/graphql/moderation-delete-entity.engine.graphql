@@ -1,0 +1,3 @@
+mutation ModerationDeleteEntity($subjectUrn: String!) {
+  deleteEntity(subjectUrn: $subjectUrn)
+}

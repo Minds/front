@@ -6,6 +6,7 @@ import { PostMenuV2Component } from './menu.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { AdminSupersetLinkService } from '../../../services/admin-superset-link.service';
 import { PermissionsService } from '../../../services/permissions.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 describe('PostMenuV2Component', () => {
   let comp: PostMenuV2Component;
@@ -181,5 +182,179 @@ describe('PostMenuV2Component', () => {
     expect(
       (comp as any).adminSupersetLink.getUserOverviewUrl
     ).toHaveBeenCalledOnceWith('234');
+  });
+
+  describe('shouldShowDelete', () => {
+    it('should show the delete option because user is the owner', () => {
+      const entityOwnerGuid = '12345676890123456';
+      const loggedInUserGuid = '12345676890123456';
+
+      (comp as any).mediaModal = false;
+      (comp as any).options = ['delete'];
+      (comp as any).entity = {
+        owner_guid: entityOwnerGuid,
+        remind_users: [],
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: loggedInUserGuid,
+      });
+      (comp as any).session.isAdmin.and.returnValue(true);
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(true);
+
+      expect(comp.shouldShowDelete()).toBeTrue();
+    });
+
+    it('should show the delete option because user is a site admin', () => {
+      const entityOwnerGuid = '12345676890123456';
+      const loggedInUserGuid = '22345676890123456';
+
+      (comp as any).mediaModal = false;
+      (comp as any).options = ['delete'];
+      (comp as any).entity = {
+        owner_guid: entityOwnerGuid,
+        remind_users: [],
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: loggedInUserGuid,
+      });
+      (comp as any).session.isAdmin.and.returnValue(true);
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(false);
+      (comp as any).canDelete = false;
+
+      expect(comp.shouldShowDelete()).toBeTrue();
+    });
+
+    it('should show the delete option because user is has moderation permissions', () => {
+      const entityOwnerGuid = '12345676890123456';
+      const loggedInUserGuid = '22345676890123456';
+
+      (comp as any).mediaModal = false;
+      (comp as any).options = ['delete'];
+      (comp as any).entity = {
+        owner_guid: entityOwnerGuid,
+        remind_users: [],
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: loggedInUserGuid,
+      });
+      (comp as any).session.isAdmin.and.returnValue(false);
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(true);
+      (comp as any).canDelete = false;
+
+      expect(comp.shouldShowDelete()).toBeTrue();
+    });
+
+    it('should show the delete option because the component has canDelete set to true', () => {
+      const entityOwnerGuid = '12345676890123456';
+      const loggedInUserGuid = '22345676890123456';
+
+      (comp as any).mediaModal = false;
+      (comp as any).options = ['delete'];
+      (comp as any).entity = {
+        owner_guid: entityOwnerGuid,
+        remind_users: [],
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: loggedInUserGuid,
+      });
+      (comp as any).session.isAdmin.and.returnValue(false);
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(false);
+      (comp as any).canDelete = true;
+
+      expect(comp.shouldShowDelete()).toBeTrue();
+    });
+
+    it('should not show the delete option in a media modal', () => {
+      const entityOwnerGuid = '12345676890123456';
+      const loggedInUserGuid = '12345676890123456';
+
+      (comp as any).mediaModal = true;
+      (comp as any).options = ['delete'];
+      (comp as any).entity = {
+        owner_guid: entityOwnerGuid,
+        remind_users: [],
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: loggedInUserGuid,
+      });
+      (comp as any).session.isAdmin.and.returnValue(true);
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(true);
+
+      expect(comp.shouldShowDelete()).toBeFalse();
+    });
+
+    it('should not show the delete option when there are remind users', () => {
+      const entityOwnerGuid = '12345676890123456';
+      const loggedInUserGuid = '12345676890123456';
+
+      (comp as any).mediaModal = false;
+      (comp as any).options = ['delete'];
+      (comp as any).entity = {
+        owner_guid: entityOwnerGuid,
+        remind_users: ['123'],
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: loggedInUserGuid,
+      });
+      (comp as any).session.isAdmin.and.returnValue(true);
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(true);
+
+      expect(comp.shouldShowDelete()).toBeFalse();
+    });
+
+    it('should not show the delete option when there is no delete option specified', () => {
+      const entityOwnerGuid = '12345676890123456';
+      const loggedInUserGuid = '12345676890123456';
+
+      (comp as any).mediaModal = false;
+      (comp as any).options = [];
+      (comp as any).entity = {
+        owner_guid: entityOwnerGuid,
+        remind_users: [],
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: loggedInUserGuid,
+      });
+      (comp as any).session.isAdmin.and.returnValue(true);
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(true);
+
+      expect(comp.shouldShowDelete()).toBeFalse();
+    });
+
+    it('should not show the delete option because user is not elibile to delete', () => {
+      const entityOwnerGuid = '12345676890123456';
+      const loggedInUserGuid = '22345676890123456';
+
+      (comp as any).mediaModal = false;
+      (comp as any).options = ['delete'];
+      (comp as any).entity = {
+        owner_guid: entityOwnerGuid,
+        remind_users: [],
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: loggedInUserGuid,
+      });
+      (comp as any).session.isAdmin.and.returnValue(false);
+      (comp as any).permissions.has
+        .withArgs(PermissionsEnum.CanModerateContent)
+        .and.returnValue(false);
+      (comp as any).canDelete = false;
+
+      expect(comp.shouldShowDelete()).toBeFalse();
+    });
   });
 });

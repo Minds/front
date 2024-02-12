@@ -1,0 +1,6 @@
+mutation ModerationSetUserBanState(
+    $subjectGuid: String!,
+    $banState: Boolean!
+) {
+    setUserBanState(subjectGuid: $subjectGuid, banState: $banState)
+}
