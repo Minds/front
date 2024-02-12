@@ -1,0 +1,27 @@
+<div>
+  <h4
+    class="m-networkAdminMobile__title"
+    i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__TITLE"
+  >
+    Preview a mobile app
+  </h4>
+  <p
+    class="m-networkAdminMobile__subtitle"
+    i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__SUBTITLE"
+  >
+    Preview how your network site looks like as a dedicated mobile app
+  </p>
+</div>
+<m-networkAdminConsole__mobileAssets></m-networkAdminConsole__mobileAssets>
+
+<!-- These elements expect init request to be already made. -->
+<ng-container *ngIf="!(initInProgress$ | async); else loadingSpinnerTemplate">
+  <m-networkAdminConsole__mobileSplashConfig></m-networkAdminConsole__mobileSplashConfig>
+  <m-networkAdminConsole__editAppearance></m-networkAdminConsole__editAppearance>
+  <m-networkAdminConsole__previewBuilder></m-networkAdminConsole__previewBuilder>
+  <m-networkAdminConsole__release></m-networkAdminConsole__release>
+</ng-container>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

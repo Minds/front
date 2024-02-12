@@ -88,10 +88,37 @@ export type AddOnSummary = {
   oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
 };
 
+export type AppReadyMobileConfig = {
+  __typename?: 'AppReadyMobileConfig';
+  ACCENT_COLOR_DARK: Scalars['String']['output'];
+  ACCENT_COLOR_LIGHT: Scalars['String']['output'];
+  API_URL: Scalars['String']['output'];
+  APP_HOST: Scalars['String']['output'];
+  APP_NAME: Scalars['String']['output'];
+  APP_SPLASH_RESIZE: Scalars['String']['output'];
+  TENANT_ID: Scalars['Int']['output'];
+  THEME: Scalars['String']['output'];
+  WELCOME_LOGO: Scalars['String']['output'];
+  assets: Array<KeyValueType>;
+};
+
 export type AssetConnection = ConnectionInterface & {
   __typename?: 'AssetConnection';
   edges: Array<EdgeInterface>;
   pageInfo: PageInfo;
+};
+
+export type AttachmentNode = {
+  __typename?: 'AttachmentNode';
+  containerGuid: Scalars['String']['output'];
+  guid: Scalars['String']['output'];
+  height?: Maybe<Scalars['Int']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  mature?: Maybe<Scalars['Boolean']['output']>;
+  src?: Maybe<Scalars['String']['output']>;
+  type: Scalars['String']['output'];
+  width?: Maybe<Scalars['Int']['output']>;
 };
 
 export type BoostEdge = EdgeInterface & {
@@ -156,6 +183,8 @@ export type CommentEdge = EdgeInterface & {
 
 export type CommentNode = NodeInterface & {
   __typename?: 'CommentNode';
+  /** Gets a comments linked AttachmentNode. */
+  attachment?: Maybe<AttachmentNode>;
   body: Scalars['String']['output'];
   childPath: Scalars['String']['output'];
   guid: Scalars['String']['output'];
@@ -203,6 +232,20 @@ export enum CustomHostnameStatusEnum {
   TestBlocked = 'TEST_BLOCKED',
   TestFailed = 'TEST_FAILED',
   TestPending = 'TEST_PENDING',
+}
+
+export type CustomPage = NodeInterface & {
+  __typename?: 'CustomPage';
+  content?: Maybe<Scalars['String']['output']>;
+  externalLink?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  pageType: CustomPageTypesEnum;
+};
+
+export enum CustomPageTypesEnum {
+  CommunityGuidelines = 'COMMUNITY_GUIDELINES',
+  PrivacyPolicy = 'PRIVACY_POLICY',
+  TermsOfService = 'TERMS_OF_SERVICE',
 }
 
 export type Dismissal = {
@@ -277,7 +320,7 @@ export type FeaturedEntityEdge = EdgeInterface & {
   /** Gets ID for GraphQL. */
   id: Scalars['ID']['output'];
   /** Gets node - can be either a FeaturedUser or FeaturedGroup. */
-  node: FeaturedEntityInterface;
+  node: NodeInterface;
   /** Gets type for GraphQL. */
   type: Scalars['String']['output'];
 };
@@ -508,6 +551,8 @@ export type GroupNode = NodeInterface & {
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   legacy: Scalars['String']['output'];
+  membersCount: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   nsfw: Array<Scalars['Int']['output']>;
   nsfwLock: Array<Scalars['Int']['output']>;
   /** Unix timestamp representation of time created */
@@ -532,7 +577,7 @@ export type Invite = NodeInterface & {
   bespokeMessage: Scalars['String']['output'];
   createdTimestamp: Scalars['Int']['output'];
   email: Scalars['String']['output'];
-  groups?: Maybe<Array<Scalars['Int']['output']>>;
+  groups?: Maybe<Array<GroupNode>>;
   id: Scalars['ID']['output'];
   inviteId: Scalars['Int']['output'];
   roles?: Maybe<Array<Role>>;
@@ -568,6 +613,39 @@ export type KeyValuePairInput = {
   value: Scalars['String']['input'];
 };
 
+export type KeyValueType = {
+  __typename?: 'KeyValueType';
+  key: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type MobileConfig = {
+  __typename?: 'MobileConfig';
+  id: Scalars['ID']['output'];
+  previewQRCode: Scalars['String']['output'];
+  previewStatus: MobilePreviewStatusEnum;
+  splashScreenType: MobileSplashScreenTypeEnum;
+  updateTimestamp: Scalars['Int']['output'];
+  welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+};
+
+export enum MobilePreviewStatusEnum {
+  Error = 'ERROR',
+  NoPreview = 'NO_PREVIEW',
+  Pending = 'PENDING',
+  Ready = 'READY',
+}
+
+export enum MobileSplashScreenTypeEnum {
+  Contain = 'CONTAIN',
+  Cover = 'COVER',
+}
+
+export enum MobileWelcomeScreenLogoTypeEnum {
+  Horizontal = 'HORIZONTAL',
+  Square = 'SQUARE',
+}
+
 export enum MultiTenantColorScheme {
   Dark = 'DARK',
   Light = 'LIGHT',
@@ -575,10 +653,14 @@ export enum MultiTenantColorScheme {
 
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
+  /** Whether federation can be enabled. */
+  canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
-  communityGuidelines?: Maybe<Scalars['String']['output']>;
+  federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
+  nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
+  replyEmail?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
@@ -586,8 +668,10 @@ export type MultiTenantConfig = {
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
-  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+  federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
+  nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+  replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
@@ -610,6 +694,7 @@ export type MultiTenantDomainDnsRecord = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  archiveSiteMembership: Scalars['Boolean']['output'];
   /** Assigns a user to a role */
   assignUserToRole: Role;
   cancelInvite?: Maybe<Scalars['Void']['output']>;
@@ -630,6 +715,7 @@ export type Mutation = {
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
+  mobileConfig: MobileConfig;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
@@ -637,18 +723,27 @@ export type Mutation = {
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   resendInvite?: Maybe<Scalars['Void']['output']>;
+  setCustomPage: Scalars['Boolean']['output'];
   /** Creates a comment on a remote url */
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
+  /** Set the stripe keys for the network */
+  setStripeKeys: Scalars['Boolean']['output'];
+  siteMembership: SiteMembership;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
   updatePostSubscription: PostSubscription;
+  updateSiteMembership: SiteMembership;
+};
+
+export type MutationArchiveSiteMembershipArgs = {
+  siteMembershipGuid: Scalars['String']['input'];
 };
 
 export type MutationAssignUserToRoleArgs = {
@@ -716,8 +811,14 @@ export type MutationDismissArgs = {
 export type MutationInviteArgs = {
   bespokeMessage: Scalars['String']['input'];
   emails: Scalars['String']['input'];
-  groups?: InputMaybe<Array<Scalars['Int']['input']>>;
+  groups?: InputMaybe<Array<Scalars['String']['input']>>;
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export type MutationMobileConfigArgs = {
+  mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
+  mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
+  mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
 };
 
 export type MutationMultiTenantConfigArgs = {
@@ -740,6 +841,12 @@ export type MutationResendInviteArgs = {
   inviteId: Scalars['Int']['input'];
 };
 
+export type MutationSetCustomPageArgs = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  externalLink?: InputMaybe<Scalars['String']['input']>;
+  pageType: Scalars['String']['input'];
+};
+
 export type MutationSetEmbeddedCommentsSettingsArgs = {
   autoImportsEnabled: Scalars['Boolean']['input'];
   domain: Scalars['String']['input'];
@@ -754,6 +861,15 @@ export type MutationSetRolePermissionArgs = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   permission: PermissionsEnum;
   roleId: Scalars['Int']['input'];
+};
+
+export type MutationSetStripeKeysArgs = {
+  pubKey: Scalars['String']['input'];
+  secKey: Scalars['String']['input'];
+};
+
+export type MutationSiteMembershipArgs = {
+  siteMembershipInput: SiteMembershipInput;
 };
 
 export type MutationStoreFeaturedEntityArgs = {
@@ -775,6 +891,10 @@ export type MutationUpdateAccountArgs = {
 export type MutationUpdatePostSubscriptionArgs = {
   entityGuid: Scalars['String']['input'];
   frequency: PostSubscriptionFrequencyEnum;
+};
+
+export type MutationUpdateSiteMembershipArgs = {
+  siteMembershipInput: SiteMembershipUpdateInput;
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -844,9 +964,12 @@ export enum PermissionsEnum {
   CanBoost = 'CAN_BOOST',
   CanComment = 'CAN_COMMENT',
   CanCreateGroup = 'CAN_CREATE_GROUP',
+  CanCreatePaywall = 'CAN_CREATE_PAYWALL',
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
+  CanModerateContent = 'CAN_MODERATE_CONTENT',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
+  CanUseRssSync = 'CAN_USE_RSS_SYNC',
 }
 
 export type Plan = {
@@ -909,6 +1032,7 @@ export type Query = {
   allPermissions: Array<PermissionsEnum>;
   /** Returns all roles that exist on the site and their permission assignments */
   allRoles: Array<Role>;
+  appReadyMobileConfig: AppReadyMobileConfig;
   /** Returns the permissions that the current session holds */
   assignedPermissions: Array<PermissionsEnum>;
   /** Returns the roles the session holds */
@@ -917,6 +1041,7 @@ export type Query = {
   boosts: BoostsConnection;
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
+  customPage: CustomPage;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
@@ -952,6 +1077,7 @@ export type Query = {
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   invite: Invite;
   invites: InviteConnection;
+  mobileConfig: MobileConfig;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
   multiTenantDomain: MultiTenantDomain;
@@ -969,6 +1095,10 @@ export type Query = {
   rssFeed: RssFeed;
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
+  siteMembership: SiteMembership;
+  siteMemberships: Array<SiteMembership>;
+  /** Returns the stripe keys */
+  stripeKeys: StripeKeysType;
   tenantAssets: AssetConnection;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
@@ -980,6 +1110,10 @@ export type Query = {
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryAppReadyMobileConfigArgs = {
+  tenantId: Scalars['Int']['input'];
 };
 
 export type QueryAssignedRolesArgs = {
@@ -1008,6 +1142,10 @@ export type QueryCheckoutPageArgs = {
   page: CheckoutPageKeyEnum;
   planId: Scalars['String']['input'];
   timePeriod: CheckoutTimePeriodEnum;
+};
+
+export type QueryCustomPageArgs = {
+  pageType: Scalars['String']['input'];
 };
 
 export type QueryDismissalByKeyArgs = {
@@ -1110,6 +1248,10 @@ export type QuerySearchArgs = {
   mediaType: SearchMediaTypeEnum;
   nsfw?: InputMaybe<Array<SearchNsfwEnum>>;
   query: Scalars['String']['input'];
+};
+
+export type QuerySiteMembershipArgs = {
+  membershipGuid: Scalars['String']['input'];
 };
 
 export type QueryTenantAssetsArgs = {
@@ -1292,6 +1434,54 @@ export enum SecuritySubReasonEnum {
   HackedAccount = 'HACKED_ACCOUNT',
 }
 
+export type SiteMembership = {
+  __typename?: 'SiteMembership';
+  groups?: Maybe<Array<GroupNode>>;
+  id: Scalars['ID']['output'];
+  membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+  membershipDescription?: Maybe<Scalars['String']['output']>;
+  membershipGuid: Scalars['String']['output'];
+  membershipName: Scalars['String']['output'];
+  membershipPriceInCents: Scalars['Int']['output'];
+  membershipPricingModel: SiteMembershipPricingModelEnum;
+  priceCurrency: Scalars['String']['output'];
+  roles?: Maybe<Array<Role>>;
+};
+
+export enum SiteMembershipBillingPeriodEnum {
+  Monthly = 'MONTHLY',
+  Yearly = 'YEARLY',
+}
+
+export type SiteMembershipInput = {
+  groups?: InputMaybe<Array<Scalars['String']['input']>>;
+  membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+  membershipDescription?: InputMaybe<Scalars['String']['input']>;
+  membershipName: Scalars['String']['input'];
+  membershipPriceInCents: Scalars['Int']['input'];
+  membershipPricingModel: SiteMembershipPricingModelEnum;
+  roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export enum SiteMembershipPricingModelEnum {
+  OneTime = 'ONE_TIME',
+  Recurring = 'RECURRING',
+}
+
+export type SiteMembershipUpdateInput = {
+  groups?: InputMaybe<Array<Scalars['String']['input']>>;
+  membershipDescription?: InputMaybe<Scalars['String']['input']>;
+  membershipGuid: Scalars['String']['input'];
+  membershipName: Scalars['String']['input'];
+  roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export type StripeKeysType = {
+  __typename?: 'StripeKeysType';
+  pubKey: Scalars['String']['output'];
+  secKey: Scalars['String']['output'];
+};
+
 export type Summary = {
   __typename?: 'Summary';
   addonsSummary: Array<AddOn>;
@@ -1306,6 +1496,7 @@ export type Tenant = {
   domain?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   ownerGuid?: Maybe<Scalars['String']['output']>;
+  plan: TenantPlanEnum;
   rootUserGuid?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1314,6 +1505,12 @@ export type TenantInput = {
   domain?: InputMaybe<Scalars['String']['input']>;
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
 };
+
+export enum TenantPlanEnum {
+  Community = 'COMMUNITY',
+  Enterprise = 'ENTERPRISE',
+  Team = 'TEAM',
+}
 
 export type TenantUser = {
   __typename?: 'TenantUser';
@@ -1670,7 +1867,12 @@ export type GetFeaturedEntitiesQuery = {
       id: string;
       cursor: string;
       node:
+        | { __typename?: 'ActivityNode'; id: string }
+        | { __typename?: 'BoostNode'; id: string }
+        | { __typename?: 'CommentNode'; id: string }
+        | { __typename?: 'CustomPage'; id: string }
         | { __typename?: 'FeaturedEntity'; id: string }
+        | { __typename?: 'FeaturedEntityConnection'; id: string }
         | {
             __typename: 'FeaturedGroup';
             entityGuid: string;
@@ -1688,7 +1890,20 @@ export type GetFeaturedEntitiesQuery = {
             autoPostSubscription: boolean;
             name: string;
             username?: string | null;
-          };
+          }
+        | { __typename?: 'FeedExploreTagNode'; id: string }
+        | { __typename?: 'FeedHeaderNode'; id: string }
+        | { __typename?: 'FeedHighlightsConnection'; id: string }
+        | { __typename?: 'FeedNoticeNode'; id: string }
+        | { __typename?: 'GiftCardNode'; id: string }
+        | { __typename?: 'GiftCardTransaction'; id: string }
+        | { __typename?: 'GroupNode'; id: string }
+        | { __typename?: 'Invite'; id: string }
+        | { __typename?: 'InviteConnection'; id: string }
+        | { __typename?: 'NodeImpl'; id: string }
+        | { __typename?: 'PublisherRecsConnection'; id: string }
+        | { __typename?: 'Report'; id: string }
+        | { __typename?: 'UserNode'; id: string };
     }>;
     pageInfo: {
       __typename?: 'PageInfo';
@@ -1744,6 +1959,53 @@ export type StoreFeaturedEntityMutation = {
       };
 };
 
+export type GetMobileConfigPreviewStateQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetMobileConfigPreviewStateQuery = {
+  __typename?: 'Query';
+  mobileConfig: {
+    __typename?: 'MobileConfig';
+    id: string;
+    previewStatus: MobilePreviewStatusEnum;
+    previewQRCode: string;
+  };
+};
+
+export type GetMobileConfigQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetMobileConfigQuery = {
+  __typename?: 'Query';
+  mobileConfig: {
+    __typename?: 'MobileConfig';
+    id: string;
+    splashScreenType: MobileSplashScreenTypeEnum;
+    welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+    previewStatus: MobilePreviewStatusEnum;
+    previewQRCode: string;
+  };
+};
+
+export type SetMobileConfigMutationVariables = Exact<{
+  mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
+  mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
+  mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
+}>;
+
+export type SetMobileConfigMutation = {
+  __typename?: 'Mutation';
+  mobileConfig: {
+    __typename?: 'MobileConfig';
+    id: string;
+    splashScreenType: MobileSplashScreenTypeEnum;
+    welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
+    previewStatus: MobilePreviewStatusEnum;
+    previewQRCode: string;
+    updateTimestamp: number;
+  };
+};
+
 export type CreateNewReportMutationVariables = Exact<{
   entityUrn: Scalars['String']['input'];
   reason: ReportReasonEnum;
@@ -1791,6 +2053,7 @@ export type GetReportsQuery = {
             | { __typename?: 'ActivityNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -1854,9 +2117,67 @@ export type GetReportsQuery = {
           __typename?: 'FeaturedEntityEdge';
           cursor: string;
           node:
+            | { __typename?: 'ActivityNode'; id: string }
+            | { __typename?: 'BoostNode'; id: string }
+            | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
-            | { __typename?: 'FeaturedUser'; id: string };
+            | { __typename?: 'FeaturedUser'; id: string }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
+            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | { __typename?: 'FeedNoticeNode'; id: string }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | { __typename?: 'PublisherRecsConnection'; id: string }
+            | {
+                __typename?: 'Report';
+                tenantId?: string | null;
+                reportGuid?: string | null;
+                entityUrn: string;
+                entityGuid?: string | null;
+                reportedByGuid?: string | null;
+                moderatedByGuid?: string | null;
+                createdTimestamp: number;
+                reason: ReportReasonEnum;
+                nsfwSubReason?: NsfwSubReasonEnum | null;
+                illegalSubReason?: IllegalSubReasonEnum | null;
+                securitySubReason?: SecuritySubReasonEnum | null;
+                id: string;
+                reportedByUserEdge?: {
+                  __typename?: 'UserEdge';
+                  node: {
+                    __typename?: 'UserNode';
+                    guid: string;
+                    username: string;
+                  };
+                } | null;
+                entityEdge?:
+                  | {
+                      __typename?: 'ActivityEdge';
+                      node: { __typename?: 'ActivityNode'; legacy: string };
+                    }
+                  | {
+                      __typename?: 'CommentEdge';
+                      node: { __typename?: 'CommentNode'; legacy: string };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      node: { __typename?: 'GroupNode'; legacy: string };
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      node: { __typename?: 'UserNode'; legacy: string };
+                    }
+                  | null;
+              }
+            | { __typename?: 'UserNode'; id: string };
         }
       | {
           __typename?: 'FeedExploreTagEdge';
@@ -1974,6 +2295,154 @@ export type ProvideVerdictMutation = {
   provideVerdict: boolean;
 };
 
+export type ArchiveSiteMembershipMutationVariables = Exact<{
+  siteMembershipGuid: Scalars['String']['input'];
+}>;
+
+export type ArchiveSiteMembershipMutation = {
+  __typename?: 'Mutation';
+  archiveSiteMembership: boolean;
+};
+
+export type GetSiteMembershipQueryVariables = Exact<{
+  membershipGuid: Scalars['String']['input'];
+}>;
+
+export type GetSiteMembershipQuery = {
+  __typename?: 'Query';
+  siteMembership: {
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipDescription?: string | null;
+    membershipPriceInCents: number;
+    priceCurrency: string;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      guid: string;
+      name: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  };
+};
+
+export type GetSiteMembershipsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetSiteMembershipsQuery = {
+  __typename?: 'Query';
+  siteMemberships: Array<{
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipDescription?: string | null;
+    membershipPriceInCents: number;
+    priceCurrency: string;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      guid: string;
+      name: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  }>;
+};
+
+export type GetStripeKeysQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetStripeKeysQuery = {
+  __typename?: 'Query';
+  stripeKeys: { __typename?: 'StripeKeysType'; pubKey: string; secKey: string };
+};
+
+export type SetSiteMembershipMutationVariables = Exact<{
+  membershipName: Scalars['String']['input'];
+  membershipPriceInCents: Scalars['Int']['input'];
+  membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+  membershipPricingModel: SiteMembershipPricingModelEnum;
+  membershipDescription?: InputMaybe<Scalars['String']['input']>;
+  roles?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  groups?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
+}>;
+
+export type SetSiteMembershipMutation = {
+  __typename?: 'Mutation';
+  siteMembership: {
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipPriceInCents: number;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    membershipDescription?: string | null;
+    priceCurrency: string;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      id: string;
+      name: string;
+      guid: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  };
+};
+
+export type SetStripeKeysMutationVariables = Exact<{
+  pubKey: Scalars['String']['input'];
+  secKey: Scalars['String']['input'];
+}>;
+
+export type SetStripeKeysMutation = {
+  __typename?: 'Mutation';
+  setStripeKeys: boolean;
+};
+
+export type UpdateSiteMembershipMutationVariables = Exact<{
+  membershipGuid: Scalars['String']['input'];
+  membershipName: Scalars['String']['input'];
+  membershipDescription?: InputMaybe<Scalars['String']['input']>;
+  roles?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  groups?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
+}>;
+
+export type UpdateSiteMembershipMutation = {
+  __typename?: 'Mutation';
+  updateSiteMembership: {
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipPriceInCents: number;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    membershipDescription?: string | null;
+    priceCurrency: string;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      id: string;
+      name: string;
+      guid: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  };
+};
+
 export type AssignUserToRoleMutationVariables = Exact<{
   userGuid: Scalars['String']['input'];
   roleId: Scalars['Int']['input'];
@@ -2002,7 +2471,9 @@ export type CreateInviteMutationVariables = Exact<{
   emails: Scalars['String']['input'];
   bespokeMessage: Scalars['String']['input'];
   roles?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
-  groups?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  groups?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
 }>;
 
 export type CreateInviteMutation = {
@@ -2040,28 +2511,17 @@ export type GetAssignedRolesQuery = {
   }>;
 };
 
-export type GetInviteQueryVariables = Exact<{
-  inviteId: Scalars['Int']['input'];
+export type GetCustomPageQueryVariables = Exact<{
+  pageType: Scalars['String']['input'];
 }>;
 
-export type GetInviteQuery = {
+export type GetCustomPageQuery = {
   __typename?: 'Query';
-  invite: {
-    __typename?: 'Invite';
-    inviteId: number;
-    email: string;
-    status: InviteEmailStatusEnum;
-    bespokeMessage: string;
-    createdTimestamp: number;
-    sendTimestamp?: number | null;
-    id: string;
-    groups?: Array<number> | null;
-    roles?: Array<{
-      __typename?: 'Role';
-      id: number;
-      name: string;
-      permissions: Array<PermissionsEnum>;
-    }> | null;
+  customPage: {
+    __typename?: 'CustomPage';
+    pageType: CustomPageTypesEnum;
+    content?: string | null;
+    externalLink?: string | null;
   };
 };
 
@@ -2088,13 +2548,13 @@ export type GetInvitesQuery = {
         createdTimestamp: number;
         sendTimestamp?: number | null;
         id: string;
-        groups?: Array<number> | null;
         roles?: Array<{
           __typename?: 'Role';
           id: number;
           name: string;
           permissions: Array<PermissionsEnum>;
         }> | null;
+        groups?: Array<{ __typename?: 'GroupNode'; legacy: string }> | null;
       } | null;
     }>;
     pageInfo: {
@@ -2119,7 +2579,9 @@ export type GetMultiTenantConfigQuery = {
     siteEmail?: string | null;
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
-    communityGuidelines?: string | null;
+    canEnableFederation?: boolean | null;
+    federationDisabled?: boolean | null;
+    replyEmail?: string | null;
   } | null;
 };
 
@@ -2194,11 +2656,24 @@ export type ResendInviteMutation = {
   resendInvite?: any | null;
 };
 
+export type SetCustomPageMutationVariables = Exact<{
+  pageType: Scalars['String']['input'];
+  content?: InputMaybe<Scalars['String']['input']>;
+  externalLink?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type SetCustomPageMutation = {
+  __typename?: 'Mutation';
+  setCustomPage: boolean;
+};
+
 export type SetMultiTenantConfigMutationVariables = Exact<{
   siteName?: InputMaybe<Scalars['String']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
-  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+  federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
+  replyEmail?: InputMaybe<Scalars['String']['input']>;
+  nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -2365,6 +2840,7 @@ export type GetNetworksListQuery = {
     domain?: string | null;
     ownerGuid?: string | null;
     rootUserGuid?: string | null;
+    plan: TenantPlanEnum;
     config?: {
       __typename?: 'MultiTenantConfig';
       siteName?: string | null;
@@ -2421,6 +2897,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -2493,6 +2970,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -2529,9 +3007,45 @@ export type FetchNewsfeedQuery = {
                   | {
                       __typename?: 'FeaturedEntityEdge';
                       publisherNode:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
                         | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string };
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          };
                     }
                   | {
                       __typename?: 'FeedExploreTagEdge';
@@ -2637,9 +3151,263 @@ export type FetchNewsfeedQuery = {
           __typename?: 'FeaturedEntityEdge';
           cursor: string;
           node:
+            | { __typename?: 'ActivityNode'; legacy: string; id: string }
+            | {
+                __typename?: 'BoostNode';
+                goalButtonUrl?: string | null;
+                goalButtonText?: number | null;
+                legacy: string;
+                id: string;
+              }
+            | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
-            | { __typename?: 'FeaturedUser'; id: string };
+            | { __typename?: 'FeaturedUser'; id: string }
+            | { __typename?: 'FeedExploreTagNode'; tag: string; id: string }
+            | { __typename?: 'FeedHeaderNode'; text: string; id: string }
+            | {
+                __typename?: 'FeedHighlightsConnection';
+                id: string;
+                edges: Array<{
+                  __typename?: 'ActivityEdge';
+                  node: {
+                    __typename?: 'ActivityNode';
+                    id: string;
+                    legacy: string;
+                  };
+                }>;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | {
+                __typename?: 'FeedNoticeNode';
+                location: string;
+                key: string;
+                dismissible: boolean;
+                id: string;
+              }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | {
+                __typename?: 'PublisherRecsConnection';
+                dismissible: boolean;
+                id: string;
+                edges: Array<
+                  | {
+                      __typename?: 'ActivityEdge';
+                      publisherNode: {
+                        __typename?: 'ActivityNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'BoostEdge';
+                      publisherNode: {
+                        __typename?: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'EdgeImpl';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeaturedEntityEdge';
+                      publisherNode:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          };
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHighlightsEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHighlightsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedNoticeEdge';
+                      publisherNode: {
+                        __typename?: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardTransactionEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardTransaction';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      publisherNode: {
+                        __typename?: 'GroupNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'InviteEdge';
+                      publisherNode?: {
+                        __typename?: 'Invite';
+                        id: string;
+                      } | null;
+                    }
+                  | {
+                      __typename?: 'PublisherRecsEdge';
+                      publisherNode: {
+                        __typename?: 'PublisherRecsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename?: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'UserRoleEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                >;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | { __typename?: 'Report'; id: string }
+            | { __typename?: 'UserNode'; id: string };
         }
       | {
           __typename?: 'FeedExploreTagEdge';
@@ -2731,6 +3499,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -2753,9 +3522,27 @@ export type FetchNewsfeedQuery = {
               | {
                   __typename?: 'FeaturedEntityEdge';
                   publisherNode:
+                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
+                    | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
-                    | { __typename?: 'FeaturedUser'; id: string };
+                    | { __typename?: 'FeaturedUser'; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
+                    | { __typename?: 'FeedHighlightsConnection'; id: string }
+                    | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'GiftCardNode'; id: string }
+                    | { __typename?: 'GiftCardTransaction'; id: string }
+                    | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'Invite'; id: string }
+                    | { __typename?: 'InviteConnection'; id: string }
+                    | { __typename?: 'NodeImpl'; id: string }
+                    | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'Report'; id: string }
+                    | { __typename?: 'UserNode'; legacy: string; id: string };
                 }
               | {
                   __typename?: 'FeedExploreTagEdge';
@@ -3022,6 +3809,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
             | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
@@ -3074,6 +3862,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
                         | {
                             __typename?: 'FeaturedEntityConnection';
@@ -3110,9 +3899,45 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'FeaturedEntityEdge';
                       publisherNode:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
                         | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string };
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          };
                     }
                   | {
                       __typename?: 'FeedExploreTagEdge';
@@ -3218,9 +4043,243 @@ export type FetchSearchQuery = {
           __typename?: 'FeaturedEntityEdge';
           cursor: string;
           node:
+            | { __typename?: 'ActivityNode'; legacy: string; id: string }
+            | {
+                __typename?: 'BoostNode';
+                goalButtonUrl?: string | null;
+                goalButtonText?: number | null;
+                legacy: string;
+                id: string;
+              }
+            | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
             | { __typename?: 'FeaturedGroup'; id: string }
-            | { __typename?: 'FeaturedUser'; id: string };
+            | { __typename?: 'FeaturedUser'; id: string }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
+            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | {
+                __typename?: 'FeedNoticeNode';
+                location: string;
+                key: string;
+                id: string;
+              }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; legacy: string; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | {
+                __typename?: 'PublisherRecsConnection';
+                id: string;
+                edges: Array<
+                  | {
+                      __typename?: 'ActivityEdge';
+                      publisherNode: {
+                        __typename?: 'ActivityNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'BoostEdge';
+                      publisherNode: {
+                        __typename?: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'EdgeImpl';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeaturedEntityEdge';
+                      publisherNode:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'CommentNode'; id: string }
+                        | { __typename?: 'CustomPage'; id: string }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          };
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHighlightsEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHighlightsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedNoticeEdge';
+                      publisherNode: {
+                        __typename?: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardTransactionEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardTransaction';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      publisherNode: {
+                        __typename?: 'GroupNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'InviteEdge';
+                      publisherNode?: {
+                        __typename?: 'Invite';
+                        id: string;
+                      } | null;
+                    }
+                  | {
+                      __typename?: 'PublisherRecsEdge';
+                      publisherNode: {
+                        __typename?: 'PublisherRecsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename?: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'UserRoleEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                >;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | { __typename?: 'Report'; id: string }
+            | { __typename?: 'UserNode'; legacy: string; id: string };
         }
       | {
           __typename?: 'FeedExploreTagEdge';
@@ -3296,6 +4355,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
                     | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
@@ -3318,9 +4378,27 @@ export type FetchSearchQuery = {
               | {
                   __typename?: 'FeaturedEntityEdge';
                   publisherNode:
+                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'CommentNode'; id: string }
+                    | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
+                    | { __typename?: 'FeaturedEntityConnection'; id: string }
                     | { __typename?: 'FeaturedGroup'; id: string }
-                    | { __typename?: 'FeaturedUser'; id: string };
+                    | { __typename?: 'FeaturedUser'; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
+                    | { __typename?: 'FeedHighlightsConnection'; id: string }
+                    | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'GiftCardNode'; id: string }
+                    | { __typename?: 'GiftCardTransaction'; id: string }
+                    | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'Invite'; id: string }
+                    | { __typename?: 'InviteConnection'; id: string }
+                    | { __typename?: 'NodeImpl'; id: string }
+                    | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'Report'; id: string }
+                    | { __typename?: 'UserNode'; legacy: string; id: string };
                 }
               | {
                   __typename?: 'FeedExploreTagEdge';
@@ -4072,6 +5150,88 @@ export class StoreFeaturedEntityGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const GetMobileConfigPreviewStateDocument = gql`
+  query GetMobileConfigPreviewState {
+    mobileConfig {
+      id
+      previewStatus
+      previewQRCode
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetMobileConfigPreviewStateGQL extends Apollo.Query<
+  GetMobileConfigPreviewStateQuery,
+  GetMobileConfigPreviewStateQueryVariables
+> {
+  document = GetMobileConfigPreviewStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetMobileConfigDocument = gql`
+  query GetMobileConfig {
+    mobileConfig {
+      id
+      splashScreenType
+      welcomeScreenLogoType
+      previewStatus
+      previewQRCode
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetMobileConfigGQL extends Apollo.Query<
+  GetMobileConfigQuery,
+  GetMobileConfigQueryVariables
+> {
+  document = GetMobileConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetMobileConfigDocument = gql`
+  mutation SetMobileConfig(
+    $mobileWelcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum
+    $mobileSplashScreenType: MobileSplashScreenTypeEnum
+    $mobilePreviewStatus: MobilePreviewStatusEnum
+  ) {
+    mobileConfig(
+      mobileWelcomeScreenLogoType: $mobileWelcomeScreenLogoType
+      mobileSplashScreenType: $mobileSplashScreenType
+      mobilePreviewStatus: $mobilePreviewStatus
+    ) {
+      id
+      splashScreenType
+      welcomeScreenLogoType
+      previewStatus
+      previewQRCode
+      updateTimestamp
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetMobileConfigGQL extends Apollo.Mutation<
+  SetMobileConfigMutation,
+  SetMobileConfigMutationVariables
+> {
+  document = SetMobileConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const CreateNewReportDocument = gql`
   mutation CreateNewReport(
     $entityUrn: String!
@@ -4198,6 +5358,252 @@ export class ProvideVerdictGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const ArchiveSiteMembershipDocument = gql`
+  mutation archiveSiteMembership($siteMembershipGuid: String!) {
+    archiveSiteMembership(siteMembershipGuid: $siteMembershipGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ArchiveSiteMembershipGQL extends Apollo.Mutation<
+  ArchiveSiteMembershipMutation,
+  ArchiveSiteMembershipMutationVariables
+> {
+  document = ArchiveSiteMembershipDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetSiteMembershipDocument = gql`
+  query GetSiteMembership($membershipGuid: String!) {
+    siteMembership(membershipGuid: $membershipGuid) {
+      id
+      membershipGuid
+      membershipName
+      membershipDescription
+      membershipPriceInCents
+      priceCurrency
+      membershipBillingPeriod
+      membershipPricingModel
+      roles {
+        id
+        name
+      }
+      groups {
+        guid
+        name
+        membersCount
+        legacy
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetSiteMembershipGQL extends Apollo.Query<
+  GetSiteMembershipQuery,
+  GetSiteMembershipQueryVariables
+> {
+  document = GetSiteMembershipDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetSiteMembershipsDocument = gql`
+  query GetSiteMemberships {
+    siteMemberships {
+      id
+      membershipGuid
+      membershipName
+      membershipDescription
+      membershipPriceInCents
+      priceCurrency
+      membershipBillingPeriod
+      membershipPricingModel
+      roles {
+        id
+        name
+      }
+      groups {
+        guid
+        name
+        membersCount
+        legacy
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetSiteMembershipsGQL extends Apollo.Query<
+  GetSiteMembershipsQuery,
+  GetSiteMembershipsQueryVariables
+> {
+  document = GetSiteMembershipsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetStripeKeysDocument = gql`
+  query GetStripeKeys {
+    stripeKeys {
+      pubKey
+      secKey
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetStripeKeysGQL extends Apollo.Query<
+  GetStripeKeysQuery,
+  GetStripeKeysQueryVariables
+> {
+  document = GetStripeKeysDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetSiteMembershipDocument = gql`
+  mutation SetSiteMembership(
+    $membershipName: String!
+    $membershipPriceInCents: Int!
+    $membershipBillingPeriod: SiteMembershipBillingPeriodEnum!
+    $membershipPricingModel: SiteMembershipPricingModelEnum!
+    $membershipDescription: String
+    $roles: [Int!]
+    $groups: [String!]
+  ) {
+    siteMembership(
+      siteMembershipInput: {
+        membershipName: $membershipName
+        membershipPriceInCents: $membershipPriceInCents
+        membershipBillingPeriod: $membershipBillingPeriod
+        membershipPricingModel: $membershipPricingModel
+        membershipDescription: $membershipDescription
+        roles: $roles
+        groups: $groups
+      }
+    ) {
+      id
+      membershipGuid
+      membershipName
+      membershipPriceInCents
+      membershipBillingPeriod
+      membershipPricingModel
+      membershipDescription
+      priceCurrency
+      roles {
+        id
+        name
+      }
+      groups {
+        id
+        name
+        guid
+        membersCount
+        legacy
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetSiteMembershipGQL extends Apollo.Mutation<
+  SetSiteMembershipMutation,
+  SetSiteMembershipMutationVariables
+> {
+  document = SetSiteMembershipDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetStripeKeysDocument = gql`
+  mutation SetStripeKeys($pubKey: String!, $secKey: String!) {
+    setStripeKeys(pubKey: $pubKey, secKey: $secKey)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetStripeKeysGQL extends Apollo.Mutation<
+  SetStripeKeysMutation,
+  SetStripeKeysMutationVariables
+> {
+  document = SetStripeKeysDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdateSiteMembershipDocument = gql`
+  mutation UpdateSiteMembership(
+    $membershipGuid: String!
+    $membershipName: String!
+    $membershipDescription: String
+    $roles: [Int!]
+    $groups: [String!]
+  ) {
+    updateSiteMembership(
+      siteMembershipInput: {
+        membershipGuid: $membershipGuid
+        membershipName: $membershipName
+        membershipDescription: $membershipDescription
+        roles: $roles
+        groups: $groups
+      }
+    ) {
+      id
+      membershipGuid
+      membershipName
+      membershipPriceInCents
+      membershipBillingPeriod
+      membershipPricingModel
+      membershipDescription
+      priceCurrency
+      roles {
+        id
+        name
+      }
+      groups {
+        id
+        name
+        guid
+        membersCount
+        legacy
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdateSiteMembershipGQL extends Apollo.Mutation<
+  UpdateSiteMembershipMutation,
+  UpdateSiteMembershipMutationVariables
+> {
+  document = UpdateSiteMembershipDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const AssignUserToRoleDocument = gql`
   mutation AssignUserToRole($userGuid: String!, $roleId: Int!) {
     assignUserToRole(userGuid: $userGuid, roleId: $roleId) {
@@ -4245,7 +5651,7 @@ export const CreateInviteDocument = gql`
     $emails: String!
     $bespokeMessage: String!
     $roles: [Int!]
-    $groups: [Int!]
+    $groups: [String!]
   ) {
     invite(
       emails: $emails
@@ -4317,22 +5723,12 @@ export class GetAssignedRolesGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const GetInviteDocument = gql`
-  query getInvite($inviteId: Int!) {
-    invite(inviteId: $inviteId) {
-      inviteId
-      email
-      status
-      bespokeMessage
-      createdTimestamp
-      sendTimestamp
-      id
-      roles {
-        id
-        name
-        permissions
-      }
-      groups
+export const GetCustomPageDocument = gql`
+  query GetCustomPage($pageType: String!) {
+    customPage(pageType: $pageType) {
+      pageType
+      content
+      externalLink
     }
   }
 `;
@@ -4340,11 +5736,11 @@ export const GetInviteDocument = gql`
 @Injectable({
   providedIn: 'root',
 })
-export class GetInviteGQL extends Apollo.Query<
-  GetInviteQuery,
-  GetInviteQueryVariables
+export class GetCustomPageGQL extends Apollo.Query<
+  GetCustomPageQuery,
+  GetCustomPageQueryVariables
 > {
-  document = GetInviteDocument;
+  document = GetCustomPageDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -4367,7 +5763,9 @@ export const GetInvitesDocument = gql`
             name
             permissions
           }
-          groups
+          groups {
+            legacy
+          }
         }
         cursor
       }
@@ -4402,7 +5800,9 @@ export const GetMultiTenantConfigDocument = gql`
       siteEmail
       colorScheme
       primaryColor
-      communityGuidelines
+      canEnableFederation
+      federationDisabled
+      replyEmail
     }
   }
 `;
@@ -4511,19 +5911,50 @@ export class ResendInviteGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const SetCustomPageDocument = gql`
+  mutation SetCustomPage(
+    $pageType: String!
+    $content: String
+    $externalLink: String
+  ) {
+    setCustomPage(
+      pageType: $pageType
+      content: $content
+      externalLink: $externalLink
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetCustomPageGQL extends Apollo.Mutation<
+  SetCustomPageMutation,
+  SetCustomPageMutationVariables
+> {
+  document = SetCustomPageDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const SetMultiTenantConfigDocument = gql`
   mutation SetMultiTenantConfig(
     $siteName: String
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
-    $communityGuidelines: String
+    $federationDisabled: Boolean
+    $replyEmail: String
+    $nsfwEnabled: Boolean
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
         siteName: $siteName
         colorScheme: $colorScheme
         primaryColor: $primaryColor
-        communityGuidelines: $communityGuidelines
+        federationDisabled: $federationDisabled
+        replyEmail: $replyEmail
+        nsfwEnabled: $nsfwEnabled
       }
     )
   }
@@ -4768,6 +6199,7 @@ export const GetNetworksListDocument = gql`
       domain
       ownerGuid
       rootUserGuid
+      plan
       config {
         siteName
       }

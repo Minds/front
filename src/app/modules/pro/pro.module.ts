@@ -32,7 +32,7 @@ import { ChannelsV2Module } from '../channels/v2/channels-v2.module';
 import { ChannelsV2Service } from '../channels/v2/channels-v2.service';
 import { PathMatch } from '../../common/types/angular.types';
 import { MarkdownModule } from 'ngx-markdown';
-import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
+import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
 
 const routes: Routes = [
   {
@@ -51,7 +51,7 @@ const routes: Routes = [
       {
         path: ':username',
         component: ProChannelComponent,
-        canActivate: [TenantRedirectGuard],
+        canActivate: [MindsOnlyRedirectGuard],
         children: [
           {
             path: '',
@@ -80,7 +80,7 @@ export const PRO_DOMAIN_ROUTES: Routes = [
   {
     path: '',
     component: ProChannelComponent,
-    canActivate: [TenantRedirectGuard],
+    canActivate: [MindsOnlyRedirectGuard],
     children: [
       {
         path: '',

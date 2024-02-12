@@ -1,0 +1,30 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 772px;
+  margin-bottom: $spacing6;
+
+  .m-networkAppRelease__title {
+    @include heading3Bold;
+    margin: 0 0 $spacing1 0;
+  }
+
+  .m-networkAppRelease__subtitle {
+    @include body2Medium;
+    margin-bottom: $spacing8;
+  }
+
+  .m-networkAppRelease__link {
+    @include body2Bold;
+    @include m-theme() {
+      color: themed($m-action);
+    }
+  }
+
+  .m-networkAppRelease__contactSupportButton {
+    display: block;
+    margin-bottom: $spacing8;
+  }
+}

@@ -55,6 +55,7 @@
         </div>
       </section>
       <section
+        *ngIf="nsfwEnabledService.nsfwEnabled$ | async"
         class="m-discoveryTagSettings__section"
         data-ref="discovery-settings-section--selected"
       >

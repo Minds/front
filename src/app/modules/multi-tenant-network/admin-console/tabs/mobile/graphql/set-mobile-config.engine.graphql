@@ -1,0 +1,18 @@
+mutation SetMobileConfig (
+    $mobileWelcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum,
+    $mobileSplashScreenType: MobileSplashScreenTypeEnum,
+    $mobilePreviewStatus: MobilePreviewStatusEnum
+) {
+    mobileConfig(
+        mobileWelcomeScreenLogoType: $mobileWelcomeScreenLogoType,
+        mobileSplashScreenType: $mobileSplashScreenType,
+        mobilePreviewStatus: $mobilePreviewStatus
+    ) {
+        id
+        splashScreenType
+        welcomeScreenLogoType
+        previewStatus
+        previewQRCode
+        updateTimestamp
+    }
+}

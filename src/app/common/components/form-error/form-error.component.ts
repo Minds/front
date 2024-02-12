@@ -52,8 +52,13 @@ export class FormErrorComponent {
   };
 
   /**
+   * For min and max validation, will prefix error value with a currency symbol.
+   */
+  @Input() private currencySymbol: string = '';
+
+  /**
    * Stringify validation errors into a human readable comma separated string.
-   * @param { ValidationErrors } errors - valiation errors to be parsed.
+   * @param { ValidationErrors } errors - validation errors to be parsed.
    * @returns { string } concatenated, parsed string for end-user consumption.
    */
   private stringifyValidationErrors(errors: ValidationErrors): string {
@@ -72,9 +77,25 @@ export class FormErrorComponent {
         `Must be at least ${errors.minlength.requiredLength} characters long`
       );
     }
+
     if (errors.maxlength && errors.maxlength.requiredLength) {
       errorStrings.push(
         `Must be at most ${errors.maxlength.requiredLength} characters long`
+      );
+    }
+    if (errors.email) {
+      errorStrings.push('Invalid email address');
+    }
+
+    if (errors.max && !isNaN(errors.max.max)) {
+      errorStrings.push(
+        `Must not be more than ${this.currencySymbol}${errors.max.max}`
+      );
+    }
+
+    if (errors.min && !isNaN(errors.min.min)) {
+      errorStrings.push(
+        `Must not be less than ${this.currencySymbol}${errors.min.min}`
       );
     }
 

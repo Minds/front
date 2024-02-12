@@ -113,36 +113,37 @@
           class="m-comment__messageWrapper"
           *ngIf="!comment.mature || shouldShowMatureContent()"
         >
-          <ng-container
-            *ngTemplateOutlet="commentMessageContent"
-          ></ng-container>
+          <p
+            [hidden]="editing"
+            class="m-comment__message m-mature-message-content"
+            [innerHtml]="comment.description || '' | tags | codeHighlight"
+            [ngClass]="{
+              'm-mature-text': comment.mature && !shouldShowMatureContent()
+            }"
+            (click)="onDescriptionTextClick($event)"
+          ></p>
         </div>
       </ng-container>
       <ng-template #useReadMore>
         <div
           class="m-comment__messageWrapper"
-          m-read-more
-          [maxHeightAllowed]="120"
           *ngIf="!comment.mature || shouldShowMatureContent()"
         >
-          <ng-container
-            *ngTemplateOutlet="commentMessageContent"
-          ></ng-container>
-
-          <m-read-more--button [v2]="true"></m-read-more--button>
+          <p
+            [hidden]="editing"
+            class="m-comment__message m-mature-message-content"
+            [ngClass]="{
+              'm-mature-text': comment.mature && !shouldShowMatureContent()
+            }"
+            (click)="onDescriptionTextClick($event)"
+          >
+            <m-readMore
+              [text]="comment.description || ''"
+              [targetLength]="200"
+            ></m-readMore>
+          </p>
         </div>
       </ng-template>
-      <ng-template #commentMessageContent>
-        <p
-          [hidden]="editing"
-          class="m-comment__message m-mature-message-content"
-          [innerHtml]="comment.description || '' | tags | codeHighlight"
-          [ngClass]="{
-            'm-mature-text': comment.mature && !shouldShowMatureContent()
-          }"
-          (click)="onDescriptionTextClick($event)"
-        ></p
-      ></ng-template>
       <!-- -------------------------------- -->
       <!-- TRANSLATION -->
       <!-- -------------------------------- -->
@@ -344,6 +345,7 @@
                     <!-- Mark as explicit -->
                     <!-- --------------------- -->
                     <m-dropdownMenu__item
+                      *ngIf="nsfwEnabledService.nsfwEnabled$ | async"
                       (click)="toggleExplicit($event)"
                       icon="explicit"
                       [red]="attachment.isMature()"

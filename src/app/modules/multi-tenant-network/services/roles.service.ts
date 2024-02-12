@@ -265,7 +265,7 @@ export class MultiTenantRolesService implements OnDestroy {
   }
 
   /**
-   * Return all the permissions in allPermissions that are also toggleable.
+   * Return all the permissions in allPermissions that are also toggleable, in the order we want to display them
    * @param allPermissions
    */
   private getToggleablePermissions(
@@ -278,6 +278,9 @@ export class MultiTenantRolesService implements OnDestroy {
       PermissionsEnum.CanInteract,
       PermissionsEnum.CanCreateGroup,
       PermissionsEnum.CanUploadVideo,
+      PermissionsEnum.CanUseRssSync,
+      PermissionsEnum.CanModerateContent,
+      PermissionsEnum.CanCreatePaywall,
     ];
 
     return toggleablePermissions.filter(permission =>
@@ -297,6 +300,12 @@ export class MultiTenantRolesService implements OnDestroy {
         return 'Create group';
       case PermissionsEnum.CanInteract:
         return 'Vote and remind';
+      case PermissionsEnum.CanUseRssSync:
+        return 'Sync RSS';
+      case PermissionsEnum.CanModerateContent:
+        return 'Moderate content';
+      case PermissionsEnum.CanCreatePaywall:
+        return 'Create membership posts';
       // The remaining PermissionsEnum values aren't displayed anywhere
     }
 
@@ -313,6 +322,27 @@ export class MultiTenantRolesService implements OnDestroy {
         return 'star';
       case RoleId.VERIFIED:
         return 'check';
+      case RoleId.DEFAULT:
+      default:
+        return '';
+    }
+  }
+
+  /**
+   * Get the label for a role id.
+   * @param { RoleId } roleId - Role id to get label for.
+   * @returns { string } - Label name.
+   */
+  public getLabelByRoleId(roleId: RoleId): string {
+    switch (roleId) {
+      case RoleId.OWNER:
+        return 'Owner';
+      case RoleId.ADMIN:
+        return 'Admin';
+      case RoleId.MODERATOR:
+        return 'Moderator';
+      case RoleId.VERIFIED:
+        return 'Verified';
       case RoleId.DEFAULT:
       default:
         return '';

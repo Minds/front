@@ -29,6 +29,12 @@
     }
   }
 
+  .m-networkAdminConsole__secondaryTitle {
+    margin: $spacing3 0 0 0;
+
+    @include heading4Regular;
+  }
+
   .m-networkAdminConsole__form {
     // standard input.
     .m-networkAdminConsole__formInputContainer {
@@ -200,6 +206,17 @@
     }
   }
 
+  .m-networkAdminConsole__toggleWrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: $spacing4;
+
+    span {
+      @include body2Regular;
+    }
+  }
+
   .m-networkAdminConsole__checkboxesWrapper {
     display: flex;
     flex-flow: column;
@@ -259,6 +276,34 @@
     }
   }
 
+  // ************************************
+  // Policy Forms
+  // ************************************
+  .m-networkAdminConsolePolicyForm__wrapper {
+    padding: $spacing7 0 !important;
+    max-width: 860px;
+    @media screen and (min-width: $min-desktop) {
+      padding-right: $spacing32;
+    }
+
+    .m-networkAdminConsole__title {
+      margin-bottom: unset;
+    }
+
+    .m-networkAdminConsole__subtitle {
+      margin: $spacing1 0 $spacing4 0;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      a {
+        @include m-theme() {
+          color: themed($m-action);
+        }
+      }
+    }
+  }
   // ---------------------------
   // LIST
   // ---------------------------

@@ -109,6 +109,7 @@
       "
     >
       <a
+        *mIfTenant="false"
         routerLink="/content-policy"
         data-ref="sidebarmore-footer-content-policy"
         (click)="toggleSidebar()"
@@ -116,12 +117,30 @@
         >Content Policy</a
       >
       <a
+        *mIfTenant="true"
+        routerLink="/pages/community-guidelines"
+        data-ref="sidebarmore-footer-community-guidelines-policy"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__COMMUNITY_GUIDELINES"
+        >Community Guidelines</a
+      >
+      <a
+        *mIfTenant="false"
         routerLink="/p/privacy"
         data-ref="sidebarmore-footer-privacy"
         (click)="toggleSidebar()"
         i18n="@@COMMON__PRIVACY"
         >Privacy</a
       >
+      <a
+        *mIfTenant="true"
+        routerLink="/pages/privacy-policy"
+        data-ref="sidebarmore-footer-privacy"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__PRIVACY"
+        >Privacy</a
+      >
+
       <ng-container *ngIf="getCurrentUser()">
         <a
           *mIfTenant="false"
@@ -176,7 +195,16 @@
         >Canary Mode</a
       >
       <a
+        *mIfTenant="false"
         routerLink="/p/terms"
+        data-ref="sidebarmore-footer-terms"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__TERMS"
+        >Terms</a
+      >
+      <a
+        *mIfTenant="true"
+        routerLink="/pages/terms-of-service"
         data-ref="sidebarmore-footer-terms"
         (click)="toggleSidebar()"
         i18n="@@COMMON__TERMS"

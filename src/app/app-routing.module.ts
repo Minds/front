@@ -22,7 +22,9 @@ import { PathMatch } from './common/types/angular.types';
 import { UpgradeModuleLazyRoutes } from './modules/upgrade/upgrade-lazy';
 import { NetworksModuleLazyRoutes } from './modules/networks/networks.lazy';
 import { NetworkAdminConsoleModuleLazyRoutes } from './modules/multi-tenant-network/admin-console/network-admin-console.lazy';
-import { TenantRedirectGuard } from './common/guards/tenant-redirect.guard';
+import { MindsOnlyRedirectGuard } from './common/guards/minds-only-redirect.guard';
+import { CustomPagesModuleLazyRoutes } from './modules/custom-pages/custom-pages.module.lazy';
+import { TenantOnlyRedirectGuard } from './common/guards/tenant-only-redirect.guard';
 
 const routes: Routes = [
   AnalyticsModuleLazyRoutes,
@@ -39,6 +41,7 @@ const routes: Routes = [
   BlogSlugModuleLazyRoutes,
   UpgradeModuleLazyRoutes,
   NetworksModuleLazyRoutes,
+  CustomPagesModuleLazyRoutes,
   // TODO: Find a way to move channel routes onto its own Module. They take priority and groups/blogs cannot be accessed
   {
     path: ':username',
@@ -63,6 +66,10 @@ const routes: Routes = [
     }),
   ],
   exports: [RouterModule],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/' }, TenantRedirectGuard],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/' },
+    MindsOnlyRedirectGuard,
+    TenantOnlyRedirectGuard,
+  ],
 })
 export class AppRoutingModule {}

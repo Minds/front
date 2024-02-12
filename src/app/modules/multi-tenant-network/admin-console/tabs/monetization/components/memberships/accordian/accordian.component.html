@@ -1,0 +1,192 @@
+<ng-container *ngIf="{ expanded: expanded$ | async } as templateVars">
+  <div
+    class="m-networkMembershipAccordian__topContainer"
+    (click)="toggleExpandedState()"
+  >
+    <div class="m-networkMembershipAccordian__topContainerLeft">
+      <h5 class="m-networkMembershipAccordian__title">
+        <span>{{ membership.membershipName }}</span>
+        <span> • </span>
+        <span>{{
+          membership.membershipPriceInCents / 100
+            | currency: membership.priceCurrency:'symbol':'1.0-2'
+        }}</span>
+
+        <span>
+          <span>&nbsp;</span>
+          <ng-container
+            *ngIf="
+              membership.membershipPricingModel ===
+                SiteMembershipPricingModelEnum.OneTime;
+              else billingPeriodTemplate
+            "
+          >
+            <span
+              class="m-networkMembershipAccordian__title--thin"
+              i18n="
+                 @@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__ONE_TIME_FEE_BRACKETS
+              "
+              >(one-time fee)</span
+            >
+          </ng-container>
+          <ng-template
+            #billingPeriodTemplate
+            [ngSwitch]="membership.membershipBillingPeriod"
+          >
+            <ng-container
+              *ngSwitchCase="SiteMembershipBillingPeriodEnum.Yearly"
+              i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__PER_YEAR"
+              >/ year</ng-container
+            >
+            <ng-container
+              *ngSwitchCase="SiteMembershipBillingPeriodEnum.Monthly"
+              i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__PER_MONTH"
+              >/ month</ng-container
+            >
+          </ng-template>
+        </span>
+      </h5>
+    </div>
+    <div class="m-networkMembershipAccordian__topContainerRight">
+      <i class="material-icons">
+        {{ templateVars.expanded ? 'expand_more' : 'chevron_right' }}</i
+      >
+    </div>
+  </div>
+  <div
+    *ngIf="templateVars.expanded"
+    [@growShrink]="templateVars.expanded"
+    class="m-networkMembershipAccordian__expandedContainer"
+  >
+    <div
+      class="m-networkMembershipAccordian__descriptionContainer"
+      *ngIf="membership.membershipDescription"
+    >
+      <markdown
+        ngPreserveWhitespaces
+        [data]="membership.membershipDescription"
+      ></markdown>
+    </div>
+    <div class="m-networkMembershipAccordian__summaryRow">
+      <h6
+        class="m-networkMembershipAccordian__sectionTitle"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__PRICING_MODEL"
+      >
+        Pricing Model
+      </h6>
+      <p
+        class="m-networkMembershipAccordian__summaryValue"
+        [ngSwitch]="membership.membershipPricingModel"
+      >
+        <ng-container
+          *ngSwitchCase="SiteMembershipPricingModelEnum.OneTime"
+          i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__ONE_TIME"
+          >One-time</ng-container
+        >
+        <ng-container
+          *ngSwitchCase="SiteMembershipPricingModelEnum.Recurring"
+          i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__RECURRING"
+          >Recurring</ng-container
+        >
+      </p>
+    </div>
+    <div class="m-networkMembershipAccordian__summaryRow">
+      <h6
+        class="m-networkMembershipAccordian__sectionTitle"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__MEMBERSHIP_PRICE"
+      >
+        Membership Price
+      </h6>
+      <p class="m-networkMembershipAccordian__summaryValue">
+        {{
+          membership.membershipPriceInCents / 100
+            | currency: membership.priceCurrency:'symbol':'1.2-2'
+        }}
+      </p>
+    </div>
+    <div class="m-networkMembershipAccordian__summaryRow">
+      <h6
+        class="m-networkMembershipAccordian__sectionTitle"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__BILLING_PERIOD"
+      >
+        Billing Period
+      </h6>
+      <p
+        [ngSwitch]="membership.membershipBillingPeriod"
+        class="m-networkMembershipAccordian__summaryValue"
+      >
+        <ng-container
+          *ngSwitchCase="SiteMembershipBillingPeriodEnum.Yearly"
+          i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__YEARLY"
+          >Yearly</ng-container
+        >
+        <ng-container
+          *ngSwitchCase="SiteMembershipBillingPeriodEnum.Monthly"
+          i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__MONTHLY"
+          >Monthly</ng-container
+        >
+      </p>
+    </div>
+
+    <div
+      class="m-networkMembershipAccordian__rolesContainer"
+      *ngIf="membership.roles?.length"
+    >
+      <h6
+        class="m-networkMembershipAccordian__sectionTitle"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__ROLES_TITLE"
+      >
+        Roles
+      </h6>
+
+      <div
+        class="m-networkMembershipAccordian__roleRow"
+        *ngFor="let role of membership.roles"
+      >
+        <m-networkAdminConsoleRole__icon
+          [roleId]="role.id"
+          scale="0.9"
+        ></m-networkAdminConsoleRole__icon>
+        <span>{{ getRoleLabelByRoleId(role.id) }}</span>
+      </div>
+    </div>
+
+    <div
+      class="m-networkMembershipAccordian__groupsContainer"
+      *ngIf="membership.groups?.length"
+    >
+      <h6
+        class="m-networkMembershipAccordian__sectionTitle"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__GROUPS_TITLE"
+      >
+        Groups
+      </h6>
+
+      <m-networkAdminMonetization__groupsList
+        [groups]="membership.groups"
+        [showDeleteButton]="false"
+      ></m-networkAdminMonetization__groupsList>
+    </div>
+
+    <div class="m-networkMembershipAccordian__actionButtonContainer">
+      <m-button
+        color="red"
+        size="medium"
+        (onAction)="onArchiveClick(membership)"
+        ><ng-container
+          i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__ARCHIVE_BUTTON"
+          >Archive</ng-container
+        ></m-button
+      >
+      <m-button
+        color="blue"
+        solid="true"
+        size="medium"
+        (onAction)="onEditClick(membership)"
+        ><ng-container i18n="@@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__EDIT_BUTTON"
+          >Edit</ng-container
+        ></m-button
+      >
+    </div>
+  </div>
+</ng-container>

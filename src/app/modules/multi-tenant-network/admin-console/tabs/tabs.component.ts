@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Session } from '../../../../services/session';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 /**
  * Top-level navigation tabs for network admin console.
@@ -9,4 +11,9 @@ import { Component } from '@angular/core';
   styleUrls: ['../stylesheets/console.component.ng.scss'],
   host: { class: 'm-networkAdminConsole__container--noHorizontalPadding' },
 })
-export class NetworkAdminConsoleTabsComponent {}
+export class NetworkAdminConsoleTabsComponent {
+  constructor(
+    public session: Session,
+    public permissions: PermissionsService
+  ) {}
+}

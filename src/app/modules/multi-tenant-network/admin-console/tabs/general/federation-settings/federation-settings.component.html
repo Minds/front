@@ -1,0 +1,26 @@
+<h4
+  class="m-networkAdminFederationSettings__title"
+  i18n="@@NETWORK_ADMIN_FEDERATION_SETTINGS__TITLE"
+>
+  Federation
+</h4>
+<p
+  class="m-networkAdminFederationSettings__body"
+  i18n="@@NETWORK_ADMIN_FEDERATION_SETTINGS__DESCRIPTION"
+>
+  Connect your network with other ActivityPub-powered social apps. Enables posts
+  from your network to reach others, and vice versa.
+</p>
+<div class="m-networkAdminFederationSettings__toggleContainer">
+  <m-toggle
+    class="m-networkAdminFederationSettings__toggle"
+    [mModel]="enabledToggleState"
+    (mModelChange)="onEnabledToggle($event)"
+    leftValue="off"
+    rightValue="on"
+    offState="off"
+  ></m-toggle>
+  <span class="m-networkAdminFederationSettings__toggleText"
+    >Federation enabled</span
+  >
+</div>

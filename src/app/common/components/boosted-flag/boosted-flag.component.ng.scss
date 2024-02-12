@@ -8,7 +8,7 @@
     @include body2Medium;
     text-decoration: none;
     @include m-theme() {
-      color: themed($m-link-text);
+      color: themed($m-action);
     }
   }
 
@@ -31,7 +31,7 @@
 
   i {
     @include m-theme() {
-      color: themed($m-link-text);
+      color: themed($m-action);
     }
   }
 }

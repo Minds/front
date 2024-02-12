@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   HostBinding,
+  Injector,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ConfigsService } from '../../common/services/configs.service';
@@ -45,7 +46,10 @@ import {
 } from '../../../graphql/generated.engine';
 import { QueryRef } from 'apollo-angular';
 import { FeedsService } from '../../common/services/feeds.service';
+import { PermissionsService } from '../../common/services/permissions.service';
+import { ComposerModalService } from '../composer/components/modal/modal.service';
 import { SiteService } from '../../common/services/site.service';
+import { Session } from '../../services/session';
 
 const PAGE_SIZE = 12;
 
@@ -139,6 +143,11 @@ export class SearchComponent {
    */
   public exploreTabContext: boolean = false;
 
+  /**
+   * Show a notice when the feed is empty
+   */
+  showEmptyFeedNotice$: Observable<boolean>;
+
   constructor(
     private fetchSearch: FetchSearchGQL,
     private countSearch: CountSearchGQL,
@@ -148,7 +157,11 @@ export class SearchComponent {
     private metaService: MetaService,
     private cd: ChangeDetectorRef,
     private legacyDiscoveryFeedsService: DiscoveryFeedsService,
-    private site: SiteService
+    protected permissions: PermissionsService,
+    private composerModal: ComposerModalService,
+    private injector: Injector,
+    private site: SiteService,
+    protected session: Session
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -216,6 +229,14 @@ export class SearchComponent {
       tap(() => (this.isFirstRun = false)) // Do not delay on future runs
     );
 
+    this.showEmptyFeedNotice$ = this.edges$.pipe(
+      map(edges => {
+        const hasActivityEdge =
+          edges && edges.some(edge => edge.__typename === 'ActivityEdge');
+        return !this.inProgress && !hasActivityEdge;
+      })
+    );
+
     this.searchData = this.searchQuery.valueChanges.pipe(
       filter(result => !!result.data?.search),
       map(result => result.data.search)
@@ -254,7 +275,7 @@ export class SearchComponent {
       })
     );
 
-    if (this.route.snapshot.data['explore']) {
+    if (this.route.snapshot?.data && this.route.snapshot.data['explore']) {
       this.exploreTabContext = true;
     }
 
@@ -365,7 +386,7 @@ export class SearchComponent {
   }
 
   /**
-   * The lastest post component will call this when clicked
+   * The latest post component will call this when clicked
    * It resets the counter and refreshes the feed
    */
   async refreshResults() {
@@ -427,6 +448,18 @@ export class SearchComponent {
 
     // Set the new page size limit
     this.pageSize$.next(currentPageSize + result.data.search.edges.length);
+  }
+
+  /**
+   * Open composer modal
+   * @returns { Promise<void> } - awaitable.
+   */
+  public async openComposerModal(): Promise<void> {
+    try {
+      await this.composerModal.setInjector(this.injector).present();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   /**

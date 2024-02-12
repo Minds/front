@@ -44,7 +44,7 @@
     a {
       @include m-theme() {
         font-weight: 300;
-        color: themed($m-link-text);
+        color: themed($m-action);
       }
     }
   }

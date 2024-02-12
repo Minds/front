@@ -1,4 +1,12 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { ProductPageService } from '../../services/product-page.service';
 import { BehaviorSubject, Subscription, take } from 'rxjs';
 import {
@@ -12,6 +20,7 @@ import { SidebarNavigationService } from '../../../../../common/layout/sidebar/n
 import { PageLayoutService } from '../../../../../common/layout/page-layout.service';
 import { StrapiMetaService } from '../../../../../common/services/strapi-meta.service';
 import { TopbarService } from '../../../../../common/layout/topbar.service';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Base component for dynamic product pages. Central switch that determines
@@ -23,6 +32,8 @@ import { TopbarService } from '../../../../../common/layout/topbar.service';
   styleUrls: ['base.component.ng.scss'],
 })
 export class ProductPageBaseComponent implements OnInit, OnDestroy {
+  @Input() slugOverride: string;
+
   /** Host classes  - force light mode. */
   @HostBinding('class')
   get classes(): Record<string, boolean> {
@@ -57,18 +68,22 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
     private topbarService: TopbarService,
     private strapiMetaService: StrapiMetaService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
-    // force scroll to top for when the component reloads with a different slug.
-    window.scroll(0, 0);
+    if (isPlatformBrowser(this.platformId)) {
+      // force scroll to top for when the component reloads with a different slug.
+      window.scroll(0, 0);
+    }
 
     this.navigationService.setVisible(false);
     this.pageLayoutService.useFullWidth();
     this.topbarService.isMinimalLightMode$.next(true);
 
-    const slug: string = this.route.snapshot.paramMap.get('slug') ?? null;
+    const slug: string =
+      (this.slugOverride || this.route.snapshot.paramMap.get('slug')) ?? null;
 
     if (!slug) {
       return this.handleLoadFailure(slug);

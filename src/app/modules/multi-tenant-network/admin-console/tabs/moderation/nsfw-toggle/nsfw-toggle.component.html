@@ -1,0 +1,21 @@
+<h4
+  class="m-networkAdminConsole__secondaryTitle"
+  i18n="@@NETWORK_ADMIN_CONSOLE__NSFW_TOGGLE__NSFW_CONTENT"
+>
+  NSFW Content
+</h4>
+<p class="m-networkAdminConsole__subtitle">
+  Restrict or open access to NSFW content on your network site
+</p>
+<div class="m-networkAdminConsole__toggleWrapper">
+  <m-toggle
+    [mModel]="nsfwToggleVal$ | async"
+    (mModelChange)="toggle($event)"
+    leftValue="off"
+    rightValue="on"
+    offState="off"
+  ></m-toggle>
+  <span i18n="@@NETWORK_ADMIN_CONSOLE__NSFW_TOGGLE__NSFW_ENABLED"
+    >NSFW enabled</span
+  >
+</div>

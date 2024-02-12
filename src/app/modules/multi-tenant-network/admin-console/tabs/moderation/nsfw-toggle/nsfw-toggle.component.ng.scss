@@ -1,0 +1,13 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networkAdminConsole__subtitle {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-networkAdminConsole__toggleWrapper {
+    margin: $spacing4 0;
+  }
+}

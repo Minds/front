@@ -116,6 +116,7 @@
             <!-- Mark as explicit -->
             <!-- --------------------- -->
             <m-dropdownMenu__item
+              *ngIf="nsfwEnabledService.nsfwEnabled$ | async"
               (click)="attachment.toggleMature()"
               icon="explicit"
               [red]="attachment.isMature()"

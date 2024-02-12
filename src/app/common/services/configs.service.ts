@@ -32,7 +32,7 @@ export class ConfigsService {
   }
 
   get<T = any>(key): T | null {
-    return (this.configs[key] as T) || null;
+    return key in this.configs ? (this.configs[key] as T) : null;
   }
 
   set(key, value): void {

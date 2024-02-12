@@ -3,6 +3,7 @@ import {
   TestBed,
   discardPeriodicTasks,
   fakeAsync,
+  flush,
   tick,
 } from '@angular/core/testing';
 import { FormControl, FormsModule, NgControl } from '@angular/forms';
@@ -70,57 +71,72 @@ describe('AutocompleteEntityInputComponent', () => {
       expect(comp.propagateChange).toHaveBeenCalledWith(userMock);
       discardPeriodicTasks();
     }));
-
-    it('should propagate change out when entityRef$ is updated with a username', fakeAsync(() => {
-      comp.entityType = AutoCompleteEntityTypeEnum.User;
-      (comp as any).api.get.and.returnValue(
-        of({
-          entities: [userMock],
-        })
-      );
-
-      comp.entityRef$.next(userMock.username);
-
-      tick(100);
-      expect((comp as any).api.get).toHaveBeenCalled();
-      expect(comp.propagateChange).toHaveBeenCalledWith(userMock);
-      discardPeriodicTasks();
-    }));
-
-    it('should propagate change out when entityRef$ is updated with a group name', fakeAsync(() => {
-      comp.entityType = AutoCompleteEntityTypeEnum.Group;
-      (comp as any).api.get.and.returnValue(
-        of({
-          entities: [groupMock],
-        })
-      );
-
-      comp.entityRef$.next(groupMock.name);
-
-      tick(100);
-      expect((comp as any).api.get).toHaveBeenCalled();
-      expect(comp.propagateChange).toHaveBeenCalledWith(groupMock);
-      discardPeriodicTasks();
-    }));
   });
 
   describe('showPopout$', () => {
-    it('should show popout because focused and has entities', fakeAsync((
-      done: DoneFn
-    ) => {
+    it('should show popout because focused and has entities', fakeAsync(() => {
+      comp.entityRef$.next('abc');
+
       (comp as any).api.get.and.returnValue(
         of({
           entities: [userMock],
         })
       );
+
       comp.inProgress$.next(false);
       comp.isFocused$.next(true);
 
       tick(100);
+
       comp.showPopout$.pipe(take(1)).subscribe(showPopout => {
-        expect(showPopout).toBe(false);
-        done();
+        expect(showPopout).toBe(true);
       });
+
+      discardPeriodicTasks();
+    }));
+  });
+
+  describe('entitySelection', () => {
+    let mockApiService: ApiService;
+
+    beforeEach(() => {
+      mockApiService = TestBed.inject(ApiService);
+      comp.propagateChange = jasmine.createSpy('propagateChange');
+    });
+
+    it('should propagate change when a group is selected', fakeAsync(() => {
+      comp.entityType = AutoCompleteEntityTypeEnum.Group;
+      (comp as any).api.get.and.returnValue(of({ entities: [groupMock] }));
+
+      comp.onEntitySelect(groupMock);
+
+      tick();
+      expect(comp.propagateChange).toHaveBeenCalledWith(groupMock);
+      discardPeriodicTasks();
+    }));
+
+    it('should propagate change when a user is selected', fakeAsync(() => {
+      comp.entityType = AutoCompleteEntityTypeEnum.User;
+      (comp as any).api.get.and.returnValue(of({ entities: [userMock] }));
+
+      comp.onEntitySelect(userMock);
+
+      tick();
+      expect(comp.propagateChange).toHaveBeenCalledWith(userMock);
+      discardPeriodicTasks();
+    }));
+  });
+
+  describe('clearAfterSelection', () => {
+    it('should clear the input field after a selection is made', fakeAsync(() => {
+      comp.clearAfterSelection = true;
+      comp.entityRef$.next(userMock);
+
+      tick();
+      fixture.detectChanges();
+
+      expect(comp.inputElRef.nativeElement.value).toBe('');
+      discardPeriodicTasks();
     }));
   });
 });

@@ -17,6 +17,22 @@
           [v2]="true"
           (onChange)="onTypeChange($event.customType)"
         ></m-sort-selector>
+
+        <ng-container *ngIf="service.isMember$ | async">
+          <a
+            *ngIf="feedService.scheduledCount$ | async as scheduledCount"
+            class="m-groupFeedFilter__scheduledToggle"
+            [class.selected]="feedService.viewScheduled$ | async"
+            (click)="toggleScheduled()"
+          >
+            <m-tooltip [anchor]="'bottom'" icon="alarm">
+              <ng-container i18n="@@M__GROUP_FEED__SCHEDULED_TOOLTIP">
+                Scheduled posts
+              </ng-container>
+            </m-tooltip>
+            <span>{{ scheduledCount }}</span>
+          </a>
+        </ng-container>
       </div>
       <!-- ----------------------------------------- -->
       <!-- SEARCH QUERY DISPLAY -->
@@ -57,34 +73,43 @@
             [anchors]="feedViewChildren"
           >
             <ng-container *ngFor="let entity$ of feed; let i = index">
-              <m-newsfeed__entity
-                [displayOptions]="{
-                  showOnlyCommentsInput: true,
-                  isFeed: true,
-                  inSingleGroupFeed: true
-                }"
-                [entity]="patchEntity(entity$ | async)"
-                [slot]="i + 1"
-                [canDelete]="group['is:owner'] || group['is:moderator']"
-                (deleted)="feedService.onDelete($event)"
-                #feedViewChildren
-              ></m-newsfeed__entity>
-              <!-- ----------------------------------------- -->
-              <!-- BOOSTS  -->
-              <!-- ----------------------------------------- -->
-              <ng-container *mIfTenant="false">
-                <m-featured-content
-                  *ngIf="
-                    shouldShowBoostInPosition(i) && service.showBoosts$ | async
-                  "
-                  [slot]="i + 1"
+              <ng-container
+                *ngIf="
+                  (feedService.viewScheduled$ | async)
+                    ? activityIsScheduled(entity$ | async)
+                    : true
+                "
+              >
+                <m-newsfeed__entity
                   [displayOptions]="{
                     showOnlyCommentsInput: true,
-                    isFeed: true
+                    isFeed: true,
+                    inSingleGroupFeed: true
                   }"
-                  showHeader="true"
-                  [servedByGuid]="service.guid$ | async"
-                ></m-featured-content>
+                  [entity]="patchEntity(entity$ | async)"
+                  [slot]="i + 1"
+                  [canDelete]="group['is:owner'] || group['is:moderator']"
+                  (deleted)="feedService.onDelete($event)"
+                  #feedViewChildren
+                ></m-newsfeed__entity>
+                <!-- ----------------------------------------- -->
+                <!-- BOOSTS  -->
+                <!-- ----------------------------------------- -->
+                <ng-container *mIfTenant="false">
+                  <m-featured-content
+                    *ngIf="
+                      shouldShowBoostInPosition(i) && service.showBoosts$
+                        | async
+                    "
+                    [slot]="i + 1"
+                    [displayOptions]="{
+                      showOnlyCommentsInput: true,
+                      isFeed: true
+                    }"
+                    showHeader="true"
+                    [servedByGuid]="service.guid$ | async"
+                  ></m-featured-content>
+                </ng-container>
               </ng-container>
             </ng-container>
           </div>

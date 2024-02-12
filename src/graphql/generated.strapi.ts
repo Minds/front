@@ -881,8 +881,21 @@ export type ComponentV2ProductFeatureTableHeaderInput = {
 
 export type ComponentV2ProductHero = {
   __typename?: 'ComponentV2ProductHero';
+  buttons?: Maybe<Array<Maybe<ComponentCommonActionButton>>>;
   id: Scalars['ID']['output'];
   text: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductHeroButtonsArgs = {
+  filters?: InputMaybe<ComponentCommonActionButtonFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentV2ProductImageCard = {
+  __typename?: 'ComponentV2ProductImageCard';
+  id: Scalars['ID']['output'];
+  image: UploadFileEntityResponse;
 };
 
 export type ComponentV2ProductPerk = {
@@ -1000,6 +1013,7 @@ export enum Enum_Feattablecolumn_Tier {
 
 export enum Enum_Productaddon_Key {
   MobileApp = 'mobile_app',
+  MobileAppSetup = 'mobile_app_setup',
   Moderation = 'moderation',
   TechnicalSupport = 'technical_support',
 }
@@ -1451,6 +1465,7 @@ export type GenericMorph =
   | ComponentV2ProductFeatureTable
   | ComponentV2ProductFeatureTableHeader
   | ComponentV2ProductHero
+  | ComponentV2ProductImageCard
   | ComponentV2ProductPerk
   | ComponentV2ProductPricingCards
   | ExplainerScreenMobile
@@ -2130,7 +2145,7 @@ export type ProductAddOn = {
   description: Scalars['String']['output'];
   key?: Maybe<Enum_Productaddon_Key>;
   name: Scalars['String']['output'];
-  perks: Array<Maybe<ComponentV2ProductPerk>>;
+  perks?: Maybe<Array<Maybe<ComponentV2ProductPerk>>>;
   perksTitle: Scalars['String']['output'];
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -2752,6 +2767,7 @@ export type UpgradePage = {
   iconSource?: Maybe<Enum_Upgradepage_Iconsource>;
   locale?: Maybe<Scalars['String']['output']>;
   localizations?: Maybe<UpgradePageRelationResponseCollection>;
+  mobileIconId?: Maybe<Scalars['String']['output']>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   rowType: Enum_Upgradepage_Rowtype;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -2792,6 +2808,7 @@ export type UpgradePageFiltersInput = {
   id?: InputMaybe<IdFilterInput>;
   locale?: InputMaybe<StringFilterInput>;
   localizations?: InputMaybe<UpgradePageFiltersInput>;
+  mobileIconId?: InputMaybe<StringFilterInput>;
   not?: InputMaybe<UpgradePageFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<UpgradePageFiltersInput>>>;
   publishedAt?: InputMaybe<DateTimeFilterInput>;
@@ -2805,6 +2822,7 @@ export type UpgradePageInput = {
   displayText?: InputMaybe<Scalars['String']['input']>;
   iconId?: InputMaybe<Scalars['String']['input']>;
   iconSource?: InputMaybe<Enum_Upgradepage_Iconsource>;
+  mobileIconId?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   rowType?: InputMaybe<Enum_Upgradepage_Rowtype>;
 };
@@ -3238,6 +3256,7 @@ export type V2ProductPageProductPageDynamicZone =
   | ComponentV2ProductFeatureShowcase
   | ComponentV2ProductFeatureTable
   | ComponentV2ProductHero
+  | ComponentV2ProductImageCard
   | ComponentV2ProductPricingCards
   | Error;
 
@@ -3503,7 +3522,37 @@ export type GetV2ProductPageBySlugQuery = {
                 }>;
               } | null;
             }
-          | { __typename: 'ComponentV2ProductHero'; id: string; text: string }
+          | {
+              __typename: 'ComponentV2ProductHero';
+              id: string;
+              text: string;
+              buttons?: Array<{
+                __typename?: 'ComponentCommonActionButton';
+                id: string;
+                text: string;
+                action?: Enum_Componentcommonactionbutton_Action | null;
+                navigationUrl?: string | null;
+                dataRef?: string | null;
+                solid?: boolean | null;
+              } | null> | null;
+            }
+          | {
+              __typename: 'ComponentV2ProductImageCard';
+              id: string;
+              image: {
+                __typename?: 'UploadFileEntityResponse';
+                data?: {
+                  __typename?: 'UploadFileEntity';
+                  attributes?: {
+                    __typename?: 'UploadFile';
+                    url: string;
+                    height?: number | null;
+                    width?: number | null;
+                    alternativeText?: string | null;
+                  } | null;
+                } | null;
+              };
+            }
           | {
               __typename: 'ComponentV2ProductPricingCards';
               id: string;
@@ -3683,6 +3732,67 @@ export type TwitterSyncTweetMessageQuery = {
   } | null;
 };
 
+export type FetchMinimalOnboardingV5VersionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type FetchMinimalOnboardingV5VersionsQuery = {
+  __typename?: 'Query';
+  onboardingV5Versions?: {
+    __typename?: 'OnboardingV5VersionEntityResponseCollection';
+    data: Array<{
+      __typename?: 'OnboardingV5VersionEntity';
+      attributes?: {
+        __typename?: 'OnboardingV5Version';
+        publishedAt?: any | null;
+        steps: Array<
+          | {
+              __typename: 'ComponentOnboardingV5OnboardingStep';
+              id: string;
+              title: string;
+              description: string;
+              stepKey: string;
+              stepType: Enum_Componentonboardingv5Onboardingstep_Steptype;
+              verifyEmailForm?: {
+                __typename: 'ComponentOnboardingV5VerifyEmailStep';
+                id: string;
+                inputLabel: string;
+                inputPlaceholder?: string | null;
+                resendCodeText: string;
+                resendCodeActionText: string;
+                changeEmailActionText: string;
+                changeEmailTitle: string;
+                changeEmailDescription: string;
+                changeEmailInputLabel: string;
+                changeEmailInputPlaceholder?: string | null;
+                changeEmailActionButton: {
+                  __typename: 'ComponentOnboardingV5ActionButton';
+                  id: string;
+                  text: string;
+                  dataRef?: string | null;
+                };
+              } | null;
+              actionButton?: {
+                __typename: 'ComponentOnboardingV5ActionButton';
+                id: string;
+                text: string;
+                dataRef?: string | null;
+              } | null;
+              skipButton?: {
+                __typename: 'ComponentOnboardingV5SkipButton';
+                id: string;
+                text: string;
+                dataRef?: string | null;
+              } | null;
+            }
+          | { __typename: 'Error' }
+          | null
+        >;
+      } | null;
+    }>;
+  } | null;
+};
+
 export type FetchOnboardingV5VersionsQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -3811,67 +3921,6 @@ export type FetchOnboardingV5VersionsQuery = {
   } | null;
 };
 
-export type FetchTenantOnboardingV5VersionsQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type FetchTenantOnboardingV5VersionsQuery = {
-  __typename?: 'Query';
-  onboardingV5Versions?: {
-    __typename?: 'OnboardingV5VersionEntityResponseCollection';
-    data: Array<{
-      __typename?: 'OnboardingV5VersionEntity';
-      attributes?: {
-        __typename?: 'OnboardingV5Version';
-        publishedAt?: any | null;
-        steps: Array<
-          | {
-              __typename: 'ComponentOnboardingV5OnboardingStep';
-              id: string;
-              title: string;
-              description: string;
-              stepKey: string;
-              stepType: Enum_Componentonboardingv5Onboardingstep_Steptype;
-              verifyEmailForm?: {
-                __typename: 'ComponentOnboardingV5VerifyEmailStep';
-                id: string;
-                inputLabel: string;
-                inputPlaceholder?: string | null;
-                resendCodeText: string;
-                resendCodeActionText: string;
-                changeEmailActionText: string;
-                changeEmailTitle: string;
-                changeEmailDescription: string;
-                changeEmailInputLabel: string;
-                changeEmailInputPlaceholder?: string | null;
-                changeEmailActionButton: {
-                  __typename: 'ComponentOnboardingV5ActionButton';
-                  id: string;
-                  text: string;
-                  dataRef?: string | null;
-                };
-              } | null;
-              actionButton?: {
-                __typename: 'ComponentOnboardingV5ActionButton';
-                id: string;
-                text: string;
-                dataRef?: string | null;
-              } | null;
-              skipButton?: {
-                __typename: 'ComponentOnboardingV5SkipButton';
-                id: string;
-                text: string;
-                dataRef?: string | null;
-              } | null;
-            }
-          | { __typename: 'Error' }
-          | null
-        >;
-      } | null;
-    }>;
-  } | null;
-};
-
 export type UpgradePageQueryVariables = Exact<{ [key: string]: never }>;
 
 export type UpgradePageQuery = {
@@ -3952,6 +4001,27 @@ export const GetV2ProductPageBySlugDocument = gql`
             ... on ComponentV2ProductHero {
               id
               text
+              buttons {
+                id
+                text
+                action
+                navigationUrl
+                dataRef
+                solid
+              }
+            }
+            ... on ComponentV2ProductImageCard {
+              id
+              image {
+                data {
+                  attributes {
+                    url
+                    height
+                    width
+                    alternativeText
+                  }
+                }
+              }
             }
             ... on ComponentV2ProductPricingCards {
               id
@@ -4277,6 +4347,72 @@ export class TwitterSyncTweetMessageGQL extends Apollo.Query<
     super(apollo);
   }
 }
+export const FetchMinimalOnboardingV5VersionsDocument = gql`
+  query FetchMinimalOnboardingV5Versions {
+    onboardingV5Versions {
+      data {
+        attributes {
+          publishedAt
+          steps {
+            __typename
+            ... on ComponentOnboardingV5OnboardingStep {
+              id
+              title
+              description
+              stepKey
+              stepType
+              verifyEmailForm {
+                id
+                __typename
+                inputLabel
+                inputPlaceholder
+                resendCodeText
+                resendCodeActionText
+                changeEmailActionText
+                changeEmailTitle
+                changeEmailDescription
+                changeEmailInputLabel
+                changeEmailInputPlaceholder
+                changeEmailActionButton {
+                  id
+                  __typename
+                  text
+                  dataRef
+                }
+              }
+              actionButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+              skipButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchMinimalOnboardingV5VersionsGQL extends Apollo.Query<
+  FetchMinimalOnboardingV5VersionsQuery,
+  FetchMinimalOnboardingV5VersionsQueryVariables
+> {
+  document = FetchMinimalOnboardingV5VersionsDocument;
+  client = 'strapi';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const FetchOnboardingV5VersionsDocument = gql`
   query FetchOnboardingV5Versions {
     onboardingV5Versions {
@@ -4399,72 +4535,6 @@ export class FetchOnboardingV5VersionsGQL extends Apollo.Query<
   FetchOnboardingV5VersionsQueryVariables
 > {
   document = FetchOnboardingV5VersionsDocument;
-  client = 'strapi';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const FetchTenantOnboardingV5VersionsDocument = gql`
-  query FetchTenantOnboardingV5Versions {
-    onboardingV5Versions {
-      data {
-        attributes {
-          publishedAt
-          steps {
-            __typename
-            ... on ComponentOnboardingV5OnboardingStep {
-              id
-              title
-              description
-              stepKey
-              stepType
-              verifyEmailForm {
-                id
-                __typename
-                inputLabel
-                inputPlaceholder
-                resendCodeText
-                resendCodeActionText
-                changeEmailActionText
-                changeEmailTitle
-                changeEmailDescription
-                changeEmailInputLabel
-                changeEmailInputPlaceholder
-                changeEmailActionButton {
-                  id
-                  __typename
-                  text
-                  dataRef
-                }
-              }
-              actionButton {
-                id
-                __typename
-                text
-                dataRef
-              }
-              skipButton {
-                id
-                __typename
-                text
-                dataRef
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class FetchTenantOnboardingV5VersionsGQL extends Apollo.Query<
-  FetchTenantOnboardingV5VersionsQuery,
-  FetchTenantOnboardingV5VersionsQueryVariables
-> {
-  document = FetchTenantOnboardingV5VersionsDocument;
   client = 'strapi';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
