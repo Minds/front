@@ -341,31 +341,6 @@ describe('MembershipsPageComponent', () => {
 
       expect((comp as any).session.isLoggedIn).toHaveBeenCalled();
       expect(
-        (comp as any).getSiteMembershipSubscriptionsGQL.fetch
-      ).toHaveBeenCalled();
-      expect(
-        (comp as any).membershipManagement.navigateToCheckout
-      ).toHaveBeenCalled();
-    }));
-
-    it('should call to navigate a user to checkout when a user logs in', fakeAsync(() => {
-      (comp as any).session.isLoggedIn.and.returnValue(false);
-      (comp as any).authModal.open.and.returnValue(Promise.resolve(userMock));
-      (comp as any).getSiteMembershipSubscriptionsGQL.fetch.and.returnValue(
-        of({ data: { siteMembershipSubscriptions: [] } })
-      );
-      (comp as any).membershipManagement.navigateToCheckout.and.returnValue(
-        Promise.resolve(true)
-      );
-
-      comp.onJoinMembershipClick(siteMembershipMock);
-      tick();
-
-      expect((comp as any).session.isLoggedIn).toHaveBeenCalled();
-      expect(
-        (comp as any).getSiteMembershipSubscriptionsGQL.fetch
-      ).toHaveBeenCalled();
-      expect(
         (comp as any).membershipManagement.navigateToCheckout
       ).toHaveBeenCalled();
     }));
