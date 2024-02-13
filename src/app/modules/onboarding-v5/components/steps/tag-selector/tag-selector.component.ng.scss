@@ -37,9 +37,10 @@
         }
 
         &:hover {
+          opacity: 0.6;
           @include m-theme() {
-            background: rgba(themed($m-action), 0.7);
-            border-color: rgba(themed($m-action), 0.7);
+            background: themed($m-action);
+            border-color: themed($m-action);
             color: themed($m-bgColor--primary);
           }
         }
