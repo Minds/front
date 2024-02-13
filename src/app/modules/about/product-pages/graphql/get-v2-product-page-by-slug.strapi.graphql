@@ -1,3 +1,4 @@
+# Write your query or mutation here
 query GetV2ProductPageBySlug($slug: String!) {
   v2ProductPages(filters: { slug: { eq: $slug } }) {
     data {
@@ -27,6 +28,27 @@ query GetV2ProductPageBySlug($slug: String!) {
           ... on ComponentV2ProductHero {
             id
             text
+            buttons {
+              id
+              text
+              action
+              navigationUrl
+              dataRef
+              solid
+            }
+          }
+          ... on ComponentV2ProductImageCard {
+            id
+            image {
+              data {
+                attributes {
+                  url
+                  height
+                  width
+                  alternativeText
+                }
+              }
+            }
           }
           ... on ComponentV2ProductPricingCards {
             id
@@ -69,7 +91,7 @@ query GetV2ProductPageBySlug($slug: String!) {
                     title
                     priceStartingAt
                     noPrice
-                  	button {
+                    button {
                       text
                       dataRef
                       solid
@@ -77,7 +99,7 @@ query GetV2ProductPageBySlug($slug: String!) {
                       navigationUrl
                       action
                       stripeProductKey
-                  	}
+                    }
                   }
                   sections {
                     data {

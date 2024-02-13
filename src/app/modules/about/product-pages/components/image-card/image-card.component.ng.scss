@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+@import '../../stylesheets/product.pages.ng.scss';
+
+:host {
+  margin-top: 148px;
+
+  padding: 0 $spacing30;
+
+  @media screen and (max-width: $min-desktop) {
+    padding: 0 $spacing5;
+  }
+
+  @media screen and (max-width: $min-tablet) {
+    margin-top: $spacing20;
+  }
+
+  .m-productPageImageCard__container {
+    width: 100%;
+    max-height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .m-productPageImageCard__image {
+    max-height: 900px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}

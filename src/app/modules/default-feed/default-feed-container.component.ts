@@ -7,8 +7,8 @@ import { Session } from '../../services/session';
  */
 @Component({
   selector: 'm-defaultFeed__container',
-  templateUrl: 'container.component.html',
-  styleUrls: ['./container.component.ng.scss'],
+  templateUrl: 'default-feed-container.component.html',
+  styleUrls: ['./default-feed-container.component.ng.scss'],
 })
 export class DefaultFeedContainerComponent implements OnInit {
   constructor(private router: Router, private session: Session) {}
