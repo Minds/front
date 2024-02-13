@@ -164,6 +164,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     .canCreateSupermindRequest$;
 
   /**
+   * Whether the post (or next or save) button is disabled
+   */
+  postButtonDisabled: boolean = true;
+
+  /**
    * Constructor
    * @param service
    * @param popup
@@ -229,6 +234,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         if (paywall && !paywall.hasOwnProperty('support_tier')) {
           this.legacyPaywallEnabled = true;
         }
+      }),
+      this.service.postButtonDisabled$.subscribe(disabled => {
+        this.postButtonDisabled = disabled;
+        this.detectChanges();
       })
     );
   }

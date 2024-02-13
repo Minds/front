@@ -6,7 +6,6 @@ import { PostMenuV2Component } from './menu.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { AdminSupersetLinkService } from '../../../services/admin-superset-link.service';
 import { PermissionsService } from '../../../services/permissions.service';
-import { By } from '@angular/platform-browser';
 
 describe('PostMenuV2Component', () => {
   let comp: PostMenuV2Component;

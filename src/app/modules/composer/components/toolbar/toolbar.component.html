@@ -190,9 +190,7 @@
   <ng-container *ngIf="!(siteMembershipGuids$ | async); else nextButton">
     <m-button
       class="m-composerToolbar__action m-composerToolbar__action--post"
-      [disabled]="
-        !(canPost$ | async) || (inProgress$ | async) || (isPosting$ | async)
-      "
+      [disabled]="postButtonDisabled"
       [saving]="(inProgress$ | async) || (isPosting$ | async)"
       [dropdown]="postButtonDropdown"
       [dropdownAnchorPosition]="{ top: '100%', right: '0' }"
@@ -212,7 +210,7 @@
       >
       <span
         class="m-composerToolbarAction__disabledOverlay"
-        *ngIf="isPostButtonDisabled$ | async"
+        *ngIf="postButtonDisabled"
       ></span>
     </m-button>
   </ng-container>
@@ -222,7 +220,7 @@
   <ng-template #nextButton>
     <m-button
       class="m-composerToolbar__action m-composerToolbar__action--post"
-      [disabled]="!(canPost$ | async) || (inProgress$ | async)"
+      [disabled]="service.nextButtonDisabled$ | async"
       [saving]="inProgress$ | async"
       [dropdown]="postButtonDropdown"
       [dropdownAnchorPosition]="{ top: '100%', right: '0' }"

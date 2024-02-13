@@ -20,6 +20,7 @@ import {
   tap,
 } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Allows users to configure a preview for a paywalled site membership
@@ -68,7 +69,8 @@ export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
   constructor(
     public service: ComposerService,
     private formBuilder: FormBuilder,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private toaster: ToasterService
   ) {
     // Initialize the form group with form controls
     this.postPreviewForm = this.formBuilder.group({
@@ -136,7 +138,11 @@ export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
       file = event.target.files[0];
     }
 
-    if (file) {
+    if (!file) {
+      console.warn('No file selected or event not recognized.');
+    }
+
+    if (file.type.startsWith('image/')) {
       this.filePreviewUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
         URL.createObjectURL(file)
       );
@@ -154,7 +160,7 @@ export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
         fileBase64,
       };
     } else {
-      console.warn('No file selected or event not recognized.');
+      this.toaster.error('Thumbnail must be an image file.');
     }
   }
 

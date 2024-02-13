@@ -9,6 +9,7 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BehaviorSubject } from 'rxjs';
 import { MockService } from '../../../../utils/mock';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 describe('ComposerSiteMembershipPostPreview', () => {
   let component: ComposerSiteMembershipPostPreview;
@@ -38,7 +39,10 @@ describe('ComposerSiteMembershipPostPreview', () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, NoopAnimationsModule],
       declarations: [ComposerSiteMembershipPostPreview],
-      providers: [{ provide: ComposerService, useValue: composerServiceMock }],
+      providers: [
+        { provide: ComposerService, useValue: composerServiceMock },
+        { provide: ToasterService, useValue: MockService(ToasterService) },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ComposerSiteMembershipPostPreview);

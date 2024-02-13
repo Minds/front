@@ -89,9 +89,7 @@
       <div class="m-form__buttonsContainer">
         <m-button
           [disabled]="
-            postPreviewForm.invalid ||
-            (service.inProgress$ | async) ||
-            (service.isPosting$ | async)
+            postPreviewForm.invalid || (service.postButtonDisabled$ | async)
           "
           [saving]="
             (service.inProgress$ | async) || (service.isPosting$ | async)

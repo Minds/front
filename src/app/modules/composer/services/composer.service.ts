@@ -374,6 +374,17 @@ export class ComposerService implements OnDestroy {
   >(DEFAULT_COMPOSER_SIZE);
 
   /**
+   * Whether post button is disabled
+   */
+  readonly postButtonDisabled$: Observable<boolean>;
+
+  /**
+   * Whether next button is disabled
+   * (used for site membership posts)
+   */
+  readonly nextButtonDisabled$: Observable<boolean>;
+
+  /**
    * URL in the message
    */
   readonly messageUrl$: Observable<string>;
@@ -719,6 +730,25 @@ export class ComposerService implements OnDestroy {
     this.dataSubscription = this.data$.subscribe(data => {
       return this.buildPayload(data);
     });
+
+    this.postButtonDisabled$ = combineLatest([
+      this.canPost$,
+      this.isPosting$,
+      this.inProgress$,
+    ]).pipe(
+      map(([canPost, isPosting, inProgress]) => {
+        return !canPost || isPosting || inProgress;
+      })
+    );
+
+    this.nextButtonDisabled$ = combineLatest([
+      this.canPost$,
+      this.inProgress$,
+    ]).pipe(
+      map(([canPost, isPosting]) => {
+        return !canPost || isPosting;
+      })
+    );
 
     // Subscribe to selected audience
     this.selectedAudienceSubscription = this.audienceSelectorService.selectedAudience$.subscribe(
@@ -1207,10 +1237,9 @@ export class ComposerService implements OnDestroy {
    * Sets the current progress state
    *
    * @param inProgress
-   * @param progress
    * @private
    */
-  setProgress(inProgress: boolean, progress: number = 1): void {
+  setProgress(inProgress: boolean): void {
     this.inProgress$.next(inProgress);
   }
 
