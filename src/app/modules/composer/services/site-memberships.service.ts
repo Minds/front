@@ -7,7 +7,6 @@ import {
   GetSiteMembershipsQuery,
   SiteMembership,
 } from '../../../../graphql/generated.engine';
-import { ojmFakeMembershipsQuery } from './ojm-fake-memberships';
 import {
   DEFAULT_ERROR_MESSAGE,
   ToasterService,
@@ -48,18 +47,14 @@ export class ComposerSiteMembershipsService {
     this.membershipLoadInProgress$.next(true);
 
     try {
-      // ojm uncomment
-      // const response: ApolloQueryResult<GetSiteMembershipsQuery> = await lastValueFrom(
-      //   this.getSiteMembershipsGQL.fetch()
-      // );
+      const response: ApolloQueryResult<GetSiteMembershipsQuery> = await lastValueFrom(
+        this.getSiteMembershipsGQL.fetch()
+      );
 
-      const response = ojmFakeMembershipsQuery;
-
-      // ojm uncomment
-      // if (response?.error || response?.errors?.length) {
-      //   console.error(response?.errors ?? DEFAULT_ERROR_MESSAGE);
-      //   throw new Error('An error has occurred while loading memberships');
-      // }
+      if (response?.error || response?.errors?.length) {
+        console.error(response?.errors ?? DEFAULT_ERROR_MESSAGE);
+        throw new Error('An error has occurred while loading memberships');
+      }
 
       if (response?.data?.siteMemberships?.length) {
         this.allMemberships$.next(

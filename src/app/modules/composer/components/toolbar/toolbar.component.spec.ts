@@ -1,4 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  flush,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ToolbarComponent } from './toolbar.component';
 import { ComposerService, ComposerSize } from '../../services/composer.service';
@@ -23,9 +30,7 @@ import { ApolloTestingModule } from 'apollo-angular/testing';
 import { SiteMembership } from '../../../../../graphql/generated.engine';
 import { By } from '@angular/platform-browser';
 import { IfTenantDirective } from '../../../../common/directives/if-tenant.directive';
-
-// ojm todo
-// Add more tests for do not show monetization button when tenant,, when to show the next button instead of the post button, when next button should be enabled
+import { IsTenantService } from '../../../../common/services/is-tenant.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -52,14 +57,13 @@ describe('Composer Toolbar', () => {
   });
 
   const size$ = new BehaviorSubject<ComposerSize>('full');
-
   const remind$ = new BehaviorSubject(null);
-
   const canCreateSupermindRequest$ = new BehaviorSubject(true);
-
+  const isGroupPost$ = new BehaviorSubject<boolean>(false);
   const canPost$ = new BehaviorSubject<boolean>(true);
   const inProgress$ = new BehaviorSubject<boolean>(false);
   const isPosting$ = new BehaviorSubject<boolean>(false);
+  const siteMembershipGuids$ = new BehaviorSubject(null);
 
   const composerServiceMock: any = MockService(ComposerService, {
     has: [
@@ -74,9 +78,11 @@ describe('Composer Toolbar', () => {
       'supermindRequest$',
       'isSupermindReply$',
       'supermindReply$',
+      'isGroupPost$',
       'canPost$',
       'inProgress$',
       'isPosting$',
+      'siteMembershipGuids$',
     ],
     props: {
       attachment$: { get: () => attachment$ },
@@ -90,11 +96,25 @@ describe('Composer Toolbar', () => {
       supermindRequest$: { get: () => canCreateSupermindRequest$ },
       isSupermindReply$: { get: () => canCreateSupermindRequest$ },
       supermindReply$: { get: () => canCreateSupermindRequest$ },
+      isGroupPost$: { get: () => isGroupPost$ },
       canPost$: { get: () => canPost$ },
       inProgress$: { get: () => inProgress$ },
       isPosting$: { get: () => isPosting$ },
+      siteMembershipGuids$: { get: () => siteMembershipGuids$ },
     },
   });
+
+  const siteMembershipsServiceMock: any = MockService(
+    ComposerSiteMembershipsService,
+    {
+      has: ['allMemberships$'],
+      props: {
+        allMemberships$: {
+          get: () => new BehaviorSubject<SiteMembership[]>([]),
+        },
+      },
+    }
+  );
 
   const popupServiceMock: any = MockService(PopupService, {
     create: function() {
@@ -104,6 +124,8 @@ describe('Composer Toolbar', () => {
   });
 
   let uploaderServiceMock;
+  let isTenantServiceMock: any;
+  let permissionsServiceMock: any;
 
   beforeEach(
     waitForAsync(() => {
@@ -116,6 +138,12 @@ describe('Composer Toolbar', () => {
           filesCount$: of(0),
         }
       );
+
+      isTenantServiceMock = jasmine.createSpyObj('IsTenantService', ['is']);
+
+      permissionsServiceMock = jasmine.createSpyObj('PermissionsService', [
+        'canCreatePaywall',
+      ]);
 
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule, ApolloTestingModule],
@@ -135,7 +163,6 @@ describe('Composer Toolbar', () => {
             selector: 'm-icon',
             inputs: ['from', 'iconId', 'sizeFactor'],
           }),
-          IfTenantDirective,
         ],
         providers: [
           {
@@ -168,7 +195,7 @@ describe('Composer Toolbar', () => {
           },
           {
             provide: PermissionsService,
-            useValue: MockService(PermissionsService),
+            useValue: permissionsServiceMock,
           },
           {
             provide: PermissionsService,
@@ -180,14 +207,12 @@ describe('Composer Toolbar', () => {
           },
           {
             provide: ComposerSiteMembershipsService,
-            useValue: MockService(ComposerSiteMembershipsService, {
-              has: ['allMemberships$'],
-              props: {
-                allMemberships$: {
-                  get: () => new BehaviorSubject<SiteMembership[]>([]),
-                },
-              },
-            }),
+            useValue: siteMembershipsServiceMock,
+          },
+          { provide: IsTenantService, useValue: isTenantServiceMock },
+          {
+            provide: IfTenantDirective,
+            useValue: MockService(IfTenantDirective),
           },
         ],
       }).compileComponents();
@@ -284,25 +309,113 @@ describe('Composer Toolbar', () => {
     expect(popupServiceMock.present).toHaveBeenCalled();
   });
 
-  it('should enable the post button when canPost is true, not inProgress, and not isPosting', () => {
-    canPost$.next(true);
-    inProgress$.next(false);
-    isPosting$.next(false);
+  it('isPostButtonDisabled$ should emit false when canPost is true, not inProgress, and not isPosting', fakeAsync(() => {
+    composerServiceMock.siteMembershipGuids$.next(null);
+    composerServiceMock.canPost$.next(true);
+    composerServiceMock.inProgress$.next(false);
+    composerServiceMock.isPosting$.next(false);
+
+    tick();
+
+    let disabled;
+    comp.isPostButtonDisabled$.subscribe(value => (disabled = value));
+    tick();
+
+    expect(disabled).toBeFalse();
+    flush();
+  }));
+
+  it('isPostButtonDisabled$ should emit true when canPost is false', fakeAsync(() => {
+    composerServiceMock.siteMembershipGuids$.next(null);
+    composerServiceMock.canPost$.next(false);
+    composerServiceMock.inProgress$.next(false);
+    composerServiceMock.isPosting$.next(false);
+
+    tick();
+
+    let disabled;
+    comp.isPostButtonDisabled$.subscribe(value => (disabled = value));
+    tick();
+
+    expect(disabled).toBeTrue();
+    flush();
+  }));
+
+  it('isNextButtonDisabled$ should emit false when canPost is true, not inProgress', fakeAsync(() => {
+    composerServiceMock.siteMembershipGuids$.next(['123']);
+    composerServiceMock.canPost$.next(true);
+    composerServiceMock.inProgress$.next(false);
+
+    tick();
+
+    let disabled;
+    comp.isNextButtonDisabled$.subscribe(value => (disabled = value));
+    tick();
+
+    expect(disabled).toBeFalse();
+    flush();
+  }));
+
+  it('isNextButtonDisabled$ should emit true when canPost is false', fakeAsync(() => {
+    composerServiceMock.siteMembershipGuids$.next(['123']);
+    composerServiceMock.canPost$.next(false);
+    composerServiceMock.inProgress$.next(false);
+
+    tick();
+
+    let disabled;
+    comp.isNextButtonDisabled$.subscribe(value => (disabled = value));
+    tick();
+
+    expect(disabled).toBeTrue();
+    flush();
+  }));
+
+  it('should show the post button when no siteMembershipGuids', () => {
+    composerServiceMock.siteMembershipGuids$.next(null);
     fixture.detectChanges();
 
     const postButton = fixture.debugElement.query(
-      By.css('.m-composerToolbar__action--post')
+      By.css('[data-ref=post-button]')
     );
-    expect(postButton.nativeElement.disabled).toBeFalse();
+    const nextButton = fixture.debugElement.query(
+      By.css('[data-ref=composer-next-button]')
+    );
+
+    expect(postButton).toBeTruthy();
+    expect(nextButton).toBeFalsy();
   });
 
-  it('should disable the post button when canPost is false', () => {
-    canPost$.next(false);
+  it('should show the next button when siteMembershipGuids has value', () => {
+    composerServiceMock.siteMembershipGuids$.next(['123']);
     fixture.detectChanges();
 
-    const postButton = fixture.debugElement.query(
-      By.css('.m-composerToolbar__action--post')
+    const nextButton = fixture.debugElement.query(
+      By.css('[data-ref=composer-next-button]')
     );
-    expect(postButton.nativeElement.disabled).toBeTrue();
+    expect(nextButton).toBeTruthy();
+  });
+
+  it('should not display the monetization button on tenant sites', () => {
+    isTenantServiceMock.is.and.returnValue(true);
+    fixture.detectChanges();
+
+    const monetizationButton = fixture.debugElement.query(
+      By.css('[data-ref=monetize-button]')
+    );
+
+    expect(monetizationButton).toBeFalsy();
+  });
+
+  it('should not display the site membership button when not a tenant site', () => {
+    isTenantServiceMock.is.and.returnValue(false);
+
+    fixture.detectChanges();
+
+    const membershipButton = fixture.debugElement.query(
+      By.css('[data-ref=site-membership-button]')
+    );
+
+    expect(membershipButton).toBeFalsy();
   });
 });

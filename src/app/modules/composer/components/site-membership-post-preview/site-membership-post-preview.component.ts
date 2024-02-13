@@ -1,13 +1,25 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   ComposerService,
   PaywallThumbnail,
 } from '../../services/composer.service';
-import { Observable, combineLatest, map, startWith, tap } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  combineLatest,
+  map,
+  startWith,
+  tap,
+} from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { FileUploadSelectEvent } from '../../../../common/components/file-upload/file-upload.component';
-import { table } from 'console';
 
 /**
  * Allows users to configure a preview for a paywalled site membership
@@ -21,7 +33,7 @@ import { table } from 'console';
   templateUrl: 'site-membership-post-preview.component.html',
   styleUrls: ['./site-membership-post-preview.component.ng.scss'],
 })
-export class ComposerSiteMembershipPostPreview implements OnInit {
+export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
   @Input() isModal: boolean;
 
   /**
@@ -41,6 +53,8 @@ export class ComposerSiteMembershipPostPreview implements OnInit {
   // Whether "Post" button should be disabled
   isPostButtonDisabled$: Observable<boolean>;
 
+  subscriptions: Subscription[] = [];
+
   /**
    * Compact mode if size is compact and NOT in a modal.
    * @returns { Observable<boolean> } - holds true if compact mode should be applied.
@@ -52,22 +66,36 @@ export class ComposerSiteMembershipPostPreview implements OnInit {
   }
 
   constructor(
-    protected service: ComposerService,
+    public service: ComposerService,
     private formBuilder: FormBuilder,
     private domSanitizer: DomSanitizer
   ) {
     // Initialize the form group with form controls
     this.postPreviewForm = this.formBuilder.group({
-      title: ['', Validators.required], // Title is required
+      title: [null, Validators.required], // Title is required
       thumbnail: [null], // Thumbnail is optional
     });
   }
 
   ngOnInit(): void {
-    this.postPreviewForm.get('title').setValue(this.service.title$.getValue());
-    this.postPreviewForm
-      .get('thumbnail')
-      .setValue(this.service.paywallThumbnail$.getValue());
+    this.subscriptions.push(
+      this.service.title$.subscribe(title => {
+        this.initializeTitle(title);
+      }),
+      this.service.richEmbedTitle$.subscribe(richEmbedTitle => {
+        this.initializeTitle(richEmbedTitle);
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
+
+  initializeTitle(initialTitle) {
+    this.postPreviewForm.get('title').setValue(initialTitle);
   }
 
   /**

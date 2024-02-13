@@ -16,7 +16,6 @@ import {
   SiteMembershipBillingPeriodEnum,
 } from '../../../../../../graphql/generated.engine';
 import { Subscription } from 'rxjs';
-import { ToasterService } from '../../../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-composer__siteMembershipSelector',
@@ -41,8 +40,7 @@ export class ComposerSiteMembershipSelectorComponent
   constructor(
     private fb: FormBuilder,
     protected composerService: ComposerService,
-    protected siteMembershipsService: ComposerSiteMembershipsService,
-    protected toaster: ToasterService
+    protected siteMembershipsService: ComposerSiteMembershipsService
   ) {
     this.membershipsForm = this.fb.group({
       memberships: new FormArray([]),
@@ -170,12 +168,6 @@ export class ComposerSiteMembershipSelectorComponent
 
     // Emit event to close the popup
     this.dismissIntent.emit();
-  }
-
-  formClicked(): void {
-    if (this.composerService.isEditing$.getValue()) {
-      this.toaster.error('Memberships are no longer editable on this post');
-    }
   }
 
   get membershipsFormArray() {

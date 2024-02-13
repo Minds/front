@@ -53,6 +53,7 @@ import {
   TagsSubjectValue,
   TitleSubjectValue,
   PaywallThumbnail,
+  RichEmbedTitleSubjectValue,
 } from './composer-data-types';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ClientMetaData } from '../../../common/services/client-meta.service';
@@ -67,6 +68,7 @@ import { LivestreamService } from './livestream.service';
  */
 export const DEFAULT_MESSAGE_VALUE: MessageSubjectValue = '';
 export const DEFAULT_TITLE_VALUE: TitleSubjectValue = null;
+export const DEFAULT_RICH_EMBED_TITLE_VALUE: RichEmbedTitleSubjectValue = null;
 export const DEFAULT_REMIND_VALUE: RemindSubjectValue = null;
 export const DEFAULT_ATTACHMENT_VALUE: AttachmentSubjectValue = null;
 export const DEFAULT_PAYWALL_THUMBNAIL_VALUE: PaywallThumbnail = null;
@@ -104,6 +106,13 @@ export class ComposerService implements OnDestroy {
   readonly title$: BehaviorSubject<TitleSubjectValue> = new BehaviorSubject<
     TitleSubjectValue
   >(DEFAULT_TITLE_VALUE);
+
+  /**
+   * Rich-embed title subject
+   */
+  readonly richEmbedTitle$: BehaviorSubject<
+    RichEmbedTitleSubjectValue
+  > = new BehaviorSubject<TitleSubjectValue>(DEFAULT_RICH_EMBED_TITLE_VALUE);
 
   /**
    * NSFW subject
@@ -329,6 +338,10 @@ export class ComposerService implements OnDestroy {
     boolean
   >(false);
 
+  readonly isSiteMembershipPost$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
   /**
    * Is group post subject
    */
@@ -447,6 +460,7 @@ export class ComposerService implements OnDestroy {
       [
         MessageSubjectValue,
         TitleSubjectValue,
+        RichEmbedTitleSubjectValue,
         NsfwSubjectValue,
         MonetizationSubjectValue,
         TagsSubjectValue,
@@ -466,6 +480,7 @@ export class ComposerService implements OnDestroy {
     >([
       this.message$.pipe(distinctUntilChanged()),
       this.title$.pipe(distinctUntilChanged()),
+      this.richEmbedTitle$.pipe(distinctUntilChanged()),
       this.nsfw$, // TODO: Implement custom distinctUntilChanged comparison
       this.monetization$, // TODO: Implement custom distinctUntilChanged comparison
       this.tags$, // TODO: Implement custom distinctUntilChanged comparison
@@ -539,7 +554,10 @@ export class ComposerService implements OnDestroy {
         this.richEmbed.resolve(200),
 
         // Set preview
-        tap((richEmbed: RichEmbed) => this.richEmbedPreview$.next(richEmbed)),
+        tap((richEmbed: RichEmbed) => {
+          this.richEmbedPreview$.next(richEmbed);
+          this.richEmbedTitle$.next(richEmbed?.title || null);
+        }),
 
         // Set in progress state to null.
         tap(() => this.inProgress$.next(null))
@@ -561,6 +579,7 @@ export class ComposerService implements OnDestroy {
         ([
           message,
           title,
+          richEmbedTitle,
           nsfw,
           monetization,
           tags,
@@ -579,6 +598,7 @@ export class ComposerService implements OnDestroy {
         ]) => ({
           message,
           title,
+          richEmbedTitle,
           nsfw,
           monetization,
           tags,
@@ -925,14 +945,11 @@ export class ComposerService implements OnDestroy {
         ? activity.access_id
         : DEFAULT_ACCESS_ID_VALUE;
     const license = activity.license || DEFAULT_LICENSE_VALUE;
-    const siteMembershipGuids =
-      activity.site_membership_guids || DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE;
 
     // Build attachment and rich embed data structure
 
     let attachments: AttachmentSubjectValue = DEFAULT_ATTACHMENT_VALUE;
     let richEmbed: RichEmbedSubjectValue = DEFAULT_RICH_EMBED_VALUE;
-    let paywallThumbnail: PaywallThumbnail = DEFAULT_PAYWALL_THUMBNAIL_VALUE;
 
     if (activity.custom_type === 'batch') {
       attachments = activity.custom_data.map(item => {
@@ -957,13 +974,6 @@ export class ComposerService implements OnDestroy {
         description: activity.blurb || '',
         thumbnail: activity.thumbnail_src || '',
       };
-    } else if (
-      siteMembershipGuids &&
-      activity?.custom_data?.paywall_thumbnail
-    ) {
-      paywallThumbnail = {
-        url: activity.custom_data.paywall_thumbnail,
-      };
     }
 
     // Priority service state elements
@@ -971,7 +981,7 @@ export class ComposerService implements OnDestroy {
     this.remind$.next(activity.remind_object || null);
     this.attachments$.next(attachments);
     this.richEmbed$.next(richEmbed);
-    this.paywallThumbnail$.next(paywallThumbnail);
+    // this.paywallThumbnail$.next(paywallThumbnail);
 
     // Apply them to the service state
 
@@ -983,8 +993,7 @@ export class ComposerService implements OnDestroy {
     this.schedule$.next(schedule);
     this.accessId$.next(accessId);
     this.license$.next(license);
-    this.siteMembershipGuids$.next(siteMembershipGuids);
-    this.paywallThumbnail$.next(paywallThumbnail);
+    this.isSiteMembershipPost$.next(activity?.site_membership);
 
     // Define container
 
@@ -1097,6 +1106,7 @@ export class ComposerService implements OnDestroy {
   buildPayload({
     message,
     title,
+    richEmbedTitle,
     nsfw,
     monetization,
     tags,
@@ -1135,6 +1145,10 @@ export class ComposerService implements OnDestroy {
       post_to_permaweb: postToPermaweb,
     };
 
+    if (richEmbedTitle) {
+      this.payload.link_title = richEmbedTitle;
+    }
+
     if (remind) {
       this.payload.remind_guid = remind.guid;
     }
@@ -1149,19 +1163,23 @@ export class ComposerService implements OnDestroy {
 
     if (this.canEditMetadata()) {
       if (attachmentGuids?.length > 0) {
-        this.payload.title = title; // Only media post can have titles
+        if (!siteMembershipGuids) {
+          // We'll set the title for siteMembership posts later
+          this.payload.title = title;
+        }
 
         this.payload.attachment_guids = attachmentGuids;
 
         this.payload.is_rich = false; // Can never have rich embed with media posts
-
-        //this.payload.entity_guid_update = true;
       } else if (richEmbed && !richEmbed.entityGuid) {
         this.payload.url = richEmbed.url;
-        this.payload.title = richEmbed.title;
         this.payload.description = richEmbed.description;
         this.payload.thumbnail = richEmbed.thumbnail;
         this.payload.is_rich = true;
+        if (!siteMembershipGuids) {
+          // We'll set the title for siteMembership posts later
+          this.payload.title = richEmbed.title;
+        }
 
         if (!this.isOriginalEntity(richEmbed.entityGuid)) {
           this.payload.entity_guid_update = true;
@@ -1181,6 +1199,7 @@ export class ComposerService implements OnDestroy {
 
     if (siteMembershipGuids) {
       this.payload.site_membership_guids = siteMembershipGuids;
+      this.payload.title = title;
     }
   }
 

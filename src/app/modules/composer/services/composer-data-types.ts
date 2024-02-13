@@ -18,6 +18,11 @@ export type MessageSubjectValue = string;
 export type TitleSubjectValue = string | null;
 
 /**
+ * Rich embed title value type
+ */
+export type RichEmbedTitleSubjectValue = string | null;
+
+/**
  * Remind value type
  */
 export type RemindSubjectValue = ActivityEntity | null;
@@ -135,6 +140,7 @@ export interface PaywallThumbnail {
 export interface Data {
   message: MessageSubjectValue;
   title: TitleSubjectValue;
+  richEmbedTitle: RichEmbedTitleSubjectValue;
   nsfw: NsfwSubjectValue;
   monetization: MonetizationSubjectValue;
   tags: TagsSubjectValue;

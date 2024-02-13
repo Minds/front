@@ -17,7 +17,6 @@
       (ngSubmit)="onSubmit()"
       *ngIf="membershipsForm"
       class="m-scroll__thin"
-      (click)="formClicked()"
     >
       <div
         formArrayName="memberships"
@@ -33,7 +32,6 @@
             class="m-siteMembershipSelector__membershipCheckbox"
             [formControlName]="i"
             [customId]="'membership-' + i"
-            [disabled]="composerService.isEditing$ | async"
           >
             <span>{{ membership.membershipName }}</span>
             <span
@@ -53,7 +51,6 @@
         class="m-siteMembershipSelector__membershipCheckbox"
         formControlName="selectAllCheckbox"
         customId="selectAllCheckbox"
-        [disabled]="composerService.isEditing$ | async"
       >
         All Memberships
       </m-formInput__checkbox>
