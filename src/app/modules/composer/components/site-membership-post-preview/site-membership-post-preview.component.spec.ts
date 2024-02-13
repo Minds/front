@@ -7,7 +7,6 @@ import {
   PaywallThumbnail,
 } from '../../services/composer.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DomSanitizer } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import { MockService } from '../../../../utils/mock';
 
@@ -49,11 +48,6 @@ describe('ComposerSiteMembershipPostPreview', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should initialize form with empty title and null thumbnail', () => {
-    expect(component.postPreviewForm.get('title').value).toBeNull();
-    expect(component.postPreviewForm.get('thumbnail').value).toBeNull();
   });
 
   it('should initialize the title in the form when title$ has a value', () => {

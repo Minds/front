@@ -865,6 +865,7 @@ export class ComposerService implements OnDestroy {
     // Reset data
     this.message$.next(DEFAULT_MESSAGE_VALUE);
     this.title$.next(DEFAULT_TITLE_VALUE);
+    this.richEmbedTitle$.next(DEFAULT_RICH_EMBED_TITLE_VALUE);
     this.nsfw$.next(DEFAULT_NSFW_VALUE);
     this.pendingMonetization$.next(DEFAULT_PENDING_MONETIZATION_VALUE);
     this.monetization$.next(DEFAULT_MONETIZATION_VALUE);
@@ -981,7 +982,6 @@ export class ComposerService implements OnDestroy {
     this.remind$.next(activity.remind_object || null);
     this.attachments$.next(attachments);
     this.richEmbed$.next(richEmbed);
-    // this.paywallThumbnail$.next(paywallThumbnail);
 
     // Apply them to the service state
 

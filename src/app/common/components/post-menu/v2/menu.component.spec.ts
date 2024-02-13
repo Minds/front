@@ -6,12 +6,21 @@ import { PostMenuV2Component } from './menu.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { AdminSupersetLinkService } from '../../../services/admin-superset-link.service';
 import { PermissionsService } from '../../../services/permissions.service';
+import { By } from '@angular/platform-browser';
 
 describe('PostMenuV2Component', () => {
   let comp: PostMenuV2Component;
   let fixture: ComponentFixture<PostMenuV2Component>;
+  let sessionMock: jasmine.SpyObj<Session>;
+  let permissionsServiceMock: jasmine.SpyObj<PermissionsService>;
 
   beforeEach(async () => {
+    sessionMock = jasmine.createSpyObj('Session', ['getLoggedInUser']);
+
+    permissionsServiceMock = jasmine.createSpyObj('PermissionsService', [
+      'canCreatePost',
+    ]);
+
     await TestBed.configureTestingModule({
       declarations: [
         PostMenuV2Component,
@@ -25,7 +34,7 @@ describe('PostMenuV2Component', () => {
         }),
       ],
       providers: [
-        { provide: Session, useValue: MockService(Session) },
+        { provide: Session, useValue: sessionMock },
         {
           provide: ChangeDetectorRef,
           useValue: MockService(ChangeDetectorRef),
@@ -36,7 +45,7 @@ describe('PostMenuV2Component', () => {
         },
         {
           provide: PermissionsService,
-          useValue: MockService(PermissionsService),
+          useValue: permissionsServiceMock,
         },
       ],
     })
@@ -181,5 +190,38 @@ describe('PostMenuV2Component', () => {
     expect(
       (comp as any).adminSupersetLink.getUserOverviewUrl
     ).toHaveBeenCalledOnceWith('234');
+  });
+
+  it('should not show the edit button for site membership posts', () => {
+    comp.mediaModal = false;
+    permissionsServiceMock.canCreatePost.and.returnValue(true);
+    sessionMock.getLoggedInUser.and.returnValue({ guid: '234' });
+    comp.entity = {
+      guid: '123',
+      owner_guid: '234', // We own the post
+      site_membership: true,
+    };
+    comp.options = ['edit', 'delete', 'share'];
+
+    fixture.detectChanges();
+
+    const result = comp.shouldShowEdit();
+    expect(result).toBeFalse();
+  });
+
+  it('should not hide the edit button when not a site membership post', () => {
+    comp.mediaModal = false;
+    permissionsServiceMock.canCreatePost.and.returnValue(true);
+    sessionMock.getLoggedInUser.and.returnValue({ guid: '234' });
+    comp.entity = {
+      guid: '123',
+      owner_guid: '234', // We own the post
+    };
+    comp.options = ['edit', 'delete', 'share'];
+
+    fixture.detectChanges();
+
+    const result = comp.shouldShowEdit();
+    expect(result).toBeTrue();
   });
 });

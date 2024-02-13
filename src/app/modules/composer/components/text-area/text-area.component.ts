@@ -14,8 +14,6 @@ import {
 import { ComposerService } from '../../services/composer.service';
 import { isPlatformBrowser } from '@angular/common';
 import { AutocompleteSuggestionsService } from '../../../suggestions/services/autocomplete-suggestions.service';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 
 /**
  * Composer message and title components.
@@ -58,13 +56,6 @@ export class TextAreaComponent implements AfterViewInit {
    */
   @ViewChild('messageInput')
   messageInput: ElementRef<HTMLTextAreaElement>;
-
-  /**
-   * Has attachments
-   */
-  hasAttachments$: Observable<boolean> = this.service.data$.pipe(
-    map(values => values.attachmentGuids?.length > 0)
-  );
 
   /**
    * Constructor

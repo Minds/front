@@ -309,68 +309,6 @@ describe('Composer Toolbar', () => {
     expect(popupServiceMock.present).toHaveBeenCalled();
   });
 
-  it('isPostButtonDisabled$ should emit false when canPost is true, not inProgress, and not isPosting', fakeAsync(() => {
-    composerServiceMock.siteMembershipGuids$.next(null);
-    composerServiceMock.canPost$.next(true);
-    composerServiceMock.inProgress$.next(false);
-    composerServiceMock.isPosting$.next(false);
-
-    tick();
-
-    let disabled;
-    comp.isPostButtonDisabled$.subscribe(value => (disabled = value));
-    tick();
-
-    expect(disabled).toBeFalse();
-    flush();
-  }));
-
-  it('isPostButtonDisabled$ should emit true when canPost is false', fakeAsync(() => {
-    composerServiceMock.siteMembershipGuids$.next(null);
-    composerServiceMock.canPost$.next(false);
-    composerServiceMock.inProgress$.next(false);
-    composerServiceMock.isPosting$.next(false);
-
-    tick();
-
-    let disabled;
-    comp.isPostButtonDisabled$.subscribe(value => (disabled = value));
-    tick();
-
-    expect(disabled).toBeTrue();
-    flush();
-  }));
-
-  it('isNextButtonDisabled$ should emit false when canPost is true, not inProgress', fakeAsync(() => {
-    composerServiceMock.siteMembershipGuids$.next(['123']);
-    composerServiceMock.canPost$.next(true);
-    composerServiceMock.inProgress$.next(false);
-
-    tick();
-
-    let disabled;
-    comp.isNextButtonDisabled$.subscribe(value => (disabled = value));
-    tick();
-
-    expect(disabled).toBeFalse();
-    flush();
-  }));
-
-  it('isNextButtonDisabled$ should emit true when canPost is false', fakeAsync(() => {
-    composerServiceMock.siteMembershipGuids$.next(['123']);
-    composerServiceMock.canPost$.next(false);
-    composerServiceMock.inProgress$.next(false);
-
-    tick();
-
-    let disabled;
-    comp.isNextButtonDisabled$.subscribe(value => (disabled = value));
-    tick();
-
-    expect(disabled).toBeTrue();
-    flush();
-  }));
-
   it('should show the post button when no siteMembershipGuids', () => {
     composerServiceMock.siteMembershipGuids$.next(null);
     fixture.detectChanges();

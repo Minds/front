@@ -72,7 +72,7 @@ export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
   ) {
     // Initialize the form group with form controls
     this.postPreviewForm = this.formBuilder.group({
-      title: [null, Validators.required], // Title is required
+      title: ['', Validators.required], // Title is required
       thumbnail: [null], // Thumbnail is optional
     });
   }
@@ -95,7 +95,9 @@ export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
   }
 
   initializeTitle(initialTitle) {
-    this.postPreviewForm.get('title').setValue(initialTitle);
+    if (initialTitle) {
+      this.postPreviewForm.get('title').setValue(initialTitle);
+    }
   }
 
   /**
