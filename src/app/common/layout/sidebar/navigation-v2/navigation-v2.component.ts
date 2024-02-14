@@ -269,14 +269,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * Returns if link should be to discovery homepage
-   * @returns { boolean } true if link should be '/'.
-   */
-  public shouldBeDiscoveryHomepage(): boolean {
-    return !this.user; // logged out
-  }
-
-  /**
    *
    * We dynamically change the z-index when the
    * "sidebar more" popper is opened
