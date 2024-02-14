@@ -61,7 +61,7 @@
         [routerLinkActiveOptions]="{ exact: plusPageActive }"
       >
         <a
-          routerLink="/discovery"
+          [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
           (click)="toggle(); discoveryLinkClicked = true"
           data-ref="sidenav-discovery"
         >
