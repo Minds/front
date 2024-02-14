@@ -64,6 +64,8 @@ describe('Composer Toolbar', () => {
   const inProgress$ = new BehaviorSubject<boolean>(false);
   const isPosting$ = new BehaviorSubject<boolean>(false);
   const siteMembershipGuids$ = new BehaviorSubject(null);
+  const postButtonDisabled$ = new BehaviorSubject<boolean>(false);
+  const nextButtonDisabled$ = new BehaviorSubject<boolean>(false);
 
   const composerServiceMock: any = MockService(ComposerService, {
     has: [
@@ -83,6 +85,8 @@ describe('Composer Toolbar', () => {
       'inProgress$',
       'isPosting$',
       'siteMembershipGuids$',
+      'postButtonDisabled$',
+      'nextButtonDisabled$',
     ],
     props: {
       attachment$: { get: () => attachment$ },
@@ -101,6 +105,8 @@ describe('Composer Toolbar', () => {
       inProgress$: { get: () => inProgress$ },
       isPosting$: { get: () => isPosting$ },
       siteMembershipGuids$: { get: () => siteMembershipGuids$ },
+      postButtonDisabled$: { get: () => postButtonDisabled$ },
+      nextButtonDisabled$: { get: () => nextButtonDisabled$ },
     },
   });
 
