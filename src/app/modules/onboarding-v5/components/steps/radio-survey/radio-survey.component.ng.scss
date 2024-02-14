@@ -86,9 +86,9 @@
             content: '\e876';
             font-family: 'Material Icons';
             border: 1px solid unset;
-            color: $grey-900;
 
             @include m-theme() {
+              color: themed($m-bgColor--primary);
               background: themed($m-action);
             }
           }

@@ -37,10 +37,13 @@
         }
 
         &:hover {
-          @include m-theme() {
-            background: $yellow-300;
-            border-color: $yellow-300;
-            color: themed($m-bgColor--primary);
+          &:not(.m-onboardingV5TagSelector__tags--selected) {
+            opacity: 0.6;
+            @include m-theme() {
+              background: themed($m-action);
+              border-color: themed($m-action);
+              color: themed($m-bgColor--primary);
+            }
           }
         }
       }
