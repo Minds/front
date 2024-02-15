@@ -4,16 +4,14 @@
 <!-- Otherwise it is in owner block -->
 <!-- ----------------------------------- -->
 <m-paywallBadge
-  *ngIf="
-    (isMinimalMode || wasQuoted || entity.site_membership) && showPaywallBadge
-  "
+  *ngIf="(isMinimalMode || wasQuoted) && showPaywallBadge"
   [entity]="entity"
   [showTierName]="false"
 ></m-paywallBadge>
 <!-- ----------------------------------- -->
 <!-- Site membership BADGE -->
 <!-- ----------------------------------- -->
-<m-siteMembershipBadge></m-siteMembershipBadge>
+<m-siteMembershipBadge *ngIf="entity.site_membership"></m-siteMembershipBadge>
 <!-- ----------------------------------- -->
 <!-- PAYWALL -->
 <!-- ----------------------------------- -->
