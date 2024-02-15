@@ -163,11 +163,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   public readonly canCreateSupermindRequest$ = this.service
     .canCreateSupermindRequest$;
 
-  // Whether "Post" button should be disabled
-  isPostButtonDisabled$: Observable<boolean>;
-
-  // Whether "Next" button should be disabled
-  isNextButtonDisabled$: Observable<boolean>;
+  /**
+   * Whether the post (or next or save) button is disabled
+   */
+  postButtonDisabled: boolean = true;
 
   /**
    * Constructor
@@ -235,24 +234,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         if (paywall && !paywall.hasOwnProperty('support_tier')) {
           this.legacyPaywallEnabled = true;
         }
+      }),
+      this.service.postButtonDisabled$.subscribe(disabled => {
+        this.postButtonDisabled = disabled;
+        this.detectChanges();
       })
     );
-
-    this.isPostButtonDisabled$ = combineLatest([
-      this.canPost$,
-      this.inProgress$,
-      this.isPosting$,
-    ]).pipe(
-      map(
-        ([canPost, inProgress, isPosting]) =>
-          !canPost || inProgress || isPosting
-      )
-    );
-
-    this.isNextButtonDisabled$ = combineLatest([
-      this.canPost$,
-      this.inProgress$,
-    ]).pipe(map(([canPost, inProgress]) => !canPost || inProgress));
   }
 
   /**

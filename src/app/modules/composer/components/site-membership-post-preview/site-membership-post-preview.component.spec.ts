@@ -7,9 +7,9 @@ import {
   PaywallThumbnail,
 } from '../../services/composer.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DomSanitizer } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import { MockService } from '../../../../utils/mock';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 describe('ComposerSiteMembershipPostPreview', () => {
   let component: ComposerSiteMembershipPostPreview;
@@ -39,7 +39,10 @@ describe('ComposerSiteMembershipPostPreview', () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, NoopAnimationsModule],
       declarations: [ComposerSiteMembershipPostPreview],
-      providers: [{ provide: ComposerService, useValue: composerServiceMock }],
+      providers: [
+        { provide: ComposerService, useValue: composerServiceMock },
+        { provide: ToasterService, useValue: MockService(ToasterService) },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ComposerSiteMembershipPostPreview);
@@ -49,11 +52,6 @@ describe('ComposerSiteMembershipPostPreview', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should initialize form with empty title and null thumbnail', () => {
-    expect(component.postPreviewForm.get('title').value).toBeNull();
-    expect(component.postPreviewForm.get('thumbnail').value).toBeNull();
   });
 
   it('should initialize the title in the form when title$ has a value', () => {

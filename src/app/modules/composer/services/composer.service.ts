@@ -374,6 +374,17 @@ export class ComposerService implements OnDestroy {
   >(DEFAULT_COMPOSER_SIZE);
 
   /**
+   * Whether post button is disabled
+   */
+  readonly postButtonDisabled$: Observable<boolean>;
+
+  /**
+   * Whether next button is disabled
+   * (used for site membership posts)
+   */
+  readonly nextButtonDisabled$: Observable<boolean>;
+
+  /**
    * URL in the message
    */
   readonly messageUrl$: Observable<string>;
@@ -720,6 +731,25 @@ export class ComposerService implements OnDestroy {
       return this.buildPayload(data);
     });
 
+    this.postButtonDisabled$ = combineLatest([
+      this.canPost$,
+      this.isPosting$,
+      this.inProgress$,
+    ]).pipe(
+      map(([canPost, isPosting, inProgress]) => {
+        return !canPost || isPosting || inProgress;
+      })
+    );
+
+    this.nextButtonDisabled$ = combineLatest([
+      this.canPost$,
+      this.inProgress$,
+    ]).pipe(
+      map(([canPost, isPosting]) => {
+        return !canPost || isPosting;
+      })
+    );
+
     // Subscribe to selected audience
     this.selectedAudienceSubscription = this.audienceSelectorService.selectedAudience$.subscribe(
       audience => {
@@ -865,6 +895,7 @@ export class ComposerService implements OnDestroy {
     // Reset data
     this.message$.next(DEFAULT_MESSAGE_VALUE);
     this.title$.next(DEFAULT_TITLE_VALUE);
+    this.richEmbedTitle$.next(DEFAULT_RICH_EMBED_TITLE_VALUE);
     this.nsfw$.next(DEFAULT_NSFW_VALUE);
     this.pendingMonetization$.next(DEFAULT_PENDING_MONETIZATION_VALUE);
     this.monetization$.next(DEFAULT_MONETIZATION_VALUE);
@@ -981,7 +1012,6 @@ export class ComposerService implements OnDestroy {
     this.remind$.next(activity.remind_object || null);
     this.attachments$.next(attachments);
     this.richEmbed$.next(richEmbed);
-    // this.paywallThumbnail$.next(paywallThumbnail);
 
     // Apply them to the service state
 
@@ -1207,10 +1237,9 @@ export class ComposerService implements OnDestroy {
    * Sets the current progress state
    *
    * @param inProgress
-   * @param progress
    * @private
    */
-  setProgress(inProgress: boolean, progress: number = 1): void {
+  setProgress(inProgress: boolean): void {
     this.inProgress$.next(inProgress);
   }
 
