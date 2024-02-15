@@ -27,7 +27,7 @@ import { MockFormInputCheckboxComponent } from '../../../../../../../../common/c
 import { siteMembershipMock } from '../../../../../../../../mocks/site-membership.mock';
 import { groupMock } from '../../../../../../../../mocks/responses/group.mock';
 import { MindsGroup } from '../../../../../../../groups/v2/group.model';
-import { MembershipsCountService } from '../../../../../../../memberships/services/membership-count.service';
+import { SiteMembershipsCountService } from '../../../../../../../site-memberships/services/site-membership-count.service';
 
 describe('NetworkAdminMonetizationMembershipFormComponent', () => {
   let comp: NetworkAdminMonetizationMembershipFormComponent;
@@ -95,8 +95,8 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
           useValue: jasmine.createSpyObj<UpdateSiteMembershipGQL>(['mutate']),
         },
         {
-          provide: MembershipsCountService,
-          useValue: MockService(MembershipsCountService),
+          provide: SiteMembershipsCountService,
+          useValue: MockService(SiteMembershipsCountService),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: Router, useValue: MockService(Router) },

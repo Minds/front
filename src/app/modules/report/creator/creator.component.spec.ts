@@ -18,13 +18,19 @@ import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
 import { Session } from '../../../services/session';
-import { sessionMock } from '../../../../tests/session-mock.spec';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 import { PlusTierUrnService } from '../../../common/services/plus-tier-urn.service';
+import { GraphQLReportCreatorService } from './services/graphql-report-creator.service';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
+import {
+  IllegalSubReasonEnum,
+  ReportReasonEnum,
+} from '../../../../graphql/generated.engine';
+import { of } from 'rxjs';
 
 /* tslint:disable */
 @Directive({
@@ -36,6 +42,7 @@ export class MdlRadioMock {}
 describe('ReportCreatorComponent', () => {
   let comp: ReportCreatorComponent;
   let fixture: ComponentFixture<ReportCreatorComponent>;
+  let isTenantNetwork: boolean = false;
 
   function getSubjectItem(i: number): DebugElement {
     return fixture.debugElement.queryAll(
@@ -76,6 +83,14 @@ describe('ReportCreatorComponent', () => {
             provide: PlusTierUrnService,
             useValue: MockService(PlusTierUrnService),
           },
+          {
+            provide: GraphQLReportCreatorService,
+            useValue: MockService(GraphQLReportCreatorService),
+          },
+          {
+            provide: IS_TENANT_NETWORK,
+            useValue: isTenantNetwork,
+          },
         ],
       }).compileComponents(); // compile template and css
     })
@@ -96,6 +111,8 @@ describe('ReportCreatorComponent', () => {
       },
     });
     (comp as any).session.isAdmin.and.returnValue(false);
+    (comp as any).graphQLReportCreatorService.createNewReport.calls.reset();
+    (comp as any).isTenantNetwork = true;
 
     fixture.detectChanges();
 
@@ -172,6 +189,7 @@ describe('ReportCreatorComponent', () => {
   });
 
   it('should show success msg after submission, calling with the expected params', fakeAsync(() => {
+    (comp as any).isTenantNetwork = false;
     clientMock.post.calls.reset();
     clientMock.response[`api/v2/moderation/report`] = {
       status: 'success',
@@ -201,6 +219,7 @@ describe('ReportCreatorComponent', () => {
   }));
 
   it('should not show success if param is not true', fakeAsync(() => {
+    (comp as any).isTenantNetwork = false;
     clientMock.post.calls.reset();
     clientMock.response[`api/v2/moderation/report`] = {
       status: 'error',
@@ -235,6 +254,7 @@ describe('ReportCreatorComponent', () => {
   }));
 
   it('should show error msg after submission, calling with the expected params', fakeAsync(() => {
+    (comp as any).isTenantNetwork = false;
     clientMock.post.calls.reset();
     clientMock.response[`api/v2/moderation/report`] = {
       status: 'error',
@@ -289,6 +309,7 @@ describe('ReportCreatorComponent', () => {
 
   it('once a item is clicked and its copyright one, next button should appear, and 2nd step should allow closing', () => {
     (comp as any).session.isAdmin.and.returnValue(false);
+    (comp as any).isTenantNetwork = false;
     fixture.detectChanges();
 
     const item = getSubjectItem(7);
@@ -491,6 +512,47 @@ describe('ReportCreatorComponent', () => {
     );
     expect(span).toBeUndefined();
   });
+
+  it('should report for a tenant network', fakeAsync(() => {
+    (comp as any).subject = { value: 1 };
+    (comp as any).subReason = { value: 2 };
+    (comp as any).urn = 'urn:activity:123';
+    (comp as any).isTenantNetwork = true;
+    (comp as any).graphQLReportCreatorService.mapLegacyReasonToEnums.and.returnValue(
+      {
+        reason: ReportReasonEnum.Illegal,
+        illegalSubReason: IllegalSubReasonEnum.Extortion,
+      }
+    );
+    (comp as any).graphQLReportCreatorService.createNewReport.and.returnValue(
+      of(true)
+    );
+    fixture.detectChanges();
+
+    const item = getSubjectItem(3);
+    item.nativeElement.click();
+    fixture.detectChanges();
+    const button = fixture.debugElement.query(
+      By.css('.m-reportCreator__button--submit button')
+    );
+    expect(button.properties.disabled).toBe(false);
+    button.nativeElement.click();
+    fixture.detectChanges();
+    tick();
+
+    expect(
+      (comp as any).graphQLReportCreatorService.mapLegacyReasonToEnums
+    ).toHaveBeenCalledWith(4, 2);
+    expect(
+      (comp as any).graphQLReportCreatorService.createNewReport
+    ).toHaveBeenCalledWith({
+      entityUrn: 'urn:activity:123',
+      reason: ReportReasonEnum.Illegal,
+      illegalSubReason: IllegalSubReasonEnum.Extortion,
+    });
+    expect(comp.success).toBe(true);
+    expect(comp.inProgress).toBe(false);
+  }));
 });
 
 const FAKE_REASONS = [

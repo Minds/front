@@ -11,8 +11,6 @@ import {
   GetSiteMembershipSubscriptionsQuery,
   GetSiteMembershipsAndSubscriptionsGQL,
   GetSiteMembershipsAndSubscriptionsQuery,
-  GetSiteMembershipsGQL,
-  GetSiteMembershipsQuery,
   SiteMembership,
   SiteMembershipSubscription,
 } from '../../../../../graphql/generated.engine';
@@ -39,25 +37,25 @@ import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 import { OnboardingV5Service } from '../../../onboarding-v5/services/onboarding-v5.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { Session } from '../../../../services/session';
-import { MembershipManagementService } from '../../services/membership-management.service';
+import { SiteMembershipManagementService } from '../../services/site-membership-management.service';
 import { ActivatedRoute } from '@angular/router';
 import { SiteMembershipService } from '../../services/site-memberships.service';
 
 /** Membership error messages. */
-export enum MembershipPageErrorMessage {
+export enum SiteMembershipPageErrorMessage {
   SUBSCRIPTION_ALREADY_CANCELLED = 'This subscription is already cancelled',
   SUBSCRIPTION_ALREADY_EXISTS = 'You are already subscribed to this membership',
 }
 
 /**
- * Base memberships page component.
+ * Base site memberships page component.
  */
 @Component({
-  selector: 'm-membershipsPage',
-  templateUrl: 'memberships-page.component.html',
-  styleUrls: ['./memberships-page.component.ng.scss'],
+  selector: 'm-siteMembershipsPage',
+  templateUrl: 'site-memberships-page.component.html',
+  styleUrls: ['./site-memberships-page.component.ng.scss'],
 })
-export class MembershipsPageComponent implements OnInit, OnDestroy {
+export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
   /** Whether component can be consider as initialized. */
   public readonly initialized$: BehaviorSubject<boolean> = this
     .siteMembershipsService.initialized$;
@@ -110,7 +108,7 @@ export class MembershipsPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private siteMembershipsService: SiteMembershipService,
-    private membershipManagement: MembershipManagementService,
+    private membershipManagement: SiteMembershipManagementService,
     private getSiteMembershipSubscriptionsGQL: GetSiteMembershipSubscriptionsGQL,
     private authModal: AuthModalService,
     private onboardingV5Service: OnboardingV5Service,
@@ -289,7 +287,7 @@ export class MembershipsPageComponent implements OnInit, OnDestroy {
         );
         if (errorQueryParam) {
           const errorMessage: string =
-            MembershipPageErrorMessage[errorQueryParam];
+            SiteMembershipPageErrorMessage[errorQueryParam];
 
           if (errorMessage) {
             this.toaster.error(errorMessage);

@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MockComponent, MockDirective, MockService } from '../../utils/mock';
 import { Session } from '../../services/session';
-import { DefaultFeedContainerComponent } from './container.component';
+import { DefaultFeedContainerComponent } from './default-feed-container.component';
 
 describe('DefaultFeedContainerComponent', () => {
   let comp: DefaultFeedContainerComponent;

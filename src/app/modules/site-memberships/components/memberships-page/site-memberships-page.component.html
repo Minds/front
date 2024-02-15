@@ -7,7 +7,7 @@
   ></m-starCard>
 
   <div class="m-membershipPage__membershipCardsContainer">
-    <m-membershipCard
+    <m-siteMembershipCard
       *ngFor="let membership of memberships$ | async"
       [name]="membership.membershipName"
       [description]="membership.membershipDescription"
@@ -23,7 +23,7 @@
       [inProgress]="navigationInProgress$ | async"
       (joinMembershipClick)="onJoinMembershipClick(membership)"
       (managePlanClick)="onManagePlanClick(membership)"
-    ></m-membershipCard>
+    ></m-siteMembershipCard>
   </div>
 </ng-container>
 

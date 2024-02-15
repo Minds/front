@@ -3,7 +3,6 @@ import {
   DEFAULT_ERROR_MESSAGE,
   ToasterService,
 } from '../../../common/services/toaster.service';
-import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens';
 import {
   GetSiteMembershipsAndSubscriptionsGQL,
   SiteMembership,
@@ -51,8 +50,7 @@ export class SiteMembershipService {
 
   constructor(
     private getSiteMembershipsAndSubscriptionsGQL: GetSiteMembershipsAndSubscriptionsGQL,
-    private toaster: ToasterService,
-    @Inject(WINDOW) private window: Window
+    private toaster: ToasterService
   ) {}
 
   /**
@@ -65,8 +63,6 @@ export class SiteMembershipService {
           fetchPolicy: 'network-only',
         })
       );
-
-      console.log(response);
 
       if (response.errors?.length || !response?.data?.siteMemberships) {
         throw response.errors ?? 'No data';

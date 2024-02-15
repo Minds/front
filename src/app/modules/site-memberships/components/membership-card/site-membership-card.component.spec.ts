@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MembershipCardComponent } from './membership-card.component';
+import { SiteMembershipCardComponent } from './site-membership-card.component';
 import { MockComponent } from '../../../../utils/mock';
 import {
   SiteMembershipBillingPeriodEnum,
@@ -7,13 +7,13 @@ import {
 } from '../../../../../graphql/generated.engine';
 import { By } from '@angular/platform-browser';
 
-describe('MembershipCardComponent', () => {
-  let comp: MembershipCardComponent;
-  let fixture: ComponentFixture<MembershipCardComponent>;
+describe('SiteMembershipCardComponent', () => {
+  let comp: SiteMembershipCardComponent;
+  let fixture: ComponentFixture<SiteMembershipCardComponent>;
 
   beforeEach((done: DoneFn) => {
     TestBed.configureTestingModule({
-      imports: [MembershipCardComponent],
+      imports: [SiteMembershipCardComponent],
       declarations: [
         MockComponent({
           selector: 'm-button',
@@ -24,7 +24,7 @@ describe('MembershipCardComponent', () => {
       ],
     });
 
-    fixture = TestBed.createComponent(MembershipCardComponent);
+    fixture = TestBed.createComponent(SiteMembershipCardComponent);
     comp = fixture.componentInstance;
 
     Object.defineProperty(comp, 'name', { writable: true });
@@ -58,8 +58,9 @@ describe('MembershipCardComponent', () => {
 
   it('should have a name', () => {
     expect(
-      fixture.debugElement.query(By.css('.m-membershipCard__membershipName'))
-        .nativeElement.innerText
+      fixture.debugElement.query(
+        By.css('.m-siteMembershipCard__membershipName')
+      ).nativeElement.innerText
     ).toBe('name');
   });
 
@@ -69,8 +70,9 @@ describe('MembershipCardComponent', () => {
       fixture.detectChanges();
 
       expect(
-        fixture.debugElement.query(By.css('.m-membershipCard__pricingPeriod'))
-          .nativeElement.innerText
+        fixture.debugElement.query(
+          By.css('.m-siteMembershipCard__pricingPeriod')
+        ).nativeElement.innerText
       ).toBe('$19.99 / year');
     });
 
@@ -79,8 +81,9 @@ describe('MembershipCardComponent', () => {
       fixture.detectChanges();
 
       expect(
-        fixture.debugElement.query(By.css('.m-membershipCard__pricingPeriod'))
-          .nativeElement.innerText
+        fixture.debugElement.query(
+          By.css('.m-siteMembershipCard__pricingPeriod')
+        ).nativeElement.innerText
       ).toBe('$19.99 / month');
     });
   });
@@ -90,7 +93,7 @@ describe('MembershipCardComponent', () => {
     fixture.detectChanges();
 
     expect(
-      fixture.debugElement.query(By.css('.m-membershipCard__description'))
+      fixture.debugElement.query(By.css('.m-siteMembershipCard__description'))
         .nativeElement.innerText
     ).toBe('description');
   });
@@ -101,8 +104,9 @@ describe('MembershipCardComponent', () => {
       fixture.detectChanges();
 
       expect(
-        fixture.debugElement.query(By.css('.m-membershipCard__actionButton'))
-          .nativeElement.innerText
+        fixture.debugElement.query(
+          By.css('.m-siteMembershipCard__actionButton')
+        ).nativeElement.innerText
       ).toBe('Join membership');
     });
 
@@ -112,8 +116,9 @@ describe('MembershipCardComponent', () => {
       fixture.detectChanges();
 
       expect(
-        fixture.debugElement.query(By.css('.m-membershipCard__actionButton'))
-          .nativeElement.innerText
+        fixture.debugElement.query(
+          By.css('.m-siteMembershipCard__actionButton')
+        ).nativeElement.innerText
       ).toBe('Manage plan');
     });
 
@@ -123,8 +128,9 @@ describe('MembershipCardComponent', () => {
       fixture.detectChanges();
 
       expect(
-        fixture.debugElement.query(By.css('.m-membershipCard__actionButton'))
-          .nativeElement.innerText
+        fixture.debugElement.query(
+          By.css('.m-siteMembershipCard__actionButton')
+        ).nativeElement.innerText
       ).toBe('Purchased');
     });
   });

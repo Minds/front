@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { MembershipsRouteGuard } from './memberships-route.guard';
+import { SiteMembershipsRouteGuard } from './site-memberships-route.guard';
 import { MockService } from '../../../utils/mock';
 import { Router } from '@angular/router';
-import { MembershipsCountService } from '../services/membership-count.service';
+import { SiteMembershipsCountService } from '../services/site-membership-count.service';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 import { BehaviorSubject } from 'rxjs';
 
-describe('MembershipsRouteGuard', () => {
-  let service: MembershipsRouteGuard;
+describe('SiteMembershipsRouteGuard', () => {
+  let service: SiteMembershipsRouteGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        MembershipsRouteGuard,
+        SiteMembershipsRouteGuard,
         {
-          provide: MembershipsCountService,
+          provide: SiteMembershipsCountService,
           useValue: { count$: new BehaviorSubject<number>(1) },
         },
         { provide: Router, useValue: MockService(Router) },
@@ -22,7 +22,7 @@ describe('MembershipsRouteGuard', () => {
       ],
     });
 
-    service = TestBed.inject(MembershipsRouteGuard);
+    service = TestBed.inject(SiteMembershipsRouteGuard);
     Object.defineProperty(service, 'isTenantNetwork', { writable: true });
   });
 

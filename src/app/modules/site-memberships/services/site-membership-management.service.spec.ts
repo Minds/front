@@ -1,23 +1,23 @@
 import { TestBed } from '@angular/core/testing';
-import { MembershipManagementService } from './membership-management.service';
+import { SiteMembershipManagementService } from './site-membership-management.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { MockService } from '../../../utils/mock';
 import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens';
 
-describe('MembershipManagementService', () => {
-  let service: MembershipManagementService;
+describe('SiteMembershipManagementService', () => {
+  let service: SiteMembershipManagementService;
   let mockWindow: Window = window;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        MembershipManagementService,
+        SiteMembershipManagementService,
         { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: WINDOW, useValue: mockWindow },
       ],
     });
 
-    service = TestBed.inject(MembershipManagementService);
+    service = TestBed.inject(SiteMembershipManagementService);
     spyOn((service as any).window, 'open');
     spyOn(console, 'error');
   });

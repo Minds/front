@@ -16,7 +16,7 @@ import { siteMembershipMock } from '../../../../../../../../mocks/site-membershi
 import { RoleId } from '../../../../roles/roles.types';
 import { ConfirmV2Component } from '../../../../../../../modals/confirm-v2/confirm.component';
 import { of } from 'rxjs';
-import { MembershipsCountService } from '../../../../../../../memberships/services/membership-count.service';
+import { SiteMembershipsCountService } from '../../../../../../../site-memberships/services/site-membership-count.service';
 
 describe('NetworkAdminMonetizationMembershipAccordianComponent', () => {
   let comp: NetworkAdminMonetizationMembershipAccordianComponent;
@@ -58,8 +58,8 @@ describe('NetworkAdminMonetizationMembershipAccordianComponent', () => {
           useValue: jasmine.createSpyObj<ArchiveSiteMembershipGQL>(['mutate']),
         },
         {
-          provide: MembershipsCountService,
-          useValue: MockService(MembershipsCountService),
+          provide: SiteMembershipsCountService,
+          useValue: MockService(SiteMembershipsCountService),
         },
         {
           provide: ToasterService,

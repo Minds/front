@@ -4,9 +4,9 @@ import {
   fakeAsync,
   tick,
 } from '@angular/core/testing';
-import { MembershipsPageComponent } from './memberships-page.component';
+import { SiteMembershipsPageComponent } from './site-memberships-page.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
-import { MembershipManagementService } from '../../services/membership-management.service';
+import { SiteMembershipManagementService } from '../../services/site-membership-management.service';
 import {
   GetSiteMembershipSubscriptionsGQL,
   GetSiteMembershipsAndSubscriptionsGQL,
@@ -30,9 +30,9 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
 import { SiteMembershipService } from '../../services/site-memberships.service';
 
-xdescribe('MembershipsPageComponent', () => {
-  let comp: MembershipsPageComponent;
-  let fixture: ComponentFixture<MembershipsPageComponent>;
+xdescribe('SiteMembershipsPageComponent', () => {
+  let comp: SiteMembershipsPageComponent;
+  let fixture: ComponentFixture<SiteMembershipsPageComponent>;
 
   const mockSiteMemberships: SiteMembership[] = [
     {
@@ -87,13 +87,13 @@ xdescribe('MembershipsPageComponent', () => {
   beforeEach((done: DoneFn) => {
     TestBed.configureTestingModule({
       declarations: [
-        MembershipsPageComponent,
+        SiteMembershipsPageComponent,
         MockComponent({
           selector: 'm-starCard',
           inputs: ['title', 'description'],
         }),
         MockComponent({
-          selector: 'm-membershipCard',
+          selector: 'm-siteMembershipCard',
           inputs: [
             'name',
             'description',
@@ -139,8 +139,8 @@ xdescribe('MembershipsPageComponent', () => {
           }),
         },
         {
-          provide: MembershipManagementService,
-          useValue: MockService(MembershipManagementService),
+          provide: SiteMembershipManagementService,
+          useValue: MockService(SiteMembershipManagementService),
         },
         {
           provide: GetSiteMembershipSubscriptionsGQL,
@@ -182,7 +182,7 @@ xdescribe('MembershipsPageComponent', () => {
       ],
     });
 
-    fixture = TestBed.createComponent(MembershipsPageComponent);
+    fixture = TestBed.createComponent(SiteMembershipsPageComponent);
     comp = fixture.componentInstance;
     spyOn(console, 'error');
     (comp as any).getSiteMembershipSubscriptionsGQL.fetch.calls.reset();

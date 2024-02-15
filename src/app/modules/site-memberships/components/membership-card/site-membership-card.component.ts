@@ -12,13 +12,13 @@ import { CommonModule } from '../../../../common/common.module';
  * the user an option to join a membership or edit a current membership plan.
  */
 @Component({
-  selector: 'm-membershipCard',
-  templateUrl: 'membership-card.component.html',
-  styleUrls: ['./membership-card.component.ng.scss'],
+  selector: 'm-siteMembershipCard',
+  templateUrl: 'site-membership-card.component.html',
+  styleUrls: ['./site-membership-card.component.ng.scss'],
   imports: [NgCommonModule, CommonModule],
   standalone: true,
 })
-export class MembershipCardComponent {
+export class SiteMembershipCardComponent {
   /** Enum for use in template. */
   public readonly SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum = SiteMembershipBillingPeriodEnum;
 

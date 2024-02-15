@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { MembershipsCountService } from './membership-count.service';
+import { SiteMembershipsCountService } from './site-membership-count.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
 
-describe('MembershipsCountService', () => {
-  let service: MembershipsCountService;
+describe('SiteMembershipsCountService', () => {
+  let service: SiteMembershipsCountService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        MembershipsCountService,
+        SiteMembershipsCountService,
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     });
 
-    service = TestBed.inject(MembershipsCountService);
+    service = TestBed.inject(SiteMembershipsCountService);
   });
 
   it('should init', () => {

@@ -71,6 +71,27 @@ describe('NetworkAdminConsoleTabsComponent', () => {
   });
 
   describe('Tab visibility for non-admin user with canModerateContent permission', () => {
+    it('should have a monetization tab', () => {
+      expect(
+        fixture.debugElement.query(
+          By.css('[data-ref=network-admin-console-tab-monetization]')
+        )
+      );
+    });
+
+    it('should have a mobile tab', () => {
+      sessionMock.isAdmin.and.returnValue(true);
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(
+          By.css('[data-ref=network-admin-console-tab-mobile]')
+        )
+      ).toBeTruthy();
+    });
+  });
+
+  describe('Tab visibility for user with canModerateContent permission', () => {
     beforeEach(() => {
       sessionMock.isAdmin.and.returnValue(false);
       permissionsServiceMock.canModerateContent.and.returnValue(true);

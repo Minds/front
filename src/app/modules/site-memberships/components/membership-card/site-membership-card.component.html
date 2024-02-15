@@ -1,6 +1,6 @@
-<div class="m-membershipCard__content">
-  <h4 class="m-membershipCard__membershipName">{{ name }}</h4>
-  <p class="m-membershipCard__pricingPeriod">
+<div class="m-siteMembershipCard__content">
+  <h4 class="m-siteMembershipCard__membershipName">{{ name }}</h4>
+  <p class="m-siteMembershipCard__pricingPeriod">
     <strong>{{
       priceInCents / 100 | currency: priceCurrencyCode:'symbol':'1.0-2'
     }}</strong>
@@ -29,12 +29,12 @@
       </ng-container>
     </ng-template>
   </p>
-  <p class="m-membershipCard__description">{{ description }}</p>
+  <p class="m-siteMembershipCard__description">{{ description }}</p>
 
-  <div class="m-membershipCard__footer">
+  <div class="m-siteMembershipCard__footer">
     <ng-container *ngIf="!isMember; else managePlanButtonTemplate">
       <m-button
-        class="m-membershipCard__actionButton"
+        class="m-siteMembershipCard__actionButton"
         color="blue"
         solid="true"
         size="xsmall"
@@ -50,7 +50,7 @@
       <ng-container [ngSwitch]="pricingModel">
         <m-button
           *ngSwitchCase="SiteMembershipPricingModelEnum.Recurring"
-          class="m-membershipCard__actionButton"
+          class="m-siteMembershipCard__actionButton"
           color="blue"
           size="xsmall"
           [solid]="false"
@@ -64,7 +64,7 @@
         >
         <m-button
           *ngSwitchDefault
-          class="m-membershipCard__actionButton"
+          class="m-siteMembershipCard__actionButton"
           color="blue"
           size="xsmall"
           [solid]="false"

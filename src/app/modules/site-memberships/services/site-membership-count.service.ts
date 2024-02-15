@@ -3,12 +3,12 @@ import { BehaviorSubject } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 /**
- * Service to globally track state of memberships count.
+ * Service to globally track state of site memberships counts.
  * Can be used to increment or decrement the count, and to subscribe to
  * changes in the count.
  */
 @Injectable({ providedIn: 'root' })
-export class MembershipsCountService {
+export class SiteMembershipsCountService {
   /** Count of memberships. */
   public readonly count$: BehaviorSubject<number> = new BehaviorSubject<number>(
     0

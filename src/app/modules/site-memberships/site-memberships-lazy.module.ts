@@ -4,16 +4,16 @@ import { CommonModule } from '../../common/common.module';
 import { RouterModule, Routes } from '@angular/router';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { markedOptionsFactory } from '../../helpers/marked-options-factory';
-import { MembershipsPageComponent } from './components/memberships-page/memberships-page.component';
+import { SiteMembershipsPageComponent } from './components/memberships-page/site-memberships-page.component';
 import { StarCardComponent } from '../../common/standalone/star-card/star-card.component';
-import { MembershipCardComponent } from './components/membership-card/membership-card.component';
-import { MembershipsRouteGuard } from './guards/memberships-route.guard';
+import { SiteMembershipCardComponent } from './components/membership-card/site-membership-card.component';
+import { SiteMembershipsRouteGuard } from './guards/site-memberships-route.guard';
 
 const routes: Routes = [
   {
     path: '', // '/memberships
-    component: MembershipsPageComponent,
-    canActivate: [MembershipsRouteGuard],
+    component: SiteMembershipsPageComponent,
+    canActivate: [SiteMembershipsRouteGuard],
   },
 ];
 
@@ -31,8 +31,8 @@ const routes: Routes = [
       },
     }),
     StarCardComponent,
-    MembershipCardComponent,
+    SiteMembershipCardComponent,
   ],
-  declarations: [MembershipsPageComponent],
+  declarations: [SiteMembershipsPageComponent],
 })
-export class MembershipsLazyModule {}
+export class SiteMembershipsLazyModule {}

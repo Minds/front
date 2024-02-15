@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivityEntity, ActivityService } from '../activity.service';
-import { MembershipManagementService } from '../../../memberships/services/membership-management.service';
-import { SiteMembershipService } from '../../../memberships/services/site-memberships.service';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { SiteMembershipManagementService } from '../../../site-memberships/services/site-membership-management.service';
+import { SiteMembershipService } from '../../../site-memberships/services/site-memberships.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'm-activity__siteMembershipCta',
@@ -20,7 +20,7 @@ export class ActivitySiteMembershipCtaComponent implements OnInit {
   constructor(
     private service: ActivityService,
     private siteMembershipService: SiteMembershipService,
-    private siteMembershipManagementService: MembershipManagementService
+    private siteMembershipManagementService: SiteMembershipManagementService
   ) {}
 
   ngOnInit(): void {

@@ -3,18 +3,18 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens';
 
 /**
- * Service to handle user actions to manage memberships, either by linking
+ * Service to handle user actions to manage site memberships, either by linking
  * to purchase a new one or linking to  manage an existing plan.
  */
 @Injectable({ providedIn: 'root' })
-export class MembershipManagementService {
+export class SiteMembershipManagementService {
   constructor(
     private toaster: ToasterService,
     @Inject(WINDOW) private window: Window
   ) {}
 
   /**
-   * Open checkout page for a membership.
+   * Open checkout page for a site membership.
    * @param { string } siteMembershipGuid - The site membership guid.
    * @param { string } redirectPath - The redirect url for after checkout.
    * @returns { Promise<boolean> } - true on success.
@@ -42,7 +42,7 @@ export class MembershipManagementService {
   }
 
   /**
-   * Open manage plan page for a membership.
+   * Open manage plan page for a site membership.
    * @param { string } subscriptionId - The GUID of the subscription that we want to navigate to.
    * @param { string } redirectPath - The redirect url for after manage plan.
    * @returns { Promise<boolean> } - true on success.
