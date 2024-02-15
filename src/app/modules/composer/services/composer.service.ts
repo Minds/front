@@ -1193,23 +1193,15 @@ export class ComposerService implements OnDestroy {
 
     if (this.canEditMetadata()) {
       if (attachmentGuids?.length > 0) {
-        if (!siteMembershipGuids) {
-          // We'll set the title for siteMembership posts later
-          this.payload.title = title;
-        }
-
+        this.payload.title = title;
         this.payload.attachment_guids = attachmentGuids;
-
         this.payload.is_rich = false; // Can never have rich embed with media posts
       } else if (richEmbed && !richEmbed.entityGuid) {
         this.payload.url = richEmbed.url;
         this.payload.description = richEmbed.description;
         this.payload.thumbnail = richEmbed.thumbnail;
         this.payload.is_rich = true;
-        if (!siteMembershipGuids) {
-          // We'll set the title for siteMembership posts later
-          this.payload.title = richEmbed.title;
-        }
+        this.payload.link_title = richEmbed.title;
 
         if (!this.isOriginalEntity(richEmbed.entityGuid)) {
           this.payload.entity_guid_update = true;
@@ -1228,8 +1220,8 @@ export class ComposerService implements OnDestroy {
     }
 
     if (siteMembershipGuids) {
-      this.payload.site_membership_guids = siteMembershipGuids;
       this.payload.title = title;
+      this.payload.site_membership_guids = siteMembershipGuids;
     }
   }
 
