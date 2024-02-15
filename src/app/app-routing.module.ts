@@ -25,7 +25,7 @@ import { NetworkAdminConsoleModuleLazyRoutes } from './modules/multi-tenant-netw
 import { MindsOnlyRedirectGuard } from './common/guards/minds-only-redirect.guard';
 import { CustomPagesModuleLazyRoutes } from './modules/custom-pages/custom-pages.module.lazy';
 import { TenantOnlyRedirectGuard } from './common/guards/tenant-only-redirect.guard';
-import { MembershipsLazyRoutes } from './modules/memberships/memberships-lazy.routes';
+import { SiteMembershipsLazyRoutes } from './modules/site-memberships/site-memberships-lazy.routes';
 
 const routes: Routes = [
   AnalyticsModuleLazyRoutes,
@@ -43,7 +43,7 @@ const routes: Routes = [
   UpgradeModuleLazyRoutes,
   NetworksModuleLazyRoutes,
   CustomPagesModuleLazyRoutes,
-  MembershipsLazyRoutes,
+  SiteMembershipsLazyRoutes,
   // TODO: Find a way to move channel routes onto its own Module. They take priority and groups/blogs cannot be accessed
   {
     path: ':username',

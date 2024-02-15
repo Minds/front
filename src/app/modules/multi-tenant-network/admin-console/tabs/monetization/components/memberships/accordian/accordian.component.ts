@@ -27,7 +27,7 @@ import {
   ToasterService,
 } from '../../../../../../../../common/services/toaster.service';
 import { Router } from '@angular/router';
-import { MembershipsCountService } from '../../../../../../../memberships/services/membership-count.service';
+import { SiteMembershipsCountService } from '../../../../../../../site-memberships/services/site-membership-count.service';
 
 /**
  * Network admin monetization membership accordian. Used to display a quick
@@ -68,7 +68,7 @@ export class NetworkAdminMonetizationMembershipAccordianComponent {
     private rolesService: MultiTenantRolesService,
     private modalService: ModalService,
     private archiveSiteMembershipGQL: ArchiveSiteMembershipGQL,
-    private membershipCountService: MembershipsCountService,
+    private membershipCountService: SiteMembershipsCountService,
     private toaster: ToasterService,
     private router: Router,
     private injector: Injector

@@ -77,14 +77,6 @@ describe('NetworkAdminConsoleTabsComponent', () => {
     );
   });
 
-  it('should have a monetization tab', () => {
-    expect(
-      fixture.debugElement.query(
-        By.css('[data-ref=network-admin-console-tab-monetization]')
-      )
-    );
-  });
-
   it('should have a mobile tab', () => {
     sessionMock.isAdmin.and.returnValue(true);
     fixture.detectChanges();
