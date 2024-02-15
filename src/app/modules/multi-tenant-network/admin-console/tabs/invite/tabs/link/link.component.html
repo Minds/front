@@ -1,0 +1,100 @@
+<ng-container *ngIf="!(loading$ | async); else loadingSpinnerTemplate">
+  <div
+    class="m-formWrapper m-networkAdminConsoleInviteLinkFormWrapper"
+    *ngIf="form"
+  >
+    <form [formGroup]="form" class="m-networkAdminConsole__form">
+      <div class="m-form__fieldsContainer">
+        <div class="m-networkAdminConsole__radioButtonInputContainer">
+          <input
+            class="m-networkAdminConsole__radioButtonInput"
+            name="linkType"
+            type="radio"
+            id="defaultLinkType"
+            formControlName="linkType"
+            [value]="TenantInviteLinkType.DEFAULT"
+          />
+          <label class="m-networkAdminConsole__radioButtonInputLabel--hidden"
+            ><!--Icon positioning element--></label
+          >
+          <div class="m-networkAdminConsole__radioButtonLabel--multiline">
+            <label
+              class="m-networkAdminConsole__radioButtonLabelMultiline--primary"
+              i18n="@@NETWORK_ADMIN_CONSOLE_INVITE_LINK_TYPE__DEFAULT__LABEL"
+              >Invite to network</label
+            ><span
+              class="m-networkAdminConsole__radioButtonLabelMultiline--secondary"
+              i18n="
+
+                @@NETWORK_ADMIN_CONSOLE_INVITE_LINK_TYPE__DEFAULT__SECONDARY_LABEL
+
+              "
+              >Copy and paste a dedicated invitation link to potential network
+              users.</span
+            >
+          </div>
+        </div>
+        <div *ngIf="showDefaultLink">
+          <m-button
+            solid="true"
+            size="small"
+            class="m-networkAdminConsoleInviteLink__copyLinkButton"
+            (onAction)="copyUrlToClipboard()"
+            data-ref="m-networkAdminConsoleInviteLink__copyLinkButton"
+          >
+            <i
+              class="material-icons m-networkAdminConsoleInviteLinkCopyLinkButton__icon"
+              >content_copy</i
+            >
+            <ng-container
+              i18n="@@NETWORK_ADMIN_CONSOLE_INVITE_LINK__COPY_INVITE_LINK"
+              >Copy invite link</ng-container
+            >
+          </m-button>
+        </div>
+      </div>
+      <!-- --------------------------------- -->
+      <div class="m-form__fieldsContainer">
+        <div
+          class="m-networkAdminConsole__radioButtonInputContainer"
+          *ngIf="memberships.length > 0"
+        >
+          <input
+            class="m-networkAdminConsole__radioButtonInput"
+            name="linkType"
+            type="radio"
+            id="membershipLinkType"
+            formControlName="linkType"
+            [value]="TenantInviteLinkType.MEMBERSHIP"
+          />
+          <label class="m-networkAdminConsole__radioButtonInputLabel--hidden"
+            ><!--Icon positioning element--></label
+          >
+
+          <div class="m-networkAdminConsole__radioButtonLabel--multiline">
+            <label
+              class="m-networkAdminConsole__radioButtonLabelMultiline--primary"
+              i18n="@@NETWORK_ADMIN_CONSOLE_INVITE_LINK_TYPE__MEMBERSHIP__LABEL"
+              >Invite to membership</label
+            ><span
+              class="m-networkAdminConsole__radioButtonLabelMultiline--secondary"
+              i18n="
+
+                @@NETWORK_ADMIN_CONSOLE_INVITE_LINK_TYPE__MEMBERSHIP__SECONDARY_LABEL
+
+              "
+              >Copy and paste a dedicated invitation link to potential network
+              users’ who would subscribe to a membership.</span
+            >
+          </div>
+        </div>
+        <div *ngIf="showMembershipLinks">
+          memberships
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

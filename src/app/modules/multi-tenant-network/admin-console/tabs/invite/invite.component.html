@@ -22,6 +22,16 @@
   </div>
   <div class="m-tabs__tab">
     <a
+      [routerLink]="['/network/admin/invite/link']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-invite-tab-link"
+      i18n="@@NETWORK_ADMIN_CONSOLE_INVITE_TAB__LINK_INVITE"
+      >Link invite</a
+    >
+  </div>
+
+  <div class="m-tabs__tab">
+    <a
       [routerLink]="['/network/admin/invite/invitations']"
       [routerLinkActive]="'m-tabs__tab--selected'"
       data-ref="network-admin-console-invite-tab-invitations"
@@ -35,6 +45,12 @@
 <!-- ------------------------------ -->
 <ng-container *ngIf="(view$ | async) === multiTenantInviteView.SEND"
   ><m-networkAdminConsoleInvite__send></m-networkAdminConsoleInvite__send
+></ng-container>
+<!-- ------------------------------ -->
+<!-- LINK INVITE TAB  -->
+<!-- ------------------------------ -->
+<ng-container *ngIf="(view$ | async) === multiTenantInviteView.LINK"
+  ><m-networkAdminConsoleInvite__link></m-networkAdminConsoleInvite__link
 ></ng-container>
 <!-- ------------------------------ -->
 <!-- INVITATIONS TAB  -->

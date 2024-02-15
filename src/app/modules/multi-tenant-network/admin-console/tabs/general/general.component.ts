@@ -119,12 +119,4 @@ export class NetworkAdminConsoleGeneralComponent implements OnInit, OnDestroy {
     this.toaster.success('Successfully updated settings.');
     this.networkNameFormControl.markAsPristine();
   }
-
-  /**
-   * Copies invite link to clipboard.
-   * @returns { void }
-   */
-  public onCopyInviteLinkClick(): void {
-    // TODO: Implement and connect to template.
-  }
 }

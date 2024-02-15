@@ -1,0 +1,29 @@
+@import 'defaults.scss';
+@import '../../../../../../../common/layout/layout.scss';
+
+:host {
+  .m-networkAdminConsoleInviteLinkFormWrapper {
+    margin-top: $spacing8;
+  }
+  .m-networkAdminConsole__radioButtonInputContainer {
+    margin-bottom: $spacing6;
+  }
+
+  .m-form__fieldsContainer {
+    gap: $spacing6;
+
+    margin-bottom: $spacing6;
+  }
+
+  .m-networkAdminConsoleInviteLink__copyLinkButton {
+    margin-right: 0;
+
+    .m-networkAdminConsoleInviteLinkCopyLinkButton__icon {
+      font-size: 16px !important;
+      margin-right: $spacing2 !important;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}
