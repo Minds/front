@@ -9,7 +9,6 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { SiteMembershipManagementService } from '../../services/site-membership-management.service';
 import {
   GetSiteMembershipSubscriptionsGQL,
-  GetSiteMembershipsAndSubscriptionsGQL,
   SiteMembership,
   SiteMembershipBillingPeriodEnum,
   SiteMembershipPricingModelEnum,
@@ -17,20 +16,17 @@ import {
 } from '../../../../../graphql/generated.engine';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 import { OnboardingV5Service } from '../../../onboarding-v5/services/onboarding-v5.service';
-import {
-  DEFAULT_ERROR_MESSAGE,
-  ToasterService,
-} from '../../../../common/services/toaster.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { BehaviorSubject, firstValueFrom, of, throwError } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
 import { siteMembershipMock } from '../../../../mocks/site-membership.mock';
 import userMock from '../../../../mocks/responses/user.mock';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
 import { SiteMembershipService } from '../../services/site-memberships.service';
 
-xdescribe('SiteMembershipsPageComponent', () => {
+describe('SiteMembershipsPageComponent', () => {
   let comp: SiteMembershipsPageComponent;
   let fixture: ComponentFixture<SiteMembershipsPageComponent>;
 
@@ -198,104 +194,18 @@ xdescribe('SiteMembershipsPageComponent', () => {
     }
   });
 
-  describe('init', () => {
-    it('should init', fakeAsync(async () => {
-      expect(comp).toBeTruthy();
-      tick();
+  it('should init', fakeAsync(async () => {
+    expect(comp).toBeTruthy();
+    tick();
 
-      expect(await firstValueFrom(comp.memberships$)).toEqual(
-        mockSiteMemberships
-      );
-      expect((comp as any).membershipSubscriptions$.getValue()).toEqual(
-        mockSiteMembershipSubscriptions
-      );
-      expect(comp.initialized$.getValue()).toBeTrue();
-      expect((comp as any).toaster.error).not.toHaveBeenCalled();
-    }));
-
-    it('should handle rxjs thrown errors during init', fakeAsync(async () => {
-      comp.memberships$.next([]);
-      (comp as any).membershipSubscriptions$.next([]);
-
-      (comp as any).getSiteMembershipsAndSubscriptionsGQL.fetch.calls.reset();
-      (comp as any).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
-        throwError(() => {
-          return new Error('error');
-        })
-      );
-
-      comp.ngOnInit();
-      tick();
-
-      expect(
-        (comp as any).getSiteMembershipsAndSubscriptionsGQL.fetch
-      ).toHaveBeenCalledWith(null, {
-        fetchPolicy: 'network-only',
-      });
-      expect(await firstValueFrom(comp.memberships$)).toEqual([]);
-      expect((comp as any).membershipSubscriptions$.getValue()).toEqual([]);
-      expect(comp.initialized$.getValue()).toBeTrue();
-      expect((comp as any).toaster.error).toHaveBeenCalledWith(
-        DEFAULT_ERROR_MESSAGE
-      );
-    }));
-
-    it('should handle GraphQL errors during init', fakeAsync(async () => {
-      comp.memberships$.next([]);
-      (comp as any).membershipSubscriptions$.next([]);
-
-      (comp as any).getSiteMembershipsAndSubscriptionsGQL.fetch.calls.reset();
-      (comp as any).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
-        of({
-          errors: [{ message: 'Error' }],
-        })
-      );
-
-      comp.ngOnInit();
-      tick();
-
-      expect(
-        (comp as any).getSiteMembershipsAndSubscriptionsGQL.fetch
-      ).toHaveBeenCalledWith(null, {
-        fetchPolicy: 'network-only',
-      });
-      expect(await firstValueFrom(comp.memberships$)).toEqual([]);
-      expect((comp as any).membershipSubscriptions$.getValue()).toEqual([]);
-      expect(comp.initialized$.getValue()).toBeTrue();
-      expect((comp as any).toaster.error).toHaveBeenCalledWith(
-        DEFAULT_ERROR_MESSAGE
-      );
-    }));
-
-    it('should handle no data errors during init', fakeAsync(async () => {
-      comp.memberships$.next([]);
-      (comp as any).membershipSubscriptions$.next([]);
-
-      (comp as any).getSiteMembershipsAndSubscriptionsGQL.fetch.calls.reset();
-      (comp as any).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
-        of({
-          data: {
-            siteMemberships: null,
-          },
-        })
-      );
-
-      comp.ngOnInit();
-      tick();
-
-      expect(
-        (comp as any).getSiteMembershipsAndSubscriptionsGQL.fetch
-      ).toHaveBeenCalledWith(null, {
-        fetchPolicy: 'network-only',
-      });
-      expect(await firstValueFrom(comp.memberships$)).toEqual([]);
-      expect((comp as any).membershipSubscriptions$.getValue()).toEqual([]);
-      expect(comp.initialized$.getValue()).toBeTrue();
-      expect((comp as any).toaster.error).toHaveBeenCalledWith(
-        DEFAULT_ERROR_MESSAGE
-      );
-    }));
-  });
+    expect((comp as any).siteMembershipsService.fetch).toHaveBeenCalled();
+    expect(await firstValueFrom(comp.memberships$)).toEqual(
+      mockSiteMemberships
+    );
+    expect((comp as any).membershipSubscriptions$.getValue()).toEqual(
+      mockSiteMembershipSubscriptions
+    );
+  }));
 
   describe('onJoinMembershipClick', () => {
     it('should call to navigate a user to checkout when logged in ', fakeAsync(() => {
