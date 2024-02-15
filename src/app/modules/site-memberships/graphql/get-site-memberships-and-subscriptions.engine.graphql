@@ -1,0 +1,29 @@
+query GetSiteMembershipsAndSubscriptions {
+  siteMemberships {
+    id
+    membershipGuid
+    membershipName
+    membershipDescription
+    membershipPriceInCents
+    priceCurrency
+    membershipBillingPeriod
+    membershipPricingModel
+    roles {
+        id
+        name
+    }
+    groups {
+        guid
+        name
+        membersCount
+        legacy
+    }
+  },
+  siteMembershipSubscriptions {
+    membershipGuid
+    membershipSubscriptionId
+    autoRenew
+    validFromTimestamp
+    validToTimestamp
+  }
+}
