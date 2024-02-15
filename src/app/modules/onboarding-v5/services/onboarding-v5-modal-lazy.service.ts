@@ -43,9 +43,6 @@ export class OnboardingV5ModalLazyService {
         },
       },
       fullscreen: true,
-      modalDialogClass: !this.isTenantNetwork
-        ? 'm-theme--wrapper m-theme--wrapper__dark'
-        : '',
     });
     return modal;
   }

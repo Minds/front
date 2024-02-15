@@ -1,0 +1,17 @@
+mutation CreateNewReport(
+  $entityUrn: String!
+  $reason: ReportReasonEnum!
+  $illegalSubReason: IllegalSubReasonEnum,
+  $nsfwSubReason: NsfwSubReasonEnum,
+  $securitySubReason: SecuritySubReasonEnum
+) {
+  createNewReport(
+    reportInput: {
+      entityUrn: $entityUrn,
+      reason: $reason
+      securitySubReason: $securitySubReason
+    	illegalSubReason: $illegalSubReason
+      nsfwSubReason: $nsfwSubReason
+    }
+  )
+}

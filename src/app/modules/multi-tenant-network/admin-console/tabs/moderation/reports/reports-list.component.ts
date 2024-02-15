@@ -148,7 +148,7 @@ export class NetworkAdminConsoleReportsListComponent
    */
   private handleQueryResult(result: ApolloQueryResult<GetReportsQuery>): void {
     const newReportEdges: ReportEdge[] =
-      (result.data.reports.edges as ReportEdge[]) ?? [];
+      (result?.data?.reports?.edges as ReportEdge[]) ?? [];
     const reportEdges: ReportEdge[] = [
       ...this.reportEdges$.getValue(),
       ...newReportEdges.filter((edge: ReportEdge) =>

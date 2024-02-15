@@ -47,9 +47,14 @@ export class SettingsV2Component implements OnInit {
           id: 'account',
         },
         {
+          label: $localize`:@@SETTINGS__PLUS__LABEL:Minds+`,
+          id: 'plus',
+          shouldShow: this.isPlusUser.bind(this),
+        },
+        {
           label: $localize`:@@SETTINGS__PRO__LABEL:Pro`,
           id: 'pro_canary', // :user param added later
-          shouldShow: this.isNotNetwork.bind(this),
+          shouldShow: this.isNotTenantSite.bind(this),
         },
         {
           label: $localize`:@@SETTINGS__SECURITY__LABEL:Security`,
@@ -58,12 +63,12 @@ export class SettingsV2Component implements OnInit {
         {
           label: $localize`:@@SETTINGS__PAYMENTS__LABEL:Payments`,
           id: 'payments',
-          shouldShow: this.isNotNetwork.bind(this),
+          shouldShow: this.isNotTenantSite.bind(this),
         },
         {
           label: $localize`:@@SETTINGS__AFFILIATES_PROGRAM__LABEL:Affiliates Program`,
           id: 'affiliates-program',
-          shouldShow: this.isNotNetwork.bind(this),
+          shouldShow: this.isNotTenantSite.bind(this),
         },
         { label: $localize`:@@SETTINGS__OTHER__LABEL:Other`, id: 'other' },
       ],
@@ -99,7 +104,7 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__ACCOUNT__BOOST__LABEL:Boosted Content`,
             id: 'boosted-content',
-            shouldShow: this.isNotNetwork.bind(this),
+            shouldShow: this.isNotTenantSite.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__ACCOUNT__NSFW__LABEL:NSFW Content`,
@@ -116,12 +121,12 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger`,
             id: 'messenger',
-            shouldShow: this.isNotNetwork.bind(this),
+            shouldShow: this.isNotTenantSite.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__ACCOUNT__NOSTR__LABEL:Nostr`,
             id: 'nostr',
-            shouldShow: this.isNotNetwork.bind(this),
+            shouldShow: this.isNotTenantSite.bind(this),
           },
         ],
       },
@@ -156,13 +161,13 @@ export class SettingsV2Component implements OnInit {
             label: $localize`:@@SETTINGS__ACCOUNTUPGRADE__PRO__LABEL:Upgrade to Pro`,
             id: 'upgrade-to-pro',
             route: '/pro',
-            shouldShow: this.shouldShowProMenuItem.bind(this),
+            shouldShow: this.isNotProUser.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__ACCOUNTUPGRADE__PLUS__LABEL:Upgrade to Plus`,
             id: 'upgrade-to-plus',
             route: '/plus',
-            shouldShow: this.shouldShowPlusMenuItem.bind(this),
+            shouldShow: this.isNotPlusUser.bind(this),
           },
         ],
       },
@@ -212,9 +217,30 @@ export class SettingsV2Component implements OnInit {
       },
     ],
 
+    plus: [
+      {
+        shouldShow: this.isPlusUser.bind(this),
+        header: {
+          label: $localize`:@@SETTINGS__PLUS__HEADER__LABEL:Minds+ Settings`,
+          id: 'plus',
+        },
+        items: [
+          {
+            label: $localize`:@@SETTINGS__PLUS__VERIFY__LABEL:Verify Your Account`,
+            id: 'verify',
+          },
+          {
+            shouldShow: this.isNotProUser.bind(this),
+            label: $localize`:@@SETTINGS__PLUS__CANCEL__LABEL:Cancel Minds+ Subscription`,
+            id: 'cancel',
+          },
+        ],
+      },
+    ],
+
     pro_canary: [
       {
-        shouldShow: this.isNotNetwork.bind(this),
+        shouldShow: this.isNotTenantSite.bind(this),
         header: {
           label: $localize`:@@SETTINGS__PRO__HEADER__LABEL:Pro Settings`,
           id: 'pro_canary',
@@ -251,7 +277,7 @@ export class SettingsV2Component implements OnInit {
         ],
       },
       {
-        shouldShow: this.isNotNetwork.bind(this),
+        shouldShow: this.isNotTenantSite.bind(this),
         header: {
           label: $localize`:@@SETTINGS__PRO__SUBSCRIPTION__HEADER__LABEL:Pro Subscription Management`,
           id: 'pro-subscription',
@@ -271,7 +297,7 @@ export class SettingsV2Component implements OnInit {
     ],
     other: [
       {
-        shouldShow: this.isNotNetwork.bind(this),
+        shouldShow: this.isNotTenantSite.bind(this),
         header: {
           label: $localize`:@@SETTINGS__OTHER__PRIVACY__HEADER__LABEL:Privacy`,
           id: 'privacy',
@@ -300,7 +326,7 @@ export class SettingsV2Component implements OnInit {
         ],
       },
       {
-        shouldShow: this.isNotNetwork.bind(this),
+        shouldShow: this.isNotTenantSite.bind(this),
         header: {
           label: $localize`:@@SETTINGS__OTHER__PAIDCONTENT__HEADER__LABEL:Paid Content`,
           id: 'paid-content',
@@ -322,7 +348,7 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__YOUTUBE__LABEL:Youtube`,
             id: 'youtube-migration',
-            shouldShow: this.isNotNetwork.bind(this),
+            shouldShow: this.isNotTenantSite.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__RSS_SYNC__LABEL:RSS Sync`,
@@ -511,21 +537,26 @@ export class SettingsV2Component implements OnInit {
   }
 
   shouldShowUpgradesMenu(): boolean {
-    return (
-      (this.shouldShowPlusMenuItem() || this.shouldShowProMenuItem()) &&
-      !this.isTenant
-    );
+    return (this.isNotPlusUser() || this.isNotProUser()) && !this.isTenant;
   }
 
-  shouldShowProMenuItem(): boolean {
+  isNotProUser(): boolean {
     return !this.session.getLoggedInUser().pro && !this.isTenant;
   }
 
-  shouldShowPlusMenuItem(): boolean {
+  isNotPlusUser(): boolean {
     return !this.session.getLoggedInUser().plus && !this.isTenant;
   }
 
-  isNotNetwork(): boolean {
+  isPlusUser(): boolean {
+    return this.session.getLoggedInUser().plus && !this.isTenant;
+  }
+
+  isProUser(): boolean {
+    return this.session.getLoggedInUser().pro && !this.isTenant;
+  }
+
+  isNotTenantSite(): boolean {
     return !this.isTenant;
   }
 
@@ -542,7 +573,7 @@ export class SettingsV2Component implements OnInit {
    * @returns { boolean } - true if the user should be shown the content migration header.
    */
   private shouldShowContentMigrationHeader(): boolean {
-    return this.hasRssSyncPermission() || this.isNotNetwork();
+    return this.hasRssSyncPermission() || this.isNotTenantSite();
   }
 
   /**
