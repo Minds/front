@@ -30,7 +30,7 @@ describe('MembershipManagementService', () => {
     it('should navigate to checkout', async () => {
       expect(await service.navigateToCheckout('123')).toBe(true);
       expect(window.open).toHaveBeenCalledWith(
-        '/api/v3/payments/site-memberships/123/checkout?redirectUri=/memberships',
+        '/api/v3/payments/site-memberships/123/checkout?redirectPath=/memberships',
         '_self'
       );
     });
@@ -38,7 +38,7 @@ describe('MembershipManagementService', () => {
     it('should NOT navigate to if no siteMembershipGuid is passed', async () => {
       expect(await service.navigateToCheckout(null)).toBe(false);
       expect(window.open).not.toHaveBeenCalledWith(
-        '/api/v3/payments/site-memberships/123/checkout?redirectUri=/memberships',
+        '/api/v3/payments/site-memberships/123/checkout?redirectPath=/memberships',
         '_self'
       );
       expect((service as any).toaster.error).toHaveBeenCalledWith(
@@ -51,7 +51,7 @@ describe('MembershipManagementService', () => {
     it('should navigate to checkout', async () => {
       expect(await service.navigateToManagePlan(123)).toBe(true);
       expect(window.open).toHaveBeenCalledWith(
-        '/api/v3/payments/site-memberships/subscriptions/123/manage?redirectUri=/memberships',
+        '/api/v3/payments/site-memberships/subscriptions/123/manage?redirectPath=/memberships',
         '_self'
       );
     });
@@ -59,7 +59,7 @@ describe('MembershipManagementService', () => {
     it('should NOT navigate to if no siteMembershipGuid is passed', async () => {
       expect(await service.navigateToManagePlan(null)).toBe(false);
       expect(window.open).not.toHaveBeenCalledWith(
-        '/api/v3/payments/site-memberships/subscriptions/123/manage?redirectUri=/memberships',
+        '/api/v3/payments/site-memberships/subscriptions/123/manage?redirectPath=/memberships',
         '_self'
       );
       expect((service as any).toaster.error).toHaveBeenCalledWith(

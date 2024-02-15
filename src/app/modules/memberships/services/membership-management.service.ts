@@ -16,19 +16,19 @@ export class MembershipManagementService {
   /**
    * Open checkout page for a membership.
    * @param { string } siteMembershipGuid - The site membership guid.
-   * @param { string } redirectUri - The redirect url for after checkout.
+   * @param { string } redirectPath - The redirect url for after checkout.
    * @returns { Promise<boolean> } - true on success.
    */
   public async navigateToCheckout(
     siteMembershipGuid: string,
-    redirectUri: string = '/memberships'
+    redirectPath: string = '/memberships'
   ): Promise<boolean> {
     try {
       if (!siteMembershipGuid) {
         throw new Error('siteMembershipGuid not provided to checkout function');
       }
       this.window.open(
-        `/api/v3/payments/site-memberships/${siteMembershipGuid}/checkout?redirectUri=${redirectUri}`,
+        `/api/v3/payments/site-memberships/${siteMembershipGuid}/checkout?redirectPath=${redirectPath}`,
         '_self'
       );
       return true;
@@ -44,19 +44,19 @@ export class MembershipManagementService {
   /**
    * Open manage plan page for a membership.
    * @param { string } subscriptionId - The GUID of the subscription that we want to navigate to.
-   * @param { string } redirectUri - The redirect url for after manage plan.
+   * @param { string } redirectPath - The redirect url for after manage plan.
    * @returns { Promise<boolean> } - true on success.
    */
   public async navigateToManagePlan(
     subscriptionId: number,
-    redirectUri: string = '/memberships'
+    redirectPath: string = '/memberships'
   ): Promise<boolean> {
     try {
       if (!subscriptionId) {
         throw new Error('subscriptionId not provided to checkout function');
       }
       this.window.open(
-        `/api/v3/payments/site-memberships/subscriptions/${subscriptionId}/manage?redirectUri=${redirectUri}`,
+        `/api/v3/payments/site-memberships/subscriptions/${subscriptionId}/manage?redirectPath=${redirectPath}`,
         '_self'
       );
       return true;

@@ -229,6 +229,14 @@ export class ActivityContentComponent
     );
   }
 
+  get hasSiteMembershipPayallThumbnail(): boolean {
+    return (
+      this.entity.site_membership &&
+      !this.entity.site_membership_unlocked &&
+      this.entity.paywall_thumbnail
+    );
+  }
+
   constructor(
     public service: ActivityService,
     private modalService: ModalService,
@@ -349,9 +357,7 @@ export class ActivityContentComponent
   }
 
   get titleText(): string {
-    return this.isImage || this.isVideo || this.isMultiImage
-      ? this.entity.title
-      : '';
+    return this.entity.title;
   }
 
   get bodyText(): string {
@@ -383,7 +389,7 @@ export class ActivityContentComponent
     }
 
     // if not an image, vid, or rich-embed.
-    return this.entity.message || this.entity.title;
+    return this.entity.message;
   }
 
   get hideBodyText(): boolean {

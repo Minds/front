@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  position: relative;
+
+  margin-top: $spacing4;
+
+  .m-activitySiteMembershipCta__thumbnail {
+    position: relative;
+    cursor: pointer;
+
+    img {
+      max-width: 100%;
+      max-height: 75vh;
+    }
+  }
+
+  m-button {
+    display: block;
+    margin-top: $spacing4;
+
+    .m-activity--minimalMode & {
+      margin: $spacing4;
+    }
+  }
+
+  ::ng-deep m-button button {
+    width: 100%;
+  }
+}

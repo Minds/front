@@ -21,6 +21,7 @@ import {
   BehaviorSubject,
   EMPTY,
   Observable,
+  ReplaySubject,
   Subscription,
   catchError,
   distinctUntilChanged,
@@ -40,6 +41,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 import { Session } from '../../../../services/session';
 import { MembershipManagementService } from '../../services/membership-management.service';
 import { ActivatedRoute } from '@angular/router';
+import { SiteMembershipService } from '../../services/site-memberships.service';
 
 /** Membership error messages. */
 export enum MembershipPageErrorMessage {
@@ -57,31 +59,21 @@ export enum MembershipPageErrorMessage {
 })
 export class MembershipsPageComponent implements OnInit, OnDestroy {
   /** Whether component can be consider as initialized. */
-  public readonly initialized$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly initialized$: BehaviorSubject<boolean> = this
+    .siteMembershipsService.initialized$;
 
   /** Array of memberships */
-  public readonly memberships$: BehaviorSubject<
-    SiteMembership[]
-  > = new BehaviorSubject<SiteMembership[]>([]);
+  public readonly memberships$: ReplaySubject<SiteMembership[]> = this
+    .siteMembershipsService.siteMemberships$;
 
   /** Array of the logged in users membership subscriptions. */
-  private readonly membershipSubscriptions$: BehaviorSubject<
+  private readonly membershipSubscriptions$: ReplaySubject<
     SiteMembershipSubscription[]
-  > = new BehaviorSubject<SiteMembershipSubscription[]>([]);
+  > = this.siteMembershipsService.siteMembershipSubscriptions$;
 
   /** Mapped array of membership subscription GUIDs */
-  public membershipSubscriptionGuids$: Observable<
-    string[]
-  > = this.membershipSubscriptions$.pipe(
-    map((subscriptions: SiteMembershipSubscription[]): string[] => {
-      return subscriptions.map(
-        (subscription: SiteMembershipSubscription): string =>
-          subscription.membershipGuid
-      );
-    })
-  );
+  public membershipSubscriptionGuids$: Observable<string[]> = this
+    .siteMembershipsService.siteMembershipSubscriptionGuids$;
 
   /** Whether navigation and pre-cursor calls are in progress. */
   public readonly navigationInProgress$: BehaviorSubject<
@@ -99,7 +91,7 @@ export class MembershipsPageComponent implements OnInit, OnDestroy {
     map((memberships: SiteMembership[]): string => {
       if (!memberships?.length) return null;
 
-      const lowestPriceMembership: SiteMembership = this.getLowestPriceMembershipFromArray(
+      const lowestPriceMembership: SiteMembership = this.siteMembershipsService.getLowestPriceMembershipFromArray(
         memberships
       );
       if (!lowestPriceMembership) return null;
@@ -114,9 +106,11 @@ export class MembershipsPageComponent implements OnInit, OnDestroy {
   /** Component-level subscriptions array. */
   private subscriptions: Subscription[] = [];
 
+  private membershipSubscriptionsSnapshot: SiteMembershipSubscription[];
+
   constructor(
+    private siteMembershipsService: SiteMembershipService,
     private membershipManagement: MembershipManagementService,
-    private getSiteMembershipsAndSubscriptionsGQL: GetSiteMembershipsAndSubscriptionsGQL,
     private getSiteMembershipSubscriptionsGQL: GetSiteMembershipSubscriptionsGQL,
     private authModal: AuthModalService,
     private onboardingV5Service: OnboardingV5Service,
@@ -134,6 +128,13 @@ export class MembershipsPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.fetchAllData();
     this.checkForErrorParams();
+
+    this.subscriptions.push(
+      this.membershipSubscriptions$.subscribe(
+        membershipSubscription =>
+          (this.membershipSubscriptionsSnapshot = membershipSubscription)
+      )
+    );
   }
 
   ngOnDestroy(): void {
@@ -147,47 +148,7 @@ export class MembershipsPageComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   private fetchAllData(): void {
-    this.subscriptions.push(
-      this.getSiteMembershipsAndSubscriptionsGQL
-        .fetch(null, {
-          fetchPolicy: 'network-only',
-        })
-        .pipe(
-          take(1),
-          catchError(
-            (error: Error): Observable<never> => {
-              console.error(error);
-              this.toaster.error(DEFAULT_ERROR_MESSAGE);
-              this.initialized$.next(true);
-              return EMPTY;
-            }
-          )
-        )
-        .subscribe(
-          (
-            response: ApolloQueryResult<GetSiteMembershipsAndSubscriptionsQuery>
-          ): void => {
-            if (response.errors?.length || !response?.data?.siteMemberships) {
-              console.error(response.errors ?? 'No data');
-              this.toaster.error(DEFAULT_ERROR_MESSAGE);
-              this.initialized$.next(true);
-              return;
-            }
-
-            this.memberships$.next(
-              response.data.siteMemberships as SiteMembership[]
-            );
-
-            if (response.data.siteMembershipSubscriptions?.length) {
-              this.membershipSubscriptions$.next(
-                response.data.siteMembershipSubscriptions
-              );
-            }
-
-            this.initialized$.next(true);
-          }
-        )
-    );
+    this.siteMembershipsService.fetch();
   }
 
   /**
@@ -344,7 +305,8 @@ export class MembershipsPageComponent implements OnInit, OnDestroy {
    * @returns { number } The membership subscription ID.
    */
   private getMembershipSubscriptionId(siteMembership: SiteMembership): number {
-    const subscriptions: SiteMembershipSubscription[] = this.membershipSubscriptions$.getValue();
+    const subscriptions: SiteMembershipSubscription[] = this
+      .membershipSubscriptionsSnapshot;
     if (!subscriptions?.length) return null;
     return (
       subscriptions.find(
@@ -352,26 +314,5 @@ export class MembershipsPageComponent implements OnInit, OnDestroy {
           subscription.membershipGuid === siteMembership.membershipGuid
       )?.membershipSubscriptionId ?? null
     );
-  }
-
-  /**
-   * Get the lowest price membership from an array of memberships.
-   * @param { SiteMembership[] } memberships - The array of memberships.
-   * @returns { SiteMembership } The lowest price membership.
-   */
-  private getLowestPriceMembershipFromArray(
-    memberships: SiteMembership[]
-  ): SiteMembership {
-    let lowestPriceMembership: SiteMembership = null;
-    for (let membership of memberships) {
-      if (
-        !lowestPriceMembership ||
-        membership.membershipPriceInCents <
-          lowestPriceMembership?.membershipPriceInCents
-      ) {
-        lowestPriceMembership = membership;
-      }
-    }
-    return lowestPriceMembership;
   }
 }
