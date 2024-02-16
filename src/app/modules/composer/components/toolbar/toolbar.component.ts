@@ -22,7 +22,13 @@ import {
   Subscription,
   combineLatest,
 } from 'rxjs';
-import { debounceTime, map, take, tap } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  take,
+  tap,
+} from 'rxjs/operators';
 import {
   ComposerService,
   ComposerSize,
@@ -59,7 +65,7 @@ import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
 import { ComposerSiteMembershipSelectorComponent } from '../popup/site-membership-selector/site-membership-selector.component';
-import { ComposerSiteMembershipsService } from '../../services/site-memberships.service';
+import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -163,6 +169,15 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   public readonly canCreateSupermindRequest$ = this.service
     .canCreateSupermindRequest$;
 
+  public readonly shouldShowSiteMemberships$: Observable<
+    boolean
+  > = this.siteMembershipsCountService.count$.pipe(
+    distinctUntilChanged(),
+    map((count: number) => {
+      return count > 0;
+    })
+  );
+
   /**
    * Whether the post (or next or save) button is disabled
    */
@@ -194,7 +209,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private permissions: PermissionsService,
     private readonly experimentService: ExperimentsService,
     protected nsfwEnabledService: NsfwEnabledService,
-    protected siteMembershipsService: ComposerSiteMembershipsService
+    protected siteMembershipsCountService: SiteMembershipsCountService
   ) {}
 
   /**

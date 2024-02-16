@@ -1,11 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  flush,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ToolbarComponent } from './toolbar.component';
 import { ComposerService, ComposerSize } from '../../services/composer.service';
@@ -25,12 +18,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
-import { ComposerSiteMembershipsService } from '../../services/site-memberships.service';
 import { ApolloTestingModule } from 'apollo-angular/testing';
-import { SiteMembership } from '../../../../../graphql/generated.engine';
 import { By } from '@angular/platform-browser';
 import { IfTenantDirective } from '../../../../common/directives/if-tenant.directive';
 import { IsTenantService } from '../../../../common/services/is-tenant.service';
+import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -66,6 +58,8 @@ describe('Composer Toolbar', () => {
   const siteMembershipGuids$ = new BehaviorSubject(null);
   const postButtonDisabled$ = new BehaviorSubject<boolean>(false);
   const nextButtonDisabled$ = new BehaviorSubject<boolean>(false);
+
+  const siteMembershipCount$ = new BehaviorSubject<number>(0);
 
   const composerServiceMock: any = MockService(ComposerService, {
     has: [
@@ -109,18 +103,6 @@ describe('Composer Toolbar', () => {
       nextButtonDisabled$: { get: () => nextButtonDisabled$ },
     },
   });
-
-  const siteMembershipsServiceMock: any = MockService(
-    ComposerSiteMembershipsService,
-    {
-      has: ['allMemberships$'],
-      props: {
-        allMemberships$: {
-          get: () => new BehaviorSubject<SiteMembership[]>([]),
-        },
-      },
-    }
-  );
 
   const popupServiceMock: any = MockService(PopupService, {
     create: function() {
@@ -211,14 +193,21 @@ describe('Composer Toolbar', () => {
             provide: NsfwEnabledService,
             useValue: MockService(NsfwEnabledService),
           },
-          {
-            provide: ComposerSiteMembershipsService,
-            useValue: siteMembershipsServiceMock,
-          },
           { provide: IsTenantService, useValue: isTenantServiceMock },
           {
             provide: IfTenantDirective,
             useValue: MockService(IfTenantDirective),
+          },
+          {
+            provide: SiteMembershipsCountService,
+            useValue: MockService(SiteMembershipsCountService, {
+              has: ['count$'],
+              props: {
+                count$: {
+                  get: () => siteMembershipCount$,
+                },
+              },
+            }),
           },
         ],
       }).compileComponents();

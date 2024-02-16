@@ -43,7 +43,6 @@ import { ComposerModalService } from '../modal/modal.service';
 import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
 import { ComposerAudienceSelectorService } from '../../services/audience.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
-import { ComposerSiteMembershipsService } from '../../services/site-memberships.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -140,8 +139,7 @@ export class BaseComponent
     private composerModal: ComposerModalService,
     configs: ConfigsService,
     protected uploaderService: UploaderService,
-    protected permissions: PermissionsService,
-    protected siteMembershipsService: ComposerSiteMembershipsService
+    protected permissions: PermissionsService
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
 
@@ -153,10 +151,6 @@ export class BaseComponent
   }
 
   ngOnInit(): void {
-    if (this.permissions.canCreatePaywall()) {
-      this.siteMembershipsService.fetchMemberships();
-    }
-
     // Show the preview pane only if we're in a modal (i.e. not embedded)
     this.showMembershipPreviewPane$ = combineLatest([
       this.service.showSiteMembershipPostPreview$,

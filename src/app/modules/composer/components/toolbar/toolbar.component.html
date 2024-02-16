@@ -96,7 +96,7 @@
     <ng-container
       *ngIf="
         permissions.canCreatePaywall() &&
-        (siteMembershipsService.allMemberships$ | async)?.length > 0 &&
+        (shouldShowSiteMemberships$ | async) &&
         !(remind$ | async)
       "
     >
