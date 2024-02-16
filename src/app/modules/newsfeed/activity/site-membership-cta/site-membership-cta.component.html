@@ -1,6 +1,6 @@
 <div
   class="m-activitySiteMembershipCta__thumbnail"
-  *ngIf="entity.paywall_thumbnail"
+  *ngIf="entity?.paywall_thumbnail"
   (click)="onClick($event)"
 >
   <span *ngIf="isVideo">
@@ -22,6 +22,7 @@
 <m-button
   [solid]="true"
   [borderless]="true"
+  [saving]="inProgress"
   color="blue"
   size="medium"
   (onAction)="onClick($event)"

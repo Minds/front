@@ -1,15 +1,12 @@
 import {
-  AfterContentInit,
   AfterViewInit,
   Component,
   ElementRef,
+  Inject,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { ActivityEntity, ActivityService } from '../activity.service';
-import { SiteMembershipManagementService } from '../../../site-memberships/services/site-membership-management.service';
-import { SiteMembershipService } from '../../../site-memberships/services/site-memberships.service';
-import { firstValueFrom } from 'rxjs';
+import { WINDOW } from '../../../../common/injection-tokens/common-injection-tokens';
 
 @Component({
   selector: 'm-activity__siteMembershipCta',
@@ -21,6 +18,7 @@ export class ActivitySiteMembershipCtaComponent
   isMinimalMode = this.service.displayOptions.minimalMode;
   entity: ActivityEntity;
   thumbnailHeightPx: number;
+  inProgress = false;
 
   get isVideo(): boolean {
     return this.entity.custom_type === 'video';
@@ -28,9 +26,8 @@ export class ActivitySiteMembershipCtaComponent
 
   constructor(
     private service: ActivityService,
-    private siteMembershipService: SiteMembershipService,
-    private siteMembershipManagementService: SiteMembershipManagementService,
-    private el: ElementRef
+    private el: ElementRef,
+    @Inject(WINDOW) private window: Window
   ) {}
 
   ngOnInit(): void {
@@ -46,9 +43,12 @@ export class ActivitySiteMembershipCtaComponent
     });
   }
 
+  /**
+   * Calculate the height of the thumbnail to prevent jumpiness throughout the feeds
+   */
   calculateThumbnailHeight() {
     const componentWidth = this.el.nativeElement.clientWidth;
-    if (this.entity.paywall_thumbnail) {
+    if (this.entity?.paywall_thumbnail) {
       const originalHeight = this.entity.paywall_thumbnail.height || 10;
       const originalWidth = this.entity.paywall_thumbnail.width || 10;
 
@@ -57,20 +57,15 @@ export class ActivitySiteMembershipCtaComponent
     }
   }
 
+  /**
+   * Redirects to the checkout flow
+   */
   async onClick(e: MouseEvent): Promise<void> {
-    await this.siteMembershipService.fetch();
+    this.inProgress = true;
 
-    const siteMemberships = await firstValueFrom(
-      this.siteMembershipService.siteMemberships$
-    );
-
-    const lowestPriceMembership = this.siteMembershipService.getLowestPriceMembershipFromArray(
-      siteMemberships
-    );
-
-    this.siteMembershipManagementService.navigateToCheckout(
-      lowestPriceMembership.id,
-      '/newsfeed/' + this.entity.guid
+    this.window.open(
+      `/api/v3/payments/site-memberships/paywalled-entities/${this.entity.guid}/checkout?redirectPath=/newsfeed/${this.entity.guid}`,
+      '_self'
     );
   }
 }
