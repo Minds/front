@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivityEntity, ActivityService } from '../activity.service';
 import { SiteMembershipManagementService } from '../../../site-memberships/services/site-membership-management.service';
 import { SiteMembershipService } from '../../../site-memberships/services/site-memberships.service';
@@ -9,13 +15,18 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './site-membership-cta.component.html',
   styleUrls: ['./site-membership-cta.component.ng.scss'],
 })
-export class ActivitySiteMembershipCtaComponent implements OnInit {
+export class ActivitySiteMembershipCtaComponent
+  implements OnInit, AfterViewInit {
   isMinimalMode = this.service.displayOptions.minimalMode;
   entity: ActivityEntity;
+  thumbnailHeightPx: number;
 
   get isVideo(): boolean {
     return this.entity.custom_type === 'video';
   }
+
+  @ViewChild('thumbnailImgEl', { read: ElementRef })
+  thumbnailImgEl: ElementRef;
 
   constructor(
     private service: ActivityService,
@@ -25,6 +36,19 @@ export class ActivitySiteMembershipCtaComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.entity$.subscribe(entity => (this.entity = entity));
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      const componentWidth = this.thumbnailImgEl.nativeElement.clientWidth;
+      if (this.entity.paywall_thumbnail) {
+        const originalHeight = this.entity.paywall_thumbnail.height || 10;
+        const originalWidth = this.entity.paywall_thumbnail.width || 10;
+
+        const aspectRatio = originalHeight / originalWidth;
+        this.thumbnailHeightPx = componentWidth * aspectRatio;
+      }
+    });
   }
 
   async onClick(e: MouseEvent): Promise<void> {

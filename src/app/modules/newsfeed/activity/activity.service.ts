@@ -123,7 +123,11 @@ export type ActivityEntity = {
   auto_caption?: string; // AI generated captions for images
   site_membership?: boolean; // The post has a membership attached
   site_membership_unlocked?: boolean; // The post can be viewed with no restrictions. False will show the cta.
-  paywall_thumbnail?: boolean;
+  paywall_thumbnail?: {
+    width: number;
+    height: number;
+    blurhash: string;
+  };
   link_title?: string;
   canonical_url?: string; // for federated posts (via activity pub)
 };

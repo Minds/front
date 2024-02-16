@@ -233,7 +233,7 @@ export class ActivityContentComponent
     return (
       this.entity.site_membership &&
       !this.entity.site_membership_unlocked &&
-      this.entity.paywall_thumbnail
+      !!this.entity.paywall_thumbnail
     );
   }
 
