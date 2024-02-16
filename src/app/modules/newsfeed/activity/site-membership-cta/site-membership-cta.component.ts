@@ -39,16 +39,21 @@ export class ActivitySiteMembershipCtaComponent
   }
 
   ngAfterViewInit(): void {
+    this.calculateThumbnailHeight();
     setTimeout(() => {
-      const componentWidth = this.thumbnailImgEl.nativeElement.clientWidth;
-      if (this.entity.paywall_thumbnail) {
-        const originalHeight = this.entity.paywall_thumbnail.height || 10;
-        const originalWidth = this.entity.paywall_thumbnail.width || 10;
-
-        const aspectRatio = originalHeight / originalWidth;
-        this.thumbnailHeightPx = componentWidth * aspectRatio;
-      }
+      this.calculateThumbnailHeight();
     });
+  }
+
+  calculateThumbnailHeight() {
+    const componentWidth = this.thumbnailImgEl.nativeElement.clientWidth;
+    if (this.entity.paywall_thumbnail) {
+      const originalHeight = this.entity.paywall_thumbnail.height || 10;
+      const originalWidth = this.entity.paywall_thumbnail.width || 10;
+
+      const aspectRatio = originalHeight / originalWidth;
+      this.thumbnailHeightPx = componentWidth * aspectRatio;
+    }
   }
 
   async onClick(e: MouseEvent): Promise<void> {
