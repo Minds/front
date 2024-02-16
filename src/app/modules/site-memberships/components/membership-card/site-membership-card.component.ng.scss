@@ -1,0 +1,56 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  min-width: 236px;
+  padding: $spacing5 $spacing4;
+  box-sizing: border-box;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-siteMembershipCard__content {
+    max-width: 200px;
+    text-align: center;
+
+    @media screen and (max-width: $max-mobile) {
+      max-width: 100%;
+    }
+
+    .m-siteMembershipCard__membershipName {
+      @include heading4Bold;
+      margin: 0 0 $spacing1 0;
+      word-break: break-word;
+    }
+
+    .m-siteMembershipCard__pricingPeriod {
+      @include body3Regular;
+      margin: 0 0 $spacing4 0;
+
+      strong {
+        @include body3Bold;
+      }
+    }
+
+    .m-siteMembershipCard__description {
+      @include body3Regular;
+      margin: 0 0 $spacing1 0;
+      margin-bottom: $spacing20;
+      word-break: break-word;
+    }
+
+    .m-siteMembershipCard__footer {
+      position: absolute;
+      bottom: $spacing6;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+}

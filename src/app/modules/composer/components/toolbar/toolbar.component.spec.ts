@@ -18,6 +18,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
+import { ApolloTestingModule } from 'apollo-angular/testing';
+import { By } from '@angular/platform-browser';
+import { IfTenantDirective } from '../../../../common/directives/if-tenant.directive';
+import { IsTenantService } from '../../../../common/services/is-tenant.service';
+import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -44,10 +49,17 @@ describe('Composer Toolbar', () => {
   });
 
   const size$ = new BehaviorSubject<ComposerSize>('full');
-
   const remind$ = new BehaviorSubject(null);
-
   const canCreateSupermindRequest$ = new BehaviorSubject(true);
+  const isGroupPost$ = new BehaviorSubject<boolean>(false);
+  const canPost$ = new BehaviorSubject<boolean>(true);
+  const inProgress$ = new BehaviorSubject<boolean>(false);
+  const isPosting$ = new BehaviorSubject<boolean>(false);
+  const siteMembershipGuids$ = new BehaviorSubject(null);
+  const postButtonDisabled$ = new BehaviorSubject<boolean>(false);
+  const nextButtonDisabled$ = new BehaviorSubject<boolean>(false);
+
+  const siteMembershipCount$ = new BehaviorSubject<number>(0);
 
   const composerServiceMock: any = MockService(ComposerService, {
     has: [
@@ -62,6 +74,13 @@ describe('Composer Toolbar', () => {
       'supermindRequest$',
       'isSupermindReply$',
       'supermindReply$',
+      'isGroupPost$',
+      'canPost$',
+      'inProgress$',
+      'isPosting$',
+      'siteMembershipGuids$',
+      'postButtonDisabled$',
+      'nextButtonDisabled$',
     ],
     props: {
       attachment$: { get: () => attachment$ },
@@ -75,6 +94,13 @@ describe('Composer Toolbar', () => {
       supermindRequest$: { get: () => canCreateSupermindRequest$ },
       isSupermindReply$: { get: () => canCreateSupermindRequest$ },
       supermindReply$: { get: () => canCreateSupermindRequest$ },
+      isGroupPost$: { get: () => isGroupPost$ },
+      canPost$: { get: () => canPost$ },
+      inProgress$: { get: () => inProgress$ },
+      isPosting$: { get: () => isPosting$ },
+      siteMembershipGuids$: { get: () => siteMembershipGuids$ },
+      postButtonDisabled$: { get: () => postButtonDisabled$ },
+      nextButtonDisabled$: { get: () => nextButtonDisabled$ },
     },
   });
 
@@ -86,6 +112,8 @@ describe('Composer Toolbar', () => {
   });
 
   let uploaderServiceMock;
+  let isTenantServiceMock: any;
+  let permissionsServiceMock: any;
 
   beforeEach(
     waitForAsync(() => {
@@ -99,8 +127,14 @@ describe('Composer Toolbar', () => {
         }
       );
 
+      isTenantServiceMock = jasmine.createSpyObj('IsTenantService', ['is']);
+
+      permissionsServiceMock = jasmine.createSpyObj('PermissionsService', [
+        'canCreatePaywall',
+      ]);
+
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
+        imports: [HttpClientTestingModule, ApolloTestingModule],
 
         declarations: [
           ToolbarComponent,
@@ -149,7 +183,7 @@ describe('Composer Toolbar', () => {
           },
           {
             provide: PermissionsService,
-            useValue: MockService(PermissionsService),
+            useValue: permissionsServiceMock,
           },
           {
             provide: PermissionsService,
@@ -158,6 +192,22 @@ describe('Composer Toolbar', () => {
           {
             provide: NsfwEnabledService,
             useValue: MockService(NsfwEnabledService),
+          },
+          { provide: IsTenantService, useValue: isTenantServiceMock },
+          {
+            provide: IfTenantDirective,
+            useValue: MockService(IfTenantDirective),
+          },
+          {
+            provide: SiteMembershipsCountService,
+            useValue: MockService(SiteMembershipsCountService, {
+              has: ['count$'],
+              props: {
+                count$: {
+                  get: () => siteMembershipCount$,
+                },
+              },
+            }),
           },
         ],
       }).compileComponents();
@@ -252,5 +302,53 @@ describe('Composer Toolbar', () => {
       ComposerSupermindComponent
     );
     expect(popupServiceMock.present).toHaveBeenCalled();
+  });
+
+  it('should show the post button when no siteMembershipGuids', () => {
+    composerServiceMock.siteMembershipGuids$.next(null);
+    fixture.detectChanges();
+
+    const postButton = fixture.debugElement.query(
+      By.css('[data-ref=post-button]')
+    );
+    const nextButton = fixture.debugElement.query(
+      By.css('[data-ref=composer-next-button]')
+    );
+
+    expect(postButton).toBeTruthy();
+    expect(nextButton).toBeFalsy();
+  });
+
+  it('should show the next button when siteMembershipGuids has value', () => {
+    composerServiceMock.siteMembershipGuids$.next(['123']);
+    fixture.detectChanges();
+
+    const nextButton = fixture.debugElement.query(
+      By.css('[data-ref=composer-next-button]')
+    );
+    expect(nextButton).toBeTruthy();
+  });
+
+  it('should not display the monetization button on tenant sites', () => {
+    isTenantServiceMock.is.and.returnValue(true);
+    fixture.detectChanges();
+
+    const monetizationButton = fixture.debugElement.query(
+      By.css('[data-ref=monetize-button]')
+    );
+
+    expect(monetizationButton).toBeFalsy();
+  });
+
+  it('should not display the site membership button when not a tenant site', () => {
+    isTenantServiceMock.is.and.returnValue(false);
+
+    fixture.detectChanges();
+
+    const membershipButton = fixture.debugElement.query(
+      By.css('[data-ref=site-membership-button]')
+    );
+
+    expect(membershipButton).toBeFalsy();
   });
 });

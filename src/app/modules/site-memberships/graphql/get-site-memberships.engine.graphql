@@ -1,0 +1,9 @@
+query GetSiteMembershipSubscriptions {
+  siteMembershipSubscriptions {
+    membershipGuid
+    membershipSubscriptionId
+    autoRenew
+    validFromTimestamp
+    validToTimestamp
+  }
+}

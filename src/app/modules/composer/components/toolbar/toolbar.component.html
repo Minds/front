@@ -90,6 +90,37 @@
     </a>
   </ng-container>
   <!----------------------------------------------->
+  <!-- SITE MEMBERSHIP POST  -->
+  <!----------------------------------------------->
+  <ng-container *mIfTenant="true">
+    <ng-container
+      *ngIf="
+        permissions.canCreatePaywall() &&
+        (shouldShowSiteMemberships$ | async) &&
+        !(remind$ | async)
+      "
+    >
+      <a
+        class="m-composerToolbar__item"
+        [class.m-composerToolbar__item--active]="
+          (service.siteMembershipGuids$ | async)?.length > 0
+        "
+        [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+        [class.m-composerToolbar__item--small]="isCompactMode$ | async"
+        (click)="onSiteMembershipClick($event)"
+        data-ref="site-membership-button"
+      >
+        <m-icon class="m-composerToolbarItem__icon" iconId="verified"></m-icon>
+        <span
+          class="m-composerToolbarItem__label"
+          [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+          i18n="@@COMMON__MEMBERSHIP"
+          >Membership</span
+        >
+      </a>
+    </ng-container>
+  </ng-container>
+  <!----------------------------------------------->
   <!-- TAGS  -->
   <!----------------------------------------------->
 
@@ -156,35 +187,52 @@
   <!-- POST  -->
   <!----------------------------------------------->
   <span class="m-composerToolbar__itemSpacer"></span>
-  <m-button
-    class="m-composerToolbar__action m-composerToolbar__action--post"
-    [disabled]="
-      !(canPost$ | async) || (inProgress$ | async) || (isPosting$ | async)
-    "
-    [saving]="(inProgress$ | async) || (isPosting$ | async)"
-    [dropdown]="postButtonDropdown"
-    [dropdownAnchorPosition]="{ top: '100%', right: '0' }"
-    [showDropdownMenu]="canSchedule$ | async"
-    (onAction)="onPost($event)"
-    [size]="(isCompactMode$ | async) ? 'xsmall' : 'small'"
-    [color]="(isCompactMode$ | async) ? 'grey' : 'blue'"
-    data-ref="post-button"
-  >
-    <span
-      *ngIf="!(isEditing$ | async); else isEditingButtonText"
-      i18n="verb|@@COMMON__POST"
-      >Post</span
+  <ng-container *ngIf="!(siteMembershipGuids$ | async); else nextButton">
+    <m-button
+      class="m-composerToolbar__action m-composerToolbar__action--post"
+      [disabled]="postButtonDisabled"
+      [saving]="(inProgress$ | async) || (isPosting$ | async)"
+      [dropdown]="postButtonDropdown"
+      [dropdownAnchorPosition]="{ top: '100%', right: '0' }"
+      [showDropdownMenu]="canSchedule$ | async"
+      (onAction)="onPost($event)"
+      [size]="(isCompactMode$ | async) ? 'xsmall' : 'small'"
+      [color]="(isCompactMode$ | async) ? 'grey' : 'blue'"
+      data-ref="post-button"
     >
-    <ng-template #isEditingButtonText
-      ><span i18n="@@COMMON__SAVE">Save</span></ng-template
+      <span
+        *ngIf="!(isEditing$ | async); else isEditingButtonText"
+        i18n="verb|@@COMMON__POST"
+        >Post</span
+      >
+      <ng-template #isEditingButtonText
+        ><span i18n="@@COMMON__SAVE">Save</span></ng-template
+      >
+      <span
+        class="m-composerToolbarAction__disabledOverlay"
+        *ngIf="postButtonDisabled"
+      ></span>
+    </m-button>
+  </ng-container>
+  <!----------------------------------------------->
+  <!-- NEXT  -->
+  <!----------------------------------------------->
+  <ng-template #nextButton>
+    <m-button
+      class="m-composerToolbar__action m-composerToolbar__action--post"
+      [disabled]="service.nextButtonDisabled$ | async"
+      [saving]="inProgress$ | async"
+      [dropdown]="postButtonDropdown"
+      [dropdownAnchorPosition]="{ top: '100%', right: '0' }"
+      [showDropdownMenu]="canSchedule$ | async"
+      (onAction)="onClickNext()"
+      [size]="(isCompactMode$ | async) ? 'xsmall' : 'small'"
+      [color]="(isCompactMode$ | async) ? 'grey' : 'blue'"
+      data-ref="composer-next-button"
     >
-    <span
-      class="m-composerToolbarAction__disabledOverlay"
-      *ngIf="
-        !(canPost$ | async) || (inProgress$ | async) || (isPosting$ | async)
-      "
-    ></span>
-  </m-button>
+      <span i18n="@@COMMON__NEXT">Next</span>
+    </m-button>
+  </ng-template>
 </div>
 
 <ng-template #postButtonDropdown>

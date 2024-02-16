@@ -25,16 +25,13 @@ describe('Composer Text Area', () => {
     getValue: '',
   });
 
-  const hasAttachments$ = jasmine.createSpyObj('hasAttachments$', {
-    getValue: '',
-  });
-
   const composerServiceMock: any = MockService(ComposerService, {
-    has: ['message$', 'title$', 'data$'],
+    has: ['message$', 'title$', 'data$', 'attachmentPreviews$'],
     props: {
       message$: { get: () => message$ },
       title$: { get: () => title$ },
       data$: { get: () => new Subject() },
+      attachmentPreviews$: { get: () => null },
     },
   });
 

@@ -121,6 +121,14 @@ export type ActivityEntity = {
   goal_button_text: BoostGoalButtonText; // may be exported if activity is a boost
   goal_button_url: string; // may be exported if activity is a boost
   auto_caption?: string; // AI generated captions for images
+  site_membership?: boolean; // The post has a membership attached
+  site_membership_unlocked?: boolean; // The post can be viewed with no restrictions. False will show the cta.
+  paywall_thumbnail?: {
+    width: number;
+    height: number;
+    blurhash: string;
+  };
+  link_title?: string;
   canonical_url?: string; // for federated posts (via activity pub)
 };
 

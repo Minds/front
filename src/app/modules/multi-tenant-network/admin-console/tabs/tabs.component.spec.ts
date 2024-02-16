@@ -53,39 +53,42 @@ describe('NetworkAdminConsoleTabsComponent', () => {
       permissionsServiceMock.canModerateContent.and.returnValue(false);
     });
 
-    it('should display all tabs for admin', () => {
-      const tabs = [
+    it('should display tabs for admin without canModerateContent permission', () => {
+      const tabsToShow = [
         'general',
         'domain',
         'invite',
         'appearance',
         'roles',
         'moderation',
+        'monetization',
         'mobile',
       ];
-      tabs.forEach(tab =>
+      tabsToShow.forEach(tab =>
         testTabVisibility(`network-admin-console-tab-${tab}`, true)
       );
     });
   });
 
-  it('should have a monetization tab', () => {
-    expect(
-      fixture.debugElement.query(
-        By.css('[data-ref=network-admin-console-tab-monetization]')
-      )
-    );
-  });
+  describe('Tab visibility for non-admin user with canModerateContent permission', () => {
+    it('should have a monetization tab', () => {
+      expect(
+        fixture.debugElement.query(
+          By.css('[data-ref=network-admin-console-tab-monetization]')
+        )
+      );
+    });
 
-  it('should have a mobile tab', () => {
-    sessionMock.isAdmin.and.returnValue(true);
-    fixture.detectChanges();
+    it('should have a mobile tab', () => {
+      sessionMock.isAdmin.and.returnValue(true);
+      fixture.detectChanges();
 
-    expect(
-      fixture.debugElement.query(
-        By.css('[data-ref=network-admin-console-tab-mobile]')
-      )
-    ).toBeTruthy();
+      expect(
+        fixture.debugElement.query(
+          By.css('[data-ref=network-admin-console-tab-mobile]')
+        )
+      ).toBeTruthy();
+    });
   });
 
   describe('Tab visibility for user with canModerateContent permission', () => {
@@ -94,24 +97,17 @@ describe('NetworkAdminConsoleTabsComponent', () => {
       permissionsServiceMock.canModerateContent.and.returnValue(true);
     });
 
-    it('should have a moderation tab', () => {
-      expect(
-        fixture.debugElement.query(
-          By.css('[data-ref=network-admin-console-tab-moderation]')
-        )
-      ).toBeTruthy();
-    });
-
     it('should display only the moderation tab', () => {
-      const tabs = [
+      const tabsToNotShow = [
         'general',
         'domain',
         'invite',
         'appearance',
         'roles',
+        'monetization',
         'mobile',
       ];
-      tabs.forEach(tab =>
+      tabsToNotShow.forEach(tab =>
         testTabVisibility(`network-admin-console-tab-${tab}`, false)
       );
       testTabVisibility('network-admin-console-tab-moderation', true);

@@ -47,28 +47,26 @@ m-videoPlayer--scrollaware {
   @include m-theme() {
     background-color: themed($m-black-always);
   }
+}
 
-  i {
-    opacity: 0.8;
-    display: block;
-    text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 100px;
-    position: absolute;
-    cursor: pointer;
-    width: 100%;
-    transition: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    @include m-theme() {
-      color: themed($m-white-always);
-      text-shadow: 0 0 3px rgba(themed($m-black-always), 0.6);
-    }
+i.minds-video-play-icon {
+  opacity: 0.8;
+  display: block;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 100px;
+  position: absolute;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  @include m-theme() {
+    color: themed($m-white-always);
+    text-shadow: 0 0 3px rgba(themed($m-black-always), 0.6);
   }
 
   &:hover {
-    i {
-      opacity: 1;
-    }
+    opacity: 1;
   }
 }
 

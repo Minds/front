@@ -2,7 +2,10 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockService } from '../../../../utils/mock';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { AttachmentPreviewComponent } from './attachment-preview.component';
-import { ComposerService } from '../../services/composer.service';
+import {
+  ComposerService,
+  PaywallThumbnail,
+} from '../../services/composer.service';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../../common/api/api.service';
 import { AttachmentService } from '../../services/attachment.service';
@@ -62,17 +65,12 @@ describe('Composer Attachment Preview', () => {
           provide: DiscoveryTagsService,
           useValue: MockService(DiscoveryTagsService, {}),
         },
+        {
+          provide: ComposerService,
+          useValue: MockService(ComposerService, {}),
+        },
       ],
-    })
-      .overrideProvider(ComposerService, {
-        useValue: MockService(ComposerService, {
-          has: ['videoPoster$'],
-          props: {
-            videoPoster$: { get: () => new BehaviorSubject<VideoPoster>(null) },
-          },
-        }),
-      })
-      .compileComponents();
+    }).compileComponents();
 
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(AttachmentPreviewComponent);

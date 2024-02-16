@@ -1,0 +1,14 @@
+@import 'defaults.scss';
+
+:host {
+  display: inline-block;
+  cursor: default;
+  border-radius: 3px;
+  padding: $spacing1 $spacing2;
+  @include body3Bold;
+
+  @include m-theme() {
+    background-color: themed($m-blue);
+    color: themed($m-white);
+  }
+}

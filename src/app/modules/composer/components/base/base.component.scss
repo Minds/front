@@ -16,6 +16,10 @@ m-composer__base {
     height: 528px;
   }
 
+  &.m-composer__base--membershipPreviewPane {
+    height: auto;
+  }
+
   .m-composerBase__container {
     flex: 1;
     display: flex;
