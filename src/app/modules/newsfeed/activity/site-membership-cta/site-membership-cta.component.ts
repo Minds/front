@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   Component,
   ElementRef,
@@ -25,28 +26,28 @@ export class ActivitySiteMembershipCtaComponent
     return this.entity.custom_type === 'video';
   }
 
-  @ViewChild('thumbnailImgEl', { read: ElementRef })
-  thumbnailImgEl: ElementRef;
-
   constructor(
     private service: ActivityService,
     private siteMembershipService: SiteMembershipService,
-    private siteMembershipManagementService: SiteMembershipManagementService
+    private siteMembershipManagementService: SiteMembershipManagementService,
+    private el: ElementRef
   ) {}
 
   ngOnInit(): void {
-    this.service.entity$.subscribe(entity => (this.entity = entity));
+    this.service.entity$.subscribe(entity => {
+      this.entity = entity;
+      this.calculateThumbnailHeight();
+    });
   }
 
   ngAfterViewInit(): void {
-    this.calculateThumbnailHeight();
     setTimeout(() => {
       this.calculateThumbnailHeight();
     });
   }
 
   calculateThumbnailHeight() {
-    const componentWidth = this.thumbnailImgEl.nativeElement.clientWidth;
+    const componentWidth = this.el.nativeElement.clientWidth;
     if (this.entity.paywall_thumbnail) {
       const originalHeight = this.entity.paywall_thumbnail.height || 10;
       const originalWidth = this.entity.paywall_thumbnail.width || 10;
