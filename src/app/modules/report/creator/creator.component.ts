@@ -17,6 +17,7 @@ import {
 } from './services/graphql-report-creator.service';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 import { Router } from '@angular/router';
+import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens';
 
 /**
  * Modal for creating reports of content policy violations
@@ -68,7 +69,7 @@ export class ReportCreatorComponent implements AfterViewInit {
     private reportService: ReportService,
     private plusTierUrn: PlusTierUrnService,
     private graphQLReportCreatorService: GraphQLReportCreatorService,
-    private router: Router,
+    @Inject(WINDOW) private window: Window,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {}
 
@@ -238,7 +239,8 @@ export class ReportCreatorComponent implements AfterViewInit {
    * @returns { void }
    */
   public openDmcaLink(): void {
-    this.router.navigateByUrl('/p/dmca');
+    this.window.open('/p/dmca', '_blank');
+    this.close();
   }
 
   /**

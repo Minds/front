@@ -32,6 +32,7 @@ import {
 } from '../../../../graphql/generated.engine';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens';
 
 /* tslint:disable */
 @Directive({
@@ -93,8 +94,10 @@ describe('ReportCreatorComponent', () => {
             useValue: isTenantNetwork,
           },
           {
-            provide: Router,
-            useValue: MockService(Router),
+            provide: WINDOW,
+            useValue: {
+              open: jasmine.createSpy('open'),
+            },
           },
         ],
       }).compileComponents(); // compile template and css
@@ -331,7 +334,8 @@ describe('ReportCreatorComponent', () => {
     });
     next.nativeElement.click();
 
-    expect((comp as any).router.navigateByUrl).toHaveBeenCalledWith('/p/dmca');
+    expect((comp as any).window.open).toHaveBeenCalledWith('/p/dmca', '_blank');
+    expect((comp as any).modalService.dismissAll).toHaveBeenCalled();
   });
 
   it('admins should see next button for copyright', () => {
