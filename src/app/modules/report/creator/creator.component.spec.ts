@@ -31,7 +31,6 @@ import {
   ReportReasonEnum,
 } from '../../../../graphql/generated.engine';
 import { of } from 'rxjs';
-import { Router } from '@angular/router';
 import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens';
 
 /* tslint:disable */

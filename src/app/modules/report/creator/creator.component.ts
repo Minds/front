@@ -16,7 +16,6 @@ import {
   GraphQLReportCreatorService,
 } from './services/graphql-report-creator.service';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
-import { Router } from '@angular/router';
 import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens';
 
 /**
