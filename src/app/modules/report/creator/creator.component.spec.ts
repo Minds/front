@@ -31,6 +31,7 @@ import {
   ReportReasonEnum,
 } from '../../../../graphql/generated.engine';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 /* tslint:disable */
 @Directive({
@@ -90,6 +91,10 @@ describe('ReportCreatorComponent', () => {
           {
             provide: IS_TENANT_NETWORK,
             useValue: isTenantNetwork,
+          },
+          {
+            provide: Router,
+            useValue: MockService(Router),
           },
         ],
       }).compileComponents(); // compile template and css
@@ -326,10 +331,7 @@ describe('ReportCreatorComponent', () => {
     });
     next.nativeElement.click();
 
-    expect(window.open).toHaveBeenCalledWith(
-      'https://support.minds.com/hc/en-us/requests/new?ticket_form_id=360003221852',
-      '_blank'
-    );
+    expect((comp as any).router.navigateByUrl).toHaveBeenCalledWith('/p/dmca');
   });
 
   it('admins should see next button for copyright', () => {
