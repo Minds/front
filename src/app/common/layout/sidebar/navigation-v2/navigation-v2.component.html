@@ -245,7 +245,11 @@
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
         >
           <a
-            [routerLink]="getTenantAdminRouterLink()"
+            [routerLink]="
+              this.user?.is_admin
+                ? ['/network/admin']
+                : ['/network/admin/moderation/reports']
+            "
             (click)="toggle()"
             data-ref="sidenav-network-admin"
           >

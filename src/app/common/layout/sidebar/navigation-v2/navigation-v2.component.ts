@@ -195,16 +195,8 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   public showTenantAdminLink(): boolean {
     return (
       this.isTenantNetwork &&
-      (this.isAdmin() || this.permissions.canModerateContent())
+      (this.user?.is_admin || this.permissions.canModerateContent())
     );
-  }
-
-  public getTenantAdminRouterLink(): string[] {
-    if (this.isAdmin()) {
-      return ['/network/admin'];
-    } else {
-      return ['/network/admin/moderation/reports'];
-    }
   }
 
   /**
