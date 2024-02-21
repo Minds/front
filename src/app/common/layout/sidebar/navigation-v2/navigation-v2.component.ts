@@ -273,7 +273,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    * @returns { boolean } true if link should be '/'.
    */
   public shouldBeDiscoveryHomepage(): boolean {
-    return !this.user; // logged out
+    return !this.user && this.isTenantNetwork; // logged out tenants
   }
 
   /**
