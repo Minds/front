@@ -67,13 +67,6 @@ export class NetworkAdminConsoleInviteLinkComponent
 
   ngOnInit(): void {
     this.fetchMemberships();
-
-    this.subscriptions.push(
-      this.form.get('linkType').valueChanges.subscribe(value => {
-        this.showDefaultLink = value === TenantInviteLinkType.DEFAULT;
-        this.showMembershipLinks = value === TenantInviteLinkType.MEMBERSHIP;
-      })
-    );
   }
 
   /**
@@ -109,6 +102,13 @@ export class NetworkAdminConsoleInviteLinkComponent
     this.form = this.fb.group({
       linkType: [TenantInviteLinkType.DEFAULT],
     });
+
+    this.subscriptions.push(
+      this.form.get('linkType').valueChanges.subscribe(value => {
+        this.showDefaultLink = value === TenantInviteLinkType.DEFAULT;
+        this.showMembershipLinks = value === TenantInviteLinkType.MEMBERSHIP;
+      })
+    );
   }
 
   getUrlToCopy(membership?: SiteMembership) {
