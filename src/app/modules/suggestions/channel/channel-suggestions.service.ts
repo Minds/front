@@ -1,7 +1,7 @@
-import { ApiResponse, ApiService } from './../../../common/api/api.service';
+import { ApiService } from './../../../common/api/api.service';
 import { RecentSubscriptionsService } from './../../../common/services/recent-subscriptions.service';
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
 import { isPlatformServer } from '@angular/common';
@@ -96,6 +96,48 @@ export class SuggestionsService {
         this.hasMoreData$.next(false);
       } else {
         this.hasMoreData$.next(suggestions.length >= opts.limit);
+      }
+    } catch (err) {
+      this.error$.next(err.message);
+    } finally {
+      this.inProgress$.next(false);
+    }
+  }
+
+  async loadForTenant(opts: {
+    limit?: number;
+    refresh: boolean;
+    type: 'user' | 'group';
+  }): Promise<void> {
+    this.error$.next(null);
+    this.inProgress$.next(true);
+
+    if (isPlatformServer(this.platformId)) {
+      this.inProgress$.next(false);
+      return;
+    }
+
+    try {
+      const requestData = {};
+
+      if (opts.limit) {
+        requestData['limit'] = opts.limit;
+      }
+
+      const response = await firstValueFrom(
+        this.api.get(`api/v3/multi-tenant/lists/${opts.type}`, requestData)
+      );
+
+      const suggestions = response.data.filter(
+        entity => !this.storage.get(`suggestion:${entity.entity_guid}:removed`)
+      );
+
+      this.suggestions$.next([...this.suggestions$.getValue(), ...suggestions]);
+
+      if (opts.limit) {
+        this.hasMoreData$.next(suggestions.length >= opts.limit);
+      } else {
+        this.hasMoreData$.next(false);
       }
     } catch (err) {
       this.error$.next(err.message);

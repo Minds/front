@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -8,10 +8,10 @@ import { DiscoveryService } from '../discovery.service';
 import { Location } from '@angular/common';
 import { Session } from '../../../services/session';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
-import { IsTenantService } from '../../../common/services/is-tenant.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * List of suggested groups or users.
@@ -26,6 +26,7 @@ import { PermissionsService } from '../../../common/services/permissions.service
 export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
   implements OnInit, OnDestroy {
   type: string = 'user';
+  contextualUser: string;
   /**
    * Whether the tabs should be hidden
    */
@@ -55,7 +56,7 @@ export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
     private session: Session,
     private authModal: AuthModalService,
     private router: Router,
-    protected isTenant: IsTenantService,
+    @Inject(IS_TENANT_NETWORK) private isTenantNetwork: boolean,
     private toaster: ToasterService,
     protected permissions: PermissionsService,
     configs: ConfigsService
@@ -81,39 +82,50 @@ export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
     this.subscriptions.push(
       combineLatest([this.route.queryParamMap, this.route.url]).subscribe(
         ([queryParamMap, segments]) => {
-          const contextualUser = queryParamMap.get('u');
+          this.contextualUser = queryParamMap.get('u');
           this.type = segments[0].path;
           // hide tabs to only show user recommendations for the contextual user
-          this.hideTabs = Boolean(contextualUser);
+          this.hideTabs = Boolean(this.contextualUser);
 
           this.exploreTabContext = Boolean(queryParamMap.get('explore'));
 
-          this.service.load({
-            limit: this.limit,
-            refresh: true,
-            type: this.type,
-            user: contextualUser,
-          });
+          this.loadSuggestions(true);
         }
       )
     );
   }
 
+  private loadSuggestions(refresh: boolean = true): void {
+    if (this.isTenantNetwork) {
+      this.service.loadForTenant({
+        refresh: refresh,
+        type: this.type === 'user' ? 'user' : 'group',
+      });
+    } else {
+      this.service.load({
+        limit: this.limit,
+        refresh: refresh,
+        type: this.type,
+        user: refresh ? this.contextualUser : null,
+      });
+    }
+  }
+
   loadMore(): void {
-    if (this.inProgress$.value) return;
-    if (!this.hasMoreData$.value) return;
-    this.service.load({
-      limit: this.limit,
-      refresh: false,
-      type: this.type,
-    });
+    if (this.inProgress$.value) {
+      return;
+    }
+    if (!this.hasMoreData$.value) {
+      return;
+    }
+    this.loadSuggestions(false);
   }
 
   /**
    * Copy invite link to clipboard
    */
   protected copyInviteLinkToClipboard(): void {
-    const url = this.isTenant.is()
+    const url = this.isTenantNetwork
       ? this.siteUrl
       : `${this.siteUrl}?referrer=${this.session.getLoggedInUser().username}`;
 
