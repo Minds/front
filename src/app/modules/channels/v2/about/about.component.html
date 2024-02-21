@@ -21,23 +21,6 @@
       </div>
 
       <div
-        *ngIf="channel?.tags?.length"
-        class="m-channelAbout__field m-channelAbout__field--fullWidth m-channelAbout__field--hideOnNarrow"
-      >
-        <div class="m-channelAboutField__label">
-          <ng-container i18n="@@COMMON__HASHTAGS">Hashtags</ng-container>
-        </div>
-        <div class="m-channelAboutField__content" ngPreserveWhitespaces>
-          <ng-container *ngFor="let tag of channel.tags">
-            <span
-              [innerHTML]="'#' + tag | tags"
-              class="m-channelAboutFieldContent__hashtag"
-            ></span>
-          </ng-container>
-        </div>
-      </div>
-
-      <div
         *ngIf="channel?.social_profiles?.length; else addLinks"
         class="m-channelAbout__field m-channelAbout__field--fullWidth"
       >
