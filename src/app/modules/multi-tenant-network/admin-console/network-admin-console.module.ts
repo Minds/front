@@ -32,13 +32,14 @@ import { RoleAggregatorComponent } from './components/role-aggregator/role-aggre
 import { NetworkAdminConsoleImageInputComponent } from './components/image-uploader/image-input.component';
 import { NetworkAdminConsoleReplyEmailSettingsComponent } from './tabs/general/reply-email-settings/reply-email-settings.component';
 import { AssignRolesModalComponent } from './tabs/roles/tabs/users/assign-roles-modal/assign-roles-modal.component';
-import { NetworkAdminConsoleRoleIconComponent } from './components/role-icon/role-icon.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { CustomPageFormContentPreviewModalComponent } from './components/custom-page-form/content-preview-modal/content-preview-modal.component';
 import { CanModerateContentGuard } from './guards/can-moderate-content.guard';
 import { GroupAggregatorComponent } from './components/group-aggregator/group-aggregator.component';
 import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
 import { NetworkAdminConsoleInviteLinkComponent } from './tabs/invite/tabs/link/link.component';
+import { SiteMembershipCardComponent } from '../../site-memberships/components/membership-card/site-membership-card.component';
+import { CopyToClipboardButtonComponent } from '../../../common/standalone/copy-to-clipboard-button/copy-to-clipboard-button.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -124,6 +125,8 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     RouterModule.forChild(NETWORK_ADMIN_CONSOLE_ROUTES),
     NetworkAdminConsoleImageInputComponent,
     MarkdownModule.forChild(),
+    SiteMembershipCardComponent,
+    CopyToClipboardButtonComponent,
   ],
   declarations: [
     NetworkAdminConsoleComponent,

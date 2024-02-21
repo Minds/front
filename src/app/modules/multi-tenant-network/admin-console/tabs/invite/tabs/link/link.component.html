@@ -35,22 +35,14 @@
           </div>
         </div>
         <div *ngIf="showDefaultLink">
-          <m-button
-            solid="true"
+          <m-copyToClipboardButton
+            [contentToCopy]="getUrlToCopy()"
+            buttonText="Copy invite link"
+            [successMessage]="getCopySuccessMessage()"
+            [solid]="true"
             size="small"
-            class="m-networkAdminConsoleInviteLink__copyLinkButton"
-            (onAction)="copyUrlToClipboard()"
-            data-ref="m-networkAdminConsoleInviteLink__copyLinkButton"
-          >
-            <i
-              class="material-icons m-networkAdminConsoleInviteLinkCopyLinkButton__icon"
-              >content_copy</i
-            >
-            <ng-container
-              i18n="@@NETWORK_ADMIN_CONSOLE_INVITE_LINK__COPY_INVITE_LINK"
-              >Copy invite link</ng-container
-            >
-          </m-button>
+            data-ref="m-networkAdminConsoleInviteLink__copyNetworkLinkButton"
+          ></m-copyToClipboardButton>
         </div>
       </div>
       <!-- --------------------------------- -->
@@ -88,8 +80,28 @@
             >
           </div>
         </div>
-        <div *ngIf="showMembershipLinks">
-          memberships
+        <div
+          class="m-networkAdminConsoleInviteLink__membershipCardsContainer"
+          *ngIf="showMembershipLinks"
+        >
+          <m-siteMembershipCard
+            *ngFor="let membership of memberships"
+            [name]="membership.membershipName"
+            [description]="membership.membershipDescription"
+            [priceInCents]="membership.membershipPriceInCents"
+            [priceCurrencyCode]="membership.membershipPriceCurrency"
+            [billingPeriod]="membership.membershipBillingPeriod"
+            [pricingModel]="membership.membershipPricingModel"
+          >
+            <m-copyToClipboardButton
+              [contentToCopy]="getUrlToCopy(membership)"
+              buttonText="Copy invite link"
+              [successMessage]="getCopySuccessMessage(membership)"
+              color="blue"
+              size="small"
+              data-ref="m-networkAdminConsoleInviteLink__copyMembershipButton"
+            ></m-copyToClipboardButton>
+          </m-siteMembershipCard>
         </div>
       </div>
     </form>

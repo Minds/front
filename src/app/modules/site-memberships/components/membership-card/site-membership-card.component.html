@@ -32,48 +32,7 @@
   <p class="m-siteMembershipCard__description">{{ description }}</p>
 
   <div class="m-siteMembershipCard__footer">
-    <ng-container *ngIf="!isMember; else managePlanButtonTemplate">
-      <m-button
-        class="m-siteMembershipCard__actionButton"
-        color="blue"
-        solid="true"
-        size="xsmall"
-        [disabled]="inProgress"
-        [saving]="inProgress"
-        (onAction)="joinMembershipClickEmitter.emit(membership)"
-        ><ng-container i18n="@@MEMBERSHIP_CARD__JOIN_MEMBERSHIP"
-          >Join membership</ng-container
-        ></m-button
-      >
-    </ng-container>
-    <ng-template #managePlanButtonTemplate>
-      <ng-container [ngSwitch]="pricingModel">
-        <m-button
-          *ngSwitchCase="SiteMembershipPricingModelEnum.Recurring"
-          class="m-siteMembershipCard__actionButton"
-          color="blue"
-          size="xsmall"
-          [solid]="false"
-          [disabled]="inProgress"
-          [saving]="inProgress"
-          (onAction)="managePlanClickEmitter.emit(membership)"
-        >
-          <ng-container i18n="@@MEMBERSHIP_CARD__MANAGER_PLAN"
-            >Manage plan</ng-container
-          ></m-button
-        >
-        <m-button
-          *ngSwitchDefault
-          class="m-siteMembershipCard__actionButton"
-          color="blue"
-          size="xsmall"
-          [solid]="false"
-          [disabled]="true"
-          ><ng-container i18n="@@MEMBERSHIP_CARD__PURCHASED"
-            >Purchased</ng-container
-          ></m-button
-        >
-      </ng-container>
-    </ng-template>
+    <!-- PROJECTED CONTENT/BUTTONS GO HERE -->
+    <ng-content></ng-content>
   </div>
 </div>

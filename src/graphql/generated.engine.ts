@@ -1437,6 +1437,7 @@ export enum SecuritySubReasonEnum {
 
 export type SiteMembership = {
   __typename?: 'SiteMembership';
+  archived?: Maybe<Scalars['Boolean']['output']>;
   groups?: Maybe<Array<GroupNode>>;
   id: Scalars['ID']['output'];
   membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
@@ -1860,57 +1861,6 @@ export type GetGiftCardsQuery = {
       endCursor?: string | null;
     };
   };
-};
-
-export type GetSiteMembershipsAndSubscriptionsQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetSiteMembershipsAndSubscriptionsQuery = {
-  __typename?: 'Query';
-  siteMemberships: Array<{
-    __typename?: 'SiteMembership';
-    id: string;
-    membershipGuid: string;
-    membershipName: string;
-    membershipDescription?: string | null;
-    membershipPriceInCents: number;
-    priceCurrency: string;
-    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
-    membershipPricingModel: SiteMembershipPricingModelEnum;
-    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
-    groups?: Array<{
-      __typename?: 'GroupNode';
-      guid: string;
-      name: string;
-      membersCount: number;
-      legacy: string;
-    }> | null;
-  }>;
-  siteMembershipSubscriptions: Array<{
-    __typename?: 'SiteMembershipSubscription';
-    membershipGuid: string;
-    membershipSubscriptionId: number;
-    autoRenew: boolean;
-    validFromTimestamp: number;
-    validToTimestamp?: number | null;
-  }>;
-};
-
-export type GetSiteMembershipSubscriptionsQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetSiteMembershipSubscriptionsQuery = {
-  __typename?: 'Query';
-  siteMembershipSubscriptions: Array<{
-    __typename?: 'SiteMembershipSubscription';
-    membershipGuid: string;
-    membershipSubscriptionId: number;
-    autoRenew: boolean;
-    validFromTimestamp: number;
-    validToTimestamp?: number | null;
-  }>;
 };
 
 export type GetFeaturedEntitiesQueryVariables = Exact<{
@@ -2381,6 +2331,7 @@ export type GetSiteMembershipQuery = {
     priceCurrency: string;
     membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
     membershipPricingModel: SiteMembershipPricingModelEnum;
+    archived?: boolean | null;
     roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
     groups?: Array<{
       __typename?: 'GroupNode';
@@ -4680,6 +4631,57 @@ export type RemoveRssFeedMutation = {
   removeRssFeed?: any | null;
 };
 
+export type GetSiteMembershipsAndSubscriptionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSiteMembershipsAndSubscriptionsQuery = {
+  __typename?: 'Query';
+  siteMemberships: Array<{
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipDescription?: string | null;
+    membershipPriceInCents: number;
+    priceCurrency: string;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      guid: string;
+      name: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  }>;
+  siteMembershipSubscriptions: Array<{
+    __typename?: 'SiteMembershipSubscription';
+    membershipGuid: string;
+    membershipSubscriptionId: number;
+    autoRenew: boolean;
+    validFromTimestamp: number;
+    validToTimestamp?: number | null;
+  }>;
+};
+
+export type GetSiteMembershipSubscriptionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSiteMembershipSubscriptionsQuery = {
+  __typename?: 'Query';
+  siteMembershipSubscriptions: Array<{
+    __typename?: 'SiteMembershipSubscription';
+    membershipGuid: string;
+    membershipSubscriptionId: number;
+    autoRenew: boolean;
+    validFromTimestamp: number;
+    validToTimestamp?: number | null;
+  }>;
+};
+
 export const PageInfoFragmentDoc = gql`
   fragment PageInfo on PageInfo {
     hasPreviousPage
@@ -5102,76 +5104,6 @@ export class GetGiftCardsGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const GetSiteMembershipsAndSubscriptionsDocument = gql`
-  query GetSiteMembershipsAndSubscriptions {
-    siteMemberships {
-      id
-      membershipGuid
-      membershipName
-      membershipDescription
-      membershipPriceInCents
-      priceCurrency
-      membershipBillingPeriod
-      membershipPricingModel
-      roles {
-        id
-        name
-      }
-      groups {
-        guid
-        name
-        membersCount
-        legacy
-      }
-    }
-    siteMembershipSubscriptions {
-      membershipGuid
-      membershipSubscriptionId
-      autoRenew
-      validFromTimestamp
-      validToTimestamp
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetSiteMembershipsAndSubscriptionsGQL extends Apollo.Query<
-  GetSiteMembershipsAndSubscriptionsQuery,
-  GetSiteMembershipsAndSubscriptionsQueryVariables
-> {
-  document = GetSiteMembershipsAndSubscriptionsDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const GetSiteMembershipSubscriptionsDocument = gql`
-  query GetSiteMembershipSubscriptions {
-    siteMembershipSubscriptions {
-      membershipGuid
-      membershipSubscriptionId
-      autoRenew
-      validFromTimestamp
-      validToTimestamp
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetSiteMembershipSubscriptionsGQL extends Apollo.Query<
-  GetSiteMembershipSubscriptionsQuery,
-  GetSiteMembershipSubscriptionsQueryVariables
-> {
-  document = GetSiteMembershipSubscriptionsDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
 export const GetFeaturedEntitiesDocument = gql`
   query GetFeaturedEntities(
     $type: FeaturedEntityTypeEnum!
@@ -5519,6 +5451,7 @@ export const GetSiteMembershipDocument = gql`
       priceCurrency
       membershipBillingPeriod
       membershipPricingModel
+      archived
       roles {
         id
         name
@@ -6882,6 +6815,76 @@ export class RemoveRssFeedGQL extends Apollo.Mutation<
   RemoveRssFeedMutationVariables
 > {
   document = RemoveRssFeedDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetSiteMembershipsAndSubscriptionsDocument = gql`
+  query GetSiteMembershipsAndSubscriptions {
+    siteMemberships {
+      id
+      membershipGuid
+      membershipName
+      membershipDescription
+      membershipPriceInCents
+      priceCurrency
+      membershipBillingPeriod
+      membershipPricingModel
+      roles {
+        id
+        name
+      }
+      groups {
+        guid
+        name
+        membersCount
+        legacy
+      }
+    }
+    siteMembershipSubscriptions {
+      membershipGuid
+      membershipSubscriptionId
+      autoRenew
+      validFromTimestamp
+      validToTimestamp
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetSiteMembershipsAndSubscriptionsGQL extends Apollo.Query<
+  GetSiteMembershipsAndSubscriptionsQuery,
+  GetSiteMembershipsAndSubscriptionsQueryVariables
+> {
+  document = GetSiteMembershipsAndSubscriptionsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetSiteMembershipSubscriptionsDocument = gql`
+  query GetSiteMembershipSubscriptions {
+    siteMembershipSubscriptions {
+      membershipGuid
+      membershipSubscriptionId
+      autoRenew
+      validFromTimestamp
+      validToTimestamp
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetSiteMembershipSubscriptionsGQL extends Apollo.Query<
+  GetSiteMembershipSubscriptionsQuery,
+  GetSiteMembershipSubscriptionsQueryVariables
+> {
+  document = GetSiteMembershipSubscriptionsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

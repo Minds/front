@@ -11,19 +11,17 @@
 
   .m-form__fieldsContainer {
     gap: $spacing6;
-
     margin-bottom: $spacing6;
   }
 
-  .m-networkAdminConsoleInviteLink__copyLinkButton {
-    margin-right: 0;
+  .m-networkAdminConsoleInviteLink__membershipCardsContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: $spacing9 $spacing15;
 
-    .m-networkAdminConsoleInviteLinkCopyLinkButton__icon {
-      font-size: 16px !important;
-      margin-right: $spacing2 !important;
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
+    m-siteMembershipCard {
+      flex: 1 0 26%;
     }
   }
 }

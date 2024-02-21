@@ -41,7 +41,7 @@ export class NetworkAdminConsoleInviteLinkComponent
     true
   );
 
-  subscriptions: Subscription[] = []; // ojm no need?
+  subscriptions: Subscription[] = [];
 
   /** Site memberships array. */
   public memberships: SiteMembership[] = [];
@@ -53,6 +53,9 @@ export class NetworkAdminConsoleInviteLinkComponent
 
   readonly siteUrl: string = '';
 
+  showDefaultLink: boolean = true;
+  showMembershipLinks: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private getSiteMembershipsGQL: GetSiteMembershipsGQL,
@@ -63,7 +66,14 @@ export class NetworkAdminConsoleInviteLinkComponent
   }
 
   ngOnInit(): void {
-    this.fetchMemberships(); // async.
+    this.fetchMemberships();
+
+    this.subscriptions.push(
+      this.form.get('linkType').valueChanges.subscribe(value => {
+        this.showDefaultLink = value === TenantInviteLinkType.DEFAULT;
+        this.showMembershipLinks = value === TenantInviteLinkType.MEMBERSHIP;
+      })
+    );
   }
 
   /**
@@ -72,8 +82,6 @@ export class NetworkAdminConsoleInviteLinkComponent
    */
   public async fetchMemberships(): Promise<void> {
     this.loading$.next(true);
-
-    console.log('ojm fetch mem');
 
     try {
       const response: ApolloQueryResult<GetSiteMembershipsQuery> = await lastValueFrom(
@@ -88,15 +96,12 @@ export class NetworkAdminConsoleInviteLinkComponent
       if (response?.data?.siteMemberships?.length) {
         this.memberships = response?.data?.siteMemberships as SiteMembership[];
       }
-
-      console.log('ojm', this.memberships);
     } catch (e) {
       console.error(e);
       this.toaster.error(e);
     } finally {
       this.setUpForm();
       this.loading$.next(false);
-      console.log('ojm not loading');
     }
   }
 
@@ -106,40 +111,23 @@ export class NetworkAdminConsoleInviteLinkComponent
     });
   }
 
-  // Copy different urls to clipboard depending on button clicked
-  copyUrlToClipboard(membership?: SiteMembership) {
-    let url;
+  getUrlToCopy(membership?: SiteMembership) {
     if (membership) {
-      url = `${this.siteUrl}/memberships/join/${membership.id}`;
+      return `${this.siteUrl}memberships/join/${membership.membershipGuid}`;
     } else {
-      url = this.siteUrl;
+      return this.siteUrl;
     }
-
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = url;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
-
-    this.toaster.success('Link copied to clipboard');
   }
 
-  get showDefaultLink(): boolean {
-    return this.form.get('linkType').value === TenantInviteLinkType.DEFAULT;
-  }
+  getCopySuccessMessage(membership?: SiteMembership) {
+    const successMessagePrefix = membership
+      ? membership.membershipName
+      : 'Network';
 
-  get showMembershipLinks(): boolean {
-    return this.form.get('linkType').value === TenantInviteLinkType.MEMBERSHIP;
+    return successMessagePrefix + ' link copied to clipboard';
   }
 
   ngOnDestroy(): void {
-    // ojm remove?
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
