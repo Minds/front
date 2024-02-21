@@ -66,6 +66,11 @@ export class ProductPagePricingService {
               return this.upgradesConfig.networks_enterprise.yearly.usd / 12;
             }
             return this.upgradesConfig.networks_enterprise.monthly.usd;
+          case ProductPlanTier.NetworksOnPrem:
+            if (timePeriod === ProductPageUpgradeTimePeriod.Annually) {
+              return this.upgradesConfig.networks_on_prem.yearly.usd / 12;
+            }
+            return this.upgradesConfig.networks_on_prem.monthly.usd;
         }
       })
     );
