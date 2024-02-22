@@ -122,6 +122,15 @@
     }
   }
 
+  .m-productPageFeatHighlight__footnotesContent {
+    display: block;
+    margin-top: $spacing3;
+
+    ::ng-deep p {
+      @include body2Regular;
+    }
+  }
+
   .m-productPageFeatHighlight__imageContainer {
     height: 100%;
     width: 50%;

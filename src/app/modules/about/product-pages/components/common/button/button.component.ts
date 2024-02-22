@@ -46,6 +46,9 @@ export class ProductPageButtonComponent {
   /** Enum for use in template. */
   public readonly ColorScheme: typeof ColorScheme = ColorScheme;
 
+  /** Whether an action is in progress. */
+  public inProgress: boolean = false;
+
   constructor(
     private session: Session,
     private router: Router,
@@ -57,7 +60,8 @@ export class ProductPageButtonComponent {
    * Handles button click events.
    * @returns { void }
    */
-  public onClick(): void {
+  public async onClick(): Promise<void> {
+    this.inProgress = true;
     // if there is a navigationUrl, navigate to it.
     if (Boolean(this.data.navigationUrl)) {
       if (this.data.navigationUrl.startsWith('http')) {
@@ -65,11 +69,13 @@ export class ProductPageButtonComponent {
       } else {
         this.router.navigateByUrl(this.data.navigationUrl);
       }
+      this.inProgress = false;
       return;
     }
     // else, if there is an action, handle it.
     if (!this.data.action) {
       console.error('Button clicked with no navigationUrl or action');
+      this.inProgress = false;
       return;
     }
 
@@ -93,7 +99,8 @@ export class ProductPageButtonComponent {
       extraData.stripeProductKey = this.data.stripeProductKey;
     }
 
-    this.strapiActionResolver.resolve(this.data.action, extraData);
+    await this.strapiActionResolver.resolve(this.data.action, extraData);
+    this.inProgress = false;
   }
 
   /**
@@ -101,6 +108,9 @@ export class ProductPageButtonComponent {
    * @returns { boolean } true if button should be disabled.
    */
   get disabled(): boolean {
+    if (this.inProgress) {
+      return true;
+    }
     switch (this.data.action) {
       case 'open_plus_upgrade_modal':
         return this.session.getLoggedInUser()?.plus;

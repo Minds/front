@@ -185,6 +185,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               action
               stripeProductKey
             }
+            footnotes
           }
           ... on ComponentV2ProductClosingCta {
             id

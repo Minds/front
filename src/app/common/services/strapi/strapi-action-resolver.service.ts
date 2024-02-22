@@ -10,6 +10,7 @@ import { WireCreatorComponent } from '../../../modules/wire/v2/creator/wire-crea
 import { ToasterService } from '../toaster.service';
 import { OnboardingV5Service } from '../../../modules/onboarding-v5/services/onboarding-v5.service';
 import { Subscription, filter, take } from 'rxjs';
+import { NetworksTrialCreationService } from '../../../modules/multi-tenant-network/services/networks-trial-creation.service';
 
 export const STRAPI_ACTION_BUTTON_ATTRIBUTES = `
   text
@@ -43,7 +44,8 @@ export type StrapiAction =
   | 'open_register_modal'
   | 'networks_team_checkout'
   | 'networks_community_checkout'
-  | 'networks_enterprise_checkout';
+  | 'networks_enterprise_checkout'
+  | 'networks_start_trial';
 
 // action button type.
 export type StrapiActionButton = {
@@ -62,6 +64,7 @@ const LOGGED_IN_ONLY_ACTIONS: StrapiAction[] = [
   'networks_team_checkout',
   'networks_community_checkout',
   'networks_enterprise_checkout',
+  'networks_start_trial',
 ];
 
 /**
@@ -80,6 +83,7 @@ export class StrapiActionResolverService implements OnDestroy {
     private modalService: ModalService,
     private wirePaymentHandlers: WirePaymentHandlersService,
     private onboardingV5Service: OnboardingV5Service,
+    private networksTrialCreationService: NetworksTrialCreationService,
     private toaster: ToasterService,
     private router: Router
   ) {}
@@ -92,9 +96,12 @@ export class StrapiActionResolverService implements OnDestroy {
    * Perform the related programmatic action for a given StrapiAction.
    * @param { StrapiAction } action - strapi action.
    * @param { any } extraData - extra data to pass to the action handler.
-   * @returns { void }
+   * @returns { Promise<void> }
    */
-  public resolve(action: StrapiAction, extraData: any = null): void {
+  public async resolve(
+    action: StrapiAction,
+    extraData: any = null
+  ): Promise<void> {
     if (LOGGED_IN_ONLY_ACTIONS.includes(action) && !this.session.isLoggedIn()) {
       this.handleAuthentication(action, extraData);
       return;
@@ -149,6 +156,9 @@ export class StrapiActionResolverService implements OnDestroy {
             timePeriod: extraData?.upgradeInterval,
           },
         });
+        break;
+      case 'networks_start_trial':
+        await this.networksTrialCreationService.startTrial();
         break;
       default:
         console.warn('Action not yet implemented: ', action);
