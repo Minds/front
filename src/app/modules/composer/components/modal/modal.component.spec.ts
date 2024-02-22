@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MockComponent } from '../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../utils/mock';
 import { ModalComponent } from './modal.component';
+import { ComposerService } from '../../services/composer.service';
 
 describe('Composer Modal', () => {
   let comp: ModalComponent;
@@ -23,6 +24,12 @@ describe('Composer Modal', () => {
             },
             ['focus']
           ),
+        ],
+        providers: [
+          {
+            provide: ComposerService,
+            useValue: MockService(ComposerService),
+          },
         ],
       }).compileComponents();
     })

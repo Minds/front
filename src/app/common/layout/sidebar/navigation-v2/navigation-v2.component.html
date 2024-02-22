@@ -58,7 +58,9 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        [routerLinkActiveOptions]="{ exact: plusPageActive }"
+        [routerLinkActiveOptions]="{
+          exact: plusPageActive || (!user && isTenantNetwork)
+        }"
       >
         <a
           [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
@@ -208,6 +210,30 @@
                 class="m-sidebarNavigationItem__text m-legible"
                 i18n="@@COMMON__GROUPS"
                 >Groups</span
+              >
+            </div>
+          </a>
+        </li>
+      </ng-container>
+
+      <!-- Memberships -->
+      <ng-container *ngIf="shouldShowMembershipsLink$ | async">
+        <li
+          class="m-sidebarNavigation__item m-sidebarNavigation__item--memberships"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a
+            [routerLink]="['/memberships']"
+            (click)="toggle()"
+            data-ref="sidenav-memberships"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">verified</i>
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__MEMBERSHIPS"
+                >Memberships</span
               >
             </div>
           </a>
