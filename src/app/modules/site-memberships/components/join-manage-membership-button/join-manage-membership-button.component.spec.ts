@@ -45,6 +45,7 @@ describe('JoinManageSiteMembershipButtonComponent', () => {
         { id: 2, name: 'role 2', permissions: [] },
       ],
       groups: [],
+      archived: false,
     },
     {
       id: '2',
@@ -60,6 +61,7 @@ describe('JoinManageSiteMembershipButtonComponent', () => {
         { id: 4, name: 'role 4', permissions: [] },
       ],
       groups: [],
+      archived: false,
     },
   ];
 

@@ -30,6 +30,7 @@ export const mockSiteMemberships: SiteMembership[] = [
       { id: 2, name: 'role 2', permissions: [] },
     ],
     groups: [],
+    archived: false,
   },
   {
     id: '2',
@@ -45,6 +46,7 @@ export const mockSiteMemberships: SiteMembership[] = [
       { id: 4, name: 'role 4', permissions: [] },
     ],
     groups: [],
+    archived: false,
   },
 ];
 
