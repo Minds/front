@@ -26,7 +26,7 @@
       >Latest</a
     >
   </div>
-  <div class="m-tabs__tab">
+  <div class="m-tabs__tab" *mIfTenant="false">
     <a
       [routerLink]="['../' + feedAlgorithm.groups]"
       routerLinkActive="m-tabs__tab--selected"
