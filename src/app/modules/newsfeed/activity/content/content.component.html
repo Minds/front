@@ -9,6 +9,10 @@
   [showTierName]="false"
 ></m-paywallBadge>
 <!-- ----------------------------------- -->
+<!-- Site membership BADGE -->
+<!-- ----------------------------------- -->
+<m-siteMembershipBadge *ngIf="entity.site_membership"></m-siteMembershipBadge>
+<!-- ----------------------------------- -->
 <!-- PAYWALL -->
 <!-- ----------------------------------- -->
 <!-- Acts as a background overlay so user
@@ -62,7 +66,7 @@ post content to trigger upgrade modal -->
   <!-- ----------------------------------- -->
   <div
     class="m-activityContent__media--video m-activityContent__media"
-    *ngIf="isVideo"
+    *ngIf="isVideo && !hasSiteMembershipPayallThumbnail"
     [ngClass]="{
       isPaywall: service.shouldShowPaywall$ | async,
       'm-activityContent__media--video--modal': isModal
@@ -94,7 +98,9 @@ post content to trigger upgrade modal -->
   <!-- ----------------------------------- -->
   <div
     class="m-activityContent__media--image m-activityContent__media"
-    *ngIf="isImage || (isMultiImage && isModal)"
+    *ngIf="
+      isImage || (isMultiImage && isModal && !hasSiteMembershipPayallThumbnail)
+    "
     [ngClass]="{
       'm-activityContent__media--extraTallImage':
         extraTallImage && (service.displayOptions.isFeed || isMinimalMode),
@@ -151,7 +157,9 @@ post content to trigger upgrade modal -->
 <!-- Excluding modals - multi-image displays same as single image in modal -->
 <!-- because only one image is shown at a time -->
 <!-- ----------------------------------- -->
-<ng-container *ngIf="isMultiImage && !isModal">
+<ng-container
+  *ngIf="isMultiImage && !isModal && !hasSiteMembershipPayallThumbnail"
+>
   <ng-container
     *ngTemplateOutlet="paywallTemplate"
     [ngTemplateOutletContext]="{ hideText: sidebarMode }"
@@ -222,6 +230,16 @@ post content to trigger upgrade modal -->
     not have permission to view it.</span
   >
 </div>
+<!-- ---------------------------------------------------  -->
+<!-- Site membership BANNER/BUTTON -->
+<!-- ---------------------------------------------------  -->
+<ng-container *mIfTenant="true">
+  <ng-container
+    *ngIf="entity.site_membership && !entity.site_membership_unlocked"
+  >
+    <m-activity__siteMembershipCta></m-activity__siteMembershipCta>
+  </ng-container>
+</ng-container>
 <!-- ----------------------------------- -->
 <!-- PERMALINK -->
 <!-- ----------------------------------- -->

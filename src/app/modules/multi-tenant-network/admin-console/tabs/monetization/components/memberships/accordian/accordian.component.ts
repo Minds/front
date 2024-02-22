@@ -27,6 +27,7 @@ import {
   ToasterService,
 } from '../../../../../../../../common/services/toaster.service';
 import { Router } from '@angular/router';
+import { SiteMembershipsCountService } from '../../../../../../../site-memberships/services/site-membership-count.service';
 
 /**
  * Network admin monetization membership accordian. Used to display a quick
@@ -67,6 +68,7 @@ export class NetworkAdminMonetizationMembershipAccordianComponent {
     private rolesService: MultiTenantRolesService,
     private modalService: ModalService,
     private archiveSiteMembershipGQL: ArchiveSiteMembershipGQL,
+    private membershipCountService: SiteMembershipsCountService,
     private toaster: ToasterService,
     private router: Router,
     private injector: Injector
@@ -161,6 +163,7 @@ export class NetworkAdminMonetizationMembershipAccordianComponent {
         throw new Error(response.errors[0].message);
       }
 
+      this.membershipCountService.decrementMembershipCount();
       this.toaster.success('Successfully archived membership.');
       this.onArchiveEmitter.emit(membership.membershipGuid);
     } catch (e) {

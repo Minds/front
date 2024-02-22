@@ -41,6 +41,8 @@ export class MockAutocompleteEntityInputComponent extends DefaultValueAccessor {
   @Input() placeholder: string;
   @Input() allowEmpty: boolean = false;
   @Input() limit: number = 8;
+  @Input() clearAfterSelection: boolean = false;
+  @Input() excludeGuids: string[] = [];
 }
 
 describe('AddFeaturedEntityModalComponent', () => {

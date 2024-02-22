@@ -15,8 +15,20 @@ import {
   PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime, map, take } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  Subscription,
+  combineLatest,
+} from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  take,
+  tap,
+} from 'rxjs/operators';
 import {
   ComposerService,
   ComposerSize,
@@ -52,6 +64,8 @@ import { LivestreamService } from '../../services/livestream.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
+import { ComposerSiteMembershipSelectorComponent } from '../popup/site-membership-selector/site-membership-selector.component';
+import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -155,6 +169,20 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   public readonly canCreateSupermindRequest$ = this.service
     .canCreateSupermindRequest$;
 
+  public readonly shouldShowSiteMemberships$: Observable<
+    boolean
+  > = this.siteMembershipsCountService.count$.pipe(
+    distinctUntilChanged(),
+    map((count: number) => {
+      return count > 0;
+    })
+  );
+
+  /**
+   * Whether the post (or next or save) button is disabled
+   */
+  postButtonDisabled: boolean = true;
+
   /**
    * Constructor
    * @param service
@@ -180,7 +208,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private injector: Injector,
     private permissions: PermissionsService,
     private readonly experimentService: ExperimentsService,
-    protected nsfwEnabledService: NsfwEnabledService
+    protected nsfwEnabledService: NsfwEnabledService,
+    protected siteMembershipsCountService: SiteMembershipsCountService
   ) {}
 
   /**
@@ -220,6 +249,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         if (paywall && !paywall.hasOwnProperty('support_tier')) {
           this.legacyPaywallEnabled = true;
         }
+      }),
+      this.service.postButtonDisabled$.subscribe(disabled => {
+        this.postButtonDisabled = disabled;
+        this.detectChanges();
       })
     );
   }
@@ -333,6 +366,13 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.service.canPost$;
   }
 
+  /**
+   * siteMembershipGuids subject from service
+   */
+  get siteMembershipGuids$() {
+    return this.service.siteMembershipGuids$;
+  }
+
   public get shouldShowLivestreamButton(): boolean {
     return (
       this.experimentService.hasVariation('minds-4157-livepeer') &&
@@ -420,6 +460,17 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Shows site membership popup
+   * @param $event
+   */
+  async onSiteMembershipClick($event?: MouseEvent): Promise<void> {
+    await this.popup
+      .create(ComposerSiteMembershipSelectorComponent)
+      .present()
+      .toPromise(/* Promise is needed to boot-up the Observable */);
+  }
+
+  /**
    * Shows tags popup
    * @param $event
    */
@@ -457,6 +508,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   onPost($event: MouseEvent): void {
+    if (this.service.siteMembershipGuids$.getValue()) {
+      return;
+    }
+
     // Get confirmation before posting a supermind offer
     if (this.isSupermindRequest) {
       this.openSupermindConfirmationModal($event);
@@ -553,6 +608,13 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         windowClass: 'm-modalV2__mobileFullCover',
       }
     );
+  }
+
+  /**
+   * When the user clicks 'next' on a site membership post
+   */
+  onClickNext(): void {
+    this.service.showSiteMembershipPostPreview$.next(true);
   }
 
   /**

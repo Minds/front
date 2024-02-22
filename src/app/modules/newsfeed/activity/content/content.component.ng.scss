@@ -543,7 +543,7 @@
 
   // TITLE
   .m-activityContentText__title {
-    @include body2Medium;
+    @include body1Bold;
     margin-bottom: 0;
     @include m-theme() {
       color: themed($m-textColor--primary);
@@ -708,5 +708,18 @@
       padding-top: $spacing3;
       padding-bottom: 11px;
     }
+  }
+
+  m-siteMembershipBadge {
+    margin-bottom: $spacing2;
+
+    .m-activity--minimalMode & {
+      margin-top: $spacing4;
+      margin-left: $spacing4;
+    }
+  }
+
+  m-activityContent__siteMembershipCta {
+    margin-top: $spacing4;
   }
 }
