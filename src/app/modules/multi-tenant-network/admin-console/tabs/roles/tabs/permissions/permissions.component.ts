@@ -34,9 +34,6 @@ export class NetworkAdminConsoleRolesPermissionsComponent implements OnInit {
     this.subscriptions.push(
       this.service.allRoles$.subscribe(roles => {
         this.allRoles = roles;
-      }),
-      this.service.allPermissions$.subscribe(permissions => {
-        console.log('ojm allPermissions$', permissions);
       })
     );
   }

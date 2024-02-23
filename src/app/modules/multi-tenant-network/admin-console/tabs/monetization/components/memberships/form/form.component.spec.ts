@@ -27,6 +27,7 @@ import { MockFormInputCheckboxComponent } from '../../../../../../../../common/c
 import { siteMembershipMock } from '../../../../../../../../mocks/site-membership.mock';
 import { groupMock } from '../../../../../../../../mocks/responses/group.mock';
 import { MindsGroup } from '../../../../../../../groups/v2/group.model';
+import { SiteMembershipsCountService } from '../../../../../../../site-memberships/services/site-membership-count.service';
 
 describe('NetworkAdminMonetizationMembershipFormComponent', () => {
   let comp: NetworkAdminMonetizationMembershipFormComponent;
@@ -92,6 +93,10 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
         {
           provide: UpdateSiteMembershipGQL,
           useValue: jasmine.createSpyObj<UpdateSiteMembershipGQL>(['mutate']),
+        },
+        {
+          provide: SiteMembershipsCountService,
+          useValue: MockService(SiteMembershipsCountService),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: Router, useValue: MockService(Router) },
@@ -368,6 +373,9 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
       expect((comp as any).router.navigateByUrl).toHaveBeenCalledWith(
         '/network/admin/monetization/memberships'
       );
+      expect(
+        (comp as any).membershipCountService.incrementMembershipCount
+      ).toHaveBeenCalled();
       expect((comp as any).submitInProgress$.getValue()).toBe(false);
     }));
 

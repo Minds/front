@@ -24,10 +24,7 @@ import { VideoPoster } from '../../services/video-poster.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'attachment-preview.component.html',
 })
-export class AttachmentPreviewComponent
-  implements OnInit, OnDestroy, OnChanges {
-  videoPosterSubscription: Subscription;
-
+export class AttachmentPreviewComponent implements OnChanges {
   /**
    * The preview resource
    */
@@ -60,22 +57,6 @@ export class AttachmentPreviewComponent
     private cd: ChangeDetectorRef
   ) {
     this.cdnUrl = configs.get('cdn_url');
-  }
-
-  ngOnInit() {
-    this.videoPosterSubscription = this.service.videoPoster$.subscribe(
-      (videoPoster: VideoPoster) => {
-        this.safeVideoPosterUrl = videoPoster
-          ? this.sanitizeUrl(videoPoster.url)
-          : null;
-        this.cd.markForCheck();
-        this.cd.detectChanges();
-      }
-    );
-  }
-
-  ngOnDestroy() {
-    this.videoPosterSubscription.unsubscribe();
   }
 
   ngOnChanges(changes) {

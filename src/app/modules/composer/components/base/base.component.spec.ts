@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { BaseComponent } from './base.component';
 import { ComposerService } from '../../services/composer.service';
 import { PopupService } from '../popup/popup.service';
@@ -13,17 +18,24 @@ import {
   MockDirective,
   MockService,
 } from '../../../../utils/mock';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
 import { ComposerAudienceSelectorService } from '../../services/audience.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
+import { ComposerSiteMembershipsService } from '../../services/site-memberships.service';
+import { ApolloTestingModule } from 'apollo-angular/testing';
+import { SiteMembership } from '../../../../../graphql/generated.engine';
+import { SimpleChange } from '@angular/core';
 
 describe('BaseComponent', () => {
   let comp: BaseComponent;
   let fixture: ComponentFixture<BaseComponent>;
+  let showMembershipPreviewPaneSubscription: Subscription;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [ApolloTestingModule],
       declarations: [
         BaseComponent,
         MockDirective({
@@ -56,6 +68,9 @@ describe('BaseComponent', () => {
         MockComponent({
           selector: 'm-composer__popup',
         }),
+        MockComponent({
+          selector: 'm-composer__siteMembershipPostPreview',
+        }),
       ],
       providers: [
         {
@@ -69,6 +84,7 @@ describe('BaseComponent', () => {
               'message$',
               'isMovingContent$',
               'isEditing$',
+              'showSiteMembershipPostPreview$',
             ],
             props: {
               attachmentError$: { get: () => new BehaviorSubject<any>(null) },
@@ -80,6 +96,9 @@ describe('BaseComponent', () => {
                 get: () => new BehaviorSubject<boolean>(false),
               },
               isEditing$: { get: () => new BehaviorSubject<boolean>(false) },
+              showSiteMembershipPostPreview$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
             },
           }),
         },
@@ -117,6 +136,21 @@ describe('BaseComponent', () => {
           provide: ComposerModalService,
           useValue: MockService(ComposerModalService),
         },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+        {
+          provide: ComposerSiteMembershipsService,
+          useValue: MockService(ComposerSiteMembershipsService, {
+            has: ['allMemberships$'],
+            props: {
+              allMemberships$: {
+                get: () => new BehaviorSubject<SiteMembership[]>([]),
+              },
+            },
+          }),
+        },
       ],
     })
       .overrideProvider(PopupService, {
@@ -135,6 +169,12 @@ describe('BaseComponent', () => {
     (comp as any).audienceSelectorService.shareToGroupMode$.next(false);
 
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    if (showMembershipPreviewPaneSubscription) {
+      showMembershipPreviewPaneSubscription.unsubscribe();
+    }
   });
 
   it('should create', () => {
@@ -190,5 +230,74 @@ describe('BaseComponent', () => {
       ComposerAudienceSelectorPanelComponent
     );
     expect((comp as any).popup.present).not.toHaveBeenCalledTimes(1);
+  });
+
+  it('should show membership preview pane only when in modal and showSiteMembershipPostPreview$ emits true', async () => {
+    comp.isModal = true;
+    fixture.detectChanges();
+
+    const changesObj = {
+      isModal: new SimpleChange(null, comp.isModal, true),
+    };
+    comp.ngOnChanges(changesObj);
+    fixture.detectChanges();
+
+    (comp as any).service.showSiteMembershipPostPreview$.next(true);
+    fixture.detectChanges();
+
+    const showPreviewPane = await new Promise(resolve => {
+      showMembershipPreviewPaneSubscription = comp.showMembershipPreviewPane$.subscribe(
+        value => resolve(value)
+      );
+      fixture.detectChanges();
+    });
+
+    expect(showPreviewPane).toBeTrue();
+  });
+
+  it('should not show membership preview pane if not in modal, regardless of showSiteMembershipPostPreview$', async () => {
+    comp.isModal = false;
+    fixture.detectChanges();
+
+    const changesObj = {
+      isModal: new SimpleChange(null, comp.isModal, true),
+    };
+    comp.ngOnChanges(changesObj);
+    fixture.detectChanges();
+
+    (comp as any).service.showSiteMembershipPostPreview$.next(true);
+    fixture.detectChanges();
+
+    const showPreviewPane = await new Promise(resolve => {
+      showMembershipPreviewPaneSubscription = comp.showMembershipPreviewPane$.subscribe(
+        value => resolve(value)
+      );
+      fixture.detectChanges();
+    });
+
+    expect(showPreviewPane).toBeFalse();
+  });
+
+  it('should not show membership preview pane if in modal but showSiteMembershipPostPreview$ emits false', async () => {
+    comp.isModal = true;
+    fixture.detectChanges();
+
+    const changesObj = {
+      isModal: new SimpleChange(null, comp.isModal, true),
+    };
+    comp.ngOnChanges(changesObj);
+    fixture.detectChanges();
+
+    (comp as any).service.showSiteMembershipPostPreview$.next(false);
+    fixture.detectChanges();
+
+    const showPreviewPane = await new Promise(resolve => {
+      showMembershipPreviewPaneSubscription = comp.showMembershipPreviewPane$.subscribe(
+        value => resolve(value)
+      );
+      fixture.detectChanges();
+    });
+
+    expect(showPreviewPane).toBeFalse();
   });
 });

@@ -28,6 +28,7 @@ import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-laz
 import getMetaAutoCaption from '../../../helpers/meta-auto-caption';
 import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelist.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { ActivityEntity } from '../activity/activity.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -43,7 +44,7 @@ export class NewsfeedSingleComponent {
   readonly cdnAssetsUrl: string;
   readonly siteUrl: string;
   inProgress: boolean = false;
-  activity: any;
+  activity: ActivityEntity | any;
   error: string = '';
   focusedCommentGuid: string = '';
   editing = false;
@@ -154,7 +155,7 @@ export class NewsfeedSingleComponent {
     this.inProgress = true;
 
     this.singleGuidSubscription = this.loadFromFeedsService(guid).subscribe(
-      activity => {
+      (activity: ActivityEntity) => {
         if (!activity) {
           return; // Not yet loaded
         }
@@ -184,7 +185,7 @@ export class NewsfeedSingleComponent {
 
         this.updateMeta();
 
-        if (this.activity.require_login) this.openLoginModal();
+        if ((<any>this.activity).require_login) this.openLoginModal();
 
         this.inProgress = false;
 
@@ -229,7 +230,7 @@ export class NewsfeedSingleComponent {
     this.headersService.setCode(401);
     const user = await this.authModal.open();
     if (user) {
-      this.activity.require_login = false;
+      (<any>this.activity).require_login = false;
       this.error = null;
     }
   }
@@ -270,6 +271,13 @@ export class NewsfeedSingleComponent {
         activity.custom_type === 'batch'
           ? activity.custom_data[0]['src']
           : activity.thumbnail_src;
+
+      if (activity.site_membership && activity.paywall_thumbnail) {
+        thumbnailSrc =
+          this.siteUrl +
+          'api/v3/payments/site-memberships/paywalled-entities/thumbnail/' +
+          activity.guid;
+      }
 
       // Make a generic description intro for images
       // that don't have a description already

@@ -1,0 +1,24 @@
+<div
+  class="m-pageLayout__container m-defaultFeedContainer__pageContainer"
+  m-pageLayout__container
+>
+  <div
+    class="m-pageLayout__pane--main m-defaultFeedContainer__feedContainer"
+    m-pageLayout__pane="main"
+    style="position: relative;"
+  >
+    <!-- Leaving here because we flip flop with guest mode a lot
+      <m-defaultFeed *mIfTenant="false"></m-defaultFeed> -->
+    <m-tenantGuestModeFeed *mIfTenant="true"></m-tenantGuestModeFeed>
+  </div>
+  <div class="m-defaultFeedContainer__sidebar" m-pageLayout__pane="right">
+    <div class="m-pageLayoutPane__inner">
+      <div class="m-pageLayoutPane__sticky" m-stickySidebar>
+        <ng-container *mIfTenant="false">
+          <m-discovery__disclaimer></m-discovery__disclaimer>
+        </ng-container>
+        <m-discovery__sidebarTags></m-discovery__sidebarTags>
+      </div>
+    </div>
+  </div>
+</div>

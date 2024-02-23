@@ -8,14 +8,14 @@ import {
 } from '@angular/core';
 
 /**
- * Drag and drop directive. Uses host listeners to listen for drag and drop events 
- * prevent default behaviour and respond my emitting the dropped file through the 
+ * Drag and drop directive. Uses host listeners to listen for drag and drop events
+ * prevent default behaviour and respond my emitting the dropped file through the
  * onFileDropped emitter.
  *
  * Usage example, on a container div:
  * m-dragAndDrop (onFileDropped)="onAttachmentPaste($event)"
 
- * Based on Mariem Chaabeni's code at: 
+ * Based on Mariem Chaabeni's code at:
  * https://medium.com/@mariemchabeni/angular-7-drag-and-drop-simple-file-uploadin-in-less-than-5-minutes-d57eb010c0dc
  */
 @Directive({

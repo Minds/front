@@ -357,4 +357,37 @@ describe('PostMenuV2Component', () => {
       expect(comp.shouldShowDelete()).toBeFalse();
     });
   });
+
+  it('should not show the edit button for site membership posts', () => {
+    comp.mediaModal = false;
+    (comp as any).permissions.canCreatePost.and.returnValue(true);
+    (comp as any).session.getLoggedInUser.and.returnValue({ guid: '234' });
+    comp.entity = {
+      guid: '123',
+      owner_guid: '234', // We own the post
+      site_membership: true,
+    };
+    comp.options = ['edit', 'delete', 'share'];
+
+    fixture.detectChanges();
+
+    const result = comp.shouldShowEdit();
+    expect(result).toBeFalse();
+  });
+
+  it('should not hide the edit button when not a site membership post', () => {
+    comp.mediaModal = false;
+    (comp as any).permissions.canCreatePost.and.returnValue(true);
+    (comp as any).session.getLoggedInUser.and.returnValue({ guid: '234' });
+    comp.entity = {
+      guid: '123',
+      owner_guid: '234', // We own the post
+    };
+    comp.options = ['edit', 'delete', 'share'];
+
+    fixture.detectChanges();
+
+    const result = comp.shouldShowEdit();
+    expect(result).toBeTrue();
+  });
 });

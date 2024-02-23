@@ -1,0 +1,117 @@
+@import 'defaults.scss';
+:host {
+  $m-siteMembershipPostPreview__horizontalSpacing: $spacing7;
+
+  .m-siteMembershipPostPreview__headerWrapper {
+    display: flex;
+    align-items: center;
+    padding: 0 $m-siteMembershipPostPreview__horizontalSpacing
+      $m-siteMembershipPostPreview__horizontalSpacing;
+    gap: $spacing5;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-siteMembershipPostPreview__header {
+      @include heading3Bold;
+    }
+
+    .m-siteMembershipPostPreview__backButton {
+      cursor: pointer;
+    }
+  }
+  .m-siteMembershipPostPreview__subheader {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing4;
+    margin: $spacing4 $m-siteMembershipPostPreview__horizontalSpacing $spacing6;
+
+    span {
+      @include heading3Bold;
+    }
+    p {
+      margin: 0;
+      @include body1Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-siteMembershipPostPreview__thumbnailPreviewWrapper {
+    position: relative;
+    img {
+      object-fit: contain;
+      margin-bottom: $spacing4;
+      max-width: 100%;
+    }
+
+    i {
+      font-size: 21px;
+      position: absolute;
+      top: $spacing4;
+      right: $spacing4;
+      z-index: 1;
+      padding: 1px;
+      border: 1px solid;
+      border-radius: 50%;
+      cursor: pointer;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        color: themed($m-textColor--secondary);
+        border-color: themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  form {
+    .m-form__fieldsContainer {
+      margin: $spacing4 $m-siteMembershipPostPreview__horizontalSpacing 0;
+    }
+    .m-form__buttonsContainer {
+      padding: $spacing5 $m-siteMembershipPostPreview__horizontalSpacing 0;
+      margin-bottom: 0;
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
+      }
+    }
+    .m-form__row--label {
+      display: flex;
+      align-items: center;
+      gap: $spacing3;
+      label {
+        @include heading4Bold;
+        span {
+          @include body2Regular;
+        }
+      }
+    }
+
+    .m-form__dragDrop {
+      width: 100%;
+      @include m-theme() {
+        border: 1px dashed themed($m-borderColor--primary);
+      }
+      border-radius: 8px;
+      padding: $spacing5;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: center;
+      gap: $spacing2;
+      span {
+        @include body2Regular;
+
+        a {
+          cursor: pointer;
+          text-decoration: underline;
+          @include m-theme() {
+            color: themed($m-action);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+<h3 i18n="@@COMMON__VERIFY">Verify</h3>
+<form
+  (submit)="submit($event)"
+  [formGroup]="form"
+  #f="ngForm"
+  class="m-plus--verify"
+>
+  <ul>
+    <p i18n="@@PLUS__VERIFY__LINKS_INPUT_LABEL">
+      Please post a link to your Minds channel page (e.g.
+      https://minds.com/YourUsername) on two other social media sites where you
+      own the same username to verify yourself. They must link back to your
+      Minds channel so we know it is you.
+    </p>
+
+    <li>
+      <input
+        type="text"
+        placeholder="eg. https://youtube.com/me"
+        i18n="@@PLUS__VERIFY__LINK1_PLACEHOLDER"
+        formControlName="link1"
+      />
+    </li>
+    <li>
+      <input
+        type="text"
+        placeholder="eg. https://twitter.com/me"
+        i18n="@@PLUS__VERIFY__LINK2_PLACEHOLDER"
+        formControlName="link2"
+      />
+    </li>
+  </ul>
+
+  <ul>
+    <p i18n="@@PLUS__VERIFY__DESCRIPTION_LABEL">
+      Please give a brief statement as to why you should be verified
+    </p>
+    <li><textarea formControlName="description"></textarea></li>
+  </ul>
+
+  <div class="m-plusVerifyModal__buttonContainer">
+    <m-button
+      color="blue"
+      type="submit"
+      [disabled]="!f.form.valid"
+      [saving]="inProgress"
+      i18n="@@PLUS__VERIFY__SUBMIT_ACTION"
+    >
+      Submit
+    </m-button>
+  </div>
+</form>
+
+<m-modalCloseButton></m-modalCloseButton>

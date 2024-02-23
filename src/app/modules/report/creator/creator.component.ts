@@ -1,4 +1,9 @@
-import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+} from '@angular/core';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ToasterService } from '../../../common/services/toaster.service';
@@ -6,6 +11,12 @@ import { ModalService } from '../../../services/ux/modal.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ReportService } from './../../../common/services/report.service';
 import { PlusTierUrnService } from '../../../common/services/plus-tier-urn.service';
+import {
+  CreateReportMutationReasonEnums,
+  GraphQLReportCreatorService,
+} from './services/graphql-report-creator.service';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
+import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens';
 
 /**
  * Modal for creating reports of content policy violations
@@ -34,6 +45,9 @@ export class ReportCreatorComponent implements AfterViewInit {
   note: string = '';
   guid: string = '';
 
+  /** URN of the entity being reported. */
+  private urn: string = '';
+
   initialized: boolean = false;
   inProgress: boolean = false;
 
@@ -52,7 +66,10 @@ export class ReportCreatorComponent implements AfterViewInit {
     private client: Client,
     protected toasterService: ToasterService,
     private reportService: ReportService,
-    private plusTierUrn: PlusTierUrnService
+    private plusTierUrn: PlusTierUrnService,
+    private graphQLReportCreatorService: GraphQLReportCreatorService,
+    @Inject(WINDOW) private window: Window,
+    @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {}
 
   setModalData(opts: {
@@ -61,6 +78,7 @@ export class ReportCreatorComponent implements AfterViewInit {
   }) {
     this._opts = opts;
     this.guid = opts.entity ? opts.entity.guid : null;
+    this.urn = opts?.entity?.urn ?? null;
 
     const supportTierUrn: string =
       opts.entity?.wire_threshold?.support_tier?.urn;
@@ -133,6 +151,11 @@ export class ReportCreatorComponent implements AfterViewInit {
    * Submits the report to the appropiate server endpoint using the current settings
    */
   async submit() {
+    if (this.isTenantNetwork) {
+      this.handleTenantReportSubmission();
+      return;
+    }
+
     if (
       this.isAdmin &&
       !confirm('Warning: This action is being run as admin - proceed?')
@@ -211,14 +234,49 @@ export class ReportCreatorComponent implements AfterViewInit {
   }
 
   /**
-   * Opens a new zendesk tab
-   * @param { string } ticketFormId - ticket form id of zendesk
+   * Opens a new tab for DMCA report submission.
    * @returns { void }
    */
-  openZendeskRequest(ticketFormId: string): void {
-    window.open(
-      `https://support.minds.com/hc/en-us/requests/new?ticket_form_id=${ticketFormId}`,
-      '_blank'
+  public openDmcaLink(): void {
+    this.window.open('/p/dmca', '_blank');
+    this.close();
+  }
+
+  /**
+   * Handle report submissions for tenant networks.
+   * @returns { Promise<void> }
+   */
+  private async handleTenantReportSubmission(): Promise<void> {
+    this.inProgress = true;
+
+    const reasonEnums: CreateReportMutationReasonEnums = this.graphQLReportCreatorService.mapLegacyReasonToEnums(
+      this.subject.value,
+      this.subReason.value
+    );
+
+    const success: boolean = await this.graphQLReportCreatorService.createNewReport(
+      {
+        entityUrn: this.urn,
+        ...reasonEnums,
+      }
+    );
+
+    this.inProgress = false;
+
+    if (!success) {
+      return;
+    }
+
+    if (this.session.isAdmin()) {
+      this.close();
+    }
+
+    this.success = true;
+
+    this._opts?.onReported?.(
+      this.guid,
+      this.subject.value,
+      this.subReason.value
     );
   }
 }

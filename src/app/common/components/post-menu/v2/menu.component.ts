@@ -85,7 +85,8 @@ export class PostMenuV2Component implements OnInit {
     if (
       this.mediaModal ||
       this.entity.permaweb_id ||
-      !this.permissions.canCreatePost()
+      !this.permissions.canCreatePost() ||
+      this.entity?.site_membership // You cannot edit a site membership post
     ) {
       return false;
     }

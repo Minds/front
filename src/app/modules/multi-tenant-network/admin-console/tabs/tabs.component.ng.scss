@@ -4,6 +4,7 @@
   .m-tabs__container {
     overflow-x: auto;
     padding: 0 $spacing8;
+    @include hide-scrollbar;
 
     .m-tabs__tab {
       a {

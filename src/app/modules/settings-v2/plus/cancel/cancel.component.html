@@ -1,0 +1,33 @@
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__PLUS__SUBSCRIPTION__CANCEL__LABEL"
+      >Cancel Minds+ Subscription</span
+    >
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__PLUS__SUBSCRIPTION__CANCEL__DESCRIPTION"
+  >
+    Manage your subscription.
+  </div>
+</m-settingsV2__header>
+
+<div *ngIf="init" class="m-formLayout--buttonLeft">
+  <div class="m-form__buttonsContainer">
+    <m-button
+      [disabled]="(isActive && !hasSubscription) || inProgress || !isActive"
+      [saving]="inProgress"
+      color="red"
+      (onAction)="cancelSubscription()"
+      i18n="@@SETTINGS__PLUS__CANCEL__CANCEL_SUBSCRIPTION"
+    >
+      Cancel Subscription
+    </m-button>
+  </div>
+</div>
+<span
+  class="m-settingV2__plusCancelNotice"
+  i18n="@@PLUS_SUBSCRIPTION__CANCEL_DISABLED_NOTICE"
+  *ngIf="isActive && !canBeCancelled && expiryString"
+  >You still have Minds+ until {{ expiryString }}.</span
+>

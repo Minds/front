@@ -49,6 +49,14 @@ const mockUpgradesConfig: ProductPageUpgradesConfig = {
       usd: 1200,
     },
   },
+  networks_on_prem: {
+    yearly: {
+      usd: 20000,
+    },
+    monthly: {
+      usd: 220000,
+    },
+  },
 };
 
 describe('ProductPagePricingService', () => {
@@ -260,6 +268,34 @@ describe('ProductPagePricingService', () => {
         ProductPageUpgradeTimePeriod.Monthly;
       const expectedPrice: number =
         mockUpgradesConfig.networks_enterprise.monthly.usd;
+
+      service.selectedTimePeriod$.next(selectedTimePeriod);
+      service.getMonthlyPrice(tier).subscribe((price: number) => {
+        expect(price).toEqual(expectedPrice);
+        done();
+      });
+    });
+
+    it('should get monthly price when selected tier is NetworksOnPrem and time period is Annually', (done: DoneFn) => {
+      const tier: Enum_Productplan_Tier = Enum_Productplan_Tier.NetworksOnPrem;
+      const selectedTimePeriod: ProductPageUpgradeTimePeriod =
+        ProductPageUpgradeTimePeriod.Annually;
+      const expectedPrice: number =
+        mockUpgradesConfig.networks_on_prem.yearly.usd / 12;
+
+      service.selectedTimePeriod$.next(selectedTimePeriod);
+      service.getMonthlyPrice(tier).subscribe((price: number) => {
+        expect(price).toEqual(expectedPrice);
+        done();
+      });
+    });
+
+    it('should get monthly price when selected tier is NetworksOnPrem and time period is Monthly', (done: DoneFn) => {
+      const tier: Enum_Productplan_Tier = Enum_Productplan_Tier.NetworksOnPrem;
+      const selectedTimePeriod: ProductPageUpgradeTimePeriod =
+        ProductPageUpgradeTimePeriod.Monthly;
+      const expectedPrice: number =
+        mockUpgradesConfig.networks_on_prem.monthly.usd;
 
       service.selectedTimePeriod$.next(selectedTimePeriod);
       service.getMonthlyPrice(tier).subscribe((price: number) => {

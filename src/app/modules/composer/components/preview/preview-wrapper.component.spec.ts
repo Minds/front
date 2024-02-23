@@ -43,9 +43,6 @@ describe('Composer Preview', () => {
             selector: 'm-composerPreview--richEmbed',
             inputs: ['richEmbed'],
           }),
-          MockComponent({
-            selector: 'm-composer__coverPhotoSelector',
-          }),
         ],
         providers: [
           {
