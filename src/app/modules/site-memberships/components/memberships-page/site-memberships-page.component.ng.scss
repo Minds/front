@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  padding: $spacing6 $spacing12;
+  box-sizing: border-box;
+
+  @media screen and (max-width: $max-mobile) {
+    padding: $spacing6 $spacing6;
+  }
+
+  h3 {
+    @include heading3Bold;
+    margin: unset;
+  }
+
+  m-starCard {
+    margin: $spacing12 0;
+  }
+
+  .m-membershipPage__membershipCardsContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: $spacing9 $spacing15;
+
+    m-siteMembershipCard {
+      flex: 1 0 26%;
+    }
+  }
+}

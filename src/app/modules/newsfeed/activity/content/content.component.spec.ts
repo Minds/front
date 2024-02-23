@@ -17,6 +17,7 @@ import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-in
 import { ActivityContentComponent } from './content.component';
 import { BehaviorSubject } from 'rxjs';
 import userMock from '../../../../mocks/responses/user.mock';
+import { TagsPipeMock } from '../../../../mocks/pipes/tagsPipe.mock';
 
 describe('ActivityContentComponent', () => {
   let comp: ActivityContentComponent;
@@ -84,6 +85,7 @@ describe('ActivityContentComponent', () => {
             selector: 'm-activity__paywall',
             inputs: ['hideText'],
           }),
+          TagsPipeMock,
         ],
         providers: [
           {
@@ -309,7 +311,7 @@ describe('ActivityContentComponent', () => {
         message: null,
         title: 'title',
       };
-      expect(comp.bodyText).toEqual(comp.entity.title);
+      expect(comp.titleText).toEqual(comp.entity.title);
     });
   });
 });

@@ -3,13 +3,22 @@
   [class.m-composer__base--withPreview]="
     (attachmentPreviews$ | async)?.length > 0 || (richEmbedPreview$ | async)
   "
+  [class.m-composer__base--membershipPreviewPane]="
+    showMembershipPreviewPane$ | async
+  "
   [class.m-composer__base--small]="isCompactMode$ | async"
-  m-dragAndDrop
-  (onFileDropped)="onAttachmentPaste($event)"
-  [disabled]="(remind$ | async) ? true : false"
   m-clientMeta
 >
-  <div class="m-composerBase__container">
+  <div
+    class="m-composerBase__container"
+    *ngIf="
+      !(showMembershipPreviewPane$ | async);
+      else siteMembershipPostPreview
+    "
+    m-dragAndDrop
+    (onFileDropped)="onAttachmentPaste($event)"
+    [disabled]="(remind$ | async) ? true : false"
+  >
     <m-composer__titleBar
       [inputId]="textareaId"
       (onCreateBlog)="createBlog()"
@@ -36,6 +45,15 @@
       [isModal]="isModal"
     ></m-composer__toolbar>
   </div>
+
+  <ng-template #siteMembershipPostPreview>
+    <div class="m-composerBase__container">
+      <m-composer__siteMembershipPostPreview
+        (onPost)="onPost($event)"
+        [isModal]="isModal"
+      ></m-composer__siteMembershipPostPreview>
+    </div>
+  </ng-template>
 
   <m-composer__popup #popupComponent></m-composer__popup>
 </div>

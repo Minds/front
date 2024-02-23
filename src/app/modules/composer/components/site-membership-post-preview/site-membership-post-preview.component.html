@@ -1,0 +1,106 @@
+<div class="m-siteMembershipPostPreview">
+  <div class="m-siteMembershipPostPreview__headerWrapper">
+    <i
+      (click)="service.showSiteMembershipPostPreview$.next(false)"
+      class="m-siteMembershipPostPreview__backButton material-icons"
+      >chevron_left</i
+    >
+    <span
+      class="m-siteMembershipPostPreview__header"
+      i18n="@@COMPOSER__MEMBERSHIP_POST_PREVIEW__HEADER"
+      >Membership post preview</span
+    >
+  </div>
+  <div class="m-siteMembershipPostPreview__subheader">
+    <span i18n="@@COMPOSER__MEMBERSHIP_POST_PREVIEW__SUBHEADER"
+      >Create a preview for your post</span
+    >
+    <p i18n="@@COMPOSER__MEMBERSHIP_POST_PREVIEW__DESC">
+      Add a title and thumbnail to your post so that non-members know what
+      they're missing out on.
+    </p>
+  </div>
+
+  <form [formGroup]="postPreviewForm" class="m-form m-formWrapper">
+    <div class="m-formLayout--buttonRight">
+      <div class="m-form__fieldsContainer">
+        <!-- Title input -->
+        <div class="m-form__field--text stretchedField">
+          <div class="m-form__input--details">
+            <div class="m-form__row--label">
+              <label for="title" i18n="@@COMMON__TITLE">
+                Title
+              </label>
+            </div>
+          </div>
+          <div class="m-form__row--input">
+            <input type="text" id="title" formControlName="title" required />
+          </div>
+        </div>
+
+        <!-- Thumbnail input -->
+        <div class="m-form__field--asset">
+          <div class="m-form__row--label">
+            <label for="thumbnail"
+              >Thumbnail <span class="optional">(*) optional</span></label
+            >
+          </div>
+
+          <div class="m-form__row--input">
+            <div
+              class="m-siteMembershipPostPreview__thumbnailPreviewWrapper"
+              *ngIf="filePreviewUrl"
+            >
+              <i
+                class="material-icons m-composerCoverPhotoSelector__delete"
+                (click)="removeFile($event)"
+                >close</i
+              >
+              <img [src]="filePreviewUrl" alt="Thumbnail preview" />
+            </div>
+            <div
+              class="m-form__dragDrop"
+              m-dragAndDrop
+              (onFileDropped)="onFileSelect($event)"
+            >
+              <input
+                class="form-control"
+                type="file"
+                id="thumbnail"
+                name="thumbnail"
+                accept="image/*"
+                (change)="onFileSelect($event)"
+                #thumbnailField
+                hidden
+              />
+              <i class="material-icons">file_upload</i>
+              <span
+                >Drag and drop file here or
+                <label for="thumbnail">
+                  <a>upload</a>
+                </label></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      <div class="m-form__buttonsContainer">
+        <m-button
+          [disabled]="
+            postPreviewForm.invalid || (service.postButtonDisabled$ | async)
+          "
+          [saving]="
+            (service.inProgress$ | async) || (service.isPosting$ | async)
+          "
+          [size]="(isCompactMode$ | async) ? 'xsmall' : 'small'"
+          [color]="(isCompactMode$ | async) ? 'grey' : 'blue'"
+          (onAction)="onSubmit($event)"
+        >
+          <span i18n="@@COMMON__POST">Post</span>
+        </m-button>
+      </div>
+    </div>
+  </form>
+</div>

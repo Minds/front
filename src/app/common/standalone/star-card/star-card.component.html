@@ -1,0 +1,33 @@
+<h2 *ngIf="title" class="m-starCard__title">{{ title }}</h2>
+<p *ngIf="description" class="m-starCard__description">{{ description }}</p>
+<ng-content></ng-content>
+<ng-template
+  [ngTemplateOutlet]="starIcon"
+  [ngTemplateOutletContext]="{
+    class: 'm-starCard__starIcon m-starCard__starIcon--top'
+  }"
+></ng-template>
+<ng-template
+  [ngTemplateOutlet]="starIcon"
+  [ngTemplateOutletContext]="{
+    class: 'm-starCard__starIcon m-starCard__starIcon--bottom'
+  }"
+></ng-template>
+
+<ng-template #starIcon let-class="class">
+  <svg
+    [class]="class"
+    width="33"
+    height="32"
+    viewBox="0 0 33 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M16.5 32C16.468 23.1743 9.31688 16.0297 0.5 16.0297C9.33655 16.0297 16.5 8.85285 16.5 0C16.5319 8.82569 23.6831 15.9704 32.5 15.9704C23.6633 15.9704 16.5 23.1472 16.5 32Z"
+      fill="#343541"
+    />
+  </svg>
+</ng-template>

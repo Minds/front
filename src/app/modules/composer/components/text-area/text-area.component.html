@@ -1,5 +1,8 @@
 <div class="m-composer__textArea">
-  <div class="m-composerTextarea__title" *ngIf="hasAttachments$ | async">
+  <div
+    class="m-composerTextarea__title"
+    *ngIf="(service.attachmentPreviews$ | async)?.length > 0"
+  >
     <textarea
       rows="1"
       type="text"

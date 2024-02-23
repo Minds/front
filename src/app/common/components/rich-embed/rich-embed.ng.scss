@@ -43,7 +43,7 @@
         padding: $activitySpacing--minimalMode;
 
         h2.m-rich-embed--title {
-          @include heading4Regular;
+          @include heading4Bold;
           @include m-theme() {
             color: themed($m-textColor--primary) !important;
           }
@@ -97,7 +97,7 @@
         text-decoration: none;
         padding: $spacing4;
         .m-rich-embed--title {
-          @include body2Medium;
+          @include body2Bold;
           text-decoration: none;
           margin-bottom: $spacing2;
           max-height: $spacing10;
