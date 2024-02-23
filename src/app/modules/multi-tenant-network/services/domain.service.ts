@@ -24,6 +24,10 @@ import {
   MultiTenantDomainStatus,
   ReturnedMultiTenantDomain,
 } from '../admin-console/tabs/domain/domain.types';
+import { ToasterService } from '../../../common/services/toaster.service';
+
+const UPDATE_FAILED_GENERIC_ERROR: string =
+  'Unable to submit changes, please try again later.';
 
 /**
  * Service for fetching and updating multi-tenant network domains.
@@ -108,7 +112,8 @@ export class MultiTenantDomainService implements OnDestroy {
 
   constructor(
     private getMultiTenantDomainGQL: GetMultiTenantDomainGQL,
-    private createMultiTenantDomainGQL: CreateMultiTenantDomainGQL
+    private createMultiTenantDomainGQL: CreateMultiTenantDomainGQL,
+    private toaster: ToasterService
   ) {}
 
   ngOnDestroy(): void {
@@ -166,10 +171,22 @@ export class MultiTenantDomainService implements OnDestroy {
       take(1),
       map((result: ApolloQueryResult<CreateMultiTenantDomainMutation>) => {
         this.domain$.next(result?.data?.createMultiTenantDomain);
+
+        if (!result) {
+          throw new Error(UPDATE_FAILED_GENERIC_ERROR);
+        }
+
+        if (result.errors?.length) {
+          throw new Error(
+            result.errors[0]?.message ?? UPDATE_FAILED_GENERIC_ERROR
+          );
+        }
+
         return Boolean(result?.data?.createMultiTenantDomain);
       }),
       catchError(
-        (e: unknown): Observable<boolean> => {
+        (e: any): Observable<boolean> => {
+          this.toaster.error(e?.message ?? UPDATE_FAILED_GENERIC_ERROR);
           console.error(e);
           return of(false);
         }
