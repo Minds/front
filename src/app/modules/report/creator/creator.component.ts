@@ -16,6 +16,7 @@ import {
   GraphQLReportCreatorService,
 } from './services/graphql-report-creator.service';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
+import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens';
 
 /**
  * Modal for creating reports of content policy violations
@@ -67,6 +68,7 @@ export class ReportCreatorComponent implements AfterViewInit {
     private reportService: ReportService,
     private plusTierUrn: PlusTierUrnService,
     private graphQLReportCreatorService: GraphQLReportCreatorService,
+    @Inject(WINDOW) private window: Window,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {}
 
@@ -232,15 +234,12 @@ export class ReportCreatorComponent implements AfterViewInit {
   }
 
   /**
-   * Opens a new zendesk tab
-   * @param { string } ticketFormId - ticket form id of zendesk
+   * Opens a new tab for DMCA report submission.
    * @returns { void }
    */
-  openZendeskRequest(ticketFormId: string): void {
-    window.open(
-      `https://support.minds.com/hc/en-us/requests/new?ticket_form_id=${ticketFormId}`,
-      '_blank'
-    );
+  public openDmcaLink(): void {
+    this.window.open('/p/dmca', '_blank');
+    this.close();
   }
 
   /**

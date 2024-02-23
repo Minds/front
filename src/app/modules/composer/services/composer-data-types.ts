@@ -18,6 +18,11 @@ export type MessageSubjectValue = string;
 export type TitleSubjectValue = string | null;
 
 /**
+ * Rich embed title value type
+ */
+export type RichEmbedTitleSubjectValue = string | null;
+
+/**
  * Remind value type
  */
 export type RemindSubjectValue = ActivityEntity | null;
@@ -111,9 +116,23 @@ export type SupermindRequestSubjectValue = SupermindComposerPayloadType | null;
 export type SupermindReplySubjectValue = Supermind | null;
 
 /**
+ * Site membership guids subject value
+ */
+export type SiteMembershipGuidsSubjectValue = string[] | [-1] | null;
+
+/**
  * The size of the composer modal
  */
 export type ComposerSize = 'compact' | 'full';
+
+/**
+ * Thumbnail image for site membership posts
+ */
+export interface PaywallThumbnail {
+  url: string;
+  file?: File;
+  fileBase64?: string;
+}
 
 /**
  * Payload data object. Used to build the DTO
@@ -121,6 +140,7 @@ export type ComposerSize = 'compact' | 'full';
 export interface Data {
   message: MessageSubjectValue;
   title: TitleSubjectValue;
+  richEmbedTitle: RichEmbedTitleSubjectValue;
   nsfw: NsfwSubjectValue;
   monetization: MonetizationSubjectValue;
   tags: TagsSubjectValue;
@@ -129,10 +149,11 @@ export interface Data {
   license: LicenseSubjectValue;
   attachmentGuids: AttachmentsMetadataMappedValue;
   richEmbed: RichEmbedMetadataMappedValue;
-  videoPoster: VideoPoster;
+  paywallThumbnail: PaywallThumbnail;
   postToPermaweb: PostToPermawebSubjectValue;
   remind: RemindSubjectValue;
   supermindRequest: SupermindRequestSubjectValue;
   supermindReply: SupermindReplySubjectValue;
+  siteMembershipGuids: SiteMembershipGuidsSubjectValue;
   container: ActivityContainer;
 }

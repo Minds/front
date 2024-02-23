@@ -47,6 +47,8 @@ import { ActivityFlagMutualSubscriptionsComponent } from './flag/mutual-subscrip
 import { ActivityBoostCtaComponent } from './boost-cta/boost-cta.component';
 import { ActivityAvatarComponent } from './avatar/avatar.component';
 import { ActivityDownvoteNoticeComponent } from './downvote-notice/downvote-notice.component';
+import { SiteMembershipBadgeComponent } from '../../../common/components/site-membership-badge/site-membership-badge.component';
+import { ActivitySiteMembershipCtaComponent } from './site-membership-cta/site-membership-cta.component';
 
 @NgModule({
   imports: [
@@ -68,6 +70,7 @@ import { ActivityDownvoteNoticeComponent } from './downvote-notice/downvote-noti
     MatGridListModule,
     SupermindSharedModule,
     ComposerModule,
+    SiteMembershipBadgeComponent,
   ],
   declarations: [
     ActivityComponent,
@@ -94,6 +97,7 @@ import { ActivityDownvoteNoticeComponent } from './downvote-notice/downvote-noti
     ActivityBoostCtaComponent,
     ActivityAvatarComponent,
     ActivityDownvoteNoticeComponent,
+    ActivitySiteMembershipCtaComponent,
   ],
   providers: [ActivityModalCreatorService],
   exports: [ActivityComponent, ActivityRemindButtonComponent],

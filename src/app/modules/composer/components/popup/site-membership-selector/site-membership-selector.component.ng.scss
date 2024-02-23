@@ -1,0 +1,52 @@
+@import 'defaults.scss';
+
+:host {
+  .m-composerPopup__title {
+    margin: 0 0 12px;
+  }
+
+  .m-composerPopup__text {
+    margin: 0 0 28px;
+  }
+
+  form {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  ::ng-deep m-formInput__checkbox {
+    display: block;
+    padding: $spacing4 0;
+    .m-formInputCheckbox__visibleWrapper {
+      justify-content: space-between;
+      gap: $spacing4;
+      width: 100%;
+      .m-formInputCheckbox__customLabel {
+        display: flex;
+        flex-grow: 2;
+        gap: $spacing4;
+        justify-content: space-between;
+        width: calc(100% - 46px);
+
+        @include body1Regular;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
+        @media screen and (max-width: $max-mobile) {
+          flex-direction: column;
+        }
+        span:first-child {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          flex-grow: 1;
+        }
+        span:last-child {
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+}

@@ -6,8 +6,11 @@ import {
   EventEmitter,
   Injector,
   Input,
+  OnChanges,
   OnDestroy,
+  OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { UniqueId } from '../../../../helpers/unique-id.helper';
@@ -28,6 +31,7 @@ import {
   BehaviorSubject,
   Observable,
   Subscription,
+  combineLatest,
   firstValueFrom,
 } from 'rxjs';
 import { BlogPreloadService } from '../../../blogs/v2/edit/blog-preload.service';
@@ -38,6 +42,7 @@ import { ClientMetaData } from '../../../../common/services/client-meta.service'
 import { ComposerModalService } from '../modal/modal.service';
 import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
 import { ComposerAudienceSelectorService } from '../../services/audience.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -49,7 +54,8 @@ import { ComposerAudienceSelectorService } from '../../services/audience.service
   templateUrl: 'base.component.html',
   providers: [PopupService],
 })
-export class BaseComponent implements AfterViewInit, OnDestroy {
+export class BaseComponent
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   /**
    * Post event emitter
    */
@@ -61,6 +67,17 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
   @Input() isModal: boolean = false;
 
   /**
+   * We use this to ensure we don't show the preview pane in the composer preview trigger
+   */
+  private isModalSubject = new BehaviorSubject<boolean>(this.isModal);
+
+  /**
+   * If we should show the default composer pane,
+   * or the membership preview pane that comes afterwards
+   */
+  showMembershipPreviewPane$: Observable<boolean>;
+
+  /**
    * Popup component ref
    */
   @ViewChild('popupComponent', { static: true }) popupComponent: PopupComponent;
@@ -68,7 +85,7 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
   /**
    * Text area component ref
    */
-  @ViewChild('textAreaComponent', { static: true })
+  @ViewChild('textAreaComponent', { static: false })
   textAreaComponent: TextAreaComponent;
 
   /**
@@ -121,7 +138,8 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
     protected blogPreloadService: BlogPreloadService,
     private composerModal: ComposerModalService,
     configs: ConfigsService,
-    protected uploaderService: UploaderService
+    protected uploaderService: UploaderService,
+    protected permissions: PermissionsService
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
 
@@ -130,6 +148,24 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
         this.service.removeAttachment();
       }
     });
+  }
+
+  ngOnInit(): void {
+    // Show the preview pane only if we're in a modal (i.e. not embedded)
+    this.showMembershipPreviewPane$ = combineLatest([
+      this.service.showSiteMembershipPostPreview$,
+      this.isModalSubject.asObservable(),
+    ]).pipe(map(([showPreview, isModal]) => showPreview && isModal));
+  }
+
+  /**
+   * Whenever isModal changes, update its BehaviorSubject
+   * @param changes
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.isModal) {
+      this.isModalSubject.next(this.isModal);
+    }
   }
 
   /**
@@ -156,6 +192,12 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
         this.isDirty = isDirty;
       })
     );
+
+    if (this.isModal) {
+      setTimeout(() => {
+        this.focus();
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -214,7 +256,9 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
    * Focuses the main text area
    */
   focus() {
-    this.textAreaComponent.focus();
+    setTimeout(() => {
+      this.textAreaComponent.focus();
+    }, 100);
   }
 
   /**

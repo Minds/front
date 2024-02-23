@@ -7,10 +7,12 @@ import {
   Inject,
   Injectable,
   PLATFORM_ID,
+  OnInit,
 } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import { isPlatformServer } from '@angular/common';
 import { isIos } from '../../../../helpers/is-mobile-or-tablet';
+import { ComposerService } from '../../services/composer.service';
 
 const noOp = () => {};
 
@@ -23,12 +25,15 @@ const noOp = () => {};
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'modal.component.html',
 })
-export class ModalComponent implements AfterViewInit {
+export class ModalComponent implements OnInit {
   resizeEvent;
 
-  constructor(@Inject(PLATFORM_ID) private platformId) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId,
+    protected service: ComposerService
+  ) {}
 
-  @ViewChild('baseComponent', { static: true }) baseComponent: BaseComponent;
+  @ViewChild('baseComponent', { static: false }) baseComponent: BaseComponent;
 
   onPost: (any) => any = noOp;
 
@@ -70,13 +75,6 @@ export class ModalComponent implements AfterViewInit {
       );
       this.setViewportHeight();
     } catch (error) {}
-  }
-
-  /**
-   * Auto-focus after view init
-   */
-  ngAfterViewInit(): void {
-    this.baseComponent.focus();
   }
 
   /**

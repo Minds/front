@@ -1,0 +1,32 @@
+<div
+  class="m-activitySiteMembershipCta__thumbnail"
+  *ngIf="entity?.paywall_thumbnail"
+  (click)="onClick($event)"
+>
+  <span *ngIf="isVideo">
+    <i class="material-icons minds-video-play-icon">
+      play_circle_outline
+    </i>
+  </span>
+  <img
+    [m-blurhash]="entity.paywall_thumbnail.blurhash"
+    [src]="
+      '/api/v3/payments/site-memberships/paywalled-entities/thumbnail/' +
+      entity.guid
+    "
+    [style.width.%]="100"
+    [style.height.px]="thumbnailHeightPx"
+  />
+</div>
+
+<m-button
+  [solid]="true"
+  [borderless]="true"
+  [saving]="inProgress"
+  color="blue"
+  size="medium"
+  (onAction)="onClick($event)"
+>
+  <span *ngIf="!isMinimalMode; else shortText">Join membership to unlock</span>
+  <ng-template #shortText>Join to unlock</ng-template>
+</m-button>

@@ -57,6 +57,14 @@ export type ProductPageUpgradesConfig = {
       usd: number;
     };
   };
+  networks_on_prem?: {
+    monthly: {
+      usd: number;
+    };
+    yearly: {
+      usd: number;
+    };
+  };
 };
 
 /** Mobile tab data. */

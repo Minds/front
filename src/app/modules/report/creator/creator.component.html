@@ -124,7 +124,7 @@
 
         <m-button
           class="m-reportCreator__button--next m-reportCreator__button--dmca"
-          (onAction)="openZendeskRequest('360003221852')"
+          (onAction)="openDmcaLink()"
           i18n="@@REPORT__CREATOR__SUBMIT_DMCA_NOTICE"
           color="blue"
           *ngIf="subject.value === 10 && !isAdmin && !isTenantNetwork"
