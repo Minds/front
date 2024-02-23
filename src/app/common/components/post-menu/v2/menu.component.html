@@ -104,27 +104,31 @@
       </m-dropdownMenu__item>
     </ng-container>
 
-    <ng-container *ngIf="service.canPin$ | async">
-      <m-dropdownMenu__item
-        (click)="onSelectedOption('pin')"
-        *ngIf="
-          options.indexOf('pin') !== -1 && (service.isPinned$ | async) === false
-        "
-      >
-        <span i18n="@@M__ACTION__PIN">
-          Pin
-        </span>
-      </m-dropdownMenu__item>
-      <m-dropdownMenu__item
-        (click)="onSelectedOption('pin')"
-        *ngIf="
-          options.indexOf('pin') !== -1 && (service.isPinned$ | async) === true
-        "
-      >
-        <span i18n="@@M__ACTION__REMOVE_PIN">
-          Remove pin
-        </span>
-      </m-dropdownMenu__item>
+    <ng-container *mIfTenant="false">
+      <ng-container *ngIf="service.canPin$ | async">
+        <m-dropdownMenu__item
+          (click)="onSelectedOption('pin')"
+          *ngIf="
+            options.indexOf('pin') !== -1 &&
+            (service.isPinned$ | async) === false
+          "
+        >
+          <span i18n="@@M__ACTION__PIN">
+            Pin
+          </span>
+        </m-dropdownMenu__item>
+        <m-dropdownMenu__item
+          (click)="onSelectedOption('pin')"
+          *ngIf="
+            options.indexOf('pin') !== -1 &&
+            (service.isPinned$ | async) === true
+          "
+        >
+          <span i18n="@@M__ACTION__REMOVE_PIN">
+            Remove pin
+          </span>
+        </m-dropdownMenu__item>
+      </ng-container>
     </ng-container>
     <m-dropdownMenu__item
       (click)="onSelectedOption('translate')"
