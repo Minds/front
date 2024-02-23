@@ -95,6 +95,10 @@ export class ProductPageButtonComponent {
           : 'monthly';
     }
 
+    if (this.data.trialUpgradeRequest) {
+      extraData.trialUpgradeRequest = true;
+    }
+
     if (this.data.stripeProductKey) {
       extraData.stripeProductKey = this.data.stripeProductKey;
     }

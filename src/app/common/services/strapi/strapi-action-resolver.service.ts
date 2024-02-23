@@ -138,6 +138,7 @@ export class StrapiActionResolverService implements OnDestroy {
           queryParams: {
             planId: extraData?.stripeProductKey ?? 'networks:team',
             timePeriod: extraData?.upgradeInterval,
+            trialUpgradeRequest: extraData?.trialUpgradeRequest,
           },
         });
         break;
@@ -146,6 +147,7 @@ export class StrapiActionResolverService implements OnDestroy {
           queryParams: {
             planId: extraData?.stripeProductKey ?? 'networks:community',
             timePeriod: extraData?.upgradeInterval,
+            trialUpgradeRequest: extraData?.trialUpgradeRequest,
           },
         });
         break;
@@ -154,6 +156,7 @@ export class StrapiActionResolverService implements OnDestroy {
           queryParams: {
             planId: extraData?.stripeProductKey ?? 'networks:enterprise',
             timePeriod: extraData?.upgradeInterval,
+            trialUpgradeRequest: extraData?.trialUpgradeRequest,
           },
         });
         break;

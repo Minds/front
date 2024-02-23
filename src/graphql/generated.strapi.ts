@@ -742,6 +742,7 @@ export type ComponentV2ProductActionButton = {
   solid?: Maybe<Scalars['Boolean']['output']>;
   stripeProductKey?: Maybe<Scalars['String']['output']>;
   text: Scalars['String']['output'];
+  trialUpgradeRequest?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type ComponentV2ProductActionButtonFiltersInput = {
@@ -759,6 +760,7 @@ export type ComponentV2ProductActionButtonFiltersInput = {
   solid?: InputMaybe<BooleanFilterInput>;
   stripeProductKey?: InputMaybe<StringFilterInput>;
   text?: InputMaybe<StringFilterInput>;
+  trialUpgradeRequest?: InputMaybe<BooleanFilterInput>;
 };
 
 export type ComponentV2ProductActionButtonInput = {
@@ -770,6 +772,7 @@ export type ComponentV2ProductActionButtonInput = {
   solid?: InputMaybe<Scalars['Boolean']['input']>;
   stripeProductKey?: InputMaybe<Scalars['String']['input']>;
   text?: InputMaybe<Scalars['String']['input']>;
+  trialUpgradeRequest?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ComponentV2ProductBasicExplainer = {
@@ -3381,6 +3384,7 @@ export type GetV2ProductPageBySlugQuery = {
                 navigationUrl?: string | null;
                 action?: Enum_Componentv2Productactionbutton_Action | null;
                 stripeProductKey?: string | null;
+                trialUpgradeRequest?: boolean | null;
               } | null;
             }
           | {
@@ -3410,6 +3414,7 @@ export type GetV2ProductPageBySlugQuery = {
                 navigationUrl?: string | null;
                 action?: Enum_Componentv2Productactionbutton_Action | null;
                 stripeProductKey?: string | null;
+                trialUpgradeRequest?: boolean | null;
               } | null;
             }
           | {
@@ -3443,6 +3448,7 @@ export type GetV2ProductPageBySlugQuery = {
                 navigationUrl?: string | null;
                 action?: Enum_Componentv2Productactionbutton_Action | null;
                 stripeProductKey?: string | null;
+                trialUpgradeRequest?: boolean | null;
               } | null;
             }
           | {
@@ -3493,6 +3499,7 @@ export type GetV2ProductPageBySlugQuery = {
                         navigationUrl?: string | null;
                         action?: Enum_Componentv2Productactionbutton_Action | null;
                         stripeProductKey?: string | null;
+                        trialUpgradeRequest?: boolean | null;
                       };
                     } | null;
                     sections?: {
@@ -3587,6 +3594,7 @@ export type GetV2ProductPageBySlugQuery = {
                       rounded?: boolean | null;
                       navigationUrl?: string | null;
                       stripeProductKey?: string | null;
+                      trialUpgradeRequest?: boolean | null;
                       action?: Enum_Componentv2Productactionbutton_Action | null;
                     };
                     perks?: Array<{
@@ -4051,6 +4059,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                       rounded
                       navigationUrl
                       stripeProductKey
+                      trialUpgradeRequest
                       action
                     }
                     perksTitle
@@ -4081,6 +4090,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                         navigationUrl
                         action
                         stripeProductKey
+                        trialUpgradeRequest
                       }
                     }
                     sections {
@@ -4139,6 +4149,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 navigationUrl
                 action
                 stripeProductKey
+                trialUpgradeRequest
               }
             }
             ... on ComponentV2ProductFeatureHighlight {
@@ -4166,6 +4177,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 navigationUrl
                 action
                 stripeProductKey
+                trialUpgradeRequest
               }
               footnotes
             }
@@ -4191,6 +4203,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 navigationUrl
                 action
                 stripeProductKey
+                trialUpgradeRequest
               }
             }
           }

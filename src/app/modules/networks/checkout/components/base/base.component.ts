@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   CheckoutPageKeyEnum,
   CheckoutTimePeriodEnum,
@@ -19,7 +19,7 @@ import { PlanCardPriceTimePeriodEnum } from '../../../../../common/components/pl
   styleUrls: ['./base.component.ng.scss'],
   providers: [NetworksCheckoutService],
 })
-export class NetworksCheckoutBaseComponent {
+export class NetworksCheckoutBaseComponent implements OnInit, OnDestroy {
   /** Enum for use in template. */
   public readonly PlanCardPriceTimePeriodEnum: typeof PlanCardPriceTimePeriodEnum = PlanCardPriceTimePeriodEnum;
 
@@ -40,6 +40,8 @@ export class NetworksCheckoutBaseComponent {
 
   ngOnInit(): void {
     const planId: string = this.route.snapshot.queryParamMap.get('planId');
+    const trialUpgradeRequest: boolean =
+      this.route.snapshot.queryParamMap.get('planId') === 'true';
     let timePeriod: CheckoutTimePeriodEnum = CheckoutTimePeriodEnum.Monthly;
     let page: CheckoutPageKeyEnum = CheckoutPageKeyEnum.Addons;
 
@@ -59,10 +61,14 @@ export class NetworksCheckoutBaseComponent {
       return;
     }
 
-    this.checkoutService.init({
+    this.checkoutService.setIsTrialUpgradeRequest(trialUpgradeRequest).init({
       planId: planId ?? '',
       page: page,
       timePeriod: timePeriod,
     });
+  }
+
+  ngOnDestroy(): void {
+    this.checkoutService.setIsTrialUpgradeRequest(false);
   }
 }
