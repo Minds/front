@@ -112,6 +112,8 @@ describe('NetworkAdminConsoleTabsComponent', () => {
     });
 
     it('should display only the moderation tab', () => {
+      (comp as any).isAdmin = false;
+
       const tabsToNotShow = [
         'general',
         'domain',
@@ -121,6 +123,8 @@ describe('NetworkAdminConsoleTabsComponent', () => {
         'monetization',
         'mobile',
       ];
+      fixture.detectChanges();
+
       tabsToNotShow.forEach(tab =>
         testTabVisibility(`network-admin-console-tab-${tab}`, false)
       );
