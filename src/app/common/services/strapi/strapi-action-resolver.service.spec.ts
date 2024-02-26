@@ -239,12 +239,13 @@ describe('StrapiActionResolverService', () => {
         queryParams: {
           planId: extraData.stripeProductKey,
           timePeriod: extraData.upgradeInterval,
+          trialUpgradeRequest: undefined,
         },
       }
     );
   });
 
-  it('should checkout for networks team', () => {
+  it('should checkout for networks community', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
 
     const action: StrapiAction = 'networks_community_checkout';
@@ -261,12 +262,13 @@ describe('StrapiActionResolverService', () => {
         queryParams: {
           planId: extraData.stripeProductKey,
           timePeriod: extraData.upgradeInterval,
+          trialUpgradeRequest: undefined,
         },
       }
     );
   });
 
-  it('should checkout for networks team', () => {
+  it('should checkout for networks enterprise', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
 
     const action: StrapiAction = 'networks_enterprise_checkout';
@@ -283,6 +285,31 @@ describe('StrapiActionResolverService', () => {
         queryParams: {
           planId: extraData.stripeProductKey,
           timePeriod: extraData.upgradeInterval,
+          trialUpgradeRequest: undefined,
+        },
+      }
+    );
+  });
+
+  it('should checkout for networks with trial upgrade request param', () => {
+    (service as any).session.isLoggedIn.and.returnValue(true);
+
+    const action: StrapiAction = 'networks_team_checkout';
+    const extraData: any = {
+      stripeProductKey: 'stripeProductKey',
+      upgradeInterval: 'monthly',
+      trialUpgradeRequest: true,
+    };
+
+    service.resolve(action as StrapiAction, extraData);
+
+    expect((service as any).router.navigate).toHaveBeenCalledWith(
+      ['/networks/checkout'],
+      {
+        queryParams: {
+          planId: extraData.stripeProductKey,
+          timePeriod: extraData.upgradeInterval,
+          trialUpgradeRequest: extraData.trialUpgradeRequest,
         },
       }
     );

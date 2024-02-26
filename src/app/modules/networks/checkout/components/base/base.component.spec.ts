@@ -83,6 +83,9 @@ describe('NetworksCheckoutBaseComponent', () => {
       (comp as any).route.snapshot.queryParamMap = convertToParamMap({
         planId: 'networks_community',
       });
+      (comp as any).checkoutService.setIsTrialUpgradeRequest.and.returnValue(
+        (comp as any).checkoutService
+      );
 
       comp.ngOnInit();
 
@@ -131,6 +134,9 @@ describe('NetworksCheckoutBaseComponent', () => {
         planId: 'networks_community',
         confirmed: 'true',
       });
+      (comp as any).checkoutService.setIsTrialUpgradeRequest.and.returnValue(
+        (comp as any).checkoutService
+      );
 
       comp.ngOnInit();
 
@@ -146,6 +152,9 @@ describe('NetworksCheckoutBaseComponent', () => {
         planId: 'networks_community',
         timePeriod: 'monthly',
       });
+      (comp as any).checkoutService.setIsTrialUpgradeRequest.and.returnValue(
+        (comp as any).checkoutService
+      );
 
       comp.ngOnInit();
 
@@ -161,6 +170,9 @@ describe('NetworksCheckoutBaseComponent', () => {
         planId: 'networks_community',
         timePeriod: 'yearly',
       });
+      (comp as any).checkoutService.setIsTrialUpgradeRequest.and.returnValue(
+        (comp as any).checkoutService
+      );
 
       comp.ngOnInit();
 

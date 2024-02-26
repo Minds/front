@@ -10,6 +10,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { PlanCardPriceTimePeriodEnum } from '../../../../../common/components/plan-card/plan-card.component';
 
+/** Query params for checkout page. */
+export type CheckoutPageQueryParams = {
+  planId: string;
+  timePeriod?: string;
+  trialUpgradeRequest?: boolean;
+};
+
 /**
  * Base component for networks checkout.
  */
