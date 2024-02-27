@@ -14,6 +14,8 @@ describe('NetworkAdminConsoleTabsComponent', () => {
 
   beforeEach(() => {
     sessionMock = jasmine.createSpyObj('Session', ['isAdmin']);
+    sessionMock.isAdmin.and.returnValue(true);
+
     permissionsServiceMock = jasmine.createSpyObj('PermissionsService', [
       'canModerateContent',
     ]);
@@ -60,6 +62,7 @@ describe('NetworkAdminConsoleTabsComponent', () => {
         'invite',
         'appearance',
         'roles',
+        'monetization',
         'moderation',
         'monetization',
         'mobile',
@@ -93,11 +96,24 @@ describe('NetworkAdminConsoleTabsComponent', () => {
 
   describe('Tab visibility for user with canModerateContent permission', () => {
     beforeEach(() => {
-      sessionMock.isAdmin.and.returnValue(false);
+      Object.defineProperty(comp, 'isAdmin', { writable: true });
       permissionsServiceMock.canModerateContent.and.returnValue(true);
     });
 
+    it('should have a moderation tab', () => {
+      (comp as any).isAdmin = true;
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(
+          By.css('[data-ref=network-admin-console-tab-moderation]')
+        )
+      ).toBeTruthy();
+    });
+
     it('should display only the moderation tab', () => {
+      (comp as any).isAdmin = false;
+
       const tabsToNotShow = [
         'general',
         'domain',
@@ -107,6 +123,8 @@ describe('NetworkAdminConsoleTabsComponent', () => {
         'monetization',
         'mobile',
       ];
+      fixture.detectChanges();
+
       tabsToNotShow.forEach(tab =>
         testTabVisibility(`network-admin-console-tab-${tab}`, false)
       );
