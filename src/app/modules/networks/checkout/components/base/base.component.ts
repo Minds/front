@@ -48,7 +48,7 @@ export class NetworksCheckoutBaseComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const planId: string = this.route.snapshot.queryParamMap.get('planId');
     const trialUpgradeRequest: boolean =
-      this.route.snapshot.queryParamMap.get('planId') === 'true';
+      this.route.snapshot.queryParamMap.get('trialUpgradeRequest') === 'true';
     let timePeriod: CheckoutTimePeriodEnum = CheckoutTimePeriodEnum.Monthly;
     let page: CheckoutPageKeyEnum = CheckoutPageKeyEnum.Addons;
 
