@@ -15,8 +15,10 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
   host: { class: 'm-networkAdminConsole__container--noHorizontalPadding' },
 })
 export class NetworkAdminConsoleTabsComponent {
-  constructor(
-    public session: Session,
-    public permissions: PermissionsService
-  ) {}
+  /** Whether the user is an admin. */
+  protected readonly isAdmin: boolean = false;
+
+  constructor(public session: Session, public permissions: PermissionsService) {
+    this.isAdmin = this.session.isAdmin();
+  }
 }
