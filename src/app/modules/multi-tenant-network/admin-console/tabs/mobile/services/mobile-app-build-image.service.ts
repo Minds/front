@@ -3,7 +3,7 @@ import {
   ApiResponse,
   ApiService,
 } from '../../../../../../common/api/api.service';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 
 /** Enum of mobile app build image types. */
@@ -19,16 +19,16 @@ export const IMAGE_URL_BASE_PATH: string =
   '/api/v3/multi-tenant/mobile-configs/image/';
 
 /** Default path for mobile app build icon image. */
-export const ICON_PATH: string = `${IMAGE_URL_BASE_PATH}icon`;
+export const ICON_PATH: string = `${IMAGE_URL_BASE_PATH}icon?${Date.now()}`;
 
 /** Default path for mobile app build splash image. */
-export const SPLASH_PATH: string = `${IMAGE_URL_BASE_PATH}splash`;
+export const SPLASH_PATH: string = `${IMAGE_URL_BASE_PATH}splash?${Date.now()}`;
 
 /** Default path for mobile app build square logo image. */
-export const SQUARE_LOGO_PATH: string = `${IMAGE_URL_BASE_PATH}square_logo`;
+export const SQUARE_LOGO_PATH: string = `${IMAGE_URL_BASE_PATH}square_logo?${Date.now()}`;
 
 /** Default path for mobile app build horizontal logo image. */
-export const HORIZONTAL_LOGO_PATH: string = `${IMAGE_URL_BASE_PATH}horizontal_logo`;
+export const HORIZONTAL_LOGO_PATH: string = `${IMAGE_URL_BASE_PATH}horizontal_logo?${Date.now()}`;
 
 /**
  * Service for the management of images used in mobile app build configuration.
