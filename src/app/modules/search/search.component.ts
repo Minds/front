@@ -171,15 +171,6 @@ export class SearchComponent {
       .filter(n => n.selected)
       .map(n => n.value);
 
-    let limit = PAGE_SIZE;
-
-    if (
-      this.toFilterEnum(this.filter) === SearchFilterEnum.User ||
-      this.toFilterEnum(this.filter) === SearchFilterEnum.Group
-    ) {
-      limit = CHANNELS_AND_GROUPS_PAGE_SIZE;
-    }
-
     /**
      * This is the initial query
      */
@@ -189,7 +180,7 @@ export class SearchComponent {
         filter: this.toFilterEnum(this.filter),
         mediaType: this.toMediaTypeEnum(this.mediaType),
         nsfw: this.toNsfwEnumArray(this.nsfw),
-        limit: limit,
+        limit: this.getResultsLimit(),
       },
       {
         fetchPolicy: 'cache-and-network',
@@ -319,6 +310,7 @@ export class SearchComponent {
             filter: this.toFilterEnum(this.filter),
             mediaType: this.toMediaTypeEnum(this.mediaType),
             nsfw: this.toNsfwEnumArray(this.nsfw),
+            limit: this.getResultsLimit(),
           });
           this.setSeo();
         }),
@@ -359,6 +351,17 @@ export class SearchComponent {
           }
         }),
     ];
+  }
+
+  private getResultsLimit(): number {
+    if (
+      this.toFilterEnum(this.filter) === SearchFilterEnum.User ||
+      this.toFilterEnum(this.filter) === SearchFilterEnum.Group
+    ) {
+      return CHANNELS_AND_GROUPS_PAGE_SIZE;
+    }
+
+    return PAGE_SIZE;
   }
 
   /**
