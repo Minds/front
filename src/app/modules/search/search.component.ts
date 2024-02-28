@@ -2,15 +2,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  HostBinding,
   Injector,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ConfigsService } from '../../common/services/configs.service';
 import {
-  DiscoveryFeedsService,
-  DiscoveryFeedsContentType,
   DiscoveryFeedsContentFilter,
+  DiscoveryFeedsContentType,
+  DiscoveryFeedsService,
 } from '../discovery/feeds/feeds.service';
 import {
   BehaviorSubject,
@@ -19,7 +18,6 @@ import {
   interval,
   Observable,
   of,
-  Subject,
   Subscription,
 } from 'rxjs';
 import {
@@ -28,7 +26,6 @@ import {
   distinctUntilChanged,
   filter,
   map,
-  takeWhile,
   tap,
 } from 'rxjs/operators';
 import { MetaService } from '../../common/services/meta.service';
@@ -52,6 +49,8 @@ import { SiteService } from '../../common/services/site.service';
 import { Session } from '../../services/session';
 
 const PAGE_SIZE = 12;
+
+const CHANNELS_AND_GROUPS_PAGE_SIZE = 36;
 
 @Component({
   selector: 'm-search',
@@ -172,6 +171,15 @@ export class SearchComponent {
       .filter(n => n.selected)
       .map(n => n.value);
 
+    let limit = PAGE_SIZE;
+
+    if (
+      this.toFilterEnum(this.filter) === SearchFilterEnum.User ||
+      this.toFilterEnum(this.filter) === SearchFilterEnum.Group
+    ) {
+      limit = CHANNELS_AND_GROUPS_PAGE_SIZE;
+    }
+
     /**
      * This is the initial query
      */
@@ -181,7 +189,7 @@ export class SearchComponent {
         filter: this.toFilterEnum(this.filter),
         mediaType: this.toMediaTypeEnum(this.mediaType),
         nsfw: this.toNsfwEnumArray(this.nsfw),
-        limit: PAGE_SIZE,
+        limit: limit,
       },
       {
         fetchPolicy: 'cache-and-network',
