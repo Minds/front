@@ -2,15 +2,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  HostBinding,
   Injector,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ConfigsService } from '../../common/services/configs.service';
 import {
-  DiscoveryFeedsService,
-  DiscoveryFeedsContentType,
   DiscoveryFeedsContentFilter,
+  DiscoveryFeedsContentType,
+  DiscoveryFeedsService,
 } from '../discovery/feeds/feeds.service';
 import {
   BehaviorSubject,
@@ -19,7 +18,6 @@ import {
   interval,
   Observable,
   of,
-  Subject,
   Subscription,
 } from 'rxjs';
 import {
@@ -28,7 +26,6 @@ import {
   distinctUntilChanged,
   filter,
   map,
-  takeWhile,
   tap,
 } from 'rxjs/operators';
 import { MetaService } from '../../common/services/meta.service';
@@ -52,6 +49,8 @@ import { SiteService } from '../../common/services/site.service';
 import { Session } from '../../services/session';
 
 const PAGE_SIZE = 12;
+
+const CHANNELS_AND_GROUPS_PAGE_SIZE = 36;
 
 @Component({
   selector: 'm-search',
@@ -181,7 +180,7 @@ export class SearchComponent {
         filter: this.toFilterEnum(this.filter),
         mediaType: this.toMediaTypeEnum(this.mediaType),
         nsfw: this.toNsfwEnumArray(this.nsfw),
-        limit: PAGE_SIZE,
+        limit: this.getResultsLimit(),
       },
       {
         fetchPolicy: 'cache-and-network',
@@ -311,6 +310,7 @@ export class SearchComponent {
             filter: this.toFilterEnum(this.filter),
             mediaType: this.toMediaTypeEnum(this.mediaType),
             nsfw: this.toNsfwEnumArray(this.nsfw),
+            limit: this.getResultsLimit(),
           });
           this.setSeo();
         }),
@@ -351,6 +351,17 @@ export class SearchComponent {
           }
         }),
     ];
+  }
+
+  private getResultsLimit(): number {
+    if (
+      this.toFilterEnum(this.filter) === SearchFilterEnum.User ||
+      this.toFilterEnum(this.filter) === SearchFilterEnum.Group
+    ) {
+      return CHANNELS_AND_GROUPS_PAGE_SIZE;
+    }
+
+    return PAGE_SIZE;
   }
 
   /**
