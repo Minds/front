@@ -1,0 +1,45 @@
+<ng-container *ngIf="membership$ | async">
+  <ng-container *ngIf="!(isMember$ | async); else managePlanButtonTemplate">
+    <m-button
+      class="m-siteMembershipCard__actionButton"
+      color="blue"
+      solid="true"
+      size="xsmall"
+      [disabled]="navigationInProgress$ | async"
+      [saving]="navigationInProgress$ | async"
+      (onAction)="onJoinMembershipClick()"
+      ><ng-container i18n="@@MEMBERSHIP_CARD__JOIN_MEMBERSHIP"
+        >Join membership</ng-container
+      ></m-button
+    >
+  </ng-container>
+  <ng-template #managePlanButtonTemplate>
+    <ng-container [ngSwitch]="(membership$ | async).membershipPricingModel">
+      <m-button
+        *ngSwitchCase="SiteMembershipPricingModelEnum.Recurring"
+        class="m-siteMembershipCard__actionButton"
+        color="blue"
+        size="xsmall"
+        [solid]="false"
+        [disabled]="navigationInProgress$ | async"
+        [saving]="navigationInProgress$ | async"
+        (onAction)="onManagePlanClick()"
+      >
+        <ng-container i18n="@@MEMBERSHIP_CARD__MANAGER_PLAN"
+          >Manage plan</ng-container
+        ></m-button
+      >
+      <m-button
+        *ngSwitchDefault
+        class="m-siteMembershipCard__actionButton"
+        color="blue"
+        size="xsmall"
+        [solid]="false"
+        [disabled]="true"
+        ><ng-container i18n="@@MEMBERSHIP_CARD__PURCHASED"
+          >Purchased</ng-container
+        ></m-button
+      >
+    </ng-container>
+  </ng-template>
+</ng-container>

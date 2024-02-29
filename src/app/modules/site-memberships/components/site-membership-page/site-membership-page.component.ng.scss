@@ -1,0 +1,29 @@
+@import 'defaults.scss';
+
+:host {
+  margin: $spacing6;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing8;
+
+  m-starCard {
+    padding: $spacing6;
+  }
+
+  .m-siteMembershipPage__footerCta {
+    width: 100%;
+    margin-top: $spacing6;
+
+    ::ng-deep m-button .m-button {
+      width: 100%;
+    }
+  }
+
+  .m-siteMembershipPage__alreadyMemberNotice {
+    @include body3Regular;
+    @include m-theme() {
+      color: themed($m-green);
+    }
+    margin: 0;
+  }
+}

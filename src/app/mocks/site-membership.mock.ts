@@ -14,6 +14,7 @@ export const siteMembershipMock: SiteMembership = {
   membershipPriceInCents: 100,
   membershipPricingModel: SiteMembershipPricingModelEnum.OneTime,
   priceCurrency: 'USD',
+  archived: false,
   groups: [
     {
       guid: '1231',

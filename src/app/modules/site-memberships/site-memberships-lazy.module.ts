@@ -8,8 +8,15 @@ import { SiteMembershipsPageComponent } from './components/memberships-page/site
 import { StarCardComponent } from '../../common/standalone/star-card/star-card.component';
 import { SiteMembershipCardComponent } from './components/membership-card/site-membership-card.component';
 import { SiteMembershipsRouteGuard } from './guards/site-memberships-route.guard';
+import { SiteMembershipPageComponent } from './components/site-membership-page/site-membership-page.component';
+import { JoinManageSiteMembershipButtonComponent } from './components/join-manage-membership-button/join-manage-membership-button.component';
 
 const routes: Routes = [
+  {
+    path: 'join/:membershipGuid',
+    component: SiteMembershipPageComponent,
+    canActivate: [SiteMembershipsRouteGuard],
+  },
   {
     path: '', // '/memberships
     component: SiteMembershipsPageComponent,
@@ -33,6 +40,11 @@ const routes: Routes = [
     StarCardComponent,
     SiteMembershipCardComponent,
   ],
-  declarations: [SiteMembershipsPageComponent],
+  declarations: [
+    SiteMembershipsPageComponent,
+    SiteMembershipPageComponent,
+    JoinManageSiteMembershipButtonComponent,
+  ],
+  exports: [SiteMembershipCardComponent],
 })
 export class SiteMembershipsLazyModule {}
