@@ -74,4 +74,13 @@
       >Mobile</a
     >
   </div>
+  <div class="m-tabs__tab" *ngIf="session.isAdmin()">
+    <a
+      [routerLink]="['/network/admin/analytics']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-tab-analytics"
+      i18n="@@NETWORK_ADMIN_CONSOLE__TAB_ANALYTICS"
+      >Analytics</a
+    >
+  </div>
 </div>

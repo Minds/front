@@ -1,0 +1,26 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: $spacing3;
+
+  .m-networkAdminAnalytics__updateTimestampMarker {
+    width: 8px;
+    height: 8px;
+    padding: calc($spacing1 / 2);
+    border-radius: 50%;
+
+    @include m-theme() {
+      background-color: themed($m-green);
+    }
+  }
+
+  .m-networkAdminAnalytics__updateTimestampSpan {
+    @include body3Regular;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+}

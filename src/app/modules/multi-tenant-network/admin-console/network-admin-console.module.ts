@@ -38,6 +38,7 @@ import { CustomPageFormContentPreviewModalComponent } from './components/custom-
 import { CanModerateContentGuard } from './guards/can-moderate-content.guard';
 import { GroupAggregatorComponent } from './components/group-aggregator/group-aggregator.component';
 import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
+import { NetworkAdminAnalyticsLazyRoutes } from './tabs/analytics/analytics-lazy.routes';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -109,6 +110,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
         path: 'invite/:view',
         component: NetworkAdminConsoleInviteComponent,
       },
+      NetworkAdminAnalyticsLazyRoutes,
     ],
   },
 ];
