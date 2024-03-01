@@ -23,7 +23,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         (onAction)="onAction.emit()"
       >
         <i *ngIf="ctaIcon" class="material-icons">{{ ctaIcon }}</i>
-        <ng-container i18n>{{ ctaText }}</ng-container></m-button
+        <span i18n>{{ ctaText }}</span></m-button
       >
     </div>
   `,

@@ -1990,7 +1990,7 @@ export type GetAdminAnalyticsChartAndKpisQuery = {
     __typename?: 'AnalyticsChartType';
     metric: AnalyticsMetricEnum;
     segments: Array<{
-      __typename?: 'AnalyticsChartSegmentType';
+      __typename?: 'AnalyticsC  hartSegmentType';
       buckets: Array<{
         __typename?: 'AnalyticsChartBucketType';
         date: string;
