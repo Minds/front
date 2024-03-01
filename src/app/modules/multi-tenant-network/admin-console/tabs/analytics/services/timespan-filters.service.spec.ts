@@ -18,8 +18,7 @@ describe('NetworkAdminAnalyticsTimespanFiltersService', () => {
   });
 
   it('should get filters', () => {
-    const filters = service.filters;
-    expect(filters).toBe({
+    expect(service.filters).toEqual({
       id: 'timespan',
       label: 'Timespan',
       options: [
