@@ -87,4 +87,16 @@ export class NetworkAdminAnalyticsTimespanFiltersService {
   public getOptionById(id: string): Option {
     return this.filters?.options?.find(option => option?.id === id);
   }
+
+  /**
+   * Patches the selected value of the filters such that the option
+   * with an id matching the id parameter is the only option selected.
+   * @param { string } id - the ID of the option to force selection of.
+   * @returns { void }
+   */
+  public forceSelectionById(id: string): void {
+    this.filters.options.map((option: Option) => {
+      option.selected = option.id === id;
+    });
+  }
 }

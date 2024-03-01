@@ -33,7 +33,7 @@ const DEFAULT_PARAMS: GetAdminAnalyticsChartAndKpisQueryVariables = {
     AnalyticsMetricEnum.TotalSiteMembershipSubscriptions,
   ],
   fromUnixTs: moment()
-    .subtract(7, 'days')
+    .subtract(30, 'days')
     .unix(),
   toUnixTs: moment().unix(),
 };

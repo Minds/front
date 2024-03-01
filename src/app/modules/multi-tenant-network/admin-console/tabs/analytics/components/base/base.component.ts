@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NetworkAdminAnalyticsKpisService } from '../../services/kpis.service';
 import { Observable } from 'rxjs';
 import { GetAdminAnalyticsChartAndKpisQuery } from '../../../../../../../../graphql/generated.engine';
-import { Filter } from '../../../../../../../interfaces/dashboard';
+import { Filter, Option } from '../../../../../../../interfaces/dashboard';
 import { DropdownSelectorSelection } from '../../../../../../../common/components/dropdown-selector/dropdown-selector.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -59,11 +59,15 @@ export class NetworkAdminAnalyticsBaseComponent implements OnInit {
    * @returns { void }
    */
   private updateTimespan(timespanString: string): void {
+    const option: Option = this.timespanFiltersService.getOptionById(
+      timespanString
+    );
     this.kpisService.patchParams({
-      fromUnixTs: this.timespanFiltersService.getOptionById(timespanString)
-        ?.from_ts_ms,
+      fromUnixTs: option?.from_ts_ms,
       toUnixTs: this.timespanFiltersService.instantiationTimestamp.unix(),
     });
+
+    this.timespanFiltersService.forceSelectionById(option.id);
 
     this.router.navigate([], {
       relativeTo: this.route,
