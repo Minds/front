@@ -42,8 +42,8 @@ export class Session {
    */
   isAdmin() {
     if (!this.isLoggedIn) return false;
-    if (this.configs.get('Admin')) return true;
-
+    if (this.configs.get('Admin') || this.getLoggedInUser()?.is_admin)
+      return true;
     return false;
   }
 
