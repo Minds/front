@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { urlValidator } from '../../../../forms/url.validator';
-import { CustomPage } from '../../../../../../graphql/generated.engine';
 import {
   CustomPageType,
   CustomPageImplementation,

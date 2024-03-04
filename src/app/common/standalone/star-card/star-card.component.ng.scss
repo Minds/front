@@ -10,8 +10,16 @@
     padding: $spacing6 $spacing12;
   }
 
-  @include m-theme() {
-    border: 4px solid themed($m-black);
+  &:not(.m-starCard--hideBorder) {
+    @include m-theme() {
+      border: 4px solid themed($m-black);
+    }
+  }
+
+  &.m-starCard--hideStars {
+    .m-starCard__starIcon {
+      display: none;
+    }
   }
 
   h2,

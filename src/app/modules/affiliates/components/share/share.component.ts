@@ -21,7 +21,7 @@ export class AffiliatesShareComponent {
   @Input() referrerUsername: string = '';
 
   /**
-   * Determinds which set of links to display
+   * Determines which set of links to display
    */
   @Input() earnMethod: AffiliatesEarnMethod;
 

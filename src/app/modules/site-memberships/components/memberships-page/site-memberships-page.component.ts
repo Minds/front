@@ -6,38 +6,18 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import {
-  GetSiteMembershipSubscriptionsGQL,
-  GetSiteMembershipSubscriptionsQuery,
-  GetSiteMembershipsAndSubscriptionsGQL,
-  GetSiteMembershipsAndSubscriptionsQuery,
-  SiteMembership,
-  SiteMembershipSubscription,
-} from '../../../../../graphql/generated.engine';
-import { ApolloQueryResult } from '@apollo/client';
+import { SiteMembership } from '../../../../../graphql/generated.engine';
 import {
   BehaviorSubject,
-  EMPTY,
   Observable,
   ReplaySubject,
   Subscription,
-  catchError,
-  distinctUntilChanged,
-  filter,
-  firstValueFrom,
   map,
-  take,
+  of,
+  switchMap,
 } from 'rxjs';
-import {
-  DEFAULT_ERROR_MESSAGE,
-  ToasterService,
-} from '../../../../common/services/toaster.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { getCurrencySymbol, isPlatformBrowser } from '@angular/common';
-import { AuthModalService } from '../../../auth/modal/auth-modal.service';
-import { OnboardingV5Service } from '../../../onboarding-v5/services/onboarding-v5.service';
-import { MindsUser } from '../../../../interfaces/entities';
-import { Session } from '../../../../services/session';
-import { SiteMembershipManagementService } from '../../services/site-membership-management.service';
 import { ActivatedRoute } from '@angular/router';
 import { SiteMembershipService } from '../../services/site-memberships.service';
 
@@ -64,74 +44,80 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
   public readonly memberships$: ReplaySubject<SiteMembership[]> = this
     .siteMembershipsService.siteMemberships$;
 
-  /** Array of the logged in users membership subscriptions. */
-  private readonly membershipSubscriptions$: ReplaySubject<
-    SiteMembershipSubscription[]
-  > = this.siteMembershipsService.siteMembershipSubscriptions$;
-
-  /** Mapped array of membership subscription GUIDs */
-  public membershipSubscriptionGuids$: Observable<string[]> = this
-    .siteMembershipsService.siteMembershipSubscriptionGuids$;
-
   /** Whether navigation and pre-cursor calls are in progress. */
   public readonly navigationInProgress$: BehaviorSubject<
     boolean
   > = new BehaviorSubject<boolean>(false);
 
   /** Localised text of the star-card title. */
-  public readonly starCardTitleText: string = null;
+  public starCardTitleText: string = null;
 
-  /** Description text for star card */
-  public readonly starCardDescriptionText$: Observable<
-    string
-  > = this.memberships$.pipe(
-    distinctUntilChanged(),
-    map((memberships: SiteMembership[]): string => {
-      if (!memberships?.length) return null;
-
-      const lowestPriceMembership: SiteMembership = this.siteMembershipsService.getLowestPriceMembershipFromArray(
-        memberships
-      );
-      if (!lowestPriceMembership) return null;
-
-      const currencySymbol: string =
-        getCurrencySymbol(lowestPriceMembership.priceCurrency, 'narrow') ?? '$';
-      return $localize`:@@MEMBERSHIPS__MEMBERSHIPS_START_AT_X_PER_MONTH:Memberships start at ${currencySymbol}${lowestPriceMembership.membershipPriceInCents /
-        100}`;
-    })
-  );
+  /** Localised text of the star-card description. */
+  public starCardDescriptionText$: Observable<string>;
 
   /** Component-level subscriptions array. */
   private subscriptions: Subscription[] = [];
 
-  private membershipSubscriptionsSnapshot: SiteMembershipSubscription[];
+  /** Whether to show 'Memberships' at the top of the page */
+  public showPageTitle$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(true);
 
   constructor(
     private siteMembershipsService: SiteMembershipService,
-    private membershipManagement: SiteMembershipManagementService,
-    private getSiteMembershipSubscriptionsGQL: GetSiteMembershipSubscriptionsGQL,
-    private authModal: AuthModalService,
-    private onboardingV5Service: OnboardingV5Service,
     private toaster: ToasterService,
-    private session: Session,
     private route: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: Object,
     readonly configs: ConfigsService
-  ) {
-    this.starCardTitleText = $localize`:@@MEMBERSHIPS__UNLEASH_THE_FULL_MINDS_EXPERIENCE:Unleash the full ${configs.get(
-      'site_name'
-    )} experience`;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.fetchAllData();
     this.checkForErrorParams();
 
     this.subscriptions.push(
-      this.membershipSubscriptions$.subscribe(
-        membershipSubscription =>
-          (this.membershipSubscriptionsSnapshot = membershipSubscription)
-      )
+      this.route.queryParamMap.subscribe(params => {
+        if (params.has('membershipRedirect')) {
+          this.starCardTitleText = $localize`:@@MEMBERSHIPS__THIS_MEMBERSHIP_IS_NO_LONGER_AVAILABLE:This membership is no longer available`;
+        } else {
+          this.starCardTitleText = $localize`:@@MEMBERSHIPS__UNLEASH_THE_FULL_MINDS_EXPERIENCE:Unleash the full ${this.configs.get(
+            'site_name'
+          )} experience`;
+        }
+      })
+    );
+
+    this.starCardDescriptionText$ = this.route.queryParamMap.pipe(
+      switchMap(params => {
+        const membershipRedirect = params.get('membershipRedirect');
+
+        if (membershipRedirect) {
+          this.showPageTitle$.next(false);
+          const siteName = this.configs.get('site_name');
+          return of(
+            $localize`:@@MEMBERSHIPS__OTHER_AVAILABLE_MEMBERSHIPS:Check out these other available memberships from ${siteName}.`
+          );
+        }
+
+        return this.siteMembershipsService.siteMemberships$.pipe(
+          map((memberships: SiteMembership[]): string => {
+            if (!memberships?.length) return null;
+
+            const lowestPriceMembership: SiteMembership = this.siteMembershipsService.getLowestPriceMembershipFromArray(
+              memberships
+            );
+            if (!lowestPriceMembership) return null;
+
+            const currencySymbol: string =
+              getCurrencySymbol(
+                lowestPriceMembership.priceCurrency,
+                'narrow'
+              ) ?? '$';
+            return $localize`:@@MEMBERSHIPS__MEMBERSHIPS_START_AT_X_PER_MONTH:Memberships start at ${currencySymbol}${lowestPriceMembership.membershipPriceInCents /
+              100}`;
+          })
+        );
+      })
     );
   }
 
@@ -146,132 +132,7 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   private fetchAllData(): void {
-    this.siteMembershipsService.fetch();
-  }
-
-  /**
-   * Handle join membership click, either by navigating to checkout or opening the auth modal
-   * and navigating to the checkout on auth success.
-   * @param { SiteMembership } siteMembership - The site membership to join.
-   * @returns { Promise<void> }
-   */
-  public async onJoinMembershipClick(
-    siteMembership: SiteMembership
-  ): Promise<void> {
-    if (this.session.isLoggedIn()) {
-      this.navigateToCheckout(siteMembership);
-      return;
-    }
-
-    const result: MindsUser = await this.authModal.open({
-      formDisplay: 'register',
-    });
-
-    // modal closed.
-    if (!result) return;
-
-    // on login, if email is already confirmed, call the action again.
-    if (result.email_confirmed) {
-      this.navigateToCheckout(siteMembership);
-      return;
-    }
-
-    // listen for onboarding handler and call the action on completion.
-    this.subscriptions.push(
-      this.onboardingV5Service.onboardingCompleted$
-        .pipe(filter(Boolean), take(1))
-        .subscribe((completed: boolean): void => {
-          this.navigateToCheckout(siteMembership);
-        })
-    );
-  }
-
-  /**
-   * Handle manage plan click.
-   * @param { SiteMembership } siteMembership - The site membership to manage.
-   * @returns { Promise<void> }
-   */
-  public async onManagePlanClick(
-    siteMembership: SiteMembership
-  ): Promise<void> {
-    this.navigationInProgress$.next(true);
-
-    const membershipSubscriptionId: number = this.getMembershipSubscriptionId(
-      siteMembership
-    );
-
-    if (!membershipSubscriptionId) {
-      this.toaster.warn('You are not subscribed to this membership.');
-      this.navigationInProgress$.next(false);
-      return;
-    }
-
-    if (
-      !(await this.membershipManagement.navigateToManagePlan(
-        membershipSubscriptionId,
-        '/memberships'
-      ))
-    ) {
-      this.navigationInProgress$.next(false);
-    }
-  }
-
-  /**
-   * Navigate to checkout for a membership. Will first re-check a members membership subscription GUIDs to ensure
-   * that they are not already subscribed to the membership, incase there has been a change in another tab
-   * or they have just logged in.
-   * @param { SiteMembership } siteMembership - The site membership to checkout.
-   * @returns { Promise<void> }
-   */
-  private async navigateToCheckout(
-    siteMembership: SiteMembership
-  ): Promise<void> {
-    this.navigationInProgress$.next(true);
-
-    // refetch membership subscription guids.
-    const membershipSubscriptionGuids: string[] = await firstValueFrom(
-      this.getSiteMembershipSubscriptionsGQL
-        .fetch(null, {
-          fetchPolicy: 'network-only',
-        })
-        .pipe(
-          map(
-            (
-              response: ApolloQueryResult<GetSiteMembershipSubscriptionsQuery>
-            ): string[] => {
-              if (
-                response.errors?.length ||
-                !response?.data?.siteMembershipSubscriptions?.length
-              ) {
-                return [];
-              }
-              return response.data.siteMembershipSubscriptions.map(
-                (subscription: SiteMembershipSubscription): string =>
-                  subscription.membershipGuid
-              );
-            }
-          )
-        )
-    );
-
-    // if they are already a member, re-init to ensure we get their correct state.
-    if (membershipSubscriptionGuids.includes(siteMembership.membershipGuid)) {
-      this.toaster.warn('You are already subscribed to this membership.');
-      this.navigationInProgress$.next(false);
-      this.initialized$.next(false);
-      this.fetchAllData();
-      return;
-    }
-
-    // navigate to checkout.
-    if (
-      !(await this.membershipManagement.navigateToCheckout(
-        siteMembership.membershipGuid,
-        '/memberships'
-      ))
-    ) {
-      this.navigationInProgress$.next(false);
-    }
+    this.siteMembershipsService.fetch(true);
   }
 
   /**
@@ -295,22 +156,5 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
         }
       }, 0);
     }
-  }
-
-  /**
-   * Get the membership subscription ID for a membership.
-   * @param { SiteMembership } siteMembership - The site membership to get the subscription ID for.
-   * @returns { number } The membership subscription ID.
-   */
-  private getMembershipSubscriptionId(siteMembership: SiteMembership): number {
-    const subscriptions: SiteMembershipSubscription[] = this
-      .membershipSubscriptionsSnapshot;
-    if (!subscriptions?.length) return null;
-    return (
-      subscriptions.find(
-        (subscription: SiteMembershipSubscription): boolean =>
-          subscription.membershipGuid === siteMembership.membershipGuid
-      )?.membershipSubscriptionId ?? null
-    );
   }
 }

@@ -149,58 +149,77 @@
       padding: $spacing4 0;
 
       .m-networkAdminConsole__radioButtonInputContainer {
+        margin-right: $spacing4;
+      }
+    }
+    .m-networkAdminConsole__radioButtonInputContainer {
+      display: flex;
+      align-items: center;
+      flex-flow: row nowrap;
+
+      .m-networkAdminConsole__radioButtonLabel {
+        margin-left: $spacing2;
+        @include body1Regular;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      .m-networkAdminConsole__radioButtonLabel--multiline {
+        margin-left: $spacing2;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing2;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
+        .m-networkAdminConsole__radioButtonLabelMultiline--primary {
+          @include body1Medium;
+        }
+
+        .m-networkAdminConsole__radioButtonLabelMultiline--secondary {
+          @include body3Regular;
+        }
+      }
+
+      .m-networkAdminConsole__radioButtonInput,
+      .m-networkAdminConsole__radioButtonInputLabel--hidden {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 5px;
+        cursor: pointer;
+      }
+
+      .m-networkAdminConsole__radioButtonInput
+        + .m-networkAdminConsole__radioButtonInputLabel--hidden:before {
+        content: '';
+        border-radius: 50%;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        width: 24px;
+        height: 24px;
+
+        @include m-theme() {
+          background: themed($m-bgColor--primary);
+          border: 1px solid themed($m-borderColor--primary);
+        }
+      }
+
+      .m-networkAdminConsole__radioButtonInput:checked
+        + .m-networkAdminConsole__radioButtonInputLabel--hidden:before {
         display: flex;
         align-items: center;
-        flex-flow: row nowrap;
-        margin-right: $spacing4;
+        justify-content: center;
+        font-size: 16px;
+        content: '\ef4a';
+        font-family: 'Material Icons';
+        border: 1px solid unset;
 
-        .m-networkAdminConsole__radioButtonLabel {
-          margin-left: $spacing2;
-
-          @include body1Regular;
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-          }
-        }
-
-        .m-networkAdminConsole__radioButtonInput,
-        .m-networkAdminConsole__radioButtonInputLabel--hidden {
-          display: inline-block;
-          vertical-align: middle;
-          margin: 5px;
-          cursor: pointer;
-        }
-
-        .m-networkAdminConsole__radioButtonInput
-          + .m-networkAdminConsole__radioButtonInputLabel--hidden:before {
-          content: '';
-          border-radius: 50%;
-          display: inline-block;
-          text-align: center;
-          vertical-align: middle;
-          width: 24px;
-          height: 24px;
-
-          @include m-theme() {
-            background: themed($m-bgColor--primary);
-            border: 1px solid themed($m-borderColor--primary);
-          }
-        }
-
-        .m-networkAdminConsole__radioButtonInput:checked
-          + .m-networkAdminConsole__radioButtonInputLabel--hidden:before {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 16px;
-          content: '\ef4a';
-          font-family: 'Material Icons';
-          border: 1px solid unset;
-
-          @include m-theme() {
-            color: themed($m-action);
-            border: 1px solid themed($m-action);
-          }
+        @include m-theme() {
+          color: themed($m-action);
+          border: 1px solid themed($m-action);
         }
       }
     }
