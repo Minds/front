@@ -1,0 +1,112 @@
+<ng-container *ngIf="!(loading$ | async); else loadingSpinnerTemplate">
+  <div
+    class="m-formWrapper m-networkAdminConsoleInviteLinkFormWrapper"
+    *ngIf="form"
+  >
+    <form [formGroup]="form" class="m-networkAdminConsole__form">
+      <div class="m-form__fieldsContainer">
+        <div class="m-networkAdminConsole__radioButtonInputContainer">
+          <input
+            class="m-networkAdminConsole__radioButtonInput"
+            name="linkType"
+            type="radio"
+            id="defaultLinkType"
+            formControlName="linkType"
+            [value]="TenantInviteLinkType.DEFAULT"
+          />
+          <label class="m-networkAdminConsole__radioButtonInputLabel--hidden"
+            ><!--Icon positioning element--></label
+          >
+          <div class="m-networkAdminConsole__radioButtonLabel--multiline">
+            <label
+              class="m-networkAdminConsole__radioButtonLabelMultiline--primary"
+              i18n="@@NETWORK_ADMIN_CONSOLE_INVITE_LINK_TYPE__DEFAULT__LABEL"
+              >Invite to network</label
+            ><span
+              class="m-networkAdminConsole__radioButtonLabelMultiline--secondary"
+              i18n="
+
+                @@NETWORK_ADMIN_CONSOLE_INVITE_LINK_TYPE__DEFAULT__SECONDARY_LABEL
+
+              "
+              >Copy and paste a dedicated invitation link to potential network
+              users.</span
+            >
+          </div>
+        </div>
+        <div *ngIf="showDefaultLink">
+          <m-copyToClipboardButton
+            [contentToCopy]="getUrlToCopy()"
+            buttonText="Copy invite link"
+            [successMessage]="getCopySuccessMessage()"
+            [solid]="true"
+            size="small"
+            data-ref="m-networkAdminConsoleInviteLink__copyNetworkLinkButton"
+          ></m-copyToClipboardButton>
+        </div>
+      </div>
+      <!-- --------------------------------- -->
+      <div class="m-form__fieldsContainer">
+        <div
+          class="m-networkAdminConsole__radioButtonInputContainer"
+          *ngIf="memberships.length > 0"
+        >
+          <input
+            class="m-networkAdminConsole__radioButtonInput"
+            name="linkType"
+            type="radio"
+            id="membershipLinkType"
+            formControlName="linkType"
+            [value]="TenantInviteLinkType.MEMBERSHIP"
+          />
+          <label class="m-networkAdminConsole__radioButtonInputLabel--hidden"
+            ><!--Icon positioning element--></label
+          >
+
+          <div class="m-networkAdminConsole__radioButtonLabel--multiline">
+            <label
+              class="m-networkAdminConsole__radioButtonLabelMultiline--primary"
+              i18n="@@NETWORK_ADMIN_CONSOLE_INVITE_LINK_TYPE__MEMBERSHIP__LABEL"
+              >Invite to membership</label
+            ><span
+              class="m-networkAdminConsole__radioButtonLabelMultiline--secondary"
+              i18n="
+
+                @@NETWORK_ADMIN_CONSOLE_INVITE_LINK_TYPE__MEMBERSHIP__SECONDARY_LABEL
+
+              "
+              >Copy and paste a dedicated invitation link to potential network
+              users’ who would subscribe to a membership.</span
+            >
+          </div>
+        </div>
+        <div
+          class="m-networkAdminConsoleInviteLink__membershipCardsContainer"
+          *ngIf="showMembershipLinks"
+        >
+          <m-siteMembershipCard
+            *ngFor="let membership of memberships"
+            [name]="membership.membershipName"
+            [description]="membership.membershipDescription"
+            [priceInCents]="membership.membershipPriceInCents"
+            [priceCurrencyCode]="membership.membershipPriceCurrency"
+            [billingPeriod]="membership.membershipBillingPeriod"
+            [pricingModel]="membership.membershipPricingModel"
+          >
+            <m-copyToClipboardButton
+              [contentToCopy]="getUrlToCopy(membership)"
+              buttonText="Copy invite link"
+              [successMessage]="getCopySuccessMessage(membership)"
+              color="blue"
+              size="small"
+              data-ref="m-networkAdminConsoleInviteLink__copyMembershipButton"
+            ></m-copyToClipboardButton>
+          </m-siteMembershipCard>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

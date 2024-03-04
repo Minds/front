@@ -2,26 +2,20 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
+  flush,
   tick,
 } from '@angular/core/testing';
 import { SiteMembershipsPageComponent } from './site-memberships-page.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
-import { SiteMembershipManagementService } from '../../services/site-membership-management.service';
 import {
-  GetSiteMembershipSubscriptionsGQL,
   SiteMembership,
   SiteMembershipBillingPeriodEnum,
   SiteMembershipPricingModelEnum,
   SiteMembershipSubscription,
 } from '../../../../../graphql/generated.engine';
-import { AuthModalService } from '../../../auth/modal/auth-modal.service';
-import { OnboardingV5Service } from '../../../onboarding-v5/services/onboarding-v5.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
-import { siteMembershipMock } from '../../../../mocks/site-membership.mock';
-import userMock from '../../../../mocks/responses/user.mock';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
 import { SiteMembershipService } from '../../services/site-memberships.service';
@@ -29,6 +23,7 @@ import { SiteMembershipService } from '../../services/site-memberships.service';
 describe('SiteMembershipsPageComponent', () => {
   let comp: SiteMembershipsPageComponent;
   let fixture: ComponentFixture<SiteMembershipsPageComponent>;
+  const queryParamMapSubject = new BehaviorSubject(convertToParamMap({}));
 
   const mockSiteMemberships: SiteMembership[] = [
     {
@@ -45,6 +40,7 @@ describe('SiteMembershipsPageComponent', () => {
         { id: 2, name: 'role 2', permissions: [] },
       ],
       groups: [],
+      archived: false,
     },
     {
       id: '2',
@@ -60,6 +56,7 @@ describe('SiteMembershipsPageComponent', () => {
         { id: 4, name: 'role 4', permissions: [] },
       ],
       groups: [],
+      archived: false,
     },
   ];
 
@@ -97,10 +94,7 @@ describe('SiteMembershipsPageComponent', () => {
             'priceCurrencyCode',
             'billingPeriod',
             'pricingModel',
-            'isMember',
-            'inProgress',
           ],
-          outputs: ['joinMembershipClick', 'managePlanClick'],
         }),
         MockComponent({
           selector: 'm-loadingSpinner',
@@ -134,44 +128,13 @@ describe('SiteMembershipsPageComponent', () => {
             },
           }),
         },
-        {
-          provide: SiteMembershipManagementService,
-          useValue: MockService(SiteMembershipManagementService),
-        },
-        {
-          provide: GetSiteMembershipSubscriptionsGQL,
-          useValue: jasmine.createSpyObj<GetSiteMembershipSubscriptionsGQL>([
-            'fetch',
-          ]),
-        },
-        { provide: AuthModalService, useValue: MockService(AuthModalService) },
-        {
-          provide: OnboardingV5Service,
-          useValue: MockService(OnboardingV5Service, {
-            has: ['onboardingCompleted$'],
-            props: {
-              onboardingCompleted$: {
-                get: () => new BehaviorSubject<boolean>(false),
-              },
-            },
-          }),
-        },
         { provide: ToasterService, useValue: MockService(ToasterService) },
-        { provide: Session, useValue: MockService(Session) },
         {
           provide: ActivatedRoute,
-          useValue: MockService(ActivatedRoute, {
-            has: ['snapshot'],
-            props: {
-              snapshot: {
-                get: () => {
-                  return {
-                    queryParamMap: convertToParamMap({ error: 'error' }),
-                  };
-                },
-              },
-            },
-          }),
+          useValue: {
+            queryParamMap: queryParamMapSubject.asObservable(),
+            snapshot: { queryParamMap: queryParamMapSubject.value },
+          },
         },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
@@ -181,7 +144,6 @@ describe('SiteMembershipsPageComponent', () => {
     fixture = TestBed.createComponent(SiteMembershipsPageComponent);
     comp = fixture.componentInstance;
     spyOn(console, 'error');
-    (comp as any).getSiteMembershipSubscriptionsGQL.fetch.calls.reset();
 
     fixture.detectChanges();
     if (fixture.isStable()) {
@@ -202,155 +164,8 @@ describe('SiteMembershipsPageComponent', () => {
     expect(await firstValueFrom(comp.memberships$)).toEqual(
       mockSiteMemberships
     );
-    expect((comp as any).membershipSubscriptions$.getValue()).toEqual(
-      mockSiteMembershipSubscriptions
-    );
+    flush();
   }));
-
-  describe('onJoinMembershipClick', () => {
-    it('should call to navigate a user to checkout when logged in ', fakeAsync(() => {
-      (comp as any).session.isLoggedIn.and.returnValue(true);
-      (comp as any).getSiteMembershipSubscriptionsGQL.fetch.and.returnValue(
-        of({ data: { siteMembershipSubscriptions: [] } })
-      );
-      (comp as any).membershipManagement.navigateToCheckout.and.returnValue(
-        Promise.resolve(true)
-      );
-
-      comp.onJoinMembershipClick(siteMembershipMock);
-      tick();
-
-      expect((comp as any).session.isLoggedIn).toHaveBeenCalled();
-      expect(
-        (comp as any).getSiteMembershipSubscriptionsGQL.fetch
-      ).toHaveBeenCalled();
-      expect(
-        (comp as any).membershipManagement.navigateToCheckout
-      ).toHaveBeenCalled();
-    }));
-
-    it('should NOT call to navigate a user to checkout when a user is not logged in and the auth modal returns no user', fakeAsync(() => {
-      (comp as any).session.isLoggedIn.and.returnValue(false);
-      (comp as any).authModal.open.and.returnValue(Promise.resolve(null));
-
-      comp.onJoinMembershipClick(siteMembershipMock);
-      tick();
-
-      expect((comp as any).session.isLoggedIn).toHaveBeenCalled();
-      expect(
-        (comp as any).getSiteMembershipSubscriptionsGQL.fetch
-      ).not.toHaveBeenCalled();
-      expect(
-        (comp as any).membershipManagement.navigateToCheckout
-      ).not.toHaveBeenCalled();
-    }));
-
-    it('should call to navigate a user to checkout when a user logs in', fakeAsync(() => {
-      (comp as any).session.isLoggedIn.and.returnValue(false);
-      (comp as any).authModal.open.and.returnValue(Promise.resolve(userMock));
-      (comp as any).getSiteMembershipSubscriptionsGQL.fetch.and.returnValue(
-        of({ data: { siteMembershipSubscriptions: [] } })
-      );
-      (comp as any).membershipManagement.navigateToCheckout.and.returnValue(
-        Promise.resolve(true)
-      );
-
-      comp.onJoinMembershipClick(siteMembershipMock);
-      tick();
-
-      expect((comp as any).session.isLoggedIn).toHaveBeenCalled();
-      expect(
-        (comp as any).membershipManagement.navigateToCheckout
-      ).toHaveBeenCalled();
-    }));
-
-    it('should call to navigate a user to checkout when a user registers', fakeAsync(() => {
-      (comp as any).session.isLoggedIn.and.returnValue(false);
-      (comp as any).authModal.open.and.returnValue(
-        Promise.resolve({
-          ...userMock,
-          email_confirmed: false,
-        })
-      );
-      (comp as any).getSiteMembershipSubscriptionsGQL.fetch.and.returnValue(
-        of({ data: { siteMembershipSubscriptions: [] } })
-      );
-      (comp as any).membershipManagement.navigateToCheckout.and.returnValue(
-        Promise.resolve(true)
-      );
-
-      comp.onJoinMembershipClick(siteMembershipMock);
-      tick();
-
-      (comp as any).onboardingV5Service.onboardingCompleted$.next(true);
-      tick();
-
-      expect((comp as any).session.isLoggedIn).toHaveBeenCalled();
-      expect(
-        (comp as any).getSiteMembershipSubscriptionsGQL.fetch
-      ).toHaveBeenCalled();
-      expect(
-        (comp as any).membershipManagement.navigateToCheckout
-      ).toHaveBeenCalled();
-    }));
-
-    it('should NOT call to navigate a user to checkout when a user is already a member of a given plan ', fakeAsync(() => {
-      (comp as any).session.isLoggedIn.and.returnValue(true);
-      (comp as any).getSiteMembershipSubscriptionsGQL.fetch.and.returnValue(
-        of({
-          data: {
-            siteMembershipSubscriptions: [
-              {
-                ...mockSiteMembershipSubscriptions,
-                membershipGuid: siteMembershipMock.membershipGuid,
-              },
-            ],
-          },
-        })
-      );
-
-      comp.onJoinMembershipClick(siteMembershipMock);
-      tick();
-
-      expect((comp as any).session.isLoggedIn).toHaveBeenCalled();
-      expect(
-        (comp as any).getSiteMembershipSubscriptionsGQL.fetch
-      ).toHaveBeenCalled();
-      expect((comp as any).toaster.warn).toHaveBeenCalled();
-      expect(
-        (comp as any).membershipManagement.navigateToCheckout
-      ).not.toHaveBeenCalled();
-    }));
-  });
-
-  describe('onManagePlanClick', () => {
-    it('should navigate to manage plan', () => {
-      (comp as any).membershipSubscriptions$.next([
-        {
-          ...mockSiteMembershipSubscriptions[0],
-          membershipGuid: siteMembershipMock.membershipGuid,
-        },
-      ]);
-      (comp as any).membershipManagement.navigateToManagePlan.and.returnValue(
-        Promise.resolve(true)
-      );
-      comp.onManagePlanClick(siteMembershipMock);
-      expect(
-        (comp as any).membershipManagement.navigateToManagePlan
-      ).toHaveBeenCalled();
-    });
-
-    it('should not navigate to manage plan if you are not a subscriber to it', () => {
-      (comp as any).membershipSubscriptions$.next([]);
-      (comp as any).membershipManagement.navigateToManagePlan.and.returnValue(
-        Promise.resolve(true)
-      );
-      comp.onManagePlanClick(siteMembershipMock);
-      expect(
-        (comp as any).membershipManagement.navigateToManagePlan
-      ).not.toHaveBeenCalled();
-    });
-  });
 
   describe('checkForErrorParams', () => {
     it('should show toast for SUBSCRIPTION_ALREADY_CANCELLED error param', fakeAsync(() => {
@@ -365,5 +180,34 @@ describe('SiteMembershipsPageComponent', () => {
         'This subscription is already cancelled'
       );
     }));
+  });
+
+  describe('SiteMembershipsPageComponent with membershipRedirect query param', () => {
+    it('should set starCardTitleText correctly when membershipRedirect query param is present', fakeAsync(() => {
+      queryParamMapSubject.next(
+        convertToParamMap({ membershipRedirect: 'true' })
+      );
+
+      fixture.detectChanges();
+      tick();
+
+      expect((comp as any).starCardTitleText).toEqual(
+        'This membership is no longer available'
+      );
+      flush();
+    }));
+
+    it('should set starCardDescriptionText$ correctly when membershipRedirect query param is present', done => {
+      queryParamMapSubject.next(
+        convertToParamMap({ membershipRedirect: 'true' })
+      );
+
+      (comp as any).starCardDescriptionText$.subscribe(description => {
+        expect(description).toContain(
+          'Check out these other available memberships'
+        );
+        done();
+      });
+    });
   });
 });

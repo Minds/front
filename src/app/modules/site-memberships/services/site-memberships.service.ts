@@ -4,6 +4,7 @@ import {
   ToasterService,
 } from '../../../common/services/toaster.service';
 import {
+  GetSiteMembershipGQL,
   GetSiteMembershipsAndSubscriptionsGQL,
   SiteMembership,
   SiteMembershipSubscription,
@@ -12,9 +13,12 @@ import {
   BehaviorSubject,
   Observable,
   ReplaySubject,
+  catchError,
   lastValueFrom,
   map,
+  of,
 } from 'rxjs';
+import { FetchPolicy } from '@apollo/client';
 
 /**
  * Service to return site memberships
@@ -50,17 +54,23 @@ export class SiteMembershipService {
 
   constructor(
     private getSiteMembershipsAndSubscriptionsGQL: GetSiteMembershipsAndSubscriptionsGQL,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private getSiteMembershipGQL: GetSiteMembershipGQL
   ) {}
 
   /**
    * Batch load site memberships and subscriptions into service state.
+   * @param [useNetworkOnly=false] true if you the data changes regularly (e.g. when you are managing memberships) to ignore the cache and always make a network call. False by default
    */
-  public async fetch(): Promise<void> {
+  public async fetch(useNetworkOnly: boolean = false): Promise<void> {
     try {
+      const fetchPolicy: FetchPolicy = useNetworkOnly
+        ? 'network-only'
+        : 'cache-first';
+
       const response = await lastValueFrom(
         this.getSiteMembershipsAndSubscriptionsGQL.fetch(null, {
-          fetchPolicy: 'network-only',
+          fetchPolicy: fetchPolicy,
         })
       );
 
@@ -104,5 +114,32 @@ export class SiteMembershipService {
       }
     }
     return lowestPriceMembership;
+  }
+
+  /**
+   * Gets a single membership by membershipGuid
+   * @param membershipGuid The guid of the membership to check.
+   * @returns SiteMembership
+   */
+  public loadMembershipByGuid(
+    membershipGuid: string
+  ): Observable<SiteMembership | null> {
+    return this.getSiteMembershipGQL
+      .fetch({ membershipGuid: membershipGuid })
+      .pipe(
+        map(response => {
+          if (!response.data?.siteMembership || response.errors?.length) {
+            throw new Error(
+              response.errors?.[0]?.message || 'Membership not found'
+            );
+          }
+          return response.data.siteMembership as SiteMembership;
+        }),
+        catchError(error => {
+          console.error(error);
+          this.toaster.error('Failed to load membership details');
+          return of(null);
+        })
+      );
   }
 }

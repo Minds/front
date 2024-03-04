@@ -1,0 +1,12 @@
+<m-button
+  class="m-copyToClipboardButton"
+  [solid]="solid"
+  [color]="color"
+  [size]="size"
+  (onAction)="copyToClipboard()"
+>
+  <ng-container *ngIf="showIcon">
+    <i class="m-copyToClipboardButtonIcon material-icons">content_copy</i>
+  </ng-container>
+  {{ buttonText }}
+</m-button>
