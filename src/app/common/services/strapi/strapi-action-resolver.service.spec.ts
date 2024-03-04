@@ -15,6 +15,7 @@ import userMock from '../../../mocks/responses/user.mock';
 import { WireCreatorComponent } from '../../../modules/wire/v2/creator/wire-creator.component';
 import { OnboardingV5Service } from '../../../modules/onboarding-v5/services/onboarding-v5.service';
 import { BehaviorSubject } from 'rxjs';
+import { NetworksTrialCreationService } from '../../../modules/multi-tenant-network/services/networks-trial-creation.service';
 
 describe('StrapiActionResolverService', () => {
   let service: StrapiActionResolverService;
@@ -43,6 +44,10 @@ describe('StrapiActionResolverService', () => {
               },
             },
           }),
+        },
+        {
+          provide: NetworksTrialCreationService,
+          useValue: MockService(NetworksTrialCreationService),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: Router, useValue: MockService(Router) },
@@ -322,5 +327,17 @@ describe('StrapiActionResolverService', () => {
 
       expect((service as any).links.openComposerModal).toHaveBeenCalled();
     }));
+  });
+
+  it('should resolve action for starting a network trial', () => {
+    (service as any).session.isLoggedIn.and.returnValue(true);
+
+    const action: StrapiAction = 'networks_start_trial';
+
+    service.resolve(action as StrapiAction);
+
+    expect(
+      (service as any).networksTrialCreationService.startTrial
+    ).toHaveBeenCalled();
   });
 });

@@ -66,6 +66,7 @@ describe('ProductPageFeatureHighlightComponent', () => {
     Object.defineProperty(comp, 'image', { writable: true });
     Object.defineProperty(comp, 'alignImage', { writable: true });
     Object.defineProperty(comp, 'backgroundColor', { writable: true });
+    Object.defineProperty(comp, 'footnotes', { writable: true });
 
     (comp as any).title = defaultTitle;
     (comp as any).body = defaultBody;
@@ -166,5 +167,27 @@ describe('ProductPageFeatureHighlightComponent', () => {
         'm-productPageFeatHighlight__host--light'
       )
     ).toBeTrue();
+  });
+
+  it('should render footnotes', () => {
+    (comp as any).footnotes = 'footnotes';
+    fixture.detectChanges();
+
+    expect(
+      fixture.debugElement.query(
+        By.css('.m-productPageFeatHighlight__footnotesContent')
+      )
+    ).toBeTruthy();
+  });
+
+  it('should NOT render footnotes when not supplied', () => {
+    (comp as any).footnotes = null;
+    fixture.detectChanges();
+
+    expect(
+      fixture.debugElement.query(
+        By.css('.m-productPageFeatHighlight__footnotesContent')
+      )
+    ).toBeFalsy();
   });
 });
