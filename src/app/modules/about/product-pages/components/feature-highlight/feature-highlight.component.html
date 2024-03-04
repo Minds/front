@@ -7,6 +7,12 @@
       [data]="button"
       [colorScheme]="colorScheme"
     ></m-productPage__button>
+    <markdown
+      *ngIf="footnotes"
+      class="m-productPageFeatHighlight__footnotesContent"
+      [data]="footnotes"
+      ngPreserveWhitespaces
+    ></markdown>
   </div>
 </div>
 <div class="m-productPageFeatHighlight__imageContainer">

@@ -143,6 +143,7 @@ describe('ProductPageBaseComponent', () => {
               'image',
               'backgroundColor',
               'alignImage',
+              'footnotes',
             ],
           }),
           MockComponent({

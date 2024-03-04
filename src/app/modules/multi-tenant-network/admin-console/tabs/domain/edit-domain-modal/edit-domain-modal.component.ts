@@ -40,8 +40,7 @@ export class NetworkAdminConsoleEditDomainModalComponent {
 
   constructor(
     protected service: MultiTenantDomainService,
-    private formBuilder: FormBuilder,
-    private toaster: ToasterService
+    private formBuilder: FormBuilder
   ) {
     this.formGroup = this.formBuilder.group({
       hostname: new FormControl<string>('', [
@@ -80,12 +79,8 @@ export class NetworkAdminConsoleEditDomainModalComponent {
     this.savingInProgress$.next(false);
     if (success) {
       this.saved = true;
-    } else {
-      this.toaster.error('Unable to submit changes, please try again later.');
-      return;
+      this.hostnameFormControl.markAsPristine();
     }
-
-    this.hostnameFormControl.markAsPristine();
   }
 
   /**

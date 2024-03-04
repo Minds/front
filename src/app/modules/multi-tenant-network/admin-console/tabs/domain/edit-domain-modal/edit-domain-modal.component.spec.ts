@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule, FormBuilder } from '@angular/forms';
 import { NetworkAdminConsoleEditDomainModalComponent } from './edit-domain-modal.component';
 import { MultiTenantDomainService } from '../../../../services/domain.service';
-import { ToasterService } from '../../../../../../common/services/toaster.service';
 
 describe('NetworkAdminConsoleEditDomainModalComponent', () => {
   let component: NetworkAdminConsoleEditDomainModalComponent;
@@ -11,7 +10,6 @@ describe('NetworkAdminConsoleEditDomainModalComponent', () => {
   const mockDomainService = jasmine.createSpyObj('MultiTenantDomainService', [
     'updateDomain',
   ]);
-  const mockToasterService = jasmine.createSpyObj('ToasterService', ['error']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -20,7 +18,6 @@ describe('NetworkAdminConsoleEditDomainModalComponent', () => {
       providers: [
         FormBuilder,
         { provide: MultiTenantDomainService, useValue: mockDomainService },
-        { provide: ToasterService, useValue: mockToasterService },
       ],
     }).compileComponents();
   });
