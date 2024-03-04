@@ -742,6 +742,7 @@ export type ComponentV2ProductActionButton = {
   solid?: Maybe<Scalars['Boolean']['output']>;
   stripeProductKey?: Maybe<Scalars['String']['output']>;
   text: Scalars['String']['output'];
+  trialUpgradeRequest?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type ComponentV2ProductActionButtonFiltersInput = {
@@ -759,6 +760,7 @@ export type ComponentV2ProductActionButtonFiltersInput = {
   solid?: InputMaybe<BooleanFilterInput>;
   stripeProductKey?: InputMaybe<StringFilterInput>;
   text?: InputMaybe<StringFilterInput>;
+  trialUpgradeRequest?: InputMaybe<BooleanFilterInput>;
 };
 
 export type ComponentV2ProductActionButtonInput = {
@@ -770,6 +772,7 @@ export type ComponentV2ProductActionButtonInput = {
   solid?: InputMaybe<Scalars['Boolean']['input']>;
   stripeProductKey?: InputMaybe<Scalars['String']['input']>;
   text?: InputMaybe<Scalars['String']['input']>;
+  trialUpgradeRequest?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ComponentV2ProductBasicExplainer = {
@@ -796,6 +799,7 @@ export type ComponentV2ProductFeatureHighlight = {
   body: Scalars['String']['output'];
   button?: Maybe<ComponentV2ProductActionButton>;
   colorScheme: Enum_Componentv2Productfeaturehighlight_Colorscheme;
+  footnotes?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   image: UploadFileEntityResponse;
   title: Scalars['String']['output'];
@@ -960,6 +964,10 @@ export enum Enum_Checkoutpage_Key {
 }
 
 export enum Enum_Componentcommonactionbutton_Action {
+  NetworksCommunityCheckout = 'networks_community_checkout',
+  NetworksEnterpriseCheckout = 'networks_enterprise_checkout',
+  NetworksStartTrial = 'networks_start_trial',
+  NetworksTeamCheckout = 'networks_team_checkout',
   OpenComposer = 'open_composer',
   OpenOnchainTransferModal = 'open_onchain_transfer_modal',
   OpenPlusUpgradeModal = 'open_plus_upgrade_modal',
@@ -980,6 +988,7 @@ export enum Enum_Componentonboardingv5Onboardingstep_Steptype {
 export enum Enum_Componentv2Productactionbutton_Action {
   NetworksCommunityCheckout = 'networks_community_checkout',
   NetworksEnterpriseCheckout = 'networks_enterprise_checkout',
+  NetworksStartTrial = 'networks_start_trial',
   NetworksTeamCheckout = 'networks_team_checkout',
   OpenComposer = 'open_composer',
   OpenOnchainTransferModal = 'open_onchain_transfer_modal',
@@ -3375,6 +3384,7 @@ export type GetV2ProductPageBySlugQuery = {
                 navigationUrl?: string | null;
                 action?: Enum_Componentv2Productactionbutton_Action | null;
                 stripeProductKey?: string | null;
+                trialUpgradeRequest?: boolean | null;
               } | null;
             }
           | {
@@ -3404,6 +3414,7 @@ export type GetV2ProductPageBySlugQuery = {
                 navigationUrl?: string | null;
                 action?: Enum_Componentv2Productactionbutton_Action | null;
                 stripeProductKey?: string | null;
+                trialUpgradeRequest?: boolean | null;
               } | null;
             }
           | {
@@ -3414,6 +3425,7 @@ export type GetV2ProductPageBySlugQuery = {
               title: string;
               body: string;
               alignImage: Enum_Componentv2Productfeaturehighlight_Alignimage;
+              footnotes?: string | null;
               image: {
                 __typename?: 'UploadFileEntityResponse';
                 data?: {
@@ -3436,6 +3448,7 @@ export type GetV2ProductPageBySlugQuery = {
                 navigationUrl?: string | null;
                 action?: Enum_Componentv2Productactionbutton_Action | null;
                 stripeProductKey?: string | null;
+                trialUpgradeRequest?: boolean | null;
               } | null;
             }
           | {
@@ -3486,6 +3499,7 @@ export type GetV2ProductPageBySlugQuery = {
                         navigationUrl?: string | null;
                         action?: Enum_Componentv2Productactionbutton_Action | null;
                         stripeProductKey?: string | null;
+                        trialUpgradeRequest?: boolean | null;
                       };
                     } | null;
                     sections?: {
@@ -3580,6 +3594,7 @@ export type GetV2ProductPageBySlugQuery = {
                       rounded?: boolean | null;
                       navigationUrl?: string | null;
                       stripeProductKey?: string | null;
+                      trialUpgradeRequest?: boolean | null;
                       action?: Enum_Componentv2Productactionbutton_Action | null;
                     };
                     perks?: Array<{
@@ -4044,6 +4059,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                       rounded
                       navigationUrl
                       stripeProductKey
+                      trialUpgradeRequest
                       action
                     }
                     perksTitle
@@ -4074,6 +4090,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                         navigationUrl
                         action
                         stripeProductKey
+                        trialUpgradeRequest
                       }
                     }
                     sections {
@@ -4132,6 +4149,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 navigationUrl
                 action
                 stripeProductKey
+                trialUpgradeRequest
               }
             }
             ... on ComponentV2ProductFeatureHighlight {
@@ -4159,7 +4177,9 @@ export const GetV2ProductPageBySlugDocument = gql`
                 navigationUrl
                 action
                 stripeProductKey
+                trialUpgradeRequest
               }
+              footnotes
             }
             ... on ComponentV2ProductClosingCta {
               id
@@ -4183,6 +4203,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 navigationUrl
                 action
                 stripeProductKey
+                trialUpgradeRequest
               }
             }
           }
