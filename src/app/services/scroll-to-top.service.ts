@@ -3,6 +3,9 @@ import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, pairwise } from 'rxjs/operators';
 
+/** Parent routes that are disabled - a route matches if it starts with one of these routes. */
+const DISABLED_PARENT_ROUTES: string[] = ['/network/admin/analytics/'];
+
 @Injectable()
 export class ScrollToTopService {
   private _routerListener: Subscription;
@@ -24,7 +27,11 @@ export class ScrollToTopService {
           previousPath = events[0].urlAfterRedirects.split('/')[1],
           currentPath = events[1].urlAfterRedirects.split('/')[1];
 
-        const currentPathDisabled = disabledPaths.indexOf(currentPath) > -1;
+        const currentPathDisabled =
+          disabledPaths.indexOf(currentPath) > -1 ||
+          DISABLED_PARENT_ROUTES.some((parentRoute: string): boolean =>
+            events?.[1]?.urlAfterRedirects.startsWith(parentRoute)
+          );
         const pathChanged = previousPath !== currentPath;
 
         // Disable scroll on disabledPaths only when navigating within them
