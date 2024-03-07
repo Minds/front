@@ -11,7 +11,7 @@ export const DEFAULT_TIMESPAN_FILTER_ID: string = '30d';
 @Injectable({ providedIn: 'root' })
 export class NetworkAdminAnalyticsTimespanFiltersService {
   /** Timestamp of service instantiation. */
-  public readonly instantiationTimestamp: moment.Moment = moment();
+  public readonly instantiationTimestamp: moment.Moment = moment().utc();
 
   /** Internal reference to the filters. */
   private _filters: Filter;
@@ -40,6 +40,7 @@ export class NetworkAdminAnalyticsTimespanFiltersService {
           id: '7d',
           label: 'Last 7 days',
           selected: false,
+          interval: 'day',
           from_ts_ms: this.instantiationTimestamp
             .clone()
             .subtract(7, 'days')
@@ -50,6 +51,7 @@ export class NetworkAdminAnalyticsTimespanFiltersService {
           id: '30d',
           label: 'Last 30 days',
           selected: true,
+          interval: 'day',
           from_ts_ms: this.instantiationTimestamp
             .clone()
             .subtract(30, 'days')
@@ -60,6 +62,7 @@ export class NetworkAdminAnalyticsTimespanFiltersService {
           id: '1y',
           label: 'Last 12 months',
           selected: false,
+          interval: 'month',
           from_ts_ms: this.instantiationTimestamp
             .clone()
             .subtract(1, 'year')
@@ -70,6 +73,7 @@ export class NetworkAdminAnalyticsTimespanFiltersService {
           id: 'ytd',
           label: 'Year to date',
           selected: false,
+          interval: 'month',
           from_ts_ms: moment()
             .startOf('year')
             .startOf('day')

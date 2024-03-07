@@ -39,6 +39,7 @@
       *ngIf="data?.tenantAdminAnalyticsChart?.segments"
       class="m-networkAdminAnalytics__chart"
       [segments]="data.tenantAdminAnalyticsChart.segments"
+      [interval]="resolution$ | async"
     ></m-chartV2>
 
     <m-networkAdminAnalytics__kpis

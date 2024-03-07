@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NetworkAdminAnalyticsKpisService } from '../../services/kpis.service';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { GetAdminAnalyticsChartAndKpisQuery } from '../../../../../../../../graphql/generated.engine';
 import { Filter, Option } from '../../../../../../../interfaces/dashboard';
 import { DropdownSelectorSelection } from '../../../../../../../common/components/dropdown-selector/dropdown-selector.component';
@@ -29,6 +29,9 @@ export class NetworkAdminAnalyticsBaseComponent implements OnInit {
 
   /** Whether loading is in progress. */
   protected inProgress$: Observable<boolean> = this.kpisService.inProgress$;
+
+  /** The resolution (day,month) of the data (graph) */
+  protected resolution$: ReplaySubject<string> = new ReplaySubject();
 
   constructor(
     private kpisService: NetworkAdminAnalyticsKpisService,
@@ -74,5 +77,16 @@ export class NetworkAdminAnalyticsBaseComponent implements OnInit {
       queryParams: { timespan: timespanString },
       queryParamsHandling: 'merge',
     });
+
+    this.updateResolution(option.id);
+  }
+
+  /**
+   * Update the resoltion based off the selected timeframe
+   * @param optionId
+   */
+  private updateResolution(optionId: string): void {
+    const option: Option = this.timespanFiltersService.getOptionById(optionId);
+    this.resolution$.next(option.interval);
   }
 }
