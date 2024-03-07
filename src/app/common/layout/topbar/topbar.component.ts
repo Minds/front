@@ -83,7 +83,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     private guestModeExperiment: GuestModeExperimentService,
     private topbarAlertService: TopbarAlertService,
     private tenantConfigImageService: MultiTenantConfigImageService,
-    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
+    @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 

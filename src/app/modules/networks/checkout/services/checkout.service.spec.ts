@@ -57,7 +57,6 @@ describe('NetworksCheckoutService', () => {
     service = TestBed.inject(NetworksCheckoutService);
     (service as any).getCheckoutPageGQL.watch.calls.reset();
     (service as any).getCheckoutLinkGQL.fetch.calls.reset();
-    // (service as any).document.defaultView.location.replace.calls.reset();
     (service as any).getCheckoutPageQuery = null;
   });
 

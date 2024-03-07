@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { SiteMembershipService } from './site-memberships.service';
 import {
+  GetSiteMembershipGQL,
   GetSiteMembershipsAndSubscriptionsGQL,
   SiteMembership,
   SiteMembershipBillingPeriodEnum,
@@ -29,6 +30,7 @@ export const mockSiteMemberships: SiteMembership[] = [
       { id: 2, name: 'role 2', permissions: [] },
     ],
     groups: [],
+    archived: false,
   },
   {
     id: '2',
@@ -44,6 +46,7 @@ export const mockSiteMemberships: SiteMembership[] = [
       { id: 4, name: 'role 4', permissions: [] },
     ],
     groups: [],
+    archived: false,
   },
 ];
 
@@ -66,8 +69,13 @@ export const mockSiteMembershipSubscriptions: SiteMembershipSubscription[] = [
 
 describe('SiteMembershipService', () => {
   let service: SiteMembershipService;
+  let getSiteMembershipGQL: jasmine.SpyObj<GetSiteMembershipGQL>;
 
   beforeEach(() => {
+    getSiteMembershipGQL = jasmine.createSpyObj('GetSiteMembershipGQL', [
+      'fetch',
+    ]);
+
     TestBed.configureTestingModule({
       providers: [
         SiteMembershipService,
@@ -78,6 +86,10 @@ describe('SiteMembershipService', () => {
           ),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
+        {
+          provide: GetSiteMembershipGQL,
+          useValue: getSiteMembershipGQL,
+        },
       ],
     });
 
@@ -90,9 +102,9 @@ describe('SiteMembershipService', () => {
   });
 
   describe('fetch', () => {
-    it('should fetch site memberships and subscriptions', async () => {
-      (service as any).siteMemberships$.next([]);
-      (service as any).siteMembershipSubscriptions$.next([]);
+    it('should fetch site memberships and subscriptions with network-only policy', async () => {
+      service.siteMemberships$.next([]);
+      service.siteMembershipSubscriptions$.next([]);
 
       (service as any).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
         of({
@@ -103,20 +115,41 @@ describe('SiteMembershipService', () => {
         })
       );
 
-      await service.fetch();
+      await service.fetch(true);
 
       expect(
         (service as any).getSiteMembershipsAndSubscriptionsGQL.fetch
-      ).toHaveBeenCalledOnceWith(null, {
+      ).toHaveBeenCalledWith(null, {
         fetchPolicy: 'network-only',
       });
-
+      expectAsync(lastValueFrom(service.siteMemberships$)).toBeResolvedTo(
+        mockSiteMemberships
+      );
       expectAsync(
-        lastValueFrom((service as any).siteMemberships$)
-      ).toBeResolvedTo(mockSiteMemberships);
-      expectAsync(
-        lastValueFrom((service as any).siteMembershipSubscriptions$)
+        lastValueFrom(service.siteMembershipSubscriptions$)
       ).toBeResolvedTo(mockSiteMembershipSubscriptions);
+    });
+
+    it('should fetch site memberships and subscriptions with cache-first policy', async () => {
+      service.siteMemberships$.next([]);
+      service.siteMembershipSubscriptions$.next([]);
+
+      (service as any).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
+        of({
+          data: {
+            siteMemberships: mockSiteMemberships,
+            siteMembershipSubscriptions: mockSiteMembershipSubscriptions,
+          },
+        })
+      );
+
+      await service.fetch(false);
+
+      expect(
+        (service as any).getSiteMembershipsAndSubscriptionsGQL.fetch
+      ).toHaveBeenCalledWith(null, {
+        fetchPolicy: 'cache-first',
+      });
     });
 
     it('should handle errors', async () => {
@@ -129,7 +162,7 @@ describe('SiteMembershipService', () => {
         })
       );
 
-      await service.fetch();
+      await service.fetch(true);
 
       expect(
         (service as any).getSiteMembershipsAndSubscriptionsGQL.fetch
@@ -161,7 +194,7 @@ describe('SiteMembershipService', () => {
         })
       );
 
-      await service.fetch();
+      await service.fetch(true);
 
       expect(
         (service as any).getSiteMembershipsAndSubscriptionsGQL.fetch
@@ -187,6 +220,30 @@ describe('SiteMembershipService', () => {
         mockSiteMemberships
       );
       expect(lowestPriceMembership).toEqual(mockSiteMemberships[1]);
+    });
+  });
+
+  describe('loadMembershipByGuid', () => {
+    it('should fetch and return a SiteMembership for a valid GUID', done => {
+      const expectedMembership = mockSiteMemberships[1];
+      const mockMembershipGuid = mockSiteMemberships[1].membershipGuid;
+
+      getSiteMembershipGQL.fetch.and.returnValue(
+        of({
+          data: { siteMembership: mockSiteMemberships[1] },
+          loading: false,
+          networkStatus: 7,
+          stale: false,
+        })
+      );
+
+      service.loadMembershipByGuid(mockMembershipGuid).subscribe(result => {
+        expect(result).toEqual(expectedMembership);
+        expect(getSiteMembershipGQL.fetch).toHaveBeenCalledWith({
+          membershipGuid: mockMembershipGuid,
+        });
+        done();
+      });
     });
   });
 });

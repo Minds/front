@@ -69,6 +69,7 @@ query GetV2ProductPageBySlug($slug: String!) {
                     rounded
                     navigationUrl
                     stripeProductKey
+                    trialUpgradeRequest
                     action
                   }
                   perksTitle
@@ -99,6 +100,7 @@ query GetV2ProductPageBySlug($slug: String!) {
                       navigationUrl
                       action
                       stripeProductKey
+                      trialUpgradeRequest
                     }
                   }
                   sections {
@@ -157,6 +159,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               navigationUrl
               action
               stripeProductKey
+              trialUpgradeRequest
             }
           }
           ... on ComponentV2ProductFeatureHighlight {
@@ -184,7 +187,9 @@ query GetV2ProductPageBySlug($slug: String!) {
               navigationUrl
               action
               stripeProductKey
+              trialUpgradeRequest
             }
+            footnotes
           }
           ... on ComponentV2ProductClosingCta {
             id
@@ -208,6 +213,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               navigationUrl
               action
               stripeProductKey
+              trialUpgradeRequest
             }
           }
         }

@@ -97,41 +97,4 @@ describe('SiteMembershipCardComponent', () => {
         .nativeElement.innerText
     ).toBe('description');
   });
-
-  describe('footer', () => {
-    it('should have a footer with a join now button when isMember is false', () => {
-      (comp as any).isMember = false;
-      fixture.detectChanges();
-
-      expect(
-        fixture.debugElement.query(
-          By.css('.m-siteMembershipCard__actionButton')
-        ).nativeElement.innerText
-      ).toBe('Join membership');
-    });
-
-    it('should have a footer with a manage plan button when isMember is true and pricing model is recurring', () => {
-      (comp as any).isMember = true;
-      (comp as any).pricingModel = SiteMembershipPricingModelEnum.Recurring;
-      fixture.detectChanges();
-
-      expect(
-        fixture.debugElement.query(
-          By.css('.m-siteMembershipCard__actionButton')
-        ).nativeElement.innerText
-      ).toBe('Manage plan');
-    });
-
-    it('should have a footer with a manage plan button when isMember is true and pricing model is one-time', () => {
-      (comp as any).isMember = true;
-      (comp as any).pricingModel = SiteMembershipPricingModelEnum.OneTime;
-      fixture.detectChanges();
-
-      expect(
-        fixture.debugElement.query(
-          By.css('.m-siteMembershipCard__actionButton')
-        ).nativeElement.innerText
-      ).toBe('Purchased');
-    });
-  });
 });

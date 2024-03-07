@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
 /**
@@ -18,4 +18,14 @@ export class StarCardComponent {
 
   /** Description of the card. */
   @Input() description: string;
+
+  /** Don't show the border */
+  @HostBinding('class.m-starCard--hideBorder')
+  @Input()
+  hideBorder: boolean = false;
+
+  /** Don't show the stars */
+  @HostBinding('class.m-starCard--hideStars')
+  @Input()
+  hideStars: boolean = false;
 }

@@ -1,0 +1,51 @@
+<ng-container
+  *ngIf="membership$ | async as membership; else loadingSpinnerTemplate"
+>
+  <m-starCard
+    [hideStars]="true"
+    [hideBorder]="true"
+    [title]="starCardTitle$ | async"
+  ></m-starCard>
+
+  <m-siteMembershipCard
+    *ngIf="membership$ | async as membership"
+    [name]="membership.membershipName"
+    [description]="membership.membershipDescription"
+    [priceInCents]="membership.membershipPriceInCents"
+    [priceCurrencyCode]="membership.membershipPriceCurrency"
+    [billingPeriod]="membership.membershipBillingPeriod"
+    [pricingModel]="membership.membershipPricingModel"
+  >
+    <p
+      *ngIf="isMember$ | async"
+      class="m-siteMembershipPage__alreadyMemberNotice"
+    >
+      <span i18n="SITE_MEMBERSHIP_PAGE__NOTICE__YOU_ARE_ALREADY_A_MEMBER_OF"
+        >You are already a member of</span
+      >&nbsp;<strong>{{ membership.membershipName }}</strong>
+    </p>
+    <ng-container *ngIf="!(isMember$ | async)"
+      ><m-joinManageSiteMembershipButton
+        [membershipGuid]="membership.membershipGuid"
+      ></m-joinManageSiteMembershipButton
+    ></ng-container>
+  </m-siteMembershipCard>
+  <a class="m-siteMembershipPage__footerCta" routerLink="/">
+    <m-button *ngIf="!(isMember$ | async)"
+      ><ng-container i18n="SITE_MEMBERSHIP_PAGE__CTA__NOT_NOW"
+        >Not now</ng-container
+      ></m-button
+    ></a
+  >
+  <a class="m-siteMembershipPage__footerCta" routerLink="/memberships">
+    <m-button *ngIf="isMember$ | async"
+      ><ng-container i18n="SITE_MEMBERSHIP_PAGE__CTA__VIEW_OTHER_MEMBERSHIPS"
+        >View other memberships</ng-container
+      ></m-button
+    ></a
+  >
+</ng-container>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

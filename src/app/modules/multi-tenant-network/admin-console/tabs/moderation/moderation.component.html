@@ -15,7 +15,7 @@
 <m-networkAdminConsole__nsfwToggle
   *ngIf="session.isAdmin()"
 ></m-networkAdminConsole__nsfwToggle>
-<div class="m-tabs__container">
+<div class="m-tabs__container m-hideScrollbar">
   <div class="m-tabs__tab" *ngIf="permissions.canModerateContent()">
     <a
       [routerLink]="['./reports']"

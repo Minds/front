@@ -824,6 +824,7 @@ export type Mutation = {
   siteMembership: SiteMembership;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
+  tenantTrial: Tenant;
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
@@ -963,6 +964,10 @@ export type MutationSiteMembershipArgs = {
 
 export type MutationStoreFeaturedEntityArgs = {
   featuredEntity: FeaturedEntityInput;
+};
+
+export type MutationTenantTrialArgs = {
+  tenant?: InputMaybe<TenantInput>;
 };
 
 export type MutationUnassignUserFromRoleArgs = {
@@ -1229,6 +1234,7 @@ export type QueryBoostsArgs = {
 
 export type QueryCheckoutLinkArgs = {
   addOnIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  isTrialUpgrade?: InputMaybe<Scalars['Boolean']['input']>;
   planId: Scalars['String']['input'];
   timePeriod: CheckoutTimePeriodEnum;
 };
@@ -1552,6 +1558,7 @@ export enum SecuritySubReasonEnum {
 
 export type SiteMembership = {
   __typename?: 'SiteMembership';
+  archived: Scalars['Boolean']['output'];
   groups?: Maybe<Array<GroupNode>>;
   id: Scalars['ID']['output'];
   membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
@@ -1623,6 +1630,7 @@ export type Tenant = {
   ownerGuid?: Maybe<Scalars['String']['output']>;
   plan: TenantPlanEnum;
   rootUserGuid?: Maybe<Scalars['String']['output']>;
+  trialStartTimestamp?: Maybe<Scalars['Int']['output']>;
 };
 
 export type TenantInput = {
@@ -1990,7 +1998,7 @@ export type GetAdminAnalyticsChartAndKpisQuery = {
     __typename?: 'AnalyticsChartType';
     metric: AnalyticsMetricEnum;
     segments: Array<{
-      __typename?: 'AnalyticsC  hartSegmentType';
+      __typename?: 'AnalyticsChartSegmentType';
       buckets: Array<{
         __typename?: 'AnalyticsChartBucketType';
         date: string;
@@ -2629,6 +2637,7 @@ export type GetSiteMembershipQuery = {
     priceCurrency: string;
     membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
     membershipPricingModel: SiteMembershipPricingModelEnum;
+    archived: boolean;
     roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
     groups?: Array<{
       __typename?: 'GroupNode';
@@ -3029,6 +3038,13 @@ export type SetRolePermissionMutation = {
   };
 };
 
+export type StartTenantTrialMutationVariables = Exact<{ [key: string]: never }>;
+
+export type StartTenantTrialMutation = {
+  __typename?: 'Mutation';
+  tenantTrial: { __typename?: 'Tenant'; id: number };
+};
+
 export type UnassignUserFromRoleMutationVariables = Exact<{
   userGuid: Scalars['String']['input'];
   roleId: Scalars['Int']['input'];
@@ -3045,6 +3061,7 @@ export type GetCheckoutLinkQueryVariables = Exact<{
     Array<Scalars['String']['input']> | Scalars['String']['input']
   >;
   timePeriod: CheckoutTimePeriodEnum;
+  isTrialUpgrade?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type GetCheckoutLinkQuery = {
@@ -6949,6 +6966,7 @@ export const GetSiteMembershipDocument = gql`
       priceCurrency
       membershipBillingPeriod
       membershipPricingModel
+      archived
       roles {
         id
         name
@@ -7595,6 +7613,27 @@ export class SetRolePermissionGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const StartTenantTrialDocument = gql`
+  mutation StartTenantTrial {
+    tenantTrial {
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class StartTenantTrialGQL extends Apollo.Mutation<
+  StartTenantTrialMutation,
+  StartTenantTrialMutationVariables
+> {
+  document = StartTenantTrialDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const UnassignUserFromRoleDocument = gql`
   mutation UnassignUserFromRole($userGuid: String!, $roleId: Int!) {
     unassignUserFromRole(userGuid: $userGuid, roleId: $roleId)
@@ -7619,8 +7658,14 @@ export const GetCheckoutLinkDocument = gql`
     $planId: String!
     $addOnIds: [String!]
     $timePeriod: CheckoutTimePeriodEnum!
+    $isTrialUpgrade: Boolean
   ) {
-    checkoutLink(planId: $planId, addOnIds: $addOnIds, timePeriod: $timePeriod)
+    checkoutLink(
+      planId: $planId
+      addOnIds: $addOnIds
+      timePeriod: $timePeriod
+      isTrialUpgrade: $isTrialUpgrade
+    )
   }
 `;
 

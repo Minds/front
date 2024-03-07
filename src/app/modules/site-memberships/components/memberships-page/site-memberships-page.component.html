@@ -1,9 +1,11 @@
 <ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
-  <h3>Memberships</h3>
+  <h3 *ngIf="showPageTitle$ | async">Memberships</h3>
 
   <m-starCard
     [title]="starCardTitleText"
     [description]="starCardDescriptionText$ | async"
+    [hideStars]="true"
+    [hideBorder]="true"
   ></m-starCard>
 
   <div class="m-membershipPage__membershipCardsContainer">
@@ -15,15 +17,11 @@
       [priceCurrencyCode]="membership.membershipPriceCurrency"
       [billingPeriod]="membership.membershipBillingPeriod"
       [pricingModel]="membership.membershipPricingModel"
-      [isMember]="
-        (membershipSubscriptionGuids$ | async)?.includes(
-          membership.membershipGuid
-        )
-      "
-      [inProgress]="navigationInProgress$ | async"
-      (joinMembershipClick)="onJoinMembershipClick(membership)"
-      (managePlanClick)="onManagePlanClick(membership)"
-    ></m-siteMembershipCard>
+    >
+      <m-joinManageSiteMembershipButton
+        [membershipGuid]="membership.membershipGuid"
+      ></m-joinManageSiteMembershipButton>
+    </m-siteMembershipCard>
   </div>
 </ng-container>
 

@@ -1,0 +1,27 @@
+@import 'defaults.scss';
+@import '../../../../../../../common/layout/layout.scss';
+
+:host {
+  .m-networkAdminConsoleInviteLinkFormWrapper {
+    margin-top: $spacing8;
+  }
+  .m-networkAdminConsole__radioButtonInputContainer {
+    margin-bottom: $spacing6;
+  }
+
+  .m-form__fieldsContainer {
+    gap: $spacing6;
+    margin-bottom: $spacing6;
+  }
+
+  .m-networkAdminConsoleInviteLink__membershipCardsContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: $spacing9 $spacing15;
+
+    m-siteMembershipCard {
+      flex: 1 0 26%;
+    }
+  }
+}

@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
-  SiteMembership,
   SiteMembershipBillingPeriodEnum,
   SiteMembershipPricingModelEnum,
 } from '../../../../../graphql/generated.engine';
@@ -8,7 +7,7 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../../../common/common.module';
 
 /**
- * Card for displaying a breif summary of membership info, whilst providing
+ * Card for displaying a brief summary of membership info, whilst providing
  * the user an option to join a membership or edit a current membership plan.
  */
 @Component({
@@ -43,22 +42,4 @@ export class SiteMembershipCardComponent {
 
   /** Pricing model of the membership, e.g. recurring or one-time. */
   @Input() public readonly pricingModel: SiteMembershipPricingModelEnum = null;
-
-  /** Whether the user is a member. */
-  @Input() public isMember: boolean = true;
-
-  /** Whether the action buttons should be considered as having an action in progress . */
-  @Input() public inProgress: boolean = false;
-
-  /** Emits when a user clicks to join a membership. */
-  @Output('joinMembershipClick')
-  public readonly joinMembershipClickEmitter: EventEmitter<
-    SiteMembership
-  > = new EventEmitter<SiteMembership>();
-
-  /** Emits when a user clicks to manage their plan. */
-  @Output('managePlanClick')
-  public readonly managePlanClickEmitter: EventEmitter<
-    SiteMembership
-  > = new EventEmitter<SiteMembership>();
 }
