@@ -1,0 +1,206 @@
+<ng-container *ngIf="edges$ | async as edges">
+  <ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
+    <ng-container *ngIf="edges?.length; else noEdgesTemplate">
+      <h4
+        [ngSwitch]="type"
+        class="m-networkAdminAnalyticsTable__title m-networkAdminAnalyticsTable__horizontalMargin"
+        *ngIf="edges?.length"
+      >
+        <ng-container
+          *ngSwitchCase="AnalyticsTableEnum.PopularActivities"
+          i18n="@@NETWORK_ANALYTICS_TABLE__MOST_POPULAR_POSTS"
+        >
+          Most popular posts
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="AnalyticsTableEnum.PopularGroups"
+          i18n="@@NETWORK_ANALYTICS_TABLE__MOST_POPULAR_GROUPS"
+        >
+          Most popular groups
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="AnalyticsTableEnum.PopularUsers"
+          i18n="@@NETWORK_ANALYTICS_TABLE__MOST_POPULAR_CHANNELS"
+        >
+          Most popular channels
+        </ng-container>
+      </h4>
+      <div class="m-networkAdminAnalyticsTable__tableContainer">
+        <table class="m-networkAdminAnalyticsTable__table">
+          <thead class="m-networkAdminAnalyticsTable__tableHeaders">
+            <tr
+              [ngSwitch]="type"
+              class="m-networkAdminAnalyticsTable__tableRow--top"
+            >
+              <ng-container
+                *ngSwitchCase="AnalyticsTableEnum.PopularActivities"
+              >
+                <th
+                  class="m-networkAdminAnalyticsTable__tableHeader"
+                  i18n="@@NETWORK_ANALYTICS_TABLE__HEADER__POST"
+                >
+                  Post
+                </th>
+                <th
+                  class="m-networkAdminAnalyticsTable__tableHeader"
+                  i18n="@@NETWORK_ANALYTICS_TABLE__HEADER__VIEWS"
+                >
+                  Views
+                </th>
+                <th
+                  class="m-networkAdminAnalyticsTable__tableHeader m-networkAdminAnalyticsTable__tableHeader--withTooltip"
+                >
+                  <span
+                    i18n="@@NETWORK_ANALYTICS_TABLE__HEADER__ENGAGEMENTS"
+                    class="m-networkAdminAnalyticsTable__tableHeaderSpan--bottom"
+                    >Engagements</span
+                  >
+                  <m-tooltip
+                    [iconStyle]="{
+                      'font-size': '24px',
+                      opacity: '0.9',
+                      'font-weight': '500'
+                    }"
+                    [tooltipBubbleStyle]="{
+                      'max-width': '300px',
+                      position: 'fixed'
+                    }"
+                    anchor="right"
+                    icon="info_outline"
+                    i18n="
+                       @@NETWORK_ANALYTICS_TABLE__HEADER__ENGAGEMENTS_TOOLTIP
+                    "
+                  >
+                    Engagements currently only include the number of upvotes
+                  </m-tooltip>
+                </th>
+              </ng-container>
+              <ng-container *ngSwitchCase="AnalyticsTableEnum.PopularGroups">
+                <th
+                  class="m-networkAdminAnalyticsTable__tableHeader m-networkAdminAnalyticsTable__tableHeader--extraWide"
+                  i18n="@@NETWORK_ANALYTICS_TABLE__HEADER__POPULAR_GROUPS"
+                >
+                  Group
+                </th>
+                <th
+                  class="m-networkAdminAnalyticsTable__tableHeader"
+                  i18n="@@NETWORK_ANALYTICS_TABLE__HEADER__NEW_USERS"
+                >
+                  New users
+                </th>
+              </ng-container>
+              <ng-container *ngSwitchCase="AnalyticsTableEnum.PopularUsers">
+                <th
+                  class="m-networkAdminAnalyticsTable__tableHeader"
+                  i18n="@@NETWORK_ANALYTICS_TABLE__HEADER__CHANNEL"
+                >
+                  Channel
+                </th>
+                <th
+                  class="m-networkAdminAnalyticsTable__tableHeader"
+                  i18n="@@NETWORK_ANALYTICS_TABLE__HEADER__NEW_SUBSCRIBERS"
+                >
+                  New subscribers
+                </th>
+                <th
+                  class="m-networkAdminAnalyticsTable__tableHeader"
+                  i18n="@@NETWORK_ANALYTICS_TABLE__HEADER__TOTAL_SUBSCRIBERS"
+                >
+                  Total subscribers
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody class="m-networkAdminAnalyticsTable__tableBody">
+            <tr
+              *ngFor="let edge of edges"
+              [ngSwitch]="type"
+              class="m-networkAdminAnalyticsTable__tableRow"
+              (click)="handleTableRowClick(edge)"
+            >
+              <ng-container
+                *ngSwitchCase="AnalyticsTableEnum.PopularActivities"
+              >
+                <td
+                  class="m-networkAdminAnalyticsTable__tableCell m-networkAdminAnalyticsTable__tableCell--left"
+                >
+                  <span
+                    *ngIf="edge?.node?.activity?.owner?.username as username"
+                    ><strong class="m-networkAdminAnalyticsTable__boldText"
+                      >@{{ username }}</strong
+                    >:
+                  </span>
+                  <span
+                    >{{edge.node.activity?.message ?? edge.node.activity?.title}}</span
+                  >
+                </td>
+                <td class="m-networkAdminAnalyticsTable__tableCell">
+                  {{edge.node.views ?? 0}}
+                </td>
+                <td class="m-networkAdminAnalyticsTable__tableCell">
+                  {{edge.node.engagements ?? 0}}
+                </td>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="AnalyticsTableEnum.PopularGroups">
+                <td
+                  class="m-networkAdminAnalyticsTable__tableCell m-networkAdminAnalyticsTable__tableCell--left"
+                >
+                  <minds-avatar
+                    *ngIf="edge.node?.group?.guid as groupGuid"
+                    [object]="{ guid: groupGuid, type: 'group' }"
+                  ></minds-avatar>
+                  <strong class="m-networkAdminAnalyticsTable__mediumText">{{
+                    edge?.node?.group?.name
+                  }}</strong>
+                </td>
+                <td class="m-networkAdminAnalyticsTable__tableCell">
+                  {{edge.node.newMembers ?? 0}}
+                </td>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="AnalyticsTableEnum.PopularUsers">
+                <td
+                  class="m-networkAdminAnalyticsTable__tableCell m-networkAdminAnalyticsTable__tableCell--left"
+                >
+                  <minds-avatar
+                    [object]="{ guid: edge?.node?.user?.guid, type: 'user' }"
+                  ></minds-avatar>
+                  <span>
+                    <strong class="m-networkAdminAnalyticsTable__boldText"
+                      >@{{ edge?.node?.user?.username }}</strong
+                    >
+                    {{edge.node.activity?.message ?? edge.node.activity?.title}}
+                  </span>
+                </td>
+                <td class="m-networkAdminAnalyticsTable__tableCell">
+                  {{edge.node.newSubscribers ?? 0}}
+                </td>
+                <td class="m-networkAdminAnalyticsTable__tableCell">
+                  {{edge.node.newSubscribers.totalSubscribers ?? 0}}
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <infinite-scroll
+        *ngIf="hasNextPage$ | async as hasNextPage"
+        (load)="fetchMore()"
+        [moreData]="hasNextPage"
+        [inProgress]="inProgress$ | async"
+        [hideManual]="true"
+      ></infinite-scroll>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
+
+<ng-template #noEdgesTemplate>
+  <m-networkAdminAnalytics__emptyStateCardWrapper
+    [type]="type"
+  ></m-networkAdminAnalytics__emptyStateCardWrapper>
+</ng-template>

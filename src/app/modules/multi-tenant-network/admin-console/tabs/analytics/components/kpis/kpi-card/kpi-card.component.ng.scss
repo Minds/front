@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+
+$minCardWidth: 174px;
+$minCardHeight: 94px;
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing2;
+  padding: $spacing5 $spacing3;
+  box-sizing: border-box;
+  min-width: $minCardWidth;
+  max-width: $minCardWidth;
+  height: $minCardHeight;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+    color: themed($m-textColor--secondary);
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  @media screen and (max-width: $min-tablet) {
+    width: 100%;
+  }
+
+  .m-kpiCard__value {
+    @include body1Bold;
+    text-align: center;
+  }
+
+  .m-kpiCard__metric {
+    @include body1Regular;
+    text-align: center;
+  }
+}

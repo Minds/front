@@ -1,0 +1,178 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  min-height: 180px;
+
+  .m-networkAdminAnalyticsTable__horizontalMargin {
+    margin-right: $spacing8;
+    margin-left: $spacing8;
+  }
+
+  .m-networkAdminAnalyticsTable__title {
+    @include heading4Bold;
+  }
+
+  .m-networkAdminAnalyticsTable__tableContainer {
+    max-width: 100%;
+    overflow-x: auto;
+    // move scrollbar to top - table rotates back.
+    transform: rotateX(180deg);
+    @include horizontal-scroll;
+
+    .m-networkAdminAnalyticsTable__table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      transform: rotateX(180deg);
+      table-layout: fixed;
+
+      .m-networkAdminAnalyticsTable__tableHeaders {
+        .m-networkAdminAnalyticsTable__tableRow--top {
+          @include m-theme() {
+            border-bottom: 1px solid themed($m-borderColor--primary);
+          }
+
+          .m-networkAdminAnalyticsTable__tableHeader {
+            text-align: left;
+            padding: $spacing5;
+            box-sizing: border-box;
+            text-overflow: ellipsis;
+            vertical-align: bottom;
+            overflow-x: hidden;
+
+            @include body1Bold;
+
+            &:first-of-type {
+              width: 45%;
+              min-width: 45%;
+              padding-left: $spacing8;
+
+              &.m-networkAdminAnalyticsTable__tableHeader--extraWide {
+                width: 60%;
+                min-width: 60%;
+              }
+            }
+
+            &:last-of-type {
+              padding-right: $spacing8;
+            }
+
+            &--withTooltip {
+              width: 200px;
+            }
+
+            ::ng-deep m-tooltip {
+              margin-left: $spacing3;
+
+              @include m-theme() {
+                color: themed($m-textColor--secondary);
+              }
+            }
+
+            .m-networkAdminAnalyticsTable__tableHeaderSpan--bottom {
+              vertical-align: bottom;
+            }
+          }
+        }
+      }
+
+      .m-networkAdminAnalyticsTable__tableBody {
+        .m-networkAdminAnalyticsTable__tableRow {
+          @include m-theme() {
+            border-bottom: 1px solid themed($m-borderColor--primary);
+            cursor: pointer;
+          }
+
+          &:hover {
+            @include m-on-theme(light) {
+              background-color: m-darken(
+                color-by-theme($m-bgColor--primary, 'light'),
+                5%
+              );
+
+              &:active {
+                background-color: m-darken(
+                  color-by-theme($m-bgColor--primary, 'light'),
+                  3%
+                );
+              }
+            }
+
+            @include m-on-theme(dark) {
+              background-color: m-lighten(
+                color-by-theme($m-bgColor--primary, 'dark'),
+                5%
+              );
+
+              &:active {
+                background-color: m-lighten(
+                  color-by-theme($m-bgColor--primary, 'dark'),
+                  2%
+                );
+              }
+            }
+          }
+
+          .m-networkAdminAnalyticsTable__tableCell {
+            padding: $spacing5;
+            text-wrap: nowrap;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            @include body2Regular;
+
+            &:first-of-type {
+              padding-left: $spacing8;
+            }
+
+            &:last-of-type {
+              padding-right: $spacing8;
+            }
+
+            .m-networkAdminAnalyticsTable__mediumText {
+              font-weight: 500px;
+            }
+
+            .m-networkAdminAnalyticsTable__boldText {
+              font-weight: 700px;
+            }
+
+            minds-avatar {
+              display: inline-block;
+              vertical-align: middle;
+
+              ::ng-deep .minds-avatar {
+                border-radius: 50%;
+                width: 16px;
+                height: 16px;
+                margin-right: 10px;
+                background-position: center;
+                background-size: cover;
+
+                @include m-theme() {
+                  border: 1px solid themed($m-borderColor--primary);
+                }
+
+                &:hover {
+                  opacity: 0.8;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  m-networkAdminAnalytics__emptyStateCardWrapper {
+    display: block;
+    margin-top: $spacing6;
+    width: 620px;
+    max-width: 100%;
+  }
+
+  m-loadingSpinner {
+    display: block;
+    margin-top: $spacing7;
+  }
+}

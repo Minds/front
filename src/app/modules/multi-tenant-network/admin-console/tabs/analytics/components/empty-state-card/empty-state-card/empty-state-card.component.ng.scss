@@ -1,0 +1,39 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: $spacing4;
+  padding: $spacing4 $spacing22 $spacing4 $spacing8;
+  box-sizing: border-box;
+
+  @media screen and (max-width: $min-tablet) {
+    padding: $spacing4 $spacing8;
+  }
+
+  .m-networkAdminEmptyStateCard__container--left {
+    i {
+      font-size: 24px;
+    }
+  }
+
+  .m-networkAdminEmptyStateCard__container--right {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .m-networkAdminEmptyStateCard__title {
+      @include heading4Bold;
+      margin-top: 0;
+      margin-bottom: $spacing1;
+    }
+
+    .m-networkAdminEmptyStateCard__description {
+      margin-bottom: $spacing3;
+      @include body2Regular;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}
