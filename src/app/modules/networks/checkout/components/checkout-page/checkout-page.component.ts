@@ -1,7 +1,6 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { PageLayoutService } from '../../../../../common/layout/page-layout.service';
 import { TopbarService } from '../../../../../common/layout/topbar.service';
-import { ScrollToTopService } from '../../../../../services/scroll-to-top.service';
 
 /**
  * Page component for networks checkout. Wrapper around the base component
