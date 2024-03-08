@@ -32,6 +32,7 @@ export class NetworksCheckoutPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.pageLayoutService.useFullWidth();
     this.topbarService.isMinimalLightMode$.next(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   ngOnDestroy(): void {
