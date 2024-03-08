@@ -1,0 +1,61 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+
+  .m-networkAdminAnalytics__horizontalMargin {
+    margin-right: $spacing8;
+    margin-left: $spacing8;
+  }
+
+  .m-networkAdminAnalytics__title {
+    margin-top: unset;
+    margin-bottom: $spacing1;
+
+    @include heading3Bold;
+  }
+
+  .m-networkAdminAnalytics__description {
+    margin-bottom: $spacing4;
+
+    @include body2Medium;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  m-networkAdminAnalytics__updateTimestamp {
+    margin-bottom: $spacing8;
+  }
+
+  .m-networkAdminAnalytics__chartHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing3;
+
+    h4 {
+      @include heading4Bold;
+    }
+
+    m-dropdownSelector {
+      padding: unset;
+      margin: unset;
+    }
+  }
+
+  .m-networkAdminAnalytics__chart {
+    display: block;
+    margin-bottom: $spacing18;
+    margin-left: unset;
+
+    @media screen and (max-width: $min-tablet) {
+      margin-bottom: $spacing8;
+    }
+  }
+
+  m-networkAdminAnalytics__kpis {
+    margin-bottom: $spacing10;
+  }
+}

@@ -78,6 +78,7 @@ describe('ProductPageButtonComponent', () => {
     (comp as any).pricingService.selectedTimePeriod$.next(
       defaultSelectedTimePeriod
     );
+    (comp as any).inProgress = false;
 
     fixture.detectChanges();
 
@@ -229,6 +230,17 @@ describe('ProductPageButtonComponent', () => {
       expect(
         fixture.debugElement.query(By.css('button')).nativeElement.disabled
       ).toBeFalse();
+    });
+
+    it('should return true if disabled becase in progress', () => {
+      (comp as any).inProgress = true;
+      expect(comp.disabled).toBe(true);
+    });
+
+    it('should return false if disabled becase NOT in progress', () => {
+      (comp as any).inProgress = false;
+      (comp as any).data.action = 'other_action';
+      expect(comp.disabled).toBe(false);
     });
   });
 

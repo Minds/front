@@ -1,0 +1,22 @@
+@import 'defaults.scss';
+@import '../../../../../../../common/layout/layout.scss';
+
+:host {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  gap: $spacing4;
+
+  m-networkAdminAnalytics__kpiCard {
+    flex: 1;
+
+    @media screen and (max-width: $min-huge) {
+      min-width: 40%;
+      margin: $spacing4 0;
+    }
+
+    @media screen and (max-width: $min-tablet) {
+      min-width: 100%;
+    }
+  }
+}

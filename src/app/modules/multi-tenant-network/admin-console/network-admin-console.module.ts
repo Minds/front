@@ -37,6 +37,7 @@ import { CustomPageFormContentPreviewModalComponent } from './components/custom-
 import { CanModerateContentGuard } from './guards/can-moderate-content.guard';
 import { GroupAggregatorComponent } from './components/group-aggregator/group-aggregator.component';
 import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
+import { NetworkAdminAnalyticsLazyRoutes } from './tabs/analytics/analytics-lazy.routes';
 import { NetworkAdminConsoleInviteLinkComponent } from './tabs/invite/tabs/link/link.component';
 import { SiteMembershipCardComponent } from '../../site-memberships/components/membership-card/site-membership-card.component';
 import { CopyToClipboardButtonComponent } from '../../../common/standalone/copy-to-clipboard-button/copy-to-clipboard-button.component';
@@ -111,6 +112,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
         path: 'invite/:view',
         component: NetworkAdminConsoleInviteComponent,
       },
+      NetworkAdminAnalyticsLazyRoutes,
     ],
   },
 ];
