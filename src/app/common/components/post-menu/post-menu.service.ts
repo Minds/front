@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { EmbedServiceV2 } from '../../../services/embedV2.service';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
@@ -14,6 +14,8 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { ModalService } from '../../../services/ux/modal.service';
 import { SubscriptionService } from '../../services/subscription.service';
 import { BoostModalV2LazyService } from '../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
+import { ModerationActionGqlService } from '../../../modules/admin/moderation/services/moderation-action-gql.service';
+import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 
 @Injectable()
 export class PostMenuService {
@@ -43,7 +45,9 @@ export class PostMenuService {
     protected toasterService: ToasterService,
     public embedService: EmbedServiceV2,
     public subscriptionService: SubscriptionService,
-    private boostModal: BoostModalV2LazyService
+    private boostModal: BoostModalV2LazyService,
+    private moderationActionGql: ModerationActionGqlService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
   setEntity(entity): PostMenuService {
@@ -176,9 +180,49 @@ export class PostMenuService {
     }
   }
 
+  /**
+   * Ban a user - note that at present this feature is only available for
+   * tenant network moderators. Calling from a non-tenant will be a no-op.
+   * @returns { Promise<void> }
+   */
+  async ban(): Promise<void> {
+    if (!this.isTenantNetwork) {
+      console.error(
+        'Direct bans are only available for tenant network moderators'
+      );
+      return;
+    }
+    this.isBanned$.next(true);
+    const result: boolean = await this.setTenantUserBanState(
+      this.entity.ownerObj.guid,
+      true
+    );
+
+    if (!result) {
+      this.isBanned$.next(false);
+    }
+  }
+
+  /**
+   * Unban a user.
+   * @returns { Promise<void> }
+   */
   async unBan(): Promise<void> {
     this.isBanned$.next(false);
+
     try {
+      if (this.isTenantNetwork) {
+        const result: boolean = await this.setTenantUserBanState(
+          this.entity.ownerObj.guid,
+          false
+        );
+
+        if (!result) {
+          this.isBanned$.next(true);
+        }
+        return;
+      }
+
       await this.client.delete(
         'api/v1/admin/ban/' + this.entity.ownerObj.guid,
         {}
@@ -381,5 +425,18 @@ export class PostMenuService {
       this.entity.pinned = !this.entity.pinned;
       this.isPinned$.next(this.entity.pinned);
     }
+  }
+
+  /**
+   * Set tenant user ban state.
+   * @param { string } subjectGuid - The guid of the user to ban.
+   * @param { boolean } banState - The state to set the user to.
+   * @returns { Promise<boolean> } - Whether the user was successfully banned.
+   */
+  private async setTenantUserBanState(
+    subjectGuid: string,
+    banState: boolean = true
+  ): Promise<boolean> {
+    return this.moderationActionGql.setUserBanState(subjectGuid, banState);
   }
 }

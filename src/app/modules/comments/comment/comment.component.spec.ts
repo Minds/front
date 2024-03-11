@@ -35,6 +35,9 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-enabled.service';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
+import { ModerationActionGqlService } from '../../admin/moderation/services/moderation-action-gql.service';
+import { PermissionsEnum } from '../../../../graphql/generated.engine';
 
 describe('CommentComponentV2', () => {
   let comp: CommentComponentV2;
@@ -87,6 +90,10 @@ describe('CommentComponentV2', () => {
           MockComponent({
             selector: 'div',
             inputs: ['maxHeightAllowed'],
+          }),
+          MockComponent({
+            selector: 'm-readMore',
+            inputs: ['text', 'targetLength'],
           }),
         ],
         providers: [
@@ -181,6 +188,11 @@ describe('CommentComponentV2', () => {
             provide: NsfwEnabledService,
             useValue: MockService(NsfwEnabledService),
           },
+          {
+            provide: ModerationActionGqlService,
+            useValue: MockService(ModerationActionGqlService),
+          },
+          { provide: IS_TENANT_NETWORK, useValue: false },
         ],
       })
         .overrideProvider(AttachmentService, {
@@ -213,6 +225,9 @@ describe('CommentComponentV2', () => {
     spyOn(window, 'confirm').and.callFake(function() {
       return true;
     });
+    spyOn(console, 'error'); // mute errors.
+
+    Object.defineProperty(comp, 'isTenantNetwork', { writable: true });
 
     (comp as any).session.getLoggedInUser.and.returnValue({
       guid: '123',
@@ -250,50 +265,110 @@ describe('CommentComponentV2', () => {
     expect((comp as any).activityModalCreator.create).not.toHaveBeenCalled();
   });
 
-  it('should delete a comment', fakeAsync(() => {
-    comp.comment = {
-      guid: 123,
-    };
+  describe('delete', () => {
+    it('should delete a comment', fakeAsync(() => {
+      comp.comment = {
+        guid: 123,
+      };
 
-    comp.parent = {
-      type: 'comment',
-      replies_count: 2,
-    };
+      comp.parent = {
+        type: 'comment',
+        replies_count: 2,
+      };
 
-    (comp as any).client.delete.and.returnValue(true);
+      (comp as any).client.delete.and.returnValue(true);
 
-    comp.delete();
-    tick();
+      comp.delete();
+      tick();
 
-    expect(window.confirm).toHaveBeenCalled();
-    expect((comp as any).client.delete).toHaveBeenCalledWith(
-      'api/v1/comments/' + comp.comment.guid
-    );
-    expect(comp.parent.replies_count).toBe(1);
-  }));
+      expect(window.confirm).toHaveBeenCalled();
+      expect((comp as any).client.delete).toHaveBeenCalledWith(
+        'api/v1/comments/' + comp.comment.guid
+      );
+      expect(comp.parent.replies_count).toBe(1);
+    }));
 
-  it('should not update reply count if there is an error deleting', fakeAsync(() => {
-    comp.comment = {
-      guid: 123,
-    };
+    it('should delete a comment on a tenant when i am the owner', fakeAsync(() => {
+      (comp as any).isTenantNetwork = true;
 
-    comp.parent = {
-      type: 'comment',
-      replies_count: 2,
-    };
+      comp.comment = {
+        guid: 123,
+        ownerObj: {
+          guid: '234',
+        },
+      };
 
-    (comp as any).client.delete.and.throwError(new Error('test'));
+      comp.parent = {
+        type: 'comment',
+        replies_count: 2,
+      };
 
-    comp.delete();
-    tick();
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: '234',
+      });
+      (comp as any).client.delete.and.returnValue(true);
 
-    expect(window.confirm).toHaveBeenCalled();
-    expect((comp as any).toasterService.error).toHaveBeenCalledWith('test');
-    expect((comp as any).client.delete).toHaveBeenCalledWith(
-      'api/v1/comments/' + comp.comment.guid
-    );
-    expect(comp.parent.replies_count).toBe(comp.parent.replies_count); // unchanged
-  }));
+      comp.delete();
+      tick();
+
+      expect(window.confirm).toHaveBeenCalled();
+      expect((comp as any).client.delete).toHaveBeenCalledWith(
+        'api/v1/comments/' + comp.comment.guid
+      );
+      expect(comp.parent.replies_count).toBe(1);
+    }));
+
+    it('should delete a comment on a tenant when i am NOT the owner', fakeAsync(() => {
+      (comp as any).isTenantNetwork = true;
+      comp.comment = {
+        guid: 123,
+        urn: 'urn:comment:123',
+        ownerObj: {
+          guid: '234',
+        },
+      };
+      comp.parent = {
+        type: 'comment',
+        replies_count: 2,
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: '345',
+      });
+
+      (comp as any).moderationActionsGql.deleteEntity.and.returnValue(true);
+      comp.delete();
+      tick();
+
+      expect(window.confirm).toHaveBeenCalled();
+      expect(
+        (comp as any).moderationActionsGql.deleteEntity
+      ).toHaveBeenCalledWith('urn:comment:123');
+      expect(comp.parent.replies_count).toBe(1);
+    }));
+
+    it('should not update reply count if there is an error deleting', fakeAsync(() => {
+      comp.comment = {
+        guid: 123,
+      };
+
+      comp.parent = {
+        type: 'comment',
+        replies_count: 2,
+      };
+
+      (comp as any).client.delete.and.throwError(new Error('test'));
+
+      comp.delete();
+      tick();
+
+      expect(window.confirm).toHaveBeenCalled();
+      expect((comp as any).toasterService.error).toHaveBeenCalledWith('test');
+      expect((comp as any).client.delete).toHaveBeenCalledWith(
+        'api/v1/comments/' + comp.comment.guid
+      );
+      expect(comp.parent.replies_count).toBe(comp.parent.replies_count); // unchanged
+    }));
+  });
 
   it('should determine whether delete option should be shown because user is admin', () => {
     const loggedInUserGuid = '123';
@@ -361,6 +436,23 @@ describe('CommentComponentV2', () => {
     comp.comment = { owner_guid: '234' };
     comp.entity = { owner_guid: '345' };
     comp.parent = { owner_guid: loggedInUserGuid };
+
+    expect(comp.showDelete()).toBeTrue();
+  });
+
+  it('should determine whether delete option should be shown because user has moderation permission', () => {
+    const loggedInUserGuid = '123';
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: loggedInUserGuid,
+    });
+    (comp as any).session.isAdmin.and.returnValue(false);
+    comp.canDelete = false;
+    comp.comment = { owner_guid: '234' };
+    comp.entity = { owner_guid: '345' };
+    comp.parent = { owner_guid: '456' };
+    (comp as any).permissions.has
+      .withArgs(PermissionsEnum.CanModerateContent)
+      .and.returnValue(true);
 
     expect(comp.showDelete()).toBeTrue();
   });
