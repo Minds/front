@@ -33,7 +33,7 @@
     </div>
   </ng-template>
 
-  <ng-container *ngIf="!session.isAdmin()">
+  <ng-container *ngIf="canShowAccountBannedSection()">
     <ng-template [ngSwitchCase]="'banned'">
       <div class="m-channelContent__wrapper">
         <i class="m-channelContent__icon material-icons">not_interested</i>
