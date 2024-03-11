@@ -1,0 +1,32 @@
+<form class="m-chatRoom__bottomBar" [formGroup]="formGroup">
+  <m-emojiPicker
+    (emojiSelect)="onEmojiAdd($event)"
+    iconName="mood"
+  ></m-emojiPicker>
+  <textarea
+    #textArea
+    class="m-chatRoomBottom__textArea"
+    name="message"
+    id="message"
+    formControlName="message"
+    placeholder="Message"
+    rows="1"
+    [autoGrow]
+    (keydown.enter)="onEnterPress($event)"
+  ></textarea>
+  <i
+    *ngIf="!(sendInProgress$ | async); else messageInProgressSpinnerTemplate"
+    class="material-icons m-chatRoomBottom__sendButton"
+    (click)="onSubmit()"
+    >send</i
+  >
+</form>
+
+<ng-template #messageInProgressSpinnerTemplate>
+  <m-sizeableLoadingSpinner
+    [spinnerWidth]="'1.5rem'"
+    [spinnerHeight]="'1.5rem'"
+    [inProgress]="true"
+  >
+  </m-sizeableLoadingSpinner>
+</ng-template>

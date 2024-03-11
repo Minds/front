@@ -1,0 +1,32 @@
+<!-- TODO: TrackBy -->
+<div
+  *ngFor="let message of messages; trackBy: trackByFn"
+  class="m-chatRoomMessage__container"
+  [ngClass]="{
+    'm-chatRoomMessage__container--left':
+      message.node?.sender?.node?.guid !== loggedInUserGuid,
+    'm-chatRoomMessage__container--right':
+      message.node?.sender?.node?.guid === loggedInUserGuid
+  }"
+>
+  <p
+    class="m-chatRoomMessage__senderName"
+    *ngIf="
+      message.node?.sender?.node?.name &&
+      message.node?.sender?.node?.guid !== loggedInUserGuid
+    "
+  >
+    {{ message.node?.sender?.node?.name }}
+  </p>
+  <div class="m-chatRoomMessage__bubble">
+    <span class="m-chatRoomMessage__text" *ngIf="message.node?.plainText">{{
+      message.node.plainText
+    }}</span>
+  </div>
+  <p
+    *ngIf="message?.node?.timeCreatedUnix"
+    class="m-chatRoomMessage__timestamp"
+  >
+    {{ message.node.timeCreatedUnix | chatDate }}
+  </p>
+</div>

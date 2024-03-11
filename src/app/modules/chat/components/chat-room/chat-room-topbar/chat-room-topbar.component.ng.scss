@@ -1,0 +1,60 @@
+@import 'defaults.scss';
+
+$topbarHeight: 64px;
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing2;
+  height: $topbarHeight;
+  padding: $spacing4 $spacing5;
+  box-sizing: border-box;
+
+  .m-chatRoomTop__leftContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing2;
+    overflow-x: hidden;
+
+    .m-chatRoomTop__avatarsList {
+      display: flex;
+      flex-flow: row nowrap;
+      margin-right: $spacing2;
+
+      > * + * {
+        margin-left: -$spacing2;
+      }
+
+      ::ng-deep .minds-avatar {
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        margin: 0;
+        background-position: center;
+        background-size: cover;
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+      }
+    }
+
+    .m-chatRoomTop__roomName {
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+      margin: auto;
+      @include heading4Bold;
+    }
+  }
+
+  .m-chatRoomTop__rightContainer {
+    i {
+      font-size: 20px;
+      cursor: pointer;
+    }
+  }
+}

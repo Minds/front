@@ -1,0 +1,12 @@
+<section *ngIf="chatRoom$ | async as chatRoom; else loadingSpinnerTemplate">
+  <m-chatRoom__top [roomMembers]="chatRoom.members?.edges"></m-chatRoom__top>
+  <m-chatRoom__messages
+    *ngIf="chatMessagesInitialised$ | async; else loadingSpinnerTemplate"
+    [messages]="chatMessages$ | async"
+  ></m-chatRoom__messages>
+  <m-chatRoom__bottom [roomGuid]="chatRoom.node.guid"></m-chatRoom__bottom>
+</section>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

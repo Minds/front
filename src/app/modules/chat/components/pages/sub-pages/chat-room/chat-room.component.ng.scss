@@ -1,0 +1,30 @@
+@import 'defaults.scss';
+
+:host {
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+
+  section {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    min-width: 100%;
+
+    m-chatroom__top {
+      margin-bottom: $spacing4;
+    }
+
+    m-chatRoom__messages {
+      flex: 1;
+      overflow-y: auto;
+    }
+  }
+
+  m-loadingSpinner {
+    display: block;
+    text-align: center;
+    margin-top: $spacing16;
+  }
+}

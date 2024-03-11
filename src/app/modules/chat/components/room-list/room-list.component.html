@@ -1,0 +1,36 @@
+<header class="m-chatRoomList__header">
+  <h3 class="m-chatRoomList__title">Chats</h3>
+  <i class="material-icons" (click)="onStartChatClick()">add_comment</i>
+</header>
+
+<ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
+  <ng-container
+    *ngIf="
+      (edges$ | async)?.length || (hasPendingRequests$ | async);
+      else noEdgesActionCardTemplate
+    "
+  >
+    <m-chatPendingRequests__widget
+      *ngIf="hasPendingRequests$ | async"
+    ></m-chatPendingRequests__widget>
+
+    <ng-container *ngFor="let edge of edges$ | async; trackBy: trackBy">
+      <m-chat__roomListItem [edge]="edge"></m-chat__roomListItem>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
+
+<ng-template #noEdgesActionCardTemplate>
+  <m-chat__actionCard
+    headerText="Say hello to chats!"
+    descriptionText="Start a direct conversation with a friend, stranger, or group of people on Minds."
+    ctaText="New chat"
+    [headerSize]="3"
+    [descriptionSize]="2"
+    (actionButtonClick)="onStartChatClick()"
+  ></m-chat__actionCard>
+</ng-template>

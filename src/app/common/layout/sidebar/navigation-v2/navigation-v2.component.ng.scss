@@ -180,6 +180,10 @@
           }
         }
 
+        &.m-sidebarNavigation__item--chat {
+          transform: translateY(2px);
+        }
+
         &.m-sidebarNavigation__item--compose {
           margin-bottom: 20px !important;
           margin-top: $spacing6;

@@ -1,0 +1,87 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: 0 $spacing5;
+  box-sizing: border-box;
+  @include horizontal-scroll;
+
+  .m-chatRoomMessage__container {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-bottom: $spacing4;
+
+    &--left {
+      align-items: flex-start;
+
+      .m-chatRoomMessage__bubble {
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+        }
+
+        .m-chatRoomMessage__text {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+
+    &--right {
+      align-items: flex-end;
+
+      .m-chatRoomMessage__bubble {
+        @include m-theme() {
+          background-color: themed($m-action);
+        }
+
+        .m-chatRoomMessage__text {
+          @include m-theme() {
+            color: themed($m-textColor--primaryInverted);
+          }
+        }
+      }
+    }
+
+    .m-chatRoomMessage__senderName {
+      margin-bottom: $spacing1;
+      max-width: 100%;
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+
+      @include body3Bold;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-chatRoomMessage__timestamp {
+      margin-top: $spacing1;
+
+      @include body3Regular;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-chatRoomMessage__bubble {
+      display: flex;
+      width: 400px;
+      max-width: 80%;
+      padding: 8px 12px;
+      box-sizing: border-box;
+      align-items: flex-start;
+      gap: 8px;
+      border-radius: 16px;
+
+      .m-chatRoomMessage__text {
+        word-break: break-word;
+        white-space: pre-line;
+        @include body2Regular;
+      }
+    }
+  }
+}

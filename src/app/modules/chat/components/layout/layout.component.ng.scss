@@ -1,0 +1,59 @@
+@import 'defaults.scss';
+@import '../../../../common/layout/layout.scss';
+
+$baseChatLayoutHeight: calc(100vh - $topbarHeight);
+
+m-chat__pageLayout {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  height: $baseChatLayoutHeight;
+
+  &.m-chat__pageLayout--hasTopbarAlert {
+    height: calc(
+      $baseChatLayoutHeight - $topbarAlertHeight--desktop
+    ) !important;
+
+    @media screen and (max-width: $max-mobile) {
+      height: calc(
+        $baseChatLayoutHeight - $topbarAlertHeight--mobile
+      ) !important;
+    }
+  }
+
+  .m-chat__pageLayoutContainer--left {
+    flex: 4;
+    max-width: 360px;
+
+    @include m-theme() {
+      border-right: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: $layoutMax3ColWidth) {
+      max-width: 50%;
+      width: 50%;
+      min-width: 50%;
+    }
+  }
+
+  .m-chat__pageLayoutContainer--right {
+    flex: 6;
+
+    @include m-theme() {
+      border-right: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: $layoutMax3ColWidth) {
+      flex: 4;
+      max-width: 50%;
+      width: 50%;
+      min-width: 50%;
+    }
+  }
+}
+
+body:has(m-chat__pageLayout) {
+  overflow: hidden !important;
+}

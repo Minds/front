@@ -1,0 +1,33 @@
+@import 'defaults.scss';
+
+@mixin horizontalPadding {
+  padding-left: $spacing6;
+  padding-right: $spacing6;
+  box-sizing: border-box;
+}
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: $spacing4 0;
+  width: 100%;
+
+  .m-chatRequestsList__header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: $spacing4;
+
+    @include horizontalPadding;
+
+    i {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .m-chatRequestsList__title {
+      @include heading3Bold;
+      margin: unset;
+    }
+  }
+}

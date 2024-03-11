@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  height: 100%;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+
+  .m-chatRequestInfo__container {
+    max-width: 364px;
+    padding: $spacing6;
+
+    .m-chatRequestInfo__title {
+      @include heading2Bold;
+      margin: 0 0 $spacing2 0;
+    }
+
+    .m-chatRequestInfo__description {
+      @include body1Regular;
+      margin: 0;
+    }
+  }
+}

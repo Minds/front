@@ -1,0 +1,72 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: $spacing6;
+  padding: $spacing4 $spacing6;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+  }
+
+  .m-chatRoomListItem__containerLeft {
+    max-width: 40px;
+
+    ::ng-deep .minds-avatar {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin: 0;
+      background-position: center;
+      background-size: cover;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  .m-chatRoomListItem__containerRight {
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 1;
+    overflow-x: hidden;
+
+    .m-chatRoomListItem__topRow {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: $spacing1;
+      gap: $spacing10;
+
+      .m-chatRoomListItem__roomName {
+        @include body2Medium;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .m-chatRoomListItem__lastMessageTimestamp {
+        @include body3Regular;
+      }
+    }
+
+    .m-chatRoomListItem__lastMessage {
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin-bottom: 0;
+      @include body3Regular;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}

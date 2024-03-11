@@ -1,0 +1,12 @@
+<div class="m-chatRoomTop__leftContainer">
+  <div class="m-chatRoomTop__avatarsList">
+    <minds-avatar
+      *ngFor="let roomMember of roomMembers"
+      [object]="{ guid: roomMember.node.guid, type: 'user' }"
+    ></minds-avatar>
+  </div>
+  <span class="m-chatRoomTop__roomName">{{ roomName }}</span>
+</div>
+<div class="m-chatRoomTop__rightContainer">
+  <i class="material-icons">info</i>
+</div>

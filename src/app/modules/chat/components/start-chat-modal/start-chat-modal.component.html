@@ -1,0 +1,116 @@
+<div class="m-startChatModal__bodyContainer">
+  <header>
+    <h3 class="m-startChatModal__title">New chat</h3>
+    <m-modalCloseButton></m-modalCloseButton>
+  </header>
+  <form
+    *ngIf="formGroup"
+    [formGroup]="formGroup"
+    class="m-startChatModal__form"
+  >
+    <m-formInput__entityTypeahead
+      formControlName="searchMatchedUsers"
+      name="searchMatchedUsers"
+      id="searchMatchedUsers"
+      placeholder="Search for people"
+      (loading)="onTypeaheadLoadingStateChange($event)"
+    ></m-formInput__entityTypeahead>
+  </form>
+
+  <ng-container
+    *ngIf="{
+      selectedUsers: selectedUsers$ | async,
+      loadingResults: loadingResults$ | async,
+      searchMatches: searchMatches$ | async
+    } as templateVars"
+  >
+    <ng-container
+      *ngIf="
+        templateVars.selectedUsers.length ||
+          templateVars.searchMatches.length ||
+          templateVars.loadingResults;
+        else trySearchingTemplate
+      "
+    >
+      <div
+        class="m-startChatModal__selectedUsersContainer"
+        *ngIf="templateVars.selectedUsers.length"
+      >
+        <span
+          *ngFor="let selectedUser of templateVars.selectedUsers"
+          class="m-startChatModal__selectedUser"
+        >
+          <span class="m-startChatModal__selectedUserName">{{
+            selectedUser.name | truncate: 24
+          }}</span>
+          <i class="material-icons" (click)="toggleUserSelect(selectedUser)"
+            >close</i
+          >
+        </span>
+      </div>
+
+      <div
+        class="m-startChatModal__resultsContainer"
+        *ngIf="!templateVars.loadingResults; else loadingSpinnerTemplate"
+      >
+        <div
+          *ngFor="
+            let searchMatch of templateVars.searchMatches;
+            trackBy: trackResultsBy
+          "
+          class="m-startChatModal__userRow"
+          (click)="toggleUserSelect(searchMatch.user)"
+        >
+          <div class="m-startChatModal__userRow--left">
+            <div
+              class="m-startChatModal__avatar"
+              [style.background-image]="'url(' + searchMatch.avatarUrl + ')'"
+              [ngClass]="{
+                'm-startChatModal__avatar--selected': searchMatch.selected
+              }"
+              tabindex="1"
+            >
+              <span *ngIf="searchMatch.selected" class="material-icons"
+                >done</span
+              >
+            </div>
+          </div>
+          <div class="m-startChatModal__userRow--right">
+            <p class="m-startChatModal__userName">
+              {{ searchMatch?.user.name }}
+            </p>
+            <p class="m-startChatModal__userUsername">
+              @{{ searchMatch?.user.username }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+<footer
+  class="m-startChatModal__footer"
+  *ngIf="{ creationInProgress: creationInProgress$ | async } as buttonVars"
+>
+  <m-button
+    color="blue"
+    size="small"
+    solid="true"
+    [saving]="buttonVars.creationInProgress"
+    [disabled]="
+      buttonVars.creationInProgress || !(selectedUsers$ | async)?.length
+    "
+    (onAction)="onConfirmClick()"
+    >Chat</m-button
+  >
+</footer>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
+
+<ng-template #trySearchingTemplate>
+  <p class="m-startChatModal__trySearchingText">
+    Try searching for people to send a chat.
+  </p>
+</ng-template>

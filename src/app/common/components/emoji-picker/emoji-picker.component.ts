@@ -9,6 +9,7 @@ import {
   ChangeDetectorRef,
   ComponentFactoryResolver,
   ViewContainerRef,
+  Input,
 } from '@angular/core';
 import { NgxPopperjsContentComponent } from 'ngx-popperjs';
 import { Subscription } from 'rxjs';
@@ -27,6 +28,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['emoji-picker.component.ng.scss'],
 })
 export class EmojiPickerComponent {
+  /** Custom icon name. */
+  @Input() iconName: string = 'emoji_emotions';
+
   popperPlacement: string = 'bottom';
   showSelector = false;
 

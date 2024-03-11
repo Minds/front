@@ -34,4 +34,24 @@ export class ChatwootWidgetService {
       (this.document.defaultView as any).$chatwoot?.toggle(toggleState);
     }
   }
+
+  /**
+   * Hide chatwoot bubble.
+   * @returns { void }
+   */
+  public hideBubble(): void {
+    (this.document.defaultView as any).$chatwoot?.toggleBubbleVisibility(
+      'hide'
+    );
+  }
+
+  /**
+   * Show chatwoot bubble.
+   * @returns { void }
+   */
+  public showBubble(): void {
+    (this.document.defaultView as any).$chatwoot?.toggleBubbleVisibility(
+      'show'
+    );
+  }
 }

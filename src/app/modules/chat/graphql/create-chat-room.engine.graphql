@@ -1,0 +1,12 @@
+mutation CreateChatRoom ($roomType: ChatRoomTypeEnum!, $otherMemberGuids: [String!]!) {
+    createChatRoom(roomType: $roomType, otherMemberGuids: $otherMemberGuids) {
+        cursor
+        node {
+            id
+            guid
+            roomType
+            timeCreatedISO8601
+            timeCreatedUnix
+        }
+    }
+}

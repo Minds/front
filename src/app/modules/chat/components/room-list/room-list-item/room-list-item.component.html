@@ -1,0 +1,12 @@
+<div class="m-chatRoomListItem__containerLeft">
+  <minds-avatar *ngFor="let avatar of avatars" [object]="avatar"></minds-avatar>
+</div>
+<div class="m-chatRoomListItem__containerRight">
+  <p class="m-chatRoomListItem__topRow">
+    <span class="m-chatRoomListItem__roomName">{{ roomName }}</span>
+    <span class="m-chatRoomListItem__lastMessageTimestamp">{{
+      timestamp | chatDate
+    }}</span>
+  </p>
+  <p class="m-chatRoomListItem__lastMessage">{{ lastMessage }}</p>
+</div>
