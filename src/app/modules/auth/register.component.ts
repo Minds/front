@@ -150,7 +150,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       )
       .setDescription(
         this.isTenant.is()
-          ? `A social app.`
+          ? `...`
           : 'Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.'
       );
 
