@@ -18,4 +18,22 @@
       overflow: visible !important;
     }
   }
+
+  .m-channel--badges {
+    ::ng-deep m-tooltip {
+      i {
+        &.unselected {
+          @include m-theme() {
+            color: themed($m-textColor--secondary) !important;
+          }
+
+          &:hover {
+            @include m-theme() {
+              color: themed($m-action) !important;
+            }
+          }
+        }
+      }
+    }
+  }
 }
