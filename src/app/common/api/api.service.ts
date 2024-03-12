@@ -331,6 +331,9 @@ export class ApiService {
     return new HttpHeaders({
       'X-XSRF-TOKEN': XSRF_TOKEN,
       'X-VERSION': environment.version,
+      'Cache-Control': 'no-cache, no-store, max-age=0',
+      Expires: 'Thu, 1 Jan 1970 00:00:00 GMT',
+      Pragma: 'no-cache',
       ...customHeaders,
     });
   }
