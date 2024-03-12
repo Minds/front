@@ -119,7 +119,7 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
   private initQueryRef(): void {
     this.queryRef = this.getChatRoomsListGql.watch(
       {
-        after: 0,
+        after: null,
         first: PAGE_SIZE,
       },
       {

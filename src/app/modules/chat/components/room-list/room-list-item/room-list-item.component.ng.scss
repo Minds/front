@@ -53,6 +53,7 @@
       }
 
       .m-chatRoomListItem__lastMessageTimestamp {
+        text-wrap: nowrap;
         @include body3Regular;
       }
     }

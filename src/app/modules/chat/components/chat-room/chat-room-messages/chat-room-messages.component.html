@@ -1,4 +1,8 @@
-<!-- TODO: TrackBy -->
+<m-loadingSpinner
+  *ngIf="hasPreviousPage$ | async"
+  [inProgress]="true"
+></m-loadingSpinner>
+
 <div
   *ngFor="let message of messages; trackBy: trackByFn"
   class="m-chatRoomMessage__container"

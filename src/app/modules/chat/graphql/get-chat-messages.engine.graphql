@@ -1,9 +1,10 @@
 query GetChatMessages(
     $roomGuid: String!
     $first: Int!
-    $after: Int!
+    $after: String
+    $before: String
 ) {
-    chatMessages(after: $after, first: $first, roomGuid: $roomGuid) {
+    chatMessages(after: $after, first: $first, before: $before, roomGuid: $roomGuid) {
         edges {
             cursor
             node {

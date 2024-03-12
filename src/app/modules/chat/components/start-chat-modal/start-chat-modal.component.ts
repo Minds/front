@@ -24,7 +24,6 @@ import {
   DEFAULT_ERROR_MESSAGE,
   ToasterService,
 } from '../../../../common/services/toaster.service';
-import { ChatRoomTypeEnum } from '../../../../../graphql/generated.engine';
 
 /** User row object. */
 type UserRow = {
@@ -164,10 +163,7 @@ export class StartChatModalServiceComponent extends AbstractSubscriberComponent
 
       // TODO: Add support for group chats in future.
       const chatRoomId: string = await this.createChatRoomService.createChatRoom(
-        selectedUsers,
-        selectedUsers.length > 2
-          ? ChatRoomTypeEnum.MultiUser
-          : ChatRoomTypeEnum.OneToOne
+        selectedUsers
       );
       this.onCompleted(chatRoomId);
     } catch (e) {

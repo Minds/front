@@ -34,3 +34,12 @@
     (actionButtonClick)="onStartChatClick()"
   ></m-chat__actionCard>
 </ng-template>
+
+<infinite-scroll
+  (load)="fetchMore()"
+  [moreData]="hasNextPage$ | async"
+  [inProgress]="(inProgress$ | async) && (initialized$ | async)"
+  [hideManual]="true"
+  [distance]="'25%'"
+  [scrollSource]="elementRef?.nativeElement"
+></infinite-scroll>

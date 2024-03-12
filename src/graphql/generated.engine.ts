@@ -250,7 +250,6 @@ export type ChatMessageNode = NodeInterface & {
   plainText: Scalars['String']['output'];
   /** The guid of the room the message belongs to */
   roomGuid: Scalars['String']['output'];
-  /** The user who sent the message */
   sender: UserEdge;
   /** The timestamp the message was sent at */
   timeCreatedISO8601: Scalars['String']['output'];
@@ -283,11 +282,16 @@ export type ChatRoomEdgeMembersArgs = {
 };
 
 export type ChatRoomEdgeMessagesArgs = {
-  after?: InputMaybe<Scalars['Int']['input']>;
-  before?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
 };
+
+export enum ChatRoomInviteRequestActionEnum {
+  Accept = 'ACCEPT',
+  Reject = 'REJECT',
+  RejectAndBlock = 'REJECT_AND_BLOCK',
+}
 
 export type ChatRoomMemberEdge = EdgeInterface & {
   __typename?: 'ChatRoomMemberEdge';
@@ -919,6 +923,7 @@ export type Mutation = {
   provideVerdict: Scalars['Boolean']['output'];
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
+  replyToRoomInviteRequest: Scalars['Boolean']['output'];
   resendInvite?: Maybe<Scalars['Void']['output']>;
   setCustomPage: Scalars['Boolean']['output'];
   /** Creates a comment on a remote url */
@@ -1049,6 +1054,11 @@ export type MutationRefreshRssFeedArgs = {
 
 export type MutationRemoveRssFeedArgs = {
   feedId: Scalars['String']['input'];
+};
+
+export type MutationReplyToRoomInviteRequestArgs = {
+  chatRoomInviteRequestActionEnum: ChatRoomInviteRequestActionEnum;
+  roomGuid: Scalars['Int']['input'];
 };
 
 export type MutationResendInviteArgs = {
@@ -1266,6 +1276,7 @@ export type Query = {
   chatMessages: ChatMessagesConnection;
   /** Returns a chat room */
   chatRoom: ChatRoomEdge;
+  chatRoomInviteRequests: ChatRoomsConnection;
   /** Returns a list of chat rooms available to a user */
   chatRoomList: ChatRoomsConnection;
   /** Returns the members of a chat room */
@@ -1340,6 +1351,7 @@ export type Query = {
   tenantAssets: AssetConnection;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
+  totalRoomInviteRequests: Scalars['Int']['output'];
   userAssets: AssetConnection;
   userQuotaUsage: QuotaDetails;
   /** Returns users and their roles */
@@ -1370,10 +1382,9 @@ export type QueryBoostsArgs = {
 };
 
 export type QueryChatMessagesArgs = {
-  after?: InputMaybe<Scalars['Int']['input']>;
-  before?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
   roomGuid: Scalars['String']['input'];
 };
 
@@ -1381,15 +1392,18 @@ export type QueryChatRoomArgs = {
   roomGuid: Scalars['String']['input'];
 };
 
-export type QueryChatRoomListArgs = {
+export type QueryChatRoomInviteRequestsArgs = {
   after?: InputMaybe<Scalars['Int']['input']>;
-  before?: InputMaybe<Scalars['Int']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryChatRoomListArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QueryChatRoomMembersArgs = {
-  after?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['Int']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
@@ -2051,7 +2065,8 @@ export type CreateChatRoomMutation = {
 export type GetChatMessagesQueryVariables = Exact<{
   roomGuid: Scalars['String']['input'];
   first: Scalars['Int']['input'];
-  after: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type GetChatMessagesQuery = {
@@ -2091,6 +2106,67 @@ export type GetChatMessagesQuery = {
       startCursor?: string | null;
       endCursor?: string | null;
     };
+  };
+};
+
+export type GetChatRoomInviteRequestsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type GetChatRoomInviteRequestsQuery = {
+  __typename?: 'Query';
+  chatRoomInviteRequests: {
+    __typename?: 'ChatRoomsConnection';
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+    edges: Array<{
+      __typename?: 'ChatRoomEdge';
+      cursor: string;
+      node: {
+        __typename?: 'ChatRoomNode';
+        id: string;
+        guid: string;
+        roomType: ChatRoomTypeEnum;
+        timeCreatedISO8601: string;
+        timeCreatedUnix: string;
+      };
+      members: {
+        __typename?: 'ChatRoomMembersConnection';
+        edges: Array<{
+          __typename?: 'ChatRoomMemberEdge';
+          cursor: string;
+          node: {
+            __typename?: 'UserNode';
+            id: string;
+            guid: string;
+            username: string;
+            name: string;
+          };
+        }>;
+      };
+      messages: {
+        __typename?: 'ChatMessagesConnection';
+        edges: Array<{
+          __typename?: 'ChatMessageEdge';
+          cursor: string;
+          node: {
+            __typename?: 'ChatMessageNode';
+            id: string;
+            guid: string;
+            roomGuid: string;
+            plainText: string;
+            timeCreatedISO8601: string;
+            timeCreatedUnix: string;
+          };
+        }>;
+      };
+    }>;
   };
 };
 
@@ -2138,7 +2214,7 @@ export type GetChatRoomQuery = {
 
 export type GetChatRoomsListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
-  after?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type GetChatRoomsListQuery = {
@@ -2195,6 +2271,15 @@ export type GetChatRoomsListQuery = {
       };
     }>;
   };
+};
+
+export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetTotalRoomInviteRequestsQuery = {
+  __typename?: 'Query';
+  totalRoomInviteRequests: number;
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -6856,8 +6941,18 @@ export class CreateChatRoomGQL extends Apollo.Mutation<
   }
 }
 export const GetChatMessagesDocument = gql`
-  query GetChatMessages($roomGuid: String!, $first: Int!, $after: Int!) {
-    chatMessages(after: $after, first: $first, roomGuid: $roomGuid) {
+  query GetChatMessages(
+    $roomGuid: String!
+    $first: Int!
+    $after: String
+    $before: String
+  ) {
+    chatMessages(
+      after: $after
+      first: $first
+      before: $before
+      roomGuid: $roomGuid
+    ) {
       edges {
         cursor
         node {
@@ -6898,6 +6993,66 @@ export class GetChatMessagesGQL extends Apollo.Query<
   GetChatMessagesQueryVariables
 > {
   document = GetChatMessagesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatRoomInviteRequestsDocument = gql`
+  query GetChatRoomInviteRequests($first: Int, $after: Int) {
+    chatRoomInviteRequests(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          id
+          guid
+          roomType
+          timeCreatedISO8601
+          timeCreatedUnix
+        }
+        members(first: 3) {
+          edges {
+            cursor
+            node {
+              id
+              guid
+              username
+              name
+            }
+          }
+        }
+        messages(first: 1) {
+          edges {
+            cursor
+            node {
+              id
+              guid
+              roomGuid
+              plainText
+              timeCreatedISO8601
+              timeCreatedUnix
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomInviteRequestsGQL extends Apollo.Query<
+  GetChatRoomInviteRequestsQuery,
+  GetChatRoomInviteRequestsQueryVariables
+> {
+  document = GetChatRoomInviteRequestsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -6952,7 +7107,7 @@ export class GetChatRoomGQL extends Apollo.Query<
   }
 }
 export const GetChatRoomsListDocument = gql`
-  query GetChatRoomsList($first: Int, $after: Int) {
+  query GetChatRoomsList($first: Int, $after: String) {
     chatRoomList(first: $first, after: $after) {
       pageInfo {
         hasNextPage
@@ -7006,6 +7161,25 @@ export class GetChatRoomsListGQL extends Apollo.Query<
   GetChatRoomsListQueryVariables
 > {
   document = GetChatRoomsListDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetTotalRoomInviteRequestsDocument = gql`
+  query GetTotalRoomInviteRequests {
+    totalRoomInviteRequests
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetTotalRoomInviteRequestsGQL extends Apollo.Query<
+  GetTotalRoomInviteRequestsQuery,
+  GetTotalRoomInviteRequestsQueryVariables
+> {
+  document = GetTotalRoomInviteRequestsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

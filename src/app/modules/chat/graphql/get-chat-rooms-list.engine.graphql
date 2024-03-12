@@ -1,4 +1,4 @@
-query GetChatRoomsList($first: Int, $after: Int) {
+query GetChatRoomsList($first: Int, $after: String) {
     chatRoomList(first: $first, after: $after) {
         pageInfo {
             hasNextPage

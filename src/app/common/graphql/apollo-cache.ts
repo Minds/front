@@ -31,6 +31,8 @@ export const cache = new InMemoryCache({
           'timePeriod',
           'addonIds',
         ]),
+        chatRoomList: relayStylePagination(['first']),
+        chatMessages: relayStylePagination(['first', 'roomId']),
       },
     },
   },

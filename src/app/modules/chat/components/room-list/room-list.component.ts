@@ -1,8 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnInit,
+} from '@angular/core';
 import { ChatPendingRequestsWidgetComponent } from './pending-requests-widget/pending-requests-widget.component';
 import { StartChatModalService } from '../start-chat-modal/start-chat-modal.service';
 import { ChatRoomsListService } from '../../services/chat-rooms-list.service';
-import { Observable, map, of } from 'rxjs';
+import { Observable, distinctUntilChanged, map, of } from 'rxjs';
 import {
   ChatRoomEdge,
   PageInfo,
@@ -31,19 +36,21 @@ import { ChatActionCardComponent } from '../action-cards/action-card.component';
 })
 export class ChatRoomListComponent implements OnInit {
   /** Whether a request is in progress to load / load more. */
-  protected readonly inProgress$: Observable<boolean> = this
-    .chatRoomsListService.inProgress$;
+  protected readonly inProgress$: Observable<
+    boolean
+  > = this.chatRoomsListService.inProgress$.pipe(distinctUntilChanged());
 
   /** Whether the component has been intiialized. */
-  protected readonly initialized$: Observable<boolean> = this
-    .chatRoomsListService.initialized$;
+  protected readonly initialized$: Observable<
+    boolean
+  > = this.chatRoomsListService.initialized$.pipe(distinctUntilChanged());
 
   /** Whether the paginated list has a next page. */
   protected readonly hasNextPage$: Observable<
     boolean
-  > = this.chatRoomsListService.pageInfo$.pipe(
-    map((pageInfo: PageInfo) => pageInfo?.hasNextPage)
-  );
+  > = this.chatRoomsListService.pageInfo$
+    .pipe(map((pageInfo: PageInfo) => pageInfo?.hasNextPage))
+    .pipe(distinctUntilChanged());
 
   protected edges$: Observable<ChatRoomEdge[]> = this.chatRoomsListService
     .edges$;
@@ -57,7 +64,8 @@ export class ChatRoomListComponent implements OnInit {
 
   constructor(
     private startChatModal: StartChatModalService,
-    private chatRoomsListService: ChatRoomsListService
+    private chatRoomsListService: ChatRoomsListService,
+    protected elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {

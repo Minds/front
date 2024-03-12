@@ -23,7 +23,7 @@ export class CreateChatRoomService {
    */
   public async createChatRoom(
     participants: MindsUser[],
-    roomType: ChatRoomTypeEnum
+    roomType: ChatRoomTypeEnum = null
   ): Promise<string> {
     const response: MutationResult<CreateChatRoomMutation> = await firstValueFrom(
       this.createChatRoomGql.mutate({

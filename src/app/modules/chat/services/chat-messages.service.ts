@@ -97,13 +97,13 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
    * @returns { void }
    */
   public fetchMore(): void {
+    this._inProgress$.next(true);
+
     this.subscriptions.push(
       this.pageInfo$.pipe(take(1)).subscribe((pageInfo: PageInfo): void => {
-        this._inProgress$.next(true);
-
         this.queryRef.fetchMore({
           variables: {
-            after: pageInfo.endCursor,
+            before: pageInfo.startCursor,
           },
         });
       })
@@ -118,7 +118,7 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
     this.queryRef = this.getChatMessagesGql.watch(
       {
         roomGuid: roomGuid,
-        after: 0,
+        after: null,
         first: PAGE_SIZE,
       },
       {
@@ -169,8 +169,6 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
               console.info('No chat rooms found');
               return;
             }
-
-            // TODO: Prepend with existing array
             this._edges$.next(
               result?.data?.chatMessages?.edges as ChatMessageEdge[]
             );
