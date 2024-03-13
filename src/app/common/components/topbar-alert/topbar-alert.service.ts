@@ -2,17 +2,20 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
   combineLatest,
+  EMPTY,
   filter,
   firstValueFrom,
   from,
   map,
   Observable,
+  of,
   ReplaySubject,
 } from 'rxjs';
 import { Session } from '../../../services/session';
 import { ObjectLocalStorageService } from '../../services/object-local-storage.service';
 import { Apollo, gql } from 'apollo-angular';
-import { IsTenantService } from '../../services/is-tenant.service';
+import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
+import { ConfigsService } from '../../services/configs.service';
 
 /** Alert key type */
 export type AlertKey = string;
@@ -65,19 +68,23 @@ export class TopbarAlertService {
     private session: Session,
     private objectStorage: ObjectLocalStorageService,
     private apollo: Apollo,
-    private isTenant: IsTenantService,
+    private config: ConfigsService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean,
     @Inject(PLATFORM_ID) private platformId: string
   ) {
     this.dismissedAlerts$.next(this.getDismissedAlerts());
 
-    this.copyData$ = isPlatformBrowser(this.platformId)
-      ? this.apollo
-          .use('strapi')
-          .watchQuery({
-            query: GET_TOPBAR_QUERY,
-          })
-          .valueChanges.pipe(map((result: any) => result.data.topbarAlert.data))
-      : from([]);
+    this.copyData$ =
+      isPlatformBrowser(this.platformId) && !isTenantNetwork
+        ? this.apollo
+            .use('strapi')
+            .watchQuery({
+              query: GET_TOPBAR_QUERY,
+            })
+            .valueChanges.pipe(
+              map((result: any) => result.data.topbarAlert.data)
+            )
+        : of(EMPTY);
 
     this.identifier$ = this.copyData$.pipe(
       map(copyData => copyData.attributes.identifier)
@@ -91,34 +98,34 @@ export class TopbarAlertService {
       map(copyData => Date.parse(copyData.attributes.onlyDisplayAfter))
     );
 
-    this.shouldShow$ = combineLatest([
-      this.identifier$,
-      this.dismissedAlerts$,
-      this.onlyDisplayAfter$,
-      this.enabled$,
-      this.session.user$.pipe(map(user => !!user)),
-    ]).pipe(
-      map(
-        ([
-          identifier,
-          dismissedAlerts,
-          onlyDisplayAfter,
-          enabled,
-          isLoggedIn,
-        ]) => {
-          if (this.isTenant.is()) {
-            return false;
-          }
-
-          return (
-            dismissedAlerts.indexOf(identifier) === -1 &&
-            onlyDisplayAfter < Date.now() &&
-            enabled &&
-            isLoggedIn
-          );
-        }
-      )
-    );
+    this.shouldShow$ = isPlatformServer(this.platformId)
+      ? of(false)
+      : this.isTenantNetwork
+      ? of(this.config.get('tenant')?.['is_trial'] ?? false)
+      : combineLatest([
+          this.identifier$,
+          this.dismissedAlerts$,
+          this.onlyDisplayAfter$,
+          this.enabled$,
+          this.session.user$.pipe(map(user => !!user)),
+        ]).pipe(
+          map(
+            ([
+              identifier,
+              dismissedAlerts,
+              onlyDisplayAfter,
+              enabled,
+              isLoggedIn,
+            ]) => {
+              return (
+                dismissedAlerts.indexOf(identifier) === -1 &&
+                onlyDisplayAfter < Date.now() &&
+                enabled &&
+                isLoggedIn
+              );
+            }
+          )
+        );
   }
 
   /**

@@ -6,10 +6,9 @@ import {
 } from './topbar-alert.service';
 import { Session } from '../../../services/session';
 import { ObjectLocalStorageService } from '../../services/object-local-storage.service';
-import { Apollo } from 'apollo-angular';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, of, skip, take } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, lastValueFrom, skip } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { MockService } from '../../../utils/mock';
 import {
@@ -17,7 +16,8 @@ import {
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import userMock from '../../../mocks/responses/user.mock';
-import { IsTenantService } from '../../services/is-tenant.service';
+import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
+import { ConfigsService } from '../../services/configs.service';
 
 describe('TopbarAlertService', () => {
   let service: TopbarAlertService;
@@ -45,10 +45,11 @@ describe('TopbarAlertService', () => {
             },
           }),
         },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
         { provide: PLATFORM_ID, useValue: 'browser' },
         {
-          provide: IsTenantService,
-          useValue: MockService(IsTenantService),
+          provide: IS_TENANT_NETWORK,
+          useValue: false,
         },
       ],
     });

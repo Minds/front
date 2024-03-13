@@ -102,6 +102,19 @@
       </m-dropdownMenu__item>
     </ng-container>
 
+    <ng-container *ngIf="shouldShowTenantModerationOptions()">
+      <m-dropdownMenu__item
+        (click)="unBan()"
+        *ngIf="service.isBanned$ | async; else tenantBanOptionTemplate"
+        ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBAN">Unban</span>
+      </m-dropdownMenu__item>
+      <ng-template #tenantBanOptionTemplate>
+        <m-dropdownMenu__item (click)="ban()"
+          ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__BAN">Ban</span>
+        </m-dropdownMenu__item>
+      </ng-template>
+    </ng-container>
+
     <!-- ******** end admin ******************** -->
     <m-dropdownMenu__item
       (click)="unblock()"

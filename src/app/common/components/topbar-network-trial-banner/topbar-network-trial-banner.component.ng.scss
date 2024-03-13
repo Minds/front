@@ -1,0 +1,61 @@
+@import 'defaults.scss';
+@import '../../layout/layout.scss';
+
+:host {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $topbarAlertHeight--desktop;
+  padding: 0 $spacing3 0 $spacing4;
+  box-sizing: border-box;
+  overflow-y: hidden;
+
+  @media screen and (max-width: $max-mobile) {
+    height: $topbarAlertHeight--mobile;
+    padding: 0 $spacing4;
+  }
+
+  &.m-networkTrialBanner__host--active {
+    background-color: color-by-theme($m-bgColor--secondary, 'dark');
+    color: color-by-theme($m-textColor--primary, 'dark');
+
+    ::ng-deep a {
+      @include m-theme() {
+        color: color-by-theme($m-textColor--primary, 'dark');
+      }
+    }
+  }
+
+  &.m-networkTrialBanner__host--expired {
+    @include m-theme() {
+      background-color: themed($m-alert);
+      color: themed($m-textColor--primaryInverted);
+    }
+
+    ::ng-deep a {
+      @include m-theme() {
+        color: themed($m-textColor--primaryInverted);
+      }
+    }
+  }
+
+  .m-topbarAlert__message {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+
+    @include unselectable;
+    @include body1Medium;
+
+    ::ng-deep a {
+      @include m-theme() {
+        font-weight: 700;
+        text-decoration-skip-ink: none;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}

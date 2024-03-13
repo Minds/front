@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
@@ -62,6 +62,7 @@ import {
   ComposerAudienceSelectorService,
 } from './audience.service';
 import { LivestreamService } from './livestream.service';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Default values
@@ -462,7 +463,8 @@ export class ComposerService implements OnDestroy {
     private onboardingService: OnboardingV3Service,
     private uploaderService: UploaderService,
     private toasterService: ToasterService,
-    private livestreamService: LivestreamService
+    private livestreamService: LivestreamService,
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -727,9 +729,11 @@ export class ComposerService implements OnDestroy {
 
     // Subscribe to data stream and re-build API payload when it changes
 
-    this.dataSubscription = this.data$.subscribe(data => {
-      return this.buildPayload(data);
-    });
+    if (isPlatformBrowser(platformId)) {
+      this.dataSubscription = this.data$.subscribe(data => {
+        return this.buildPayload(data);
+      });
+    }
 
     this.postButtonDisabled$ = combineLatest([
       this.canPost$,
@@ -802,7 +806,7 @@ export class ComposerService implements OnDestroy {
       this.attachments$.pipe(distinctUntilChanged()),
       this.remind$.pipe(distinctUntilChanged()),
     ])
-      .pipe(debounceTime(500))
+      .pipe(debounceTime(isPlatformBrowser(platformId) ? 500 : 0))
       .subscribe(
         ([messageUrl, [previousRichEmbed, richEmbed], attachment, remind]) => {
           // Use current message URL when:
@@ -853,7 +857,7 @@ export class ComposerService implements OnDestroy {
     this.reset();
 
     // Unsubscribe to data stream
-    this.dataSubscription.unsubscribe();
+    this.dataSubscription?.unsubscribe();
 
     // Unsubscribe from pending monetization
     this.pendingMonetizationSubscription.unsubscribe();

@@ -26,6 +26,9 @@ export class ProductPageFeatureHighlightComponent implements OnInit {
   /** Action button to be displayed. */
   @Input() public readonly button: ActionButton;
 
+  /** Markdown footnotes displayed under button. */
+  @Input() public readonly footnotes: string;
+
   /**
    * Color scheme of the component - a light color scheme will provide
    * a dark button / text for use if a light background has been selected.

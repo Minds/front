@@ -253,7 +253,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
         linecolor: this.getColor('m-borderColor--primary'),
         linewidth: 1,
         zeroline: false,
-        fixedrange: true,
+        fixedrange: false,
       },
       yaxis: {
         ticks: '',

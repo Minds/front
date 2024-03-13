@@ -414,7 +414,7 @@ review:stop:
   image: minds/ci:latest
   script:
     ## Sync assets with CDN
-    - aws s3 sync dist $S3_REPOSITORY_URL/$IMAGE_LABEL --cache-control max-age=31536000
+    - aws s3 sync dist $S3_REPOSITORY_URL/$IMAGE_LABEL --cache-control max-age=31536000 --exact-timestamps
     ## Update docker server container
     - crane auth login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - crane tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $IMAGE_LABEL

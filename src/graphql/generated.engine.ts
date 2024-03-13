@@ -1976,6 +1976,25 @@ export type AdminUpdateAccountMutation = {
   updateAccount: Array<string>;
 };
 
+export type ModerationSetUserBanStateMutationVariables = Exact<{
+  subjectGuid: Scalars['String']['input'];
+  banState: Scalars['Boolean']['input'];
+}>;
+
+export type ModerationSetUserBanStateMutation = {
+  __typename?: 'Mutation';
+  setUserBanState: boolean;
+};
+
+export type ModerationDeleteEntityMutationVariables = Exact<{
+  subjectUrn: Scalars['String']['input'];
+}>;
+
+export type ModerationDeleteEntityMutation = {
+  __typename?: 'Mutation';
+  deleteEntity: boolean;
+};
+
 export type GetBoostFeedQueryVariables = Exact<{
   targetLocation?: InputMaybe<Scalars['Int']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2436,6 +2455,114 @@ export type GetGiftCardsQuery = {
     pageInfo: {
       __typename?: 'PageInfo';
       hasNextPage: boolean;
+      endCursor?: string | null;
+    };
+  };
+};
+
+export type GetAdminAnalyticsChartAndKpisQueryVariables = Exact<{
+  chartMetric: AnalyticsMetricEnum;
+  kpiMetrics: Array<AnalyticsMetricEnum> | AnalyticsMetricEnum;
+  fromUnixTs: Scalars['Int']['input'];
+  toUnixTs: Scalars['Int']['input'];
+}>;
+
+export type GetAdminAnalyticsChartAndKpisQuery = {
+  __typename?: 'Query';
+  tenantAdminAnalyticsChart: {
+    __typename?: 'AnalyticsChartType';
+    metric: AnalyticsMetricEnum;
+    segments: Array<{
+      __typename?: 'AnalyticsChartSegmentType';
+      buckets: Array<{
+        __typename?: 'AnalyticsChartBucketType';
+        date: string;
+        key: string;
+        value: number;
+      }>;
+    }>;
+  };
+  tenantAdminAnalyticsKpis: Array<{
+    __typename?: 'AnalyticsKpiType';
+    metric: AnalyticsMetricEnum;
+    value: number;
+    previousPeriodValue: number;
+  }>;
+};
+
+export type GetTenantAnalyticsTableQueryVariables = Exact<{
+  table: AnalyticsTableEnum;
+  fromUnixTs?: InputMaybe<Scalars['Int']['input']>;
+  toUnixTs?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type GetTenantAnalyticsTableQuery = {
+  __typename?: 'Query';
+  tenantAdminAnalyticsTable: {
+    __typename?: 'AnalyticsTableConnection';
+    edges: Array<{
+      __typename?: 'AnalyticsTableRowEdge';
+      cursor: string;
+      node:
+        | { __typename?: 'ActivityNode'; id: string }
+        | {
+            __typename?: 'AnalyticsTableRowActivityNode';
+            views: number;
+            engagements: number;
+            id: string;
+            activity: {
+              __typename?: 'ActivityNode';
+              id: string;
+              guid: string;
+              ownerGuid: string;
+              title?: string | null;
+              message: string;
+              owner: { __typename?: 'UserNode'; username: string };
+            };
+          }
+        | {
+            __typename?: 'AnalyticsTableRowGroupNode';
+            newMembers: number;
+            id: string;
+            group: { __typename?: 'GroupNode'; name: string; guid: string };
+          }
+        | {
+            __typename?: 'AnalyticsTableRowUserNode';
+            newSubscribers: number;
+            totalSubscribers: number;
+            id: string;
+            user: { __typename?: 'UserNode'; guid: string; username: string };
+          }
+        | { __typename?: 'BoostNode'; id: string }
+        | { __typename?: 'ChatMessageNode'; id: string }
+        | { __typename?: 'ChatRoomNode'; id: string }
+        | { __typename?: 'CommentNode'; id: string }
+        | { __typename?: 'CustomPage'; id: string }
+        | { __typename?: 'FeaturedEntity'; id: string }
+        | { __typename?: 'FeaturedEntityConnection'; id: string }
+        | { __typename?: 'FeaturedGroup'; id: string }
+        | { __typename?: 'FeaturedUser'; id: string }
+        | { __typename?: 'FeedExploreTagNode'; id: string }
+        | { __typename?: 'FeedHeaderNode'; id: string }
+        | { __typename?: 'FeedHighlightsConnection'; id: string }
+        | { __typename?: 'FeedNoticeNode'; id: string }
+        | { __typename?: 'GiftCardNode'; id: string }
+        | { __typename?: 'GiftCardTransaction'; id: string }
+        | { __typename?: 'GroupNode'; id: string }
+        | { __typename?: 'Invite'; id: string }
+        | { __typename?: 'InviteConnection'; id: string }
+        | { __typename?: 'NodeImpl'; id: string }
+        | { __typename?: 'PublisherRecsConnection'; id: string }
+        | { __typename?: 'Report'; id: string }
+        | { __typename?: 'UserNode'; id: string };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
       endCursor?: string | null;
     };
   };
@@ -3411,6 +3538,13 @@ export type SetRolePermissionMutation = {
   };
 };
 
+export type StartTenantTrialMutationVariables = Exact<{ [key: string]: never }>;
+
+export type StartTenantTrialMutation = {
+  __typename?: 'Mutation';
+  tenantTrial: { __typename?: 'Tenant'; id: number };
+};
+
 export type UnassignUserFromRoleMutationVariables = Exact<{
   userGuid: Scalars['String']['input'];
   roleId: Scalars['Int']['input'];
@@ -3427,6 +3561,7 @@ export type GetCheckoutLinkQueryVariables = Exact<{
     Array<Scalars['String']['input']> | Scalars['String']['input']
   >;
   timePeriod: CheckoutTimePeriodEnum;
+  isTrialUpgrade?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type GetCheckoutLinkQuery = {
@@ -6826,6 +6961,47 @@ export class AdminUpdateAccountGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const ModerationSetUserBanStateDocument = gql`
+  mutation ModerationSetUserBanState(
+    $subjectGuid: String!
+    $banState: Boolean!
+  ) {
+    setUserBanState(subjectGuid: $subjectGuid, banState: $banState)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ModerationSetUserBanStateGQL extends Apollo.Mutation<
+  ModerationSetUserBanStateMutation,
+  ModerationSetUserBanStateMutationVariables
+> {
+  document = ModerationSetUserBanStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ModerationDeleteEntityDocument = gql`
+  mutation ModerationDeleteEntity($subjectUrn: String!) {
+    deleteEntity(subjectUrn: $subjectUrn)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ModerationDeleteEntityGQL extends Apollo.Mutation<
+  ModerationDeleteEntityMutation,
+  ModerationDeleteEntityMutationVariables
+> {
+  document = ModerationDeleteEntityDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetBoostFeedDocument = gql`
   query GetBoostFeed(
     $targetLocation: Int
@@ -7430,6 +7606,125 @@ export class GetGiftCardsGQL extends Apollo.Query<
   GetGiftCardsQueryVariables
 > {
   document = GetGiftCardsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetAdminAnalyticsChartAndKpisDocument = gql`
+  query GetAdminAnalyticsChartAndKpis(
+    $chartMetric: AnalyticsMetricEnum!
+    $kpiMetrics: [AnalyticsMetricEnum!]!
+    $fromUnixTs: Int!
+    $toUnixTs: Int!
+  ) {
+    tenantAdminAnalyticsChart(
+      metric: $chartMetric
+      fromUnixTs: $fromUnixTs
+      toUnixTs: $toUnixTs
+    ) {
+      metric
+      segments {
+        buckets {
+          date
+          key
+          value
+        }
+      }
+    }
+    tenantAdminAnalyticsKpis(
+      metrics: $kpiMetrics
+      fromUnixTs: $fromUnixTs
+      toUnixTs: $toUnixTs
+    ) {
+      metric
+      value
+      previousPeriodValue
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetAdminAnalyticsChartAndKpisGQL extends Apollo.Query<
+  GetAdminAnalyticsChartAndKpisQuery,
+  GetAdminAnalyticsChartAndKpisQueryVariables
+> {
+  document = GetAdminAnalyticsChartAndKpisDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetTenantAnalyticsTableDocument = gql`
+  query GetTenantAnalyticsTable(
+    $table: AnalyticsTableEnum!
+    $fromUnixTs: Int
+    $toUnixTs: Int
+    $after: String
+    $limit: Int
+  ) {
+    tenantAdminAnalyticsTable(
+      table: $table
+      fromUnixTs: $fromUnixTs
+      toUnixTs: $toUnixTs
+      after: $after
+      limit: $limit
+    ) {
+      edges {
+        node {
+          id
+          ... on AnalyticsTableRowActivityNode {
+            views
+            engagements
+            activity {
+              id
+              guid
+              ownerGuid
+              title
+              message
+              owner {
+                username
+              }
+            }
+          }
+          ... on AnalyticsTableRowGroupNode {
+            newMembers
+            group {
+              name
+              guid
+            }
+          }
+          ... on AnalyticsTableRowUserNode {
+            newSubscribers
+            totalSubscribers
+            user {
+              guid
+              username
+            }
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetTenantAnalyticsTableGQL extends Apollo.Query<
+  GetTenantAnalyticsTableQuery,
+  GetTenantAnalyticsTableQueryVariables
+> {
+  document = GetTenantAnalyticsTableDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -8429,6 +8724,27 @@ export class SetRolePermissionGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const StartTenantTrialDocument = gql`
+  mutation StartTenantTrial {
+    tenantTrial {
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class StartTenantTrialGQL extends Apollo.Mutation<
+  StartTenantTrialMutation,
+  StartTenantTrialMutationVariables
+> {
+  document = StartTenantTrialDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const UnassignUserFromRoleDocument = gql`
   mutation UnassignUserFromRole($userGuid: String!, $roleId: Int!) {
     unassignUserFromRole(userGuid: $userGuid, roleId: $roleId)
@@ -8453,8 +8769,14 @@ export const GetCheckoutLinkDocument = gql`
     $planId: String!
     $addOnIds: [String!]
     $timePeriod: CheckoutTimePeriodEnum!
+    $isTrialUpgrade: Boolean
   ) {
-    checkoutLink(planId: $planId, addOnIds: $addOnIds, timePeriod: $timePeriod)
+    checkoutLink(
+      planId: $planId
+      addOnIds: $addOnIds
+      timePeriod: $timePeriod
+      isTrialUpgrade: $isTrialUpgrade
+    )
   }
 `;
 

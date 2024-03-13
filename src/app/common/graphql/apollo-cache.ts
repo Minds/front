@@ -31,6 +31,7 @@ export const cache = new InMemoryCache({
           'timePeriod',
           'addonIds',
         ]),
+        tenantAdminAnalyticsTable: relayStylePagination(['table']),
         chatRoomList: relayStylePagination(['first']),
         chatMessages: relayStylePagination(['first', 'roomId']),
       },

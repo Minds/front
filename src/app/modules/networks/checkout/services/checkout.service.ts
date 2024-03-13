@@ -123,6 +123,8 @@ export class NetworksCheckoutService implements OnDestroy {
   /** QueryRef for checkout page query. */
   private getCheckoutPageQuery: QueryRef<GetCheckoutPageQuery>;
 
+  private isTrialUpgradeRequest: boolean = false;
+
   /** Array of subscriptions. */
   private subscriptions: Subscription[] = [];
 
@@ -137,6 +139,17 @@ export class NetworksCheckoutService implements OnDestroy {
     this.subscriptions.forEach(subscription => subscription?.unsubscribe());
     this.getCheckoutPageQuery = null;
     this.loaded$.next(false);
+  }
+
+  /**
+   * Set whether the checkout is for a trial upgrade request. Value will be passed to server.
+   * Recommend setting this to false on destroy of the implmentation.
+   * @param { boolean } isTrialUpgradeRequest - whether the checkout is for a trial upgrade request.
+   * @returns { this }
+   */
+  public setIsTrialUpgradeRequest(isTrialUpgradeRequest: boolean): this {
+    this.isTrialUpgradeRequest = isTrialUpgradeRequest;
+    return this;
   }
 
   /**
@@ -286,6 +299,7 @@ export class NetworksCheckoutService implements OnDestroy {
                     (addOn: AddOn): string => addOn.id
                   ),
                   timePeriod: selectedTimePeriod,
+                  isTrialUpgrade: this.isTrialUpgradeRequest ?? false,
                 },
                 { fetchPolicy: 'no-cache', errorPolicy: 'all' }
               );

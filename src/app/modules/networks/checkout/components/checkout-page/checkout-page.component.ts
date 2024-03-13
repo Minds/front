@@ -1,6 +1,14 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { PageLayoutService } from '../../../../../common/layout/page-layout.service';
 import { TopbarService } from '../../../../../common/layout/topbar.service';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Page component for networks checkout. Wrapper around the base component
@@ -26,12 +34,17 @@ export class NetworksCheckoutPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private pageLayoutService: PageLayoutService,
-    private topbarService: TopbarService
+    private topbarService: TopbarService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
     this.pageLayoutService.useFullWidth();
     this.topbarService.isMinimalLightMode$.next(true);
+
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   ngOnDestroy(): void {
