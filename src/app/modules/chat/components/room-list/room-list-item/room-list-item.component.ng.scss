@@ -10,7 +10,8 @@
   align-items: center;
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &.m-chat__roomListItem--active {
     @include m-theme() {
       background-color: themed($m-bgColor--secondary);
     }

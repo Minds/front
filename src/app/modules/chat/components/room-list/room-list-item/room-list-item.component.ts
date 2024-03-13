@@ -1,5 +1,10 @@
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  Input,
+} from '@angular/core';
 import { CommonModule } from '../../../../../common/common.module';
 import {
   ChatRoomEdge,
@@ -42,6 +47,11 @@ export class ChatRoomListItemComponent {
 
   /** GUID of the room. */
   protected roomGuid: string;
+
+  /** Whether the room is active. Binds active class when input value is true. */
+  @HostBinding('class.m-chat__roomListItem--active')
+  @Input()
+  active: boolean = false;
 
   /**
    * Set class variables based upon the edge passed via input.

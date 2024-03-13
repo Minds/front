@@ -16,6 +16,7 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { ChatRoomListItemComponent } from './room-list-item/room-list-item.component';
 import { CommonModule } from '../../../../common/common.module';
 import { ChatActionCardComponent } from '../action-cards/action-card.component';
+import { ActivatedRoute, Params } from '@angular/router';
 
 /**
  * List of chat rooms.
@@ -65,8 +66,17 @@ export class ChatRoomListComponent implements OnInit {
   constructor(
     private startChatModal: StartChatModalService,
     private chatRoomsListService: ChatRoomsListService,
+    private route: ActivatedRoute,
     protected elementRef: ElementRef
   ) {}
+
+  /** ID of the currently selected room. */
+  protected readonly currentRoomId$: Observable<
+    string
+  > = this.route.firstChild.params.pipe(
+    distinctUntilChanged(),
+    map((params: Params): string => params['roomId'] ?? '')
+  );
 
   ngOnInit(): void {
     this.chatRoomsListService.init();

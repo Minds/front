@@ -14,8 +14,15 @@
       *ngIf="hasPendingRequests$ | async"
     ></m-chatPendingRequests__widget>
 
-    <ng-container *ngFor="let edge of edges$ | async; trackBy: trackBy">
-      <m-chat__roomListItem [edge]="edge"></m-chat__roomListItem>
+    <ng-container
+      *ngIf="{ currentRoomId: currentRoomId$ | async } as roomListItemParams"
+    >
+      <ng-container *ngFor="let edge of edges$ | async; trackBy: trackBy">
+        <m-chat__roomListItem
+          [edge]="edge"
+          [active]="roomListItemParams.currentRoomId === edge.node.guid"
+        ></m-chat__roomListItem>
+      </ng-container>
     </ng-container>
   </ng-container>
 </ng-container>
