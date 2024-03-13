@@ -40,7 +40,10 @@
         'm-chatRoomMessage__bubble--clickable':
           templateVars.isNextMessageFromSameSender
       }"
-      (click)="handleMessageClick(i)"
+      throttledClick
+      (throttledClick)="
+        templateVars.isNextMessageFromSameSender ? handleMessageClick(i) : null
+      "
     >
       <span class="m-chatRoomMessage__text" *ngIf="message.node?.plainText">{{
         message.node.plainText
@@ -53,6 +56,8 @@
           expandedMessageIndex === i)
       "
       class="m-chatRoomMessage__timestamp"
+      [@.disabled]="inProgress$ | async"
+      [@growShrinkInOut]="expandedMessageIndex === i ? 'in' : 'out'"
     >
       {{ message?.node?.timeCreatedUnix | chatDate }}
     </p>
