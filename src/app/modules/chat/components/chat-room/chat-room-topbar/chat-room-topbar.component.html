@@ -3,6 +3,7 @@
     <minds-avatar
       *ngFor="let roomMember of roomMembers"
       [object]="{ guid: roomMember.node.guid, type: 'user' }"
+      [routerLink]="['/' + roomMember.node.username]"
     ></minds-avatar>
   </div>
   <span class="m-chatRoomTop__roomName">{{ roomName }}</span>

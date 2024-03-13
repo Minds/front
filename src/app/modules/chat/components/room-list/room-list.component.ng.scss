@@ -3,9 +3,10 @@
 :host {
   display: block;
   max-height: 100%;
-  overflow-y: auto;
-  margin: $spacing4 0;
   width: 100%;
+  margin: $spacing4 0;
+  overflow-y: auto;
+  @include hide-scrollbar;
 
   .m-chatRoomList__header {
     display: flex;
@@ -28,6 +29,7 @@
   }
 
   m-chat__actionCard {
+    display: block;
     margin-top: $spacing8;
     padding: 0 $spacing6;
     box-sizing: border-box;

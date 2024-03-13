@@ -5,7 +5,7 @@
   flex-direction: column;
   padding: 0 $spacing5;
   box-sizing: border-box;
-  @include horizontal-scroll;
+  @include hide-scrollbar;
 
   .m-chatRoomMessage__container {
     display: flex;
@@ -26,6 +26,11 @@
           }
         }
       }
+
+      .m-chatRoomMessage__timestamp,
+      .m-chatRoomMessage__senderName {
+        margin-left: $spacing2;
+      }
     }
 
     &--right {
@@ -42,6 +47,15 @@
           }
         }
       }
+
+      .m-chatRoomMessage__timestamp,
+      .m-chatRoomMessage__senderName {
+        margin-right: $spacing1;
+      }
+    }
+
+    &.m-chatRoomMessage__container--hasNextMessageFromSameSender {
+      margin-bottom: $spacing1;
     }
 
     .m-chatRoomMessage__senderName {
@@ -69,13 +83,16 @@
 
     .m-chatRoomMessage__bubble {
       display: flex;
-      width: 400px;
       max-width: 80%;
       padding: 8px 12px;
       box-sizing: border-box;
       align-items: flex-start;
       gap: 8px;
       border-radius: 16px;
+
+      &--clickable {
+        cursor: pointer;
+      }
 
       .m-chatRoomMessage__text {
         word-break: break-word;

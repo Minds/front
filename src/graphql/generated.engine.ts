@@ -2040,10 +2040,10 @@ export type CreateChatMessageMutation = {
 };
 
 export type CreateChatRoomMutationVariables = Exact<{
-  roomType: ChatRoomTypeEnum;
   otherMemberGuids:
     | Array<Scalars['String']['input']>
     | Scalars['String']['input'];
+  roomType?: InputMaybe<ChatRoomTypeEnum>;
 }>;
 
 export type CreateChatRoomMutation = {
@@ -6911,10 +6911,10 @@ export class CreateChatMessageGQL extends Apollo.Mutation<
 }
 export const CreateChatRoomDocument = gql`
   mutation CreateChatRoom(
-    $roomType: ChatRoomTypeEnum!
     $otherMemberGuids: [String!]!
+    $roomType: ChatRoomTypeEnum
   ) {
-    createChatRoom(roomType: $roomType, otherMemberGuids: $otherMemberGuids) {
+    createChatRoom(otherMemberGuids: $otherMemberGuids, roomType: $roomType) {
       cursor
       node {
         id

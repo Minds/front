@@ -23,6 +23,7 @@ const CHAT_ROUTES: Routes = [
   {
     path: 'rooms',
     component: ChatRoomsListPageComponent,
+    data: { reloadOnRouteChange: true },
     canActivate: [
       experimentVariationGuard('epic-358-chat'),
       loggedInRedirectGuard('/'),
@@ -31,9 +32,7 @@ const CHAT_ROUTES: Routes = [
       {
         path: '',
         component: NoChatsSubPageComponent,
-        data: {
-          fullWidthOnly: true,
-        },
+        data: { fullWidthOnly: true },
       },
       {
         path: ':roomId',
@@ -53,9 +52,7 @@ const CHAT_ROUTES: Routes = [
       {
         path: '',
         component: ChatRequestsInfoSubPageComponent,
-        data: {
-          fullWidthOnly: true,
-        },
+        data: { fullWidthOnly: true },
       },
     ],
   },
@@ -71,6 +68,11 @@ const CHAT_ROUTES: Routes = [
     MarkdownModule.forChild(),
   ],
   declarations: [],
-  providers: [{ provide: RouteReuseStrategy, useClass: NoRouteReuseStrategy }],
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: NoRouteReuseStrategy,
+    },
+  ],
 })
 export class ChatModule {}

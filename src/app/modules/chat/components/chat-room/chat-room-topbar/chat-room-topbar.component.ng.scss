@@ -29,6 +29,7 @@ $topbarHeight: 64px;
       }
 
       ::ng-deep .minds-avatar {
+        cursor: pointer;
         border-radius: 50%;
         width: 32px;
         height: 32px;

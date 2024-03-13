@@ -76,7 +76,7 @@ $footerHeight: 85px;
       flex-flow: column nowrap;
       gap: $spacing2;
       margin-bottom: $spacing4;
-      overflow-y: scroll;
+      overflow-y: auto;
       overflow-x: hidden;
       width: 100%;
       @include vertical-scroll;

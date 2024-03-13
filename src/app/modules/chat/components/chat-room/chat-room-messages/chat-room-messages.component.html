@@ -4,33 +4,57 @@
 ></m-loadingSpinner>
 
 <div
-  *ngFor="let message of messages; trackBy: trackByFn"
+  *ngFor="let message of messages; index as i; trackBy: trackByFn"
   class="m-chatRoomMessage__container"
   [ngClass]="{
     'm-chatRoomMessage__container--left':
       message.node?.sender?.node?.guid !== loggedInUserGuid,
     'm-chatRoomMessage__container--right':
-      message.node?.sender?.node?.guid === loggedInUserGuid
+      message.node?.sender?.node?.guid === loggedInUserGuid,
+    'm-chatRoomMessage__container--hasNextMessageFromSameSender':
+      messages[i + 1]?.node.sender.node.guid === message.node.sender.node.guid
   }"
 >
-  <p
-    class="m-chatRoomMessage__senderName"
-    *ngIf="
-      message.node?.sender?.node?.name &&
-      message.node?.sender?.node?.guid !== loggedInUserGuid
-    "
+  <ng-container
+    *ngIf="{
+      isNextMessageFromSameSender:
+        messages[i + 1]?.node.sender.node.guid ===
+        message.node.sender.node.guid,
+      isPreviousMessageFromSameSender:
+        messages[i - 1]?.node.sender.node.guid === message.node.sender.node.guid
+    } as templateVars"
   >
-    {{ message.node?.sender?.node?.name }}
-  </p>
-  <div class="m-chatRoomMessage__bubble">
-    <span class="m-chatRoomMessage__text" *ngIf="message.node?.plainText">{{
-      message.node.plainText
-    }}</span>
-  </div>
-  <p
-    *ngIf="message?.node?.timeCreatedUnix"
-    class="m-chatRoomMessage__timestamp"
-  >
-    {{ message.node.timeCreatedUnix | chatDate }}
-  </p>
+    <p
+      class="m-chatRoomMessage__senderName"
+      *ngIf="
+        message.node?.sender?.node?.name &&
+        message.node?.sender?.node?.guid !== loggedInUserGuid &&
+        !templateVars.isPreviousMessageFromSameSender
+      "
+    >
+      {{ message.node?.sender?.node?.name }}
+    </p>
+    <div
+      class="m-chatRoomMessage__bubble"
+      [ngClass]="{
+        'm-chatRoomMessage__bubble--clickable':
+          templateVars.isNextMessageFromSameSender
+      }"
+      (click)="handleMessageClick(i)"
+    >
+      <span class="m-chatRoomMessage__text" *ngIf="message.node?.plainText">{{
+        message.node.plainText
+      }}</span>
+    </div>
+    <p
+      *ngIf="
+        message?.node?.timeCreatedUnix &&
+        (!templateVars.isNextMessageFromSameSender ||
+          expandedMessageIndex === i)
+      "
+      class="m-chatRoomMessage__timestamp"
+    >
+      {{ message?.node?.timeCreatedUnix | chatDate }}
+    </p>
+  </ng-container>
 </div>

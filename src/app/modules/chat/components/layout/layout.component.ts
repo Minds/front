@@ -69,7 +69,7 @@ export class ChatPageLayoutComponent implements OnInit, OnDestroy {
    */
   protected fullWidthOnlyChildRoute$: BehaviorSubject<
     boolean
-  > = new BehaviorSubject<boolean>(true);
+  > = new BehaviorSubject<boolean>(false);
 
   /**
    * Whether the component has been initialized.

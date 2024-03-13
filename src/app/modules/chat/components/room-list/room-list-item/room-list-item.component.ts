@@ -8,7 +8,7 @@ import {
 import { ChatRoomUtilsService } from '../../../services/utils.service';
 import { MindsAvatarObject } from '../../../../../common/components/avatar/avatar';
 import { ChatDatePipe } from '../../../pipes/chat-date-pipe';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 /** Amount of avatars to show for a multi-user chat-room. */
 const MULTI_USER_AVATARS_TO_SHOW: number = 1;
@@ -21,7 +21,7 @@ const MULTI_USER_AVATARS_TO_SHOW: number = 1;
   templateUrl: './room-list-item.component.html',
   styleUrls: ['./room-list-item.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, NgCommonModule, ChatDatePipe],
+  imports: [CommonModule, NgCommonModule, ChatDatePipe, RouterModule],
   standalone: true,
   host: {
     '(click)': 'navigateToChat()',
@@ -80,6 +80,7 @@ export class ChatRoomListItemComponent {
           return {
             guid: member.node.guid,
             type: 'user', // TODO: in future add group support.
+            username: member.node.username,
           };
         }) ?? []
     );

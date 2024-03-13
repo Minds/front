@@ -1,5 +1,5 @@
-mutation CreateChatRoom ($roomType: ChatRoomTypeEnum!, $otherMemberGuids: [String!]!) {
-    createChatRoom(roomType: $roomType, otherMemberGuids: $otherMemberGuids) {
+mutation CreateChatRoom ($otherMemberGuids: [String!]!, $roomType: ChatRoomTypeEnum) {
+    createChatRoom(otherMemberGuids: $otherMemberGuids, roomType: $roomType) {
         cursor
         node {
             id

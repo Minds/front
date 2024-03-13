@@ -8,6 +8,7 @@ import {
 import { CommonModule } from '../../../../../common/common.module';
 import { ChatRoomUtilsService } from '../../../services/utils.service';
 import { ChatRoomMemberEdge } from '../../../../../../graphql/generated.engine';
+import { RouterModule } from '@angular/router';
 
 /**
  * Top section of a chat room, containing the room name members, and submenu icon.
@@ -17,7 +18,7 @@ import { ChatRoomMemberEdge } from '../../../../../../graphql/generated.engine';
   styleUrls: ['./chat-room-topbar.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './chat-room-topbar.component.html',
-  imports: [NgCommonModule, CommonModule],
+  imports: [NgCommonModule, CommonModule, RouterModule],
   standalone: true,
 })
 export class ChatRoomTopComponent implements OnInit {
