@@ -95,7 +95,6 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
         .subscribe((_: boolean) => {
           // reattach change detector as we've loaded.
           this.cd.reattach();
-          this.cd.markForCheck();
           this.cd.detectChanges();
 
           // immediately scroll to bottom.
@@ -166,8 +165,8 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
 
       // push to back of event queue.
       setTimeout(() => {
+        // reattach change detector.
         this.cd.reattach();
-        this.cd.markForCheck();
         this.cd.detectChanges();
 
         this.elementRef.nativeElement.scrollTo({
