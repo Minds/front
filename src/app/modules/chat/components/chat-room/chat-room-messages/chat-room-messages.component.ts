@@ -150,6 +150,13 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
     );
 
     if (initialized && !inProgress && hasPreviousPage) {
+      /**
+       * Appending items to the top of this container causes the scroll position to
+       * jump significantly, so we have to reset the scroll position to the correct place.
+       * This causes a flash of the incorrect scroll position, so to prevent the layout jump,
+       * we are detaching the change detector whilst loading, and reattaching it when loading
+       * is completed, then scrolling back to correct place.
+       */
       this.cd.detach();
       this.chatMessagesService.fetchMore();
 
@@ -169,6 +176,7 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
         this.cd.reattach();
         this.cd.detectChanges();
 
+        // scroll back to correct positon.
         this.elementRef.nativeElement.scrollTo({
           top: this.elementRef.nativeElement.scrollHeight - initialScrollHeight,
           behavior: 'instant',

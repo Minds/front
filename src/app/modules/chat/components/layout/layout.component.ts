@@ -13,7 +13,7 @@ import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 import { TopbarAlertService } from '../../../../common/components/topbar-alert/topbar-alert.service';
 
 /** Width to consider the component in "narrow viewport" mode. */
-const NARROW_VIEWPORT_WIDTH: string = '1040px';
+const NARROW_VIEWPORT_WIDTH: string = '1040px'; // $layoutMin3ColWidth
 
 /**
  * Page layout component for chat. Expects two projected content areas, "left" and optionally, "right".
@@ -29,36 +29,22 @@ const NARROW_VIEWPORT_WIDTH: string = '1040px';
   template: `
     <ng-container *ngIf="initialized$ | async">
       <!-- Full width viewport -->
-      <ng-container
-        *ngIf="!(isNarrowViewport$ | async); else narrowViewportTemplate"
+      <div
+        class="m-chat__pageLayoutContainer--left"
+        *ngIf="
+          !(isNarrowViewport$ | async) || (fullWidthOnlyChildRoute$ | async)
+        "
       >
-        <div class="m-chat__pageLayoutContainer--left">
-          <ng-template *ngTemplateOutlet="leftContent"></ng-template>
-        </div>
-        <div class="m-chat__pageLayoutContainer--right">
-          <ng-template *ngTemplateOutlet="rightContent"></ng-template>
-        </div>
-      </ng-container>
-      <!-- Narrow viewport -->
-      <ng-template #narrowViewportTemplate>
-        <!--If the child route should only be rendered when full width, show the rooms list instead -->
-        <ng-container
-          *ngIf="!(fullWidthOnlyChildRoute$ | async); else leftContentTemplate"
-        >
-          <ng-template *ngTemplateOutlet="rightContent"></ng-template>
-        </ng-container>
-        <ng-template #leftContentTemplate>
-          <ng-template *ngTemplateOutlet="leftContent"></ng-template>
-        </ng-template>
-      </ng-template>
-
-      <!-- Projected content is only rendered once. Dropping them in an ng-template allows reuse. -->
-      <ng-template #rightContent
-        ><ng-content select="[right]"></ng-content
-      ></ng-template>
-      <ng-template #leftContent
-        ><ng-content select="[left]"></ng-content
-      ></ng-template>
+        <ng-content select="[left]"></ng-content>
+      </div>
+      <div
+        class="m-chat__pageLayoutContainer--right"
+        *ngIf="
+          !(isNarrowViewport$ | async) || !(fullWidthOnlyChildRoute$ | async)
+        "
+      >
+        <ng-content select="[right]"></ng-content>
+      </div>
     </ng-container>
   `,
   encapsulation: ViewEncapsulation.None,

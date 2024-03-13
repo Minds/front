@@ -25,21 +25,20 @@ m-chat__pageLayout {
 
   .m-chat__pageLayoutContainer--left {
     flex: 4;
-    max-width: 360px;
+    max-width: 100%;
 
     @include m-theme() {
       border-right: 1px solid themed($m-borderColor--primary);
     }
 
-    @media screen and (max-width: $layoutMax3ColWidth) {
-      max-width: 50%;
-      width: 50%;
-      min-width: 50%;
+    @media screen and (min-width: $layoutMax3ColWidth) {
+      max-width: 360px;
     }
   }
 
   .m-chat__pageLayoutContainer--right {
     flex: 6;
+    max-width: 100%;
 
     @include m-theme() {
       border-right: 1px solid themed($m-borderColor--primary);
@@ -47,9 +46,6 @@ m-chat__pageLayout {
 
     @media screen and (max-width: $layoutMax3ColWidth) {
       flex: 4;
-      max-width: 50%;
-      width: 50%;
-      min-width: 50%;
     }
   }
 }
