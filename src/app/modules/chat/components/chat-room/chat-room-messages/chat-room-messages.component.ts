@@ -26,7 +26,6 @@ import {
   take,
 } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { GrowShrinkFastInOut } from '../../../../../animations';
 
 /** How far away from the top of the scroll area loading of new elements should start. */
 const LOADING_BUFFER_TOP_PX: number = 300;
@@ -39,7 +38,6 @@ const LOADING_BUFFER_TOP_PX: number = 300;
   styleUrls: ['./chat-room-messages.component.ng.scss'],
   templateUrl: './chat-room-messages.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [GrowShrinkFastInOut],
   imports: [NgCommonModule, CommonModule, ChatDatePipe],
   standalone: true,
 })

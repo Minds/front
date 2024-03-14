@@ -40,10 +40,13 @@
 
     .m-chatRoomBottom__sendButton {
       cursor: pointer;
+      @include unselectable;
     }
+
     m-sizeableLoadingSpinner {
       height: $spacing6;
       width: $spacing6;
+      @include unselectable;
     }
   }
 }

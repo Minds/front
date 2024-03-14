@@ -21,33 +21,49 @@
         messages[i + 1]?.node.sender.node.guid ===
         message.node.sender.node.guid,
       isPreviousMessageFromSameSender:
-        messages[i - 1]?.node.sender.node.guid === message.node.sender.node.guid
+        messages[i - 1]?.node.sender.node.guid ===
+        message.node.sender.node.guid,
+      isFromOtherParticipant:
+        message.node?.sender?.node?.guid !== loggedInUserGuid
     } as templateVars"
   >
     <p
       class="m-chatRoomMessage__senderName"
       *ngIf="
         message.node?.sender?.node?.name &&
-        message.node?.sender?.node?.guid !== loggedInUserGuid &&
+        templateVars.isFromOtherParticipant &&
         !templateVars.isPreviousMessageFromSameSender
       "
     >
       {{ message.node?.sender?.node?.name }}
     </p>
-    <div
-      class="m-chatRoomMessage__bubble"
-      [ngClass]="{
-        'm-chatRoomMessage__bubble--clickable':
+    <div class="m-chatMessage__contentRow">
+      <div
+        *ngIf="templateVars.isFromOtherParticipant"
+        class="m-chatRoomMessage__avatarContainer"
+      >
+        <minds-avatar
+          *ngIf="!templateVars.isNextMessageFromSameSender"
+          [object]="{ guid: message.node?.sender?.node?.guid, type: 'user' }"
+        ></minds-avatar>
+      </div>
+      <div
+        class="m-chatRoomMessage__bubble"
+        [ngClass]="{
+          'm-chatRoomMessage__bubble--clickable':
+            templateVars.isNextMessageFromSameSender
+        }"
+        throttledClick
+        (throttledClick)="
           templateVars.isNextMessageFromSameSender
-      }"
-      throttledClick
-      (throttledClick)="
-        templateVars.isNextMessageFromSameSender ? handleMessageClick(i) : null
-      "
-    >
-      <span class="m-chatRoomMessage__text" *ngIf="message.node?.plainText">{{
-        message.node.plainText
-      }}</span>
+            ? handleMessageClick(i)
+            : null
+        "
+      >
+        <span class="m-chatRoomMessage__text" *ngIf="message.node?.plainText">{{
+          message.node.plainText
+        }}</span>
+      </div>
     </div>
     <p
       *ngIf="
@@ -56,8 +72,6 @@
           expandedMessageIndex === i)
       "
       class="m-chatRoomMessage__timestamp"
-      [@.disabled]="inProgress$ | async"
-      [@growShrinkInOut]="expandedMessageIndex === i ? 'in' : 'out'"
     >
       {{ message?.node?.timeCreatedUnix | chatDate: false }}
     </p>

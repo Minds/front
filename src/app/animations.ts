@@ -167,27 +167,3 @@ export const GrowShrinkFast: AnimationTriggerMetadata = trigger('growShrink', [
     ),
   ]),
 ]);
-
-/**
- * Grows and shrinks smoothly on in and out state change.
- */
-export const GrowShrinkFastInOut: AnimationTriggerMetadata = trigger(
-  'growShrinkInOut',
-  [
-    state('*', style({ height: '*', opacity: 1, margin: '*' })),
-    transition('* => in', [
-      style({ height: '0px', opacity: 0, margin: 0 }),
-      animate(
-        '0.3s cubic-bezier(0.24, 1, 0.32, 1)',
-        style({ height: '*', opacity: 1, margin: '*' })
-      ),
-    ]),
-    transition(':leave', [
-      style({ height: '*', opacity: 1, margin: '*' }),
-      animate(
-        '0.3s cubic-bezier(0.24, 1, 0.32, 1)',
-        style({ height: '0px', opacity: 0, margin: 0 })
-      ),
-    ]),
-  ]
-);
