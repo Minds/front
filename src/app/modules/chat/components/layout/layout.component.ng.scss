@@ -31,7 +31,7 @@ m-chat__pageLayout {
       border-right: 1px solid themed($m-borderColor--primary);
     }
 
-    @media screen and (min-width: $layoutMax3ColWidth) {
+    @media screen and (min-width: $layoutMin3ColWidth) {
       max-width: 360px;
     }
   }
@@ -45,7 +45,7 @@ m-chat__pageLayout {
       border-right: 1px solid themed($m-borderColor--primary);
     }
 
-    @media screen and (max-width: $layoutMax3ColWidth) {
+    @media screen and (max-width: $layoutMin3ColWidth) {
       flex: 4;
     }
   }
