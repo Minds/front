@@ -26,19 +26,8 @@ query GetChatRoomsList($first: Int, $after: String) {
                     }
                 }
             }
-            messages(first: 1) {
-                edges {
-                    cursor
-                    node {
-                        id
-                        guid
-                        roomGuid
-                        plainText
-                        timeCreatedISO8601
-                        timeCreatedUnix
-                    }
-                }
-            }
+            lastMessagePlainText,
+            lastMessageCreatedTimestamp
         }
     }
 }

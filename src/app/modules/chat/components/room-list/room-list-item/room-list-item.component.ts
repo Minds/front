@@ -63,12 +63,12 @@ export class ChatRoomListItemComponent {
     this.avatars = this.getAvatarObjects(edge.members?.edges);
 
     this.timestamp = Number(
-      edge.messages?.edges?.length
-        ? edge.messages.edges[0]?.node.timeCreatedUnix
+      Boolean(edge.lastMessageCreatedTimestamp)
+        ? edge.lastMessageCreatedTimestamp
         : edge.node.timeCreatedUnix
     );
 
-    this.lastMessage = edge.messages.edges[0]?.node.plainText;
+    this.lastMessage = edge.lastMessagePlainText;
     this.roomGuid = edge.node?.guid;
   }
 

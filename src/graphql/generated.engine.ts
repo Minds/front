@@ -2250,6 +2250,8 @@ export type GetChatRoomsListQuery = {
     edges: Array<{
       __typename?: 'ChatRoomEdge';
       cursor: string;
+      lastMessagePlainText?: string | null;
+      lastMessageCreatedTimestamp?: number | null;
       node: {
         __typename?: 'ChatRoomNode';
         id: string;
@@ -2269,22 +2271,6 @@ export type GetChatRoomsListQuery = {
             guid: string;
             username: string;
             name: string;
-          };
-        }>;
-      };
-      messages: {
-        __typename?: 'ChatMessagesConnection';
-        edges: Array<{
-          __typename?: 'ChatMessageEdge';
-          cursor: string;
-          node: {
-            __typename?: 'ChatMessageNode';
-            id: string;
-            guid: string;
-            roomGuid: string;
-            plainText: string;
-            timeCreatedISO8601: string;
-            timeCreatedUnix: string;
           };
         }>;
       };
@@ -7311,19 +7297,8 @@ export const GetChatRoomsListDocument = gql`
             }
           }
         }
-        messages(first: 1) {
-          edges {
-            cursor
-            node {
-              id
-              guid
-              roomGuid
-              plainText
-              timeCreatedISO8601
-              timeCreatedUnix
-            }
-          }
-        }
+        lastMessagePlainText
+        lastMessageCreatedTimestamp
       }
     }
   }
