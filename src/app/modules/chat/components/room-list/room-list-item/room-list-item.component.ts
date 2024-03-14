@@ -16,7 +16,7 @@ import { ChatDatePipe } from '../../../pipes/chat-date-pipe';
 import { Router, RouterModule } from '@angular/router';
 
 /** Amount of avatars to show for a multi-user chat-room. */
-const MULTI_USER_AVATARS_TO_SHOW: number = 1;
+const MULTI_USER_AVATARS_TO_SHOW: number = 2;
 
 /**
  * Individual item in the room list.
