@@ -48,6 +48,9 @@ export class ChatRoomListItemComponent {
   /** GUID of the room. */
   protected roomGuid: string;
 
+  /** True/False if unread messages exist in this room */
+  protected unreadMessages: boolean;
+
   /** Whether the room is active. Binds active class when input value is true. */
   @HostBinding('class.m-chat__roomListItem--active')
   @Input()
@@ -70,6 +73,7 @@ export class ChatRoomListItemComponent {
 
     this.lastMessage = edge.messages.edges[0]?.node.plainText;
     this.roomGuid = edge.node?.guid;
+    this.unreadMessages = edge.unreadMessagesCount > 0;
   }
 
   constructor(

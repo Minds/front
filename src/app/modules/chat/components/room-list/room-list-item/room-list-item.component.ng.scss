@@ -39,6 +39,7 @@
     flex-flow: column nowrap;
     flex: 1;
     overflow-x: hidden;
+    position: relative;
 
     .m-chatRoomListItem__topRow {
       display: flex;
@@ -68,6 +69,19 @@
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-chatRoomListItem__unreadDot {
+      position: absolute;
+      right: 0;
+      width: $spacing2;
+      height: $spacing2;
+      border-radius: 50%;
+      top: 50%;
+
+      @include m-theme() {
+        background-color: themed($m-action);
       }
     }
   }

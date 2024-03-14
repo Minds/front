@@ -13,4 +13,6 @@
     }}</span>
   </p>
   <p class="m-chatRoomListItem__lastMessage">{{ lastMessage }}</p>
+
+  <span class="m-chatRoomListItem__unreadDot" *ngIf="unreadMessages"></span>
 </div>
