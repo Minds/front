@@ -23,7 +23,6 @@ import { AuthModalService } from './modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import { OnboardingV5Service } from '../onboarding-v5/services/onboarding-v5.service';
 import { WINDOW } from '../../common/injection-tokens/common-injection-tokens';
-import { Meta, Title } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
 
 /**
@@ -94,7 +93,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.authModal.open({ formDisplay: 'login', standalonePage: true });
+    if (isPlatformBrowser(this.platformId)) {
+      this.authModal.open({ formDisplay: 'login', standalonePage: true });
+    }
 
     this.redirectTo = this.cookieService.get('redirect');
 

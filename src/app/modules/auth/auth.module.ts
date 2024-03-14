@@ -15,6 +15,7 @@ import { LogoutComponent } from './logout.component';
 import { RegisterComponent } from './register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { MarketingModule } from '../marketing/marketing.module';
+import { RegisterPageGuard } from './modal/guards/register-page.guard';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [RegisterPageGuard],
     data: {
       title: 'Join',
       canonicalUrl: '/register',
