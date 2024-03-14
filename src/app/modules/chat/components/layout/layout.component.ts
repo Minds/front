@@ -8,8 +8,13 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterEvent,
+} from '@angular/router';
+import { BehaviorSubject, Observable, Subscription, filter, map } from 'rxjs';
 import { TopbarAlertService } from '../../../../common/components/topbar-alert/topbar-alert.service';
 
 /** Width to consider the component in "narrow viewport" mode. */
@@ -82,6 +87,7 @@ export class ChatPageLayoutComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private breakpointObserver: BreakpointObserver,
     private topbarAlertService: TopbarAlertService
   ) {}
@@ -90,6 +96,14 @@ export class ChatPageLayoutComponent implements OnInit, OnDestroy {
     this.fullWidthOnlyChildRoute$.next(
       this.route.snapshot.firstChild?.data?.fullWidthOnly
     );
+
+    this.routerEventSubscription = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((event: RouterEvent) => {
+        this.fullWidthOnlyChildRoute$.next(
+          this.route.snapshot.firstChild?.data?.fullWidthOnly
+        );
+      });
 
     if (!this.initialized$.getValue()) {
       this.initialized$.next(true);

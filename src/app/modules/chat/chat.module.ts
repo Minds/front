@@ -24,7 +24,6 @@ const CHAT_ROUTES: Routes = [
   {
     path: 'rooms',
     component: ChatRoomsListPageComponent,
-    data: { reloadOnRouteChange: true },
     canActivate: [
       experimentVariationGuard('epic-358-chat'),
       loggedInRedirectGuard('/'),
@@ -33,7 +32,7 @@ const CHAT_ROUTES: Routes = [
       {
         path: '',
         component: NoChatsSubPageComponent,
-        data: { fullWidthOnly: true },
+        data: { fullWidthOnly: true, reloadOnRouteChange: true },
       },
       {
         path: ':roomId',

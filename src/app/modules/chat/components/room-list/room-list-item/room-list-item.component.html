@@ -1,9 +1,16 @@
 <div class="m-chatRoomListItem__containerLeft">
-  <minds-avatar
-    *ngFor="let avatar of avatars"
-    [object]="avatar"
-    [routerLink]="['/' + avatar.username]"
-  ></minds-avatar>
+  <div
+    class="m-chatRoomListItem__avatarContainer"
+    [ngClass]="{
+      'm-chatRoomListItem__avatarContainer--multiAvatar': avatars.length > 1
+    }"
+  >
+    <minds-avatar
+      *ngFor="let avatar of avatars"
+      [object]="avatar"
+      [routerLink]="['/' + avatar.username]"
+    ></minds-avatar>
+  </div>
 </div>
 <div class="m-chatRoomListItem__containerRight">
   <p class="m-chatRoomListItem__topRow">

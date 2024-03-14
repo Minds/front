@@ -182,7 +182,8 @@ export const GrowShrinkFastInOut: AnimationTriggerMetadata = trigger(
         style({ height: '*', opacity: 1, margin: '*' })
       ),
     ]),
-    transition('out => *', [
+    transition(':leave', [
+      style({ height: '*', opacity: 1, margin: '*' }),
       animate(
         '0.3s cubic-bezier(0.24, 1, 0.32, 1)',
         style({ height: '0px', opacity: 0, margin: 0 })

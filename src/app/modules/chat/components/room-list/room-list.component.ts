@@ -2,12 +2,21 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { ChatPendingRequestsWidgetComponent } from './pending-requests-widget/pending-requests-widget.component';
 import { StartChatModalService } from '../start-chat-modal/start-chat-modal.service';
 import { ChatRoomsListService } from '../../services/chat-rooms-list.service';
-import { Observable, distinctUntilChanged, map, of } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  distinctUntilChanged,
+  filter,
+  map,
+  of,
+} from 'rxjs';
 import {
   ChatRoomEdge,
   PageInfo,
@@ -16,7 +25,12 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { ChatRoomListItemComponent } from './room-list-item/room-list-item.component';
 import { CommonModule } from '../../../../common/common.module';
 import { ChatActionCardComponent } from '../action-cards/action-card.component';
-import { ActivatedRoute, Params } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterEvent,
+} from '@angular/router';
 
 /**
  * List of chat rooms.
@@ -35,7 +49,7 @@ import { ActivatedRoute, Params } from '@angular/router';
   ],
   standalone: true,
 })
-export class ChatRoomListComponent implements OnInit {
+export class ChatRoomListComponent implements OnInit, OnDestroy {
   /** Whether a request is in progress to load / load more. */
   protected readonly inProgress$: Observable<
     boolean
@@ -56,6 +70,9 @@ export class ChatRoomListComponent implements OnInit {
   protected edges$: Observable<ChatRoomEdge[]> = this.chatRoomsListService
     .edges$;
 
+  /** Router events subscription. */
+  private routerEventsSubscription: Subscription;
+
   /**
    * TODO: Wire this up to pending requests. We may want to have this variable
    * be the amount of requests and pass that through to the widget in the template.
@@ -67,19 +84,31 @@ export class ChatRoomListComponent implements OnInit {
     private startChatModal: StartChatModalService,
     private chatRoomsListService: ChatRoomsListService,
     private route: ActivatedRoute,
+    private router: Router,
     protected elementRef: ElementRef
   ) {}
 
   /** ID of the currently selected room. */
-  protected readonly currentRoomId$: Observable<
+  protected readonly currentRoomId$: BehaviorSubject<
     string
-  > = this.route.firstChild.params.pipe(
-    distinctUntilChanged(),
-    map((params: Params): string => params['roomId'] ?? '')
-  );
+  > = new BehaviorSubject<string>('');
 
   ngOnInit(): void {
     this.chatRoomsListService.init();
+
+    this.currentRoomId$.next(this.route.snapshot.firstChild.params['roomId']);
+
+    this.routerEventsSubscription = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((event: RouterEvent) => {
+        this.currentRoomId$.next(
+          this.route.snapshot.firstChild.params['roomId']
+        );
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.routerEventsSubscription?.unsubscribe();
   }
 
   /**

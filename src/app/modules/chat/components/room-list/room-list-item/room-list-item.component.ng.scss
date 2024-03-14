@@ -3,7 +3,7 @@
 :host {
   display: flex;
   flex-flow: row nowrap;
-  gap: $spacing6;
+  gap: $spacing4;
   padding: $spacing4 $spacing6;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -20,16 +20,51 @@
   .m-chatRoomListItem__containerLeft {
     max-width: 40px;
 
-    ::ng-deep .minds-avatar {
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      margin: 0;
-      background-position: center;
-      background-size: cover;
+    .m-chatRoomListItem__avatarContainer {
+      max-width: 48px;
+      max-height: 48px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
 
-      @include m-theme() {
-        border: 1px solid themed($m-borderColor--primary);
+      ::ng-deep .minds-avatar {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin: 0;
+        background-position: center;
+        background-size: cover;
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+      }
+
+      &--multiAvatar {
+        position: relative;
+
+        minds-avatar {
+          position: absolute;
+
+          &:nth-of-type(1) {
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+          }
+
+          &:nth-of-type(2) {
+            right: 0;
+            top: 0;
+          }
+
+          ::ng-deep .minds-avatar {
+            width: 32px;
+            height: 32px;
+          }
+        }
       }
     }
   }

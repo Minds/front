@@ -16,7 +16,7 @@ import { ChatDatePipe } from '../../../pipes/chat-date-pipe';
 import { Router, RouterModule } from '@angular/router';
 
 /** Amount of avatars to show for a multi-user chat-room. */
-const MULTI_USER_AVATARS_TO_SHOW: number = 1;
+const MULTI_USER_AVATARS_TO_SHOW: number = 2;
 
 /**
  * Individual item in the room list.
@@ -66,12 +66,12 @@ export class ChatRoomListItemComponent {
     this.avatars = this.getAvatarObjects(edge.members?.edges);
 
     this.timestamp = Number(
-      edge.messages?.edges?.length
-        ? edge.messages.edges[0]?.node.timeCreatedUnix
+      Boolean(edge.lastMessageCreatedTimestamp)
+        ? edge.lastMessageCreatedTimestamp
         : edge.node.timeCreatedUnix
     );
 
-    this.lastMessage = edge.messages.edges[0]?.node.plainText;
+    this.lastMessage = edge.lastMessagePlainText;
     this.roomGuid = edge.node?.guid;
     this.unreadMessages = edge.unreadMessagesCount > 0;
   }
