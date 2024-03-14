@@ -4,6 +4,7 @@ import {
   Inject,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -25,6 +26,7 @@ import { SiteService } from '../../common/services/site.service';
 import { HORIZONTAL_LOGO_PATH as TENANT_HORIZONTAL_LOGO } from '../multi-tenant-network/services/config-image.service';
 import { OnboardingV5Service } from '../onboarding-v5/services/onboarding-v5.service';
 import { WINDOW } from '../../common/injection-tokens/common-injection-tokens';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Standalone register page for new users to sign up
@@ -79,7 +81,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private authModal: AuthModalService,
     private isTenant: IsTenantService,
     private site: SiteService,
-    @Inject(WINDOW) private window: Window
+    @Inject(WINDOW) private window: Window,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -154,8 +157,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
           : 'Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.'
       );
 
-    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
-      this.flags.canPlayInlineVideos = false;
+    if (isPlatformBrowser(this.platformId)) {
+      if (/iP(hone|od)/.test(window.navigator.userAgent)) {
+        this.flags.canPlayInlineVideos = false;
+      }
     }
   }
 
@@ -258,9 +263,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
     }
 
+    // ojm wrap or use Location
+    // ojm OR use this.document.location.href
     // If this is an api redirect, we need to redirect outside of angular router
     if (uri[0].indexOf(this.configs.get('site_url') + 'api/') === 0) {
-      this.window.location.href = this.redirectTo;
+      if (isPlatformBrowser(this.platformId)) {
+        this.window.location.href = this.redirectTo;
+      }
     } else {
       this.router.navigate([uri[0]], extras);
     }

@@ -4,6 +4,7 @@ import {
   Inject,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -21,8 +22,9 @@ import { ConfigsService } from '../../common/services/configs.service';
 import { AuthModalService } from './modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import { OnboardingV5Service } from '../onboarding-v5/services/onboarding-v5.service';
-import { DOCUMENT } from '@angular/common';
 import { WINDOW } from '../../common/injection-tokens/common-injection-tokens';
+import { Meta, Title } from '@angular/platform-browser';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Standalone login page
@@ -69,7 +71,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
     private onboardingV5Service: OnboardingV5Service,
-    @Inject(WINDOW) private window: Window
+    @Inject(WINDOW) private window: Window,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
   ngOnInit() {
@@ -104,8 +107,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     });
 
-    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
-      this.flags.canPlayInlineVideos = false;
+    if (isPlatformBrowser(this.platformId)) {
+      if (/iP(hone|od)/.test(window.navigator.userAgent)) {
+        this.flags.canPlayInlineVideos = false;
+      }
     }
 
     this.topbarService.toggleVisibility(false);
@@ -163,7 +168,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     // If this is an api redirect, we need to redirect outside of angular router
     if (uri[0].indexOf(this.config.get('site_url') + 'api/') === 0) {
-      this.window.location.href = this.redirectTo;
+      if (isPlatformBrowser(this.platformId)) {
+        this.window.location.href = this.redirectTo;
+      }
     } else {
       this.router.navigate([uri[0]], extras);
     }
