@@ -13,8 +13,6 @@ import {
   ChatMessageEdge,
   PageInfo,
 } from '../../../../../../graphql/generated.engine';
-import { Session } from '../../../../../services/session';
-import { ChatDatePipe } from '../../../pipes/chat-date-pipe';
 import { ChatMessagesService } from '../../../services/chat-messages.service';
 import {
   Observable,
@@ -26,6 +24,7 @@ import {
   take,
 } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { ChatRoomMessageComponent } from './chat-room-message/chat-room-message.component';
 
 /** How far away from the top of the scroll area loading of new elements should start. */
 const LOADING_BUFFER_TOP_PX: number = 300;
@@ -38,16 +37,13 @@ const LOADING_BUFFER_TOP_PX: number = 300;
   styleUrls: ['./chat-room-messages.component.ng.scss'],
   templateUrl: './chat-room-messages.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgCommonModule, CommonModule, ChatDatePipe],
+  imports: [NgCommonModule, CommonModule, ChatRoomMessageComponent],
   standalone: true,
 })
 export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
   implements OnInit, OnDestroy {
   /** Array of messages to be displayed. */
   @Input() protected messages: ChatMessageEdge[];
-
-  /** Currently logged in users GUID. */
-  protected readonly loggedInUserGuid: number;
 
   /** Whether chat message loading is in progress. */
   protected readonly inProgress$: Observable<boolean> = this.chatMessagesService
@@ -60,17 +56,12 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
     map((pageInfo: PageInfo) => pageInfo?.hasPreviousPage)
   );
 
-  /** Index of the currently expanded message. */
-  protected expandedMessageIndex: number = -1;
-
   constructor(
-    private session: Session,
     private chatMessagesService: ChatMessagesService,
     protected elementRef: ElementRef,
     private cd: ChangeDetectorRef
   ) {
     super();
-    this.loggedInUserGuid = this.session.getLoggedInUser()?.guid;
   }
 
   ngOnInit(): void {
@@ -122,16 +113,6 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
       top: this.elementRef.nativeElement.scrollHeight,
       behavior: behavior,
     });
-  }
-
-  /**
-   * Handle message click.
-   * @param { number } index - The index of the message.
-   * @returns { void }
-   */
-  protected handleMessageClick(index: number): void {
-    this.expandedMessageIndex =
-      this.expandedMessageIndex === index ? -1 : index;
   }
 
   /**

@@ -1,0 +1,40 @@
+<a
+  class="m-chatRoomMessage__senderName"
+  *ngIf="
+    senderName && isFromOtherParticipant && !isPreviousMessageFromSameSender
+  "
+  [routerLink]="['/' + senderUsername]"
+  >{{ senderName }}</a
+>
+<div class="m-chatMessage__contentRow">
+  <div
+    *ngIf="isFromOtherParticipant"
+    class="m-chatRoomMessage__avatarContainer"
+  >
+    <minds-avatar
+      *ngIf="!isNextMessageFromSameSender"
+      [object]="{ guid: senderGuid, type: 'user' }"
+      [routerLink]="['/' + senderUsername]"
+    ></minds-avatar>
+  </div>
+  <div
+    class="m-chatRoomMessage__bubble"
+    [ngClass]="{
+      'm-chatRoomMessage__bubble--clickable': isNextMessageFromSameSender
+    }"
+    throttledClick
+    (throttledClick)="handleMessageClick()"
+  >
+    <span class="m-chatRoomMessage__text" *ngIf="plainText">{{
+      plainText
+    }}</span>
+  </div>
+</div>
+<p
+  *ngIf="
+    timeCreatedUnix && (!isNextMessageFromSameSender || isManuallyExpanded)
+  "
+  class="m-chatRoomMessage__timestamp"
+>
+  {{ timeCreatedUnix | chatDate: false }}
+</p>
