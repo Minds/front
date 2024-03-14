@@ -59,7 +59,7 @@
       [@.disabled]="inProgress$ | async"
       [@growShrinkInOut]="expandedMessageIndex === i ? 'in' : 'out'"
     >
-      {{ message?.node?.timeCreatedUnix | chatDate }}
+      {{ message?.node?.timeCreatedUnix | chatDate: false }}
     </p>
   </ng-container>
 </div>

@@ -10,9 +10,16 @@ import * as moment from 'moment';
   standalone: true,
 })
 export class ChatDatePipe implements PipeTransform {
-  transform(value: string | number): any {
+  /**
+   * Transform a timestamp into a human readable date.
+   * @param { string | number } timestamp - timestamp to transform.
+   * @param { boolean } short - whether the format should be shortened.
+   * The longer format provides additional resolution.
+   * @returns { string } - human readable chat date string.
+   */
+  transform(value: string | number, short: boolean = true): string {
     if (!value) {
-      return value;
+      return '';
     }
 
     if (typeof value === 'string') {
@@ -44,9 +51,9 @@ export class ChatDatePipe implements PipeTransform {
             .startOf('year')
         )
     ) {
-      return date.format('MMM DD');
+      return date.format(short ? 'MMM DD' : 'MMM DD h:mma');
     }
 
-    return date.format('MMM D YYYY');
+    return date.format(short ? 'MMM D YYYY' : 'MMM D YYYY h:mma');
   }
 }
