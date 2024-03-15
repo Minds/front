@@ -63,7 +63,6 @@ import { Session } from '../../../../services/session';
 export class EntityTypeaheadComponent
   implements ControlValueAccessor, OnDestroy {
   /** Entity type. */
-
   @Input() protected entityType: AutoCompleteEntityTypeEnum =
     AutoCompleteEntityTypeEnum.User;
 
