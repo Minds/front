@@ -167,8 +167,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
           `${this.cdnUrl}icon/${ch.guid}/large/${ch.icontime}`
         );
         this.setReferrerTitle(ch.name);
-      } else {
-        this.setPlaceholderMetaImage();
       }
     } catch (e) {
       console.error(e);
