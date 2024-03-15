@@ -35,6 +35,8 @@
     timeCreatedUnix && (!isNextMessageFromSameSender || isManuallyExpanded)
   "
   class="m-chatRoomMessage__timestamp"
+  [@.disabled]="!isNextMessageFromSameSender"
+  [@growShrink]
 >
   {{ timeCreatedUnix | chatDate: false }}
 </p>
