@@ -1,8 +1,10 @@
 import {
   Component,
   HostListener,
+  Inject,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -17,6 +19,7 @@ import { ContextService } from '../../services/context.service';
 import { NewsfeedService } from './services/newsfeed.service';
 import { PagesService } from '../../common/services/pages.service';
 import { ExperimentsService } from '../experiments/experiments.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'm-newsfeed',
@@ -66,7 +69,8 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     public pagesService: PagesService,
     protected storage: Storage,
     protected context: ContextService,
-    protected newsfeedService: NewsfeedService
+    protected newsfeedService: NewsfeedService,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
@@ -93,8 +97,10 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!this.session.isLoggedIn()) {
-      this.router.navigate(['/login']); //force login
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.session.isLoggedIn()) {
+        this.router.navigate(['/login']); //force login
+      }
     }
 
     this.paramsSubscription = this.route.params.subscribe(params => {
