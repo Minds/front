@@ -32,7 +32,6 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [RegisterPageGuard],
     data: {
       title: 'Join',
       canonicalUrl: '/register',

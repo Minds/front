@@ -135,6 +135,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.referrer = params['referrer'];
         this.setReferrerMetaImage();
       } else {
+        this.setPlaceholderMetaImage();
       }
       if (params['redirectUrl']) {
         this.redirectTo = decodeURI(params['redirectUrl']);
@@ -143,6 +144,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.inviteToken = params['invite_token'];
       }
     });
+
+    // set here rather than in auth module so we can set join to false.
+    this.metaService
+      .setTitle(
+        this.isTenant.is()
+          ? `Join us on ${this.site.title}`
+          : 'Join Minds, and Elevate the Conversation',
+        false
+      )
+      .setDescription(
+        this.isTenant.is()
+          ? `A social app.`
+          : 'Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.'
+      );
 
     if (isPlatformBrowser(this.platformId)) {
       if (/iP(hone|od)/.test(window.navigator.userAgent)) {
@@ -180,6 +195,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
    */
   setReferrerTitle(name: string = 'us'): void {
     this.metaService.setTitle(`Join ${name} on ${this.site.title}`, false);
+  }
+
+  setPlaceholderMetaImage(): void {
+    if (this.isTenant.is()) {
+      this.metaService.setOgImage(TENANT_HORIZONTAL_LOGO);
+    } else {
+      this.metaService.setOgImage('/assets/og-images/default-v3.png', {
+        width: 1200,
+        height: 1200,
+      });
+    }
   }
 
   /**
