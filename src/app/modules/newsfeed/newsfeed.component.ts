@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
   PLATFORM_ID,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -41,10 +42,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   urlSubscription: Subscription;
 
-  pollingTimer: any;
-  pollingOffset: string = '';
-  pollingNewPosts: number = 0;
-
   boostFeed: boolean = false;
 
   subscribed: boolean = false;
@@ -70,6 +67,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     protected storage: Storage,
     protected context: ContextService,
     protected newsfeedService: NewsfeedService,
+    private renderer: Renderer2,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {
     this.urlSubscription = this.route.url.subscribe(() => {
@@ -101,6 +99,10 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
       if (!this.session.isLoggedIn()) {
         this.router.navigate(['/login']); //force login
       }
+
+      this.renderer.listen('window', 'resize', event => {
+        this.detectWidth();
+      });
     }
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -116,7 +118,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    clearInterval(this.pollingTimer);
     if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
   }
 
@@ -138,7 +139,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     event.stopPropagation();
   }
 
-  @HostListener('window:resize') detectWidth() {
+  detectWidth() {
     this.showRightSidebar = window.innerWidth >= 1100;
     this.preventHashtagOverflow = window.innerWidth < 400;
   }
