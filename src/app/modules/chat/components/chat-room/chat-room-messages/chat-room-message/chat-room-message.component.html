@@ -36,7 +36,7 @@
   "
   class="m-chatRoomMessage__timestamp"
   [@.disabled]="!isNextMessageFromSameSender"
-  [@growShrink]
+  [@growShrinkNoMarginShift]
 >
   {{ timeCreatedUnix | chatDate: false }}
 </p>
