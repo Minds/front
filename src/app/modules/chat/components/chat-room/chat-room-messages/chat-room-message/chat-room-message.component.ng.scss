@@ -102,7 +102,6 @@
     margin-top: $spacing1;
 
     @include body3Regular;
-
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
