@@ -4,7 +4,7 @@
 ></m-loadingSpinner>
 
 <m-chatRoom__message
-  *ngFor="let messageEdge of messages; index as i; trackBy: trackByFn"
+  *ngFor="let messageEdge of messages; index as i"
   [messageEdge]="messageEdge"
   [isNextMessageFromSameSender]="
     messages[i + 1]?.node.sender.node.guid === messageEdge.node.sender.node.guid

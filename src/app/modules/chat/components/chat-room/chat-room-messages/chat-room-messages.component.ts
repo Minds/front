@@ -95,15 +95,6 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
   }
 
   /**
-   * TrackBy function for for-loop.
-   * @param { ChatMessageEdge } message - The message.
-   * @returns { string } - The guid of the message.
-   */
-  protected trackByFn(message: ChatMessageEdge): string {
-    return message?.node?.guid;
-  }
-
-  /**
    * Scroll to the bottom of the page.
    * @param { 'instant' | 'smooth' } behavior - The behavior of the scroll.
    * @returns { void }
