@@ -16,6 +16,9 @@
     }
 
     .m-chatPendingRequestsWidget__containerLeft {
+      display: flex;
+      align-items: center;
+
       i {
         font-size: 20px;
         padding: 10px;

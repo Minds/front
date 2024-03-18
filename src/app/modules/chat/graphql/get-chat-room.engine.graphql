@@ -9,8 +9,8 @@ query GetChatRoom(
             guid
             roomType
             id
+            isChatRequest           
         }
-        # totalMembers
         members(first: $firstMembers, after: $afterMembers) {
             edges {
                 cursor

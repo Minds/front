@@ -4,9 +4,18 @@
     *ngIf="chatMessagesInitialised$ | async; else loadingSpinnerTemplate"
     [messages]="chatMessages$ | async"
   ></m-chatRoom__messages>
-  <m-chatRoom__bottom [roomGuid]="chatRoom.node.guid"></m-chatRoom__bottom>
+  <ng-container *ngIf="!requestMode; else requestModeBottomBarTemplate">
+    <m-chatRoom__bottom [roomGuid]="chatRoom.node.guid"></m-chatRoom__bottom>
+  </ng-container>
 </section>
 
 <ng-template #loadingSpinnerTemplate>
   <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
+
+<ng-template #requestModeBottomBarTemplate>
+  <m-chatRoom__bottom--request
+    [roomGuid]="roomGuid"
+    [roomType]="(chatRoom$ | async).node.roomType"
+  ></m-chatRoom__bottom--request>
 </ng-template>

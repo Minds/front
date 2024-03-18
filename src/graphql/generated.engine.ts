@@ -316,6 +316,7 @@ export type ChatRoomNode = NodeInterface & {
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  isChatRequest: Scalars['Boolean']['output'];
   /** The type of room. i.e. one-to-one, multi-user, or group-owned */
   roomType: ChatRoomTypeEnum;
   /** The timestamp the room was created at */
@@ -1058,7 +1059,7 @@ export type MutationRemoveRssFeedArgs = {
 
 export type MutationReplyToRoomInviteRequestArgs = {
   chatRoomInviteRequestActionEnum: ChatRoomInviteRequestActionEnum;
-  roomGuid: Scalars['Int']['input'];
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationResendInviteArgs = {
@@ -1393,7 +1394,7 @@ export type QueryChatRoomArgs = {
 };
 
 export type QueryChatRoomInviteRequestsArgs = {
-  after?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -2130,7 +2131,7 @@ export type GetChatMessagesQuery = {
 
 export type GetChatRoomInviteRequestsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
-  after?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type GetChatRoomInviteRequestsQuery = {
@@ -2147,6 +2148,8 @@ export type GetChatRoomInviteRequestsQuery = {
     edges: Array<{
       __typename?: 'ChatRoomEdge';
       cursor: string;
+      lastMessagePlainText?: string | null;
+      lastMessageCreatedTimestamp?: number | null;
       node: {
         __typename?: 'ChatRoomNode';
         id: string;
@@ -2166,22 +2169,6 @@ export type GetChatRoomInviteRequestsQuery = {
             guid: string;
             username: string;
             name: string;
-          };
-        }>;
-      };
-      messages: {
-        __typename?: 'ChatMessagesConnection';
-        edges: Array<{
-          __typename?: 'ChatMessageEdge';
-          cursor: string;
-          node: {
-            __typename?: 'ChatMessageNode';
-            id: string;
-            guid: string;
-            roomGuid: string;
-            plainText: string;
-            timeCreatedISO8601: string;
-            timeCreatedUnix: string;
           };
         }>;
       };
@@ -2205,6 +2192,7 @@ export type GetChatRoomQuery = {
       guid: string;
       roomType: ChatRoomTypeEnum;
       id: string;
+      isChatRequest: boolean;
     };
     members: {
       __typename?: 'ChatRoomMembersConnection';
@@ -2285,6 +2273,16 @@ export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
 export type GetTotalRoomInviteRequestsQuery = {
   __typename?: 'Query';
   totalRoomInviteRequests: number;
+};
+
+export type ReplyToRoomInviteRequestMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  action: ChatRoomInviteRequestActionEnum;
+}>;
+
+export type ReplyToRoomInviteRequestMutation = {
+  __typename?: 'Mutation';
+  replyToRoomInviteRequest: boolean;
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -7161,7 +7159,7 @@ export class GetChatMessagesGQL extends Apollo.Query<
   }
 }
 export const GetChatRoomInviteRequestsDocument = gql`
-  query GetChatRoomInviteRequests($first: Int, $after: Int) {
+  query GetChatRoomInviteRequests($first: Int, $after: String) {
     chatRoomInviteRequests(first: $first, after: $after) {
       pageInfo {
         hasNextPage
@@ -7189,19 +7187,8 @@ export const GetChatRoomInviteRequestsDocument = gql`
             }
           }
         }
-        messages(first: 1) {
-          edges {
-            cursor
-            node {
-              id
-              guid
-              roomGuid
-              plainText
-              timeCreatedISO8601
-              timeCreatedUnix
-            }
-          }
-        }
+        lastMessagePlainText
+        lastMessageCreatedTimestamp
       }
     }
   }
@@ -7232,6 +7219,7 @@ export const GetChatRoomDocument = gql`
         guid
         roomType
         id
+        isChatRequest
       }
       members(first: $firstMembers, after: $afterMembers) {
         edges {
@@ -7331,6 +7319,31 @@ export class GetTotalRoomInviteRequestsGQL extends Apollo.Query<
   GetTotalRoomInviteRequestsQueryVariables
 > {
   document = GetTotalRoomInviteRequestsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ReplyToRoomInviteRequestDocument = gql`
+  mutation ReplyToRoomInviteRequest(
+    $roomGuid: String!
+    $action: ChatRoomInviteRequestActionEnum!
+  ) {
+    replyToRoomInviteRequest(
+      roomGuid: $roomGuid
+      chatRoomInviteRequestActionEnum: $action
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ReplyToRoomInviteRequestGQL extends Apollo.Mutation<
+  ReplyToRoomInviteRequestMutation,
+  ReplyToRoomInviteRequestMutationVariables
+> {
+  document = ReplyToRoomInviteRequestDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

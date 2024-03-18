@@ -109,6 +109,7 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
    * @returns { void }
    */
   public refetch(): void {
+    this._initialized$.next(false);
     this.queryRef.refetch();
   }
 
@@ -123,7 +124,7 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
         first: PAGE_SIZE,
       },
       {
-        fetchPolicy: 'cache-and-network',
+        fetchPolicy: 'network-only',
         nextFetchPolicy: 'cache-first',
         notifyOnNetworkStatusChange: false,
         errorPolicy: 'all',
@@ -167,6 +168,7 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
 
             if (!result || !result?.data?.chatRoomList?.edges?.length) {
               console.info('No chat rooms found');
+              this._edges$.next([]);
               return;
             }
 

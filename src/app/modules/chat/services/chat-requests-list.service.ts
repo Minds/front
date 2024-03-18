@@ -9,78 +9,73 @@ import {
   take,
 } from 'rxjs';
 import {
-  ChatMessageEdge,
-  GetChatMessagesGQL,
-  GetChatMessagesQuery,
-  GetChatMessagesQueryVariables,
+  ChatRoomEdge,
+  GetChatRoomInviteRequestsGQL,
+  GetChatRoomInviteRequestsQuery,
+  GetChatRoomInviteRequestsQueryVariables,
   PageInfo,
 } from '../../../../graphql/generated.engine';
 import { QueryRef } from 'apollo-angular';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ApolloQueryResult } from '@apollo/client';
-import { Router } from '@angular/router';
 
 /** Size of an individual page. */
 const PAGE_SIZE: number = 24;
 
-@Injectable()
-export class ChatMessagesService extends AbstractSubscriberComponent {
-  /** Whether request is in progress. */
+/**
+ * Service for handling the list of a users pending chat requests.
+ */
+@Injectable({ providedIn: 'root' })
+export class ChatRequestsListService extends AbstractSubscriberComponent {
+  /** Internal subject to hold whether a request is in progress. */
   private readonly _inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(true);
 
-  /** Exposed observable to track whether a request is in progress. */
+  /** Exposed observable that represents whether a request is in progress. */
   public readonly inProgress$: Observable<
     boolean
   > = this._inProgress$.asObservable();
 
-  /** Whether the service has been initialized. */
+  /** Internal subject to hold whether the service has been initialized. */
   private readonly _initialized$: Subject<boolean> = new BehaviorSubject<
     boolean
   >(false);
 
-  /** Exposed observable to track whether the service has been initialized. */
+  /** Exposed observable that represents whether the service has been initialized. */
   public readonly initialized$: Observable<
     boolean
   > = this._initialized$.asObservable();
 
-  /** Page info for the chat messages. */
+  /** Internal subject to hold the page info for the chat rooms list. */
   private readonly _pageInfo$: BehaviorSubject<PageInfo> = new BehaviorSubject<
     PageInfo
   >(null);
 
-  /** Exposed observable to track the page info for the chat messages. */
+  /** Exposed observable that represents the page info for the chat rooms list. */
   public readonly pageInfo$: Observable<
     PageInfo
   > = this._pageInfo$.asObservable();
 
-  /** Edges for the chat messages. */
+  /** Internal subject to hold the edges for the chat rooms list. */
   private readonly _edges$: BehaviorSubject<
-    ChatMessageEdge[]
-  > = new BehaviorSubject<ChatMessageEdge[]>([]);
+    ChatRoomEdge[]
+  > = new BehaviorSubject<ChatRoomEdge[]>([]);
 
-  /** Exposed observable to track the edges for the chat messages. */
+  /** Exposed observable that represents the edges for the chat rooms list. */
   public readonly edges$: Observable<
-    ChatMessageEdge[]
+    ChatRoomEdge[]
   > = this._edges$.asObservable();
 
-  /** Reference to the query. */
+  /** Internal reference to the query. */
   private queryRef: QueryRef<
-    GetChatMessagesQuery,
-    GetChatMessagesQueryVariables
+    GetChatRoomInviteRequestsQuery,
+    GetChatRoomInviteRequestsQueryVariables
   >;
 
-  private _chatMessageAppended$: Subject<boolean> = new Subject<boolean>();
-
-  public chatMessageAppended$: Observable<
-    boolean
-  > = this._chatMessageAppended$.asObservable();
-
   constructor(
-    private getChatMessagesGql: GetChatMessagesGQL,
-    private toaster: ToasterService,
-    private router: Router
+    private getChatRoomInviteRequestsGQL: GetChatRoomInviteRequestsGQL,
+    private toaster: ToasterService
   ) {
     super();
   }
@@ -89,8 +84,8 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
    * Initializes the service with the given parameters.
    * @returns { void }
    */
-  public init(roomGuid: string): void {
-    this.initQueryRef(roomGuid);
+  public init(): void {
+    this.initQueryRef();
     this.subscribeToValueChanges();
   }
 
@@ -99,13 +94,13 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
    * @returns { void }
    */
   public fetchMore(): void {
-    this._inProgress$.next(true);
-
     this.subscriptions.push(
       this.pageInfo$.pipe(take(1)).subscribe((pageInfo: PageInfo): void => {
+        this._inProgress$.next(true);
+
         this.queryRef.fetchMore({
           variables: {
-            before: pageInfo.startCursor,
+            after: pageInfo.endCursor,
           },
         });
       })
@@ -113,13 +108,21 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
   }
 
   /**
+   * Refetch rooms.
+   * @returns { void }
+   */
+  public refetch(): void {
+    this._initialized$.next(false);
+    this.queryRef.refetch();
+  }
+
+  /**
    * Initializes the query reference.
    * @returns { void }
    */
-  private initQueryRef(roomGuid: string): void {
-    this.queryRef = this.getChatMessagesGql.watch(
+  private initQueryRef(): void {
+    this.queryRef = this.getChatRoomInviteRequestsGQL.watch(
       {
-        roomGuid: roomGuid,
         after: null,
         first: PAGE_SIZE,
       },
@@ -150,38 +153,43 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
         .pipe(
           catchError(e => {
             this.handleError(e);
-            this._inProgress$.next(false);
-            this._initialized$.next(true);
             return of(null);
           })
         )
-        .subscribe((result: ApolloQueryResult<GetChatMessagesQuery>): void => {
-          try {
-            if (!result || result.loading) {
-              return;
-            }
+        .subscribe(
+          (result: ApolloQueryResult<GetChatRoomInviteRequestsQuery>): void => {
+            try {
+              if (!result || result.loading) {
+                return;
+              }
 
-            if (result?.errors?.length) {
-              throw new Error(result.errors[0].message);
-            }
+              if (result?.errors?.length) {
+                throw new Error(result.errors[0].message);
+              }
 
-            if (!result || !result?.data?.chatMessages?.edges?.length) {
               this._inProgress$.next(false);
               this._initialized$.next(true);
-              this._edges$.next([]);
-              console.info('No chat rooms found');
-              return;
+
+              if (
+                !result ||
+                !result?.data?.chatRoomInviteRequests?.edges?.length
+              ) {
+                console.info('No chat rooms found');
+                this._edges$.next([]);
+                return;
+              }
+
+              this._edges$.next(
+                result?.data?.chatRoomInviteRequests?.edges as ChatRoomEdge[]
+              );
+              this._pageInfo$.next(
+                result?.data?.chatRoomInviteRequests?.pageInfo
+              );
+            } catch (e) {
+              this.handleError(e);
             }
-            this._edges$.next(
-              result?.data?.chatMessages?.edges as ChatMessageEdge[]
-            );
-            this._pageInfo$.next(result?.data?.chatMessages?.pageInfo);
-            this._inProgress$.next(false);
-            this._initialized$.next(true);
-          } catch (e) {
-            this.handleError(e);
           }
-        })
+        )
     );
   }
 
@@ -194,16 +202,5 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
     console.error(e);
     this.toaster.error(e?.message);
     this._inProgress$.next(false);
-    this.router.navigateByUrl('/chat/rooms');
-  }
-
-  /**
-   * Append a message to chat messages.
-   * @param { ChatMessageEdge } chatMessageEdge - The chat message edge to append.
-   * @returns { void }
-   */
-  public appendChatMessage(chatMessageEdge: ChatMessageEdge): void {
-    this._edges$.next([...this._edges$.getValue(), chatMessageEdge]);
-    this._chatMessageAppended$.next(true);
   }
 }

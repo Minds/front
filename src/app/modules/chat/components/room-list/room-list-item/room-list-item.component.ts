@@ -51,7 +51,10 @@ export class ChatRoomListItemComponent {
   /** Whether the room is active. Binds active class when input value is true. */
   @HostBinding('class.m-chat__roomListItem--active')
   @Input()
-  active: boolean = false;
+  protected active: boolean = false;
+
+  /** Navigation link for on item click. */
+  @Input() protected navigationLink: string;
 
   /**
    * Set class variables based upon the edge passed via input.
@@ -101,6 +104,8 @@ export class ChatRoomListItemComponent {
    * @returns { void }
    */
   protected navigateToChat(): void {
-    this.router.navigateByUrl(`/chat/rooms/${this.roomGuid}`);
+    this.router.navigateByUrl(
+      this.navigationLink ?? `/chat/rooms/${this.roomGuid}`
+    );
   }
 }

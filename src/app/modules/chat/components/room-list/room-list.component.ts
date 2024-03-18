@@ -12,6 +12,7 @@ import {
   BehaviorSubject,
   Observable,
   Subscription,
+  combineLatest,
   distinctUntilChanged,
   filter,
   map,
@@ -31,6 +32,7 @@ import {
   Router,
   RouterEvent,
 } from '@angular/router';
+import { TotalChatRoomInviteRequestsService } from '../../services/total-chat-room-invite-requests.service';
 
 /**
  * List of chat rooms.
@@ -40,6 +42,7 @@ import {
   templateUrl: './room-list.component.html',
   styleUrls: ['./room-list.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [TotalChatRoomInviteRequestsService],
   imports: [
     NgCommonModule,
     CommonModule,
@@ -56,9 +59,14 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
   > = this.chatRoomsListService.inProgress$.pipe(distinctUntilChanged());
 
   /** Whether the component has been intiialized. */
-  protected readonly initialized$: Observable<
-    boolean
-  > = this.chatRoomsListService.initialized$.pipe(distinctUntilChanged());
+  protected readonly initialized$: Observable<boolean> = combineLatest([
+    this.chatRoomsListService.initialized$,
+    this.totalChatRequestsService.initialized$,
+  ]).pipe(
+    map(([chatRoomsInit, totalChatInit]: [boolean, boolean]) => {
+      return chatRoomsInit && totalChatInit;
+    })
+  );
 
   /** Whether the paginated list has a next page. */
   protected readonly hasNextPage$: Observable<
@@ -73,16 +81,17 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
   /** Router events subscription. */
   private routerEventsSubscription: Subscription;
 
-  /**
-   * TODO: Wire this up to pending requests. We may want to have this variable
-   * be the amount of requests and pass that through to the widget in the template.
-   * Or share a replay out from a service to use in the widget, and just map it here.
-   */
-  protected hasPendingRequests$ = of(false);
+  /** Total chat requests from service. */
+  protected hasPendingRequests$: Observable<
+    boolean
+  > = this.totalChatRequestsService.totalRequests$.pipe(
+    map((totalRequests: number): boolean => Boolean(totalRequests))
+  );
 
   constructor(
     private startChatModal: StartChatModalService,
     private chatRoomsListService: ChatRoomsListService,
+    private totalChatRequestsService: TotalChatRoomInviteRequestsService,
     private route: ActivatedRoute,
     private router: Router,
     protected elementRef: ElementRef
@@ -95,6 +104,7 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.chatRoomsListService.init();
+    this.totalChatRequestsService.init();
 
     this.currentRoomId$.next(this.route.snapshot.firstChild.params['roomId']);
 

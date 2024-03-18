@@ -13,7 +13,7 @@ import {
   ChatMessageEdge,
   ChatRoomEdge,
 } from '../../../../../../../graphql/generated.engine';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, firstValueFrom } from 'rxjs';
 import { ToasterService } from '../../../../../../common/services/toaster.service';
 import { ChatwootWidgetService } from '../../../../../../common/components/chatwoot-widget/chatwoot-widget.service';
 import { WINDOW } from '../../../../../../common/injection-tokens/common-injection-tokens';
@@ -21,6 +21,7 @@ import { ChatRoomMessagesComponent } from '../../../chat-room/chat-room-messages
 import { ChatMessagesService } from '../../../../services/chat-messages.service';
 import { ChatRoomBottomBarComponent } from '../../../chat-room/chat-room-bottom-bar/chat-room-bottom-bar.component';
 import { CommonModule } from '../../../../../../common/common.module';
+import { ChatRoomRequestBottomBarComponent } from '../../../chat-room/chat-room-request-bottom-bar/chat-room-request-bottom-bar.component';
 
 /**
  * Core sub-page for a chat-room.
@@ -37,6 +38,7 @@ import { CommonModule } from '../../../../../../common/common.module';
     ChatRoomTopComponent,
     ChatRoomMessagesComponent,
     ChatRoomBottomBarComponent,
+    ChatRoomRequestBottomBarComponent,
   ],
   standalone: true,
 })
@@ -52,6 +54,15 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   /** Whether chat messages have been initialised. */
   protected chatMessagesInitialised$: Observable<boolean> = this
     .chatMessagesService.initialized$;
+
+  /** GUID of the room.  */
+  protected roomGuid: string;
+
+  /** Whether the chat room is in request mode. */
+  protected requestMode: boolean = false;
+
+  /** Subscription to chat room initialization. */
+  private chatRoomInitSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -72,9 +83,13 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.roomGuid = roomId;
     this.singleChatRoomService.setRoomGuid(roomId);
     this.chatMessagesService.init(roomId);
 
+    this.requestMode = this.route.snapshot.data.requestMode ?? false;
+
+    this.handleChatRoomInit(this.requestMode);
     this.hideChatwootWhenReady();
   }
 
@@ -85,6 +100,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
       this.hideChatwootBubble.bind(this)
     );
     this.chatwootWidgetService.showBubble();
+    this.chatRoomInitSubscription?.unsubscribe();
   }
 
   /**
@@ -111,5 +127,24 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
    */
   private hideChatwootBubble(): void {
     this.chatwootWidgetService.hideBubble();
+  }
+
+  /**
+   * Handles chat room init.
+   * @param { boolean } requestMode - Whether the chat room is in request mode.
+   * @returns { Promise<void> }
+   */
+  private async handleChatRoomInit(requestMode: boolean): Promise<void> {
+    const chatRoom: ChatRoomEdge = await firstValueFrom(this.chatRoom$);
+
+    if (chatRoom?.node?.isChatRequest && !requestMode) {
+      this.router.navigate([`/chat/requests/${this.roomGuid}`], {
+        relativeTo: this.route,
+      });
+    } else if (!chatRoom.node.isChatRequest && requestMode) {
+      this.router.navigate([`/chat/rooms/${this.roomGuid}`], {
+        relativeTo: this.route,
+      });
+    }
   }
 }

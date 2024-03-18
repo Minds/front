@@ -51,7 +51,12 @@ const CHAT_ROUTES: Routes = [
       {
         path: '',
         component: ChatRequestsInfoSubPageComponent,
-        data: { fullWidthOnly: true },
+        data: { fullWidthOnly: true, reloadOnRouteChange: true },
+      },
+      {
+        path: ':roomId',
+        component: ChatRoomComponent,
+        data: { requestMode: true, reloadOnRouteChange: true },
       },
     ],
   },

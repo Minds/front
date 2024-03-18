@@ -33,6 +33,7 @@ export const cache = new InMemoryCache({
         ]),
         tenantAdminAnalyticsTable: relayStylePagination(['table']),
         chatRoomList: relayStylePagination(['first']),
+        chatRoomInviteRequests: relayStylePagination(['first']),
         chatMessages: relayStylePagination(['first', 'roomId']),
       },
     },

@@ -3,6 +3,10 @@
   <i class="material-icons" (click)="onStartChatClick()">add_comment</i>
 </header>
 
+<m-chatPendingRequests__widget
+  *ngIf="hasPendingRequests$ | async"
+></m-chatPendingRequests__widget>
+
 <ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
   <ng-container
     *ngIf="
@@ -10,10 +14,6 @@
       else noEdgesActionCardTemplate
     "
   >
-    <m-chatPendingRequests__widget
-      *ngIf="hasPendingRequests$ | async"
-    ></m-chatPendingRequests__widget>
-
     <ng-container
       *ngIf="{ currentRoomId: currentRoomId$ | async } as roomListItemParams"
     >
@@ -26,6 +26,15 @@
     </ng-container>
   </ng-container>
 </ng-container>
+
+<infinite-scroll
+  (load)="fetchMore()"
+  [moreData]="hasNextPage$ | async"
+  [inProgress]="(inProgress$ | async) && (initialized$ | async)"
+  [hideManual]="true"
+  [distance]="'25%'"
+  [scrollSource]="elementRef?.nativeElement"
+></infinite-scroll>
 
 <ng-template #loadingSpinnerTemplate>
   <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
@@ -41,12 +50,3 @@
     (actionButtonClick)="onStartChatClick()"
   ></m-chat__actionCard>
 </ng-template>
-
-<infinite-scroll
-  (load)="fetchMore()"
-  [moreData]="hasNextPage$ | async"
-  [inProgress]="(inProgress$ | async) && (initialized$ | async)"
-  [hideManual]="true"
-  [distance]="'25%'"
-  [scrollSource]="elementRef?.nativeElement"
-></infinite-scroll>

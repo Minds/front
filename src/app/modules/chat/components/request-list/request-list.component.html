@@ -2,3 +2,40 @@
   <i class="material-icons" (click)="onBackIconClick()">arrow_back</i>
   <h3 class="m-chatRequestsList__title">Chat requests</h3>
 </header>
+
+<ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
+  <ng-container
+    *ngIf="{ currentRoomId: currentRoomId$ | async } as roomListItemParams"
+  >
+    <ng-container *ngIf="(edges$ | async)?.length; else noRequestsTemplate">
+      <m-chat__roomListItem
+        *ngFor="let edge of edges$ | async; trackBy: trackBy"
+        [edge]="edge"
+        [active]="roomListItemParams.currentRoomId === edge.node.guid"
+        [navigationLink]="'/chat/requests/' + edge.node.guid"
+      ></m-chat__roomListItem>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<infinite-scroll
+  (load)="fetchMore()"
+  [moreData]="hasNextPage$ | async"
+  [inProgress]="(inProgress$ | async) && (initialized$ | async)"
+  [hideManual]="true"
+  [distance]="'25%'"
+  [scrollSource]="elementRef?.nativeElement"
+></infinite-scroll>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
+
+<ng-template #noRequestsTemplate>
+  <div class="m-chatRequestsList__noRequestsContainer">
+    <i class="material-icons m-chatRequestsList__noRequestsIcon">sms</i>
+    <p class="m-chatRequestsList__noRequestsText">
+      You have no pending requests at this time
+    </p>
+  </div>
+</ng-template>

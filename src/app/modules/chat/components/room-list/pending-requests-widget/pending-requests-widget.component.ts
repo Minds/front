@@ -1,6 +1,8 @@
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { TotalChatRoomInviteRequestsService } from '../../../services/total-chat-room-invite-requests.service';
+import { Observable } from 'rxjs';
 
 /**
  * Pending requests widget for chat.
@@ -13,7 +15,7 @@ import { Router, RouterModule } from '@angular/router';
   standalone: true,
   template: `
     <div
-      *ngIf="hasPendingRequests"
+      *ngIf="totalRequests$ | async as totalRequests"
       class="m-chatPendingRequestsWidget__container"
       (click)="onPendingRequestsWidgetClick()"
     >
@@ -23,17 +25,21 @@ import { Router, RouterModule } from '@angular/router';
       <div class="m-chatPendingRequestsWidget__containerRight">
         <p class="m-chatPendingRequestsWidget__title">Chat requests</p>
         <p class="m-chatPendingRequestsWidget__requestCount">
-          X pending requests
+          {{ totalRequests }} pending requests
         </p>
       </div>
     </div>
   `,
 })
 export class ChatPendingRequestsWidgetComponent {
-  // TODO: Replace with dynamic and real value.
-  protected hasPendingRequests: boolean = false;
+  /** Total chat requests from service. */
+  protected totalRequests$: Observable<number> = this.totalChatRequestsService
+    .totalRequests$;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private totalChatRequestsService: TotalChatRoomInviteRequestsService
+  ) {}
 
   /**
    * Handle on pending requests widget click.
