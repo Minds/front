@@ -100,7 +100,7 @@ export class ChatRoomRequestBottomBarComponent {
     ) {
       this.toaster.success('User has been blocked');
       this.chatRequestsListService.refetch();
-      this.router.navigateByUrl('/chat/requests');
+      await this.router.navigateByUrl('/chat/requests');
     }
 
     this.blockInProgress$.next(false);
@@ -117,7 +117,7 @@ export class ChatRoomRequestBottomBarComponent {
     if (await this.submitAction(ChatRoomInviteRequestActionEnum.Reject)) {
       this.toaster.success('Request rejected');
       this.chatRequestsListService.refetch();
-      this.router.navigateByUrl('/chat/requests');
+      await this.router.navigateByUrl('/chat/requests');
     }
 
     this.rejectInProgress$.next(false);
@@ -132,10 +132,10 @@ export class ChatRoomRequestBottomBarComponent {
     this.acceptInProgress$.next(true);
 
     if (await this.submitAction(ChatRoomInviteRequestActionEnum.Accept)) {
-      this.router.navigateByUrl(`/chat/rooms/${this.roomGuid}`);
+      await this.router.navigateByUrl('/chat/rooms/' + this.roomGuid);
     }
 
-    this.rejectInProgress$.next(false);
+    this.acceptInProgress$.next(false);
   }
 
   /**

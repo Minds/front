@@ -34,11 +34,14 @@ export class SingleChatRoomService {
     filter(Boolean),
     switchMap(
       (roomGuid: string): Observable<ApolloQueryResult<GetChatRoomQuery>> =>
-        this.getChatRoomGql.fetch({
-          roomGuid: roomGuid,
-          firstMembers: 12,
-          afterMembers: 0,
-        })
+        this.getChatRoomGql.fetch(
+          {
+            roomGuid: roomGuid,
+            firstMembers: 12,
+            afterMembers: 0,
+          },
+          { fetchPolicy: 'no-cache' }
+        )
     ),
     map(
       (result: ApolloQueryResult<GetChatRoomQuery>): ChatRoomEdge =>
