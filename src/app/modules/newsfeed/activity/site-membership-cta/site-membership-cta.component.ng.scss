@@ -6,6 +6,12 @@
 
   margin-top: $spacing4;
 
+  &.m-activitySiteMembershipCta--unlockedMode {
+    .m-activitySiteMembershipCta__thumbnail {
+      cursor: default;
+    }
+  }
+
   .m-activitySiteMembershipCta__thumbnail {
     position: relative;
     cursor: pointer;

@@ -86,8 +86,8 @@ export class ActivityContentComponent
   /**
    * Used in activity modal
    */
-  @Input() hideText: boolean = false;
-  @Input() hideMedia: boolean = false;
+  @Input() hideText: boolean = false; // left side of modal
+  @Input() hideMedia: boolean = false; // right side of modal
 
   @Input() maxHeightAllowed: number;
 
@@ -177,13 +177,18 @@ export class ActivityContentComponent
     return this.entity.custom_type == 'video';
   }
 
+  /**
+   * It's an image as long as it's a non-multi image batch
+   * OR it has a thumbnail but isn't a video or rich-embed
+   */
   @HostBinding('class.m-activityContent--image')
   get isImage(): boolean {
     return (
       (this.entity.custom_type == 'batch' ||
         (this.entity.thumbnail_src &&
           !this.entity.perma_url &&
-          this.entity.custom_type !== 'video')) &&
+          this.entity.custom_type !== 'video' &&
+          !this.entity?.link_title)) &&
       !this.isMultiImage
     );
   }
@@ -234,6 +239,26 @@ export class ActivityContentComponent
       this.entity.site_membership &&
       !this.entity.site_membership_unlocked &&
       !!this.entity.paywall_thumbnail
+    );
+  }
+
+  /**
+   * Hide cta after post is unlocked,
+   * except for status posts w/ thumbnails
+   */
+  get shouldShowSiteMembershipCta(): boolean {
+    return (
+      this.entity.site_membership &&
+      (!this.entity.site_membership_unlocked || this.isStatus)
+    );
+  }
+
+  get shouldShowSingleImage(): boolean {
+    return (
+      (this.isImage && !this.hasSiteMembershipPayallThumbnail) ||
+      (this.isMultiImage &&
+        this.isModal &&
+        !this.hasSiteMembershipPayallThumbnail)
     );
   }
 
@@ -456,9 +481,14 @@ export class ActivityContentComponent
     return this.service.displayOptions.hasLoadingPriority;
   }
 
-  // Text usually goes above media, except for
-  // minimal mode and rich-embed modals
-  // Note: no rich-embed modals anymore
+  /**
+   * Text usually goes above media,
+   * EXCEPT for rich-embed modals (which are no longer used) and
+   * minimal mode, with the exception of:
+   * - minimal mode posts locked behind site membership paywalls
+   * - minimal mode status posts with site membership thumbnails
+   *   (locked or unlocked)
+   */
   get isTextBelowMedia(): boolean {
     return (
       (this.isMinimalMode && !this.isQuote) ||
