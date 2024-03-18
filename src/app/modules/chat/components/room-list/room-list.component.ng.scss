@@ -8,6 +8,27 @@
   overflow-y: auto;
   @include hide-scrollbar;
 
+  .m-chatRoomList__headerLeft {
+    display: flex;
+    flex-flow: row wrap;
+    gap: $spacing2;
+
+    .m-chatRoomList__alphaBadge {
+      display: block;
+      padding: $spacing1 $spacing2;
+      align-items: center;
+      border-radius: 999px;
+      margin: auto;
+
+      @include unselectable;
+      @include body3Bold;
+      @include m-theme() {
+        background: themed($m-action);
+        color: themed($m-textColor--primaryInverted);
+      }
+    }
+  }
+
   .m-chatRoomList__header {
     display: flex;
     flex-flow: row nowrap;
@@ -25,6 +46,7 @@
     i {
       font-size: 24px;
       cursor: pointer;
+      @include unselectable;
     }
   }
 

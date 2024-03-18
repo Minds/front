@@ -12,7 +12,14 @@
     ></minds-avatar>
   </div>
 </div>
-<div class="m-chatRoomListItem__containerRight">
+<div
+  class="m-chatRoomListItem__containerRight"
+  aria-role="button"
+  [attr.aria-label]="roomName + 'chat room'"
+  tabindex="0"
+  (keydown.enter)="navigateToChat()"
+  (click)="navigateToChat()"
+>
   <p class="m-chatRoomListItem__topRow">
     <span class="m-chatRoomListItem__roomName">{{ roomName }}</span>
     <span class="m-chatRoomListItem__lastMessageTimestamp">{{

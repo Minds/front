@@ -1,6 +1,17 @@
 <header class="m-chatRoomList__header">
-  <h3 class="m-chatRoomList__title">Chats</h3>
-  <i class="material-icons" (click)="onStartChatClick()">add_comment</i>
+  <span class="m-chatRoomList__headerLeft">
+    <h3 class="m-chatRoomList__title">Chats</h3>
+    <span class="m-chatRoomList__alphaBadge">Alpha</span>
+  </span>
+  <i
+    class="material-icons"
+    aria-role="button"
+    aria-label="New chat"
+    (click)="onStartChatClick()"
+    (keydown.enter)="onStartChatClick()"
+    tabindex="0"
+    >add_comment</i
+  >
 </header>
 
 <m-chatPendingRequests__widget
