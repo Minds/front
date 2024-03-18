@@ -2,6 +2,7 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  Inject,
   Input,
   OnInit,
 } from '@angular/core';
@@ -9,6 +10,7 @@ import { CommonModule } from '../../../../../common/common.module';
 import { ChatRoomUtilsService } from '../../../services/utils.service';
 import { ChatRoomMemberEdge } from '../../../../../../graphql/generated.engine';
 import { RouterModule } from '@angular/router';
+import { WINDOW } from '../../../../../common/injection-tokens/common-injection-tokens';
 
 /**
  * Top section of a chat room, containing the room name members, and submenu icon.
@@ -28,7 +30,10 @@ export class ChatRoomTopComponent implements OnInit {
   /** Members of the room. */
   @Input() protected roomMembers: ChatRoomMemberEdge[] = [];
 
-  constructor(private chatRoomUtilsService: ChatRoomUtilsService) {}
+  constructor(
+    private chatRoomUtilsService: ChatRoomUtilsService,
+    @Inject(WINDOW) private window: Window
+  ) {}
 
   ngOnInit(): void {
     if (!this.roomName && this.roomMembers.length) {
@@ -36,5 +41,13 @@ export class ChatRoomTopComponent implements OnInit {
         this.roomMembers
       );
     }
+  }
+
+  /**
+   * Handles middle mouse click on an avatar by opening the users channel
+   * in a new tab.
+   */
+  protected openChannelInNewTab(username: string): void {
+    this.window.open(`/${username}`, '_blank');
   }
 }

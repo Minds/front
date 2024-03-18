@@ -4,6 +4,7 @@
     senderName && isFromOtherParticipant && !isPreviousMessageFromSameSender
   "
   [routerLink]="['/' + senderUsername]"
+  (mouseup)="$event.which == 2 ? openSenderChannelInNewTab() : null"
   >{{ senderName }}</a
 >
 <div class="m-chatMessage__contentRow">
@@ -15,6 +16,7 @@
       *ngIf="!isNextMessageFromSameSender"
       [object]="{ guid: senderGuid, type: 'user' }"
       [routerLink]="['/' + senderUsername]"
+      (mouseup)="$event.which == 2 ? openSenderChannelInNewTab() : null"
       tabindex="0"
       [attr.aria-label]="senderName + 's channel'"
     ></minds-avatar>

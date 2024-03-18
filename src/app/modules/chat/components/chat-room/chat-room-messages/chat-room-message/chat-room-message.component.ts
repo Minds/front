@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostBinding,
+  Inject,
   Input,
 } from '@angular/core';
 import { CommonModule } from '../../../../../../common/common.module';
@@ -11,6 +12,7 @@ import { ChatDatePipe } from '../../../../pipes/chat-date-pipe';
 import { Session } from '../../../../../../services/session';
 import { RouterModule } from '@angular/router';
 import { GrowShrinkFastNoMarginShift } from '../../../../../../animations';
+import { WINDOW } from '../../../../../../common/injection-tokens/common-injection-tokens';
 
 /**
  * Message component for the chat room.
@@ -81,7 +83,10 @@ export class ChatRoomMessageComponent {
   /** Whether the message is manually expanded. */
   protected isManuallyExpanded: boolean = false;
 
-  constructor(private session: Session) {}
+  constructor(
+    private session: Session,
+    @Inject(WINDOW) private window: Window
+  ) {}
 
   /**
    * Handle message click.
@@ -90,5 +95,13 @@ export class ChatRoomMessageComponent {
   protected handleMessageClick(): void {
     if (!this.isNextMessageFromSameSender) return;
     this.isManuallyExpanded = !this.isManuallyExpanded;
+  }
+
+  /**
+   * Handles middle mouse click on an avatar by opening the users channel
+   * in a new tab.
+   */
+  protected openSenderChannelInNewTab(): void {
+    this.window.open(`/${this.senderUsername}`, '_blank');
   }
 }

@@ -4,6 +4,9 @@
       *ngFor="let roomMember of roomMembers"
       [object]="{ guid: roomMember.node.guid, type: 'user' }"
       [routerLink]="['/' + roomMember.node.username]"
+      (mouseup)="
+        $event.which == 2 ? openChannelInNewTab(roomMember.node.username) : null
+      "
     ></minds-avatar>
   </div>
   <span class="m-chatRoomTop__roomName" tabindex="0">{{ roomName }}</span>

@@ -40,10 +40,15 @@
           *ngFor="let selectedUser of templateVars.selectedUsers"
           class="m-startChatModal__selectedUser"
         >
-          <span class="m-startChatModal__selectedUserName">{{
+          <span class="m-startChatModal__selectedUserName" tabindex="1">{{
             selectedUser.name | truncate: 24
           }}</span>
-          <i class="material-icons" (click)="toggleUserSelect(selectedUser)"
+          <i
+            class="material-icons"
+            (click)="toggleUserSelect(selectedUser)"
+            tabindex="1"
+            aria-role="button"
+            [attr.aria-label]="'Remove ' + selectedUser.username"
             >close</i
           >
         </span>
@@ -59,7 +64,11 @@
             trackBy: trackResultsBy
           "
           class="m-startChatModal__userRow"
+          tabindex="1"
+          aria-role="button"
+          [attr.aria-label]="'Toggle ' + searchMatch.user.username"
           (click)="toggleUserSelect(searchMatch.user)"
+          (keyup.enter)="toggleUserSelect(searchMatch.user)"
         >
           <div class="m-startChatModal__userRow--left">
             <div
@@ -68,7 +77,6 @@
               [ngClass]="{
                 'm-startChatModal__avatar--selected': searchMatch.selected
               }"
-              tabindex="1"
             >
               <span *ngIf="searchMatch.selected" class="material-icons"
                 >done</span
@@ -101,6 +109,9 @@
       buttonVars.creationInProgress || !(selectedUsers$ | async)?.length
     "
     (onAction)="onConfirmClick()"
+    (keydown.enter)="onConfirmClick()"
+    tabindex="1"
+    aria-label="Start chat"
     >Chat</m-button
   >
 </footer>

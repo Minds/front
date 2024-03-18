@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostBinding,
+  Inject,
   Input,
 } from '@angular/core';
 import { CommonModule } from '../../../../../common/common.module';
@@ -14,6 +15,7 @@ import { ChatRoomUtilsService } from '../../../services/utils.service';
 import { MindsAvatarObject } from '../../../../../common/components/avatar/avatar';
 import { ChatDatePipe } from '../../../pipes/chat-date-pipe';
 import { Router, RouterModule } from '@angular/router';
+import { WINDOW } from '../../../../../common/injection-tokens/common-injection-tokens';
 
 /** Amount of avatars to show for a multi-user chat-room. */
 const MULTI_USER_AVATARS_TO_SHOW: number = 2;
@@ -77,7 +79,8 @@ export class ChatRoomListItemComponent {
 
   constructor(
     private chatRoomUtilsService: ChatRoomUtilsService,
-    private router: Router
+    private router: Router,
+    @Inject(WINDOW) private window: Window
   ) {}
 
   /**
@@ -107,5 +110,13 @@ export class ChatRoomListItemComponent {
     this.router.navigateByUrl(
       this.navigationLink ?? `/chat/rooms/${this.roomGuid}`
     );
+  }
+
+  /**
+   * Handles middle mouse click on an avatar by opening the users channel
+   * in a new tab.
+   */
+  protected openChannelInNewTab(username: string): void {
+    this.window.open(`/${username}`, '_blank');
   }
 }
