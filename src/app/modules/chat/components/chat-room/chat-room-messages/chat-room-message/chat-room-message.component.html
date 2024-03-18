@@ -15,6 +15,8 @@
       *ngIf="!isNextMessageFromSameSender"
       [object]="{ guid: senderGuid, type: 'user' }"
       [routerLink]="['/' + senderUsername]"
+      tabindex="0"
+      [attr.aria-label]="senderName + 's channel'"
     ></minds-avatar>
   </div>
   <div
@@ -25,7 +27,7 @@
     throttledClick
     (throttledClick)="handleMessageClick()"
   >
-    <span class="m-chatRoomMessage__text" *ngIf="plainText">{{
+    <span class="m-chatRoomMessage__text" *ngIf="plainText" tabindex="0">{{
       plainText
     }}</span>
   </div>

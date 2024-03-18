@@ -6,8 +6,10 @@
       [routerLink]="['/' + roomMember.node.username]"
     ></minds-avatar>
   </div>
-  <span class="m-chatRoomTop__roomName">{{ roomName }}</span>
+  <span class="m-chatRoomTop__roomName" tabindex="0">{{ roomName }}</span>
 </div>
 <div class="m-chatRoomTop__rightContainer">
-  <i class="material-icons">info</i>
+  <i class="material-icons" aria-label="Chat details panel" tabindex="0"
+    >info</i
+  >
 </div>

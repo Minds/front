@@ -10,17 +10,7 @@ import { ChatMessageEdge } from '../../../../../../../graphql/generated.engine';
 import { ChatDatePipe } from '../../../../pipes/chat-date-pipe';
 import { Session } from '../../../../../../services/session';
 import { RouterModule } from '@angular/router';
-import {
-  GrowShrinkFast,
-  GrowShrinkFastNoMarginShift,
-} from '../../../../../../animations';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { GrowShrinkFastNoMarginShift } from '../../../../../../animations';
 
 /**
  * Message component for the chat room.
