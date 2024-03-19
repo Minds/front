@@ -266,12 +266,14 @@ export type ChatMessagesConnection = ConnectionInterface & {
 export type ChatRoomEdge = EdgeInterface & {
   __typename?: 'ChatRoomEdge';
   cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   lastMessageCreatedTimestamp?: Maybe<Scalars['Int']['output']>;
   lastMessagePlainText?: Maybe<Scalars['String']['output']>;
   members: ChatRoomMembersConnection;
   messages: ChatMessagesConnection;
   node: ChatRoomNode;
   totalMembers: Scalars['Int']['output'];
+  unreadMessagesCount: Scalars['Int']['output'];
 };
 
 export type ChatRoomEdgeMembersArgs = {
@@ -922,6 +924,8 @@ export type Mutation = {
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
   provideVerdict: Scalars['Boolean']['output'];
+  /** Updates the read reciept of a room */
+  readReceipt: ChatRoomEdge;
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   replyToRoomInviteRequest: Scalars['Boolean']['output'];
@@ -1047,6 +1051,11 @@ export type MutationMultiTenantConfigArgs = {
 
 export type MutationProvideVerdictArgs = {
   verdictInput: VerdictInput;
+};
+
+export type MutationReadReceiptArgs = {
+  messageGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationRefreshRssFeedArgs = {
@@ -1282,6 +1291,8 @@ export type Query = {
   chatRoomList: ChatRoomsConnection;
   /** Returns the members of a chat room */
   chatRoomMembers: ChatRoomMembersConnection;
+  /** Returns the total count of unread messages a user has */
+  chatUnreadMessagesCount: Scalars['Int']['output'];
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
   customPage: CustomPage;
@@ -2237,7 +2248,9 @@ export type GetChatRoomsListQuery = {
     };
     edges: Array<{
       __typename?: 'ChatRoomEdge';
+      id: string;
       cursor: string;
+      unreadMessagesCount: number;
       lastMessagePlainText?: string | null;
       lastMessageCreatedTimestamp?: number | null;
       node: {
@@ -2266,6 +2279,13 @@ export type GetChatRoomsListQuery = {
   };
 };
 
+export type GetChatUnreadCountQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetChatUnreadCountQuery = {
+  __typename?: 'Query';
+  chatUnreadMessagesCount: number;
+};
+
 export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -2283,6 +2303,20 @@ export type ReplyToRoomInviteRequestMutationVariables = Exact<{
 export type ReplyToRoomInviteRequestMutation = {
   __typename?: 'Mutation';
   replyToRoomInviteRequest: boolean;
+};
+
+export type SetReadReceiptMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  messageGuid: Scalars['String']['input'];
+}>;
+
+export type SetReadReceiptMutation = {
+  __typename?: 'Mutation';
+  readReceipt: {
+    __typename?: 'ChatRoomEdge';
+    id: string;
+    unreadMessagesCount: number;
+  };
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -7266,6 +7300,7 @@ export const GetChatRoomsListDocument = gql`
         endCursor
       }
       edges {
+        id
         cursor
         node {
           id
@@ -7285,6 +7320,7 @@ export const GetChatRoomsListDocument = gql`
             }
           }
         }
+        unreadMessagesCount
         lastMessagePlainText
         lastMessageCreatedTimestamp
       }
@@ -7300,6 +7336,25 @@ export class GetChatRoomsListGQL extends Apollo.Query<
   GetChatRoomsListQueryVariables
 > {
   document = GetChatRoomsListDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatUnreadCountDocument = gql`
+  query GetChatUnreadCount {
+    chatUnreadMessagesCount
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatUnreadCountGQL extends Apollo.Query<
+  GetChatUnreadCountQuery,
+  GetChatUnreadCountQueryVariables
+> {
+  document = GetChatUnreadCountDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -7344,6 +7399,28 @@ export class ReplyToRoomInviteRequestGQL extends Apollo.Mutation<
   ReplyToRoomInviteRequestMutationVariables
 > {
   document = ReplyToRoomInviteRequestDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetReadReceiptDocument = gql`
+  mutation SetReadReceipt($roomGuid: String!, $messageGuid: String!) {
+    readReceipt(roomGuid: $roomGuid, messageGuid: $messageGuid) {
+      id
+      unreadMessagesCount
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetReadReceiptGQL extends Apollo.Mutation<
+  SetReadReceiptMutation,
+  SetReadReceiptMutationVariables
+> {
+  document = SetReadReceiptDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

@@ -25,6 +25,8 @@ import {
 } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ChatRoomMessageComponent } from './chat-room-message/chat-room-message.component';
+import { ChatReceiptService } from '../../../services/chat-receipt.service';
+import { Session } from '../../../../../services/session';
 
 /** How far away from the top of the scroll area loading of new elements should start. */
 const LOADING_BUFFER_TOP_PX: number = 300;
@@ -58,6 +60,8 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
 
   constructor(
     private chatMessagesService: ChatMessagesService,
+    private chatReceiptService: ChatReceiptService,
+    private session: Session,
     protected elementRef: ElementRef,
     private cd: ChangeDetectorRef
   ) {
@@ -104,6 +108,21 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
       top: this.elementRef.nativeElement.scrollHeight,
       behavior: behavior,
     });
+
+    this.updateReadReceipt();
+  }
+
+  /**
+   * Updates the read read receipt to the last message in our list
+   * TODO: (MH) make sure this only fire on new messages we have seen.
+   * Currently this is firing BEFORE a new message is how in the list.
+   */
+  protected updateReadReceipt() {
+    const lastMsg = this.messages[this.messages.length - 1];
+    if (lastMsg.node.sender.node.guid === this.session.getLoggedInUser().guid) {
+      return; // Do not send for our own.
+    }
+    this.chatReceiptService.update(lastMsg.node.roomGuid, lastMsg.node.guid);
   }
 
   /**

@@ -13,6 +13,7 @@ import { ChatRequestsInfoSubPageComponent } from './components/pages/sub-pages/c
 import { ChatRoomComponent } from './components/pages/sub-pages/chat-room/chat-room.component';
 import { NoRouteReuseStrategy } from '../../common/routerReuseStrategies/no-route-reuse.strategy';
 import { loggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
+import { ChatReceiptService } from './services/chat-receipt.service';
 
 const CHAT_ROUTES: Routes = [
   {
@@ -77,6 +78,7 @@ const CHAT_ROUTES: Routes = [
       provide: RouteReuseStrategy,
       useClass: NoRouteReuseStrategy,
     },
+    ChatReceiptService,
   ],
 })
 export class ChatModule {}

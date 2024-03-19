@@ -182,6 +182,23 @@
 
         &.m-sidebarNavigation__item--chat {
           transform: translateY(2px);
+
+          i.showDot {
+            position: relative;
+            &::after {
+              content: '';
+              display: block;
+              width: 5px;
+              height: 5px;
+              position: absolute;
+              border-radius: 50%;
+              top: 0;
+              right: 0;
+              @include m-theme() {
+                background-color: themed($m-blue);
+              }
+            }
+          }
         }
 
         &.m-sidebarNavigation__item--compose {
