@@ -326,6 +326,7 @@ export enum CustomHostnameStatusEnum {
 export type CustomPage = NodeInterface & {
   __typename?: 'CustomPage';
   content?: Maybe<Scalars['String']['output']>;
+  defaultContent?: Maybe<Scalars['String']['output']>;
   externalLink?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   pageType: CustomPageTypesEnum;
@@ -2872,6 +2873,7 @@ export type GetCustomPageQuery = {
     pageType: CustomPageTypesEnum;
     content?: string | null;
     externalLink?: string | null;
+    defaultContent?: string | null;
   };
 };
 
@@ -7381,6 +7383,7 @@ export const GetCustomPageDocument = gql`
       pageType
       content
       externalLink
+      defaultContent
     }
   }
 `;
