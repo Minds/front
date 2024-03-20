@@ -21,7 +21,6 @@ import { CustomPageFormContentPreviewModalComponent } from './content-preview-mo
 /**
  * Allows tenant admins to manage their custom pages
  * (e.g. privacy, TOS, community guidelines)
- * test
  */
 @Component({
   selector: 'm-customPage__form',
