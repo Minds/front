@@ -5,5 +5,6 @@
   flex-direction: column;
   padding: 0 $spacing5;
   box-sizing: border-box;
+  overflow-x: hidden;
   @include hide-scrollbar;
 }

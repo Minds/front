@@ -1,0 +1,59 @@
+<div
+  *ngIf="!(deleteInProgress$ | async); else menuLoadingSpinnerTemplate"
+  showOnHover
+  [hoverSourceElement]="hoverSourceElement"
+  [forceShow]="dropdownMenuShown"
+  [reactToForceShowChange]="true"
+  [popper]="dropdownMenuContent"
+  [popperShowOnStart]="false"
+  [popperTrigger]="'click'"
+  [popperHideOnClickOutside]="true"
+  [popperHideOnScroll]="false"
+  [popperPreventOverflow]="false"
+  [popperPlacement]="'bottom'"
+  (popperOnShown)="onPopperShown()"
+  (popperOnHidden)="onPopperHidden()"
+  #dropdownMenu
+>
+  <i
+    *ngIf="!(deleteInProgress$ | async); else menuLoadingSpinnerTemplate"
+    class="material-icons m-chatRoomMessageDropdown__icon"
+    [ngClass]="{
+      'm-chatRoomMessageDropdown__icon--menuShown': dropdownMenuShown
+    }"
+    >more_horiz</i
+  >
+</div>
+
+<popper-content #dropdownMenuContent>
+  <ul class="m-chatRoomMessageDropdown__dropdownList">
+    <li
+      *ngIf="!isMessageOwner"
+      class="m-chatRoomMessageDropdown__dropdownListItem"
+      (click)="onReportClick()"
+    >
+      <span i18n="@@CHAT_ROOM__MESSAGE_DROPDOWN__REPORT_MESSAGE"
+        >Report message</span
+      >
+    </li>
+  </ul>
+  <ul class="m-chatRoomMessageDropdown__dropdownList">
+    <li
+      *ngIf="isMessageOwner"
+      class="m-chatRoomMessageDropdown__dropdownListItem"
+      (click)="onDeleteClick()"
+    >
+      <span i18n="@@CHAT_ROOM__MESSAGE_DROPDOWN__REPORT_MESSAGE"
+        >Delete message</span
+      >
+    </li>
+  </ul>
+</popper-content>
+
+<ng-template #menuLoadingSpinnerTemplate>
+  <m-sizeableLoadingSpinner
+    [inProgress]="true"
+    spinnerHeight="20px"
+    spinnerWidth="20px"
+  ></m-sizeableLoadingSpinner>
+</ng-template>

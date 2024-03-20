@@ -249,6 +249,9 @@ export class NetworkAdminConsoleReportComponent extends AbstractSubscriberCompon
    * @returns { Object } parsed entity object.
    */
   public get entity(): Object {
+    if (this.reportEdge?.node?.entityEdge.__typename === 'ChatMessageEdge') {
+      return this.reportEdge?.node?.entityEdge?.node;
+    }
     return this.reportEdge?.node?.entityEdge?.node?.legacy
       ? this.parseLegacyEntityJson(
           this.reportEdge?.node?.entityEdge?.node?.legacy
@@ -272,6 +275,8 @@ export class NetworkAdminConsoleReportComponent extends AbstractSubscriberCompon
         return $localize`:@@REPORT_V2__ACTION_BAR__DELETE_COMMENT:Delete comment`;
       case 'GroupNode':
         return $localize`:@@REPORT_V2__ACTION_BAR__DELETE_GROUP:Delete group`;
+      case 'ChatMessageNode':
+        return $localize`:@@REPORT_V2__ACTION_BAR__DELETE_MESSAGE:Delete message`;
       default:
         return $localize`:@@REPORT_V2__ACTION_BAR__DELETE:Delete`;
     }
@@ -286,6 +291,7 @@ export class NetworkAdminConsoleReportComponent extends AbstractSubscriberCompon
       case 'ActivityNode':
       case 'CommentNode':
       case 'UserNode':
+      case 'ChatMessageNode':
         return $localize`:@@REPORT_V2__ACTION_BAR__BAN_USER:Ban user`;
       default:
         return $localize`:@@REPORT_V2__ACTION_BAR__BAN:Ban`;
@@ -311,6 +317,11 @@ export class NetworkAdminConsoleReportComponent extends AbstractSubscriberCompon
       case 'GroupNode':
         this.toaster.success(
           $localize`:@@REPORT_V2__VERDICT_PROVIDED__GROUP_DELETED:Group deleted`
+        );
+        break;
+      case 'ChatMessageNode':
+        this.toaster.success(
+          $localize`:@@REPORT_V2__VERDICT_PROVIDED__CHAT_MESSAGE_DELETED:Chat message deleted`
         );
         break;
       default:
@@ -340,6 +351,11 @@ export class NetworkAdminConsoleReportComponent extends AbstractSubscriberCompon
       case 'GroupNode':
         this.toaster.error(
           $localize`:@@REPORT_V2__VERDICT_PROVIDED__ERROR_DELETING_GROUP:There was an error when deleting this group`
+        );
+        break;
+      case 'ChatMessageNode':
+        this.toaster.error(
+          $localize`:@@REPORT_V2__VERDICT_PROVIDED__ERROR_DELETING_CHAT_MESSAGE:There was an error when deleting this chat message`
         );
         break;
       default:

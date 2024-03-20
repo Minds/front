@@ -58,6 +58,9 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
     map((pageInfo: PageInfo) => pageInfo?.hasPreviousPage)
   );
 
+  /** ID of the currently logged in user. */
+  protected loggedInUserGuid: string = '';
+
   constructor(
     private chatMessagesService: ChatMessagesService,
     private chatReceiptService: ChatReceiptService,
@@ -69,6 +72,8 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
   }
 
   ngOnInit(): void {
+    this.loggedInUserGuid = this.session.getLoggedInUser()?.guid;
+
     // detach CD, reattach when initialized to prevent page jumps.
     this.cd.detach();
 

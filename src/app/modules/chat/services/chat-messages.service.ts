@@ -5,17 +5,20 @@ import {
   Observable,
   Subject,
   catchError,
+  lastValueFrom,
   of,
   take,
 } from 'rxjs';
 import {
   ChatMessageEdge,
+  DeleteChatMessageGQL,
+  DeleteChatMessageMutation,
   GetChatMessagesGQL,
   GetChatMessagesQuery,
   GetChatMessagesQueryVariables,
   PageInfo,
 } from '../../../../graphql/generated.engine';
-import { QueryRef } from 'apollo-angular';
+import { MutationResult, QueryRef } from 'apollo-angular';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ApolloQueryResult } from '@apollo/client';
 import { Router } from '@angular/router';
@@ -79,6 +82,7 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
 
   constructor(
     private getChatMessagesGql: GetChatMessagesGQL,
+    private deleteChatMessage: DeleteChatMessageGQL,
     private toaster: ToasterService,
     private router: Router
   ) {
@@ -205,5 +209,44 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
   public appendChatMessage(chatMessageEdge: ChatMessageEdge): void {
     this._edges$.next([...this._edges$.getValue(), chatMessageEdge]);
     this._chatMessageAppended$.next(true);
+  }
+
+  /**
+   * Append a message to chat messages.
+   * @param { ChatMessageEdge } chatMessageEdge - The chat message edge to append.
+   * @returns { Promise<void> }
+   */
+  public async removeChatMessage(
+    chatMessageEdge: ChatMessageEdge
+  ): Promise<boolean> {
+    try {
+      const response: MutationResult<DeleteChatMessageMutation> = await lastValueFrom(
+        this.deleteChatMessage.mutate({
+          messageGuid: chatMessageEdge.node.guid,
+          roomGuid: chatMessageEdge.node.roomGuid,
+        })
+      );
+
+      if (response?.errors?.length) {
+        throw new Error(response.errors[0].message);
+      }
+
+      if (!response.data.deleteChatMessage) {
+        throw new Error('Failed to delete message');
+      }
+
+      this._edges$.next(
+        this._edges$.getValue().filter((edge: ChatMessageEdge): boolean => {
+          return edge.node.id !== chatMessageEdge.node.id;
+        })
+      );
+
+      this.toaster.success('Message deleted');
+      return true;
+    } catch (e) {
+      console.error(e);
+      this.toaster.error(e?.message);
+      return false;
+    }
   }
 }

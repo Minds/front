@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
 } from '@angular/core';
 import { MessengerConversationDockpanesService } from '../../../messenger/dockpanes/dockpanes.service';
 import { MessengerConversationBuilderService } from '../../../messenger/dockpanes/conversation-builder.service';
@@ -15,6 +16,7 @@ import {
 import { ChatExperimentService } from '../../../experiments/sub-services/chat-experiment.service';
 import { CreateChatRoomService } from '../../../chat/services/create-chat-room.service';
 import { Router } from '@angular/router';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Message button (non-owner) - action button shown to logged-in channel visitors.
@@ -27,6 +29,9 @@ import { Router } from '@angular/router';
 })
 export class ChannelActionsMessageComponent {
   inProgress = false;
+
+  /** Whether chat experiment is active. */
+  protected isChatExperimentActive: boolean = false;
 
   /**
    * Constructor
@@ -44,14 +49,17 @@ export class ChannelActionsMessageComponent {
     private toaster: ToasterService,
     private chatExperiment: ChatExperimentService,
     private createChatRoom: CreateChatRoomService,
-    private router: Router
-  ) {}
+    private router: Router,
+    @Inject(IS_TENANT_NETWORK) protected isTenantNetwork: boolean
+  ) {
+    this.isChatExperimentActive = this.chatExperiment.isActive();
+  }
 
   /**
    * Opens conversation pane
    */
   async message(): Promise<void> {
-    if (this.chatExperiment.isActive()) {
+    if (this.isChatExperimentActive) {
       return this.handleMindsInternalChatRequest();
     }
     this.inProgress = true;

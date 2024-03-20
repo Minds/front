@@ -169,6 +169,7 @@ export class ReportCreatorComponent implements AfterViewInit {
     try {
       let response: any = await this.client.post(`api/v2/moderation/report`, {
         entity_guid: this.guid,
+        entity_urn: this.urn,
         reason_code: this.subject.value,
         note: this.note,
         sub_reason_code: this.subReason.value,

@@ -912,6 +912,7 @@ export type Mutation = {
   createNewReport: Scalars['Boolean']['output'];
   createRssFeed: RssFeed;
   createTenant: Tenant;
+  deleteChatMessage: Scalars['Boolean']['output'];
   /** Delete an entity. */
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
@@ -924,7 +925,7 @@ export type Mutation = {
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
   provideVerdict: Scalars['Boolean']['output'];
-  /** Updates the read reciept of a room */
+  /** Updates the read receipt of a room */
   readReceipt: ChatRoomEdge;
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
@@ -1018,6 +1019,11 @@ export type MutationCreateRssFeedArgs = {
 
 export type MutationCreateTenantArgs = {
   tenant?: InputMaybe<TenantInput>;
+};
+
+export type MutationDeleteChatMessageArgs = {
+  messageGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationDeleteEntityArgs = {
@@ -1600,7 +1606,9 @@ export type Report = NodeInterface & {
   createdTimestamp: Scalars['Int']['output'];
   cursor?: Maybe<Scalars['String']['output']>;
   /** Gets entity edge from entityUrn. */
-  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdge>;
+  entityEdge?: Maybe<
+    UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge
+  >;
   entityGuid?: Maybe<Scalars['String']['output']>;
   entityUrn: Scalars['String']['output'];
   /** Gets ID for GraphQL. */
@@ -1854,8 +1862,9 @@ export enum TenantUserRoleEnum {
   User = 'USER',
 }
 
-export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdge =
+export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge =
   | ActivityEdge
+  | ChatMessageEdge
   | CommentEdge
   | GroupEdge
   | UserEdge;
@@ -2091,6 +2100,16 @@ export type CreateChatRoomMutation = {
       timeCreatedUnix: string;
     };
   };
+};
+
+export type DeleteChatMessageMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  messageGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteChatMessageMutation = {
+  __typename?: 'Mutation';
+  deleteChatMessage: boolean;
 };
 
 export type GetChatMessagesQueryVariables = Exact<{
@@ -2831,6 +2850,31 @@ export type GetReportsQuery = {
                       node: { __typename?: 'ActivityNode'; legacy: string };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      node: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                        guid: string;
+                        roomGuid: string;
+                        plainText: string;
+                        timeCreatedISO8601: string;
+                        timeCreatedUnix: string;
+                        sender: {
+                          __typename?: 'UserEdge';
+                          id: string;
+                          type: string;
+                          cursor: string;
+                          node: {
+                            __typename?: 'UserNode';
+                            name: string;
+                            username: string;
+                            id: string;
+                            guid: string;
+                          };
+                        };
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       node: { __typename?: 'CommentNode'; legacy: string };
                     }
@@ -2927,6 +2971,31 @@ export type GetReportsQuery = {
                       node: { __typename?: 'ActivityNode'; legacy: string };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      node: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                        guid: string;
+                        roomGuid: string;
+                        plainText: string;
+                        timeCreatedISO8601: string;
+                        timeCreatedUnix: string;
+                        sender: {
+                          __typename?: 'UserEdge';
+                          id: string;
+                          type: string;
+                          cursor: string;
+                          node: {
+                            __typename?: 'UserNode';
+                            name: string;
+                            username: string;
+                            id: string;
+                            guid: string;
+                          };
+                        };
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       node: { __typename?: 'CommentNode'; legacy: string };
                     }
@@ -2997,6 +3066,31 @@ export type GetReportsQuery = {
                   | {
                       __typename?: 'ActivityEdge';
                       node: { __typename?: 'ActivityNode'; legacy: string };
+                    }
+                  | {
+                      __typename?: 'ChatMessageEdge';
+                      node: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                        guid: string;
+                        roomGuid: string;
+                        plainText: string;
+                        timeCreatedISO8601: string;
+                        timeCreatedUnix: string;
+                        sender: {
+                          __typename?: 'UserEdge';
+                          id: string;
+                          type: string;
+                          cursor: string;
+                          node: {
+                            __typename?: 'UserNode';
+                            name: string;
+                            username: string;
+                            id: string;
+                            guid: string;
+                          };
+                        };
+                      };
                     }
                   | {
                       __typename?: 'CommentEdge';
@@ -3084,6 +3178,31 @@ export type GetReportsQuery = {
               | {
                   __typename?: 'ActivityEdge';
                   node: { __typename?: 'ActivityNode'; legacy: string };
+                }
+              | {
+                  __typename?: 'ChatMessageEdge';
+                  node: {
+                    __typename?: 'ChatMessageNode';
+                    id: string;
+                    guid: string;
+                    roomGuid: string;
+                    plainText: string;
+                    timeCreatedISO8601: string;
+                    timeCreatedUnix: string;
+                    sender: {
+                      __typename?: 'UserEdge';
+                      id: string;
+                      type: string;
+                      cursor: string;
+                      node: {
+                        __typename?: 'UserNode';
+                        name: string;
+                        username: string;
+                        id: string;
+                        guid: string;
+                      };
+                    };
+                  };
                 }
               | {
                   __typename?: 'CommentEdge';
@@ -7134,6 +7253,25 @@ export class CreateChatRoomGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const DeleteChatMessageDocument = gql`
+  mutation DeleteChatMessage($roomGuid: String!, $messageGuid: String!) {
+    deleteChatMessage(roomGuid: $roomGuid, messageGuid: $messageGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteChatMessageGQL extends Apollo.Mutation<
+  DeleteChatMessageMutation,
+  DeleteChatMessageMutationVariables
+> {
+  document = DeleteChatMessageDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetChatMessagesDocument = gql`
   query GetChatMessages(
     $roomGuid: String!
@@ -8063,6 +8201,27 @@ export const GetReportsDocument = gql`
               ... on CommentEdge {
                 node {
                   legacy
+                }
+              }
+              ... on ChatMessageEdge {
+                node {
+                  id
+                  guid
+                  roomGuid
+                  plainText
+                  timeCreatedISO8601
+                  timeCreatedUnix
+                  sender {
+                    id
+                    type
+                    cursor
+                    node {
+                      name
+                      username
+                      id
+                      guid
+                    }
+                  }
                 }
               }
             }

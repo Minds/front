@@ -32,6 +32,7 @@
       max-height: 180px;
 
       @include body2Regular;
+      @include vertical-scroll;
 
       &:focus {
         outline: none;

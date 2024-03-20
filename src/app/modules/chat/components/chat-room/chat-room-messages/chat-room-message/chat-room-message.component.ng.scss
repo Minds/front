@@ -33,6 +33,8 @@
         align-items: flex-end;
         margin-right: $spacing3;
         min-width: 36px;
+        height: 100%;
+        align-self: flex-end;
 
         ::ng-deep .minds-avatar {
           cursor: pointer;
@@ -110,6 +112,7 @@
   .m-chatMessage__contentRow {
     display: flex;
     flex-flow: row nowrap;
+    align-items: center;
     width: 100%;
 
     .m-chatRoomMessage__bubble {
@@ -130,5 +133,9 @@
         @include body2Regular;
       }
     }
+  }
+
+  m-chatRoomMessage__dropdown {
+    margin: 0 $spacing3;
   }
 }

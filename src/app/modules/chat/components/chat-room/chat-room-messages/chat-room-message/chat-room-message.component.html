@@ -1,17 +1,15 @@
 <a
   class="m-chatRoomMessage__senderName"
-  *ngIf="
-    senderName && isFromOtherParticipant && !isPreviousMessageFromSameSender
-  "
+  *ngIf="senderName && !isFromLoggedInUser && !isPreviousMessageFromSameSender"
   [routerLink]="['/' + senderUsername]"
   (mouseup)="$event.which == 2 ? openSenderChannelInNewTab() : null"
   >{{ senderName }}</a
 >
 <div class="m-chatMessage__contentRow">
-  <div
-    *ngIf="isFromOtherParticipant"
-    class="m-chatRoomMessage__avatarContainer"
-  >
+  <ng-container *ngIf="isFromLoggedInUser && messageEdge">
+    <ng-container *ngTemplateOutlet="dropdownEllipsisTemplate"></ng-container>
+  </ng-container>
+  <div *ngIf="!isFromLoggedInUser" class="m-chatRoomMessage__avatarContainer">
     <minds-avatar
       *ngIf="!isNextMessageFromSameSender"
       [object]="{ guid: senderGuid, type: 'user' }"
@@ -33,6 +31,9 @@
       plainText
     }}</span>
   </div>
+  <ng-container *ngIf="!isFromLoggedInUser && messageEdge">
+    <ng-container *ngTemplateOutlet="dropdownEllipsisTemplate"></ng-container>
+  </ng-container>
 </div>
 <p
   *ngIf="
@@ -44,3 +45,11 @@
 >
   {{ timeCreatedUnix | chatDate: false }}
 </p>
+
+<ng-template #dropdownEllipsisTemplate>
+  <m-chatRoomMessage__dropdown
+    [messageEdge]="messageEdge"
+    [hoverSourceElement]="elementRef"
+    [isMessageOwner]="isFromLoggedInUser"
+  ></m-chatRoomMessage__dropdown>
+</ng-template>

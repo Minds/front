@@ -194,6 +194,7 @@ import { AutocompleteEntityInputComponent } from './components/forms/autocomplet
 import { PublisherListComponent } from './components/publisher-list/publisher-list.component';
 import { TopbarNetworkTrialBannerComponent } from './components/topbar-network-trial-banner/topbar-network-trial-banner.component';
 import { ThrottledClickDirective } from './directives/throttled-click.directive';
+import { ShowOnHoverDirective } from './directives/show-on-hover-directive';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -341,6 +342,7 @@ const MINDS_DIRECTIVES = [
   ViewedDirective,
   FeedHeaderComponent,
   ThrottledClickDirective,
+  ShowOnHoverDirective,
 ];
 // ------------------------------------
 // ------------------------------------

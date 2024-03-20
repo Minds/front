@@ -2,6 +2,7 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   HostBinding,
   Inject,
   Input,
@@ -9,13 +10,16 @@ import {
 import { CommonModule } from '../../../../../../common/common.module';
 import { ChatMessageEdge } from '../../../../../../../graphql/generated.engine';
 import { ChatDatePipe } from '../../../../pipes/chat-date-pipe';
-import { Session } from '../../../../../../services/session';
 import { RouterModule } from '@angular/router';
 import { GrowShrinkFastNoMarginShift } from '../../../../../../animations';
 import { WINDOW } from '../../../../../../common/injection-tokens/common-injection-tokens';
+import { ChatRoomMessageDropdownComponent } from './chat-room-message-dropdown/chat-room-message-dropdown.component';
 
 /**
  * Message component for the chat room.
+ *
+ * TODO: When adding media in future, be sure to update all implementations of this component,
+ * including in the admin queue.
  */
 @Component({
   selector: 'm-chatRoom__message',
@@ -23,69 +27,71 @@ import { WINDOW } from '../../../../../../common/injection-tokens/common-injecti
   templateUrl: './chat-room-message.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [GrowShrinkFastNoMarginShift],
-  imports: [NgCommonModule, CommonModule, ChatDatePipe, RouterModule],
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    RouterModule,
+    ChatDatePipe,
+    ChatRoomMessageDropdownComponent,
+  ],
   standalone: true,
 })
 export class ChatRoomMessageComponent {
-  /** Setter for message edge. */
-  @Input() protected set messageEdge(messageEdge: ChatMessageEdge) {
-    this.senderName = messageEdge.node?.sender?.node?.name;
-    this.plainText = messageEdge.node.plainText;
-    this.timeCreatedUnix = Number(messageEdge?.node?.timeCreatedUnix);
-    this.senderGuid = messageEdge.node?.sender?.node?.guid;
-    this.senderUsername = messageEdge.node?.sender?.node?.username;
-    this.isFromOtherParticipant =
-      this.session.getLoggedInUser()?.guid !== this.senderGuid;
+  /** Whether the message is from the currently logged in user. */
+  private _isFromLoggedInUser: boolean = false;
 
-    if (this.isFromOtherParticipant) {
-      this.isLeft = true;
-      this.isRight = false;
-    } else {
-      this.isLeft = false;
-      this.isRight = true;
-    }
-  }
+  /** Whether the alignment of the message is left. */
+  @HostBinding('class.m-chatRoom__message--left')
+  protected isLeftAligned: boolean = false;
 
-  /** Whether preceding message in sequence is from the same sender. */
-  @Input() protected isPreviousMessageFromSameSender: boolean = false;
+  /** Whether the alignment of the message is right. */
+  @HostBinding('class.m-chatRoom__message--right')
+  protected isRightAligned: boolean = true;
 
-  /** Whether next message in sequence is from the same sender. */
+  /** Whether next message in a sequence is from the same sender. */
   @HostBinding('class.m-chatRoom__message--nextMessageIsFromSameSender')
   @Input()
   protected isNextMessageFromSameSender: boolean = false;
 
-  /** Whether the alignment of the message is left. */
-  @HostBinding('class.m-chatRoom__message--left')
-  protected isLeft: boolean = false;
-
-  /** Whether the alignment of the message is right. */
-  @HostBinding('class.m-chatRoom__message--right')
-  protected isRight: boolean = true;
+  /** Whether preceding message in a sequence is from the same sender. */
+  @Input() protected isPreviousMessageFromSameSender: boolean = false;
 
   /** Name of the sender. */
-  protected senderName: string;
+  @Input() protected senderName: string;
 
   /** Plain text of the message. */
-  protected plainText: string;
+  @Input() protected plainText: string;
 
   /** Time created for the message (unix). */
-  protected timeCreatedUnix: number;
+  @Input() protected timeCreatedUnix: number;
 
   /** GUID of the sender. */
-  protected senderGuid: string;
+  @Input() protected senderGuid: string;
 
   /** Username of the sender. */
-  protected senderUsername: string;
+  @Input() protected senderUsername: string;
+
+  /** Full message edge. - can be omitted if no dropdown menu is required. */
+  @Input() protected messageEdge: ChatMessageEdge;
 
   /** Whether the message is from another chat participant. */
-  protected isFromOtherParticipant: boolean = false;
+  @Input() protected set isMessageOwner(isFromLoggedInUser: boolean) {
+    this._isFromLoggedInUser = isFromLoggedInUser;
+    this.isLeftAligned = !isFromLoggedInUser;
+    this.isRightAligned = isFromLoggedInUser;
+  }
+
+  /** Whether the message is from another chat participant. */
+  get isFromLoggedInUser(): boolean {
+    return this._isFromLoggedInUser;
+  }
 
   /** Whether the message is manually expanded. */
   protected isManuallyExpanded: boolean = false;
 
   constructor(
-    private session: Session,
-    @Inject(WINDOW) private window: Window
+    @Inject(WINDOW) private window: Window,
+    protected elementRef: ElementRef
   ) {}
 
   /**
