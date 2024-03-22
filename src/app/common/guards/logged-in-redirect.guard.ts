@@ -1,8 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { CanActivate, CanActivateFn, Router } from '@angular/router';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { Session } from '../../services/session';
-import { Location } from '@angular/common';
+import { Location, isPlatformBrowser } from '@angular/common';
 import { ToasterService } from '../services/toaster.service';
 
 /**
@@ -18,7 +18,8 @@ export class LoggedInRedirectGuard implements CanActivate {
     private session: Session,
     private loginReferrer: LoginReferrerService,
     private location: Location,
-    private toast: ToasterService
+    private toast: ToasterService,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
   /**
@@ -26,11 +27,13 @@ export class LoggedInRedirectGuard implements CanActivate {
    * @returns { boolean } true if route can be activated.
    */
   canActivate(): boolean {
-    if (!this.session.isLoggedIn()) {
-      this.toast.warn('Please log in before viewing this page.');
-      this.loginReferrer.register(this.location.path());
-      this.router.navigate(['/login']);
-      return false;
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.session.isLoggedIn()) {
+        this.toast.warn('Please log in before viewing this page.');
+        this.loginReferrer.register(this.location.path());
+        this.router.navigate(['/login']);
+        return false;
+      }
     }
     return true;
   }

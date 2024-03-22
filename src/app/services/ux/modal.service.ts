@@ -2,9 +2,11 @@ import { ComponentType } from '@angular/cdk/overlay';
 import {
   Compiler,
   Component,
+  Inject,
   Injectable,
   Injector,
   OnDestroy,
+  PLATFORM_ID,
 } from '@angular/core';
 import {
   NgbModal,
@@ -13,6 +15,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import isMobile from '../../helpers/is-mobile';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface Modal<T> {
   setModalData(data: T & ModalDefaultData): void;
@@ -51,7 +54,11 @@ export class ModalService implements OnDestroy {
   activeInstancesSubscription: Subscription;
   activeInstances: NgbModalRef[] = [];
 
-  constructor(private service: NgbModal, private compiler: Compiler) {
+  constructor(
+    private service: NgbModal,
+    private compiler: Compiler,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.activeInstancesSubscription = service.activeInstances.subscribe(
       activeInstances => (this.activeInstances = activeInstances)
     );
@@ -67,6 +74,10 @@ export class ModalService implements OnDestroy {
     component: ModalComponent<T>,
     modalOptions: ModalOptions<T> = {}
   ): ModalRef<any> {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     const { data, injector, lazyModule, beforeDismiss, ...rest } = modalOptions;
 
     if (lazyModule) {
