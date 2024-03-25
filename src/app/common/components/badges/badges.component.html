@@ -8,7 +8,7 @@
   <li *ngIf="showVerifiedBadge()" (click)="verify($event)">
     <m-tooltip
       icon="verified_user"
-      [iconClass]="{ selected: user.verified }"
+      [iconClass]="{ selected: user.verified, unselected: !user.verified }"
       i18n="Verified as user status@@COMMON__BADGES__VERIFIED"
     >
       Verified
@@ -74,6 +74,7 @@
     <m-tooltip
       icon="flight_takeoff"
       i18n="Founder as user status@@COMMON__BADGES__FOUNDER"
+      [iconClass]="{ unselected: !user.founder }"
     >
       Founder
     </m-tooltip>

@@ -2,6 +2,7 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
   combineLatest,
+  EMPTY,
   filter,
   firstValueFrom,
   from,
@@ -83,7 +84,7 @@ export class TopbarAlertService {
             .valueChanges.pipe(
               map((result: any) => result.data.topbarAlert.data)
             )
-        : of([]);
+        : of(EMPTY);
 
     this.identifier$ = this.copyData$.pipe(
       map(copyData => copyData.attributes.identifier)
@@ -97,7 +98,9 @@ export class TopbarAlertService {
       map(copyData => Date.parse(copyData.attributes.onlyDisplayAfter))
     );
 
-    this.shouldShow$ = this.isTenantNetwork
+    this.shouldShow$ = isPlatformServer(this.platformId)
+      ? of(false)
+      : this.isTenantNetwork
       ? of(this.config.get('tenant')?.['is_trial'] ?? false)
       : combineLatest([
           this.identifier$,
