@@ -338,11 +338,11 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     ) {
       const modalResult = this.modalService.present(ConfirmV2Component, {
         data: {
-          title: 'Block user',
+          title: 'Live reply',
           body:
-            "Are you sure you want to block this user?\n\nBlocking ensures that you won't receive any message requests from this user going forward. Your chat history with this user will be deleted.",
-          confirmButtonColor: 'red',
-          confirmButtonSolid: false,
+            "This Supermind is requesting a live reply. The recipient will respond on a live stream, podcast, or other media platform, which means that **you won't get a Minds activity post reply when they accept the offer**.",
+          confirmButtonColor: 'blue',
+          confirmButtonSolid: true,
           onConfirm: () => {
             this.save();
             modalResult.dismiss();

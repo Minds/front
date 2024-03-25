@@ -78,9 +78,7 @@ export class ChatRoomMembersListItemDropdownComponent {
   );
 
   /**
-   * Whether to force the showing of the dropdown. This is helpful so that
-   * we can still show the ellipsis when the menu is open, but the
-   * hover source element is not hovered.
+   * Whether to force the showing of the dropdown.
    */
   protected dropdownMenuShown: boolean = false;
 
@@ -135,7 +133,7 @@ export class ChatRoomMembersListItemDropdownComponent {
     ) {
       this.chatRoomMembersService.refetch();
       this.singleChatRoomService.refetch();
-      this.totalChatRoomMembersService.reload();
+      this.totalChatRoomMembersService.refetch();
     }
   }
 }

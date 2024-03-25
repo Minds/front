@@ -74,7 +74,7 @@ export class TotalChatRoomMembersService {
    * Reload the count of the chat room members.
    * @returns { void }
    */
-  public reload(): void {
+  public refetch(): void {
     this.reload$.next();
   }
 }

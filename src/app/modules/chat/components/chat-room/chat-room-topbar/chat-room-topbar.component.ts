@@ -33,6 +33,7 @@ export class ChatRoomTopComponent implements OnChanges {
   /** Members of the room. */
   @Input() protected roomMembers: ChatRoomMemberEdge[] = [];
 
+  /** Whether topbar for a chat room in request mode. */
   @Input() protected requestMode: boolean = false;
 
   /** Fires on details icon click. */
