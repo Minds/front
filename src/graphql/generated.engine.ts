@@ -299,7 +299,6 @@ export type ChatRoomMemberEdge = EdgeInterface & {
   __typename?: 'ChatRoomMemberEdge';
   cursor: Scalars['String']['output'];
   node: UserNode;
-  /** The role a member has in the room */
   role: ChatRoomRoleEnum;
   /** The timestamp the message was sent at */
   timeJoinedISO8601: Scalars['String']['output'];
@@ -315,10 +314,12 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
+  areChatRoomNotificationsMuted?: Maybe<Scalars['Boolean']['output']>;
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   isChatRequest: Scalars['Boolean']['output'];
+  isUserRoomOwner?: Maybe<Scalars['Boolean']['output']>;
   /** The type of room. i.e. one-to-one, multi-user, or group-owned */
   roomType: ChatRoomTypeEnum;
   /** The timestamp the room was created at */
@@ -913,6 +914,8 @@ export type Mutation = {
   createRssFeed: RssFeed;
   createTenant: Tenant;
   deleteChatMessage: Scalars['Boolean']['output'];
+  deleteChatRoom: Scalars['Boolean']['output'];
+  deleteChatRoomAndBlockUser: Scalars['Boolean']['output'];
   /** Delete an entity. */
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
@@ -920,6 +923,7 @@ export type Mutation = {
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
+  leaveChatRoom: Scalars['Boolean']['output'];
   mobileConfig: MobileConfig;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
@@ -928,6 +932,7 @@ export type Mutation = {
   /** Updates the read receipt of a room */
   readReceipt: ChatRoomEdge;
   refreshRssFeed: RssFeed;
+  removeMemberFromChatRoom: Scalars['Boolean']['output'];
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   replyToRoomInviteRequest: Scalars['Boolean']['output'];
   resendInvite?: Maybe<Scalars['Void']['output']>;
@@ -1026,6 +1031,14 @@ export type MutationDeleteChatMessageArgs = {
   roomGuid: Scalars['String']['input'];
 };
 
+export type MutationDeleteChatRoomArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteChatRoomAndBlockUserArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationDeleteEntityArgs = {
   subjectUrn: Scalars['String']['input'];
 };
@@ -1043,6 +1056,10 @@ export type MutationInviteArgs = {
   emails: Scalars['String']['input'];
   groups?: InputMaybe<Array<Scalars['String']['input']>>;
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export type MutationLeaveChatRoomArgs = {
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationMobileConfigArgs = {
@@ -1066,6 +1083,11 @@ export type MutationReadReceiptArgs = {
 
 export type MutationRefreshRssFeedArgs = {
   feedId: Scalars['String']['input'];
+};
+
+export type MutationRemoveMemberFromChatRoomArgs = {
+  memberGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationRemoveRssFeedArgs = {
@@ -1423,6 +1445,7 @@ export type QueryChatRoomListArgs = {
 export type QueryChatRoomMembersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['Int']['input']>;
+  excludeSelf?: InputMaybe<Scalars['Boolean']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   roomGuid?: InputMaybe<Scalars['String']['input']>;
@@ -2112,6 +2135,24 @@ export type DeleteChatMessageMutation = {
   deleteChatMessage: boolean;
 };
 
+export type DeleteChatRoomAndBlockUserMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteChatRoomAndBlockUserMutation = {
+  __typename?: 'Mutation';
+  deleteChatRoomAndBlockUser: boolean;
+};
+
+export type DeleteChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteChatRoomMutation = {
+  __typename?: 'Mutation';
+  deleteChatRoom: boolean;
+};
+
 export type GetChatMessagesQueryVariables = Exact<{
   roomGuid: Scalars['String']['input'];
   first: Scalars['Int']['input'];
@@ -2206,6 +2247,40 @@ export type GetChatRoomInviteRequestsQuery = {
   };
 };
 
+export type GetChatRoomMembersQueryVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  excludeSelf?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+export type GetChatRoomMembersQuery = {
+  __typename?: 'Query';
+  chatRoomMembers: {
+    __typename?: 'ChatRoomMembersConnection';
+    edges: Array<{
+      __typename?: 'ChatRoomMemberEdge';
+      cursor: string;
+      role: ChatRoomRoleEnum;
+      node: {
+        __typename?: 'UserNode';
+        id: string;
+        guid: string;
+        name: string;
+        username: string;
+        urn: string;
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
+};
+
 export type GetChatRoomQueryVariables = Exact<{
   roomGuid: Scalars['String']['input'];
   firstMembers: Scalars['Int']['input'];
@@ -2223,6 +2298,8 @@ export type GetChatRoomQuery = {
       roomType: ChatRoomTypeEnum;
       id: string;
       isChatRequest: boolean;
+      isUserRoomOwner?: boolean | null;
+      areChatRoomNotificationsMuted?: boolean | null;
     };
     members: {
       __typename?: 'ChatRoomMembersConnection';
@@ -2305,6 +2382,15 @@ export type GetChatUnreadCountQuery = {
   chatUnreadMessagesCount: number;
 };
 
+export type GetTotalChatRoomMembersQueryVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type GetTotalChatRoomMembersQuery = {
+  __typename?: 'Query';
+  chatRoom: { __typename?: 'ChatRoomEdge'; totalMembers: number };
+};
+
 export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -2312,6 +2398,25 @@ export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
 export type GetTotalRoomInviteRequestsQuery = {
   __typename?: 'Query';
   totalRoomInviteRequests: number;
+};
+
+export type LeaveChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type LeaveChatRoomMutation = {
+  __typename?: 'Mutation';
+  leaveChatRoom: boolean;
+};
+
+export type RemoveMemberFromChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  memberGuid: Scalars['String']['input'];
+}>;
+
+export type RemoveMemberFromChatRoomMutation = {
+  __typename?: 'Mutation';
+  removeMemberFromChatRoom: boolean;
 };
 
 export type ReplyToRoomInviteRequestMutationVariables = Exact<{
@@ -7272,6 +7377,44 @@ export class DeleteChatMessageGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const DeleteChatRoomAndBlockUserDocument = gql`
+  mutation DeleteChatRoomAndBlockUser($roomGuid: String!) {
+    deleteChatRoomAndBlockUser(roomGuid: $roomGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteChatRoomAndBlockUserGQL extends Apollo.Mutation<
+  DeleteChatRoomAndBlockUserMutation,
+  DeleteChatRoomAndBlockUserMutationVariables
+> {
+  document = DeleteChatRoomAndBlockUserDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const DeleteChatRoomDocument = gql`
+  mutation DeleteChatRoom($roomGuid: String!) {
+    deleteChatRoom(roomGuid: $roomGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteChatRoomGQL extends Apollo.Mutation<
+  DeleteChatRoomMutation,
+  DeleteChatRoomMutationVariables
+> {
+  document = DeleteChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetChatMessagesDocument = gql`
   query GetChatMessages(
     $roomGuid: String!
@@ -7379,6 +7522,53 @@ export class GetChatRoomInviteRequestsGQL extends Apollo.Query<
     super(apollo);
   }
 }
+export const GetChatRoomMembersDocument = gql`
+  query GetChatRoomMembers(
+    $roomGuid: String!
+    $first: Int!
+    $after: String
+    $excludeSelf: Boolean
+  ) {
+    chatRoomMembers(
+      roomGuid: $roomGuid
+      first: $first
+      after: $after
+      excludeSelf: $excludeSelf
+    ) {
+      edges {
+        cursor
+        role
+        node {
+          id
+          guid
+          name
+          username
+          urn
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomMembersGQL extends Apollo.Query<
+  GetChatRoomMembersQuery,
+  GetChatRoomMembersQueryVariables
+> {
+  document = GetChatRoomMembersDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetChatRoomDocument = gql`
   query GetChatRoom(
     $roomGuid: String!
@@ -7392,6 +7582,8 @@ export const GetChatRoomDocument = gql`
         roomType
         id
         isChatRequest
+        isUserRoomOwner
+        areChatRoomNotificationsMuted
       }
       members(first: $firstMembers, after: $afterMembers) {
         edges {
@@ -7498,6 +7690,27 @@ export class GetChatUnreadCountGQL extends Apollo.Query<
     super(apollo);
   }
 }
+export const GetTotalChatRoomMembersDocument = gql`
+  query GetTotalChatRoomMembers($roomGuid: String!) {
+    chatRoom(roomGuid: $roomGuid) {
+      totalMembers
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetTotalChatRoomMembersGQL extends Apollo.Query<
+  GetTotalChatRoomMembersQuery,
+  GetTotalChatRoomMembersQueryVariables
+> {
+  document = GetTotalChatRoomMembersDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetTotalRoomInviteRequestsDocument = gql`
   query GetTotalRoomInviteRequests {
     totalRoomInviteRequests
@@ -7512,6 +7725,44 @@ export class GetTotalRoomInviteRequestsGQL extends Apollo.Query<
   GetTotalRoomInviteRequestsQueryVariables
 > {
   document = GetTotalRoomInviteRequestsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const LeaveChatRoomDocument = gql`
+  mutation LeaveChatRoom($roomGuid: String!) {
+    leaveChatRoom(roomGuid: $roomGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class LeaveChatRoomGQL extends Apollo.Mutation<
+  LeaveChatRoomMutation,
+  LeaveChatRoomMutationVariables
+> {
+  document = LeaveChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const RemoveMemberFromChatRoomDocument = gql`
+  mutation RemoveMemberFromChatRoom($roomGuid: String!, $memberGuid: String!) {
+    removeMemberFromChatRoom(roomGuid: $roomGuid, memberGuid: $memberGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RemoveMemberFromChatRoomGQL extends Apollo.Mutation<
+  RemoveMemberFromChatRoomMutation,
+  RemoveMemberFromChatRoomMutationVariables
+> {
+  document = RemoveMemberFromChatRoomDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

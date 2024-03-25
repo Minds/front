@@ -2,9 +2,12 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Inject,
   Input,
-  OnInit,
+  OnChanges,
+  Output,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '../../../../../common/common.module';
 import { ChatRoomUtilsService } from '../../../services/utils.service';
@@ -23,23 +26,30 @@ import { WINDOW } from '../../../../../common/injection-tokens/common-injection-
   imports: [NgCommonModule, CommonModule, RouterModule],
   standalone: true,
 })
-export class ChatRoomTopComponent implements OnInit {
+export class ChatRoomTopComponent implements OnChanges {
   /** Name of the room. (optional: will be derived from room members if not provided) */
   @Input() protected roomName: string;
 
   /** Members of the room. */
   @Input() protected roomMembers: ChatRoomMemberEdge[] = [];
 
+  @Input() protected requestMode: boolean = false;
+
+  /** Fires on details icon click. */
+  @Output('detailsIconClick') protected detailsIconClickEmitter: EventEmitter<
+    void
+  > = new EventEmitter<void>();
+
   constructor(
     private chatRoomUtilsService: ChatRoomUtilsService,
     @Inject(WINDOW) private window: Window
   ) {}
 
-  ngOnInit(): void {
-    if (!this.roomName && this.roomMembers.length) {
-      this.roomName = this.chatRoomUtilsService.deriveRoomNameFromMembers(
-        this.roomMembers
-      );
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes.roomMembers.currentValue !== changes.roomMembers.previousValue
+    ) {
+      this.deriveRoomNameFromMembers();
     }
   }
 
@@ -49,5 +59,17 @@ export class ChatRoomTopComponent implements OnInit {
    */
   protected openChannelInNewTab(username: string): void {
     this.window.open(`/${username}`, '_blank');
+  }
+
+  /**
+   * Derives room name from members.
+   * @returns { void }
+   */
+  private deriveRoomNameFromMembers(): void {
+    if (this.roomMembers.length) {
+      this.roomName = this.chatRoomUtilsService.deriveRoomNameFromMembers(
+        this.roomMembers
+      );
+    }
   }
 }

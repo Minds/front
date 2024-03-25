@@ -2,6 +2,7 @@
 @import '../../../../common/layout/layout.scss';
 
 $baseChatLayoutHeight: calc(100vh - $topbarHeight);
+$leftPanelFullScreenWidth: 360px;
 
 m-chat__pageLayout {
   display: flex;
@@ -32,7 +33,7 @@ m-chat__pageLayout {
     }
 
     @media screen and (min-width: $layoutMin3ColWidth) {
-      max-width: 360px;
+      max-width: $leftPanelFullScreenWidth;
     }
   }
 

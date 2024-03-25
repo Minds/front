@@ -1,0 +1,62 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing6;
+  width: 100%;
+  padding: $spacing2;
+  box-sizing: border-box;
+
+  .m-chatMemberListItem__leftContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: $spacing3;
+    min-width: 0;
+
+    ::ng-deep .minds-avatar {
+      cursor: pointer;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin: 0;
+      background-position: center;
+      background-size: cover;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .m-chatMemberListItem__nameContainer {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: $spacing1;
+      min-width: 0;
+
+      .m-chatMemberListItem__name {
+        cursor: pointer;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow-x: hidden;
+
+        @include body1Bold;
+      }
+
+      .m-chatMemberListItem__username {
+        cursor: pointer;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow-x: hidden;
+
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+}

@@ -20,10 +20,6 @@
       background: themed($m-bgColor--primary);
     }
 
-    m-emojiPicker {
-      @include z-index(messenger);
-    }
-
     .m-chatRoomBottom__textArea {
       flex: 1;
       padding: $spacing3 0;
