@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  HostBinding,
   Inject,
   Input,
   OnInit,
@@ -22,15 +21,6 @@ export class ActivitySiteMembershipCtaComponent
    * b/c button is already shown on right side
    */
   @Input() showButton: boolean = true;
-
-  /**
-   * Whether to display a thumbnail image with no calls to action
-   * (no button, no clickable action on thumbnail)
-   * e.g. for an unlocked status post with thumbnail
-   */
-  @HostBinding('class.m-activitySiteMembershipCta--unlockedMode')
-  @Input()
-  unlockedMode: boolean = false;
 
   isMinimalMode = this.service.displayOptions.minimalMode;
   entity: ActivityEntity;
@@ -78,9 +68,6 @@ export class ActivitySiteMembershipCtaComponent
    * Redirects to the checkout flow
    */
   async onClick(e: MouseEvent): Promise<void> {
-    if (this.unlockedMode) {
-      return;
-    }
     this.inProgress = true;
 
     this.window.open(

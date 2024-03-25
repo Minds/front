@@ -243,14 +243,10 @@ export class ActivityContentComponent
   }
 
   /**
-   * Hide cta after post is unlocked,
-   * except for status posts w/ thumbnails
+   * Hide cta after membership post is unlocked
    */
   get shouldShowSiteMembershipCta(): boolean {
-    return (
-      this.entity.site_membership &&
-      (!this.entity.site_membership_unlocked || this.isStatus)
-    );
+    return this.entity.site_membership && !this.entity.site_membership_unlocked;
   }
 
   get shouldShowSingleImage(): boolean {
@@ -486,8 +482,7 @@ export class ActivityContentComponent
    * EXCEPT for rich-embed modals (which are no longer used) and
    * minimal mode, with the exception of:
    * - minimal mode posts locked behind site membership paywalls
-   * - minimal mode status posts with site membership thumbnails
-   *   (locked or unlocked)
+   * - locked minimal mode status posts with site membership thumbnails
    */
   get isTextBelowMedia(): boolean {
     return (

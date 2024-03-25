@@ -237,7 +237,6 @@ post content to trigger upgrade modal -->
   <ng-container *ngIf="shouldShowSiteMembershipCta">
     <m-activity__siteMembershipCta
       [showButton]="!(isModal && hideText) && !entity?.site_membership_unlocked"
-      [unlockedMode]="entity?.site_membership_unlocked"
     ></m-activity__siteMembershipCta>
   </ng-container>
 </ng-container>
