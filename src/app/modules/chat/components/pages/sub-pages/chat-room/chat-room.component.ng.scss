@@ -16,10 +16,6 @@ $detailsPanelWidth: calc($leftPanelFullScreenWidth + 2px);
     height: 100%;
     min-width: 100%;
 
-    m-chatroom__top {
-      margin-bottom: $spacing4;
-    }
-
     m-chatRoom__messages {
       flex: 1;
       overflow-y: auto;
