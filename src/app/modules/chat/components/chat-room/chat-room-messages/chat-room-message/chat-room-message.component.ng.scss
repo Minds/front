@@ -61,12 +61,12 @@
 
       .m-chatRoomMessage__bubble {
         @include m-theme() {
-          background-color: themed($m-action);
+          background-color: color-by-theme($m-action, 'light');
         }
 
         .m-chatRoomMessage__text {
           @include m-theme() {
-            color: themed($m-textColor--primaryInverted);
+            color: color-by-theme($m-textColor--primaryInverted, 'light');
           }
         }
       }
