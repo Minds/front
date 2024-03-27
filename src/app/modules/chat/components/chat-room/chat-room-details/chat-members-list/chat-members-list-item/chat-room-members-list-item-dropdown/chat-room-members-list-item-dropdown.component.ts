@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { NgxPopperjsContentComponent } from 'ngx-popperjs';
@@ -40,7 +41,7 @@ import { TotalChatRoomMembersService } from '../../../../../../services/total-ch
   imports: [NgCommonModule, CommonModule],
   standalone: true,
 })
-export class ChatRoomMembersListItemDropdownComponent {
+export class ChatRoomMembersListItemDropdownComponent implements OnInit {
   // Enums for use in template.
   protected readonly ChatRoomTypeEnum: typeof ChatRoomTypeEnum = ChatRoomTypeEnum;
   protected readonly ChatRoomRoleEnum: typeof ChatRoomRoleEnum = ChatRoomRoleEnum;
@@ -83,7 +84,7 @@ export class ChatRoomMembersListItemDropdownComponent {
   protected dropdownMenuShown: boolean = false;
 
   /** Currently logged in user guid. */
-  protected readonly loggedInUserGuid: string;
+  protected loggedInUserGuid: string;
 
   constructor(
     private router: Router,
@@ -92,7 +93,9 @@ export class ChatRoomMembersListItemDropdownComponent {
     private userActions: ChatRoomUserActionsService,
     private chatRoomMembersService: ChatRoomMembersService,
     private totalChatRoomMembersService: TotalChatRoomMembersService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.loggedInUserGuid = this.session.getLoggedInUser().guid;
   }
 

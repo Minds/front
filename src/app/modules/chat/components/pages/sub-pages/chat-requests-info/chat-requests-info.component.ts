@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ChatActionCardComponent } from '../../../action-cards/action-card.component';
 
 /**
  * Info section for chat requests page.
@@ -8,7 +7,6 @@ import { ChatActionCardComponent } from '../../../action-cards/action-card.compo
   selector: 'm-chatRequestsInfoSubPage',
   styleUrls: ['./chat-requests-info.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ChatActionCardComponent],
   standalone: true,
   template: `
     <div class="m-chatRequestInfo__container">

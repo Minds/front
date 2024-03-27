@@ -1,6 +1,7 @@
 import { CommonModule as NgCommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Inject,
@@ -42,6 +43,7 @@ export class ChatRoomTopComponent implements OnChanges {
   > = new EventEmitter<void>();
 
   constructor(
+    public cd: ChangeDetectorRef,
     private chatRoomUtilsService: ChatRoomUtilsService,
     @Inject(WINDOW) private window: Window
   ) {}

@@ -123,7 +123,7 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
    * Currently this is firing BEFORE a new message is how in the list.
    */
   protected updateReadReceipt() {
-    const lastMsg = this.messages[this.messages.length - 1];
+    const lastMsg = this.messages?.[this.messages.length - 1];
     if (
       !lastMsg ||
       lastMsg.node.sender.node.guid === this.session.getLoggedInUser().guid

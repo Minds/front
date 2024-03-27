@@ -119,6 +119,7 @@ export class ChatRoomListItemComponent {
   /**
    * Handles middle mouse click on an avatar by opening the users channel
    * in a new tab.
+   * @returns { void }
    */
   protected openChannelInNewTab(username: string): void {
     this.window.open(`/${username}`, '_blank');

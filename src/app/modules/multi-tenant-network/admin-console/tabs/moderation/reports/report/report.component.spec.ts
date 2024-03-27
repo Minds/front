@@ -14,6 +14,7 @@ import {
   ReportEdge,
   ReportStatusEnum,
   UserEdge,
+  UserNode,
 } from '../../../../../../../../graphql/generated.engine';
 import { ToasterService } from '../../../../../../../common/services/toaster.service';
 import { Router } from '@angular/router';
@@ -1081,14 +1082,13 @@ describe('NetworkAdminConsoleReportComponent', () => {
         guid: '1',
         type: 'activity',
       });
-      comp.reportEdge.node.entityEdge.node.legacy = entityJson;
+      (comp.reportEdge.node.entityEdge.node as UserNode).legacy = entityJson;
       expect(comp.entity).toEqual(JSON.parse(entityJson));
     });
 
-    it('should NOT get unparseable entity', () => {
-      const entityJson: string = "{invalid guid: '1', type: 'activity' }";
-      comp.reportEdge.node.entityEdge.node.legacy = entityJson;
-      expect(comp.entity).toBe(null);
+    it('should get entity for chat message', () => {
+      comp.reportEdge.node.entityEdge.__typename = 'ChatMessageEdge';
+      expect(comp.entity).toEqual(comp.reportEdge.node.entityEdge.node);
     });
   });
 
@@ -1115,6 +1115,11 @@ describe('NetworkAdminConsoleReportComponent', () => {
       expect(comp.deletePostButtonText).toBe('Delete group');
     });
 
+    it('should get delete button text for chat messages', () => {
+      comp.reportEdge.node.entityEdge.node.__typename = 'ChatMessageNode';
+      expect(comp.deletePostButtonText).toBe('Delete message');
+    });
+
     it('should get delete button text for other entities', () => {
       comp.reportEdge.node.entityEdge.node.__typename = 'UserNode';
       expect(comp.deletePostButtonText).toBe('Delete');
@@ -1134,6 +1139,11 @@ describe('NetworkAdminConsoleReportComponent', () => {
 
     it('should get ban button text for users', () => {
       comp.reportEdge.node.entityEdge.node.__typename = 'UserNode';
+      expect(comp.banButtonText).toBe('Ban user');
+    });
+
+    it('should get ban button text for users', () => {
+      comp.reportEdge.node.entityEdge.node.__typename = 'ChatMessageNode';
       expect(comp.banButtonText).toBe('Ban user');
     });
 
