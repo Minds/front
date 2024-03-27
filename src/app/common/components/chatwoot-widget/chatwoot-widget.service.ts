@@ -40,9 +40,15 @@ export class ChatwootWidgetService {
    * @returns { void }
    */
   public hideBubble(): void {
-    (this.document.defaultView as any).$chatwoot?.toggleBubbleVisibility(
-      'hide'
-    );
+    if (isPlatformBrowser(this.platformId)) {
+      try {
+        (this.document.defaultView as any).$chatwoot?.toggleBubbleVisibility(
+          'hide'
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }
 
   /**
@@ -50,8 +56,14 @@ export class ChatwootWidgetService {
    * @returns { void }
    */
   public showBubble(): void {
-    (this.document.defaultView as any).$chatwoot?.toggleBubbleVisibility(
-      'show'
-    );
+    if (isPlatformBrowser(this.platformId)) {
+      try {
+        (this.document.defaultView as any).$chatwoot?.toggleBubbleVisibility(
+          'show'
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }
 }
