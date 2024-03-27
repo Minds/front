@@ -53,6 +53,16 @@ describe('ChatReceiptService', () => {
   });
 
   it('should submit read receipt', async () => {
+    (service as any).setReadReceiptGql.mutate.and.returnValue(
+      of({
+        data: {
+          setReadReceipt: {
+            success: true,
+          },
+        },
+      })
+    );
+
     service.update('1', '2');
 
     expect((service as any).setReadReceiptGql.mutate).toHaveBeenCalled();

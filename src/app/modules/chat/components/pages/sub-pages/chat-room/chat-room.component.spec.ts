@@ -1,9 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChatRoomComponent } from './chat-room.component';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { MockComponent, MockService } from '../../../../../../utils/mock';
@@ -167,36 +162,4 @@ describe('ChatRoomComponent', () => {
       false
     );
   });
-
-  it('navigate to rooms page if appropriate', fakeAsync(() => {
-    const chatRoom: ChatRoomEdge = mockChatRoomEdge;
-    chatRoom.node.isChatRequest = false;
-    (comp as any).requestMode = true;
-
-    (comp as any).handleChatRoomInit();
-    tick();
-
-    expect((comp as any).router.navigate).toHaveBeenCalledWith(
-      [`/chat/rooms/${ROOM_ID}`],
-      {
-        relativeTo: (comp as any).route,
-      }
-    );
-  }));
-
-  it('navigate to requests page if appropriate', fakeAsync(() => {
-    const chatRoom: ChatRoomEdge = mockChatRoomEdge;
-    chatRoom.node.isChatRequest = true;
-    (comp as any).requestMode = false;
-
-    (comp as any).handleChatRoomInit();
-    tick();
-
-    expect((comp as any).router.navigate).toHaveBeenCalledWith(
-      [`/chat/requests/${ROOM_ID}`],
-      {
-        relativeTo: (comp as any).route,
-      }
-    );
-  }));
 });

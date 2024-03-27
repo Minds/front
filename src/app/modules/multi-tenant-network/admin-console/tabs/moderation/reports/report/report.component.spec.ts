@@ -1078,6 +1078,7 @@ describe('NetworkAdminConsoleReportComponent', () => {
 
   describe('entity', () => {
     it('should get entity', () => {
+      comp.reportEdge.node.entityEdge.__typename = 'ActivityEdge';
       const entityJson: string = JSON.stringify({
         guid: '1',
         type: 'activity',
