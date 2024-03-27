@@ -30,7 +30,7 @@ import {
 import { ConfirmV2Component } from '../../../../modals/confirm-v2/confirm.component';
 
 /**
- * Chat room details.
+ * Details panel for a given chat room.
  */
 @Component({
   selector: 'm-chatRoom__details',
