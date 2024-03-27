@@ -106,6 +106,9 @@ export class ChatRoomBottomBarComponent implements OnInit {
    * @returns { Promise<void> }
    */
   protected async onSubmit(): Promise<void> {
+    // This prevents mobile keyboards from closing on submit.
+    this.textArea.nativeElement.focus();
+
     const formControl: AbstractControl<string> = this.formGroup.get('message');
     const message = formControl.value.trim();
 
@@ -118,7 +121,6 @@ export class ChatRoomBottomBarComponent implements OnInit {
         return;
       }
 
-      formControl.disable();
       this.sendInProgress$.next(true);
 
       const result: MutationResult<CreateChatMessageMutation> = await lastValueFrom(
@@ -150,8 +152,6 @@ export class ChatRoomBottomBarComponent implements OnInit {
       console.error(e);
     } finally {
       this.sendInProgress$.next(false);
-      formControl.enable();
-      this.textArea.nativeElement.focus();
     }
   }
 }
