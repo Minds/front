@@ -21,6 +21,7 @@ import {
   firstValueFrom,
   fromEvent,
   map,
+  skip,
   take,
 } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
@@ -84,7 +85,7 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
           this.scrollToBottom();
         }),
       fromEvent(this.elementRef.nativeElement, 'scroll')
-        .pipe(debounceTime(50))
+        .pipe(debounceTime(50), skip(1))
         .subscribe((event: Event) => {
           if (this.elementRef.nativeElement.scrollTop < LOADING_BUFFER_TOP_PX) {
             this.fetchMore();
