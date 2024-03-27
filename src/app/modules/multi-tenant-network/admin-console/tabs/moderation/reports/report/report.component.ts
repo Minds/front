@@ -249,7 +249,7 @@ export class NetworkAdminConsoleReportComponent extends AbstractSubscriberCompon
    * @returns { Object } parsed entity object.
    */
   public get entity(): Object {
-    if (this.reportEdge?.node?.entityEdge.__typename === 'ChatMessageEdge') {
+    if (this.reportEdge?.node?.entityEdge?.__typename === 'ChatMessageEdge') {
       return this.reportEdge?.node?.entityEdge?.node;
     }
     return this.reportEdge?.node?.entityEdge?.node?.legacy

@@ -1,0 +1,88 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  padding: $spacing8;
+  box-sizing: border-box;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+  }
+
+  .m-chatRoomDetails__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing8;
+
+    .m-chatRoomDetails__backButton {
+      font-size: 24px;
+      margin-right: $spacing4;
+      cursor: pointer;
+    }
+
+    .m-chatRoomDetails__headerTitle {
+      @include heading3Bold;
+      margin: unset;
+    }
+  }
+
+  .m-chatRoomDetails__chatMembersSection {
+    margin-top: $spacing6;
+    margin-bottom: $spacing8;
+
+    .m-chatRoomDetails__chatMembersTitle {
+      @include heading4Bold;
+      margin-bottom: $spacing3;
+    }
+
+    m-chatRoom__membersList {
+      max-height: 376px;
+      border-radius: 4px;
+      overflow-y: auto;
+      padding: $spacing3 0;
+
+      @include vertical-scroll;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  .m-chatRoomDetails__actionsSection {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing3;
+
+    .m-chatRoomDetails__actionText {
+      margin: $spacing2 0;
+      cursor: pointer;
+      @include body1Medium;
+
+      &:hover {
+        opacity: 0.8;
+
+        &:active {
+          opacity: 0.6;
+        }
+      }
+
+      &--red {
+        @include m-theme() {
+          color: themed($m-alert);
+        }
+      }
+    }
+  }
+
+  .m-chatRoomDetails__notificationsSection {
+    margin-bottom: $spacing8;
+
+    .m-chatRoomDetails__notificationsTitle {
+      @include heading4Bold;
+      margin-bottom: $spacing4;
+      margin-top: $spacing3;
+    }
+  }
+}

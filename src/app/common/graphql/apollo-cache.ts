@@ -35,6 +35,11 @@ export const cache = new InMemoryCache({
         chatRoomList: relayStylePagination(['first']),
         chatRoomInviteRequests: relayStylePagination(['first']),
         chatMessages: relayStylePagination(['first', 'roomId']),
+        chatRoomMembers: relayStylePagination([
+          'first',
+          'roomId',
+          'excludeSelf',
+        ]),
       },
     },
   },

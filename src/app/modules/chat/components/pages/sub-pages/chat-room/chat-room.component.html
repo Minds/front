@@ -1,5 +1,16 @@
 <section *ngIf="chatRoom$ | async as chatRoom; else loadingSpinnerTemplate">
-  <m-chatRoom__top [roomMembers]="chatRoom.members?.edges"></m-chatRoom__top>
+  <!-- Overlay drawer -->
+  <m-chatRoom__details
+    *ngIf="detailsDrawerOpen"
+    [roomGuid]="roomGuid"
+    (backClick)="hideDetailsDrawer()"
+    [@slideInFromRight]
+  ></m-chatRoom__details>
+  <m-chatRoom__top
+    [roomMembers]="chatRoom.members?.edges"
+    [requestMode]="requestMode"
+    (detailsIconClick)="showDetailsDrawer()"
+  ></m-chatRoom__top>
   <m-chatRoom__messages
     *ngIf="chatMessagesInitialised$ | async; else loadingSpinnerTemplate"
     [messages]="chatMessages$ | async"
