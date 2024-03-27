@@ -45,6 +45,7 @@ $topbarHeight: 64px;
 
     .m-chatRoomTop__roomName {
       text-wrap: nowrap;
+      white-space: nowrap;
       text-overflow: ellipsis;
       overflow-x: hidden;
       margin: auto;
