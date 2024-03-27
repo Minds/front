@@ -57,7 +57,7 @@ export class ChatRoomUserActionsService {
       }
 
       if (!response.data.deleteChatRoomAndBlockUser) {
-        throw new Error('User blocked user');
+        throw new Error('Could not block user');
       }
 
       this.toaster.success('User blocked');
@@ -92,7 +92,7 @@ export class ChatRoomUserActionsService {
       }
 
       if (!response.data.deleteChatRoom) {
-        throw new Error('Failed to delete chat room');
+        throw new Error('Could not delete chat room');
       }
 
       this.toaster.success('Chat room deleted');
@@ -126,7 +126,7 @@ export class ChatRoomUserActionsService {
       }
 
       if (!response.data.leaveChatRoom) {
-        throw new Error('Failed to leave chat room');
+        throw new Error('Could not leave chat room');
       }
 
       this.toaster.success('Left chat room');

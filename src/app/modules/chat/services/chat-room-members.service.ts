@@ -174,7 +174,6 @@ export class ChatRoomMembersService extends AbstractSubscriberComponent {
               if (!result || !result?.data?.chatRoomMembers?.edges?.length) {
                 this._inProgress$.next(false);
                 this._initialized$.next(true);
-                this._edges$.next([]);
                 console.info('No chat room members found');
                 return;
               }
