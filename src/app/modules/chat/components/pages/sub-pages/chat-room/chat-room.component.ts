@@ -22,6 +22,31 @@ import { ChatMessagesService } from '../../../../services/chat-messages.service'
 import { ChatRoomBottomBarComponent } from '../../../chat-room/chat-room-bottom-bar/chat-room-bottom-bar.component';
 import { CommonModule } from '../../../../../../common/common.module';
 import { ChatRoomRequestBottomBarComponent } from '../../../chat-room/chat-room-request-bottom-bar/chat-room-request-bottom-bar.component';
+import { ChatRoomDetailsComponent } from '../../../chat-room/chat-room-details/chat-room-details.component';
+import { ChatRoomMembersService } from '../../../../services/chat-room-members.service';
+import { TotalChatRoomMembersService } from '../../../../services/total-chat-room-members.service';
+import {
+  AnimationTriggerMetadata,
+  animate,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+
+/** Bespoke animation to component to handle details drawer slide in. */
+const SlideInFromRightAnimation: AnimationTriggerMetadata = trigger(
+  'slideInFromRight',
+  [
+    transition(':enter', [
+      style({ width: '250px', opacity: 0 }),
+      animate('150ms linear', style({ width: '*', opacity: 1 })),
+    ]),
+    transition(
+      ':leave',
+      animate('150ms linear', style({ width: '250px', opacity: 0 }))
+    ),
+  ]
+);
 
 /**
  * Core sub-page for a chat-room.
@@ -31,7 +56,12 @@ import { ChatRoomRequestBottomBarComponent } from '../../../chat-room/chat-room-
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [SingleChatRoomService, ChatMessagesService],
+  providers: [
+    SingleChatRoomService,
+    ChatMessagesService,
+    ChatRoomMembersService,
+    TotalChatRoomMembersService,
+  ],
   imports: [
     NgCommonModule,
     CommonModule,
@@ -39,8 +69,10 @@ import { ChatRoomRequestBottomBarComponent } from '../../../chat-room/chat-room-
     ChatRoomMessagesComponent,
     ChatRoomBottomBarComponent,
     ChatRoomRequestBottomBarComponent,
+    ChatRoomDetailsComponent,
   ],
   standalone: true,
+  animations: [SlideInFromRightAnimation],
 })
 export class ChatRoomComponent implements OnInit, OnDestroy {
   /** Chat room from server. */
@@ -61,6 +93,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   /** Whether the chat room is in request mode. */
   protected requestMode: boolean = false;
 
+  /** Whether the details drawer is open. */
+  protected detailsDrawerOpen: boolean = false;
+
   /** Subscription to chat room initialization. */
   private chatRoomInitSubscription: Subscription;
 
@@ -70,6 +105,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     private singleChatRoomService: SingleChatRoomService,
     private chatwootWidgetService: ChatwootWidgetService,
     private chatMessagesService: ChatMessagesService,
+    private totalChatRoomMembersService: TotalChatRoomMembersService,
     private toaster: ToasterService,
     @Inject(WINDOW) private window
   ) {}
@@ -85,6 +121,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
     this.roomGuid = roomId;
     this.singleChatRoomService.setRoomGuid(roomId);
+    this.totalChatRoomMembersService.setRoomGuid(roomId);
     this.chatMessagesService.init(roomId);
 
     this.requestMode = this.route.snapshot.data.requestMode ?? false;
@@ -146,5 +183,21 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
         relativeTo: this.route,
       });
     }
+  }
+
+  /**
+   * Handle details drawer open.
+   * @returns { void }
+   */
+  protected showDetailsDrawer(): void {
+    this.detailsDrawerOpen = true;
+  }
+
+  /**
+   * Handle details drawer close.
+   * @returns { void }
+   */
+  protected hideDetailsDrawer(): void {
+    this.detailsDrawerOpen = false;
   }
 }

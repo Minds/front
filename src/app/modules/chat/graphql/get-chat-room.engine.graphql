@@ -9,7 +9,9 @@ query GetChatRoom(
             guid
             roomType
             id
-            isChatRequest           
+            isChatRequest
+            isUserRoomOwner
+            areChatRoomNotificationsMuted
         }
         members(first: $firstMembers, after: $afterMembers) {
             edges {

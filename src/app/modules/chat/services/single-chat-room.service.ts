@@ -28,6 +28,11 @@ export class SingleChatRoomService {
     string
   >(null);
 
+  /** Internal subject to hold the guid of the chat room. */
+  public readonly roomGuid$: Observable<
+    string
+  > = this._roomGuid$.asObservable();
+
   /** Exposed observable that represents the chat room. - pulls data from server and shares replay. */
   public readonly chatRoom$: Observable<ChatRoomEdge> = this._roomGuid$.pipe(
     startWith(null),
@@ -44,8 +49,9 @@ export class SingleChatRoomService {
         )
     ),
     map(
-      (result: ApolloQueryResult<GetChatRoomQuery>): ChatRoomEdge =>
-        (result?.data?.chatRoom as ChatRoomEdge) ?? null
+      (result: ApolloQueryResult<GetChatRoomQuery>): ChatRoomEdge => {
+        return (result?.data?.chatRoom as ChatRoomEdge) ?? null;
+      }
     ),
     catchError(
       (e: Error): Observable<null> => {
@@ -69,5 +75,13 @@ export class SingleChatRoomService {
    */
   public setRoomGuid(roomGuid: string): void {
     this._roomGuid$.next(roomGuid);
+  }
+
+  /**
+   * Refetch the chat room data.
+   * @returns { void }
+   */
+  public refetch(): void {
+    this._roomGuid$.next(this._roomGuid$.getValue());
   }
 }

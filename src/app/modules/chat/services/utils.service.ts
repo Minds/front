@@ -18,6 +18,10 @@ export class ChatRoomUtilsService {
       return members[0].node.name;
     }
 
+    if (members.length === 2) {
+      return `${members[0].node.name} and ${members[1].node.name}`;
+    }
+
     return `${members[0].node.name}, ${members[1].node.name}, and more`;
   }
 }

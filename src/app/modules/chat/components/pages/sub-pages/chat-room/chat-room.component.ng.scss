@@ -1,4 +1,8 @@
 @import 'defaults.scss';
+@import '../../../layout/layout.component.ng.scss';
+
+// adjusted for border visibility.
+$detailsPanelWidth: calc($leftPanelFullScreenWidth + 2px);
 
 :host {
   height: 100%;
@@ -26,5 +30,19 @@
     display: block;
     text-align: center;
     margin-top: $spacing16;
+  }
+
+  m-chatRoom__details {
+    position: absolute;
+    bottom: 1; // adjusted for border visibility.
+    right: 1; // adjusted for border visibility.
+    height: 100%;
+    width: calc(100% - $detailsPanelWidth);
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      width: 100%;
+    }
+
+    @include z-index(body);
   }
 }

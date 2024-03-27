@@ -172,7 +172,6 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
             if (!result || !result?.data?.chatMessages?.edges?.length) {
               this._inProgress$.next(false);
               this._initialized$.next(true);
-              this._edges$.next([]);
               console.info('No chat rooms found');
               return;
             }

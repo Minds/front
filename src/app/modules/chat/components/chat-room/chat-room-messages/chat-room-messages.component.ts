@@ -123,9 +123,12 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
    * Currently this is firing BEFORE a new message is how in the list.
    */
   protected updateReadReceipt() {
-    const lastMsg = this.messages[this.messages.length - 1];
-    if (lastMsg.node.sender.node.guid === this.session.getLoggedInUser().guid) {
-      return; // Do not send for our own.
+    const lastMsg = this.messages?.[this.messages.length - 1];
+    if (
+      !lastMsg ||
+      lastMsg.node.sender.node.guid === this.session.getLoggedInUser().guid
+    ) {
+      return; // Do not send for our own, or when there are no messages.
     }
     this.chatReceiptService.update(lastMsg.node.roomGuid, lastMsg.node.guid);
   }

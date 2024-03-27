@@ -1,6 +1,7 @@
 import { CommonModule as NgCommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostBinding,
@@ -90,6 +91,7 @@ export class ChatRoomMessageComponent {
   protected isManuallyExpanded: boolean = false;
 
   constructor(
+    public cd: ChangeDetectorRef,
     @Inject(WINDOW) private window: Window,
     protected elementRef: ElementRef
   ) {}
