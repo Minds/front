@@ -29,7 +29,11 @@ describe('ChatRoomBottomBarComponent', () => {
         EmojiPickerModule,
       ],
       declarations: [
-        MockComponent({ selector: 'm-emojiPicker', outputs: ['emojiSelect'] }),
+        MockComponent({
+          selector: 'm-emojiPicker',
+          inputs: ['iconName', 'popperPlacement'],
+          outputs: ['emojiSelect'],
+        }),
         MockComponent({
           selector: 'm-sizableLoadingSpinner',
           inputs: ['spinnerWidth', 'spinnerHeight', 'inProgress'],
