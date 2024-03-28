@@ -6,5 +6,10 @@
   padding: 0 $spacing5;
   box-sizing: border-box;
   overflow-x: hidden;
+  margin-bottom: -$spacing6;
   @include hide-scrollbar;
+
+  m-chatRoom__message:last-of-type {
+    margin-bottom: 0;
+  }
 }
