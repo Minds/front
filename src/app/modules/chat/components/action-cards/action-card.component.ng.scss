@@ -1,0 +1,38 @@
+@import 'defaults.scss';
+
+:host {
+  .m-chatActionCard__title {
+    margin-top: unset;
+    margin-bottom: $spacing2;
+
+    &--size1 {
+      @include heading1Bold;
+    }
+
+    &--size2 {
+      @include heading2Bold;
+    }
+
+    &--size3 {
+      @include heading3Bold;
+    }
+  }
+
+  .m-chatActionCard__description {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &--size1 {
+      @include body1Regular;
+    }
+
+    &--size2 {
+      @include body2Regular;
+    }
+
+    &--size3 {
+      @include body3Regular;
+    }
+  }
+}

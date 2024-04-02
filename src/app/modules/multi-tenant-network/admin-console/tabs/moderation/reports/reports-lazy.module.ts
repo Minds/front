@@ -6,6 +6,7 @@ import { NetworkAdminConsoleReportComponent } from './report/report.component';
 import { CommentsModule } from '../../../../../comments/comments.module';
 import { ActivityModule } from '../../../../../newsfeed/activity/activity.module';
 import { RouterModule, Routes } from '@angular/router';
+import { ChatRoomMessageComponent } from '../../../../../chat/components/chat-room/chat-room-messages/chat-room-message/chat-room-message.component';
 
 const routes: Routes = [
   { path: '', component: NetworkAdminConsoleReportsListComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
     ActivityModule,
     CommentsModule,
     RouterModule.forChild(routes),
+    ChatRoomMessageComponent,
   ],
   declarations: [
     NetworkAdminConsoleReportsListComponent,

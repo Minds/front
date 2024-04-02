@@ -1,0 +1,35 @@
+query GetChatRoomsList($first: Int, $after: String) {
+    chatRoomList(first: $first, after: $after) {
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+        }
+        edges {
+            id
+            cursor
+            node {
+                id
+                guid
+                roomType
+                timeCreatedISO8601
+                timeCreatedUnix
+            }
+            members(first: 3) {
+                 edges {
+                    cursor
+                    node {
+                        id
+                        guid
+                        username
+                        name
+                    }
+                }
+            }
+            unreadMessagesCount
+            lastMessagePlainText,
+            lastMessageCreatedTimestamp
+        }
+    }
+}

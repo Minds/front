@@ -62,32 +62,46 @@
     </div>
 
     <ng-container *ngIf="report.entity; else noEntity">
-      <m-publisherCard
-        *ngIf="
-          report.entity.type && report.entity.type === 'user';
-          else notUser
-        "
-        [publisher]="report.entity"
-      ></m-publisherCard>
-      <ng-template #notUser>
-        <a
-          *ngIf="report.entity.entity_guid"
-          [href]="'/newsfeed/' + report.entity.entity_guid"
-          target="_blank"
-        >
-          <h3 style="margin-top: 10px">View linked entity</h3>
-        </a>
-        <minds-card
-          [object]="report.entity"
-          [flags]="{ hideToolbar: true }"
-          [displayOptions]="{
-            isFeed: true,
-            showComments: true,
-            autoplayVideo: false
-          }"
-          class="mdl-card m-border"
-        ></minds-card
-      ></ng-template>
+      <ng-container [ngSwitch]="report.entity?.type">
+        <ng-container *ngSwitchCase="'chat'">
+          <m-chatRoom__message
+            [senderName]="report.entity.sender.name"
+            [plainText]="report.entity.plainText"
+            [timeCreatedUnix]="report.entity.timeCreatedUnix"
+            [senderGuid]="report.entity.sender.guid"
+            [senderUsername]="report.entity.sender.username"
+            [isMessageOwner]="false"
+          ></m-chatRoom__message>
+        </ng-container>
+        <ng-container *ngSwitchCase="'user'">
+          <m-publisherCard
+            *ngIf="
+              report.entity.type && report.entity.type === 'user';
+              else notUser
+            "
+            [publisher]="report.entity"
+          ></m-publisherCard>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <a
+            *ngIf="report.entity.entity_guid"
+            [href]="'/newsfeed/' + report.entity.entity_guid"
+            target="_blank"
+          >
+            <h3 style="margin-top: 10px">View linked entity</h3>
+          </a>
+          <minds-card
+            [object]="report.entity"
+            [flags]="{ hideToolbar: true }"
+            [displayOptions]="{
+              isFeed: true,
+              showComments: true,
+              autoplayVideo: false
+            }"
+            class="mdl-card m-border"
+          ></minds-card>
+        </ng-container>
+      </ng-container>
     </ng-container>
     <ng-template #noEntity>
       <p>The post could not be loaded. Please overturn the report</p>

@@ -1,0 +1,49 @@
+@import 'defaults.scss';
+
+:host {
+  .m-chatRoom__bottomBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 40px;
+    gap: $spacing4;
+    padding: 0 $spacing4;
+    margin: $spacing4;
+    box-sizing: border-box;
+
+    @media screen and (max-width: $min-tablet) {
+      gap: $spacing1;
+    }
+
+    @include m-theme() {
+      border: 1px solid themed($m-textColor--secondary);
+      background: themed($m-bgColor--primary);
+    }
+
+    .m-chatRoomBottom__textArea {
+      flex: 1;
+      padding: $spacing3 0;
+      border: none;
+      resize: none;
+      max-height: 180px;
+
+      @include body2Regular;
+      @include vertical-scroll;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .m-chatRoomBottom__sendButton {
+      cursor: pointer;
+      @include unselectable;
+    }
+
+    m-sizeableLoadingSpinner {
+      height: $spacing6;
+      width: $spacing6;
+      @include unselectable;
+    }
+  }
+}

@@ -34,4 +34,36 @@ export class ChatwootWidgetService {
       (this.document.defaultView as any).$chatwoot?.toggle(toggleState);
     }
   }
+
+  /**
+   * Hide chatwoot bubble.
+   * @returns { void }
+   */
+  public hideBubble(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      try {
+        (this.document.defaultView as any).$chatwoot?.toggleBubbleVisibility(
+          'hide'
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }
+
+  /**
+   * Show chatwoot bubble.
+   * @returns { void }
+   */
+  public showBubble(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      try {
+        (this.document.defaultView as any).$chatwoot?.toggleBubbleVisibility(
+          'show'
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }
 }

@@ -1,0 +1,3 @@
+mutation DeleteChatMessage($roomGuid: String!, $messageGuid: String!) {
+    deleteChatMessage(roomGuid: $roomGuid, messageGuid: $messageGuid)
+}

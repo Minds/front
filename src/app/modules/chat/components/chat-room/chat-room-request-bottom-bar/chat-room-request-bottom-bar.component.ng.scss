@@ -1,0 +1,72 @@
+@import 'defaults.scss';
+
+:host {
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-chatRequest__bottomBar {
+    .m-chatRequestBottomBar__header {
+      padding: $spacing5 $spacing6;
+
+      h5 {
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: $spacing4;
+
+        @include body1Bold;
+      }
+
+      p {
+        text-align: center;
+        margin-bottom: $spacing4;
+
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    .m-chatRequestBottomBar__actionButtonRow {
+      display: flex;
+      justify-content: space-between;
+
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
+
+        > * + * {
+          border-left: 1px solid themed($m-borderColor--primary);
+        }
+      }
+
+      .m-chatRequestBottomBar__actionButton {
+        flex: 1;
+        text-align: center;
+        padding: $spacing4 $spacing2;
+        box-sizing: border-box;
+        cursor: pointer;
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
+
+        &--disabled {
+          cursor: not-allowed;
+        }
+
+        span {
+          @include body1Bold;
+        }
+
+        &--warning {
+          @include m-theme() {
+            color: themed($m-alert);
+          }
+        }
+      }
+    }
+  }
+}
