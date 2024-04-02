@@ -23,9 +23,6 @@ import {
   CustomPageImplementation,
   CustomPageType,
 } from '../../custom-pages/custom-pages.types';
-import { DEFAULT_PRIVACY_POLICY_CONTENT } from '../../custom-pages/default-content/default-privacy-policy.constant';
-import { DEFAULT_TERMS_OF_SERVICE_CONTENT } from '../../custom-pages/default-content/default-terms-of-service.constant';
-import { DEFAULT_COMMUNITY_GUIDELINES_CONTENT } from '../../custom-pages/default-content/default-community-guidelines.constant';
 
 @Injectable({ providedIn: 'root' })
 export class CustomPageService implements OnDestroy {
@@ -180,19 +177,6 @@ export class CustomPageService implements OnDestroy {
       return customPage.content;
     }
 
-    return this.getDefaultContent(customPage.pageType);
-  }
-
-  public getDefaultContent(pageType: CustomPageTypesEnum): string {
-    switch (pageType) {
-      case CustomPageTypesEnum.PrivacyPolicy:
-        return DEFAULT_PRIVACY_POLICY_CONTENT;
-      case CustomPageTypesEnum.TermsOfService:
-        return DEFAULT_TERMS_OF_SERVICE_CONTENT;
-      case CustomPageTypesEnum.CommunityGuidelines:
-        return DEFAULT_COMMUNITY_GUIDELINES_CONTENT;
-      default:
-        throw new Error('Invalid CustomPageType');
-    }
+    return customPage.defaultContent;
   }
 }
