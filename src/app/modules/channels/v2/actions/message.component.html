@@ -1,4 +1,6 @@
-<m-button (onAction)="message()" iconOnly="true" overlay="true">
-  <m-icon *ngIf="!inProgress" iconId="chat_bubble" [sizeFactor]="0"></m-icon>
-  <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
-</m-button>
+<ng-container *ngIf="!isTenantNetwork || isChatExperimentActive">
+  <m-button (onAction)="message()" iconOnly="true" overlay="true">
+    <m-icon *ngIf="!inProgress" iconId="chat_bubble" [sizeFactor]="0"></m-icon>
+    <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
+  </m-button>
+</ng-container>

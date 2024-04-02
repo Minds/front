@@ -1,0 +1,50 @@
+@import 'defaults.scss';
+
+:host {
+  .m-chatPendingRequestsWidget__container {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing6;
+    cursor: pointer;
+    padding: $spacing4 $spacing6;
+    box-sizing: border-box;
+
+    &:hover {
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+      }
+    }
+
+    .m-chatPendingRequestsWidget__containerLeft {
+      display: flex;
+      align-items: center;
+
+      i {
+        font-size: 20px;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+
+        @include m-theme() {
+          background-color: themed($m-borderColor--primary);
+        }
+      }
+    }
+
+    .m-chatPendingRequestsWidget__containerRight {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: $spacing2;
+
+      .m-chatPendingRequestsWidget__title {
+        @include body2Bold;
+        margin: unset;
+      }
+
+      .m-chatPendingRequestsWidget__requestCount {
+        @include body3Medium;
+        margin: unset;
+      }
+    }
+  }
+}

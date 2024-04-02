@@ -30,11 +30,9 @@
       <m-channelActions__wire *mIfTenant="false"></m-channelActions__wire>
 
       <div class="m-hideOnMobile">
-        <ng-container *mIfTenant="false">
-          <m-channelActions__message
-            *ngIf="service.isSubscribed$ | async"
-          ></m-channelActions__message>
-        </ng-container>
+        <m-channelActions__message
+          *ngIf="service.isSubscribed$ | async"
+        ></m-channelActions__message>
       </div>
 
       <m-channelActions__subscribe

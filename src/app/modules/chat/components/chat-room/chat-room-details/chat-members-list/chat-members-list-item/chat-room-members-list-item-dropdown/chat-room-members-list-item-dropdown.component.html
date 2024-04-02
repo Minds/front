@@ -1,0 +1,51 @@
+<div
+  [popper]="dropdownMenuContent"
+  [popperShowOnStart]="false"
+  [popperTrigger]="'click'"
+  [popperHideOnClickOutside]="true"
+  [popperHideOnScroll]="false"
+  [popperPreventOverflow]="true"
+  [popperPlacement]="'left'"
+  (popperOnShown)="onPopperShown()"
+  (popperOnHidden)="onPopperHidden()"
+  #dropdownMenu
+>
+  <i
+    *ngIf="!(actionInProgress$ | async); else menuLoadingSpinnerTemplate"
+    class="material-icons m-chatRoomMemberDropdown__icon"
+    [ngClass]="{
+      'm-chatRoomMemberDropdown__icon--menuShown': dropdownMenuShown
+    }"
+    >more_horiz</i
+  >
+</div>
+
+<popper-content #dropdownMenuContent>
+  <ul class="m-chatRoomMemberDropdown__dropdownList">
+    <li
+      class="m-chatRoomMemberDropdown__dropdownListItem"
+      (click)="onViewProfileClick()"
+    >
+      <span i18n="@@CHAT_ROOM__MESSAGE_DROPDOWN__VIEW_PROFILE"
+        >View profile</span
+      >
+    </li>
+    <li
+      *ngIf="showRemoveFromChatOption$ | async"
+      class="m-chatRoomMemberDropdown__dropdownListItem"
+      (click)="onRemoveMemberClick()"
+    >
+      <span i18n="@@CHAT_ROOM__MESSAGE_DROPDOWN__REMOVE_FROM_CHAT"
+        >Remove from chat</span
+      >
+    </li>
+  </ul>
+</popper-content>
+
+<ng-template #menuLoadingSpinnerTemplate>
+  <m-sizeableLoadingSpinner
+    [inProgress]="true"
+    spinnerHeight="20px"
+    spinnerWidth="20px"
+  ></m-sizeableLoadingSpinner>
+</ng-template>

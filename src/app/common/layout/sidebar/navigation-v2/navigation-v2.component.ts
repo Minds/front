@@ -30,6 +30,8 @@ import { IS_TENANT_NETWORK } from '../../../injection-tokens/tenant-injection-to
 import { PermissionsService } from '../../../services/permissions.service';
 import { MultiTenantConfigImageService } from '../../../../modules/multi-tenant-network/services/config-image.service';
 import { SiteMembershipsCountService } from '../../../../modules/site-memberships/services/site-membership-count.service';
+import { ChatExperimentService } from '../../../../modules/experiments/sub-services/chat-experiment.service';
+import { ChatReceiptService } from '../../../../modules/chat/services/chat-receipt.service';
 
 /**
  * V2 version of sidebar component.
@@ -75,6 +77,11 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   // Becomes true when the discovery link is clicked.
   // Used to determine whether to show 'new content dot'
   discoveryLinkClicked: boolean = false;
+
+  protected chatExperimentIsActive: boolean = false;
+
+  /** Unread message count */
+  public chatUnreadCount = 0;
 
   /** Whether experiment controlling reorganization of menu items variation is active */
   public showReorgVariation: boolean = false;
@@ -128,6 +135,8 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private tenantConfigImageService: MultiTenantConfigImageService,
     private siteMembershipsCountService: SiteMembershipsCountService,
     protected permissions: PermissionsService,
+    private chatExperimentService: ChatExperimentService,
+    private chatReceiptService: ChatReceiptService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
@@ -143,6 +152,8 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     }
 
     this.settingsLink = '/settings';
+
+    this.chatExperimentIsActive = this.chatExperimentService.isActive();
 
     this.subscriptions.push(
       this.themeService.isDark$.subscribe(isDark => {
@@ -172,6 +183,14 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
           }
         })
     );
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.subscriptions.push(
+        this.chatReceiptService.getUnreadCount$().subscribe(count => {
+          this.chatUnreadCount = count;
+        })
+      );
+    }
   }
 
   ngOnDestroy(): void {

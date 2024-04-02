@@ -1,0 +1,35 @@
+<div class="m-chatRoomListItem__containerLeft">
+  <div
+    class="m-chatRoomListItem__avatarContainer"
+    [ngClass]="{
+      'm-chatRoomListItem__avatarContainer--multiAvatar': avatars.length > 1
+    }"
+  >
+    <minds-avatar
+      *ngFor="let avatar of avatars"
+      [object]="avatar"
+      [routerLink]="['/' + avatar.username]"
+      (mouseup)="
+        $event.which == 2 ? openChannelInNewTab(avatar.username) : null
+      "
+    ></minds-avatar>
+  </div>
+</div>
+<div
+  class="m-chatRoomListItem__containerRight"
+  aria-role="button"
+  [attr.aria-label]="roomName + 'chat room'"
+  tabindex="0"
+  (keydown.enter)="navigateToChat()"
+  (click)="navigateToChat()"
+>
+  <p class="m-chatRoomListItem__topRow">
+    <span class="m-chatRoomListItem__roomName">{{ roomName }}</span>
+    <span class="m-chatRoomListItem__lastMessageTimestamp">{{
+      timestamp | chatDate
+    }}</span>
+  </p>
+  <p class="m-chatRoomListItem__lastMessage">{{ lastMessage }}</p>
+
+  <span class="m-chatRoomListItem__unreadDot" *ngIf="unreadMessages"></span>
+</div>

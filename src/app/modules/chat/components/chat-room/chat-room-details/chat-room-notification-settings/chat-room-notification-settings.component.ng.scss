@@ -1,0 +1,17 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+
+  .m-chatRoomNotificationSettings__muteNotificationsRow {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing2 0;
+
+    .m-chatRoomNotificationSettings__muteNotificationsLabel {
+      @include body2Regular;
+    }
+  }
+}
