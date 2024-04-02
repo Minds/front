@@ -21,7 +21,6 @@ import { CustomPageFormContentPreviewModalComponent } from './content-preview-mo
 /**
  * Allows tenant admins to manage their custom pages
  * (e.g. privacy, TOS, community guidelines)
- *
  */
 @Component({
   selector: 'm-customPage__form',
@@ -76,9 +75,7 @@ export class CustomPageFormComponent implements OnInit, OnDestroy {
         if (customPage) {
           this.customPage = customPage;
           this.displayName = customPage.displayName;
-          this.defaultContent = this.service.getDefaultContent(
-            this.customPage.pageType
-          );
+          this.defaultContent = customPage.defaultContent;
           this.setUpForm();
           this.loading$.next(false);
         }
