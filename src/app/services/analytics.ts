@@ -5,7 +5,7 @@ import {
   PLATFORM_ID,
   RendererFactory2,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Client } from './api/client';
 import { SiteService } from '../common/services/site.service';
 import { isPlatformServer } from '@angular/common';
@@ -40,6 +40,7 @@ export class AnalyticsService implements OnDestroy {
 
   constructor(
     public router: Router,
+    private activatedRoute: ActivatedRoute,
     public client: Client,
     public site: SiteService,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -48,7 +49,6 @@ export class AnalyticsService implements OnDestroy {
     private configService: ConfigsService
   ) {
     this.initPostHog();
-    this.onRouterInit();
 
     this.router.events.subscribe(navigationState => {
       if (navigationState instanceof NavigationEnd) {
@@ -116,7 +116,9 @@ export class AnalyticsService implements OnDestroy {
   async send(type: string, fields: any = {}, entityGuid: string = null) {
     if (isPlatformServer(this.platformId)) return; // Client side does these. Don't call twice
     if (type === 'pageview') {
-      posthog.capture('$pageview');
+      posthog.capture('$pageview', {
+        ng_tokenized_path: fields?.tokenizedPath,
+      });
     }
   }
 
@@ -187,8 +189,6 @@ export class AnalyticsService implements OnDestroy {
     // We are not sending to posthog at the minute
   }
 
-  async onRouterInit() {}
-
   onRouteChanged(path) {
     if (!this.defaultPrevented) {
       let url = path;
@@ -196,6 +196,8 @@ export class AnalyticsService implements OnDestroy {
       this.send('pageview', {
         url,
         referrer: document.referrer,
+        tokenizedPath: this.activatedRoute.snapshot.firstChild?.routeConfig
+          ?.path,
       });
     }
 

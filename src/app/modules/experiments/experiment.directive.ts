@@ -25,7 +25,7 @@ export class ExperimentDirective {
   ngOnInit() {
     const variation = this.service.run(this.experimentId);
 
-    if (variation === this.variationId?.toString()) {
+    if (variation === this.variationId) {
       this.viewContainer.clear();
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {

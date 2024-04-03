@@ -12,9 +12,8 @@ export class ExperimentsService {
    * @throws { string } unable to find experiment error.
    * @returns { string } - variation to display.
    */
-  public run(key: string): string {
-    const result = posthog.getFeatureFlag(key);
-    return result?.toString();
+  public run(key: string): string | boolean {
+    return posthog.getFeatureFlag(key);
   }
 
   /**
@@ -25,7 +24,7 @@ export class ExperimentsService {
    */
   public hasVariation(
     experimentId: string,
-    variation: string | number | boolean = true
+    variation: string | boolean = true
   ): boolean {
     try {
       return this.run(experimentId) === variation;
