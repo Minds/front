@@ -3,7 +3,7 @@ import { ExperimentsService } from '../experiments.service';
 
 /**
  * Returns whether the persistent feed experiment is active
- * https://growthbook.minds.com/features/front-5333-persistent-feed
+ * Not flag currently
  */
 @Injectable({ providedIn: 'root' })
 export class PersistentFeedExperimentService {
@@ -14,6 +14,6 @@ export class PersistentFeedExperimentService {
    * @returns { boolean } whether the experiment is active
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('front-5333-persistent-feed', true);
+    return false;
   }
 }

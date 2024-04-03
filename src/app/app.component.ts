@@ -147,13 +147,6 @@ export class Minds implements OnInit, OnDestroy {
       this.diagnostics.setUser(this.configs.get('user'));
       this.diagnostics.listen(); // Listen for user changes
 
-      // Setup our AB testing
-      this.experimentsService.initGrowthbook();
-
-      // if (this.sso.isRequired()) {
-      //   this.sso.connect();
-      // }
-
       if (this.session.getLoggedInUser()) {
         if (await this.shouldShowOnboardingV5()) {
           this.onboardingV5ModalService.open();

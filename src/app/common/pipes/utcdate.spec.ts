@@ -16,7 +16,7 @@ describe('DataTableFormat', () => {
 
   it('should transform ', () => {
     let pipe = new UtcDatePipe();
-    let testDate: Date = new Date();
+    let testDate: Date = new Date(Date.UTC(2024, 1, 1));
 
     const outputDate: Date = pipe.transform(<any>testDate);
 
