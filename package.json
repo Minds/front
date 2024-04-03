@@ -53,7 +53,6 @@
     "@ctrl/ngx-emoji-mart": "^6.2.0",
     "@danielmoncada/angular-datetime-picker": "^15.0.2",
     "@fontsource/inter": "^4.5.15",
-    "@growthbook/growthbook": "^0.16.1",
     "@mindsorg/ngx-plyr": "^4.0.3",
     "@mindsorg/ngx-universal": "^2.3.0",
     "@mindsorg/web3modal-angular": "^1.7.2-beta.1",
