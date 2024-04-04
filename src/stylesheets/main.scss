@@ -361,18 +361,6 @@ body.m-theme-in-transition *:after {
   }
 }
 
-.m-showOnMobile {
-  @media screen and (min-width: $max-mobile + 1) {
-    display: none;
-  }
-}
-
-.m-showOnTablet {
-  @media screen and (min-width: $min-tablet + 1) {
-    display: none;
-  }
-}
-
 // Don't allow this phrase to be broken
 // into multiple lines
 .m-keepTogether {

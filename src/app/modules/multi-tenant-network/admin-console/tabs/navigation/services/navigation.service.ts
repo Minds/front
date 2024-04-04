@@ -156,7 +156,7 @@ export class MultiTenantNavigationService implements OnDestroy {
   }
 
   /**
-   * Confirm that the user wants to delete the item before deleting it.
+   * Confirms that the user wants to delete the item before deleting it.
    * Only applicable to custom links.
    * @param { NavigationItem } item
    */

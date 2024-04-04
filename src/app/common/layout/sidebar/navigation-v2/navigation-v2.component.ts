@@ -364,7 +364,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * Updates link active options based on user roles
+   * Updates active route match options for links that require it
    */
   updateActiveRouteMatchOptions() {
     this.customNavItemsRequiringExactRouteMatchIds = ['memberships', 'groups'];
