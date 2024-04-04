@@ -129,7 +129,7 @@ describe('AnalyticsService', () => {
 
     service.trackClick('spec-test');
 
-    expect(posthog.capture).toHaveBeenCalledWith('user_generic_click', {
+    expect(posthog.capture).toHaveBeenCalledWith('dataref_click', {
       ref: 'spec-test',
     });
   }));
@@ -148,7 +148,7 @@ describe('AnalyticsService', () => {
       },
     ]);
 
-    expect(posthog.capture).toHaveBeenCalledWith('user_generic_click', {
+    expect(posthog.capture).toHaveBeenCalledWith('dataref_click', {
       ref: 'spec-test',
       entity_guid: '123',
       entity_type: 'activity',

@@ -242,7 +242,7 @@ export class AnalyticsService implements OnDestroy {
       }
     }
 
-    posthog.capture(`user_generic_${eventType}`, {
+    posthog.capture(`dataref_${eventType}`, {
       ref: eventRef,
       ...properties,
     });
