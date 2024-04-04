@@ -6,19 +6,32 @@ $topbarAlertHeight--mobile: 72px;
 $topbarHeight: 75px;
 
 m-body {
+  margin-top: 52px;
   display: block;
-  padding-top: $topbarHeight;
-  min-height: calc(100% - $topbarHeight);
+  min-height: 100%;
+
+  @media screen and (max-width: $max-mobile) {
+    padding-bottom: 60px;
+  }
+
+  &.has-v2-navbar {
+    margin-top: 51px;
+  }
+
+  &.has-v3-navbar {
+    margin-top: $topbarHeight;
+  }
 
   &.m-body__topbarAlert {
-    padding-top: calc($topbarHeight + $topbarAlertHeight--desktop);
+    margin-top: calc($topbarHeight + $topbarAlertHeight--desktop);
 
     @media screen and (max-width: $max-mobile) {
-      padding-top: calc($topbarHeight + $topbarAlertHeight--mobile);
+      margin-top: calc($topbarHeight + $topbarAlertHeight--mobile);
     }
   }
 
   &.is-pro-domain {
+    margin-top: 0;
     padding-bottom: 0;
   }
 }
@@ -52,9 +65,8 @@ $layoutMin1ColWidth: 280px;
   padding: 0 $layoutTotalPadding;
   min-width: $layoutMin1ColWidth;
   max-width: $layoutMax3ColWidth - $layoutTotalPadding;
+  min-height: 100%;
   box-sizing: content-box; // 1172px (incl. 16px padding * 2)
-  height: inherit;
-  min-height: inherit;
 
   .m-pageLayout__container {
     padding: 0;
