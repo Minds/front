@@ -106,9 +106,7 @@ describe('AnalyticsService', () => {
     router.initialNavigation();
     tick();
 
-    expect(posthog.capture).toHaveBeenCalledWith('$pageview', {
-      ng_tokenized_path: undefined,
-    });
+    expect(posthog.capture).toHaveBeenCalledWith('$pageview', {});
     expect(posthog.capture).toHaveBeenCalledTimes(1);
   }));
 

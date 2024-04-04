@@ -12,7 +12,7 @@ import { isPlatformServer } from '@angular/common';
 import { CookieService } from '../common/services/cookie.service';
 import { Session } from './session';
 
-import posthog from 'posthog-js';
+import posthog, { Properties } from 'posthog-js';
 
 import { MindsUser } from './../interfaces/entities';
 import { ActivityEntity } from '../modules/newsfeed/activity/activity.service';
@@ -143,9 +143,7 @@ export class AnalyticsService implements OnDestroy {
   async send(type: string, fields: any = {}, entityGuid: string = null) {
     if (isPlatformServer(this.platformId)) return; // Client side does these. Don't call twice
     if (type === 'pageview') {
-      posthog.capture('$pageview', {
-        ng_tokenized_path: fields?.tokenizedPath,
-      });
+      this.capture('$pageview');
     }
   }
 
@@ -223,8 +221,6 @@ export class AnalyticsService implements OnDestroy {
       this.send('pageview', {
         url,
         referrer: document.referrer,
-        tokenizedPath: this.activatedRoute.snapshot.firstChild?.routeConfig
-          ?.path,
       });
     }
 
@@ -269,9 +265,35 @@ export class AnalyticsService implements OnDestroy {
       }
     }
 
-    posthog.capture(`dataref_${eventType}`, {
+    this.capture(`dataref_${eventType}`, {
       ref: eventRef,
       ...properties,
     });
+  }
+
+  /**
+   * Wrapper around posthog.capture
+   * @param eventName
+   * @param properties
+   */
+  private capture(eventName: string, properties?: Properties): void {
+    properties = properties || {};
+
+    // Group together similar pages by the ng route
+    const ng_tokenized_path = this.activatedRoute.snapshot.firstChild
+      ?.routeConfig?.path;
+    if (ng_tokenized_path) {
+      properties.ng_tokenized_path = ng_tokenized_path;
+    }
+
+    // If this is a tenant, add the tenant id
+    const tenantId = this.configService.get('tenant_id');
+    if (tenantId) {
+      properties.$set_once = {
+        tenant_id: tenantId,
+      };
+    }
+
+    posthog.capture(eventName, properties);
   }
 }
