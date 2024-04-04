@@ -24,11 +24,18 @@ import {
   ChatMessageEdge,
   CreateChatMessageGQL,
   CreateChatMessageMutation,
+  GetChatMessagesDocument,
+  GetChatMessagesQuery,
 } from '../../../../../../graphql/generated.engine';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { MutationResult } from 'apollo-angular';
 import { ToasterService } from '../../../../../common/services/toaster.service';
-import { ChatMessagesService } from '../../../services/chat-messages.service';
+import {
+  ChatMessagesService,
+  PAGE_SIZE,
+} from '../../../services/chat-messages.service';
+import { InMemoryCache } from '@apollo/client';
+import { cloneDeep } from '@apollo/client/utilities';
 
 /**
  * Bottom bar for chat room.
@@ -124,10 +131,15 @@ export class ChatRoomBottomBarComponent implements OnInit {
       this.sendInProgress$.next(true);
 
       const result: MutationResult<CreateChatMessageMutation> = await lastValueFrom(
-        this.createMessageGQL.mutate({
-          plainText: message,
-          roomGuid: this.roomGuid,
-        })
+        this.createMessageGQL.mutate(
+          {
+            plainText: message,
+            roomGuid: this.roomGuid,
+          },
+          {
+            update: this.handleCreateMessageUpdate.bind(this),
+          }
+        )
       );
 
       if (!result) {
@@ -139,10 +151,7 @@ export class ChatRoomBottomBarComponent implements OnInit {
       }
 
       if (result.data.createChatMessage) {
-        this.chatMessageService.appendChatMessage(
-          result.data.createChatMessage as ChatMessageEdge
-        );
-
+        this.chatMessageService.requestScrollToBottom();
         formControl.setValue('');
         formControl.markAsPristine();
         formControl.markAsUntouched();
@@ -153,5 +162,41 @@ export class ChatRoomBottomBarComponent implements OnInit {
     } finally {
       this.sendInProgress$.next(false);
     }
+  }
+
+  /**
+   * Handle create message update. Will update the cache with the new message.
+   * @param { InMemoryCache } cache - cache.
+   * @param { MutationResult<CreateChatMessageMutation> } result - result of the updating mutation.
+   * @param { unknown } options - options.
+   * @returns { void }
+   */
+  private handleCreateMessageUpdate(
+    cache: InMemoryCache,
+    result: MutationResult<CreateChatMessageMutation>,
+    options: unknown
+  ): void {
+    let newValue: GetChatMessagesQuery = cloneDeep(
+      cache.readQuery<GetChatMessagesQuery>({
+        query: GetChatMessagesDocument,
+        variables: {
+          first: PAGE_SIZE,
+          roomGuid: this.roomGuid,
+        },
+      })
+    );
+
+    newValue.chatMessages.edges.push(
+      result.data.createChatMessage as ChatMessageEdge
+    );
+
+    cache.writeQuery({
+      query: GetChatMessagesDocument,
+      variables: {
+        first: PAGE_SIZE,
+        roomGuid: this.roomGuid,
+      },
+      data: newValue,
+    });
   }
 }

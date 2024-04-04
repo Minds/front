@@ -1,30 +1,68 @@
-import { Injectable } from '@angular/core';
-import { Observable, lastValueFrom, map } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, Subscription, lastValueFrom, map, of } from 'rxjs';
 import {
+  GetChatRoomsListDocument,
+  GetChatRoomsListQuery,
   GetChatUnreadCountGQL,
+  GetChatUnreadCountQuery,
   SetReadReceiptGQL,
 } from '../../../../graphql/generated.engine';
+import {
+  ChatRoomEvent,
+  GlobalChatSocketService,
+} from './global-chat-socket.service';
+import { Session } from '../../../services/session';
+import { Apollo, QueryRef } from 'apollo-angular';
+import { cloneDeep } from '@apollo/client/utilities';
+import { PAGE_SIZE } from './chat-rooms-list.service';
 
 @Injectable({ providedIn: 'root' })
-export class ChatReceiptService {
+export class ChatReceiptService implements OnDestroy {
+  private socketEventSubscription: Subscription;
+
+  private _queryRef: QueryRef<GetChatUnreadCountQuery>;
+
   constructor(
     private setReadReceiptGql: SetReadReceiptGQL,
-    private getUnreadCountGql: GetChatUnreadCountGQL
-  ) {}
+    private getUnreadCountGql: GetChatUnreadCountGQL,
+    private globalChatSocketService: GlobalChatSocketService,
+    private apollo: Apollo,
+    private session: Session
+  ) {
+    this.socketEventSubscription = this.globalChatSocketService.globalEvents$.subscribe(
+      (event: ChatRoomEvent): void => {
+        const senderGuid: number = event.data?.['metadata']?.['senderGuid'];
+        const loggedInUserGuid: number = Number(
+          this.session.getLoggedInUser()?.guid
+        );
+
+        if (!loggedInUserGuid) {
+          return;
+        }
+
+        if (senderGuid !== loggedInUserGuid) {
+          this.getQueryRef().refetch();
+          this.updateRoomsListCache(event.roomGuid);
+        }
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.socketEventSubscription?.unsubscribe();
+  }
 
   /**
-   * Poll for the unread message count
-   * A temporary solution until we have websockets
+   * Get initial unread message count and poll for future updates..
+   * @returns { Observable<number> } - the unread message count.
    */
-  getUnreadCount$(): Observable<number> {
-    return this.getUnreadCountGql
-      .watch(
-        {},
-        {
-          pollInterval: 30 * 1000, // Every 30 seconds
-        }
-      )
-      .valueChanges.pipe(map(({ data }) => data.chatUnreadMessagesCount));
+  public getUnreadCount$(): Observable<number> {
+    if (!this.session.isLoggedIn()) {
+      return of(null);
+    }
+    return this.getQueryRef().valueChanges.pipe(
+      map(({ data }) => data.chatUnreadMessagesCount)
+    );
   }
 
   /**
@@ -39,6 +77,48 @@ export class ChatReceiptService {
       })
     );
 
+    this.getQueryRef().refetch();
+
     return !!result.data.readReceipt;
+  }
+
+  /**
+   * Gets the query reference or instantiates a new one.
+   * @returns { QueryRef<GetChatUnreadCountQuery> } - the query reference.
+   */
+  private getQueryRef(): QueryRef<GetChatUnreadCountQuery> {
+    if (!this._queryRef) {
+      this._queryRef = this.getUnreadCountGql.watch();
+    }
+    return this._queryRef;
+  }
+
+  /**
+   * Updates the rooms list cache to update unread message counts.
+   * @param { string } roomGuid - the room guid to update.
+   */
+  private updateRoomsListCache(roomGuid: string): void {
+    let newValue: GetChatRoomsListQuery = cloneDeep(
+      this.apollo.client.readQuery<GetChatRoomsListQuery>({
+        query: GetChatRoomsListDocument,
+        variables: {
+          first: 24,
+        },
+      })
+    );
+
+    newValue.chatRoomList.edges.map(edge => {
+      if (edge.node.guid === roomGuid) {
+        edge.unreadMessagesCount += 1;
+      }
+    });
+
+    this.apollo.client.writeQuery({
+      query: GetChatRoomsListDocument,
+      variables: {
+        first: PAGE_SIZE,
+      },
+      data: newValue,
+    });
   }
 }
