@@ -23,6 +23,7 @@ import { MultiFactorAuthService } from '../../auth/multi-factor-auth/services/mu
 import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { RegexService } from '../../../common/services/regex.service';
+import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 import { Router } from '@angular/router';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
@@ -130,6 +131,10 @@ describe('LoginForm', () => {
           { provide: Router, useClass: RouterStub },
           RegexService,
           { provide: Router, useClass: RouterStub },
+          {
+            provide: ResetPasswordExperimentService,
+            useValue: MockService(ResetPasswordExperimentService),
+          },
           {
             provide: PermissionsService,
             useValue: MockService(PermissionsService),
