@@ -56,7 +56,7 @@
         }
         &--invalid {
           @include m-theme() {
-            bordercolor: themed($m-alert);
+            border-color: themed($m-alert);
           }
         }
       }

@@ -217,6 +217,7 @@ describe('ReportCreatorComponent', () => {
     tick();
     expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
       entity_guid: '1',
+      entity_urn: null,
       reason_code: 4,
       sub_reason_code: null,
       note: '',
@@ -252,6 +253,7 @@ describe('ReportCreatorComponent', () => {
     tick();
     expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
       entity_guid: '1',
+      entity_urn: null,
       reason_code: 4,
       sub_reason_code: null,
       note: '',
@@ -287,6 +289,7 @@ describe('ReportCreatorComponent', () => {
     tick();
     expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
       entity_guid: '1',
+      entity_urn: null,
       reason_code: 4,
       sub_reason_code: null,
       note: '',

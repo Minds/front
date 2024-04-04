@@ -1,0 +1,16 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  height: 100%;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+
+  m-chat__actionCard {
+    max-width: 336px;
+    // offset for page layout not accounting for topbar.
+    margin-bottom: 150px;
+    padding: $spacing6;
+  }
+}

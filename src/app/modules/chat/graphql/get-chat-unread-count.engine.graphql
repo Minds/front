@@ -1,0 +1,3 @@
+query GetChatUnreadCount {
+    chatUnreadMessagesCount
+}

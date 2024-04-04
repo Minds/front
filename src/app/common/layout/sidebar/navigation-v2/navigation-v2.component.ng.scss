@@ -40,7 +40,7 @@
     nav {
       overflow-y: auto;
       overflow-x: hidden;
-      max-height: calc(100vh - 75px);
+      max-height: calc(100% - 75px);
 
       @include hide-scrollbar;
 
@@ -177,6 +177,27 @@
           @media screen and (max-width: $layoutMax1ColWidth),
             (min-width: calc($layoutMax3ColWidth + 1px)) {
             transform: translateY(2px);
+          }
+        }
+
+        &.m-sidebarNavigation__item--chat {
+          transform: translateY(2px);
+
+          i.showDot {
+            position: relative;
+            &::after {
+              content: '';
+              display: block;
+              width: 5px;
+              height: 5px;
+              position: absolute;
+              border-radius: 50%;
+              top: 0;
+              right: 0;
+              @include m-theme() {
+                background-color: themed($m-blue);
+              }
+            }
           }
         }
 

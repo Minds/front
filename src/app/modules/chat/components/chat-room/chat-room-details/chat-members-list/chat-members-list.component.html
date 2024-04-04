@@ -1,0 +1,23 @@
+<ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
+  <m-chatRoom__membersListItem
+    *ngFor="let memberEdge of members$ | async"
+    [memberEdge]="memberEdge"
+  ></m-chatRoom__membersListItem>
+
+  <infinite-scroll
+    *ngIf="hasNextPage$ | async"
+    (load)="fetchMore()"
+    [moreData]="hasNextPage$ | async"
+    [inProgress]="inProgress$ | async"
+    [hideManual]="true"
+    [distance]="'25%'"
+    [scrollSource]="elementRef?.nativeElement"
+  ></infinite-scroll>
+</ng-container>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner
+    *ngIf="!(initialized$ | async)"
+    [inProgress]="true"
+  ></m-loadingSpinner>
+</ng-template>

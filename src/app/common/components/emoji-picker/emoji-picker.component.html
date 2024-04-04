@@ -1,13 +1,16 @@
 <div
   [popper]="popper"
-  [popperPlacement]="'bottom'"
+  [popperPlacement]="popperPlacement"
   [popperTrigger]="'click'"
   [popperModifiers]="popperModifiers"
   (popperOnShown)="onShowSelector()"
   (popperOnHidden)="onHideSelector()"
   (mouseenter)="onMouseEnter()"
 >
-  <i class="m-emojiPicker__icon material-icons">emoji_emotions</i>
+  <i
+    class="m-emojiPicker__icon material-icons"
+    >{{iconName ?? 'emoji_emotions'}}</i
+  >
 </div>
 
 <popper-content #popper>

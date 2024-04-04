@@ -19,6 +19,7 @@ import { BannedService } from './banned/banned.service';
 import { BannedComponent } from './banned/banned.component';
 import { ModerationAppealComponent } from './console/appeal.component';
 import { MarketingModule } from '../marketing/marketing.module';
+import { ChatRoomMessageComponent } from '../chat/components/chat-room/chat-room-messages/chat-room-message/chat-room-message.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { MarketingModule } from '../marketing/marketing.module';
       { path: 'moderation/banned', component: BannedComponent },
     ]),
     TokenOnboardingModule,
+    ChatRoomMessageComponent,
   ],
   declarations: [
     ReportCreatorComponent,

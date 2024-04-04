@@ -1,0 +1,14 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: 0 $spacing5;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  @include hide-scrollbar;
+
+  m-chatRoom__message:last-of-type {
+    margin-bottom: 0;
+  }
+}

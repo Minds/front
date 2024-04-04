@@ -1,0 +1,63 @@
+<header class="m-chatRoomList__header">
+  <span class="m-chatRoomList__headerLeft">
+    <h3 class="m-chatRoomList__title">Chats</h3>
+    <span class="m-chatRoomList__alphaBadge">Alpha</span>
+  </span>
+  <i
+    class="material-icons"
+    aria-role="button"
+    aria-label="New chat"
+    (click)="onStartChatClick()"
+    (keydown.enter)="onStartChatClick()"
+    tabindex="0"
+    >add_comment</i
+  >
+</header>
+
+<m-chatPendingRequests__widget
+  *ngIf="hasPendingRequests$ | async"
+></m-chatPendingRequests__widget>
+
+<ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
+  <ng-container
+    *ngIf="
+      (edges$ | async)?.length || (hasPendingRequests$ | async);
+      else noEdgesActionCardTemplate
+    "
+  >
+    <ng-container
+      *ngIf="{ currentRoomId: currentRoomId$ | async } as roomListItemParams"
+    >
+      <ng-container *ngFor="let edge of edges$ | async; trackBy: trackBy">
+        <m-chat__roomListItem
+          [edge]="edge"
+          [active]="roomListItemParams.currentRoomId === edge.node.guid"
+        ></m-chat__roomListItem>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<infinite-scroll
+  (load)="fetchMore()"
+  [moreData]="hasNextPage$ | async"
+  [inProgress]="(inProgress$ | async) && (initialized$ | async)"
+  [hideManual]="true"
+  [distance]="'25%'"
+  [scrollSource]="elementRef?.nativeElement"
+></infinite-scroll>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
+
+<ng-template #noEdgesActionCardTemplate>
+  <m-chat__actionCard
+    headerText="Say hello to chats!"
+    descriptionText="Start a direct conversation with a friend, stranger, or group of people on Minds."
+    ctaText="New chat"
+    [headerSize]="3"
+    [descriptionSize]="2"
+    (actionButtonClick)="onStartChatClick()"
+  ></m-chat__actionCard>
+</ng-template>

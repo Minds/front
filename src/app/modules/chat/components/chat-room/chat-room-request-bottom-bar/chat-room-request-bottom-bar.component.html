@@ -1,0 +1,66 @@
+<section class="m-chatRequest__bottomBar">
+  <header class="m-chatRequestBottomBar__header">
+    <h5 i18n="@@CHAT_ROOM_REQUEST_BOTTOM_BAR__ACCEPT_CHAT_REQUEST">
+      Accept chat request?
+    </h5>
+    <p i18n="@@CHAT_ROOM_REQUEST_BOTTOM_BAR__ACCEPT_CHAT_REQUEST_DESCRIPTION">
+      They will only be notified that you've seen their chat after you accept
+      it.
+    </p>
+  </header>
+  <div
+    class="m-chatRequestBottomBar__actionButtonRow"
+    *ngIf="{
+      anyActionInProgress: anyActionInProgress$ | async
+    } as templateVars"
+  >
+    <div
+      *ngIf="roomType === ChatRoomTypeEnum.OneToOne"
+      class="m-chatRequestBottomBar__actionButton m-chatRequestBottomBar__actionButton--warning"
+      [ngClass]="{
+        'm-chatRequestBottomBar__actionButton--disabled':
+          templateVars.anyActionInProgress
+      }"
+      (click)="onBlockClick()"
+      aria-role="button"
+    >
+      <span *ngIf="!(blockInProgress$ | async); else loadingSpinnerTemplate"
+        >Block</span
+      >
+    </div>
+    <div
+      class="m-chatRequestBottomBar__actionButton m-chatRequestBottomBar__actionButton--warning"
+      [ngClass]="{
+        'm-chatRequestBottomBar__actionButton--disabled':
+          templateVars.anyActionInProgress
+      }"
+      (click)="onRejectClick()"
+      aria-role="button"
+    >
+      <span *ngIf="!(rejectInProgress$ | async); else loadingSpinnerTemplate"
+        >Reject</span
+      >
+    </div>
+    <div
+      class="m-chatRequestBottomBar__actionButton"
+      [ngClass]="{
+        'm-chatRequestBottomBar__actionButton--disabled':
+          templateVars.anyActionInProgress
+      }"
+      (click)="onAcceptClick()"
+      aria-role="button"
+    >
+      <span *ngIf="!(acceptInProgress$ | async); else loadingSpinnerTemplate"
+        >Accept</span
+      >
+    </div>
+  </div>
+</section>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-sizeableLoadingSpinner
+    [inProgress]="true"
+    spinnerHeight="19px"
+    spinnerWidth="19px"
+  ></m-sizeableLoadingSpinner>
+</ng-template>

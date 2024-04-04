@@ -1,0 +1,92 @@
+<header class="m-chatRoomDetails__header">
+  <i
+    class="material-icons m-chatRoomDetails__backButton"
+    tabindex="1"
+    aria-role="button"
+    aria-label="back button"
+    (click)="backClickEmitter.emit()"
+    >arrow_back</i
+  >
+  <h3
+    class="m-chatRoomDetails__headerTitle"
+    i18n="@@CHAT_ROOM_DETAILS__CHAT_DETAILS"
+  >
+    Chat details
+  </h3>
+</header>
+
+<section class="m-chatRoomDetails__notificationsSection">
+  <h4
+    class="m-chatRoomDetails__notificationsTitle"
+    i18n="@@CHAT_ROOM_DETAILS__NOTIFICATIONS"
+  >
+    Notifications
+  </h4>
+  <m-chatRoom__notificationSettings></m-chatRoom__notificationSettings>
+</section>
+
+<section
+  class="m-chatRoomDetails__chatMembersSection"
+  *ngIf="initialized$ | async; else loadingSpinnerTemplate"
+>
+  <h4 class="m-chatRoomDetails__chatMembersTitle">
+    <span i18n="@@CHAT_ROOM_DETAILS__CHAT_MEMBERS">Chat members</span>
+    <span>&nbsp;</span>
+    <span
+      *ngIf="
+        membersCount$ | async as membersCount;
+        else loadingEllipsisTemplate
+      "
+      >({{ membersCount }})</span
+    >
+  </h4>
+  <m-chatRoom__membersList [roomGuid]="roomGuid"></m-chatRoom__membersList>
+</section>
+
+<section
+  class="m-chatRoomDetails__actionsSection"
+  *ngIf="{
+    chatRoomType: chatRoomType$ | async,
+    isUserRoomOwner: isUserRoomOwner$ | async
+  } as actionVars"
+>
+  <span
+    *ngIf="actionVars.chatRoomType === ChatRoomTypeEnum.OneToOne"
+    class="m-chatRoomDetails__actionText m-chatRoomDetails__actionText--red"
+    aria-role="button"
+    tabindex="1"
+    i18n="@@CHAT_ROOM_DETAILS__BLOCK_USER"
+    (click)="onBlockUserClick()"
+    >Block user</span
+  >
+  <span
+    *ngIf="
+      actionVars.chatRoomType === ChatRoomTypeEnum.OneToOne ||
+      actionVars.isUserRoomOwner
+    "
+    class="m-chatRoomDetails__actionText m-chatRoomDetails__actionText--red"
+    aria-role="button"
+    tabindex="1"
+    i18n="@@CHAT_ROOM_DETAILS__DELETE_CHAT"
+    (click)="onDeleteChatClick()"
+    >Delete chat</span
+  >
+  <span
+    *ngIf="
+      actionVars.chatRoomType !== ChatRoomTypeEnum.OneToOne &&
+      !actionVars.isUserRoomOwner
+    "
+    class="m-chatRoomDetails__actionText m-chatRoomDetails__actionText--red"
+    aria-role="button"
+    tabindex="1"
+    i18n="@@CHAT_ROOM_DETAILS__LEAVE_CHAT"
+    (click)="onLeaveChatClick()"
+    >Leave chat</span
+  >
+</section>
+
+<ng-template #loadingEllipsisTemplate><span>...</span></ng-template>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

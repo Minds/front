@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { NestedMenu } from '../../common/layout/nested-menu/nested-menu.component';
 import { Session } from '../../services/session';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { TwitterSyncSettingsExperimentService } from '../experiments/sub-service
 import { IsTenantService } from '../../common/services/is-tenant.service';
 import { PermissionsService } from '../../common/services/permissions.service';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Container that determines what form/menu(s)
@@ -397,13 +398,16 @@ export class SettingsV2Component implements OnInit {
     protected toasterService: ToasterService,
     private twitterSyncSettingsExperiment: TwitterSyncSettingsExperimentService,
     private IsTenantService: IsTenantService,
-    private permissionsService: PermissionsService
+    private permissionsService: PermissionsService,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
   ngOnInit() {
-    if (!this.session.isLoggedIn()) {
-      this.router.navigate(['/login'], { replaceUrl: true });
-      return;
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.session.isLoggedIn()) {
+        this.router.navigate(['/login'], { replaceUrl: true });
+        return;
+      }
     }
     this.user = this.session.getLoggedInUser().username;
 
