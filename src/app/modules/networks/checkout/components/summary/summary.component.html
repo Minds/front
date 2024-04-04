@@ -165,6 +165,7 @@
           [saving]="checkoutButtonVars.navToPaymentUrlInProgress"
           [disabled]="checkoutButtonVars.navToPaymentUrlInProgress"
           (onAction)="onPrimaryCtaClick(templateVars.activePage)"
+          data-ref="tenant-checkout-btn"
         >
           <ng-container [ngSwitch]="templateVars.activePage">
             <ng-container
