@@ -78,8 +78,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
 
   isDarkTheme: boolean = false;
 
-  isLoggedIn: boolean = false;
-
   // Becomes true when the discovery link is clicked.
   // Used to determine whether to show 'new content dot'
   discoveryLinkClicked: boolean = false;
@@ -169,8 +167,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
       this.onResize();
     }
 
-    this.isLoggedIn = this.session.isLoggedIn();
-
     if (this.isTenantNetwork) {
       this.prepareCustomNavItems();
     }
@@ -206,8 +202,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
             this.plusPageActive = false;
           }
         }),
-      this.session.loggedinEmitter?.subscribe(user => {
-        this.isLoggedIn = !!user;
+      this.session.loggedinEmitter?.subscribe(() => {
         this.prepareCustomNavItems();
       }),
       this.shouldShowMembershipsLink$.subscribe(should => {
@@ -260,6 +255,14 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   }
 
   /**
+   * Whether the user is logged in
+   * @returns { boolean } true if logged in
+   */
+  public isLoggedIn(): boolean {
+    return this.session.isLoggedIn();
+  }
+
+  /**
    * @returns {boolean} true if tenant user is admin or has moderation permission
    */
   public showTenantAdminLink(): boolean {
@@ -267,7 +270,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
       this.isTenantNetwork &&
       (this.user?.is_admin || this.permissions.canModerateContent())
     );
-  }
+  } // ojm remove
 
   /**
    * Toggles sidebar being open on mobile.
@@ -291,7 +294,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    * @returns { Promise<void> }
    */
   public async openComposeModal(): Promise<void> {
-    if (!this.isLoggedIn) {
+    if (!this.isLoggedIn()) {
       this.authModal.open();
       return;
     }
@@ -392,7 +395,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   updateActiveRouteMatchOptions() {
     this.customNavItemsRequiringExactRouteMatchIds = ['memberships', 'groups'];
-    if (!this.isLoggedIn) {
+    if (!this.isLoggedIn()) {
       this.customNavItemsRequiringExactRouteMatchIds.push('explore');
     }
   }
@@ -404,7 +407,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     let hiddenItemsSet = new Set(this.hiddenCustomNavItemsIds);
 
     // Handle 'newsfeed' and 'channel' based on login status
-    if (!this.isLoggedIn) {
+    if (!this.isLoggedIn()) {
       hiddenItemsSet.add('newsfeed').add('channel');
     } else {
       hiddenItemsSet.delete('newsfeed');
@@ -412,7 +415,10 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     }
 
     // Hide or unhide 'admin' based on user roles
-    if (!this.user?.is_admin && !this.permissions.canModerateContent()) {
+    if (
+      !this.isLoggedIn() ||
+      (!this.isAdmin() && !this.permissions.canModerateContent())
+    ) {
       hiddenItemsSet.add('admin');
     } else {
       hiddenItemsSet.delete('admin');
@@ -429,7 +435,9 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   adjustLinkPathsForUser(rawCustomNavItems) {
     return rawCustomNavItems.map(item =>
       //  The 'explore' item path is different in guest mode
-      item.id === 'explore' && !this.isLoggedIn ? { ...item, path: '/' } : item
+      item.id === 'explore' && !this.isLoggedIn()
+        ? { ...item, path: '/' }
+        : item
     );
   }
 }

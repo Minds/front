@@ -311,7 +311,7 @@
             [routerLinkActiveOptions]="{ exact: true }"
           >
             <a
-              [routerLink]="isLoggedIn ? ['/networks'] : ['/about/networks']"
+              [routerLink]="isLoggedIn() ? ['/networks'] : ['/about/networks']"
               (click)="toggle()"
               data-ref="sidenav-networks-list"
             >

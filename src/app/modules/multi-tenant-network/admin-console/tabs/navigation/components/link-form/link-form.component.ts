@@ -13,9 +13,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DialogService } from '../../../../../../../common/services/confirm-leave-dialog.service';
 
 export enum NavigationLinkFormView {
-  'CREATE_CUSTOM_LINK',
-  'EDIT_CORE_LINK',
-  'EDIT_CUSTOM_LINK',
+  'CreateCustomLink',
+  'EditCoreLink',
+  'EditCustomLink',
 }
 
 /**
@@ -45,8 +45,7 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
    */
   public itemType: NavigationItemTypeEnum = NavigationItemTypeEnum.CustomLink;
 
-  public view: NavigationLinkFormView =
-    NavigationLinkFormView.CREATE_CUSTOM_LINK;
+  public view: NavigationLinkFormView = NavigationLinkFormView.CreateCustomLink;
 
   /**
    * Allows us to use enums in the template
@@ -143,12 +142,14 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
    * Determine form view from the item type
    */
   private setFormView(): void {
+    if (!this.navigationItem) {
+      this.view = NavigationLinkFormView.CreateCustomLink;
+      return;
+    }
     if (this.itemType === NavigationItemTypeEnum.Core) {
-      this.view = NavigationLinkFormView.EDIT_CORE_LINK;
+      this.view = NavigationLinkFormView.EditCoreLink;
     } else if (this.itemType === NavigationItemTypeEnum.CustomLink) {
-      this.view = NavigationLinkFormView.EDIT_CUSTOM_LINK;
-    } else {
-      this.view = NavigationLinkFormView.CREATE_CUSTOM_LINK;
+      this.view = NavigationLinkFormView.EditCustomLink;
     }
   }
 
@@ -180,15 +181,15 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
             ? formValue.pathOrUrl
             : null,
         type: this.itemType,
-        visible: this.navigationItem?.visible || true,
-        order: this.navigationItem?.order || 500,
+        visible: this.navigationItem?.visible ?? true,
+        order: this.navigationItem?.order ?? 500,
       };
 
       this.subscriptions.push(
         this.service.upsertNavigationItem(submittedItem).subscribe(success => {
           if (success) {
             // Reset the form so we don't get stopped by the deactivate guard
-            this.linkForm.markAsPristine();
+            this.linkForm.markAsUntouched();
             this.router.navigate(['network/admin/navigation/menu/list']);
           }
         })
@@ -216,7 +217,7 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
    * @returns { Observable<boolean> } - true if component can be deactivated.
    */
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.linkForm.dirty) {
+    if (!this.linkForm.touched) {
       return true;
     }
 

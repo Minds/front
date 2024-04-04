@@ -16,18 +16,18 @@
         class="m-networkAdminNavigationEditForm__headerTitle"
       >
         <ng-container
-          *ngSwitchCase="NavigationLinkFormView.CREATE_CUSTOM_LINK"
-          i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__CREATE_CUSTOM_LINK"
+          *ngSwitchCase="NavigationLinkFormView.CreateCustomLink"
+          i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__CreateCustomLink"
           >Create custom link</ng-container
         >
         <ng-container
-          *ngSwitchCase="NavigationLinkFormView.EDIT_CUSTOM_LINK"
-          i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__EDIT_CUSTOM_LINK"
+          *ngSwitchCase="NavigationLinkFormView.EditCustomLink"
+          i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__EditCustomLink"
           >Edit custom link</ng-container
         >
         <ng-container
-          *ngSwitchCase="NavigationLinkFormView.EDIT_CORE_LINK"
-          i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__EDIT_CORE_LINK"
+          *ngSwitchCase="NavigationLinkFormView.EditCoreLink"
+          i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__EditCoreLink"
           >Edit core link</ng-container
         >
       </h3>
@@ -37,7 +37,7 @@
       [ngSwitch]="view"
     >
       <ng-container
-        *ngSwitchCase="NavigationLinkFormView.CREATE_CUSTOM_LINK"
+        *ngSwitchCase="NavigationLinkFormView.CreateCustomLink"
         i18n=" @@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__CREATE_DESCRIPTION "
         >Enhance your site navigation by adding a custom link. This feature lets
         you direct users to a chosen URL, providing quick access and
@@ -46,13 +46,13 @@
         attention.</ng-container
       >
       <ng-container
-        *ngSwitchCase="NavigationLinkFormView.EDIT_CUSTOM_LINK"
+        *ngSwitchCase="NavigationLinkFormView.EditCustomLink"
         i18n=" @@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__CUSTOM_LINK_DESCRIPTION "
         >Add an external link to your website and place it in the side
         navigation to draw users' attention.</ng-container
       >
       <ng-container
-        *ngSwitchCase="NavigationLinkFormView.EDIT_CORE_LINK"
+        *ngSwitchCase="NavigationLinkFormView.EditCoreLink"
         i18n=" @@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__CORE_DESCRIPTION "
         >Customize the link title and icon to guide users on your network with
         your own personalization.</ng-container
