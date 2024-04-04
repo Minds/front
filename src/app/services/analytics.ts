@@ -33,6 +33,7 @@ export type ContextualizableEntity = {
 @Injectable()
 export class AnalyticsService implements OnDestroy {
   private defaultPrevented: boolean = false;
+  private hasBeenLoggedIn = false;
 
   contexts: SnowplowContext[] = [];
 
@@ -66,8 +67,15 @@ export class AnalyticsService implements OnDestroy {
     this.sessionService.loggedinEmitter.subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.setUser(this.sessionService.getLoggedInUser());
-      } else {
+        this.hasBeenLoggedIn = true;
+      } else if (this.hasBeenLoggedIn) {
+        // If the user was previously logged in, we can reset
+        // If a user is opted out, they should still be when logged out too
+        const isOptOut = this.configService.get('posthog')['opt_out'];
         posthog.reset();
+        if (isOptOut) {
+          posthog.opt_out_capturing();
+        }
       }
     });
 
@@ -104,13 +112,32 @@ export class AnalyticsService implements OnDestroy {
     this.setUser(this.sessionService.getLoggedInUser());
   }
 
-  setUser(user: MindsUser) {
+  /**
+   * Set if a user has disabled analytics or not
+   */
+  public setOptOut(optOut: boolean): void {
+    const posthostConfig = this.configService.get('posthog');
+    posthostConfig.opt_out = optOut;
+    this.configService.set('posthog', posthostConfig);
+  }
+
+  /**
+   * Set the currently logged in user so we can identify them
+   */
+  public setUser(user: MindsUser): void {
+    if (!user) return;
+
+    // Check (from configs) if we have opted out of analytics
+    if (this.configService.get('posthog')['opt_out']) {
+      posthog.opt_out_capturing();
+    } else {
+      if (posthog.has_opted_out_capturing()) {
+        posthog.clear_opt_in_out_capturing();
+      }
+    }
+
     // Call once per session
     posthog.identify(user.guid);
-    //, {
-    // is_canary: !!(<any>user).canary,
-    // environment: this.configService.get('environment'),
-    //});
   }
 
   async send(type: string, fields: any = {}, entityGuid: string = null) {

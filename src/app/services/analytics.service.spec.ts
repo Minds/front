@@ -17,11 +17,25 @@ import { ConfigsService } from '../common/services/configs.service';
 import { MockService } from '../utils/mock';
 import posthog from 'posthog-js';
 import { Router } from '@angular/router';
+import userMock from '../mocks/responses/user.mock';
 
 describe('AnalyticsService', () => {
-  let service: AnalyticsService, router: Router;
+  let service: AnalyticsService,
+    router: Router,
+    configService: Partial<ConfigsService>;
 
   beforeEach(() => {
+    configService = {
+      get: key => {
+        if (key === 'posthog') {
+          return <any>{
+            feature_flags: [],
+          };
+        }
+        return null;
+      },
+    };
+
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, CookieModule],
       providers: [
@@ -35,15 +49,7 @@ describe('AnalyticsService', () => {
         { provide: Session, useValue: sessionMock },
         {
           provide: ConfigsService,
-          useValue: MockService(ConfigsService, {
-            get: () => {
-              return {
-                posthog: {
-                  feature_flags: [],
-                },
-              };
-            },
-          }),
+          useValue: configService,
         },
       ],
     });
@@ -155,5 +161,48 @@ describe('AnalyticsService', () => {
       entity_subtype: undefined,
       entity_owner_guid: '456',
     });
+  }));
+
+  it('should respect a users opt out status when logging in', fakeAsync(() => {
+    spyOn(posthog, 'opt_out_capturing');
+
+    spyOn(configService, 'get').and.returnValue({
+      opt_out: true, // user is opted out of analytics
+    });
+
+    service.setUser(userMock);
+
+    expect(posthog.opt_out_capturing).toHaveBeenCalled();
+  }));
+
+  it('should restart tracking if a user is not opted out, but a previous session was', fakeAsync(() => {
+    spyOn(posthog, 'has_opted_out_capturing').and.returnValue(true);
+    spyOn(posthog, 'clear_opt_in_out_capturing');
+
+    spyOn(configService, 'get').and.returnValue({
+      opt_out: false, // user is NOT opted out of analytics
+    });
+
+    service.setUser(userMock);
+
+    expect(posthog.clear_opt_in_out_capturing).toHaveBeenCalled();
+  }));
+
+  it('should make sure a user, opted out, who logs out retains their opt out status', fakeAsync(() => {
+    spyOn(posthog, 'reset');
+    spyOn(posthog, 'opt_out_capturing');
+
+    spyOn(configService, 'get').and.returnValue({
+      opt_out: true, // user is opted out of analytics
+    });
+
+    sessionMock.loggedinEmitter.emit(true);
+    tick();
+
+    sessionMock.loggedinEmitter.emit(false);
+    tick();
+
+    expect(posthog.reset).toHaveBeenCalled();
+    expect(posthog.opt_out_capturing).toHaveBeenCalled();
   }));
 });
