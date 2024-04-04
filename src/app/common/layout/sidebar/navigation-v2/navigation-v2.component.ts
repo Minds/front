@@ -8,8 +8,6 @@ import {
   ViewChild,
   OnDestroy,
   Injector,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Navigation as NavigationService } from '../../../../services/navigation';
@@ -30,6 +28,12 @@ import { IS_TENANT_NETWORK } from '../../../injection-tokens/tenant-injection-to
 import { PermissionsService } from '../../../services/permissions.service';
 import { MultiTenantConfigImageService } from '../../../../modules/multi-tenant-network/services/config-image.service';
 import { SiteMembershipsCountService } from '../../../../modules/site-memberships/services/site-membership-count.service';
+import { NavigationItem } from '../../../../../graphql/generated.engine';
+
+export type NavigationItemExtended = NavigationItem & {
+  mustBeLoggedIn?: boolean;
+  routerLinkActiveExact?: boolean;
+};
 
 /**
  * V2 version of sidebar component.
@@ -72,12 +76,26 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
 
   isDarkTheme: boolean = false;
 
+  isLoggedIn: boolean = false;
+
   // Becomes true when the discovery link is clicked.
   // Used to determine whether to show 'new content dot'
   discoveryLinkClicked: boolean = false;
 
   /** Whether experiment controlling reorganization of menu items variation is active */
   public showReorgVariation: boolean = false;
+
+  /** Custom nav items for tenants */
+  public customNavItems: NavigationItem[];
+
+  /**
+   * Ids of custom nav items for which
+   * routerLinkActiveOptions.exact should be true
+   */
+  public customNavItemsRequiringExactRouteMatchIds: string[];
+
+  /** Ids of custom nav items that should not be shown to this user */
+  public hiddenCustomNavItemsIds: string[] = [];
 
   /** Whether memberships link should be shown. */
   public readonly shouldShowMembershipsLink$: Observable<boolean> = !this
@@ -142,6 +160,10 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
       this.onResize();
     }
 
+    if (this.isTenantNetwork) {
+      this.prepareContextualCustomNavItems();
+    }
+
     this.settingsLink = '/settings';
 
     this.subscriptions.push(
@@ -170,7 +192,21 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
           } else {
             this.plusPageActive = false;
           }
-        })
+        }),
+      this.session.loggedinEmitter?.subscribe(user => {
+        this.isLoggedIn = !!user;
+        this.prepareContextualCustomNavItems();
+      }),
+      this.shouldShowMembershipsLink$.subscribe(should => {
+        // Only show the memberships link when the site has memberships
+        if (should) {
+          this.hiddenCustomNavItemsIds = this.hiddenCustomNavItemsIds.filter(
+            item => item !== 'memberships'
+          );
+        } else {
+          this.hiddenCustomNavItemsIds.push('memberships');
+        }
+      })
     );
   }
 
@@ -234,7 +270,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    * @returns { Promise<void> }
    */
   public async openComposeModal(): Promise<void> {
-    if (!this.session.isLoggedIn()) {
+    if (!this.isLoggedIn) {
       this.authModal.open();
       return;
     }
@@ -255,7 +291,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   public setVisible(value: boolean): void {
     this.hidden = !value;
-
     if (!value) {
       if (this.host && this.host.viewContainerRef) {
         this.host.viewContainerRef.clear();
@@ -318,10 +353,59 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * Whether the user is logged in.
-   * @returns { boolean } true if user is logged in.
+   * Perform various tasks that adjust the presentation and visibility of finicky custom nav items
    */
-  public isLoggedIn(): boolean {
-    return this.session.isLoggedIn();
+  prepareContextualCustomNavItems() {
+    this.updateActiveRouteMatchOptions();
+    this.syncNavItemsWithUserState();
+    this.customNavItems = this.adjustLinkPathsForUser(
+      this.configs.get('custom')?.navigation
+    );
+  }
+
+  /**
+   * Updates link active options based on user roles
+   */
+  updateActiveRouteMatchOptions() {
+    this.customNavItemsRequiringExactRouteMatchIds = ['memberships', 'groups'];
+    if (!this.isLoggedIn) {
+      this.customNavItemsRequiringExactRouteMatchIds.push('explore');
+    }
+  }
+
+  /**
+   * Show or hide custom links based on user state/role
+   */
+  syncNavItemsWithUserState() {
+    let hiddenItemsSet = new Set(this.hiddenCustomNavItemsIds);
+
+    // Handle 'newsfeed' and 'channel' based on login status
+    if (!this.isLoggedIn) {
+      hiddenItemsSet.add('newsfeed').add('channel');
+    } else {
+      hiddenItemsSet.delete('newsfeed');
+      hiddenItemsSet.delete('channel');
+    }
+
+    // Hide or unhide 'admin' based on user roles
+    if (!this.user?.is_admin && !this.permissions.canModerateContent()) {
+      hiddenItemsSet.add('admin');
+    } else {
+      hiddenItemsSet.delete('admin');
+    }
+
+    // Convert the Set back to an array for further use
+    this.hiddenCustomNavItemsIds = Array.from(hiddenItemsSet);
+  }
+
+  /**
+   * @param {Array} rawCustomNavItems - The original list of custom navigation items.
+   * @return {Array} The adjusted list of custom navigation items.
+   */
+  adjustLinkPathsForUser(rawCustomNavItems) {
+    return rawCustomNavItems.map(item =>
+      //  The 'explore' item path is different in guest mode
+      item.id === 'explore' && !this.isLoggedIn ? { ...item, path: '/' } : item
+    );
   }
 }

@@ -799,6 +799,8 @@ export type Mutation = {
   createNewReport: Scalars['Boolean']['output'];
   createRssFeed: RssFeed;
   createTenant: Tenant;
+  /** Deletes a navigation item */
+  deleteCustomNavigationItem: Scalars['Boolean']['output'];
   /** Delete an entity. */
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
@@ -832,8 +834,12 @@ export type Mutation = {
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+  /** Updates the order of the navigation items */
+  updateCustomNavigationItemsOrder: Array<NavigationItem>;
   updatePostSubscription: PostSubscription;
   updateSiteMembership: SiteMembership;
+  /** Add or update a navigation item */
+  upsertCustomNavigationItem: NavigationItem;
 };
 
 export type MutationArchiveSiteMembershipArgs = {
@@ -892,6 +898,10 @@ export type MutationCreateRssFeedArgs = {
 
 export type MutationCreateTenantArgs = {
   tenant?: InputMaybe<TenantInput>;
+};
+
+export type MutationDeleteCustomNavigationItemArgs = {
+  id: Scalars['String']['input'];
 };
 
 export type MutationDeleteEntityArgs = {
@@ -995,6 +1005,10 @@ export type MutationUpdateAccountArgs = {
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type MutationUpdateCustomNavigationItemsOrderArgs = {
+  orderedIds: Array<Scalars['String']['input']>;
+};
+
 export type MutationUpdatePostSubscriptionArgs = {
   entityGuid: Scalars['String']['input'];
   frequency: PostSubscriptionFrequencyEnum;
@@ -1003,6 +1017,40 @@ export type MutationUpdatePostSubscriptionArgs = {
 export type MutationUpdateSiteMembershipArgs = {
   siteMembershipInput: SiteMembershipUpdateInput;
 };
+
+export type MutationUpsertCustomNavigationItemArgs = {
+  action?: InputMaybe<NavigationItemActionEnum>;
+  iconId: Scalars['String']['input'];
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  order?: InputMaybe<Scalars['Int']['input']>;
+  path?: InputMaybe<Scalars['String']['input']>;
+  type: NavigationItemTypeEnum;
+  url?: InputMaybe<Scalars['String']['input']>;
+  visible: Scalars['Boolean']['input'];
+};
+
+export type NavigationItem = {
+  __typename?: 'NavigationItem';
+  action?: Maybe<NavigationItemActionEnum>;
+  iconId: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
+  path?: Maybe<Scalars['String']['output']>;
+  type: NavigationItemTypeEnum;
+  url?: Maybe<Scalars['String']['output']>;
+  visible: Scalars['Boolean']['output'];
+};
+
+export enum NavigationItemActionEnum {
+  ShowSidebarMore = 'SHOW_SIDEBAR_MORE',
+}
+
+export enum NavigationItemTypeEnum {
+  Core = 'CORE',
+  CustomLink = 'CUSTOM_LINK',
+}
 
 export type NewsfeedConnection = ConnectionInterface & {
   __typename?: 'NewsfeedConnection';
@@ -1148,6 +1196,8 @@ export type Query = {
   boosts: BoostsConnection;
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
+  /** Returns the navigation items that are configured for a site */
+  customNavigationItems: Array<NavigationItem>;
   customPage: CustomPage;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
@@ -2831,6 +2881,15 @@ export type CreateInviteMutation = {
   invite?: any | null;
 };
 
+export type DeleteCustomNavigationItemMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+export type DeleteCustomNavigationItemMutation = {
+  __typename?: 'Mutation';
+  deleteCustomNavigationItem: boolean;
+};
+
 export type GetRolesAndPermissionsQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -2858,6 +2917,24 @@ export type GetAssignedRolesQuery = {
     id: number;
     name: string;
     permissions: Array<PermissionsEnum>;
+  }>;
+};
+
+export type GetNavigationItemsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetNavigationItemsQuery = {
+  __typename?: 'Query';
+  customNavigationItems: Array<{
+    __typename?: 'NavigationItem';
+    id: string;
+    name: string;
+    type: NavigationItemTypeEnum;
+    action?: NavigationItemActionEnum | null;
+    iconId: string;
+    order: number;
+    url?: string | null;
+    visible: boolean;
+    path?: string | null;
   }>;
 };
 
@@ -3006,6 +3083,18 @@ export type ResendInviteMutation = {
   resendInvite?: any | null;
 };
 
+export type ReorderNavigationItemsMutationVariables = Exact<{
+  ids: Array<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+export type ReorderNavigationItemsMutation = {
+  __typename?: 'Mutation';
+  updateCustomNavigationItemsOrder: Array<{
+    __typename?: 'NavigationItem';
+    id: string;
+  }>;
+};
+
 export type SetCustomPageMutationVariables = Exact<{
   pageType: Scalars['String']['input'];
   content?: InputMaybe<Scalars['String']['input']>;
@@ -3085,6 +3174,23 @@ export type UnassignUserFromRoleMutationVariables = Exact<{
 export type UnassignUserFromRoleMutation = {
   __typename?: 'Mutation';
   unassignUserFromRole: boolean;
+};
+
+export type UpsertNavigationItemMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  type: NavigationItemTypeEnum;
+  visible: Scalars['Boolean']['input'];
+  iconId: Scalars['String']['input'];
+  order: Scalars['Int']['input'];
+  path?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+  action?: InputMaybe<NavigationItemActionEnum>;
+}>;
+
+export type UpsertNavigationItemMutation = {
+  __typename?: 'Mutation';
+  upsertCustomNavigationItem: { __typename?: 'NavigationItem'; id: string };
 };
 
 export type GetCheckoutLinkQueryVariables = Exact<{
@@ -7327,6 +7433,25 @@ export class CreateInviteGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const DeleteCustomNavigationItemDocument = gql`
+  mutation deleteCustomNavigationItem($id: String!) {
+    deleteCustomNavigationItem(id: $id)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteCustomNavigationItemGQL extends Apollo.Mutation<
+  DeleteCustomNavigationItemMutation,
+  DeleteCustomNavigationItemMutationVariables
+> {
+  document = DeleteCustomNavigationItemDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetRolesAndPermissionsDocument = gql`
   query GetRolesAndPermissions {
     allRoles {
@@ -7370,6 +7495,35 @@ export class GetAssignedRolesGQL extends Apollo.Query<
   GetAssignedRolesQueryVariables
 > {
   document = GetAssignedRolesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetNavigationItemsDocument = gql`
+  query getNavigationItems {
+    customNavigationItems {
+      id
+      name
+      type
+      action
+      iconId
+      order
+      url
+      visible
+      path
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetNavigationItemsGQL extends Apollo.Query<
+  GetNavigationItemsQuery,
+  GetNavigationItemsQueryVariables
+> {
+  document = GetNavigationItemsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -7563,6 +7717,27 @@ export class ResendInviteGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const ReorderNavigationItemsDocument = gql`
+  mutation reorderNavigationItems($ids: [String!]!) {
+    updateCustomNavigationItemsOrder(orderedIds: $ids) {
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ReorderNavigationItemsGQL extends Apollo.Mutation<
+  ReorderNavigationItemsMutation,
+  ReorderNavigationItemsMutationVariables
+> {
+  document = ReorderNavigationItemsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const SetCustomPageDocument = gql`
   mutation SetCustomPage(
     $pageType: String!
@@ -7721,6 +7896,47 @@ export class UnassignUserFromRoleGQL extends Apollo.Mutation<
   UnassignUserFromRoleMutationVariables
 > {
   document = UnassignUserFromRoleDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpsertNavigationItemDocument = gql`
+  mutation upsertNavigationItem(
+    $id: String!
+    $name: String!
+    $type: NavigationItemTypeEnum!
+    $visible: Boolean!
+    $iconId: String!
+    $order: Int!
+    $path: String
+    $url: String
+    $action: NavigationItemActionEnum
+  ) {
+    upsertCustomNavigationItem(
+      id: $id
+      name: $name
+      type: $type
+      visible: $visible
+      iconId: $iconId
+      order: $order
+      path: $path
+      url: $url
+      action: $action
+    ) {
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpsertNavigationItemGQL extends Apollo.Mutation<
+  UpsertNavigationItemMutation,
+  UpsertNavigationItemMutationVariables
+> {
+  document = UpsertNavigationItemDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

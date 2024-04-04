@@ -1,0 +1,136 @@
+<header>
+  <h4 class="m-networkAdminConsole__secondaryTitle" i18n="@@COMMON__MENU">
+    Menu
+  </h4>
+  <p
+    class="m-networkAdminConsole__subtitle"
+    i18n="@@NETWORK_ADMIN_NAVIGATION__LIST__SUBTITLE"
+  >
+    You can change the order of navigation items and toggle visibility to
+    prioritize what matters for your community. Create a custom link to a URL to
+    place on the side navigation menu and drive users to your pages. Refresh the
+    page to see your changes in the sidebar.
+  </p>
+  <div class="m-networkAdminConsoleNavigationList__headerButtonsContainer">
+    <a [routerLink]="['../edit']">
+      <m-button color="blue" solid="true" size="small"
+        ><span i18n="@@NETWORK_ADMIN_NAVIGATION__LIST__CREATE_LINK"
+          >Create link</span
+        ></m-button
+      >
+    </a>
+  </div>
+</header>
+
+<ng-container
+  *ngIf="service.allNavigationItems$ | async; else loadingSpinnerTemplate"
+>
+  <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+    <div class="m-form__fieldsContainer containsDragDrop">
+      <div class="m-form__field--grid" formArrayName="navigationItems">
+        <div class="m-form__row--input">
+          <div
+            class="m-networkAdminConsoleNavigationList__row m-networkAdminConsoleNavigationList__headerRow"
+          >
+            <!-- ------------------------------------------- -->
+            <!-- LIST HEADER -->
+            <!-- ------------------------------------------- -->
+            <div class="m-networkAdminConsoleNavigationListItem__cell--name">
+              <h4 i18n="@@NETWORK_ADMIN_CONSOLE_NAVIGATION__LIST__LINK_NAME">
+                Link Name
+              </h4>
+            </div>
+            <div class="m-networkAdminConsoleNavigationListItem__cell--type">
+              <h4 i18n="@@COMMON__TYPE">
+                Type
+              </h4>
+            </div>
+            <div class="m-networkAdminConsoleNavigationListItem__cell--toggle">
+              <h4 i18n="@@NETWORK_ADMIN_CONSOLE_NAVIGATION__LIST__VISIBLE">
+                Visible
+              </h4>
+            </div>
+            <div
+              class="m-networkAdminConsoleNavigationListItem__cell--actions"
+            ></div>
+          </div>
+          <!-- ------------------------------------------- -->
+          <!-- LIST ITEMS  -->
+          <!-- ------------------------------------------- -->
+          <m-draggableList
+            class="m-networkAdminConsoleNavigation__list"
+            [data]="form.value.navigationItems"
+            [id]="'id'"
+            (arrayChanged)="arrayChanged($event)"
+            #draggableEl
+          >
+            <ng-template let-item="item" let-i="i">
+              <div
+                class="m-networkAdminConsoleNavigationList__row"
+                [formGroupName]="i"
+              >
+                <div
+                  class="m-networkAdminConsoleNavigationListItem__cell--name"
+                >
+                  <i
+                    *ngIf="item.id !== 'channel'; else channelAvatar"
+                    class="material-icons"
+                    >{{ item.iconId }}</i
+                  >
+                  <ng-template #channelAvatar>
+                    <img [src]="channelAvatarUrl" alt="" />
+                  </ng-template>
+                  <span>{{ item.name }}</span>
+                </div>
+                <div
+                  class="m-networkAdminConsoleNavigationListItem__cell--type"
+                >
+                  <span>{{
+                    item.type === NavigationItemTypeEnum.CustomLink
+                      ? 'URL Link'
+                      : 'Core'
+                  }}</span>
+                </div>
+                <div
+                  class="m-networkAdminConsoleNavigationListItem__cell--toggle"
+                >
+                  <m-toggle
+                    [mModel]="item.visible ? 'on' : 'off'"
+                    (mModelChange)="toggleVisibility(i)"
+                    [disabled]="service.savingNavigationItem$ | async"
+                    leftValue="off"
+                    rightValue="on"
+                    offState="off"
+                  >
+                  </m-toggle>
+                </div>
+                <div
+                  class="m-networkAdminConsoleNavigationListItem__cell--actions"
+                >
+                  <a [routerLink]="['../edit']" [queryParams]="{ id: item.id }">
+                    <m-button
+                      *ngIf="item.id !== 'channel'"
+                      iconOnly="true"
+                      title="Edit"
+                      ><i class="material-icons">edit</i></m-button
+                    >
+                  </a>
+                  <m-button
+                    *ngIf="item.type === NavigationItemTypeEnum.CustomLink"
+                    (onAction)="deleteCustomItem(item)"
+                    iconOnly="true"
+                    title="Delete"
+                    ><i class="material-icons">clear</i>
+                  </m-button>
+                </div>
+              </div>
+            </ng-template>
+          </m-draggableList>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

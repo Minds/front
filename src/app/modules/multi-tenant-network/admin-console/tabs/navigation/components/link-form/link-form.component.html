@@ -1,0 +1,169 @@
+<ng-container
+  *ngIf="
+    (service.allNavigationItems$ | async).length;
+    else loadingSpinnerTemplate
+  "
+>
+  <header class="m-networkAdminNavigationEditForm__header">
+    <div class="m-networkAdminNavigationEditForm__headerTitleRow">
+      <i
+        routerLink="../list"
+        class="material-icons m-networkAdminNavigationEditForm__headerIcon"
+        >arrow_back</i
+      >
+      <h3
+        [ngSwitch]="view"
+        class="m-networkAdminNavigationEditForm__headerTitle"
+      >
+        <ng-container
+          *ngSwitchCase="NavigationLinkFormView.CREATE_CUSTOM_LINK"
+          i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__CREATE_CUSTOM_LINK"
+          >Create custom link</ng-container
+        >
+        <ng-container
+          *ngSwitchCase="NavigationLinkFormView.EDIT_CUSTOM_LINK"
+          i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__EDIT_CUSTOM_LINK"
+          >Edit custom link</ng-container
+        >
+        <ng-container
+          *ngSwitchCase="NavigationLinkFormView.EDIT_CORE_LINK"
+          i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__EDIT_CORE_LINK"
+          >Edit core link</ng-container
+        >
+      </h3>
+    </div>
+    <p
+      class="m-networkAdminNavigationEditForm__headerDescription"
+      [ngSwitch]="view"
+    >
+      <ng-container
+        *ngSwitchCase="NavigationLinkFormView.CREATE_CUSTOM_LINK"
+        i18n=" @@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__CREATE_DESCRIPTION "
+        >Enhance your site navigation by adding a custom link. This feature lets
+        you direct users to a chosen URL, providing quick access and
+        highlighting important content. Tailor your site by creating distinct
+        links that capture the uniqueness of your network and draw users'
+        attention.</ng-container
+      >
+      <ng-container
+        *ngSwitchCase="NavigationLinkFormView.EDIT_CUSTOM_LINK"
+        i18n=" @@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__CUSTOM_LINK_DESCRIPTION "
+        >Add an external link to your website and place it in the side
+        navigation to draw users' attention.</ng-container
+      >
+      <ng-container
+        *ngSwitchCase="NavigationLinkFormView.EDIT_CORE_LINK"
+        i18n=" @@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__CORE_DESCRIPTION "
+        >Customize the link title and icon to guide users on your network with
+        your own personalization.</ng-container
+      >
+    </p>
+  </header>
+  <!-- --------------------------------- -->
+  <form [formGroup]="linkForm" class="m-form m-formWrapper">
+    <div class="m-form__fieldsContainer">
+      <!-- ------------------------------------------ -->
+      <!-- TITLE -->
+      <!-- ------------------------------------------ -->
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label
+            for="name"
+            i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__LINK_TITLE"
+            >Link title</label
+          >
+        </div>
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            formControlName="name"
+            required
+            autofocus
+          />
+        </div>
+      </div>
+      <!-- ------------------------------------------ -->
+      <!-- ICON -->
+      <!-- ------------------------------------------ -->
+      <div class="m-form__field--iconSelector">
+        <div
+          class="m-form__row--label m-networkAdminNavigationEditFormLabel--bold"
+        >
+          <label
+            for="iconId"
+            i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__CUSTOMIZE_ICON"
+            >Customize icon</label
+          >
+        </div>
+        <div class="m-networkAdminNavigationEditForm__iconSelectorInputRow">
+          <m-button color="blue" size="small" (click)="openIconSelectorModal()"
+            ><span i18n="@@NETWORK_ADMIN_NAVIGATION_EDIT_FORM__SELECT_ICON">{{
+              linkForm.get('iconId')?.value
+                ? 'Change icon'
+                : 'Select
+            icon'
+            }}</span></m-button
+          >
+          <m-selectableIcon
+            *ngIf="linkForm.get('iconId')?.value"
+            [iconId]="linkForm.get('iconId')?.value"
+            (click)="openIconSelectorModal()"
+          >
+          </m-selectableIcon>
+        </div>
+      </div>
+      <!-- ------------------------------------------ -->
+      <!-- PATH / URL -->
+      <!-- ------------------------------------------ -->
+      <div
+        class="m-form__field--text stretchedField"
+        [ngClass]="{
+          'm-networkAdminNavigationEditFor__field--disabled':
+            itemType === NavigationItemTypeEnum.Core
+        }"
+      >
+        <div
+          class="m-form__row--label m-networkAdminNavigationEditFormLabel--bold"
+        >
+          <label for="pathOrUrl">{{
+            itemType === NavigationItemTypeEnum.Core ? 'Path' : 'URL'
+          }}</label>
+        </div>
+        <p class="m-networkAdminNavigationEditForm__headerDescription">
+          {{ itemType === NavigationItemTypeEnum.Core ? 'Path' : 'URL' }} where
+          your link will take a user to.
+        </p>
+        <div class="m-form__row--label">
+          <label for="pathOrUrl">{{
+            itemType === NavigationItemTypeEnum.Core ? 'Path' : 'URL'
+          }}</label>
+        </div>
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            id="pathOrUrl"
+            class="form-control"
+            formControlName="pathOrUrl"
+            required
+          />
+        </div>
+      </div>
+      <!-- ------------------------------------------ -->
+      <m-button
+        class="m-networkAdminNavigationEditForm__saveButton"
+        size="small"
+        [solid]="true"
+        color="blue"
+        (onAction)="onSubmit()"
+        [saving]="service.savingNavigationItem$ | async"
+        [disabled]="linkForm.invalid"
+        ><span i18n="@@COMMON__SAVE">Save</span></m-button
+      >
+    </div>
+  </form>
+</ng-container>
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

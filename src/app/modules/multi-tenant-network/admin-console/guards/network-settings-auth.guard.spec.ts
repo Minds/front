@@ -74,8 +74,9 @@ describe('NetworkSettingsAuthGuard', () => {
       );
     });
 
-    it('should NOT be able to activate when user is NOT admin on tenant network', () => {
+    it('should NOT be able to activate when user is NOT admin and does NOT have canModerateContent permission on tenant network', () => {
       sessionMock.isAdmin.and.returnValue(false);
+      permissionsMock.canModerateContent.and.returnValue(false);
       configsMock.get.and.returnValue(true);
 
       expect(
@@ -144,5 +145,23 @@ describe('NetworkSettingsAuthGuard', () => {
         'You do not have permission to access this route.'
       );
     });
+  });
+
+  it('should redirect to moderation reports for non-admin tenant users with canModerateContent permission on non-moderation route', () => {
+    configsMock.get.and.returnValue(true);
+    sessionMock.isAdmin.and.returnValue(false);
+    permissionsMock.canModerateContent.and.returnValue(true);
+    mockRouterStateSnapshot.url = '/network/admin/general';
+
+    const canActivate = service.canActivate(
+      mockActivatedRouteSnapshot,
+      mockRouterStateSnapshot
+    );
+
+    expect(canActivate).toBeFalse();
+    expect(routerMock.navigate).toHaveBeenCalledWith([
+      '/network/admin/moderation/reports',
+    ]);
+    expect(toasterServiceMock.warn).not.toHaveBeenCalled();
   });
 });

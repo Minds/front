@@ -32,312 +32,305 @@
 
     <!-- Reorganised order variation -->
     <ul class="m-sidebarNavigation__list">
-      <!-- Newsfeed -->
-      <li
-        class="m-sidebarNavigation__item"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        *ngIf="user"
-      >
-        <a
-          [routerLink]="['/newsfeed/subscriptions']"
-          (click)="toggle()"
-          data-ref="sidenav-newsfeed"
-        >
-          <div class="m-sidebarNavigationItem__hoverArea">
-            <i class="material-icons">home</i>
-            <span
-              class="m-sidebarNavigationItem__text m-legible"
-              i18n="@@COMMON__NEWSFEED"
-              >Newsfeed</span
+      <!-- ------------------------------------------ -->
+      <!-- TENANTS ONLY (CUSTOM NAV)-->
+      <!-- ------------------------------------------ -->
+      <ng-container *mIfTenant="true">
+        <ng-container *ngFor="let item of customNavItems">
+          <ng-container
+            *ngIf="item.visible && !hiddenCustomNavItemsIds.includes(item.id)"
+          >
+            <li
+              *ngIf="item.id !== 'channel'"
+              class="m-sidebarNavigation__item"
+              [routerLinkActive]="'m-sidebarNavigation__item--active'"
+              [routerLinkActiveOptions]="{
+                exact: customNavItemsRequiringExactRouteMatchIds.includes(
+                  item.id
+                )
+              }"
             >
-          </div>
-        </a>
-      </li>
+              <a
+                *ngIf="item.path"
+                [routerLink]="[item.path]"
+                (click)="toggle()"
+                [data-ref]="'sidenav-' + item.id"
+              >
+                <ng-container
+                  [ngTemplateOutlet]="customNavLinkInterior"
+                  [ngTemplateOutletContext]="{ item: item }"
+                ></ng-container>
+              </a>
+              <a
+                *ngIf="item.url"
+                [href]="item.url"
+                (click)="toggle()"
+                [data-ref]="'sidenav-' + item.id"
+              >
+                <ng-container
+                  [ngTemplateOutlet]="customNavLinkInterior"
+                  [ngTemplateOutletContext]="{ item: item }"
+                ></ng-container>
+              </a>
+            </li>
+            <ng-container *ngIf="item.id === 'channel'">
+              <ng-container *ngTemplateOutlet="channelNavItem"></ng-container>
+            </ng-container>
 
-      <!-- Explore -->
-      <li
-        class="m-sidebarNavigation__item"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        [routerLinkActiveOptions]="{
-          exact: plusPageActive || (!user && isTenantNetwork)
-        }"
-      >
-        <a
-          [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
-          (click)="toggle(); discoveryLinkClicked = true"
-          data-ref="sidenav-discovery"
-        >
-          <div class="m-sidebarNavigationItem__hoverArea">
-            <m-sidebarNavigation__newContentDot
-              [discoveryLinkClicked]="discoveryLinkClicked"
-            ></m-sidebarNavigation__newContentDot>
-            <i class="material-icons m-sidebarNavigation__hashIcon">#</i>
-            <span class="m-sidebarNavigationItem__text m-legible">
-              <ng-container i18n="@@COMMON__EXPLORE">Explore</ng-container>
-            </span>
-          </div>
-        </a>
-      </li>
-
-      <!-- Boost -->
-      <li
-        *mIfTenant="false"
-        class="m-sidebarNavigation__item m-sidebarNavigation__item--boost"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-      >
-        <a
-          [routerLink]="['/boost/boost-console']"
-          (click)="toggle()"
-          data-ref="sidenav-boost"
-        >
-          <div class="m-sidebarNavigationItem__hoverArea">
-            <i class="material-icons">trending_up</i>
-            <span
-              class="m-sidebarNavigationItem__text m-legible"
-              i18n="@@COMMON__BOOST"
-              >Boost</span
-            >
-          </div>
-        </a>
-      </li>
-
-      <!-- Minds+ -->
-      <li
-        *mIfTenant="false"
-        class="m-sidebarNavigation__item"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        [routerLinkActiveOptions]="{ exact: !plusPageActive }"
-      >
-        <a
-          routerLink="/discovery/plus/overview"
-          (click)="toggle()"
-          data-ref="sidenav-plus"
-        >
-          <div class="m-sidebarNavigationItem__hoverArea">
-            <i class="material-icons">add_to_queue</i>
-            <span
-              class="m-sidebarNavigationItem__text m-legible"
-              i18n="@@COMMON__MINDS+"
-              >Minds+</span
-            >
-          </div>
-        </a>
-      </li>
-
-      <!-- Supermind -->
-      <li
-        *mIfTenant="false"
-        class="m-sidebarNavigation__item m-sidebarNavigation__item--supermind"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-      >
-        <a
-          routerLink="/supermind"
-          (click)="toggle()"
-          data-ref="sidenav-supermind"
-        >
-          <div class="m-sidebarNavigationItem__hoverArea">
-            <i class="material-icons">tips_and_updates</i>
-            <span
-              class="m-sidebarNavigationItem__text m-legible"
-              i18n="@@COMMON__SUPERMIND"
-              >Supermind</span
-            >
-          </div>
-        </a>
-      </li>
-
-      <!-- Wallet -->
+            <ng-template #customNavLinkInterior let-item="item">
+              <div class="m-sidebarNavigationItem__hoverArea">
+                <i class="material-icons">{{ item?.iconId }}</i>
+                <span class="m-sidebarNavigationItem__text m-legible">{{
+                  item?.name
+                }}</span>
+              </div>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <!-- ------------------------------------------ -->
+      <!-- MINDS ONLY -->
+      <!-- ------------------------------------------ -->
       <ng-container *mIfTenant="false">
+        <!-- Newsfeed -->
         <li
           class="m-sidebarNavigation__item"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           *ngIf="user"
         >
           <a
-            [routerLink]="['/wallet']"
+            [routerLink]="['/newsfeed/subscriptions']"
             (click)="toggle()"
-            data-ref="sidenav-wallet"
+            data-ref="sidenav-newsfeed"
           >
             <div class="m-sidebarNavigationItem__hoverArea">
-              <i class="material-icons">account_balance</i>
+              <i class="material-icons">home</i>
               <span
                 class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__WALLET"
-                >Wallet</span
+                i18n="@@COMMON__NEWSFEED"
+                >Newsfeed</span
               >
             </div>
           </a>
         </li>
-      </ng-container>
 
-      <!-- Affiliate -->
-      <li
-        *mIfTenant="false"
-        class="m-sidebarNavigation__item"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-      >
-        <a
-          [routerLink]="['/settings/affiliates-program']"
-          (click)="toggle()"
-          data-ref="sidenav-affiliates"
+        <!-- Explore -->
+        <li
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{
+            exact: plusPageActive || (!user && isTenantNetwork)
+          }"
         >
-          <div class="m-sidebarNavigationItem__hoverArea">
-            <i class="material-icons">volunteer_activism</i>
-            <span
-              class="m-sidebarNavigationItem__text m-legible"
-              i18n="@@COMMON__AFFILIATE"
-              >Affiliate</span
+          <a
+            [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
+            (click)="toggle(); discoveryLinkClicked = true"
+            data-ref="sidenav-discovery"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <m-sidebarNavigation__newContentDot
+                [discoveryLinkClicked]="discoveryLinkClicked"
+              ></m-sidebarNavigation__newContentDot>
+              <i class="material-icons m-sidebarNavigation__hashIcon">#</i>
+              <span class="m-sidebarNavigationItem__text m-legible">
+                <ng-container i18n="@@COMMON__EXPLORE">Explore</ng-container>
+              </span>
+            </div>
+          </a>
+        </li>
+
+        <!-- Boost -->
+        <li
+          *mIfTenant="false"
+          class="m-sidebarNavigation__item m-sidebarNavigation__item--boost"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        >
+          <a
+            [routerLink]="['/boost/boost-console']"
+            (click)="toggle()"
+            data-ref="sidenav-boost"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">trending_up</i>
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__BOOST"
+                >Boost</span
+              >
+            </div>
+          </a>
+        </li>
+
+        <!-- Minds+ -->
+        <li
+          *mIfTenant="false"
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: !plusPageActive }"
+        >
+          <a
+            routerLink="/discovery/plus/overview"
+            (click)="toggle()"
+            data-ref="sidenav-plus"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">add_to_queue</i>
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__MINDS+"
+                >Minds+</span
+              >
+            </div>
+          </a>
+        </li>
+
+        <!-- Supermind -->
+        <li
+          *mIfTenant="false"
+          class="m-sidebarNavigation__item m-sidebarNavigation__item--supermind"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        >
+          <a
+            routerLink="/supermind"
+            (click)="toggle()"
+            data-ref="sidenav-supermind"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">tips_and_updates</i>
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__SUPERMIND"
+                >Supermind</span
+              >
+            </div>
+          </a>
+        </li>
+
+        <!-- Wallet -->
+        <ng-container *mIfTenant="false">
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            *ngIf="user"
+          >
+            <a
+              [routerLink]="['/wallet']"
+              (click)="toggle()"
+              data-ref="sidenav-wallet"
             >
-          </div>
-        </a>
-      </li>
+              <div class="m-sidebarNavigationItem__hoverArea">
+                <i class="material-icons">account_balance</i>
+                <span
+                  class="m-sidebarNavigationItem__text m-legible"
+                  i18n="@@COMMON__WALLET"
+                  >Wallet</span
+                >
+              </div>
+            </a>
+          </li>
+        </ng-container>
 
-      <!-- Groups -->
-      <ng-container>
+        <!-- Affiliate -->
         <li
-          class="m-sidebarNavigation__item m-sidebarNavigation__item--groups"
+          *mIfTenant="false"
+          class="m-sidebarNavigation__item"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          [routerLinkActiveOptions]="{ exact: true }"
         >
           <a
-            [routerLink]="['/groups/memberships']"
+            [routerLink]="['/settings/affiliates-program']"
             (click)="toggle()"
-            data-ref="sidenav-groups"
+            data-ref="sidenav-affiliates"
           >
             <div class="m-sidebarNavigationItem__hoverArea">
-              <i class="material-icons">group</i>
+              <i class="material-icons">volunteer_activism</i>
               <span
                 class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__GROUPS"
-                >Groups</span
+                i18n="@@COMMON__AFFILIATE"
+                >Affiliate</span
               >
             </div>
           </a>
         </li>
-      </ng-container>
 
-      <!-- Memberships -->
-      <ng-container *ngIf="shouldShowMembershipsLink$ | async">
-        <li
-          class="m-sidebarNavigation__item m-sidebarNavigation__item--memberships"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a
-            [routerLink]="['/memberships']"
-            (click)="toggle()"
-            data-ref="sidenav-memberships"
+        <!-- Groups -->
+        <ng-container>
+          <li
+            class="m-sidebarNavigation__item m-sidebarNavigation__item--groups"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            [routerLinkActiveOptions]="{ exact: true }"
           >
-            <div class="m-sidebarNavigationItem__hoverArea">
-              <i class="material-icons">verified</i>
-              <span
-                class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__MEMBERSHIPS"
-                >Memberships</span
-              >
-            </div>
-          </a>
-        </li>
-      </ng-container>
+            <a
+              [routerLink]="['/groups/memberships']"
+              (click)="toggle()"
+              data-ref="sidenav-groups"
+            >
+              <div class="m-sidebarNavigationItem__hoverArea">
+                <i class="material-icons">group</i>
+                <span
+                  class="m-sidebarNavigationItem__text m-legible"
+                  i18n="@@COMMON__GROUPS"
+                  >Groups</span
+                >
+              </div>
+            </a>
+          </li>
+        </ng-container>
 
-      <!-- Networks list (on minds.com)-->
-      <ng-container *mIfTenant="false">
-        <li
-          *ngIf="showNetworksLink"
-          class="m-sidebarNavigation__item m-sidebarNavigation__item--networks"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a
-            [routerLink]="isLoggedIn() ? ['/networks'] : ['/about/networks']"
-            (click)="toggle()"
-            data-ref="sidenav-networks-list"
+        <!-- Networks list (on minds.com)-->
+        <ng-container *mIfTenant="false">
+          <li
+            *ngIf="showNetworksLink"
+            class="m-sidebarNavigation__item m-sidebarNavigation__item--networks"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            [routerLinkActiveOptions]="{ exact: true }"
           >
-            <div class="m-sidebarNavigationItem__hoverArea">
-              <i class="material-icons">dashboard</i>
-              <span
-                class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__NETWORKS"
-                >Networks</span
-              >
-            </div>
-          </a>
-        </li>
-      </ng-container>
-      <!-- Network admin (on tenant sites) -->
-      <ng-container *ngIf="showTenantAdminLink()">
-        <li
-          class="m-sidebarNavigation__item m-sidebarNavigation__item--network"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        >
-          <a
-            [routerLink]="
-              this.user?.is_admin
-                ? ['/network/admin']
-                : ['/network/admin/moderation/reports']
-            "
-            (click)="toggle()"
-            data-ref="sidenav-network-admin"
+            <a
+              [routerLink]="isLoggedIn() ? ['/networks'] : ['/about/networks']"
+              (click)="toggle()"
+              data-ref="sidenav-networks-list"
+            >
+              <div class="m-sidebarNavigationItem__hoverArea">
+                <i class="material-icons">dashboard</i>
+                <span
+                  class="m-sidebarNavigationItem__text m-legible"
+                  i18n="@@COMMON__NETWORKS"
+                  >Networks</span
+                >
+              </div>
+            </a>
+          </li>
+        </ng-container>
+        <!-- Upgrade -->
+        <ng-container *mIfTenant="false">
+          <li
+            *ngIf="user"
+            class="m-sidebarNavigation__item m-sidebarNavigation__item--upgrade"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            [routerLinkActiveOptions]="{ exact: true }"
           >
-            <div class="m-sidebarNavigationItem__hoverArea">
-              <i class="material-icons">dashboard</i>
-              <span
-                class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__ADMIN"
-                >Admin</span
-              >
-            </div>
-          </a>
-        </li>
-      </ng-container>
+            <a
+              [routerLink]="['/upgrade']"
+              (click)="toggle()"
+              data-ref="sidenav-upgrade"
+            >
+              <div class="m-sidebarNavigationItem__hoverArea">
+                <i class="material-icons">verified</i>
+                <span
+                  class="m-sidebarNavigationItem__text m-legible"
+                  i18n="@@COMMON__UPGRADE"
+                  >Upgrade</span
+                >
+              </div>
+            </a>
+          </li>
+        </ng-container>
 
-      <!-- Upgrade -->
-      <ng-container *mIfTenant="false">
-        <li
-          *ngIf="user"
-          class="m-sidebarNavigation__item m-sidebarNavigation__item--upgrade"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a
-            [routerLink]="['/upgrade']"
-            (click)="toggle()"
-            data-ref="sidenav-upgrade"
-          >
-            <div class="m-sidebarNavigationItem__hoverArea">
-              <i class="material-icons">verified</i>
-              <span
-                class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__UPGRADE"
-                >Upgrade</span
-              >
-            </div>
-          </a>
-        </li>
+        <!-- User's channel -->
+        <ng-container *ngTemplateOutlet="channelNavItem"></ng-container>
       </ng-container>
-
-      <!-- User's channel -->
-      <li
-        *ngIf="user"
-        class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-      >
-        <a
-          [routerLink]="['/' + user.username]"
-          (click)="toggle()"
-          data-ref="sidenav-channel"
-        >
-          <div class="m-sidebarNavigationItem__hoverArea">
-            <img
-              [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
-              alt=""
-            />
-            <span class="m-sidebarNavigationItem__text m-legible">
-              @{{ user.username }}
-            </span>
-          </div>
-        </a>
-      </li>
+      <!-- ------------------------------------------ -->
+      <!-- END MINDS ONLY -->
+      <!-- ------------------------------------------ -->
 
       <!-- Click event is handled by popperjs inside trigger component -->
       <m-sidebarMore__trigger (toggle)="onSidebarMoreToggle($event)">
@@ -401,3 +394,28 @@
   *ngIf="isOpened && layoutMode === 'phone'"
   (click)="toggle()"
 ></div>
+
+<!-- Channel template  -->
+<ng-template #channelNavItem>
+  <li
+    *ngIf="user"
+    class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
+    [routerLinkActive]="'m-sidebarNavigation__item--active'"
+  >
+    <a
+      [routerLink]="['/' + user.username]"
+      (click)="toggle()"
+      data-ref="sidenav-channel"
+    >
+      <div class="m-sidebarNavigationItem__hoverArea">
+        <img
+          [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
+          alt=""
+        />
+        <span class="m-sidebarNavigationItem__text m-legible">
+          @{{ user.username }}
+        </span>
+      </div>
+    </a>
+  </li>
+</ng-template>
