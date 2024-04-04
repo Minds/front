@@ -169,8 +169,10 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
       this.onResize();
     }
 
+    this.isLoggedIn = this.session.isLoggedIn();
+
     if (this.isTenantNetwork) {
-      this.prepareContextualCustomNavItems();
+      this.prepareCustomNavItems();
     }
 
     this.settingsLink = '/settings';
@@ -206,7 +208,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
         }),
       this.session.loggedinEmitter?.subscribe(user => {
         this.isLoggedIn = !!user;
-        this.prepareContextualCustomNavItems();
+        this.prepareCustomNavItems();
       }),
       this.shouldShowMembershipsLink$.subscribe(should => {
         // Only show the memberships link when the site has memberships
@@ -374,7 +376,10 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   /**
    * Perform various tasks that adjust the presentation and visibility of finicky custom nav items
    */
-  prepareContextualCustomNavItems() {
+  prepareCustomNavItems() {
+    if (!this.isTenantNetwork) {
+      return;
+    }
     this.updateActiveRouteMatchOptions();
     this.syncNavItemsWithUserState();
     this.customNavItems = this.adjustLinkPathsForUser(

@@ -260,14 +260,6 @@ export class SettingsV2Component implements OnInit {
             id: 'assets',
           },
           {
-            label: $localize`:@@SETTINGS__PRO__HASHTAGS__LABEL:Hashtags`,
-            id: 'hashtags',
-          },
-          {
-            label: $localize`:@@SETTINGS__PRO__FOOTER__LABEL:Footer`,
-            id: 'footer',
-          },
-          {
             label: $localize`:@@SETTINGS__PRO__DOMAIN__LABEL:Domain`,
             id: 'domain',
           },
