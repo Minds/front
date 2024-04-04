@@ -12,10 +12,15 @@ import { MockComponent, MockService } from '../../../../../utils/mock';
 import {
   ChatMessageEdge,
   CreateChatMessageGQL,
+  GetChatMessagesDocument,
 } from '../../../../../../graphql/generated.engine';
-import { ChatMessagesService } from '../../../services/chat-messages.service';
+import {
+  ChatMessagesService,
+  PAGE_SIZE,
+} from '../../../services/chat-messages.service';
 import { ThemeService } from '../../../../../common/services/theme.service';
 import { of } from 'rxjs';
+import { mockChatMessageEdge } from '../../../../../mocks/chat.mock';
 
 describe('ChatRoomBottomBarComponent', () => {
   let comp: ChatRoomBottomBarComponent;
@@ -102,13 +107,17 @@ describe('ChatRoomBottomBarComponent', () => {
       (comp as any).onSubmit();
       tick();
 
-      expect((comp as any).createMessageGQL.mutate).toHaveBeenCalledWith({
-        plainText: testMessage,
-        roomGuid: roomGuid,
-      });
+      expect((comp as any).createMessageGQL.mutate).toHaveBeenCalledWith(
+        {
+          plainText: testMessage,
+          roomGuid: roomGuid,
+        },
+        { update: jasmine.any(Function) }
+      );
       expect(
-        (comp as any).chatMessageService.appendChatMessage
-      ).toHaveBeenCalledWith(chatMessageEdge);
+        (comp as any).chatMessageService.requestScrollToBottom
+      ).toHaveBeenCalled();
+
       expect((comp as any).formGroup.get('message').value).toBe('');
       expect((comp as any).formGroup.get('message').pristine).toBeTrue();
       expect((comp as any).formGroup.get('message').untouched).toBeTrue();
@@ -123,7 +132,7 @@ describe('ChatRoomBottomBarComponent', () => {
 
       expect((comp as any).createMessageGQL.mutate).not.toHaveBeenCalled();
       expect(
-        (comp as any).chatMessageService.appendChatMessage
+        (comp as any).chatMessageService.requestScrollToBottom
       ).not.toHaveBeenCalled();
     }));
 
@@ -142,12 +151,15 @@ describe('ChatRoomBottomBarComponent', () => {
       (comp as any).onSubmit();
       tick();
 
-      expect((comp as any).createMessageGQL.mutate).toHaveBeenCalledWith({
-        plainText: testMessage,
-        roomGuid: roomGuid,
-      });
+      expect((comp as any).createMessageGQL.mutate).toHaveBeenCalledWith(
+        {
+          plainText: testMessage,
+          roomGuid: roomGuid,
+        },
+        { update: jasmine.any(Function) }
+      );
       expect(
-        (comp as any).chatMessageService.appendChatMessage
+        (comp as any).chatMessageService.requestScrollToBottom
       ).not.toHaveBeenCalled();
       expect((comp as any).toaster.error).toHaveBeenCalled();
       expect((comp as any).formGroup.get('message').value).toBe(testMessage);
@@ -177,13 +189,16 @@ describe('ChatRoomBottomBarComponent', () => {
       });
       tick();
 
-      expect((comp as any).createMessageGQL.mutate).toHaveBeenCalledWith({
-        plainText: testMessage,
-        roomGuid: roomGuid,
-      });
+      expect((comp as any).createMessageGQL.mutate).toHaveBeenCalledWith(
+        {
+          plainText: testMessage,
+          roomGuid: roomGuid,
+        },
+        { update: jasmine.any(Function) }
+      );
       expect(
-        (comp as any).chatMessageService.appendChatMessage
-      ).toHaveBeenCalledWith(chatMessageEdge);
+        (comp as any).chatMessageService.requestScrollToBottom
+      ).toHaveBeenCalled();
       expect((comp as any).formGroup.get('message').value).toBe('');
       expect((comp as any).formGroup.get('message').pristine).toBeTrue();
       expect((comp as any).formGroup.get('message').untouched).toBeTrue();
@@ -195,5 +210,55 @@ describe('ChatRoomBottomBarComponent', () => {
 
       expect((comp as any).createMessageGQL.mutate).not.toHaveBeenCalled();
     }));
+  });
+
+  describe('handleCreateMessageUpdate', () => {
+    it('should handle create message update', () => {
+      const cachedEdges: ChatMessageEdge[] = [
+        {
+          ...mockChatMessageEdge,
+          id: '1',
+        },
+      ];
+      const newEdge: ChatMessageEdge = {
+        ...mockChatMessageEdge,
+        id: '2',
+      };
+      const readQueryResponse = {
+        chatMessages: {
+          edges: cachedEdges,
+        },
+      };
+
+      const cache: any = {
+        readQuery: jasmine.createSpy().and.returnValue(readQueryResponse),
+        writeQuery: jasmine.createSpy().and.returnValue(true),
+      };
+
+      const data: any = {
+        data: {
+          createChatMessage: newEdge,
+        },
+      };
+
+      (comp as any).handleCreateMessageUpdate(cache, { data });
+
+      expect(cache.readQuery).toHaveBeenCalledWith({
+        query: GetChatMessagesDocument,
+        variables: {
+          first: PAGE_SIZE,
+          roomGuid: (comp as any).roomGuid,
+        },
+      });
+      expect(cache.writeQuery).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          query: GetChatMessagesDocument,
+          variables: {
+            first: PAGE_SIZE,
+            roomGuid: (comp as any).roomGuid,
+          },
+        })
+      );
+    });
   });
 });

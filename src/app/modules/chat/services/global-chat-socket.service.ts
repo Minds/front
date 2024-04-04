@@ -19,7 +19,7 @@ import { Session } from '../../../services/session';
 const CHAT_POLLING_INTERVAL = 600 * 1000; // 10m
 
 /** Prefix for chat room names. */
-const CHAT_ROOM_NAME_PREFIX: string = 'chat:';
+export const CHAT_ROOM_NAME_PREFIX: string = 'chat:';
 
 /** Chat room event. */
 export type ChatRoomEvent = {

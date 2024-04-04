@@ -29,23 +29,7 @@ export class ChatReceiptService implements OnDestroy {
     private apollo: Apollo,
     private session: Session
   ) {
-    this.socketEventSubscription = this.globalChatSocketService.globalEvents$.subscribe(
-      (event: ChatRoomEvent): void => {
-        const senderGuid: number = event.data?.['metadata']?.['senderGuid'];
-        const loggedInUserGuid: number = Number(
-          this.session.getLoggedInUser()?.guid
-        );
-
-        if (!loggedInUserGuid) {
-          return;
-        }
-
-        if (senderGuid !== loggedInUserGuid) {
-          this.getQueryRef().refetch();
-          this.updateRoomsListCache(event.roomGuid);
-        }
-      }
-    );
+    this.initSocketSubscription();
   }
 
   ngOnDestroy(): void {
@@ -120,5 +104,33 @@ export class ChatReceiptService implements OnDestroy {
       },
       data: newValue,
     });
+  }
+
+  /**
+   * Initializes the socket subscription to listen for new messages.
+   * @returns { void }
+   */
+  private initSocketSubscription(): void {
+    this.socketEventSubscription = this.globalChatSocketService.globalEvents$.subscribe(
+      (event: ChatRoomEvent): void => {
+        if (!event.data || event['type'] !== 'NEW_MESSAGE') {
+          return;
+        }
+
+        const senderGuid: number = event.data?.['metadata']?.['senderGuid'];
+        const loggedInUserGuid: number = Number(
+          this.session.getLoggedInUser()?.guid
+        );
+
+        if (!loggedInUserGuid) {
+          return;
+        }
+
+        if (senderGuid !== loggedInUserGuid) {
+          this.getQueryRef().refetch();
+          this.updateRoomsListCache(event.roomGuid);
+        }
+      }
+    );
   }
 }

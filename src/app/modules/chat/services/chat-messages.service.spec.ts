@@ -1,16 +1,22 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { ChatMessagesService } from './chat-messages.service';
+import { ChatMessagesService, PAGE_SIZE } from './chat-messages.service';
 import {
   DeleteChatMessageGQL,
+  GetChatMessagesDocument,
   GetChatMessagesGQL,
   GetChatMessagesQuery,
 } from '../../../../graphql/generated.engine';
 import { MockService } from '../../../utils/mock';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, Subject, of } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client';
 import { mockChatMessageEdge } from '../../../mocks/chat.mock';
+import { Session } from '../../../services/session';
+import {
+  ChatRoomEvent,
+  GlobalChatSocketService,
+} from './global-chat-socket.service';
 
 const DEFAULT_ROOM_GUID: string = '1234567890';
 
@@ -47,6 +53,11 @@ describe('ChatMessagesService', () => {
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: Router, useValue: MockService(Router) },
+        {
+          provide: GlobalChatSocketService,
+          useValue: MockService(GlobalChatSocketService),
+        },
+        { provide: Session, useValue: MockService(Session) },
       ],
     });
 
@@ -59,6 +70,9 @@ describe('ChatMessagesService', () => {
       >(mockResponse),
       fetchMore: jasmine.createSpy('fetchMore'),
     });
+    (service as any).globalChatSocketService.getEventsByChatRoomGuid.and.returnValue(
+      new Subject<ChatRoomEvent>()
+    );
     service.init(DEFAULT_ROOM_GUID);
   });
 
@@ -139,15 +153,6 @@ describe('ChatMessagesService', () => {
     });
   });
 
-  it('should append a chat message', () => {
-    (service as any)._edges$.next([mockChatMessageEdge]);
-    service.appendChatMessage(mockChatMessageEdge);
-    expect((service as any)._edges$.getValue()).toEqual([
-      mockChatMessageEdge,
-      mockChatMessageEdge,
-    ]);
-  });
-
   describe('removeChatMessage', () => {
     it('should remove a chat message', fakeAsync(() => {
       (service as any)._edges$.next([mockChatMessageEdge]);
@@ -186,5 +191,126 @@ describe('ChatMessagesService', () => {
       ]);
       expect((service as any).toaster.error).toHaveBeenCalledWith('error');
     }));
+  });
+
+  describe('fetchNew', () => {
+    it('should fetch new messages', () => {
+      (service as any).queryRef.subscribeToMore = jasmine.createSpy(
+        'subscribeToMore'
+      );
+      (service as any).queryRef.variables = { roomGuid: DEFAULT_ROOM_GUID };
+
+      (service as any).fetchNew();
+
+      expect((service as any).queryRef.subscribeToMore).toHaveBeenCalledWith({
+        document: GetChatMessagesDocument,
+        variables: {
+          roomGuid: (service as any).queryRef.variables.roomGuid,
+          after: (service as any).endCursor,
+          first: PAGE_SIZE,
+        },
+        updateQuery: jasmine.any(Function),
+      });
+    });
+  });
+
+  describe('updateCacheWithNewMessage', () => {
+    it('should return updated cache value with a new message', () => {
+      const newStartCursor: string = 'newStartCursor';
+      const chatMessageEdge1 = {
+        ...mockChatMessageEdge,
+        id: '1',
+      };
+      const chatMessageEdge2 = {
+        ...mockChatMessageEdge,
+        id: '2',
+      };
+      const prev: GetChatMessagesQuery = {
+        chatMessages: {
+          edges: [chatMessageEdge1],
+          pageInfo: {
+            hasPreviousPage: false,
+            startCursor: newStartCursor,
+            endCursor: null,
+            hasNextPage: false,
+          },
+        },
+      };
+
+      expect(
+        (service as any).updateCacheWithNewMessage(prev, {
+          subscriptionData: {
+            data: {
+              chatMessages: {
+                edges: [chatMessageEdge2],
+                pageInfo: {
+                  hasPreviousPage: false,
+                  startCursor: null,
+                  endCursor: null,
+                  hasNextPage: false,
+                },
+              },
+            },
+          },
+        })
+      ).toEqual({
+        chatMessages: {
+          edges: [chatMessageEdge1, chatMessageEdge2],
+          pageInfo: {
+            hasNextPage: false,
+            hasPreviousPage: prev.chatMessages.pageInfo.hasPreviousPage,
+            startCursor: prev.chatMessages.pageInfo.startCursor,
+            endCursor: null,
+          },
+        },
+      });
+    });
+
+    it('should return updated cache value without a new message that already exists by id', () => {
+      const newStartCursor: string = 'newStartCursor';
+      const chatMessageEdge1 = {
+        ...mockChatMessageEdge,
+        id: '1',
+      };
+      const prev: GetChatMessagesQuery = {
+        chatMessages: {
+          edges: [chatMessageEdge1],
+          pageInfo: {
+            hasPreviousPage: false,
+            startCursor: newStartCursor,
+            endCursor: null,
+            hasNextPage: false,
+          },
+        },
+      };
+
+      expect(
+        (service as any).updateCacheWithNewMessage(prev, {
+          subscriptionData: {
+            data: {
+              chatMessages: {
+                edges: [chatMessageEdge1],
+                pageInfo: {
+                  hasPreviousPage: false,
+                  startCursor: null,
+                  endCursor: null,
+                  hasNextPage: false,
+                },
+              },
+            },
+          },
+        })
+      ).toEqual({
+        chatMessages: {
+          edges: [chatMessageEdge1],
+          pageInfo: {
+            hasNextPage: false,
+            hasPreviousPage: prev.chatMessages.pageInfo.hasPreviousPage,
+            startCursor: prev.chatMessages.pageInfo.startCursor,
+            endCursor: null,
+          },
+        },
+      });
+    });
   });
 });

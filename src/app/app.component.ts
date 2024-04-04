@@ -270,7 +270,7 @@ export class Minds implements OnInit, OnDestroy {
 
     this.socketsService.setUp();
 
-    if (this.isChatExperimentActive) {
+    if (this.isChatExperimentActive && this.session.isLoggedIn()) {
       this.globalChatSocketService.setUp();
     }
     // TODO uncomment this when we want logged out users

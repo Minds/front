@@ -231,9 +231,9 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
 
   /**
    * Fetch new messages.
-   * @returns { Promise<void> }
+   * @returns { void }
    */
-  protected async fetchNew(): Promise<void> {
+  protected fetchNew(): void {
     this.chatMessagesService.fetchNew();
   }
 }

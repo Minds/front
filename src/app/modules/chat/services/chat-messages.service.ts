@@ -157,45 +157,7 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
         after: this.endCursor,
         first: PAGE_SIZE,
       },
-      updateQuery: (
-        prev: GetChatMessagesQuery,
-        {
-          subscriptionData,
-        }: { subscriptionData: ApolloQueryResult<GetChatMessagesQuery> }
-      ): GetChatMessagesQuery => {
-        if (!subscriptionData.data) {
-          return prev;
-        }
-
-        // deduplicate messages.
-        let newEdges = subscriptionData.data.chatMessages.edges.filter(
-          (edge: ChatMessageEdge) =>
-            prev.chatMessages.edges.filter(
-              (prevEdge: ChatMessageEdge): boolean => {
-                return prevEdge.id !== edge.id;
-              }
-            ).length === prev.chatMessages.edges.length
-        );
-
-        let pageInfo: PageInfo = subscriptionData.data.chatMessages.pageInfo;
-
-        /**
-         * We need to patch edges to insert new edges, but also page data, as we are
-         * changing the next page states, but don't want to change the previous page states.
-         */
-
-        return {
-          chatMessages: {
-            edges: [...prev.chatMessages.edges, ...newEdges],
-            pageInfo: {
-              hasNextPage: pageInfo.hasNextPage,
-              hasPreviousPage: prev.chatMessages.pageInfo.hasPreviousPage,
-              startCursor: prev.chatMessages.pageInfo.startCursor,
-              endCursor: pageInfo.endCursor,
-            },
-          },
-        };
-      },
+      updateQuery: this.updateCacheWithNewMessage.bind(this),
     });
   }
 
@@ -368,5 +330,48 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
    */
   public hasNextPage(): boolean {
     return this._pageInfo$.getValue()?.hasNextPage;
+  }
+
+  /**
+   * Update the Apollo cache with a new message.
+   * @param { GetChatMessagesQuery } prev - The previous query.
+   * @param { ApolloQueryResult<GetChatMessagesQuery> } queryResult - containing subscription data.
+   * @returns { GetChatMessagesQuery } - The updated query.
+   */
+  private updateCacheWithNewMessage(
+    prev: GetChatMessagesQuery,
+    {
+      subscriptionData,
+    }: { subscriptionData: ApolloQueryResult<GetChatMessagesQuery> }
+  ): GetChatMessagesQuery {
+    if (!subscriptionData.data) {
+      return prev;
+    }
+
+    // deduplicate messages.
+    let newEdges = subscriptionData.data.chatMessages.edges.filter(
+      (edge: ChatMessageEdge) =>
+        prev.chatMessages.edges.filter((prevEdge: ChatMessageEdge): boolean => {
+          return prevEdge.id !== edge.id;
+        }).length === prev.chatMessages.edges.length
+    );
+
+    let pageInfo: PageInfo = subscriptionData.data.chatMessages.pageInfo;
+
+    /**
+     * We need to patch edges to insert new edges, but also page data, as we are
+     * changing the next page states, but don't want to change the previous page states.
+     */
+    return {
+      chatMessages: {
+        edges: [...prev.chatMessages.edges, ...newEdges],
+        pageInfo: {
+          hasNextPage: pageInfo.hasNextPage,
+          hasPreviousPage: prev.chatMessages.pageInfo.hasPreviousPage,
+          startCursor: prev.chatMessages.pageInfo.startCursor,
+          endCursor: pageInfo.endCursor,
+        },
+      },
+    };
   }
 }
