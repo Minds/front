@@ -187,18 +187,18 @@ describe('AnalyticsService', () => {
   }));
 
   it('should make sure a user, opted out, who logs out retains their opt out status', fakeAsync(() => {
-    spyOn(posthog, 'reset');
-    spyOn(posthog, 'opt_out_capturing');
+    spyOn(posthog, 'reset').and.callThrough();
+    spyOn(posthog, 'opt_out_capturing').and.callThrough();
 
     spyOn(configService, 'get').and.returnValue({
       opt_out: true, // user is opted out of analytics
     });
 
     sessionMock.loggedinEmitter.emit(true);
-    tick();
+    tick(1000);
 
     sessionMock.loggedinEmitter.emit(false);
-    tick();
+    tick(1000);
 
     expect(posthog.reset).toHaveBeenCalled();
     expect(posthog.opt_out_capturing).toHaveBeenCalled();
