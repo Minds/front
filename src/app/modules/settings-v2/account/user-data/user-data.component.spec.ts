@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { ChangeDetectorRef } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { MockService } from '../../../../utils/mock';
@@ -7,12 +12,16 @@ import { BehaviorSubject } from 'rxjs';
 import { SettingsV2UserDataComponent } from './user-data.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { AnalyticsService } from '../../../../services/analytics';
+import { DeletePostHogPersonGQL } from '../../../../../graphql/generated.engine';
+import { ToasterService } from '../../../../common/services/toaster.service';
+import { ButtonComponent } from '../../../../common/components/button/button.component';
 
 describe('SettingsV2UserDataComponent', () => {
   let component: SettingsV2UserDataComponent;
   let fixture: ComponentFixture<SettingsV2UserDataComponent>;
   let configsService: Partial<ConfigsService>;
   let analyticsService;
+  let deletePostHogPersonGql: DeletePostHogPersonGQL;
 
   beforeEach(() => {
     configsService = {
@@ -21,8 +30,12 @@ describe('SettingsV2UserDataComponent', () => {
       },
     };
 
+    deletePostHogPersonGql = jasmine.createSpyObj<DeletePostHogPersonGQL>([
+      'mutate',
+    ]);
+
     TestBed.configureTestingModule({
-      declarations: [SettingsV2UserDataComponent],
+      declarations: [SettingsV2UserDataComponent, ButtonComponent],
       providers: [
         ChangeDetectorRef,
         { provide: Session, useValue: MockService(Session) },
@@ -44,6 +57,11 @@ describe('SettingsV2UserDataComponent', () => {
         {
           provide: AnalyticsService,
           useValue: analyticsService,
+        },
+        ToasterService,
+        {
+          provide: DeletePostHogPersonGQL,
+          useValue: deletePostHogPersonGql,
         },
       ],
     }).compileComponents();
@@ -74,4 +92,15 @@ describe('SettingsV2UserDataComponent', () => {
 
     expect(component.optOut.value).toBe(false);
   });
+
+  it('should delete a users data when clicking the button', fakeAsync(() => {
+    const btn = fixture.debugElement.nativeElement.querySelector(
+      'm-button button'
+    );
+    btn.click();
+
+    tick();
+
+    expect(deletePostHogPersonGql.mutate).toHaveBeenCalled();
+  }));
 });

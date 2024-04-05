@@ -15,12 +15,14 @@ import {
 } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
-import { Subscription } from 'rxjs';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { AnalyticsService } from '../../../../services/analytics';
+import { DeletePostHogPersonGQL } from '../../../../../graphql/generated.engine';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Setting that controls whether videos in your feed play automatically.
@@ -47,7 +49,9 @@ export class SettingsV2UserDataComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected settingsService: SettingsV2Service,
     protected configsService: ConfigsService,
-    protected analyticsService: AnalyticsService
+    protected analyticsService: AnalyticsService,
+    protected toasterServer: ToasterService,
+    protected deletePostHogPersonGql: DeletePostHogPersonGQL
   ) {}
 
   ngOnInit() {
@@ -111,7 +115,16 @@ export class SettingsV2UserDataComponent implements OnInit, OnDestroy {
   }
 
   public async deleteData() {
-    alert('coming soon');
+    try {
+      await firstValueFrom(this.deletePostHogPersonGql.mutate());
+      this.toasterServer.success(
+        'Your data is queued for deletion. Thjis may take up to 7 days.'
+      );
+    } catch (err) {
+      this.toasterServer.warn(
+        'We did not find any data for your user to delete.'
+      );
+    }
   }
 
   detectChanges() {
