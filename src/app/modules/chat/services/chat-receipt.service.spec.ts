@@ -2,10 +2,10 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ChatReceiptService } from './chat-receipt.service';
 import {
   GetChatRoomsListDocument,
-  GetChatUnreadCountGQL,
+  InitChatDocument,
   SetReadReceiptGQL,
 } from '../../../../graphql/generated.engine';
-import { BehaviorSubject, ReplaySubject, Subject, of, take } from 'rxjs';
+import { ReplaySubject, Subject, of } from 'rxjs';
 import {
   ChatRoomEvent,
   GlobalChatSocketService,
@@ -16,6 +16,7 @@ import { Session } from '../../../services/session';
 import { ApolloClient } from '@apollo/client';
 import { mockChatMemberEdge } from '../../../mocks/chat.mock';
 import { PAGE_SIZE } from './chat-rooms-list.service';
+import { ChatInitService } from './chat-init.service';
 
 describe('ChatReceiptService', () => {
   let service: ChatReceiptService, getChatUnreadCountMock$: ReplaySubject<any>;
@@ -28,8 +29,8 @@ describe('ChatReceiptService', () => {
           useValue: jasmine.createSpyObj<SetReadReceiptGQL>(['mutate']),
         },
         {
-          provide: GetChatUnreadCountGQL,
-          useValue: jasmine.createSpyObj<GetChatUnreadCountGQL>(['watch']),
+          provide: ChatInitService,
+          useValue: MockService(ChatInitService),
         },
         {
           provide: GlobalChatSocketService,
@@ -44,9 +45,14 @@ describe('ChatReceiptService', () => {
         },
         {
           provide: Apollo,
-          useValue: {
-            client: MockService(ApolloClient),
-          },
+          useValue: MockService(Apollo, {
+            has: ['client'],
+            props: {
+              client: {
+                get: () => MockService(ApolloClient),
+              },
+            },
+          }),
         },
         {
           provide: Session,
@@ -58,61 +64,17 @@ describe('ChatReceiptService', () => {
 
     service = TestBed.inject(ChatReceiptService);
 
-    getChatUnreadCountMock$ = new ReplaySubject();
-
-    (service as any).getUnreadCountGql.watch.and.returnValue({
-      refetch: jasmine.createSpy('refetch'),
-      fetchMore: jasmine.createSpy('fetchMore'),
-      valueChanges: getChatUnreadCountMock$,
-    });
+    (service as any).chatInitService.getUnreadCount$.and.returnValue(
+      new ReplaySubject()
+    );
   });
 
   it('should init', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('getUnreadCount$', () => {
-    it('should get unread count', (done: DoneFn) => {
-      (service as any).session.isLoggedIn.and.returnValue(true);
-      (service as any)._queryRef = {
-        valueChanges: new BehaviorSubject<any>({
-          data: { chatUnreadMessagesCount: 4 },
-        }),
-      };
-
-      service
-        .getUnreadCount$()
-        .pipe(take(1))
-        .subscribe(count => {
-          expect(count).toBe(4);
-          done();
-        });
-    });
-
-    it('should NOT get unread count when logged out', (done: DoneFn) => {
-      (service as any).session.isLoggedIn.and.returnValue(false);
-      (service as any)._queryRef = {
-        valueChanges: new BehaviorSubject<any>({
-          data: { chatUnreadMessagesCount: 4 },
-        }),
-      };
-
-      service
-        .getUnreadCount$()
-        .pipe(take(1))
-        .subscribe(count => {
-          expect(count).toBe(null);
-          done();
-        });
-    });
-  });
-
   describe('update', () => {
     it('should call to update and refetch the query', async () => {
-      (service as any)._queryRef = {
-        refetch: jasmine.createSpy('refetch'),
-      };
-
       (service as any).setReadReceiptGql.mutate.and.returnValue(
         of({ data: { readReceipt: true } })
       );
@@ -124,7 +86,7 @@ describe('ChatReceiptService', () => {
         roomGuid: 'roomGuid',
         messageGuid: 'messageGuid',
       });
-      expect((service as any)._queryRef.refetch).toHaveBeenCalled();
+      expect((service as any).chatInitService.refetch).toHaveBeenCalled();
     });
   });
 
@@ -136,29 +98,54 @@ describe('ChatReceiptService', () => {
       (service as any).session.getLoggedInUser.and.returnValue({
         guid: '2234567890123456',
       });
-      (service as any).apollo.client.readQuery.and.returnValue({
-        chatRoomList: {
-          edges: [mockChatMemberEdge],
-        },
-      });
+      (service as any).apollo.client.readQuery
+        .withArgs({
+          query: GetChatRoomsListDocument,
+          variables: {
+            first: PAGE_SIZE,
+          },
+        })
+        .and.returnValue({
+          chatRoomList: {
+            edges: [mockChatMemberEdge],
+          },
+        });
+      (service as any).apollo.client.readQuery
+        .withArgs({
+          query: InitChatDocument,
+        })
+        .and.returnValue({
+          chatUnreadMessagesCount: 1,
+        });
 
       (service as any).globalChatSocketService.globalEvents$.next({
-        type: 'NEW_MESSAGE',
+        roomGuid: 'roomGuid',
         data: {
-          roomGuid: 'roomGuid',
+          type: 'NEW_MESSAGE',
           messageGuid: 'messageGuid',
           userGuid: '1234567890123456',
         },
       });
       tick();
 
-      expect((service as any)._queryRef.refetch).toHaveBeenCalled();
+      expect((service as any).apollo.client.readQuery).toHaveBeenCalledWith({
+        query: GetChatRoomsListDocument,
+        variables: { first: PAGE_SIZE },
+      });
       expect((service as any).apollo.client.writeQuery).toHaveBeenCalledWith(
         jasmine.objectContaining({
           query: GetChatRoomsListDocument,
           variables: { first: PAGE_SIZE },
         })
       );
+
+      expect((service as any).apollo.client.readQuery).toHaveBeenCalledWith({
+        query: InitChatDocument,
+      });
+      expect((service as any).apollo.client.writeQuery).toHaveBeenCalledWith({
+        query: InitChatDocument,
+        data: { chatUnreadMessagesCount: 2 },
+      });
     }));
   });
 });

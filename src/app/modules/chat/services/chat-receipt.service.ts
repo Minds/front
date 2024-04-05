@@ -63,10 +63,10 @@ export class ChatReceiptService implements OnDestroy {
   }
 
   /**
-   * Updates the rooms list cache to update unread message counts.
+   * Updates the rooms list cache to increment unread message counts.
    * @param { string } roomGuid - the room guid to update.
    */
-  private updateRoomsListCache(
+  private incrementRoomUnreadCountCache(
     roomGuid: string,
     incrementBy: number = 1
   ): void {
@@ -74,7 +74,7 @@ export class ChatReceiptService implements OnDestroy {
       this.apollo.client.readQuery<GetChatRoomsListQuery>({
         query: GetChatRoomsListDocument,
         variables: {
-          first: 24,
+          first: PAGE_SIZE,
         },
       })
     );
@@ -100,7 +100,7 @@ export class ChatReceiptService implements OnDestroy {
    * Updates the rooms list cache to update unread message counts.
    * @param { string } roomGuid - the room guid to update.
    */
-  private updateUnreadCountCache(incrementBy: number = 1): void {
+  private incrementGlobalUnreadCountCache(incrementBy: number = 1): void {
     let newValue: InitChatQuery = cloneDeep(
       this.apollo.client.readQuery<InitChatQuery>({
         query: InitChatDocument,
@@ -138,8 +138,8 @@ export class ChatReceiptService implements OnDestroy {
         }
 
         if (senderGuid !== loggedInUserGuid) {
-          this.updateUnreadCountCache();
-          this.updateRoomsListCache(event.roomGuid);
+          this.incrementGlobalUnreadCountCache();
+          this.incrementRoomUnreadCountCache(event.roomGuid);
         }
       }
     );

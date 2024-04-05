@@ -6,7 +6,6 @@ import {
   GlobalChatSocketService,
 } from './global-chat-socket.service';
 import { MockService } from '../../../utils/mock';
-import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
@@ -31,7 +30,6 @@ describe('GlobalChatSocketService', () => {
           provide: GetChatRoomGuidsGQL,
           useValue: jasmine.createSpyObj<GetChatRoomGuidsGQL>(['watch']),
         },
-        { provide: Session, useValue: MockService(Session) },
         GlobalChatSocketService,
       ],
     });
@@ -43,23 +41,15 @@ describe('GlobalChatSocketService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should set up', fakeAsync(() => {
+  it('should listen to given room guids', fakeAsync(() => {
     const guid1: string = 'guid1';
     const guid2: string = 'guid2';
 
-    (service as any).session.isLoggedIn.and.returnValue(true);
-    (service as any).getChatRoomGuidsGQL.watch.and.returnValue({
-      valueChanges: new BehaviorSubject({
-        data: { chatRoomGuids: [guid1, guid2] },
-      }),
-    });
-
     (service as any).sockets.subscribe.and.returnValue(new Subscription());
 
-    service.setUp();
+    service.listenToRoomGuids([guid1, guid2]);
     tick();
 
-    expect((service as any).getRoomGuidsQuery).toBeTruthy();
     expect((service as any).sockets.join).toHaveBeenCalledWith(
       CHAT_ROOM_NAME_PREFIX + guid1
     );
@@ -74,18 +64,12 @@ describe('GlobalChatSocketService', () => {
     ).toBeTruthy();
   }));
 
-  it('should destroy', () => {
-    const getRoomGuidsSubscription = new Subscription();
+  it('should leave all rooms', () => {
     const room1Subscription = new Subscription();
-    (service as any).getRoomGuidsQuery = {
-      stopPolling: jasmine.createSpy('stopPolling'),
-    };
-
     (service as any).roomMap.set('room1', room1Subscription);
 
-    service.destroy();
+    service.leaveAllRooms();
 
-    expect((service as any).getRoomGuidsQuery.stopPolling).toHaveBeenCalled();
     expect((service as any).roomMap.size).toBe(0);
     expect((service as any).sockets.leave).toHaveBeenCalled();
   });
