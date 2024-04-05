@@ -1,22 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { SocketsService } from '../../../services/sockets';
 import {
-  GetChatRoomGuidsGQL,
-  GetChatRoomGuidsQuery,
-} from '../../../../graphql/generated.engine';
-import {
   Observable,
   Subject,
   Subscription,
   filter,
   firstValueFrom,
 } from 'rxjs';
-import { ApolloQueryResult } from '@apollo/client';
-import { QueryRef } from 'apollo-angular';
-import { Session } from '../../../services/session';
-
-/** Interval for chat polling - long time period to help keep things in sync. */
-const CHAT_POLLING_INTERVAL = 600 * 1000; // 10m
 
 /** Prefix for chat room names. */
 export const CHAT_ROOM_NAME_PREFIX: string = 'chat:';
@@ -27,6 +17,9 @@ export type ChatRoomEvent = {
   data: Object;
 };
 
+/**
+ * Service to handle global chat socket events.
+ */
 @Injectable({ providedIn: 'root' })
 export class GlobalChatSocketService implements OnDestroy {
   /** Subject for global chat events. */
@@ -40,54 +33,23 @@ export class GlobalChatSocketService implements OnDestroy {
     Subscription
   >();
 
-  /** Reference to get room GUIDs query. */
-  private getRoomGuidsQuery: QueryRef<GetChatRoomGuidsQuery>;
-
-  /** Subscription to get room GUIDs query. */
-  private getRoomGuidsSubscription: Subscription;
-
-  constructor(
-    private sockets: SocketsService,
-    private getChatRoomGuidsGQL: GetChatRoomGuidsGQL,
-    private session: Session
-  ) {}
+  constructor(private sockets: SocketsService) {}
 
   ngOnDestroy(): void {
-    this.destroy();
+    this.leaveAllRooms();
   }
 
   /**
-   * Set up the service.
+   * Listen to room GUIDs.
+   * @param { string[] } roomGuids - the room GUIDs to listen to.
    * @returns { Promise<void> }
    */
-  public async setUp(): Promise<void> {
-    if (!this.session.isLoggedIn()) {
-      console.info('Skipping chat socket init as user is not logged in');
-      return;
+  public async listenToRoomGuids(roomGuids: string[]): Promise<void> {
+    await firstValueFrom(this.sockets.onReady$);
+
+    for (let roomGuid of roomGuids) {
+      this.joinRoom(CHAT_ROOM_NAME_PREFIX + roomGuid);
     }
-
-    this.getRoomGuidsQuery = this.getChatRoomGuidsGQL.watch(
-      {},
-      {
-        pollInterval: CHAT_POLLING_INTERVAL,
-      }
-    );
-
-    this.getRoomGuidsSubscription = this.getRoomGuidsQuery.valueChanges.subscribe(
-      (response: ApolloQueryResult<GetChatRoomGuidsQuery>): void => {
-        this.listenToRoomGuids(response.data.chatRoomGuids);
-      }
-    );
-  }
-
-  /**
-   * Destroy subscriptions and leave all rooms.
-   * @returns { void }
-   */
-  public destroy(): void {
-    this.getRoomGuidsSubscription?.unsubscribe();
-    this.getRoomGuidsQuery.stopPolling();
-    this.leaveAllRooms();
   }
 
   /**
@@ -101,13 +63,23 @@ export class GlobalChatSocketService implements OnDestroy {
   }
 
   /**
+   * Get events by chat room GUID.
+   * @param { string } guid - the chat room GUID.
+   * @returns { Observable<ChatRoomEvent> } - the chat room event.
+   */
+  public getEventsByChatRoomGuid(guid: string): Observable<ChatRoomEvent> {
+    return this.globalEvents$.pipe(
+      filter((event: ChatRoomEvent) => event.roomGuid === guid)
+    );
+  }
+
+  /**
    * Join a room.
    * @param { string } roomName - the room name to join.
    * @returns { void }
    */
-  public joinRoom(roomName: string): void {
+  private joinRoom(roomName: string): void {
     if (Boolean(this.roomMap.get(roomName))) {
-      console.info('Already joined room:', roomName);
       return;
     }
 
@@ -124,37 +96,13 @@ export class GlobalChatSocketService implements OnDestroy {
   }
 
   /**
-   * Get events by chat room GUID.
-   * @param { string } guid - the chat room GUID.
-   * @returns { Observable<ChatRoomEvent> } - the chat room event.
-   */
-  public getEventsByChatRoomGuid(guid: string): Observable<ChatRoomEvent> {
-    return this.globalEvents$.pipe(
-      filter((event: ChatRoomEvent) => event.roomGuid === guid)
-    );
-  }
-
-  /**
    * Leave a room.
    * @param { string } roomName - the room name to leave.
    * @returns { void }
    */
-  public leaveRoom(roomName: string): void {
+  private leaveRoom(roomName: string): void {
     this.roomMap.get(roomName)?.unsubscribe();
     this.roomMap.delete(roomName);
     this.sockets.leave(roomName);
-  }
-
-  /**
-   * Listen to room GUIDs.
-   * @param { string[] } roomGuids - the room GUIDs to listen to.
-   * @returns { Promise<void> }
-   */
-  private async listenToRoomGuids(roomGuids: string[]): Promise<void> {
-    await firstValueFrom(this.sockets.onReady$);
-
-    for (let roomGuid of roomGuids) {
-      this.joinRoom(CHAT_ROOM_NAME_PREFIX + roomGuid);
-    }
   }
 }

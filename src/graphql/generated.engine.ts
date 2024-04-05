@@ -2387,13 +2387,6 @@ export type GetChatRoomsListQuery = {
   };
 };
 
-export type GetChatUnreadCountQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetChatUnreadCountQuery = {
-  __typename?: 'Query';
-  chatUnreadMessagesCount: number;
-};
-
 export type GetTotalChatRoomMembersQueryVariables = Exact<{
   roomGuid: Scalars['String']['input'];
 }>;
@@ -2410,6 +2403,14 @@ export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
 export type GetTotalRoomInviteRequestsQuery = {
   __typename?: 'Query';
   totalRoomInviteRequests: number;
+};
+
+export type InitChatQueryVariables = Exact<{ [key: string]: never }>;
+
+export type InitChatQuery = {
+  __typename?: 'Query';
+  chatUnreadMessagesCount: number;
+  chatRoomGuids: Array<string>;
 };
 
 export type LeaveChatRoomMutationVariables = Exact<{
@@ -7705,25 +7706,6 @@ export class GetChatRoomsListGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const GetChatUnreadCountDocument = gql`
-  query GetChatUnreadCount {
-    chatUnreadMessagesCount
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetChatUnreadCountGQL extends Apollo.Query<
-  GetChatUnreadCountQuery,
-  GetChatUnreadCountQueryVariables
-> {
-  document = GetChatUnreadCountDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
 export const GetTotalChatRoomMembersDocument = gql`
   query GetTotalChatRoomMembers($roomGuid: String!) {
     chatRoom(roomGuid: $roomGuid) {
@@ -7759,6 +7741,26 @@ export class GetTotalRoomInviteRequestsGQL extends Apollo.Query<
   GetTotalRoomInviteRequestsQueryVariables
 > {
   document = GetTotalRoomInviteRequestsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const InitChatDocument = gql`
+  query InitChat {
+    chatUnreadMessagesCount
+    chatRoomGuids
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class InitChatGQL extends Apollo.Query<
+  InitChatQuery,
+  InitChatQueryVariables
+> {
+  document = InitChatDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

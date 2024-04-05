@@ -43,8 +43,8 @@ import { OnboardingV5ModalLazyService } from './modules/onboarding-v5/services/o
 import { OnboardingV5Service } from './modules/onboarding-v5/services/onboarding-v5.service';
 import { OnboardingV5ExperimentService } from './modules/experiments/sub-services/onboarding-v5-experiment.service';
 import { ExplainerScreensService } from './modules/explainer-screens/services/explainer-screen.service';
-import { GlobalChatSocketService } from './modules/chat/services/global-chat-socket.service';
 import { ChatExperimentService } from './modules/experiments/sub-services/chat-experiment.service';
+import { ChatInitService } from './modules/chat/services/chat-init.service';
 
 @Component({
   selector: 'm-app',
@@ -105,7 +105,7 @@ export class Minds implements OnInit, OnDestroy {
     private onboardingV5ModalService: OnboardingV5ModalLazyService,
     private onboardingV5ExperimentService: OnboardingV5ExperimentService,
     private explainerScreenService: ExplainerScreensService,
-    private globalChatSocketService: GlobalChatSocketService,
+    private chatInitService: ChatInitService,
     private chatExperimentService: ChatExperimentService
   ) {
     this.name = 'Minds';
@@ -236,13 +236,13 @@ export class Minds implements OnInit, OnDestroy {
         this.notificationService.updateNotificationCount();
 
         if (this.isChatExperimentActive) {
-          this.globalChatSocketService.setUp();
+          this.chatInitService.reinit();
         }
       } else {
         this.notificationService.unlisten();
 
         if (this.isChatExperimentActive) {
-          this.globalChatSocketService.destroy();
+          this.chatInitService.destroy();
         }
       }
     });
@@ -271,7 +271,7 @@ export class Minds implements OnInit, OnDestroy {
     this.socketsService.setUp();
 
     if (this.isChatExperimentActive && this.session.isLoggedIn()) {
-      this.globalChatSocketService.setUp();
+      this.chatInitService.init();
     }
     // TODO uncomment this when we want logged out users
     // to complete the social compass questionnaire

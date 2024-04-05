@@ -1,10 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, Subscription, lastValueFrom, map, of } from 'rxjs';
+import { Observable, Subscription, lastValueFrom } from 'rxjs';
 import {
   GetChatRoomsListDocument,
   GetChatRoomsListQuery,
-  GetChatUnreadCountGQL,
-  GetChatUnreadCountQuery,
+  InitChatDocument,
+  InitChatQuery,
   SetReadReceiptGQL,
 } from '../../../../graphql/generated.engine';
 import {
@@ -12,19 +12,27 @@ import {
   GlobalChatSocketService,
 } from './global-chat-socket.service';
 import { Session } from '../../../services/session';
-import { Apollo, QueryRef } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { cloneDeep } from '@apollo/client/utilities';
 import { PAGE_SIZE } from './chat-rooms-list.service';
+import { ChatInitService } from './chat-init.service';
 
+/**
+ * Service to handle read receipts in chat.
+ */
 @Injectable({ providedIn: 'root' })
 export class ChatReceiptService implements OnDestroy {
+  /** Subscription to socket events. */
   private socketEventSubscription: Subscription;
 
-  private _queryRef: QueryRef<GetChatUnreadCountQuery>;
+  /** Unread message count */
+  public readonly unreadCount$: Observable<
+    number
+  > = this.chatInitService.getUnreadCount$();
 
   constructor(
     private setReadReceiptGql: SetReadReceiptGQL,
-    private getUnreadCountGql: GetChatUnreadCountGQL,
+    private chatInitService: ChatInitService,
     private globalChatSocketService: GlobalChatSocketService,
     private apollo: Apollo,
     private session: Session
@@ -37,21 +45,9 @@ export class ChatReceiptService implements OnDestroy {
   }
 
   /**
-   * Get initial unread message count and poll for future updates..
-   * @returns { Observable<number> } - the unread message count.
-   */
-  public getUnreadCount$(): Observable<number> {
-    if (!this.session.isLoggedIn()) {
-      return of(null);
-    }
-    return this.getQueryRef().valueChanges.pipe(
-      map(({ data }) => data.chatUnreadMessagesCount)
-    );
-  }
-
-  /**
    * Updates the read receipt of a room
-   * This mutation will then update the cache of the read list
+   * This mutation will then update the cache of the read list.
+   * @returns { Promise<boolean> } - the result of the mutation.
    */
   async update(roomGuid: string, messageGuid: string): Promise<boolean> {
     const result = await lastValueFrom(
@@ -61,27 +57,19 @@ export class ChatReceiptService implements OnDestroy {
       })
     );
 
-    this.getQueryRef().refetch();
+    this.chatInitService.refetch();
 
     return !!result.data.readReceipt;
-  }
-
-  /**
-   * Gets the query reference or instantiates a new one.
-   * @returns { QueryRef<GetChatUnreadCountQuery> } - the query reference.
-   */
-  private getQueryRef(): QueryRef<GetChatUnreadCountQuery> {
-    if (!this._queryRef) {
-      this._queryRef = this.getUnreadCountGql.watch();
-    }
-    return this._queryRef;
   }
 
   /**
    * Updates the rooms list cache to update unread message counts.
    * @param { string } roomGuid - the room guid to update.
    */
-  private updateRoomsListCache(roomGuid: string): void {
+  private updateRoomsListCache(
+    roomGuid: string,
+    incrementBy: number = 1
+  ): void {
     let newValue: GetChatRoomsListQuery = cloneDeep(
       this.apollo.client.readQuery<GetChatRoomsListQuery>({
         query: GetChatRoomsListDocument,
@@ -91,9 +79,11 @@ export class ChatReceiptService implements OnDestroy {
       })
     );
 
+    if (!newValue) return;
+
     newValue.chatRoomList.edges.map(edge => {
       if (edge.node.guid === roomGuid) {
-        edge.unreadMessagesCount += 1;
+        edge.unreadMessagesCount += incrementBy;
       }
     });
 
@@ -107,13 +97,34 @@ export class ChatReceiptService implements OnDestroy {
   }
 
   /**
+   * Updates the rooms list cache to update unread message counts.
+   * @param { string } roomGuid - the room guid to update.
+   */
+  private updateUnreadCountCache(incrementBy: number = 1): void {
+    let newValue: InitChatQuery = cloneDeep(
+      this.apollo.client.readQuery<InitChatQuery>({
+        query: InitChatDocument,
+      })
+    );
+
+    if (!newValue) return;
+
+    newValue.chatUnreadMessagesCount += incrementBy;
+
+    this.apollo.client.writeQuery({
+      query: InitChatDocument,
+      data: newValue,
+    });
+  }
+
+  /**
    * Initializes the socket subscription to listen for new messages.
    * @returns { void }
    */
   private initSocketSubscription(): void {
     this.socketEventSubscription = this.globalChatSocketService.globalEvents$.subscribe(
       (event: ChatRoomEvent): void => {
-        if (!event.data || event['type'] !== 'NEW_MESSAGE') {
+        if (!event.data || event.data['type'] !== 'NEW_MESSAGE') {
           return;
         }
 
@@ -127,7 +138,7 @@ export class ChatReceiptService implements OnDestroy {
         }
 
         if (senderGuid !== loggedInUserGuid) {
-          this.getQueryRef().refetch();
+          this.updateUnreadCountCache();
           this.updateRoomsListCache(event.roomGuid);
         }
       }

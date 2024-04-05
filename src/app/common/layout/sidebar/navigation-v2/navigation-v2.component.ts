@@ -194,6 +194,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
             this.initUnreadChatCountSubscription();
           } else {
             this.unreadChatCountSubscription?.unsubscribe();
+            this.unreadChatCountSubscription = null;
           }
         })
       );
@@ -207,6 +208,11 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.groupSelectedSubscription) {
       this.groupSelectedSubscription.unsubscribe();
+    }
+
+    if (this.chatExperimentIsActive && this.unreadChatCountSubscription) {
+      this.unreadChatCountSubscription?.unsubscribe();
+      this.unreadChatCountSubscription = null;
     }
 
     for (let subscription of this.subscriptions) {
@@ -365,10 +371,10 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
       return;
     }
 
-    this.unreadChatCountSubscription = this.chatReceiptService
-      .getUnreadCount$()
-      .subscribe(count => {
+    this.unreadChatCountSubscription = this.chatReceiptService.unreadCount$.subscribe(
+      (count: number) => {
         this.chatUnreadCount = count;
-      });
+      }
+    );
   }
 }
