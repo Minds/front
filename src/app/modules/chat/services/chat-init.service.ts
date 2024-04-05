@@ -47,7 +47,8 @@ export class ChatInitService {
    * @returns { void }
    */
   public destroy(): void {
-    this?.getChatRoomGuidsSubscription?.unsubscribe();
+    this._queryRef?.resetLastResults();
+    this.getChatRoomGuidsSubscription?.unsubscribe();
     this.globalChatSocketService.leaveAllRooms();
   }
 
