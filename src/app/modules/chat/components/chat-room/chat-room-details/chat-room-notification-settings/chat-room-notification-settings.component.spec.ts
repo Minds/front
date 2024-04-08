@@ -9,8 +9,16 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { MockComponent, MockService } from '../../../../../../utils/mock';
 import { SingleChatRoomService } from '../../../../services/single-chat-room.service';
 import { mockChatRoomEdge } from '../../../../../../mocks/chat.mock';
-import { BehaviorSubject } from 'rxjs';
-import { ChatRoomEdge } from '../../../../../../../graphql/generated.engine';
+import { BehaviorSubject, of } from 'rxjs';
+import {
+  ChatRoomEdge,
+  ChatRoomNotificationStatusEnum,
+  UpdateChatRoomNotificationSettingsGQL,
+} from '../../../../../../../graphql/generated.engine';
+import {
+  DEFAULT_ERROR_MESSAGE,
+  ToasterService,
+} from '../../../../../../common/services/toaster.service';
 
 describe('ChatRoomNotificationSettingsComponent', () => {
   let comp: ChatRoomNotificationSettingsComponent;
@@ -31,6 +39,16 @@ describe('ChatRoomNotificationSettingsComponent', () => {
             },
           }),
         },
+        {
+          provide: UpdateChatRoomNotificationSettingsGQL,
+          useValue: jasmine.createSpyObj<UpdateChatRoomNotificationSettingsGQL>(
+            ['mutate']
+          ),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
       ],
     }).overrideComponent(ChatRoomNotificationSettingsComponent, {
       set: {
@@ -45,6 +63,8 @@ describe('ChatRoomNotificationSettingsComponent', () => {
         ],
       },
     });
+
+    spyOn(console, 'error'); // mute error logs
 
     fixture = TestBed.createComponent(ChatRoomNotificationSettingsComponent);
     comp = fixture.componentInstance;
@@ -70,7 +90,9 @@ describe('ChatRoomNotificationSettingsComponent', () => {
   it('should set notifications to muted when initing a room with muted notifications', fakeAsync(() => {
     (comp as any).notificationsMuted$.next(false);
     (comp as any).singleChatRoomService.chatRoom$.next({
-      node: { areChatRoomNotificationsMuted: true },
+      node: {
+        chatRoomNotificationStatus: ChatRoomNotificationStatusEnum.Muted,
+      },
     });
     tick();
     expect((comp as any).notificationsMuted$.getValue()).toBe(true);
@@ -79,9 +101,98 @@ describe('ChatRoomNotificationSettingsComponent', () => {
   it('should set notifications to not muted when initing a room with not muted notifications', fakeAsync(() => {
     (comp as any).notificationsMuted$.next(true);
     (comp as any).singleChatRoomService.chatRoom$.next({
-      node: { areChatRoomNotificationsMuted: false },
+      node: { chatRoomNotificationStatus: ChatRoomNotificationStatusEnum.All },
     });
     tick();
     expect((comp as any).notificationsMuted$.getValue()).toBe(false);
   }));
+
+  describe('onMuteNotificationToggle', () => {
+    it('should mute notificiation toggle', fakeAsync(() => {
+      (comp as any).notificationsMuted$.next(false);
+      (comp as any).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
+        of({
+          data: { updateNotificationSettings: true },
+        })
+      );
+
+      (comp as any).onMuteNotificationToggle(true);
+      tick();
+
+      expect((comp as any).notificationsMuted$.getValue()).toBe(true);
+      expect(
+        (comp as any).updateChatRoomNotificationSettingsGql.mutate
+      ).toHaveBeenCalledWith({
+        roomGuid: mockChatRoomEdge.node.guid,
+        notificationStatus: ChatRoomNotificationStatusEnum.Muted,
+      });
+      expect((comp as any).toaster.error).not.toHaveBeenCalled();
+    }));
+
+    it('should unmute notificiation toggle', fakeAsync(() => {
+      (comp as any).notificationsMuted$.next(true);
+      (comp as any).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
+        of({
+          data: { updateNotificationSettings: true },
+        })
+      );
+
+      (comp as any).onMuteNotificationToggle(false);
+      tick();
+
+      expect((comp as any).notificationsMuted$.getValue()).toBe(false);
+      expect(
+        (comp as any).updateChatRoomNotificationSettingsGql.mutate
+      ).toHaveBeenCalledWith({
+        roomGuid: mockChatRoomEdge.node.guid,
+        notificationStatus: ChatRoomNotificationStatusEnum.All,
+      });
+      expect((comp as any).toaster.error).not.toHaveBeenCalled();
+    }));
+
+    it('should handle errors when muting notificiation toggle', fakeAsync(() => {
+      const error: Error = new Error('error');
+      (comp as any).notificationsMuted$.next(false);
+      (comp as any).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
+        of({
+          errors: [error],
+        })
+      );
+
+      (comp as any).onMuteNotificationToggle(true);
+      tick();
+
+      expect((comp as any).notificationsMuted$.getValue()).toBe(false);
+      expect(
+        (comp as any).updateChatRoomNotificationSettingsGql.mutate
+      ).toHaveBeenCalledWith({
+        roomGuid: mockChatRoomEdge.node.guid,
+        notificationStatus: ChatRoomNotificationStatusEnum.Muted,
+      });
+      expect((comp as any).toaster.error).toHaveBeenCalledWith(error);
+    }));
+
+    it('should handle falsy response when muting notificiation toggle', fakeAsync(() => {
+      (comp as any).notificationsMuted$.next(false);
+      (comp as any).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
+        of({
+          data: { updateNotificationSettings: false },
+        })
+      );
+
+      (comp as any).onMuteNotificationToggle(true);
+      tick();
+
+      expect((comp as any).notificationsMuted$.getValue()).toBe(false);
+      expect(
+        (comp as any).updateChatRoomNotificationSettingsGql.mutate
+      ).toHaveBeenCalledWith({
+        roomGuid: mockChatRoomEdge.node.guid,
+        notificationStatus: ChatRoomNotificationStatusEnum.Muted,
+      });
+      expect((comp as any).toaster.error).toHaveBeenCalledWith(
+        new Error(DEFAULT_ERROR_MESSAGE)
+      );
+    }));
+  });
 });

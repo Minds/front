@@ -11,7 +11,7 @@ query GetChatRoom(
             id
             isChatRequest
             isUserRoomOwner
-            areChatRoomNotificationsMuted
+            chatRoomNotificationStatus
         }
         members(first: $firstMembers, after: $afterMembers) {
             edges {
