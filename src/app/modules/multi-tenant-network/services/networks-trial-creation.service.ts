@@ -10,6 +10,7 @@ import {
   DEFAULT_ERROR_MESSAGE,
   ToasterService,
 } from '../../../common/services/toaster.service';
+import { AutoLoginService } from '../../networks/auto-login.service';
 
 /**
  * Service for starting a trial of a network.
@@ -19,6 +20,7 @@ export class NetworksTrialCreationService {
   constructor(
     private router: Router,
     private startTenantTrialGql: StartTenantTrialGQL,
+    private autoLoginService: AutoLoginService,
     private toaster: ToasterService
   ) {}
 
@@ -37,12 +39,27 @@ export class NetworksTrialCreationService {
         throw new Error(response.errors[0].message ?? DEFAULT_ERROR_MESSAGE);
       }
 
-      if (!response?.data?.tenantTrial?.id) {
+      if (!response?.data?.tenantTrial?.tenant?.id) {
         console.error('Response data is empty');
         throw new Error(DEFAULT_ERROR_MESSAGE);
       }
 
-      this.router.navigateByUrl('/networks');
+      if (
+        !response?.data?.tenantTrial?.loginUrl ||
+        !response?.data?.tenantTrial?.jwtToken
+      ) {
+        this.toaster.warn(
+          'An error occurred while logging you into your network.'
+        );
+        this.router.navigateByUrl('/networks');
+        return;
+      }
+
+      await this.autoLoginService.openNetworkUrl(
+        response.data.tenantTrial.loginUrl,
+        response.data.tenantTrial.jwtToken,
+        false
+      );
     } catch (e) {
       this.toaster.error(e?.message ?? DEFAULT_ERROR_MESSAGE);
     }
