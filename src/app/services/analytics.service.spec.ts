@@ -106,7 +106,12 @@ describe('AnalyticsService', () => {
     router.initialNavigation();
     tick();
 
-    expect(posthog.capture).toHaveBeenCalledWith('$pageview', {});
+    expect(posthog.capture).toHaveBeenCalledWith('$pageview', {
+      environment: null,
+      $set: {
+        environment: null,
+      },
+    });
     expect(posthog.capture).toHaveBeenCalledTimes(1);
   }));
 
@@ -135,6 +140,10 @@ describe('AnalyticsService', () => {
 
     expect(posthog.capture).toHaveBeenCalledWith('dataref_click', {
       ref: 'spec-test',
+      environment: null,
+      $set: {
+        environment: null,
+      },
     });
   }));
 
@@ -158,6 +167,10 @@ describe('AnalyticsService', () => {
       entity_type: 'activity',
       entity_subtype: undefined,
       entity_owner_guid: '456',
+      environment: null,
+      $set: {
+        environment: null,
+      },
     });
   }));
 
