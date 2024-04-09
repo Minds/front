@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-forgot-password',
@@ -30,7 +31,6 @@ export class ForgotPasswordComponent {
   }
 
   ngOnDestroy() {
-    this.pageLayout.cancelFullWidth();
     this.paramsSubscription.unsubscribe();
   }
 }
