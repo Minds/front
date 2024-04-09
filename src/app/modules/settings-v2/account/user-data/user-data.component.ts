@@ -118,7 +118,7 @@ export class SettingsV2UserDataComponent implements OnInit, OnDestroy {
     try {
       await firstValueFrom(this.deletePostHogPersonGql.mutate());
       this.toasterServer.success(
-        'Your data is queued for deletion. Thjis may take up to 7 days.'
+        'Your data is queued for deletion. This may take up to 7 days.'
       );
     } catch (err) {
       this.toasterServer.warn(
