@@ -79,8 +79,8 @@ namespace CommonSteps {
       I.refreshPage();
       I.amOnPage(loginPage.loginURI);
 
-      loginPage.login(loginPage.validUsername, loginPage.validPassword),
-        I.seeCookie('minds_sess');
+      loginPage.login(loginPage.validUsername, loginPage.validPassword);
+      I.seeCookie('minds_sess');
     }
   );
 
