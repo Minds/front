@@ -30,6 +30,7 @@ export class ForgotPasswordComponent {
   }
 
   ngOnDestroy() {
+    this.pageLayout.cancelFullWidth();
     this.paramsSubscription.unsubscribe();
   }
 }
