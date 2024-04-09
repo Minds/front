@@ -195,6 +195,7 @@ import { PublisherListComponent } from './components/publisher-list/publisher-li
 import { TopbarNetworkTrialBannerComponent } from './components/topbar-network-trial-banner/topbar-network-trial-banner.component';
 import { ThrottledClickDirective } from './directives/throttled-click.directive';
 import { ShowOnHoverDirective } from './directives/show-on-hover-directive';
+import { CustomNavigationItemsComponent } from './layout/sidebar/custom-navigation-items/custom-navigation-items.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -211,6 +212,7 @@ const MINDS_COMMON_COMPONENTS = [
   CommentButton,
   ConfirmV2Component,
   CountryInputComponent,
+  CustomNavigationItemsComponent,
   DashboardLayoutComponent,
   DataTabsComponent,
   DataTabsHeaderComponent,

@@ -1,19 +1,21 @@
 <ng-container
   *ngIf="
-    (service.allNavigationItems$ | async).length;
+    (service.allNavigationItems$ | async)?.length;
     else loadingSpinnerTemplate
   "
 >
   <header class="m-networkAdminNavigationEditForm__header">
     <div class="m-networkAdminNavigationEditForm__headerTitleRow">
       <i
-        routerLink="../list"
+        (click)="navigateToListView()"
         class="material-icons m-networkAdminNavigationEditForm__headerIcon"
+        data-ref="m-networkAdminNavigationEditForm__headerIcon"
         >arrow_back</i
       >
       <h3
         [ngSwitch]="view"
         class="m-networkAdminNavigationEditForm__headerTitle"
+        data-ref="m-networkAdminNavigationEditForm__headerTitle"
       >
         <ng-container
           *ngSwitchCase="NavigationLinkFormView.CreateCustomLink"
@@ -147,12 +149,14 @@
             class="form-control"
             formControlName="pathOrUrl"
             required
+            data-ref="m-networkAdminNavigationEditFormControl__pathOrUrl"
           />
         </div>
       </div>
       <!-- ------------------------------------------ -->
       <m-button
         class="m-networkAdminNavigationEditForm__saveButton"
+        data-ref="m-networkAdminNavigationEditForm__saveButton"
         size="small"
         [solid]="true"
         color="blue"

@@ -38,22 +38,22 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
   /**
    * The item that we're creating/editing
    */
-  public navigationItem: NavigationItem | null = null;
+  navigationItem: NavigationItem | null = null;
 
   /**
    * The type of the link we're creating/editing
    */
-  public itemType: NavigationItemTypeEnum = NavigationItemTypeEnum.CustomLink;
+  itemType: NavigationItemTypeEnum = NavigationItemTypeEnum.CustomLink;
 
-  public view: NavigationLinkFormView = NavigationLinkFormView.CreateCustomLink;
+  view: NavigationLinkFormView = NavigationLinkFormView.CreateCustomLink;
 
   /**
    * Allows us to use enums in the template
    */
-  public NavigationItemTypeEnum: typeof NavigationItemTypeEnum = NavigationItemTypeEnum;
-  public NavigationLinkFormView: typeof NavigationLinkFormView = NavigationLinkFormView;
+  NavigationItemTypeEnum: typeof NavigationItemTypeEnum = NavigationItemTypeEnum;
+  NavigationLinkFormView: typeof NavigationLinkFormView = NavigationLinkFormView;
 
-  public linkForm: FormGroup;
+  linkForm: FormGroup;
 
   private subscriptions: Subscription[] = [];
 
@@ -65,16 +65,16 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
     private route: ActivatedRoute,
     private dialogService: DialogService,
     private router: Router
-  ) {}
-
-  ngOnInit() {
+  ) {
     // Define the structure of the form
     this.linkForm = this.fb.group({
       name: ['', Validators.required],
       iconId: ['', Validators.required],
       pathOrUrl: [''],
     });
+  }
 
+  ngOnInit() {
     /**
      * Watch queryParams to determine whether we have the id
      * of an item to edit. If not, we're creating a new item.
@@ -141,7 +141,7 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
   /**
    * Determine form view from the item type
    */
-  private setFormView(): void {
+  setFormView(): void {
     if (!this.navigationItem) {
       this.view = NavigationLinkFormView.CreateCustomLink;
       return;
@@ -189,8 +189,8 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
         this.service.upsertNavigationItem(submittedItem).subscribe(success => {
           if (success) {
             // Reset the form so we don't get stopped by the deactivate guard
-            this.linkForm.markAsUntouched();
-            this.router.navigate(['network/admin/navigation/menu/list']);
+            this.linkForm.markAsPristine();
+            this.navigateToListView();
           }
         })
       );
@@ -217,11 +217,19 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
    * @returns { Observable<boolean> } - true if component can be deactivated.
    */
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.linkForm.touched) {
+    if (!this.linkForm.dirty) {
       return true;
     }
 
     return this.dialogService.confirm('Discard changes?');
+  }
+
+  /**
+   * Navigate back to list view
+   * @returns { void }
+   */
+  public navigateToListView(): void {
+    this.router.navigate(['/network/admin/navigation/menu/list']);
   }
 
   /**

@@ -144,6 +144,7 @@
       padding: 0;
       margin: 0;
 
+      ::ng-deep m-sidebar__customNavigationItems .m-sidebarNavigation__item,
       .m-sidebarNavigation__item {
         &.m-sidebarNavigation__item--supermind {
           /**
@@ -316,6 +317,7 @@
   }
 }
 
+::ng-deep m-sidebar__customNavigationItems .m-sidebarNavigation__item,
 .m-sidebarNavigation__item {
   a {
     display: flex;
