@@ -6,7 +6,6 @@ import {
   ViewContainerRef,
   TemplateRef,
 } from '@angular/core';
-import { Experiment } from '@growthbook/growthbook';
 
 import { ExperimentsService } from './experiments.service';
 
@@ -25,8 +24,6 @@ export class ExperimentDirective {
 
   ngOnInit() {
     const variation = this.service.run(this.experimentId);
-
-    // console.log("Growth back says you should see " + variation + " and this will render " + this.variationId);
 
     if (variation === this.variationId) {
       this.viewContainer.clear();

@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   CookieModule,
@@ -15,27 +15,47 @@ import { Session } from './session';
 import { siteServiceMock } from '../mocks/services/site-service-mock.spec';
 import { ConfigsService } from '../common/services/configs.service';
 import { MockService } from '../utils/mock';
+import posthog from 'posthog-js';
+import { Router } from '@angular/router';
+import userMock from '../mocks/responses/user.mock';
 
 describe('AnalyticsService', () => {
-  let service: AnalyticsService;
+  let service: AnalyticsService,
+    router: Router,
+    configService: Partial<ConfigsService>;
 
   beforeEach(() => {
+    configService = {
+      get: key => {
+        if (key === 'posthog') {
+          return <any>{
+            feature_flags: [],
+          };
+        }
+        return null;
+      },
+    };
+
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, CookieModule],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: SiteService, useValue: siteServiceMock },
-        CookieService,
         {
           provide: COOKIE_OPTIONS,
           useValue: CookieOptionsProvider,
         },
         AnalyticsService,
         { provide: Session, useValue: sessionMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: ConfigsService,
+          useValue: configService,
+        },
       ],
     });
+
     service = TestBed.inject(AnalyticsService);
+    router = TestBed.inject(Router);
   });
 
   it('should be created', () => {
@@ -79,4 +99,108 @@ describe('AnalyticsService', () => {
       },
     });
   });
+
+  it('should emit a pageview event to posthog on navigation change', fakeAsync(() => {
+    spyOn(posthog, 'capture');
+
+    router.initialNavigation();
+    tick();
+
+    expect(posthog.capture).toHaveBeenCalledWith('$pageview', {});
+    expect(posthog.capture).toHaveBeenCalledTimes(1);
+  }));
+
+  it('should identify a user on session emission', fakeAsync(() => {
+    spyOn(posthog, 'identify');
+
+    sessionMock.loggedinEmitter.emit(true);
+    tick();
+
+    expect(posthog.identify).toHaveBeenCalledWith('1000');
+  }));
+
+  it('should reset identity on logout', fakeAsync(() => {
+    spyOn(posthog, 'reset');
+
+    sessionMock.loggedinEmitter.emit(false);
+    tick();
+
+    expect(posthog.reset).toHaveBeenCalled();
+  }));
+
+  it('should send an event when a click happens', fakeAsync(() => {
+    spyOn(posthog, 'capture');
+
+    service.trackClick('spec-test');
+
+    expect(posthog.capture).toHaveBeenCalledWith('dataref_click', {
+      ref: 'spec-test',
+    });
+  }));
+
+  it('should send an event when a click happens with entity context', fakeAsync(() => {
+    spyOn(posthog, 'capture');
+
+    service.trackClick('spec-test', [
+      {
+        schema: 'iglu:com.minds/entity_context/jsonschema/1-0-0',
+        data: {
+          entity_guid: '123',
+          entity_type: 'activity',
+          entity_owner_guid: '456',
+        },
+      },
+    ]);
+
+    expect(posthog.capture).toHaveBeenCalledWith('dataref_click', {
+      ref: 'spec-test',
+      entity_guid: '123',
+      entity_type: 'activity',
+      entity_subtype: undefined,
+      entity_owner_guid: '456',
+    });
+  }));
+
+  it('should respect a users opt out status when logging in', fakeAsync(() => {
+    spyOn(posthog, 'opt_out_capturing');
+
+    spyOn(configService, 'get').and.returnValue({
+      opt_out: true, // user is opted out of analytics
+    });
+
+    service.setUser(userMock);
+
+    expect(posthog.opt_out_capturing).toHaveBeenCalled();
+  }));
+
+  it('should restart tracking if a user is not opted out, but a previous session was', fakeAsync(() => {
+    spyOn(posthog, 'has_opted_out_capturing').and.returnValue(true);
+    spyOn(posthog, 'clear_opt_in_out_capturing');
+
+    spyOn(configService, 'get').and.returnValue({
+      opt_out: false, // user is NOT opted out of analytics
+    });
+
+    service.setUser(userMock);
+
+    expect(posthog.clear_opt_in_out_capturing).toHaveBeenCalled();
+  }));
+
+  it('should make sure a user, opted out, who logs out retains their opt out status', fakeAsync(() => {
+    spyOn(posthog, 'reset').and.callThrough();
+    spyOn(posthog, 'opt_out_capturing').and.callThrough();
+
+    spyOn(configService, 'get').and.returnValue({
+      opt_out: true, // user is opted out of analytics
+    });
+
+    sessionMock.loggedinEmitter.emit(true);
+    tick(1000);
+
+    sessionMock.loggedinEmitter.emit(false);
+    tick(1000);
+
+    expect(posthog.reset).toHaveBeenCalled();
+    expect(posthog.opt_out_capturing).toHaveBeenCalled();
+  }));
 });
