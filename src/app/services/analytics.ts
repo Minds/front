@@ -278,6 +278,8 @@ export class AnalyticsService implements OnDestroy {
    */
   private capture(eventName: string, properties?: Properties): void {
     properties = properties || {};
+    const $setOnce = properties.$set_once || {};
+    const $set = properties.$set || {};
 
     // Group together similar pages by the ng route
     const ng_tokenized_path = this.activatedRoute.snapshot.firstChild
@@ -289,9 +291,20 @@ export class AnalyticsService implements OnDestroy {
     // If this is a tenant, add the tenant id
     const tenantId = this.configService.get('tenant_id');
     if (tenantId) {
-      properties.$set_once = {
-        tenant_id: tenantId,
-      };
+      $setOnce.tenant_id = tenantId;
+      properties.tenant_id = tenantId;
+    }
+
+    // Set the current environment
+    $set.environment = this.configService.get('environment');
+    properties.environment = this.configService.get('environment');
+
+    if (Object.keys($set).length) {
+      properties.$set = $set;
+    }
+
+    if (Object.keys($setOnce).length) {
+      properties.$set_once = $setOnce;
     }
 
     posthog.capture(eventName, properties);
