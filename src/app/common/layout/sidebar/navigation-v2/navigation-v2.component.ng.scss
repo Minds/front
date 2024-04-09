@@ -40,7 +40,7 @@
     nav {
       overflow-y: auto;
       overflow-x: hidden;
-      max-height: calc(100% - 75px);
+      max-height: calc(100vh - 75px);
 
       @include hide-scrollbar;
 

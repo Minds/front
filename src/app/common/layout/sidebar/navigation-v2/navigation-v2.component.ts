@@ -176,13 +176,13 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
         })
     );
 
-    if (isPlatformBrowser(this.platformId)) {
-      this.subscriptions.push(
-        this.chatReceiptService.getUnreadCount$().subscribe(count => {
-          this.chatUnreadCount = count;
-        })
-      );
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.subscriptions.push(
+    //     this.chatReceiptService.getUnreadCount$().subscribe(count => {
+    //       this.chatUnreadCount = count;
+    //     })
+    //   );
+    // }
   }
 
   ngOnDestroy(): void {
