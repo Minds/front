@@ -33,6 +33,8 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { TotalChatRoomInviteRequestsService } from '../../services/total-chat-room-invite-requests.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * List of chat rooms.
@@ -92,6 +94,8 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
     private startChatModal: StartChatModalService,
     private chatRoomsListService: ChatRoomsListService,
     private totalChatRequestsService: TotalChatRoomInviteRequestsService,
+    private permissionsService: PermissionsService,
+    private toaster: ToasterService,
     private route: ActivatedRoute,
     private router: Router,
     protected elementRef: ElementRef
@@ -134,6 +138,10 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> }
    */
   protected async onStartChatClick(): Promise<void> {
+    if (!this.permissionsService.canCreateChatRoom()) {
+      this.toaster.warn("You don't have permission to create a chat room");
+      return;
+    }
     const result: string = await this.startChatModal.open(true);
     if (result) {
       this.chatRoomsListService.refetch();

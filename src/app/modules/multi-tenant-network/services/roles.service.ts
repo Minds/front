@@ -281,6 +281,8 @@ export class MultiTenantRolesService implements OnDestroy {
       PermissionsEnum.CanUseRssSync,
       PermissionsEnum.CanModerateContent,
       PermissionsEnum.CanCreatePaywall,
+      PermissionsEnum.CanCreateChatRoom,
+      PermissionsEnum.CanUploadChatMedia,
     ];
 
     return toggleablePermissions.filter(permission =>
@@ -306,6 +308,10 @@ export class MultiTenantRolesService implements OnDestroy {
         return 'Moderate content';
       case PermissionsEnum.CanCreatePaywall:
         return 'Create membership posts';
+      case PermissionsEnum.CanCreateChatRoom:
+        return 'Create chat room';
+      case PermissionsEnum.CanUploadChatMedia:
+        return 'Upload media to chats';
       // The remaining PermissionsEnum values aren't displayed anywhere
     }
 

@@ -73,4 +73,32 @@ describe('PermissionsService', () => {
     service.setWhitelist([]);
     expect(service.canCreatePaywall()).toBe(false);
   });
+
+  describe('createChatRoom', () => {
+    it('should determine if the user can create a new chat room', () => {
+      experimentsServiceSpy.hasVariation.and.returnValue(true);
+      service.setWhitelist([PermissionsEnum.CanCreateChatRoom]);
+      expect(service.canCreateChatRoom()).toBe(true);
+    });
+
+    it('should determine if the user can NOT create a new chat room', () => {
+      experimentsServiceSpy.hasVariation.and.returnValue(true);
+      service.setWhitelist([]);
+      expect(service.canCreateChatRoom()).toBe(false);
+    });
+  });
+
+  describe('canUploadChatMedia', () => {
+    it('should determine if the user can upload chat media', () => {
+      experimentsServiceSpy.hasVariation.and.returnValue(true);
+      service.setWhitelist([PermissionsEnum.CanUploadChatMedia]);
+      expect(service.canUploadChatMedia()).toBe(true);
+    });
+
+    it('should determine if the user can NOT upload chat media', () => {
+      experimentsServiceSpy.hasVariation.and.returnValue(true);
+      service.setWhitelist([]);
+      expect(service.canUploadChatMedia()).toBe(false);
+    });
+  });
 });
