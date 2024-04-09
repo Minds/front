@@ -27,6 +27,7 @@ import { ResetPasswordExperimentService } from '../../experiments/sub-services/r
 import { Router } from '@angular/router';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
+import { AnalyticsService } from '../../../services/analytics';
 
 export class RouterStub {
   url = '';
@@ -142,6 +143,10 @@ describe('LoginForm', () => {
           {
             provide: SiteService,
             useValue: MockService(SiteService),
+          },
+          {
+            provide: AnalyticsService,
+            useValue: MockService(AnalyticsService),
           },
         ],
       }).compileComponents(); // compile template and css
