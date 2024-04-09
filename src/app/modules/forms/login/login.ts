@@ -20,7 +20,6 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { Router } from '@angular/router';
 import { RegexService } from '../../../common/services/regex.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
 
@@ -70,7 +69,6 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     private authModal: AuthModalService,
     private router: Router,
     private regex: RegexService,
-    private resetPasswordExperiment: ResetPasswordExperimentService,
     private permissionsService: PermissionsService,
     protected site: SiteService
   ) {
@@ -183,12 +181,7 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
    */
   public onForgotPasswordClick(): void {
     this.done.emit(true);
-
-    if (this.resetPasswordExperiment.isActive()) {
-      this.router.navigate(['/'], { queryParams: { resetPassword: true } });
-    } else {
-      this.router.navigate(['/forgot-password']);
-    }
+    this.router.navigate(['/'], { queryParams: { resetPassword: true } });
   }
 
   /**
