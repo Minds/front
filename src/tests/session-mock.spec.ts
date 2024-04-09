@@ -25,7 +25,7 @@ export let sessionMock = new (function() {
 
   this.userEmitter = new EventEmitter<any>();
 
-  this.loggedInEmitter = new EventEmitter<any>();
+  this.loggedinEmitter = new EventEmitter<any>();
 
   this.getLoggedInUser = () => {
     return this.user;

@@ -22,6 +22,7 @@ import { RegexService } from '../../../common/services/regex.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
+import { AnalyticsService } from '../../../services/analytics';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -70,7 +71,8 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     private router: Router,
     private regex: RegexService,
     private permissionsService: PermissionsService,
-    protected site: SiteService
+    protected site: SiteService,
+    protected analyticsService: AnalyticsService
   ) {
     super();
     this.form = fb.group({
@@ -131,6 +133,10 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
 
         // Set permissions
         this.permissionsService.setWhitelist(data.permissions);
+
+        if (data.opt_out_analytics) {
+          this.analyticsService.setOptOut(data.opt_out_analytics);
+        }
 
         this.session.login(data.user);
         this.userAvatarService.init();

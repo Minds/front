@@ -55,7 +55,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
   isMobile: boolean = false;
 
   onAuthPages: boolean = false; // sets to true if we're on login or register pages
-  onHomepage: boolean = false; // sets to true if we're on home or about pages
 
   router$;
 
@@ -135,8 +134,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   private setPages(url) {
     this.onAuthPages = url === '/login' || url === '/register';
-    this.onHomepage =
-      (url === '/' && !this.guestModeExperiment.isActive()) || url === '/about';
     this.detectChanges();
   }
 

@@ -12,7 +12,14 @@ import {
 import { ChannelsV2Service } from './channels-v2.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, fromEvent, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  fromEvent,
+  skip,
+  Subscription,
+} from 'rxjs';
 import { ChannelEditIntentService } from './services/edit-intent.service';
 import { WireModalService } from '../../wire/wire-modal.service';
 import { SeoService } from './seo.service';
@@ -22,7 +29,6 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
-import { Experiment } from '../../experiments/experiments.service';
 import { MutualSubscriptionsService } from './mutual-subscriptions/mutual-subscriptions.service';
 
 /**
@@ -210,17 +216,22 @@ export class ChannelComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.querySubscription = this.service.query$.subscribe(query => {
-      this.encodedQuery = query.length ? encodeURIComponent(query) : null;
+    this.querySubscription = this.service.query$
+      .pipe(
+        distinctUntilChanged(),
+        skip(1) // First emission is always ''
+      )
+      .subscribe(query => {
+        this.encodedQuery = query.length ? encodeURIComponent(query) : null;
 
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: {
-          query: this.encodedQuery,
-        },
-        queryParamsHandling: 'merge',
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {
+            query: this.encodedQuery,
+          },
+          queryParamsHandling: 'merge',
+        });
       });
-    });
   }
 
   /**
