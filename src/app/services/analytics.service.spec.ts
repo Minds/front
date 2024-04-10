@@ -131,7 +131,10 @@ describe('AnalyticsService', () => {
   }));
 
   it('should reset identity on logout', fakeAsync(() => {
-    spyOn(posthog, 'reset');
+    sessionMock.loggedinEmitter.emit(true);
+    tick();
+
+    spyOn(posthog, 'reset').and.callThrough();
 
     sessionMock.loggedinEmitter.emit(false);
     tick();
