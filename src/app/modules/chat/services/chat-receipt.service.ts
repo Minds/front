@@ -26,9 +26,8 @@ export class ChatReceiptService implements OnDestroy {
   private socketEventSubscription: Subscription;
 
   /** Unread message count */
-  public readonly unreadCount$: Observable<
-    number
-  > = this.chatInitService.getUnreadCount$();
+  public readonly unreadCount$: Observable<number> =
+    this.chatInitService.getUnreadCount$();
 
   constructor(
     private setReadReceiptGql: SetReadReceiptGQL,
@@ -81,7 +80,7 @@ export class ChatReceiptService implements OnDestroy {
 
     if (!newValue) return;
 
-    newValue.chatRoomList.edges.map(edge => {
+    newValue.chatRoomList.edges.map((edge) => {
       if (edge.node.guid === roomGuid) {
         edge.unreadMessagesCount += incrementBy;
       }
@@ -122,26 +121,27 @@ export class ChatReceiptService implements OnDestroy {
    * @returns { void }
    */
   private initSocketSubscription(): void {
-    this.socketEventSubscription = this.globalChatSocketService.globalEvents$.subscribe(
-      (event: ChatRoomEvent): void => {
-        if (!event.data || event.data['type'] !== 'NEW_MESSAGE') {
-          return;
-        }
+    this.socketEventSubscription =
+      this.globalChatSocketService.globalEvents$.subscribe(
+        (event: ChatRoomEvent): void => {
+          if (!event.data || event.data['type'] !== 'NEW_MESSAGE') {
+            return;
+          }
 
-        const senderGuid: number = event.data?.['metadata']?.['senderGuid'];
-        const loggedInUserGuid: number = Number(
-          this.session.getLoggedInUser()?.guid
-        );
+          const senderGuid: number = event.data?.['metadata']?.['senderGuid'];
+          const loggedInUserGuid: number = Number(
+            this.session.getLoggedInUser()?.guid
+          );
 
-        if (!loggedInUserGuid) {
-          return;
-        }
+          if (!loggedInUserGuid) {
+            return;
+          }
 
-        if (senderGuid !== loggedInUserGuid) {
-          this.incrementGlobalUnreadCountCache();
-          this.incrementRoomUnreadCountCache(event.roomGuid);
+          if (senderGuid !== loggedInUserGuid) {
+            this.incrementGlobalUnreadCountCache();
+            this.incrementRoomUnreadCountCache(event.roomGuid);
+          }
         }
-      }
-    );
+      );
   }
 }

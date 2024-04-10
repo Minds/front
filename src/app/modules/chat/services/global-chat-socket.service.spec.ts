@@ -81,7 +81,7 @@ describe('GlobalChatSocketService', () => {
       data: { type: 'test' },
     };
 
-    (service as any).getEventsByChatRoomGuid(roomGuid).subscribe(event => {
+    (service as any).getEventsByChatRoomGuid(roomGuid).subscribe((event) => {
       expect(event).toEqual(chatRoomEvent);
       done();
     });

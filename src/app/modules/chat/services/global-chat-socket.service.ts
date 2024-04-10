@@ -23,9 +23,8 @@ export type ChatRoomEvent = {
 @Injectable({ providedIn: 'root' })
 export class GlobalChatSocketService implements OnDestroy {
   /** Subject for global chat events. */
-  public readonly globalEvents$: Subject<ChatRoomEvent> = new Subject<
-    ChatRoomEvent
-  >();
+  public readonly globalEvents$: Subject<ChatRoomEvent> =
+    new Subject<ChatRoomEvent>();
 
   /** Map of room names to subscriptions. */
   private readonly roomMap: Map<string, Subscription> = new Map<

@@ -70,7 +70,9 @@ describe('ChatMessagesService', () => {
       >(mockResponse),
       fetchMore: jasmine.createSpy('fetchMore'),
     });
-    (service as any).globalChatSocketService.getEventsByChatRoomGuid.and.returnValue(
+    (
+      service as any
+    ).globalChatSocketService.getEventsByChatRoomGuid.and.returnValue(
       new Subject<ChatRoomEvent>()
     );
     service.init(DEFAULT_ROOM_GUID);
@@ -195,9 +197,8 @@ describe('ChatMessagesService', () => {
 
   describe('fetchNew', () => {
     it('should fetch new messages', () => {
-      (service as any).queryRef.subscribeToMore = jasmine.createSpy(
-        'subscribeToMore'
-      );
+      (service as any).queryRef.subscribeToMore =
+        jasmine.createSpy('subscribeToMore');
       (service as any).queryRef.variables = { roomGuid: DEFAULT_ROOM_GUID };
 
       (service as any).fetchNew();
