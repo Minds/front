@@ -12,7 +12,7 @@ import { ApiService } from './../api/api.service';
 import { BlockListService } from './block-list.service';
 import { FeedsService, NEW_POST_POLL_INTERVAL } from './feeds.service';
 
-let storageV2Mock = new (function() {})();
+let storageV2Mock = new (function () {})();
 
 describe('FeedsService', () => {
   let service: FeedsService;

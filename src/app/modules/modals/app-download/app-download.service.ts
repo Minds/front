@@ -10,7 +10,10 @@ type ModalComponent = typeof AppDownloadModalComponent;
  */
 @Injectable({ providedIn: 'root' })
 export class AppDownloadModalLazyService {
-  constructor(private modalService: ModalService, private injector: Injector) {}
+  constructor(
+    private modalService: ModalService,
+    private injector: Injector
+  ) {}
 
   /**
    * Lazy load modules and open modal.

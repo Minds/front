@@ -32,8 +32,10 @@ export interface ProToggleResponse {
   templateUrl: 'menu.component.html',
   providers: [PostMenuService, ActivityService],
 })
-export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
-  implements OnInit {
+export class ChannelActionsMenuComponent
+  extends AbstractSubscriberComponent
+  implements OnInit
+{
   /**
    * Constructor
    * @param service
@@ -59,7 +61,7 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
 
   ngOnInit() {
     this.subscriptions.push(
-      this.adminConfirmation.completed$.subscribe(payload => {
+      this.adminConfirmation.completed$.subscribe((payload) => {
         if (payload) {
           let channel = this.service.channel$.getValue();
           const nextState = payload.action === 'make' ? true : false;
@@ -192,7 +194,7 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
   async setNSFWLock(reasons: Array<{ label; value; selected }>) {
     const channel = { ...this.service.channel$.getValue() };
 
-    const nsfw = reasons.map(reason => reason.value);
+    const nsfw = reasons.map((reason) => reason.value);
 
     // Optimistic mutation
     this.service.setChannel({ ...channel, nsfw: nsfw, subscribed: false });

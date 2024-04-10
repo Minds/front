@@ -13,7 +13,8 @@ export class EmbedImage {
   private _serializePreImages: Function;
   $element;
   $currentImage;
-  private readonly urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+  private readonly urlRegex =
+    /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
   constructor(options: Options, configs: ConfigsService) {
     this.options = { ...options };
@@ -120,7 +121,7 @@ export class EmbedImage {
     }
 
     img.src = imgSrc;
-    img.onerror = function() {
+    img.onerror = function () {
       this.classList.add('m--img-not-found');
     };
     img.addEventListener('click', this.selectImage.bind(this));
@@ -141,10 +142,7 @@ export class EmbedImage {
   }
 
   public handleClick(event: any) {
-    const src = this.window
-      .getSelection()
-      .toString()
-      .trim();
+    const src = this.window.getSelection().toString().trim();
 
     if (this.urlRegex.exec(src)) {
       this.insertHTML(src);
@@ -158,16 +156,16 @@ export class EmbedImage {
    */
   public events() {
     /* prevent default image drag&drop */
-    this.$element.addEventListener('dragover', e => {
+    this.$element.addEventListener('dragover', (e) => {
       e.preventDefault();
       e.stopPropagation();
     });
-    this.$element.addEventListener('drop', e => {
+    this.$element.addEventListener('drop', (e) => {
       e.preventDefault();
       e.stopPropagation();
     });
 
-    this.$element.addEventListener('keypress', e => {
+    this.$element.addEventListener('keypress', (e) => {
       if (e.keyCode == 13) {
         this.unselectImage(e);
       }

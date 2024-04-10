@@ -21,20 +21,20 @@ export class BoostModalV2FooterComponent implements OnDestroy {
   public BoostGoal: typeof BoostGoal = BoostGoal;
 
   // currently active modal panel.
-  public readonly activePanel$: BehaviorSubject<BoostModalPanel> = this.service
-    .activePanel$;
+  public readonly activePanel$: BehaviorSubject<BoostModalPanel> =
+    this.service.activePanel$;
 
   // entity type of the post that is being boosted.
-  public readonly entityType$: Observable<BoostSubject> = this.service
-    .entityType$;
+  public readonly entityType$: Observable<BoostSubject> =
+    this.service.entityType$;
 
   // whether the next button is enabled.
-  public readonly disableSubmitButton$: Observable<boolean> = this.service
-    .disableSubmitButton$;
+  public readonly disableSubmitButton$: Observable<boolean> =
+    this.service.disableSubmitButton$;
 
   // whether boost submission is in progress.
-  public readonly boostSubmissionInProgress$: Observable<boolean> = this.service
-    .boostSubmissionInProgress$;
+  public readonly boostSubmissionInProgress$: Observable<boolean> =
+    this.service.boostSubmissionInProgress$;
 
   // subscription fired once on button click.
   private buttonClickSubscription: Subscription;

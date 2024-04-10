@@ -11,63 +11,61 @@ describe('TopbarWrapperComponent', () => {
   let comp: TopbarWrapperComponent;
   let fixture: ComponentFixture<TopbarWrapperComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          TopbarWrapperComponent,
-          MockComponent({
-            selector: 'm-topbar',
-          }),
-          MockComponent({
-            selector: 'm-search--bar',
-            inputs: ['defaultSizes'],
-          }),
-          MockComponent({
-            selector: 'm-tooltip',
-          }),
-          MockComponent({
-            selector: 'm-topbar__walletBalance',
-          }),
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['from', 'iconId', 'sizeFactor', 'rem'],
-            outputs: ['click'],
-          }),
-          MockComponent({
-            selector: 'm-notifications--topbar-toggle',
-          }),
-        ],
-        providers: [
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: Router,
-            useValue: MockService(Router),
-          },
-          {
-            provide: GiftCardPurchaseExperimentService,
-            useValue: MockService(GiftCardPurchaseExperimentService),
-          },
-          {
-            provide: TopbarService,
-            useValue: MockService(TopbarService, {
-              has: ['isMinimalLightMode$'],
-              props: {
-                isMinimalLightMode$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        TopbarWrapperComponent,
+        MockComponent({
+          selector: 'm-topbar',
+        }),
+        MockComponent({
+          selector: 'm-search--bar',
+          inputs: ['defaultSizes'],
+        }),
+        MockComponent({
+          selector: 'm-tooltip',
+        }),
+        MockComponent({
+          selector: 'm-topbar__walletBalance',
+        }),
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['from', 'iconId', 'sizeFactor', 'rem'],
+          outputs: ['click'],
+        }),
+        MockComponent({
+          selector: 'm-notifications--topbar-toggle',
+        }),
+      ],
+      providers: [
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
+        {
+          provide: GiftCardPurchaseExperimentService,
+          useValue: MockService(GiftCardPurchaseExperimentService),
+        },
+        {
+          provide: TopbarService,
+          useValue: MockService(TopbarService, {
+            has: ['isMinimalLightMode$'],
+            props: {
+              isMinimalLightMode$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(TopbarWrapperComponent);
     comp = fixture.componentInstance;
 

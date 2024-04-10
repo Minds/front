@@ -70,16 +70,14 @@ export class AppPromptService implements OnDestroy {
   /**
    * Current state of modal
    */
-  public readonly state$: BehaviorSubject<AppPromptState> = new BehaviorSubject<
-    AppPromptState
-  >('dismissed');
+  public readonly state$: BehaviorSubject<AppPromptState> =
+    new BehaviorSubject<AppPromptState>('dismissed');
 
   /**
    * Current user platform (defaults to non-mobile until after init)
    */
-  public readonly platform$: BehaviorSubject<
-    MobilePlatform
-  > = new BehaviorSubject<MobilePlatform>('non-mobile');
+  public readonly platform$: BehaviorSubject<MobilePlatform> =
+    new BehaviorSubject<MobilePlatform>('non-mobile');
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -281,7 +279,7 @@ export class AppPromptService implements OnDestroy {
         this.platform$
           .pipe(
             take(1),
-            catchError(e => this.handleError(e))
+            catchError((e) => this.handleError(e))
           )
           .subscribe((platform: MobilePlatform) => {
             try {

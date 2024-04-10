@@ -26,11 +26,11 @@ import * as _ from 'lodash';
   ],
 })
 export class NetworkAdminConsoleInviteInvitationsComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /** Whether loading is in progress. */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** List of invites to be displayed. */
   public invites$: BehaviorSubject<InviteEdge[]> = new BehaviorSubject<
@@ -44,9 +44,8 @@ export class NetworkAdminConsoleInviteInvitationsComponent
   public getInvitesQuery: QueryRef<GetInvitesQuery, GetInvitesQueryVariables>;
 
   /** Whether pagination has next page. */
-  public readonly hasNextPage$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly hasNextPage$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Enum for display in component. */
   public readonly RoleId: typeof RoleId = RoleId;
@@ -125,7 +124,7 @@ export class NetworkAdminConsoleInviteInvitationsComponent
     for (let edge of edges ?? []) {
       // Check if the edge node has groups and if each group has a legacy property
       if (edge.node.groups && edge.node.groups.length > 0) {
-        edge.node.groups.forEach(group => {
+        edge.node.groups.forEach((group) => {
           if (typeof group.legacy === 'string') {
             group.legacy = JSON.parse(group.legacy);
           }
@@ -166,7 +165,7 @@ export class NetworkAdminConsoleInviteInvitationsComponent
    * */
   protected async cancelInvite(invite: InviteEdge): Promise<void> {
     this.subscriptions.push(
-      await this.service.cancelInvite(invite).subscribe(success => {
+      await this.service.cancelInvite(invite).subscribe((success) => {
         if (success) {
           this.updateInvitesList(invite, true);
         }
@@ -179,7 +178,7 @@ export class NetworkAdminConsoleInviteInvitationsComponent
    */
   protected async resendInvite(invite: InviteEdge): Promise<void> {
     this.subscriptions.push(
-      await this.service.resendInvite(invite).subscribe(success => {
+      await this.service.resendInvite(invite).subscribe((success) => {
         let pendingInvite: InviteEdge = { ...invite };
         pendingInvite.node.status = InviteEmailStatusEnum.Pending;
         if (success) {
@@ -206,7 +205,7 @@ export class NetworkAdminConsoleInviteInvitationsComponent
 
     // Find the index of the invite with the matching node.id
     const indexToUpdate = currentInvites.findIndex(
-      invite => invite.node.id === updatedInvite.node.id
+      (invite) => invite.node.id === updatedInvite.node.id
     );
 
     if (indexToUpdate === -1) {

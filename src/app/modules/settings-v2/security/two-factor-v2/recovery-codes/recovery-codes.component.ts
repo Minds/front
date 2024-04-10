@@ -19,11 +19,11 @@ import {
 })
 export class SettingsTwoFactorRecoveryCodeComponent
   extends AbstractSubscriberComponent
-  implements AfterViewInit {
+  implements AfterViewInit
+{
   // true if progress should be disabled.
-  public readonly disabled$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly disabled$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // Various ViewChildren used in component logic.
   @ViewChild('recoveryCode') recoveryCode: ElementRef;
@@ -61,7 +61,7 @@ export class SettingsTwoFactorRecoveryCodeComponent
           // throttle request to once every 1000ms
           throttleTime(1000)
         )
-        .subscribe($event => {
+        .subscribe(($event) => {
           this.copyToClipboard();
         }),
       fromEvent(this.downloadButton.nativeElement, 'click')
@@ -69,7 +69,7 @@ export class SettingsTwoFactorRecoveryCodeComponent
           // throttle request to once every 2000ms
           throttleTime(2000)
         )
-        .subscribe($event => {
+        .subscribe(($event) => {
           this.downloadRecoveryCode();
         })
     );

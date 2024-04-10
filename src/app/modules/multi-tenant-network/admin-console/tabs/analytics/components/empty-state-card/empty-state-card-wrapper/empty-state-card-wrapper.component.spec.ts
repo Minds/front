@@ -73,9 +73,10 @@ describe('NetworkAdminAnalyticsEmptyStateCardWrapperComponent', () => {
     (comp as any).type = AnalyticsTableEnum.PopularActivities;
     fixture.detectChanges();
 
-    const emptyStateComponent: DebugElement = fixture.nativeElement.querySelector(
-      'm-networkAdminAnalytics__emptyStateCard'
-    );
+    const emptyStateComponent: DebugElement =
+      fixture.nativeElement.querySelector(
+        'm-networkAdminAnalytics__emptyStateCard'
+      );
     expect(emptyStateComponent).toBeTruthy();
 
     const attributes: any = emptyStateComponent.attributes;
@@ -92,9 +93,10 @@ describe('NetworkAdminAnalyticsEmptyStateCardWrapperComponent', () => {
     (comp as any).type = AnalyticsTableEnum.PopularGroups;
     fixture.detectChanges();
 
-    const emptyStateComponent: DebugElement = fixture.nativeElement.querySelector(
-      'm-networkAdminAnalytics__emptyStateCard'
-    );
+    const emptyStateComponent: DebugElement =
+      fixture.nativeElement.querySelector(
+        'm-networkAdminAnalytics__emptyStateCard'
+      );
     expect(emptyStateComponent).toBeTruthy();
 
     const attributes: any = emptyStateComponent.attributes;
@@ -113,9 +115,10 @@ describe('NetworkAdminAnalyticsEmptyStateCardWrapperComponent', () => {
     (comp as any).type = AnalyticsTableEnum.PopularUsers;
     fixture.detectChanges();
 
-    const emptyStateComponent: DebugElement = fixture.nativeElement.querySelector(
-      'm-networkAdminAnalytics__emptyStateCard'
-    );
+    const emptyStateComponent: DebugElement =
+      fixture.nativeElement.querySelector(
+        'm-networkAdminAnalytics__emptyStateCard'
+      );
     expect(emptyStateComponent).toBeTruthy();
 
     const attributes: any = emptyStateComponent.attributes;

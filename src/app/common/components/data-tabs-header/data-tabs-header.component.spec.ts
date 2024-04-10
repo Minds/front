@@ -16,13 +16,11 @@ describe('DataTabsHeaderComponent', () => {
   let component: DataTabsHeaderComponent;
   let fixture: ComponentFixture<DataTabsHeaderComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [DataTabsHeaderComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [DataTabsHeaderComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DataTabsHeaderComponent);

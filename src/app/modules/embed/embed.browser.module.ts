@@ -13,6 +13,8 @@ import {
 } from '../../common/services/redirect.service';
 import { EmbedComponent } from './embed.component';
 import { EmbedModule } from './embed.module';
+import { POSTHOG_JS } from '../../common/services/posthog/posthog-injection-tokens';
+import posthog from 'posthog-js';
 
 @NgModule({
   imports: [
@@ -30,6 +32,10 @@ import { EmbedModule } from './embed.module';
     {
       provide: HeadersService,
       useClass: BrowserHeadersService,
+    },
+    {
+      provide: POSTHOG_JS,
+      useValue: posthog,
     },
   ],
   bootstrap: [EmbedComponent],

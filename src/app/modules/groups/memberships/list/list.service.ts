@@ -27,14 +27,12 @@ export class GroupsMembershipsListService {
   constructor(private api: ApiService) {}
 
   // Which membership level do we want to present?
-  public readonly groupMembershipLevel$: BehaviorSubject<
-    GroupMembershipLevel
-  > = new BehaviorSubject<GroupMembershipLevel>(GroupMembershipLevel.MEMBER);
+  public readonly groupMembershipLevel$: BehaviorSubject<GroupMembershipLevel> =
+    new BehaviorSubject<GroupMembershipLevel>(GroupMembershipLevel.MEMBER);
 
   // Show all groups in which the user is above the specified level
-  public readonly membershipLevelGte$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly membershipLevelGte$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Get list of groups from API
@@ -70,7 +68,7 @@ export class GroupsMembershipsListService {
           return this.api.get<ApiResponse>(endpoint, params);
         }
       ),
-      catchError(e => {
+      catchError((e) => {
         return of(null);
       }),
       shareReplay()

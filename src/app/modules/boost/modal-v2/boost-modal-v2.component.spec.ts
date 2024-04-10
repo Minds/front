@@ -10,67 +10,63 @@ describe('BoostModalV2Component', () => {
   let comp: BoostModalV2Component;
   let fixture: ComponentFixture<BoostModalV2Component>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          BoostModalV2Component,
-          MockComponent({
-            selector: 'm-boostModalV2__header',
-          }),
-          MockComponent({
-            selector: 'm-boostModalV2__audienceSelector',
-          }),
-          MockComponent({
-            selector: 'm-boostModalV2__budgetSelector',
-          }),
-          MockComponent({
-            selector: 'm-boostModalV2__review',
-          }),
-          MockComponent({
-            selector: 'm-boostModalV2__footer',
-          }),
-        ],
-        providers: [
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      })
-        .overrideProvider(BoostModalV2Service, {
-          useValue: MockService(BoostModalV2Service, {
-            has: ['activePanel$', 'callSaveIntent$', 'entity$', 'firstPanel$'],
-            props: {
-              activePanel$: {
-                get: () =>
-                  new BehaviorSubject<BoostModalPanel>(BoostModalPanel.REVIEW),
-              },
-              callSaveIntent$: { get: () => new Subject<boolean>() },
-              entity$: {
-                get: () =>
-                  new BehaviorSubject<BoostableEntity>({
-                    guid: '123',
-                    type: 'activity',
-                    subtype: '',
-                    owner_guid: '234',
-                    time_created: '99999999999',
-                  }),
-              },
-              firstPanel$: {
-                get: () =>
-                  new BehaviorSubject<BoostModalPanel>(
-                    BoostModalPanel.AUDIENCE
-                  ),
-              },
-            },
-          }),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        BoostModalV2Component,
+        MockComponent({
+          selector: 'm-boostModalV2__header',
+        }),
+        MockComponent({
+          selector: 'm-boostModalV2__audienceSelector',
+        }),
+        MockComponent({
+          selector: 'm-boostModalV2__budgetSelector',
+        }),
+        MockComponent({
+          selector: 'm-boostModalV2__review',
+        }),
+        MockComponent({
+          selector: 'm-boostModalV2__footer',
+        }),
+      ],
+      providers: [
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
     })
-  );
+      .overrideProvider(BoostModalV2Service, {
+        useValue: MockService(BoostModalV2Service, {
+          has: ['activePanel$', 'callSaveIntent$', 'entity$', 'firstPanel$'],
+          props: {
+            activePanel$: {
+              get: () =>
+                new BehaviorSubject<BoostModalPanel>(BoostModalPanel.REVIEW),
+            },
+            callSaveIntent$: { get: () => new Subject<boolean>() },
+            entity$: {
+              get: () =>
+                new BehaviorSubject<BoostableEntity>({
+                  guid: '123',
+                  type: 'activity',
+                  subtype: '',
+                  owner_guid: '234',
+                  time_created: '99999999999',
+                }),
+            },
+            firstPanel$: {
+              get: () =>
+                new BehaviorSubject<BoostModalPanel>(BoostModalPanel.AUDIENCE),
+            },
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostModalV2Component);
     comp = fixture.componentInstance;
 
@@ -114,7 +110,7 @@ describe('BoostModalV2Component', () => {
       entity: entity,
     });
 
-    (comp as any).service.entity$.subscribe(val => {
+    (comp as any).service.entity$.subscribe((val) => {
       expect(val).toEqual(entity);
       done();
     });

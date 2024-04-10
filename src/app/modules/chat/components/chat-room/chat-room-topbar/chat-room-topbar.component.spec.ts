@@ -63,7 +63,9 @@ describe('ChatRoomTopComponent', () => {
   describe('ngOnChanges', () => {
     it('should derive room name from members', () => {
       (comp as any).roomMembers = [mockChatMemberEdge];
-      (comp as any).chatRoomUtilsService.deriveRoomNameFromMembers.and.returnValue(
+      (
+        comp as any
+      ).chatRoomUtilsService.deriveRoomNameFromMembers.and.returnValue(
         'roomName'
       );
       comp.ngOnChanges({

@@ -29,7 +29,7 @@ export class PasswordRiskValidator {
         return control.valueChanges.pipe(
           debounceTime(300),
           take(1),
-          switchMap(_ =>
+          switchMap((_) =>
             this.client
               .post('api/v3/security/password/risk', {
                 password: val,
@@ -42,7 +42,7 @@ export class PasswordRiskValidator {
                   return null;
                 }
               })
-              .catch(e => {
+              .catch((e) => {
                 console.log(e);
                 return null;
               })

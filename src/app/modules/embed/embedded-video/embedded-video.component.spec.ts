@@ -41,6 +41,8 @@ import { EmbeddedVideoComponent } from './embedded-video.component';
 import { By } from '@angular/platform-browser';
 import { AnalyticsService } from '../../../services/analytics';
 import { siteServiceMock } from '../../../mocks/services/site-service-mock.spec';
+import { POSTHOG_JS } from '../../../common/services/posthog/posthog-injection-tokens';
+import posthog from 'posthog-js';
 
 const GUID = '1155576347020644352';
 const OWNER_GUID = '1153095520021913602';
@@ -219,93 +221,96 @@ describe('EmbeddedVideoComponent', () => {
         paramMap: new BehaviorSubject(convertToParamMap({ guid })),
       },
     });
+
     TestBed.compileComponents();
     fixture = TestBed.createComponent(EmbeddedVideoComponent);
     component = fixture.componentInstance;
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      const configsServiceMock = MockService(ConfigsService, {
-        get: key => {
-          const config = {
-            site_url: 'https://minds.com/',
-            cdn_url: 'https://cdn.minds.com/',
-          };
-          return config[key];
+  beforeEach(() => {
+    const configsServiceMock = MockService(ConfigsService, {
+      get: (key) => {
+        const config = {
+          site_url: 'https://minds.com/',
+          cdn_url: 'https://cdn.minds.com/',
+        };
+        return config[key];
+      },
+    });
+
+    TestBed.configureTestingModule({
+      declarations: [EmbeddedVideoComponent],
+      providers: [
+        { provide: DiagnosticsService, useClass: ServerDiagnosticsService },
+        { provide: XhrFactory, useClass: ServerXhr },
+        {
+          provide: CookieService,
+          useClass: CookieBackendService,
         },
-      });
+        {
+          provide: RedirectService,
+          useClass: ServerRedirectService,
+        },
+        {
+          provide: HeadersService,
+          useClass: ServerHeadersService,
+        },
+        {
+          provide: HlsjsPlyrDriver,
+          useClass: DefaultPlyrDriver,
+        },
+        { provide: Client, useValue: clientMock },
+        { provide: MetaService, useValue: metaServiceMock },
+        {
+          provide: RelatedContentService,
+          useValue: MockService(RelatedContentService),
+        },
+        {
+          provide: ConfigsService,
+          useValue: configsServiceMock,
+        },
+        {
+          provide: REQUEST,
+          useValue: {},
+        },
+        {
+          provide: RESPONSE,
+          useValue: {},
+        },
+        {
+          provide: NgxRequest,
+          useValue: {},
+        },
+        {
+          provide: NgxResponse,
+          useValue: {},
+        },
+        { provide: 'ORIGIN_URL', useValue: location.origin },
+        {
+          provide: 'QUERY_STRING',
+          useFactory: () => '',
+        },
+        {
+          provide: SENTRY,
+          useValue: Sentry,
+        },
+        {
+          provide: POSTHOG_JS,
+          useValue: posthog,
+        },
+        {
+          provide: AnalyticsService,
+          useValue: MockService(AnalyticsService),
+        },
+      ],
+      imports: [EmbedModule],
+    });
 
-      TestBed.configureTestingModule({
-        declarations: [EmbeddedVideoComponent],
-        providers: [
-          { provide: DiagnosticsService, useClass: ServerDiagnosticsService },
-          { provide: XhrFactory, useClass: ServerXhr },
-          {
-            provide: CookieService,
-            useClass: CookieBackendService,
-          },
-          {
-            provide: RedirectService,
-            useClass: ServerRedirectService,
-          },
-          {
-            provide: HeadersService,
-            useClass: ServerHeadersService,
-          },
-          {
-            provide: HlsjsPlyrDriver,
-            useClass: DefaultPlyrDriver,
-          },
-          { provide: Client, useValue: clientMock },
-          { provide: MetaService, useValue: metaServiceMock },
-          {
-            provide: RelatedContentService,
-            useValue: MockService(RelatedContentService),
-          },
-          {
-            provide: ConfigsService,
-            useValue: configsServiceMock,
-          },
-          {
-            provide: REQUEST,
-            useValue: {},
-          },
-          {
-            provide: RESPONSE,
-            useValue: {},
-          },
-          {
-            provide: NgxRequest,
-            useValue: {},
-          },
-          {
-            provide: NgxResponse,
-            useValue: {},
-          },
-          { provide: 'ORIGIN_URL', useValue: location.origin },
-          {
-            provide: 'QUERY_STRING',
-            useFactory: () => '',
-          },
-          {
-            provide: SENTRY,
-            useValue: Sentry,
-          },
-          {
-            provide: AnalyticsService,
-            useValue: {},
-          },
-        ],
-        imports: [EmbedModule],
-      });
+    siteServiceMock.baseUrl = 'https://www.minds.com/';
+    siteServiceMock.cdnUrl = 'https://cdn.minds.com/';
 
-      siteServiceMock.baseUrl = 'https://www.minds.com/';
-      siteServiceMock.cdnUrl = 'https://cdn.minds.com/';
-
-      clientMock.response = CLIENT_RESPONSE;
-    })
-  );
+    clientMock.response = CLIENT_RESPONSE;
+  });
 
   it('should create', () => {
     setup(null, null);

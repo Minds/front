@@ -79,9 +79,8 @@ export class FeedFilterComponent implements OnInit {
   /**
    * Change current type
    */
-  @Output('typeChange') typeChangeEmitter: EventEmitter<
-    FeedFilterType
-  > = new EventEmitter<FeedFilterType>();
+  @Output('typeChange') typeChangeEmitter: EventEmitter<FeedFilterType> =
+    new EventEmitter<FeedFilterType>();
 
   /**
    * Sorts
@@ -120,7 +119,7 @@ export class FeedFilterComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions = [
-      this.service.dateRangeEnabled$.subscribe(dateRangeEnabled => {
+      this.service.dateRangeEnabled$.subscribe((dateRangeEnabled) => {
         this.dateRangeType = dateRangeEnabled ? 'custom' : 'all';
       }),
     ];
@@ -157,12 +156,12 @@ export class FeedFilterComponent implements OnInit {
   }
 
   get typeLabel() {
-    return this.types.find(typeObj => typeObj.value === this.type).label;
+    return this.types.find((typeObj) => typeObj.value === this.type).label;
   }
 
   get dateRangeLabel() {
     return this.dateRangeTypes.find(
-      dateRangeEntry => dateRangeEntry.value === this.dateRangeType
+      (dateRangeEntry) => dateRangeEntry.value === this.dateRangeType
     ).label;
   }
 }

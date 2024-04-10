@@ -16,8 +16,8 @@ export class IntersectionObserverService {
    * @returns { Observable<boolean> } true when element is visible, else false.
    */
   public createAndObserve(element: ElementRef): Observable<boolean> {
-    return new Observable(observer => {
-      const intersectionObserver = new IntersectionObserver(entries => {
+    return new Observable((observer) => {
+      const intersectionObserver = new IntersectionObserver((entries) => {
         observer.next(entries);
       });
 

@@ -10,7 +10,10 @@ export class ReferralUrlService {
   // base url for site from config.
   private readonly siteUrl: string;
 
-  constructor(private session: Session, config: ConfigsService) {
+  constructor(
+    private session: Session,
+    config: ConfigsService
+  ) {
     this.siteUrl = config.get('site_url');
   }
 

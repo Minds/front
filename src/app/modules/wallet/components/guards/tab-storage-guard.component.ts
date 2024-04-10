@@ -23,7 +23,7 @@ export class TabStorageGuard implements CanActivate {
   canActivate() {
     this.router.events
       .pipe(
-        filter(event => event instanceof ChildActivationEnd),
+        filter((event) => event instanceof ChildActivationEnd),
         take(1)
       )
       .subscribe((event: any) => {

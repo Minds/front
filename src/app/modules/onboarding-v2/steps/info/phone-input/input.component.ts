@@ -28,7 +28,10 @@ export class PhoneVerificationComponent {
 
   protected resendButtonDisabled: boolean = false;
 
-  constructor(private client: Client, private session: Session) {}
+  constructor(
+    private client: Client,
+    private session: Session
+  ) {}
 
   async savePhoneNumber() {
     this.verify();

@@ -64,9 +64,8 @@ export class RelativeTimeSpanComponent {
   public pauseableRelativeTimeAgo$: Observable<any> = this.relativeTimeAgo$;
 
   // holds true if span component is being intersected.
-  private readonly isIntersecting$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  private readonly isIntersecting$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // intersection observer to monitor intersection with viewport.
   private intersectionObserver: IntersectionObserver;
@@ -94,7 +93,7 @@ export class RelativeTimeSpanComponent {
   setupPauseableRelativeTime(): void {
     this.pauseableRelativeTimeAgo$ = this.isIntersecting$.pipe(
       // If not intersecting, output last emitted value, else, output live observable.
-      switchMap(value =>
+      switchMap((value) =>
         !value ? this.relativeTimeAgo$.pipe(last()) : this.relativeTimeAgo$
       )
     );
@@ -120,7 +119,7 @@ export class RelativeTimeSpanComponent {
 
     this.intersectionObserver = new IntersectionObserver(
       (entries, observer) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           this.isIntersecting$.next(entry.isIntersecting);
         });
       },

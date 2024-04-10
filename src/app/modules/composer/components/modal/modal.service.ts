@@ -19,7 +19,7 @@ export type ComposerData = {
 @Injectable()
 export class ComposerModalService {
   protected injector: Injector;
-  protected onPostFn = _ => {};
+  protected onPostFn = (_) => {};
 
   constructor(
     protected modalService: ModalService,
@@ -55,7 +55,7 @@ export class ComposerModalService {
     if (!this.emailConfirmation.ensureEmailConfirmed()) return;
     const modal = this.modalService.present(ModalComponent, {
       data: {
-        onPost: response => {
+        onPost: (response) => {
           modal.close(response);
           this.onPostFn(response);
         },

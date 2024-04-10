@@ -20,12 +20,12 @@ export class AutocompleteSuggestionsService {
     let result;
     switch (triggerCharacter) {
       case '#':
-        result = response.tags.filter(item =>
+        result = response.tags.filter((item) =>
           item.toLowerCase().includes(searchText.toLowerCase())
         );
         break;
       case '@':
-        result = response.entities.filter(item =>
+        result = response.entities.filter((item) =>
           item.username.toLowerCase().includes(searchText.toLowerCase())
         );
         break;

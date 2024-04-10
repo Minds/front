@@ -9,14 +9,16 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Client } from './api/client';
 import { SiteService } from '../common/services/site.service';
 import { isPlatformServer } from '@angular/common';
-import { CookieService } from '../common/services/cookie.service';
 import { Session } from './session';
 
-import posthog, { Properties } from 'posthog-js';
+import type { PostHog, Properties } from 'posthog-js';
 
 import { MindsUser } from './../interfaces/entities';
 import { ActivityEntity } from '../modules/newsfeed/activity/activity.service';
 import { ConfigsService } from '../common/services/configs.service';
+import { POSTHOG_JS } from '../common/services/posthog/posthog-injection-tokens';
+
+type PostHogI = PostHog;
 
 export type SnowplowContext = any;
 
@@ -47,11 +49,12 @@ export class AnalyticsService implements OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private sessionService: Session,
     private rendererFactory2: RendererFactory2,
-    private configService: ConfigsService
+    private configService: ConfigsService,
+    @Inject(POSTHOG_JS) private posthog: PostHogI
   ) {
     this.initPostHog();
 
-    this.router.events.subscribe(navigationState => {
+    this.router.events.subscribe((navigationState) => {
       if (navigationState instanceof NavigationEnd) {
         try {
           this.onRouteChanged(navigationState.urlAfterRedirects);
@@ -64,7 +67,7 @@ export class AnalyticsService implements OnDestroy {
     /**
      * On login event, let posthog know our new identity
      */
-    this.sessionService.loggedinEmitter.subscribe(isLoggedIn => {
+    this.sessionService.loggedinEmitter.subscribe((isLoggedIn) => {
       if (isLoggedIn) {
         this.setUser(this.sessionService.getLoggedInUser());
         this.hasBeenLoggedIn = true;
@@ -72,9 +75,9 @@ export class AnalyticsService implements OnDestroy {
         // If the user was previously logged in, we can reset
         // If a user is opted out, they should still be when logged out too
         const isOptOut = this.configService.get('posthog')['opt_out'];
-        posthog.reset();
+        this.posthog.reset();
         if (isOptOut) {
-          posthog.opt_out_capturing();
+          this.posthog.opt_out_capturing();
         }
       }
     });
@@ -99,8 +102,10 @@ export class AnalyticsService implements OnDestroy {
    * Setup posthog, with the server side evaluated flags
    */
   initPostHog() {
+    if (isPlatformServer(this.platformId)) return; // Do not init for SSR
+
     const featureFlags = this.configService.get('posthog')['feature_flags'];
-    posthog.init(this.configService.get('posthog')['api_key'], {
+    this.posthog.init(this.configService.get('posthog')['api_key'], {
       api_host: this.configService.get('posthog')['host'],
       capture_pageview: false, // Do not send initial pageview, angular will
       autocapture: false, // Disable auto-capture by default
@@ -129,15 +134,15 @@ export class AnalyticsService implements OnDestroy {
 
     // Check (from configs) if we have opted out of analytics
     if (this.configService.get('posthog')['opt_out']) {
-      posthog.opt_out_capturing();
+      this.posthog.opt_out_capturing();
     } else {
-      if (posthog.has_opted_out_capturing()) {
-        posthog.clear_opt_in_out_capturing();
+      if (this.posthog.has_opted_out_capturing()) {
+        this.posthog.clear_opt_in_out_capturing();
       }
     }
 
     // Call once per session
-    posthog.identify(user.guid);
+    this.posthog.identify(user.guid);
   }
 
   async send(type: string, fields: any = {}, entityGuid: string = null) {
@@ -282,8 +287,8 @@ export class AnalyticsService implements OnDestroy {
     const $set = properties.$set || {};
 
     // Group together similar pages by the ng route
-    const ng_tokenized_path = this.activatedRoute.snapshot.firstChild
-      ?.routeConfig?.path;
+    const ng_tokenized_path =
+      this.activatedRoute.snapshot.firstChild?.routeConfig?.path;
     if (ng_tokenized_path) {
       properties.ng_tokenized_path = ng_tokenized_path;
     }
@@ -307,6 +312,6 @@ export class AnalyticsService implements OnDestroy {
       properties.$set_once = $setOnce;
     }
 
-    posthog.capture(eventName, properties);
+    this.posthog.capture(eventName, properties);
   }
 }

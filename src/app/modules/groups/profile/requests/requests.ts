@@ -39,7 +39,7 @@ export class GroupsProfileRequests {
   }
 
   ngOnInit() {
-    this.$group = this.service.$group.subscribe(group => {
+    this.$group = this.service.$group.subscribe((group) => {
       this.group = group;
       this.load(true);
     });
@@ -87,7 +87,7 @@ export class GroupsProfileRequests {
         this.newMemberCount.emit(this.group['members:count']);
         this.newRequestCount.emit(this.group['requests:count']);
       })
-      .catch(e => {
+      .catch((e) => {
         this.toast.error(
           e?.error?.message ?? e?.message ?? 'An unknown error has occurred'
         );
@@ -103,7 +103,7 @@ export class GroupsProfileRequests {
         this.newMemberCount.emit(this.group['members:count']);
         this.newRequestCount.emit(this.group['requests:count']);
       })
-      .catch(e => {
+      .catch((e) => {
         this.toast.error(
           e?.error?.message ?? e?.message ?? 'An unknown error has occurred'
         );

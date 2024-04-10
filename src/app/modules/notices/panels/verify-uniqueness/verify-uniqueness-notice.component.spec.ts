@@ -13,57 +13,55 @@ describe('VerifyUniquenessNoticeComponent', () => {
   let comp: VerifyUniquenessNoticeComponent;
   let fixture: ComponentFixture<VerifyUniquenessNoticeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          VerifyUniquenessNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon', 'dismissible'],
-            outputs: ['dismissClick'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: ConnectWalletModalService,
-            useValue: MockService(ConnectWalletModalService),
-          },
-          {
-            provide: VerifyUniquenessModalLazyService,
-            useValue: MockService(VerifyUniquenessModalLazyService),
-          },
-          {
-            provide: InAppVerificationExperimentService,
-            useValue: MockService(InAppVerificationExperimentService),
-          },
-          {
-            provide: PhoneVerificationService,
-            useValue: MockService(PhoneVerificationService, {
-              has: ['phoneVerified$'],
-              props: {
-                phoneVerified$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        VerifyUniquenessNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon', 'dismissible'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: ConnectWalletModalService,
+          useValue: MockService(ConnectWalletModalService),
+        },
+        {
+          provide: VerifyUniquenessModalLazyService,
+          useValue: MockService(VerifyUniquenessModalLazyService),
+        },
+        {
+          provide: InAppVerificationExperimentService,
+          useValue: MockService(InAppVerificationExperimentService),
+        },
+        {
+          provide: PhoneVerificationService,
+          useValue: MockService(PhoneVerificationService, {
+            has: ['phoneVerified$'],
+            props: {
+              phoneVerified$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(VerifyUniquenessNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

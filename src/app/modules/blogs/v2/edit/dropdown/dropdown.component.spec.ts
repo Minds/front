@@ -27,36 +27,34 @@ describe('BlogEditorDropdownComponent', () => {
   let comp: BlogEditorDropdownComponent;
   let fixture: ComponentFixture<BlogEditorDropdownComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          BlogEditorDropdownComponent,
-          MockComponent({
-            selector: 'm-composerTitleBar__dropdown',
-            inputs: ['anchorPosition'],
-          }),
-          MockComponent({
-            selector: 'm-dropdownMenu',
-            inputs: ['anchorPosition', 'menu'],
-          }),
-          MockComponent({
-            selector: 'm-icon',
-          }),
-        ],
-        imports: [RouterTestingModule, NgCommonModule, FormsModule],
-        providers: [
-          { provide: BlogsEditService, useValue: blogsEditServiceMock },
-          {
-            provide: NsfwEnabledService,
-            useValue: MockService(NsfwEnabledService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        BlogEditorDropdownComponent,
+        MockComponent({
+          selector: 'm-composerTitleBar__dropdown',
+          inputs: ['anchorPosition'],
+        }),
+        MockComponent({
+          selector: 'm-dropdownMenu',
+          inputs: ['anchorPosition', 'menu'],
+        }),
+        MockComponent({
+          selector: 'm-icon',
+        }),
+      ],
+      imports: [RouterTestingModule, NgCommonModule, FormsModule],
+      providers: [
+        { provide: BlogsEditService, useValue: blogsEditServiceMock },
+        {
+          provide: NsfwEnabledService,
+          useValue: MockService(NsfwEnabledService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

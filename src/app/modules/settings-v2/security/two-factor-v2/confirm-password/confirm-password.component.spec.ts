@@ -14,7 +14,7 @@ import {
 
 import { SettingsTwoFactorPasswordComponent } from './confirm-password.component';
 
-let apiServiceMock = new (function() {
+let apiServiceMock = new (function () {
   this.post = jasmine
     .createSpy('success')
     .and.returnValue(new BehaviorSubject<any>(null));
@@ -24,28 +24,26 @@ describe('SettingsTwoFactorPasswordComponent', () => {
   let comp: SettingsTwoFactorPasswordComponent;
   let fixture: ComponentFixture<SettingsTwoFactorPasswordComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule],
-        declarations: [SettingsTwoFactorPasswordComponent, ButtonComponentMock],
-        providers: [
-          {
-            provide: SettingsTwoFactorV2Service,
-            useValue: MockService(SettingsTwoFactorV2Service),
-          },
-          {
-            provide: ApiService,
-            useValue: apiServiceMock,
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule],
+      declarations: [SettingsTwoFactorPasswordComponent, ButtonComponentMock],
+      providers: [
+        {
+          provide: SettingsTwoFactorV2Service,
+          useValue: MockService(SettingsTwoFactorV2Service),
+        },
+        {
+          provide: ApiService,
+          useValue: apiServiceMock,
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorPasswordComponent);
@@ -71,19 +69,18 @@ describe('SettingsTwoFactorPasswordComponent', () => {
   });
 
   it('should pass to app-connect panel from setup-app intent', () => {
-    (comp as any).service.activePanel$ = new BehaviorSubject<
-      TwoFactorSetupPanel
-    >({
-      panel: 'password',
-      intent: 'setup-app',
-    });
+    (comp as any).service.activePanel$ =
+      new BehaviorSubject<TwoFactorSetupPanel>({
+        panel: 'password',
+        intent: 'setup-app',
+      });
     (comp as any).service.passwordConfirmed$ = new BehaviorSubject<boolean>(
       false
     );
 
     (comp as any).onSuccess();
 
-    (comp as any).service.activePanel$.subscribe(val => {
+    (comp as any).service.activePanel$.subscribe((val) => {
       expect(val).toEqual({
         panel: 'app-connect',
       });
@@ -91,19 +88,18 @@ describe('SettingsTwoFactorPasswordComponent', () => {
   });
 
   it('should pass to disable panel from disable intent', () => {
-    (comp as any).service.activePanel$ = new BehaviorSubject<
-      TwoFactorSetupPanel
-    >({
-      panel: 'password',
-      intent: 'disable',
-    });
+    (comp as any).service.activePanel$ =
+      new BehaviorSubject<TwoFactorSetupPanel>({
+        panel: 'password',
+        intent: 'disable',
+      });
     (comp as any).service.passwordConfirmed$ = new BehaviorSubject<boolean>(
       false
     );
 
     (comp as any).onSuccess();
 
-    (comp as any).service.activePanel$.subscribe(val => {
+    (comp as any).service.activePanel$.subscribe((val) => {
       expect(val).toEqual({
         panel: 'disable',
       });
@@ -111,19 +107,18 @@ describe('SettingsTwoFactorPasswordComponent', () => {
   });
 
   it('should pass to sms panel from sms panel', () => {
-    (comp as any).service.activePanel$ = new BehaviorSubject<
-      TwoFactorSetupPanel
-    >({
-      panel: 'password',
-      intent: 'sms',
-    });
+    (comp as any).service.activePanel$ =
+      new BehaviorSubject<TwoFactorSetupPanel>({
+        panel: 'password',
+        intent: 'sms',
+      });
     (comp as any).service.passwordConfirmed$ = new BehaviorSubject<boolean>(
       false
     );
 
     (comp as any).onSuccess();
 
-    (comp as any).service.activePanel$.subscribe(val => {
+    (comp as any).service.activePanel$.subscribe((val) => {
       expect(val).toEqual({
         panel: 'sms',
       });

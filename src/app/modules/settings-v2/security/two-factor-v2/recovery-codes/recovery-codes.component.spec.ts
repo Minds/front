@@ -17,34 +17,32 @@ describe('SettingsTwoFactorRecoveryCodeComponent', () => {
   let comp: SettingsTwoFactorRecoveryCodeComponent;
   let fixture: ComponentFixture<SettingsTwoFactorRecoveryCodeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          SettingsTwoFactorRecoveryCodeComponent,
-          ButtonComponentMock,
-        ],
-        providers: [
-          {
-            provide: SettingsTwoFactorV2Service,
-            useValue: MockService(SettingsTwoFactorV2Service),
-          },
-          {
-            provide: Session,
-            useValue: sessionMock,
-          },
-          {
-            provide: ModalService,
-            useValue: modalServiceMock,
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        SettingsTwoFactorRecoveryCodeComponent,
+        ButtonComponentMock,
+      ],
+      providers: [
+        {
+          provide: SettingsTwoFactorV2Service,
+          useValue: MockService(SettingsTwoFactorV2Service),
+        },
+        {
+          provide: Session,
+          useValue: sessionMock,
+        },
+        {
+          provide: ModalService,
+          useValue: modalServiceMock,
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorRecoveryCodeComponent);
@@ -57,15 +55,14 @@ describe('SettingsTwoFactorRecoveryCodeComponent', () => {
   });
 
   it('should reload settings and redirect to root with enable-totp intent', () => {
-    (comp as any).service.activePanel$ = new BehaviorSubject<
-      TwoFactorSetupPanel
-    >(null);
+    (comp as any).service.activePanel$ =
+      new BehaviorSubject<TwoFactorSetupPanel>(null);
 
     comp.continueButtonClick();
 
     expect((comp as any).service.reloadSettings).toHaveBeenCalled();
 
-    (comp as any).activePanel$.subscribe(val => {
+    (comp as any).activePanel$.subscribe((val) => {
       expect(val).toEqual({ panel: 'root', intent: 'enabled-totp' });
     });
   });
@@ -76,7 +73,7 @@ describe('SettingsTwoFactorRecoveryCodeComponent', () => {
 
     (comp as any).copyToClipboard();
 
-    comp.disabled$.subscribe(val => {
+    comp.disabled$.subscribe((val) => {
       expect(val).toBeFalsy();
     });
   });
@@ -87,7 +84,7 @@ describe('SettingsTwoFactorRecoveryCodeComponent', () => {
 
     (comp as any).downloadRecoveryCode();
 
-    comp.disabled$.subscribe(val => {
+    comp.disabled$.subscribe((val) => {
       expect(val).toBeFalsy();
     });
   });

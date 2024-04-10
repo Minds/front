@@ -14,7 +14,7 @@ export class TransactionOverlayService {
     const compEventEmitter = this.comp.show(this.comp.COMP_SETUP_METAMASK);
 
     return new Promise((resolve, reject) => {
-      const subscription: Subscription = compEventEmitter.subscribe(data => {
+      const subscription: Subscription = compEventEmitter.subscribe((data) => {
         subscription.unsubscribe();
         if (data && !(data instanceof Error)) {
           resolve(data);
@@ -29,7 +29,7 @@ export class TransactionOverlayService {
     let compEventEmitter = this.comp.show(this.comp.COMP_UNLOCK);
 
     return new Promise((resolve, reject) => {
-      let subscription: Subscription = compEventEmitter.subscribe(data => {
+      let subscription: Subscription = compEventEmitter.subscribe((data) => {
         subscription.unsubscribe();
 
         if (data && !(data instanceof Error)) {
@@ -54,7 +54,7 @@ export class TransactionOverlayService {
     );
 
     return new Promise((resolve, reject) => {
-      let subscription: Subscription = compEventEmitter.subscribe(data => {
+      let subscription: Subscription = compEventEmitter.subscribe((data) => {
         subscription.unsubscribe();
 
         if (data && !(data instanceof Error)) {

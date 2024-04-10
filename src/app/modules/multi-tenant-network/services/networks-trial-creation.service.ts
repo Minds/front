@@ -28,9 +28,8 @@ export class NetworksTrialCreationService {
    */
   public async startTrial(): Promise<void> {
     try {
-      const response: MutationResult<StartTenantTrialMutation> = await lastValueFrom(
-        this.startTenantTrialGql.mutate()
-      );
+      const response: MutationResult<StartTenantTrialMutation> =
+        await lastValueFrom(this.startTenantTrialGql.mutate());
 
       if (response.errors?.length) {
         console.error(response.errors);

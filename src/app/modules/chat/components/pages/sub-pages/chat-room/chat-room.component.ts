@@ -76,16 +76,16 @@ const SlideInFromRightAnimation: AnimationTriggerMetadata = trigger(
 })
 export class ChatRoomComponent implements OnInit, OnDestroy {
   /** Chat room from server. */
-  protected readonly chatRoom$: Observable<ChatRoomEdge> = this
-    .singleChatRoomService.chatRoom$;
+  protected readonly chatRoom$: Observable<ChatRoomEdge> =
+    this.singleChatRoomService.chatRoom$;
 
   /** Messages for the chat room. */
-  protected readonly chatMessages$: Observable<ChatMessageEdge[]> = this
-    .chatMessagesService.edges$;
+  protected readonly chatMessages$: Observable<ChatMessageEdge[]> =
+    this.chatMessagesService.edges$;
 
   /** Whether chat messages have been initialised. */
-  protected chatMessagesInitialised$: Observable<boolean> = this
-    .chatMessagesService.initialized$;
+  protected chatMessagesInitialised$: Observable<boolean> =
+    this.chatMessagesService.initialized$;
 
   /** GUID of the room.  */
   protected roomGuid: string;

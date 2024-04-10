@@ -20,29 +20,25 @@ import { MutationResult } from 'apollo-angular';
 @Injectable({ providedIn: 'root' })
 export class StripeKeysService {
   /** Stripe keys. */
-  public readonly stripeKeys$: BehaviorSubject<
-    StripeKeysType
-  > = new BehaviorSubject<StripeKeysType>(null);
+  public readonly stripeKeys$: BehaviorSubject<StripeKeysType> =
+    new BehaviorSubject<StripeKeysType>(null);
 
   /** Whether the service has been initialized. */
-  public readonly initialized$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly initialized$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether a fetch is in progress. */
 
-  public readonly fetchInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly fetchInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether the user has set Stripe keys. */
-  public readonly hasSetStripeKeys$: Observable<
-    boolean
-  > = this.stripeKeys$.pipe(
-    map((stripeKeys: StripeKeysType): boolean =>
-      Boolean(stripeKeys?.pubKey && stripeKeys?.secKey)
-    )
-  );
+  public readonly hasSetStripeKeys$: Observable<boolean> =
+    this.stripeKeys$.pipe(
+      map((stripeKeys: StripeKeysType): boolean =>
+        Boolean(stripeKeys?.pubKey && stripeKeys?.secKey)
+      )
+    );
 
   constructor(
     private getStripeKeysGQL: GetStripeKeysGQL,
@@ -58,9 +54,10 @@ export class StripeKeysService {
     this.fetchInProgress$.next(true);
 
     try {
-      const response: ApolloQueryResult<GetStripeKeysQuery> = await lastValueFrom(
-        this.getStripeKeysGQL.fetch(null, { fetchPolicy: 'network-only' })
-      );
+      const response: ApolloQueryResult<GetStripeKeysQuery> =
+        await lastValueFrom(
+          this.getStripeKeysGQL.fetch(null, { fetchPolicy: 'network-only' })
+        );
       const stripeKeys: StripeKeysType = response?.data?.stripeKeys;
       if (stripeKeys) {
         this.stripeKeys$.next(stripeKeys);

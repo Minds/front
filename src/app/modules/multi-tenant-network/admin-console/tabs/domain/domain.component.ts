@@ -53,10 +53,10 @@ export class NetworkAdminConsoleDomainComponent implements OnInit, OnDestroy {
     this.service.fetchDomain();
 
     this.subscriptions.push(
-      this.service.domain$.subscribe(domain => {
+      this.service.domain$.subscribe((domain) => {
         this.domain = domain;
       }),
-      this.service.status$.subscribe(status => {
+      this.service.status$.subscribe((status) => {
         // If pending, start polling for change in status
         if (status === MultiTenantDomainStatus.PENDING) {
           if (!this.pollingSubscription) {

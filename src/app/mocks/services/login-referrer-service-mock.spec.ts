@@ -1,4 +1,4 @@
-export let loginReferrerServiceMock = new (function() {
+export let loginReferrerServiceMock = new (function () {
   this.listen = jasmine.createSpy('listen');
   this.unlisten = jasmine.createSpy('unlisten');
   this.register = jasmine.createSpy('register');

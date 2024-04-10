@@ -41,22 +41,21 @@ import { ChatRoomListItemComponent } from '../room-list/room-list-item/room-list
 })
 export class ChatRequestListComponent {
   /** Whether a request is in progress to load / load more. */
-  protected readonly inProgress$: Observable<boolean> = this
-    .chatRequestsListService.inProgress$;
+  protected readonly inProgress$: Observable<boolean> =
+    this.chatRequestsListService.inProgress$;
 
   /** Whether the component has been intiialized. */
-  protected readonly initialized$: Observable<boolean> = this
-    .chatRequestsListService.initialized$;
+  protected readonly initialized$: Observable<boolean> =
+    this.chatRequestsListService.initialized$;
 
   /** Whether the paginated list has a next page. */
-  protected readonly hasNextPage$: Observable<
-    boolean
-  > = this.chatRequestsListService.pageInfo$
-    .pipe(map((pageInfo: PageInfo) => pageInfo?.hasNextPage))
-    .pipe(distinctUntilChanged());
+  protected readonly hasNextPage$: Observable<boolean> =
+    this.chatRequestsListService.pageInfo$
+      .pipe(map((pageInfo: PageInfo) => pageInfo?.hasNextPage))
+      .pipe(distinctUntilChanged());
 
-  protected edges$: Observable<ChatRoomEdge[]> = this.chatRequestsListService
-    .edges$;
+  protected edges$: Observable<ChatRoomEdge[]> =
+    this.chatRequestsListService.edges$;
 
   /** Router events subscription. */
   private routerEventsSubscription: Subscription;
@@ -69,16 +68,15 @@ export class ChatRequestListComponent {
   ) {}
 
   /** ID of the currently selected room. */
-  protected readonly currentRoomId$: BehaviorSubject<
-    string
-  > = new BehaviorSubject<string>('');
+  protected readonly currentRoomId$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   ngOnInit(): void {
     this.chatRequestsListService.init();
     this.currentRoomId$.next(this.route.snapshot.firstChild.params['roomId']);
 
     this.routerEventsSubscription = this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
+      .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe((event: RouterEvent) => {
         this.currentRoomId$.next(
           this.route.snapshot.firstChild.params['roomId']

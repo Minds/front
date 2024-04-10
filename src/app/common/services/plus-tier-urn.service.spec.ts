@@ -4,7 +4,7 @@ describe('PlusTierUrnService', () => {
   let service: PlusTierUrnService;
   const plusTierUrn: string = 'urn:plus';
 
-  let configMock = new (function() {
+  let configMock = new (function () {
     this.get = jasmine.createSpy('get').and.returnValue({
       support_tier_urn: plusTierUrn,
     });

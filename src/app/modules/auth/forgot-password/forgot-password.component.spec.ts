@@ -20,31 +20,29 @@ describe('ForgotPasswordComponent', () => {
   let comp: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ForgotPasswordComponent],
-        imports: [ReactiveFormsModule],
-        providers: [
-          {
-            provide: Router,
-            useValue: MockService(Router),
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ForgotPasswordComponent],
+      imports: [ReactiveFormsModule],
+      providers: [
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: new BehaviorSubject<Params>(
+              convertToParamMap({
+                username: '',
+                code: '',
+              })
+            ),
           },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              params: new BehaviorSubject<Params>(
-                convertToParamMap({
-                  username: '',
-                  code: '',
-                })
-              ),
-            },
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ForgotPasswordComponent);

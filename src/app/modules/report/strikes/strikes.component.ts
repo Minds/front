@@ -25,7 +25,10 @@ export class StrikesComponent implements OnInit {
 
   hasNewNav: boolean = false;
 
-  constructor(private client: Client, public service: JurySessionService) {}
+  constructor(
+    private client: Client,
+    public service: JurySessionService
+  ) {}
 
   ngOnInit() {
     this.hasNewNav = true;

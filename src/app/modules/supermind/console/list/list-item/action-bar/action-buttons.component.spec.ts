@@ -38,46 +38,46 @@ describe('SupermindConsoleActionButtonsComponent', () => {
     entity: { guid: '123' },
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          SupermindConsoleActionButtonsComponent,
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['saving'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: SupermindConsoleExpirationService,
-            useValue: MockService(SupermindConsoleExpirationService),
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: Router,
-            useValue: MockService(Router),
-          },
-        ],
-      })
-        .overrideProvider(SupermindReplyService, {
-          useValue: MockService(SupermindReplyService),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        SupermindConsoleActionButtonsComponent,
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['saving'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: SupermindConsoleExpirationService,
+          useValue: MockService(SupermindConsoleExpirationService),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
+      ],
     })
-  );
+      .overrideProvider(SupermindReplyService, {
+        useValue: MockService(SupermindReplyService),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(SupermindConsoleActionButtonsComponent);
     comp = fixture.componentInstance;
     comp.supermind = mockSupermind;
 
     (comp as any).supermindReplyService.startReply.calls.reset();
-    (comp as any).supermindReplyService.startAcceptingLiveSupermind.calls.reset();
+    (
+      comp as any
+    ).supermindReplyService.startAcceptingLiveSupermind.calls.reset();
     (comp as any).supermindReplyService.decline.calls.reset();
     (comp as any).supermindReplyService.cancel.calls.reset();
     (comp as any).router.navigate.calls.reset();

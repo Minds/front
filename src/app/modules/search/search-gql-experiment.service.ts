@@ -13,6 +13,7 @@ export class SearchGqlExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('minds-4127-search', true);
+    // return this.experiments.hasVariation('minds-4127-search', true);
+    return true;
   }
 }

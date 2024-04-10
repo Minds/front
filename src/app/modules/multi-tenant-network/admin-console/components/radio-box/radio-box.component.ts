@@ -26,7 +26,8 @@ import { Subscription } from 'rxjs';
   imports: [NgCommonModule, CommonModule],
 })
 export class NetworkAdminConsoleRadioBoxComponent<T>
-  implements ControlValueAccessor, OnInit, OnDestroy {
+  implements ControlValueAccessor, OnInit, OnDestroy
+{
   /** Title of box. */
   @Input() public title: string;
 
@@ -58,11 +59,10 @@ export class NetworkAdminConsoleRadioBoxComponent<T>
   }
 
   ngOnInit() {
-    this.valueChangeSubscription = this.ngControl.control.valueChanges.subscribe(
-      (value: T): void => {
+    this.valueChangeSubscription =
+      this.ngControl.control.valueChanges.subscribe((value: T): void => {
         this.writeValue(value);
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {

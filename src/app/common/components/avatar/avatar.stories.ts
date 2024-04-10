@@ -80,7 +80,7 @@ Large.args = {
 };
 Large.decorators = [
   componentWrapperDecorator(
-    story =>
+    (story) =>
       `<div style="height: 400px; width: 400px" class="m-avatar__wrapper">${story}</div><hr><div>Maintains proportions of original image, with longest side no larger than 425px. By default, the component returns large size if passed an object. Other sizes can be accessed by adding the url via src input.</div>`
   ),
 ];
@@ -91,7 +91,7 @@ Medium.args = {
 };
 Medium.decorators = [
   componentWrapperDecorator(
-    story =>
+    (story) =>
       `<div style="height: 100px; width: 100px" class="m-avatar__wrapper">${story}</div><hr><div>Cropped to 100px × 100px</div>`
   ),
 ];
@@ -102,7 +102,7 @@ Small.args = {
 };
 Small.decorators = [
   componentWrapperDecorator(
-    story =>
+    (story) =>
       `<div style="height: 40px; width: 40px" class="m-avatar__wrapper">${story}</div><hr><div>Cropped to 40px × 40px</div>`
   ),
 ];
@@ -113,7 +113,7 @@ Tiny.args = {
 };
 Tiny.decorators = [
   componentWrapperDecorator(
-    story =>
+    (story) =>
       `<div style="height: 25px; width: 25px" class="m-avatar__wrapper">${story}</div><hr><div>Cropped to 25px × 25px</div>`
   ),
 ];

@@ -36,9 +36,8 @@ export class ChannelListComponent {
   /**
    * Search event
    */
-  @Output('onSearch') onSearchEmitter: EventEmitter<string> = new EventEmitter<
-    string
-  >();
+  @Output('onSearch') onSearchEmitter: EventEmitter<string> =
+    new EventEmitter<string>();
 
   /**
    * Search query

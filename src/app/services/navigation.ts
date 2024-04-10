@@ -6,7 +6,10 @@ import { ConfigsService } from '../common/services/configs.service';
 export class Navigation {
   readonly navigation;
 
-  constructor(public location: Location, configs: ConfigsService) {
+  constructor(
+    public location: Location,
+    configs: ConfigsService
+  ) {
     this.navigation = configs.get('navigation');
   }
 

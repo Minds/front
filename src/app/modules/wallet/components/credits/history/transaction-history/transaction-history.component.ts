@@ -28,31 +28,28 @@ import * as moment from 'moment';
   styleUrls: ['./transaction-history.component.ng.scss'],
 })
 export class WalletV2CreditsTransactionHistoryComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /** Gift card transactions for display. */
   public readonly giftCardTransactions$: BehaviorSubject<
     GiftCardTransaction[]
   > = new BehaviorSubject<GiftCardTransaction[]>([]);
 
   /** Whether fetch more is in progress. */
-  public readonly fetchMoreInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly fetchMoreInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Whether initial load is in progress. */
-  public readonly loading$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly loading$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Gift card data to display in summary at top. */
-  public readonly giftCard$: BehaviorSubject<
-    GiftCardNode
-  > = new BehaviorSubject<GiftCardNode>(null);
+  public readonly giftCard$: BehaviorSubject<GiftCardNode> =
+    new BehaviorSubject<GiftCardNode>(null);
 
   /** Info for the current page. */
-  private readonly pageInfo$: BehaviorSubject<PageInfo> = new BehaviorSubject<
-    PageInfo
-  >(null);
+  private readonly pageInfo$: BehaviorSubject<PageInfo> =
+    new BehaviorSubject<PageInfo>(null);
 
   /** Limit / pagesize of batches of cards. */
   private readonly limit: number = 10;
@@ -85,13 +82,12 @@ export class WalletV2CreditsTransactionHistoryComponent
   );
 
   /** Transactions formatted for injection into the transactions table. */
-  public readonly formattedTransactions$: Observable<
-    any[]
-  > = this.giftCardTransactions$.pipe(
-    map((transactions: GiftCardTransaction[]): any[] =>
-      this.formatTransactions(transactions, true)
-    )
-  );
+  public readonly formattedTransactions$: Observable<any[]> =
+    this.giftCardTransactions$.pipe(
+      map((transactions: GiftCardTransaction[]): any[] =>
+        this.formatTransactions(transactions, true)
+      )
+    );
 
   constructor(
     private route: ActivatedRoute,
@@ -101,9 +97,8 @@ export class WalletV2CreditsTransactionHistoryComponent
   ) {}
 
   ngOnInit(): void {
-    const giftCardGuid: string = this.route.snapshot.paramMap.get(
-      'giftCardGuid'
-    );
+    const giftCardGuid: string =
+      this.route.snapshot.paramMap.get('giftCardGuid');
 
     this.giftCardSubscription = this.getGiftCardGQL
       .fetch({ guid: giftCardGuid })
@@ -112,41 +107,46 @@ export class WalletV2CreditsTransactionHistoryComponent
         this.giftCard$.next(result?.data?.giftCard as GiftCardNode);
       });
 
-    this.giftCardTransactionsQuery = this.getGiftCardTransactionsLedgerGQL.watch(
-      {
-        giftCardGuid: giftCardGuid,
-        first: this.limit,
-      },
-      {
-        fetchPolicy: 'cache-and-network',
-        nextFetchPolicy: 'cache-first',
-        notifyOnNetworkStatusChange: false,
-        errorPolicy: 'all',
-        useInitialLoading: true,
-      }
-    );
-
-    this.giftCardTransactionsSubscription = this.giftCardTransactionsQuery.valueChanges.subscribe(
-      (result: ApolloQueryResult<GetGiftCardTransactionsLedgerQuery>): void => {
-        if (result.loading) {
-          return;
+    this.giftCardTransactionsQuery =
+      this.getGiftCardTransactionsLedgerGQL.watch(
+        {
+          giftCardGuid: giftCardGuid,
+          first: this.limit,
+        },
+        {
+          fetchPolicy: 'cache-and-network',
+          nextFetchPolicy: 'cache-first',
+          notifyOnNetworkStatusChange: false,
+          errorPolicy: 'all',
+          useInitialLoading: true,
         }
+      );
 
-        if (this.loading$.getValue()) {
-          this.loading$.next(false);
+    this.giftCardTransactionsSubscription =
+      this.giftCardTransactionsQuery.valueChanges.subscribe(
+        (
+          result: ApolloQueryResult<GetGiftCardTransactionsLedgerQuery>
+        ): void => {
+          if (result.loading) {
+            return;
+          }
+
+          if (this.loading$.getValue()) {
+            this.loading$.next(false);
+          }
+
+          this.giftCardTransactions$.next(
+            result.data.giftCardTransactionLedger.edges.map(
+              (edge: GiftCardTransactionEdge): GiftCardTransaction => edge.node
+            )
+          );
+          this.pageInfo$.next(
+            result.data.giftCardTransactionLedger.pageInfo as PageInfo
+          );
+          this.cursor =
+            result.data.giftCardTransactionLedger.pageInfo.endCursor;
         }
-
-        this.giftCardTransactions$.next(
-          result.data.giftCardTransactionLedger.edges.map(
-            (edge: GiftCardTransactionEdge): GiftCardTransaction => edge.node
-          )
-        );
-        this.pageInfo$.next(
-          result.data.giftCardTransactionLedger.pageInfo as PageInfo
-        );
-        this.cursor = result.data.giftCardTransactionLedger.pageInfo.endCursor;
-      }
-    );
+      );
   }
 
   ngOnDestroy(): void {

@@ -22,7 +22,7 @@ export class ProgressbarComponent implements OnInit {
   }
 
   getSelectedIndex() {
-    return this.steps.findIndex(item => item.selected);
+    return this.steps.findIndex((item) => item.selected);
   }
 
   isMobile() {

@@ -1,7 +1,7 @@
 <div class="m-analyticsTable__wrapper" [hidden]="loading">
   <div class="m-analyticsTable__row--header">
     <div
-      *ngFor="let col of columns | slice: 0:1"
+      *ngFor="let col of columns | slice: 0 : 1"
       class="m-analyticsTable__col--entity m-analyticsTable__cell"
     >
       {{ col.label }}
@@ -28,7 +28,7 @@
           <div class="m-analyticsTable__entityDetails">
             <span class="m-analyticsTable__usernameWrapper">
               <a [routerLink]="'/' + row.entity.name"
-                >@{{ row.entity.username }}</a
+                >&#64;{{ row.entity.username }}</a
               >
             </span>
             <span class="m-analyticsTable__entityType">{{

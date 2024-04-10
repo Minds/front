@@ -16,7 +16,7 @@ export interface LanguageListEntry {
 }
 
 const isoCodeToLanguageName = ([languages, currentLanguage]) =>
-  languages.find(language => language.code === currentLanguage).name;
+  languages.find((language) => language.code === currentLanguage).name;
 
 const POPULAR_LANGUAGE_CODES = ['en', 'es', 'de', 'fr', 'th', 'it'];
 
@@ -28,9 +28,8 @@ export class LanguageService {
   /**
    * Current language selected by user
    */
-  readonly currentLanguage$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('en');
+  readonly currentLanguage$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('en');
 
   /**
    * Browser's language
@@ -38,7 +37,7 @@ export class LanguageService {
   readonly browserLanguage$: Observable<string> = of(
     (navigator as any).language || (navigator as any).userLanguage
   ).pipe(
-    map<string, string>(language =>
+    map<string, string>((language) =>
       (language || 'en').slice(0, 2).toLowerCase()
     )
   );
@@ -48,7 +47,7 @@ export class LanguageService {
    */
   readonly languages$: Observable<Array<LanguageListEntry>> = combineLatest([
     of(this.configs.get<Object>('languages')).pipe(
-      map(languages => {
+      map((languages) => {
         const arr = [];
         for (const code in languages) {
           if (languages.hasOwnProperty(code)) {

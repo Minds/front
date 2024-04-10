@@ -31,12 +31,13 @@ export class CreateChatRoomService {
       }
     );
 
-    const response: MutationResult<CreateChatRoomMutation> = await firstValueFrom(
-      this.createChatRoomGql.mutate({
-        otherMemberGuids: otherMembers,
-        roomType: roomType,
-      })
-    );
+    const response: MutationResult<CreateChatRoomMutation> =
+      await firstValueFrom(
+        this.createChatRoomGql.mutate({
+          otherMemberGuids: otherMembers,
+          roomType: roomType,
+        })
+      );
 
     return response.data?.createChatRoom?.node?.guid ?? null;
   }

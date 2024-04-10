@@ -43,9 +43,10 @@ export class TopbarWalletBalance {
       }
     );
 
-    this.connectedWallet = this.connectWalletModalService.isConnected$.subscribe(
-      isConnected => (this.isConnected = isConnected)
-    );
+    this.connectedWallet =
+      this.connectWalletModalService.isConnected$.subscribe(
+        (isConnected) => (this.isConnected = isConnected)
+      );
   }
 
   formatTokens(value: number) {

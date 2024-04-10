@@ -33,7 +33,10 @@ export class TokenOnboardingVideoComponent {
   @ViewChild('video', { static: true }) videoEl;
   @Input() src: string;
 
-  constructor(protected client: Client, protected cd: ChangeDetectorRef) {}
+  constructor(
+    protected client: Client,
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     console.log(this.videoEl);

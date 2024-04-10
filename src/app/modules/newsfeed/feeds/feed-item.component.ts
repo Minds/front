@@ -33,7 +33,7 @@ export class NewsfeedFeedItemComponent implements OnInit, OnDestroy {
     this.resizeDebouncerSubscription = this.resizeDebouncer$
       /** debounce this event to allow rendering to finish */
       .pipe(debounceTime(1500))
-      .subscribe(event => {
+      .subscribe((event) => {
         if (!event) return;
 
         this.storage.memory.setActivityOutletRatio(

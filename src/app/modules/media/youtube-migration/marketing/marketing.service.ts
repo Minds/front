@@ -8,14 +8,14 @@ import { ProductMarketingResponse } from '../../../../common/services/strapi/mar
  */
 @Injectable({ providedIn: 'root' })
 export class YoutubeMigrationMarketingService {
-  public readonly copyData: QueryRef<
-    ProductMarketingResponse
-  > = this.apollo.use('strapi').watchQuery<ProductMarketingResponse>({
-    query: PRODUCT_PAGE_QUERY_FULL,
-    variables: {
-      slug: 'youtube-migration',
-    },
-  });
+  public readonly copyData: QueryRef<ProductMarketingResponse> = this.apollo
+    .use('strapi')
+    .watchQuery<ProductMarketingResponse>({
+      query: PRODUCT_PAGE_QUERY_FULL,
+      variables: {
+        slug: 'youtube-migration',
+      },
+    });
 
   constructor(private apollo: Apollo) {}
 }

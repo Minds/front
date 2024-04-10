@@ -51,7 +51,7 @@ export class ChannelContentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.stateSubscription = this.content.state$.subscribe(state => {
+    this.stateSubscription = this.content.state$.subscribe((state) => {
       this.channelIsNsfw = state === 'nsfw';
     });
   }

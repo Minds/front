@@ -33,7 +33,7 @@ export class UpdateMarkersService {
   get markers() {
     if (!this.markers$) {
       this.markers$ = this.markersSubject.asObservable();
-      this.isLoggedIn = this.session.isLoggedIn(is => {
+      this.isLoggedIn = this.session.isLoggedIn((is) => {
         this.isLoggedIn = is;
         this.fetch();
       });
@@ -67,7 +67,7 @@ export class UpdateMarkersService {
 
   clear() {
     // clean subscriptions
-    this.entityGuidsSockets$.forEach(sub => {
+    this.entityGuidsSockets$.forEach((sub) => {
       sub.unsubscribe();
     });
     this.entityGuidsSockets$ = [];
@@ -82,8 +82,8 @@ export class UpdateMarkersService {
 
     if (!opts.noReply) {
       this.http.post('api/v2/notifications/markers/read', opts).subscribe(
-        res => null,
-        err => console.warn(err)
+        (res) => null,
+        (err) => console.warn(err)
       );
     }
 
@@ -117,7 +117,7 @@ export class UpdateMarkersService {
       this.sockets.join(`marker:${entity_guid}`);
       this.entityGuidsSockets$[entity_guid] = this.sockets.subscribe(
         `marker:${entity_guid}`,
-        marker => {
+        (marker) => {
           marker = JSON.parse(marker);
           let entity_guid = marker.entity_guid;
 
@@ -148,7 +148,7 @@ export class UpdateMarkersService {
   }
 
   emitToEntityGuids() {
-    this.markersSubject.pipe(concatAll()).subscribe(marker => {
+    this.markersSubject.pipe(concatAll()).subscribe((marker) => {
       const subject = this.getByEntityGuid(marker.entity_guid);
       subject.next(marker);
     });

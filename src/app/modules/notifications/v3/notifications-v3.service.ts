@@ -67,13 +67,13 @@ export class NotificationsV3Service {
    */
   rawList$ = combineLatest([this.filter$, this.pagingToken$]).pipe(
     debounceTime(100), // Hack to prevent first cancelled call
-    tap(_ => this.inProgress$.next(true)),
+    tap((_) => this.inProgress$.next(true)),
     switchMap(([filter, pagingToken]) => this.apiRequest(filter, pagingToken)),
-    tap(response => {
+    tap((response) => {
       this.nextPagingToken$.next(response['load-next']);
     }),
-    map(response => response.notifications || []),
-    tap(_ => this.inProgress$.next(false)),
+    map((response) => response.notifications || []),
+    tap((_) => this.inProgress$.next(false)),
     scan((a, c) => [...a, ...c], [])
   );
 

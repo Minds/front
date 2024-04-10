@@ -30,7 +30,7 @@ export class GroupsTileComponent {
   }
 
   ngOnInit() {
-    this.$updateMarker = this.updateMarkers.markers.subscribe(markers => {
+    this.$updateMarker = this.updateMarkers.markers.subscribe((markers) => {
       if (!markers) return;
 
       this.entity.hasGathering$ = interval(1000).pipe(
@@ -39,7 +39,7 @@ export class GroupsTileComponent {
         map(
           () =>
             markers.filter(
-              marker =>
+              (marker) =>
                 marker.entity_guid == this.entity.guid &&
                 marker.marker == 'gathering-heartbeat' &&
                 marker.updated_timestamp > Date.now() / 1000 - 60 //1 minute tolerance
@@ -48,7 +48,7 @@ export class GroupsTileComponent {
       );
 
       this.hasMarker = markers.filter(
-        marker =>
+        (marker) =>
           marker.read_timestamp < marker.updated_timestamp &&
           marker.entity_guid == this.entity.guid
       ).length;

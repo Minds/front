@@ -71,7 +71,10 @@ export class PopoverComponent {
     this.detectChanges();
   }
 
-  constructor(protected cd: ChangeDetectorRef, protected client: Client) {}
+  constructor(
+    protected cd: ChangeDetectorRef,
+    protected client: Client
+  ) {}
 
   show(): void {
     if (this._password.length > 0) {

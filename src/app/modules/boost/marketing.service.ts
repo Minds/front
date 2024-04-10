@@ -8,14 +8,14 @@ import { ProductMarketingResponse } from '../../common/services/strapi/marketing
  */
 @Injectable({ providedIn: 'root' })
 export class BoostMarketingService {
-  public readonly copyData: QueryRef<
-    ProductMarketingResponse
-  > = this.apollo.use('strapi').watchQuery<ProductMarketingResponse>({
-    query: PRODUCT_PAGE_QUERY_FULL,
-    variables: {
-      slug: 'boost',
-    },
-  });
+  public readonly copyData: QueryRef<ProductMarketingResponse> = this.apollo
+    .use('strapi')
+    .watchQuery<ProductMarketingResponse>({
+      query: PRODUCT_PAGE_QUERY_FULL,
+      variables: {
+        slug: 'boost',
+      },
+    });
 
   constructor(private apollo: Apollo) {}
 }

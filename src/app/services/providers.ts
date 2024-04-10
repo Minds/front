@@ -250,37 +250,37 @@ export const MINDS_PROVIDERS: any[] = [
   },
   {
     provide: ScrollRestorationService,
-    useFactory: router => new ScrollRestorationService(router),
+    useFactory: (router) => new ScrollRestorationService(router),
     deps: [Router],
   },
   {
     provide: CDN_URL,
-    useFactory: configs => configs.get('cdn_url'),
+    useFactory: (configs) => configs.get('cdn_url'),
     deps: [ConfigsService],
   },
   {
     provide: CDN_ASSETS_URL,
-    useFactory: configs => configs.get('cdn_assets_url'),
+    useFactory: (configs) => configs.get('cdn_assets_url'),
     deps: [ConfigsService],
   },
   {
     provide: SITE_URL,
-    useFactory: configs => configs.get('site_url'),
+    useFactory: (configs) => configs.get('site_url'),
     deps: [ConfigsService],
   },
   {
     provide: STRAPI_URL,
-    useFactory: configs => configs.get('strapi')?.url,
+    useFactory: (configs) => configs.get('strapi')?.url,
     deps: [ConfigsService],
   },
   {
     provide: IS_TENANT_NETWORK,
-    useFactory: configs => configs.get('is_tenant') ?? false,
+    useFactory: (configs) => configs.get('is_tenant') ?? false,
     deps: [ConfigsService],
   },
   {
     provide: SITE_NAME,
-    useFactory: configs => configs.get('site_name') ?? 'Minds',
+    useFactory: (configs) => configs.get('site_name') ?? 'Minds',
     deps: [ConfigsService],
   },
   {

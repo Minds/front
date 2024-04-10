@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 describe('SettingsV2SupermindService', () => {
   let service: SettingsV2SupermindService;
 
-  let apiMock = new (function() {
+  let apiMock = new (function () {
     this.get = jasmine.createSpy('get').and.returnValue(
       of({
         min_offchain_tokens: 1,
@@ -19,11 +19,11 @@ describe('SettingsV2SupermindService', () => {
     this.post = jasmine.createSpy('post');
   })();
 
-  let toasterMock = new (function() {
+  let toasterMock = new (function () {
     this.error = jasmine.createSpy('error');
   })();
 
-  let configMock = new (function() {
+  let configMock = new (function () {
     this.get = jasmine.createSpy('get');
   })();
 

@@ -50,15 +50,13 @@ export class ChatRoomBottomBarComponent implements OnInit {
   /** Form group containing the text area. */
   protected formGroup: FormGroup;
 
-  protected readonly sendInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected readonly sendInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   @Input() protected roomGuid: string;
 
-  @Output() protected messageSent: EventEmitter<
-    ChatMessageEdge
-  > = new EventEmitter<ChatMessageEdge>();
+  @Output() protected messageSent: EventEmitter<ChatMessageEdge> =
+    new EventEmitter<ChatMessageEdge>();
 
   /** Text area viewchild */
   @ViewChild('textArea') protected textArea: ElementRef<HTMLTextAreaElement>;
@@ -123,12 +121,13 @@ export class ChatRoomBottomBarComponent implements OnInit {
 
       this.sendInProgress$.next(true);
 
-      const result: MutationResult<CreateChatMessageMutation> = await lastValueFrom(
-        this.createMessageGQL.mutate({
-          plainText: message,
-          roomGuid: this.roomGuid,
-        })
-      );
+      const result: MutationResult<CreateChatMessageMutation> =
+        await lastValueFrom(
+          this.createMessageGQL.mutate({
+            plainText: message,
+            roomGuid: this.roomGuid,
+          })
+        );
 
       if (!result) {
         throw new Error('Failed to send message');

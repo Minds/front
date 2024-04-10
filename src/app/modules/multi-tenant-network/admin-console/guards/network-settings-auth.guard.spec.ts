@@ -10,21 +10,18 @@ import { Session } from '../../../../services/session';
 import { NetworkSettingsAuthGuard } from './network-settings-auth.guard';
 import { PermissionsService } from '../../../../common/services/permissions.service';
 
-const configsMock: jasmine.SpyObj<ConfigsService> = jasmine.createSpyObj<
-  ConfigsService
->(['get']);
+const configsMock: jasmine.SpyObj<ConfigsService> =
+  jasmine.createSpyObj<ConfigsService>(['get']);
 const sessionMock: jasmine.SpyObj<Session> = jasmine.createSpyObj<Session>([
   'isAdmin',
 ]);
 const routerMock: jasmine.SpyObj<Router> = jasmine.createSpyObj<Router>([
   'navigate',
 ]);
-const toasterServiceMock: jasmine.SpyObj<ToasterService> = jasmine.createSpyObj<
-  ToasterService
->(['warn']);
-const permissionsMock: jasmine.SpyObj<PermissionsService> = jasmine.createSpyObj<
-  PermissionsService
->(['canModerateContent']);
+const toasterServiceMock: jasmine.SpyObj<ToasterService> =
+  jasmine.createSpyObj<ToasterService>(['warn']);
+const permissionsMock: jasmine.SpyObj<PermissionsService> =
+  jasmine.createSpyObj<PermissionsService>(['canModerateContent']);
 
 describe('NetworkSettingsAuthGuard', () => {
   let service: NetworkSettingsAuthGuard;

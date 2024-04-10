@@ -26,17 +26,14 @@ const SUM_AMOUNT = (arr, currencyType): number => {
 export class WalletEarningsComponent {
   earnings$: BehaviorSubject<any> = new BehaviorSubject(null);
   earningsTotal$: Observable<number> = this.earnings$.pipe(
-    map(earnings => SUM_AMOUNT(earnings ?? [], this.currencyType))
+    map((earnings) => SUM_AMOUNT(earnings ?? [], this.currencyType))
   );
   payouts$: BehaviorSubject<any> = new BehaviorSubject(null);
   payoutsTotal$: Observable<number> = this.payouts$.pipe(
-    map(payouts => SUM_AMOUNT(payouts ?? [], this.currencyType))
+    map((payouts) => SUM_AMOUNT(payouts ?? [], this.currencyType))
   );
   inProgress = false;
-  from: number = moment()
-    .utc()
-    .startOf('month')
-    .unix();
+  from: number = moment().utc().startOf('month').unix();
 
   filter: Filter = {
     id: 'month',
@@ -62,12 +59,8 @@ export class WalletEarningsComponent {
    */
   private buildMonthOptions(numberOfMonths: number = 6): Option[] {
     const months = [];
-    const dateStart = moment()
-      .utc()
-      .subtract(numberOfMonths, 'month');
-    const dateEnd = moment()
-      .utc()
-      .startOf('month');
+    const dateStart = moment().utc().subtract(numberOfMonths, 'month');
+    const dateEnd = moment().utc().startOf('month');
     while (dateEnd.diff(dateStart, 'months') >= 0) {
       months.push({
         id: dateEnd.unix(),
@@ -94,18 +87,14 @@ export class WalletEarningsComponent {
         'api/v3/monetization/earnings/overview',
         {
           from: this.from,
-          to: moment
-            .unix(this.from)
-            .utc()
-            .add(1, 'month')
-            .unix(),
+          to: moment.unix(this.from).utc().add(1, 'month').unix(),
         }
       );
       if (response.earnings) {
         this.earnings$.next(response.earnings);
 
         if (isInit) {
-          this._expandedRows = response.earnings.map(value => {
+          this._expandedRows = response.earnings.map((value) => {
             return value.id;
           });
         }

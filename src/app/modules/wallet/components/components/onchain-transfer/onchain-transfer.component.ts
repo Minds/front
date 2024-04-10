@@ -90,11 +90,10 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
       this.modalService.dismissAll();
       return;
     }
-    this.phoneVerifiedSubscription = this.phoneVerificationService.phoneVerified$.subscribe(
-      verified => {
+    this.phoneVerifiedSubscription =
+      this.phoneVerificationService.phoneVerified$.subscribe((verified) => {
         this.phoneVerified = verified;
-      }
-    );
+      });
     this.isPlus = this.session.getLoggedInUser().plus;
     this.load();
   }
@@ -127,7 +126,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
 
     this.amountSubscription = this.form
       .get('amount')
-      .valueChanges.subscribe(changes => {
+      .valueChanges.subscribe((changes) => {
         this.submitError = '';
       });
 

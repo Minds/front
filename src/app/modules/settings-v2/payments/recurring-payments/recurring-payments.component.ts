@@ -42,7 +42,7 @@ export class SettingsV2RecurringPaymentsComponent {
         this.init = true;
         this.detectChanges();
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
         this.init = true;
         this.detectChanges();
@@ -67,7 +67,7 @@ export class SettingsV2RecurringPaymentsComponent {
         this.inProgress = false;
         this.cd.detectChanges();
       })
-      .catch(e => {
+      .catch((e) => {
         this.toasterService.error('Sorry, there was an error');
         subscription._cancelling = false;
         this.inProgress = false;

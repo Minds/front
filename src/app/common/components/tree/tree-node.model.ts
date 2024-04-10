@@ -39,7 +39,7 @@ export class TreeNode {
 
     this.parent = parent;
 
-    (data[childrenField] || []).forEach(item => {
+    (data[childrenField] || []).forEach((item) => {
       const node = new TreeNode(
         item,
         idField,

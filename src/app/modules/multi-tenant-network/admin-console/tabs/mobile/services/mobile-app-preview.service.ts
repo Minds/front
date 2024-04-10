@@ -29,34 +29,28 @@ import { ApolloQueryResult } from '@apollo/client';
 @Injectable({ providedIn: 'root' })
 export class MobileAppPreviewService implements OnDestroy {
   /** Splash screen type. */
-  public readonly splashScreenType$: BehaviorSubject<
-    MobileSplashScreenTypeEnum
-  > = new BehaviorSubject<MobileSplashScreenTypeEnum>(null);
+  public readonly splashScreenType$: BehaviorSubject<MobileSplashScreenTypeEnum> =
+    new BehaviorSubject<MobileSplashScreenTypeEnum>(null);
 
   /** Welcome screen type. */
-  public readonly welcomeScreenLogoType$: BehaviorSubject<
-    MobileWelcomeScreenLogoTypeEnum
-  > = new BehaviorSubject<MobileWelcomeScreenLogoTypeEnum>(null);
+  public readonly welcomeScreenLogoType$: BehaviorSubject<MobileWelcomeScreenLogoTypeEnum> =
+    new BehaviorSubject<MobileWelcomeScreenLogoTypeEnum>(null);
 
   /** Status of the build preview. */
-  public readonly previewStatus$: BehaviorSubject<
-    MobilePreviewStatusEnum
-  > = new BehaviorSubject<MobilePreviewStatusEnum>(null);
+  public readonly previewStatus$: BehaviorSubject<MobilePreviewStatusEnum> =
+    new BehaviorSubject<MobilePreviewStatusEnum>(null);
 
   /** QR code for a built preview app. */
-  public readonly previewQRCode$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >(null);
+  public readonly previewQRCode$: BehaviorSubject<string> =
+    new BehaviorSubject<string>(null);
 
   /** Whether init is in progress. */
-  public readonly initInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly initInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Whether set mobile config request is in progress. */
-  public readonly setMobileConfigInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly setMobileConfigInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // subscriptions.
   private subscriptions: Subscription[] = [];

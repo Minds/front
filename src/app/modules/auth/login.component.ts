@@ -81,12 +81,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptions.push(
-      this.authModal.onLoggedIn$.subscribe(loggedIn => {
+      this.authModal.onLoggedIn$.subscribe((loggedIn) => {
         if (loggedIn) {
           this.loggedin();
         }
       }),
-      this.onboardingV5Service.onboardingCompleted$.subscribe(registered => {
+      this.onboardingV5Service.onboardingCompleted$.subscribe((registered) => {
         if (registered) {
           this.registered();
         }
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.redirectTo = this.cookieService.get('redirect');
 
-    this.paramsSubscription = this.route.queryParams.subscribe(params => {
+    this.paramsSubscription = this.route.queryParams.subscribe((params) => {
       if (params['referrer']) {
         this.referrer = params['referrer'];
       }

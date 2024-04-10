@@ -21,7 +21,8 @@ import { BoostTargetExperimentService } from '../../../../experiments/sub-servic
   styleUrls: ['audience.component.ng.scss'],
 })
 export class BoostModalV2AudienceSelectorComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   public BoostAudience: typeof BoostAudience = BoostAudience;
   public form: FormGroup; // form group
 
@@ -113,11 +114,12 @@ export class BoostModalV2AudienceSelectorComponent
       );
 
     // change audience in service on value form control change.
-    this.audienceChangeSubscription = this.form.controls.audience.valueChanges.subscribe(
-      (audience: BoostAudience) => {
-        this.service.audience$.next(audience);
-      }
-    );
+    this.audienceChangeSubscription =
+      this.form.controls.audience.valueChanges.subscribe(
+        (audience: BoostAudience) => {
+          this.service.audience$.next(audience);
+        }
+      );
   }
 
   ngOnDestroy(): void {

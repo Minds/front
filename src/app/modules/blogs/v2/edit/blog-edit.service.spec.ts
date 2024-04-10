@@ -6,17 +6,17 @@ import { composerMockService } from '../../../../mocks/modules/composer/services
 import { BehaviorSubject } from 'rxjs';
 import { siteServiceMock } from '../../../../mocks/services/site-service-mock.spec';
 
-let routerMock = new (function() {
+let routerMock = new (function () {
   this.navigate = jasmine.createSpy('navigate');
 })();
 
-export let toasterServiceMock = new (function() {
+export let toasterServiceMock = new (function () {
   this.success = jasmine.createSpy('success').and.returnValue(this);
 })();
 
 const message$ = new BehaviorSubject<string>('');
 
-export let preloadServiceMock = new (function() {
+export let preloadServiceMock = new (function () {
   this.getValue = jasmine.createSpy('getValue').and.returnValue('');
   this.message$ = message$;
 })();

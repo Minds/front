@@ -26,9 +26,10 @@ export class LanguageSidebarPromptComponent {
   constructor(private languageService: LanguageService) {}
 
   ngOnInit() {
-    this.browserLanguageSubscription = this.languageService.browserLanguage$.subscribe(
-      browserLanguage => (this.browserLanguage = browserLanguage)
-    );
+    this.browserLanguageSubscription =
+      this.languageService.browserLanguage$.subscribe(
+        (browserLanguage) => (this.browserLanguage = browserLanguage)
+      );
   }
 
   ngOnDestroy() {

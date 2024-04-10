@@ -50,7 +50,7 @@ describe('CustomPageComponent', () => {
     );
   });
 
-  it('should set loading to false after fetching custom page', done => {
+  it('should set loading to false after fetching custom page', (done) => {
     customPageServiceMock.customPage$.next({
       implementation: CustomPageImplementation.DEFAULT,
       displayName: 'Privacy Policy',

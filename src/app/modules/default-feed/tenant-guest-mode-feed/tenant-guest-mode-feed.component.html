@@ -2,7 +2,7 @@
   <!--actual feed-->
   <ng-container
     *ngFor="
-      let edge of edges$ | async | slice: 0:(pageSize$ | async) as edges;
+      let edge of edges$ | async | slice: 0 : (pageSize$ | async) as edges;
       let i = index;
       trackBy: trackByFn
     "

@@ -59,17 +59,16 @@ export class UploaderService implements OnDestroy {
    * Emit here when the user tries to upload a video
    * but doesn't have permission
    */
-  public videoPermissionsError$ = this.attachmentApi.videoPermissionsError$.pipe(
-    shareReplay()
-  );
+  public videoPermissionsError$ =
+    this.attachmentApi.videoPermissionsError$.pipe(shareReplay());
 
   /**
    * Will retry a failed file
    */
   fileStartOrRetry$: Observable<File> = this.file$$.pipe(
-    mergeMap(file =>
+    mergeMap((file) =>
       this.retryFile$$.pipe(
-        filter(retryFile => retryFile === file),
+        filter((retryFile) => retryFile === file),
         startWith(file)
       )
     ),
@@ -79,22 +78,21 @@ export class UploaderService implements OnDestroy {
   /**
    * Queues a file to be uploaded
    */
-  addFileToQueueAfterStartOrRetry$: Observable<
-    FileUpload
-  > = this.fileStartOrRetry$.pipe(
-    map(file => ({
-      file,
-      progress: 0,
-      error: false,
-      toRemove: false,
-    }))
-  );
+  addFileToQueueAfterStartOrRetry$: Observable<FileUpload> =
+    this.fileStartOrRetry$.pipe(
+      map((file) => ({
+        file,
+        progress: 0,
+        error: false,
+        toRemove: false,
+      }))
+    );
 
   /**
    * Queues uploads to be delted
    */
   markFileToBeRemovedAfterStop$: Observable<FileUpload> = this.stopFile$$.pipe(
-    map(file => ({
+    map((file) => ({
       file,
       progress: 0,
       error: false,
@@ -106,15 +104,15 @@ export class UploaderService implements OnDestroy {
    * Performs the actual upload and records progress
    */
   updateFileProgress$: Observable<FileUpload> = this.fileStartOrRetry$.pipe(
-    map(file =>
+    map((file) =>
       this.attachmentApi.upload(file, {}).pipe(
-        filter(uploadEvent => {
+        filter((uploadEvent) => {
           return (
             uploadEvent.type === UploadEventType.Progress ||
             uploadEvent.type === UploadEventType.Success
           );
         }),
-        map(uploadEvent => {
+        map((uploadEvent) => {
           return {
             type: uploadEvent.payload?.request?.type as AttachmentType,
             guid: uploadEvent.payload?.response?.guid,
@@ -122,9 +120,11 @@ export class UploaderService implements OnDestroy {
           };
         }),
         takeUntil(
-          this.stopFile$$.pipe(filter(stopFile => stopFile.name === file.name))
+          this.stopFile$$.pipe(
+            filter((stopFile) => stopFile.name === file.name)
+          )
         ),
-        catchError(e => of({ error: true })),
+        catchError((e) => of({ error: true })),
         scan(
           (
             acc,
@@ -180,7 +180,7 @@ export class UploaderService implements OnDestroy {
         [curr.file?.name]: curr,
       };
     }, {}),
-    map(fileUploads => Object.values(fileUploads)),
+    map((fileUploads) => Object.values(fileUploads)),
     share()
   );
 
@@ -189,7 +189,7 @@ export class UploaderService implements OnDestroy {
    */
   filesCount$: Observable<number> = this.files$.pipe(
     startWith([]), // So we have an initial value of 0
-    map(fileUploads => fileUploads?.length || 0)
+    map((fileUploads) => fileUploads?.length || 0)
   );
 
   /**
@@ -197,9 +197,9 @@ export class UploaderService implements OnDestroy {
    */
   isUploadingFinished$: Observable<boolean> = this.files$.pipe(
     startWith([]),
-    map(fileUploads => {
-      const guids = fileUploads.map(fileUpload => fileUpload.guid);
-      return guids.length === guids.filter(guid => !!guid).length; // If we have 'undefined' guids, we're not done yet
+    map((fileUploads) => {
+      const guids = fileUploads.map((fileUpload) => fileUpload.guid);
+      return guids.length === guids.filter((guid) => !!guid).length; // If we have 'undefined' guids, we're not done yet
     })
   );
 
@@ -211,7 +211,7 @@ export class UploaderService implements OnDestroy {
   fileUploadRefs: FileUpload[] = [];
 
   constructor(protected attachmentApi: AttachmentApiService) {
-    this.fileUploadRefSubscription = this.files$.subscribe(fileUploads => {
+    this.fileUploadRefSubscription = this.files$.subscribe((fileUploads) => {
       this.fileUploadRefs.push(...fileUploads);
     });
   }

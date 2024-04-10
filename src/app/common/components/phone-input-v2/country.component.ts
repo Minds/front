@@ -31,15 +31,15 @@ export type CountrySelectedEvent = {
   templateUrl: 'country.component.html',
 })
 export class PhoneInputCountryV2Component
-  implements OnInit, AfterViewInit, OnDestroy {
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @Input() disabled: boolean = false;
   @Input() showDropdown: boolean = false;
   @Input() initCountryCode: string;
   @Input() allowedCountries: string[];
   @Output() toggledDropdown: EventEmitter<any> = new EventEmitter();
-  @Output() countrySelected: EventEmitter<
-    CountrySelectedEvent
-  > = new EventEmitter<CountrySelectedEvent>();
+  @Output() countrySelected: EventEmitter<CountrySelectedEvent> =
+    new EventEmitter<CountrySelectedEvent>();
 
   @ViewChild('input') input: ElementRef;
   @ViewChild('dropdown', { static: true }) dropdown: ElementRef;
@@ -186,7 +186,7 @@ export class PhoneInputCountryV2Component
       this.allowedCountries[i] = this.allowedCountries[i].toLowerCase();
     }
 
-    this.countryCodeData.countries.forEach(c => {
+    this.countryCodeData.countries.forEach((c) => {
       if (
         this.allowedCountries.length === 0 ||
         this.countryIsAllowed(c[1].toString())
@@ -210,7 +210,7 @@ export class PhoneInputCountryV2Component
   setInitCountry() {
     this.initCountryCode = this.initCountryCode.toLowerCase();
 
-    const initCountryIndex = this.countries.findIndex(c => {
+    const initCountryIndex = this.countries.findIndex((c) => {
       return this.initCountryCode === c.iso2;
     });
     if (initCountryIndex > -1) {

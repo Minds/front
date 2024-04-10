@@ -13,8 +13,10 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   selector: 'm-feedNotice--setupChannel',
   templateUrl: 'setup-channel-notice.component.html',
 })
-export class SetupChannelNoticeComponent extends AbstractSubscriberComponent
-  implements OnInit {
+export class SetupChannelNoticeComponent
+  extends AbstractSubscriberComponent
+  implements OnInit
+{
   @Input() public dismissible: boolean = true;
 
   constructor(

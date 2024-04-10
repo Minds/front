@@ -54,7 +54,7 @@
   </ng-container>
 </div>
 
-<div class="mdl-grid m-admin-reports" style="max-width:600px">
+<div class="mdl-grid m-admin-reports" style="max-width: 600px">
   <div class="mdl-cell mdl-cell--12-col">
     <!--<div class="mdl-spinner mdl-spinner&#45;&#45;single-color mdl-js-spinner is-active" [hidden]="reports.length > 0 || !inProgress"></div>-->
 
@@ -73,7 +73,7 @@
         <p *ngIf="report?.reporterObj?.username">
           <span>Reported by:</span>
           <a [routerLink]="['/', report.reporterObj.username]" target="_blank">
-            @{{report.reporterObj.username }}
+            &#64;{{report.reporterObj.username }}
           </a>
         </p>
 
@@ -84,8 +84,9 @@
               [value]="reason.value"
               [selected]="report.reason == reason.value"
               *ngFor="let reason of reasons"
-              >{{reason.label}}</option
             >
+              {{reason.label}}
+            </option>
           </select>
           <!--{{ parseReason(report.reason) }}-->
         </p>
@@ -128,17 +129,13 @@
         <m-comment [comment]="report.entityObj" class="mdl-card"></m-comment>
       </div>
       <div *ngIf="!report.entityObj" class="m-comment-wrapper">
-        <div class="m-admin-reports--comment-note">
-          Post not found
-        </div>
+        <div class="m-admin-reports--comment-note">Post not found</div>
       </div>
 
       <div class="mdl-card__supporting-text m-action-buttons">
         <ng-container *ngIf="filter == 'reports'">
           <ng-container *ngIf="type == 'review'">
-            <m-button (onAction)="archive(report, i)">
-              Archive
-            </m-button>
+            <m-button (onAction)="archive(report, i)"> Archive </m-button>
           </ng-container>
 
           <ng-container *ngIf="type == 'review' || type == 'archived'">

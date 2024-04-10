@@ -33,37 +33,35 @@ describe('TokenRewardsOnboardingComponent', () => {
   let comp: TokenRewardsOnboardingComponent;
   let fixture: ComponentFixture<TokenRewardsOnboardingComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          TokenRewardsOnboardingComponent,
-          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-          MockComponent({ selector: 'm-tooltip', inputs: ['icon', 'i18n'] }),
-          MockComponent({ selector: 'm-phone-input' }),
-          MockComponent({
-            selector: 'm-token--onboarding--video',
-            inputs: ['src'],
-          }),
-        ],
-        imports: [FormsModule],
-        providers: [
-          { provide: Client, useValue: clientMock },
-          { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
-          { provide: Session, useValue: sessionMock },
-          { provide: Router, useValue: RouterTestingModule },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        TokenRewardsOnboardingComponent,
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        MockComponent({ selector: 'm-tooltip', inputs: ['icon', 'i18n'] }),
+        MockComponent({ selector: 'm-phone-input' }),
+        MockComponent({
+          selector: 'm-token--onboarding--video',
+          inputs: ['src'],
+        }),
+      ],
+      imports: [FormsModule],
+      providers: [
+        { provide: Client, useValue: clientMock },
+        { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
+        { provide: Session, useValue: sessionMock },
+        { provide: Router, useValue: RouterTestingModule },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

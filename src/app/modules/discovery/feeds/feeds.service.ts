@@ -52,7 +52,8 @@ export class DiscoveryFeedsService {
   async load(): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
     const isPlusPage: boolean = this.discoveryService.isPlusPage$.value;
-    const wireSupportTiersOnly: boolean = this.discoveryService.isWireSupportPage$.getValue();
+    const wireSupportTiersOnly: boolean =
+      this.discoveryService.isWireSupportPage$.getValue();
 
     let algorithm: string = this.filter$.getValue();
     const allowedPlusAlgorithms: string[] = ['top', 'topV2', 'latest'];
@@ -127,8 +128,8 @@ export class DiscoveryFeedsService {
 
   getNsfwString(): string {
     return this.nsfw$.value
-      .filter(reason => reason.selected)
-      .map(reason => reason.value)
+      .filter((reason) => reason.selected)
+      .map((reason) => reason.value)
       .join(',');
   }
 }

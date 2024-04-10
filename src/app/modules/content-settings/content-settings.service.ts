@@ -5,9 +5,8 @@ export type ContentSettingsTab = 'tags' | 'compass' | 'nsfw';
 
 @Injectable({ providedIn: 'root' })
 export class ContentSettingsService {
-  activeTab$: BehaviorSubject<ContentSettingsTab> = new BehaviorSubject<
-    ContentSettingsTab
-  >('tags');
+  activeTab$: BehaviorSubject<ContentSettingsTab> =
+    new BehaviorSubject<ContentSettingsTab>('tags');
 
   constructor() {}
 }

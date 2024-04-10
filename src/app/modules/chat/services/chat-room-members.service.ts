@@ -28,44 +28,36 @@ const PAGE_SIZE: number = 24;
 @Injectable()
 export class ChatRoomMembersService extends AbstractSubscriberComponent {
   /** Whether request is in progress. */
-  private readonly _inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  private readonly _inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Exposed observable to track whether a request is in progress. */
-  public readonly inProgress$: Observable<
-    boolean
-  > = this._inProgress$.asObservable();
+  public readonly inProgress$: Observable<boolean> =
+    this._inProgress$.asObservable();
 
   /** Whether the service has been initialized. */
-  private readonly _initialized$: Subject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  private readonly _initialized$: Subject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Exposed observable to track whether the service has been initialized. */
-  public readonly initialized$: Observable<
-    boolean
-  > = this._initialized$.asObservable();
+  public readonly initialized$: Observable<boolean> =
+    this._initialized$.asObservable();
 
   /** Page info for the chat members. */
-  private readonly _pageInfo$: BehaviorSubject<PageInfo> = new BehaviorSubject<
-    PageInfo
-  >(null);
+  private readonly _pageInfo$: BehaviorSubject<PageInfo> =
+    new BehaviorSubject<PageInfo>(null);
 
   /** Exposed observable to track the page info for the chat members. */
-  public readonly pageInfo$: Observable<
-    PageInfo
-  > = this._pageInfo$.asObservable();
+  public readonly pageInfo$: Observable<PageInfo> =
+    this._pageInfo$.asObservable();
 
   /** Edges for the chat members. */
-  private readonly _edges$: BehaviorSubject<
-    ChatRoomMemberEdge[]
-  > = new BehaviorSubject<ChatRoomMemberEdge[]>([]);
+  private readonly _edges$: BehaviorSubject<ChatRoomMemberEdge[]> =
+    new BehaviorSubject<ChatRoomMemberEdge[]>([]);
 
   /** Exposed observable to track the edges for the chat members. */
-  public readonly edges$: Observable<
-    ChatRoomMemberEdge[]
-  > = this._edges$.asObservable();
+  public readonly edges$: Observable<ChatRoomMemberEdge[]> =
+    this._edges$.asObservable();
 
   /** Reference to the query. */
   private queryRef: QueryRef<
@@ -153,7 +145,7 @@ export class ChatRoomMembersService extends AbstractSubscriberComponent {
     this.subscriptions.push(
       this.queryRef.valueChanges
         .pipe(
-          catchError(e => {
+          catchError((e) => {
             this.handleError(e);
             this._inProgress$.next(false);
             this._initialized$.next(true);

@@ -13,11 +13,10 @@ import { ConfigsService } from '../../../../common/services/configs.service';
 @Injectable({ providedIn: 'root' })
 export class ProductPagePricingService {
   /** User selected time period for their potential subscription. */
-  public readonly selectedTimePeriod$: BehaviorSubject<
-    ProductPageUpgradeTimePeriod
-  > = new BehaviorSubject<ProductPageUpgradeTimePeriod>(
-    ProductPageUpgradeTimePeriod.Annually
-  );
+  public readonly selectedTimePeriod$: BehaviorSubject<ProductPageUpgradeTimePeriod> =
+    new BehaviorSubject<ProductPageUpgradeTimePeriod>(
+      ProductPageUpgradeTimePeriod.Annually
+    );
 
   /** Upgrades config. */
   public readonly upgradesConfig: ProductPageUpgradesConfig;

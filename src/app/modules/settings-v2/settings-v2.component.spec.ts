@@ -21,67 +21,65 @@ describe('SettingsV2Component', () => {
   let fixture: ComponentFixture<SettingsV2Component>;
   let router: Router;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockComponent({
-            selector: 'm-nestedMenu',
-            inputs: ['isNested', 'menus', 'parentRoute', 'disableActiveClass'],
-            outputs: ['itemSelected', 'clickedBack'],
-          }),
-          SettingsV2Component,
-          LoadingSpinnerComponent,
-        ],
-        providers: [
-          { provide: Client, useValue: clientMock },
-          { provide: Session, useValue: sessionMock },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockComponent({
+          selector: 'm-nestedMenu',
+          inputs: ['isNested', 'menus', 'parentRoute', 'disableActiveClass'],
+          outputs: ['itemSelected', 'clickedBack'],
+        }),
+        SettingsV2Component,
+        LoadingSpinnerComponent,
+      ],
+      providers: [
+        { provide: Client, useValue: clientMock },
+        { provide: Session, useValue: sessionMock },
+        {
+          provide: ProService,
+          useValue: MockService(ProService, { get: {} }),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: TwitterSyncSettingsExperimentService,
+          useValue: MockService(TwitterSyncSettingsExperimentService),
+        },
+        {
+          provide: IsTenantService,
+          useValue: MockService(IsTenantService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+      ],
+      imports: [
+        RouterTestingModule.withRoutes([
           {
-            provide: ProService,
-            useValue: MockService(ProService, { get: {} }),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          {
-            provide: TwitterSyncSettingsExperimentService,
-            useValue: MockService(TwitterSyncSettingsExperimentService),
-          },
-          {
-            provide: IsTenantService,
-            useValue: MockService(IsTenantService),
-          },
-          {
-            provide: PermissionsService,
-            useValue: MockService(PermissionsService),
-          },
-        ],
-        imports: [
-          RouterTestingModule.withRoutes([
-            {
-              path: 'settings',
-              children: [
-                {
-                  path: 'account',
-                  data: {
-                    isMenu: true,
-                  },
-                  component: SettingsV2Component,
-                  children: [
-                    {
-                      path: '**',
-                      redirectTo: 'account',
-                    },
-                  ],
+            path: 'settings',
+            children: [
+              {
+                path: 'account',
+                data: {
+                  isMenu: true,
                 },
-              ],
-            },
-          ]),
-        ],
-      }).compileComponents();
-    })
-  );
+                component: SettingsV2Component,
+                children: [
+                  {
+                    path: '**',
+                    redirectTo: 'account',
+                  },
+                ],
+              },
+            ],
+          },
+        ]),
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     router = TestBed.inject(Router);
@@ -241,8 +239,8 @@ describe('SettingsV2Component', () => {
       (component as any).injectExperimentItems();
 
       const menuItem: any = component.secondaryMenus.other
-        .find(x => x.header.id === 'content-migration')
-        .items.find(x => x.id === 'twitter-sync');
+        .find((x) => x.header.id === 'content-migration')
+        .items.find((x) => x.id === 'twitter-sync');
 
       expect(menuItem.label).toEqual('Twitter');
     });
@@ -255,8 +253,8 @@ describe('SettingsV2Component', () => {
       (component as any).injectExperimentItems();
 
       const menuItem: any = component.secondaryMenus.other
-        .find(x => x.header.id === 'content-migration')
-        .items.find(x => x.id === 'twitter-sync');
+        .find((x) => x.header.id === 'content-migration')
+        .items.find((x) => x.id === 'twitter-sync');
 
       expect(menuItem).toBeUndefined();
     });

@@ -21,9 +21,8 @@ export class JuryDutySessionListComponent extends AbstractSubscriberComponent {
     []
   );
 
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   constructor(private sessionService: JurySessionService) {
     super();
@@ -63,7 +62,7 @@ export class JuryDutySessionListComponent extends AbstractSubscriberComponent {
     if (result && result.reports && result.reports.length) {
       // sub to existing reports to get current value.
       this.subscriptions.push(
-        this.reports$.pipe(take(1)).subscribe(existingReports => {
+        this.reports$.pipe(take(1)).subscribe((existingReports) => {
           // concat already loaded reports with new ones.
           this.reports$.next([...existingReports, ...result.reports]);
         })

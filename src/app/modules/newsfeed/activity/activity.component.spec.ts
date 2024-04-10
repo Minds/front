@@ -17,86 +17,84 @@ describe('ActivityComponent', () => {
   let comp: ActivityComponent;
   let fixture: ComponentFixture<ActivityComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ActivityComponent],
-        providers: [
-          { provide: ElementRef, useValue: MockService(ElementRef) },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          { provide: NewsfeedService, useValue: MockService(NewsfeedService) },
-          { provide: Session, useValue: MockService(Session) },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          {
-            provide: IntersectionObserverService,
-            useValue: MockService(IntersectionObserverService),
-          },
-          {
-            provide: EntityMetricsSocketsExperimentService,
-            useValue: MockService(EntityMetricsSocketsExperimentService),
-          },
-          {
-            provide: PersistentFeedExperimentService,
-            useValue: MockService(PersistentFeedExperimentService),
-          },
-          { provide: IsTenantService, useValue: MockService(IsTenantService) },
-        ],
-      })
-        .overrideProvider(ActivityService, {
-          useValue: MockService(ActivityService, {
-            has: [
-              'entity$',
-              'height$',
-              'isLoggedIn$',
-              'displayOptions',
-              'canShow$',
-            ],
-            props: {
-              entity$: { get: () => new BehaviorSubject<any>(null) },
-              height$: { get: () => new BehaviorSubject<any>(null) },
-              isLoggedIn$: { get: () => new BehaviorSubject<any>(null) },
-              canShow$: { get: () => new BehaviorSubject<any>(true) },
-              displayOptions: {
-                autoplayVideo: true,
-                showOwnerBlock: true,
-                showComments: true,
-                showOnlyCommentsInput: true,
-                showOnlyCommentsToggle: false,
-                showToolbar: true,
-                showInteractions: false,
-                showEditedTag: false,
-                showVisibilityState: false,
-                showTranslation: false,
-                showPostMenu: true,
-                showPinnedBadge: true,
-                showMetrics: true,
-                fixedHeight: false,
-                fixedHeightContainer: false,
-                isModal: false,
-                minimalMode: false,
-                bypassMediaModal: false,
-                sidebarMode: false,
-                boostRotatorMode: false,
-                isSidebarBoost: false,
-                isFeed: false,
-                isSingle: false,
-                permalinkBelowContent: false,
-                hideTopBorder: false,
-              },
-            },
-          }),
-        })
-        .overrideProvider(ElementVisibilityService, {
-          useValue: MockService(ElementVisibilityService),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ActivityComponent],
+      providers: [
+        { provide: ElementRef, useValue: MockService(ElementRef) },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        { provide: NewsfeedService, useValue: MockService(NewsfeedService) },
+        { provide: Session, useValue: MockService(Session) },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: IntersectionObserverService,
+          useValue: MockService(IntersectionObserverService),
+        },
+        {
+          provide: EntityMetricsSocketsExperimentService,
+          useValue: MockService(EntityMetricsSocketsExperimentService),
+        },
+        {
+          provide: PersistentFeedExperimentService,
+          useValue: MockService(PersistentFeedExperimentService),
+        },
+        { provide: IsTenantService, useValue: MockService(IsTenantService) },
+      ],
     })
-  );
+      .overrideProvider(ActivityService, {
+        useValue: MockService(ActivityService, {
+          has: [
+            'entity$',
+            'height$',
+            'isLoggedIn$',
+            'displayOptions',
+            'canShow$',
+          ],
+          props: {
+            entity$: { get: () => new BehaviorSubject<any>(null) },
+            height$: { get: () => new BehaviorSubject<any>(null) },
+            isLoggedIn$: { get: () => new BehaviorSubject<any>(null) },
+            canShow$: { get: () => new BehaviorSubject<any>(true) },
+            displayOptions: {
+              autoplayVideo: true,
+              showOwnerBlock: true,
+              showComments: true,
+              showOnlyCommentsInput: true,
+              showOnlyCommentsToggle: false,
+              showToolbar: true,
+              showInteractions: false,
+              showEditedTag: false,
+              showVisibilityState: false,
+              showTranslation: false,
+              showPostMenu: true,
+              showPinnedBadge: true,
+              showMetrics: true,
+              fixedHeight: false,
+              fixedHeightContainer: false,
+              isModal: false,
+              minimalMode: false,
+              bypassMediaModal: false,
+              sidebarMode: false,
+              boostRotatorMode: false,
+              isSidebarBoost: false,
+              isFeed: false,
+              isSingle: false,
+              permalinkBelowContent: false,
+              hideTopBorder: false,
+            },
+          },
+        }),
+      })
+      .overrideProvider(ElementVisibilityService, {
+        useValue: MockService(ElementVisibilityService),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ActivityComponent);
     comp = fixture.componentInstance;
 

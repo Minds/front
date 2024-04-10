@@ -45,9 +45,8 @@ export class MultiTenantRolesService implements OnDestroy {
   >(null);
 
   /** Subject to store all permissions value. */
-  public readonly allPermissions$: BehaviorSubject<
-    PermissionsEnum[]
-  > = new BehaviorSubject<PermissionsEnum[]>(null);
+  public readonly allPermissions$: BehaviorSubject<PermissionsEnum[]> =
+    new BehaviorSubject<PermissionsEnum[]>(null);
 
   /**
    * All the roles assigned to the current logged in user
@@ -102,21 +101,17 @@ export class MultiTenantRolesService implements OnDestroy {
    * Gets all roles and permissions from server.
    * @returns { Observable<ApolloQueryResult<GetRolesAndPermissionsQuery> | null>}
    */
-  public getRolesAndPermissions(): Observable<ApolloQueryResult<
-    GetRolesAndPermissionsQuery
-  > | null> {
+  public getRolesAndPermissions(): Observable<ApolloQueryResult<GetRolesAndPermissionsQuery> | null> {
     return this.getRolesAndPermissionsGQL
       .fetch(null, {
         fetchPolicy: 'network-only',
       })
       .pipe(
         take(1),
-        catchError(
-          (e: unknown): Observable<null> => {
-            console.error('getRolesAndPermissions Error: ', e);
-            return of(null);
-          }
-        )
+        catchError((e: unknown): Observable<null> => {
+          console.error('getRolesAndPermissions Error: ', e);
+          return of(null);
+        })
       );
   }
 
@@ -141,15 +136,13 @@ export class MultiTenantRolesService implements OnDestroy {
 
         return Boolean(updatedPermissions);
       }),
-      catchError(
-        (e: any): Observable<boolean> => {
-          if (e?.errors[0] && e.errors[0].message) {
-            this.toaster.error(e.errors[0].message);
-          }
-          console.error(e);
-          return of(false);
+      catchError((e: any): Observable<boolean> => {
+        if (e?.errors[0] && e.errors[0].message) {
+          this.toaster.error(e.errors[0].message);
         }
-      )
+        console.error(e);
+        return of(false);
+      })
     );
   }
 
@@ -158,8 +151,8 @@ export class MultiTenantRolesService implements OnDestroy {
     updatedPermissions: PermissionsEnum[]
   ): void {
     // Update the permissions for the role in allRoles$
-    this.allRoles$.pipe(take(1)).subscribe(roles => {
-      const updatedRoles = roles.map(role => {
+    this.allRoles$.pipe(take(1)).subscribe((roles) => {
+      const updatedRoles = roles.map((role) => {
         if (role.id === roleId) {
           return {
             ...role,
@@ -184,8 +177,8 @@ export class MultiTenantRolesService implements OnDestroy {
           userGuid: this.session.getLoggedInUser().guid,
         })
         .valueChanges.pipe(
-          map(result => result.data?.assignedRoles || []),
-          tap(roles => {
+          map((result) => result.data?.assignedRoles || []),
+          tap((roles) => {
             if (roles) this.loggedInUserRoles$.next(roles);
           }),
           shareReplay()
@@ -217,15 +210,13 @@ export class MultiTenantRolesService implements OnDestroy {
       map((result: MutationResult<AssignUserToRoleMutation>) => {
         return Boolean(result?.data?.assignUserToRole.name);
       }),
-      catchError(
-        (e: any): Observable<boolean> => {
-          if (e?.errors?.[0] && e.errors[0].message) {
-            this.toaster.error(e.errors[0].message);
-          }
-          console.error(e);
-          return of(false);
+      catchError((e: any): Observable<boolean> => {
+        if (e?.errors?.[0] && e.errors[0].message) {
+          this.toaster.error(e.errors[0].message);
         }
-      )
+        console.error(e);
+        return of(false);
+      })
     );
   }
 
@@ -252,15 +243,13 @@ export class MultiTenantRolesService implements OnDestroy {
       map((result: MutationResult<UnassignUserFromRoleMutation>) => {
         return result?.data?.unassignUserFromRole;
       }),
-      catchError(
-        (e: any): Observable<boolean> => {
-          if (e?.errors?.[0] && e.errors[0].message) {
-            this.toaster.error(e.errors[0].message);
-          }
-          console.error(e);
-          return of(false);
+      catchError((e: any): Observable<boolean> => {
+        if (e?.errors?.[0] && e.errors[0].message) {
+          this.toaster.error(e.errors[0].message);
         }
-      )
+        console.error(e);
+        return of(false);
+      })
     );
   }
 
@@ -285,7 +274,7 @@ export class MultiTenantRolesService implements OnDestroy {
       PermissionsEnum.CanUploadChatMedia,
     ];
 
-    return toggleablePermissions.filter(permission =>
+    return toggleablePermissions.filter((permission) =>
       allPermissions.includes(permission)
     );
   }

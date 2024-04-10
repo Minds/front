@@ -65,7 +65,7 @@ const buildWireRewardEntries = (
   data: Array<any>
 ): Array<WireReward> =>
   (data || [])
-    .map(entry => ({
+    .map((entry) => ({
       id: `${key}:${entry.amount}`,
       amount: entry.amount,
       description: entry.description,
@@ -227,7 +227,7 @@ type DataArray = [
   string | null,
   boolean | null,
   boolean | null,
-  string | null
+  string | null,
 ];
 
 /**
@@ -251,9 +251,8 @@ export class WireV2Service implements OnDestroy {
     ''
   );
 
-  readonly sourceEntityGuid$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  readonly sourceEntityGuid$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   /**
    * Wire type subject
@@ -262,16 +261,14 @@ export class WireV2Service implements OnDestroy {
     DEFAULT_TYPE_VALUE
   );
 
-  readonly supportTier$: BehaviorSubject<SupportTier> = new BehaviorSubject<
-    SupportTier
-  >(null);
+  readonly supportTier$: BehaviorSubject<SupportTier> =
+    new BehaviorSubject<SupportTier>(null);
 
   /**
    * Wire upgrade type subject
    */
-  readonly upgradeType$: BehaviorSubject<WireUpgradeType> = new BehaviorSubject<
-    WireUpgradeType
-  >(DEFAULT_UPGRADE_TYPE_VALUE);
+  readonly upgradeType$: BehaviorSubject<WireUpgradeType> =
+    new BehaviorSubject<WireUpgradeType>(DEFAULT_UPGRADE_TYPE_VALUE);
 
   /**
    * Wire type subject
@@ -283,48 +280,40 @@ export class WireV2Service implements OnDestroy {
   /**
    * True if wire modal is in gift giving mode.
    */
-  public readonly isSendingGift$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly isSendingGift$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * True if the modal is in gift receipt mode.
    */
-  public readonly isReceivingGift$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly isReceivingGift$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Gift recipient username for when sending a gift.
    */
-  public readonly giftRecipientUsername$: BehaviorSubject<
-    string
-  > = new BehaviorSubject<string>(null);
+  public readonly giftRecipientUsername$: BehaviorSubject<string> =
+    new BehaviorSubject<string>(null);
 
   /**
    * True if sending a self gift (allowing the user to give the code out themselves).
    */
-  public readonly isSelfGift$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly isSelfGift$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Wire upgrade interval subject
    */
-  readonly upgradeInterval$: BehaviorSubject<
-    UpgradeOptionInterval
-  > = new BehaviorSubject<UpgradeOptionInterval>(
-    DEFAULT_UPGRADE_INTERVAL_VALUE
-  );
+  readonly upgradeInterval$: BehaviorSubject<UpgradeOptionInterval> =
+    new BehaviorSubject<UpgradeOptionInterval>(DEFAULT_UPGRADE_INTERVAL_VALUE);
 
   /**
    * Wire upgrade pricing options subject
    */
-  readonly upgradePricingOptions$: BehaviorSubject<
-    WireUpgradePricingOptions
-  > = new BehaviorSubject<WireUpgradePricingOptions>(
-    DEFAULT_WIRE_UPGRADE_PRICING_OPTIONS
-  );
+  readonly upgradePricingOptions$: BehaviorSubject<WireUpgradePricingOptions> =
+    new BehaviorSubject<WireUpgradePricingOptions>(
+      DEFAULT_WIRE_UPGRADE_PRICING_OPTIONS
+    );
 
   /**
    * Wire upgrade trial observable
@@ -334,9 +323,8 @@ export class WireV2Service implements OnDestroy {
   /**
    * Wire token type subject
    */
-  readonly tokenType$: BehaviorSubject<WireTokenType> = new BehaviorSubject<
-    WireTokenType
-  >(DEFAULT_TOKEN_TYPE_VALUE);
+  readonly tokenType$: BehaviorSubject<WireTokenType> =
+    new BehaviorSubject<WireTokenType>(DEFAULT_TOKEN_TYPE_VALUE);
 
   /**
    * Amount subject
@@ -355,37 +343,32 @@ export class WireV2Service implements OnDestroy {
   /**
    * Refund policy agreed subject
    */
-  readonly refundPolicyAgreed$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(DEFAULT_REFUND_POLICY_ACCEPTED_VALUE);
+  readonly refundPolicyAgreed$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(DEFAULT_REFUND_POLICY_ACCEPTED_VALUE);
 
   /**
    * USD payload subject (card selector payment ID)
    */
-  readonly usdPaymentMethodId$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  readonly usdPaymentMethodId$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   /**
    * User resolver that's going to asynchronously re-sync the reward tiers (state)
    */
-  readonly ownerResolver$: BehaviorSubject<MindsUser | null> = new BehaviorSubject<MindsUser | null>(
-    null
-  );
+  readonly ownerResolver$: BehaviorSubject<MindsUser | null> =
+    new BehaviorSubject<MindsUser | null>(null);
 
   /**
    * User that's going to receive the payment (might be the same as the entity itself) (state)
    */
-  readonly owner$: BehaviorSubject<MindsUser | null> = new BehaviorSubject<MindsUser | null>(
-    null
-  );
+  readonly owner$: BehaviorSubject<MindsUser | null> =
+    new BehaviorSubject<MindsUser | null>(null);
 
   /**
    * Wire Rewards (Shop support tiers)
    */
-  readonly wireRewards$: BehaviorSubject<WireRewards> = new BehaviorSubject<
-    WireRewards
-  >(DEFAULT_WIRE_REWARDS_VALUE);
+  readonly wireRewards$: BehaviorSubject<WireRewards> =
+    new BehaviorSubject<WireRewards>(DEFAULT_WIRE_REWARDS_VALUE);
 
   /**
    * Sum of the accumulated Wires in the last 30 days, per currency
@@ -401,9 +384,8 @@ export class WireV2Service implements OnDestroy {
     false
   );
 
-  protected readonly currencyOptions$: BehaviorSubject<
-    WireCurrencyOptions
-  > = new BehaviorSubject<WireCurrencyOptions>(DEFAULT_CURRENCY_OPTIONS_VALUE);
+  protected readonly currencyOptions$: BehaviorSubject<WireCurrencyOptions> =
+    new BehaviorSubject<WireCurrencyOptions>(DEFAULT_CURRENCY_OPTIONS_VALUE);
 
   /**
    * Validate data observable
@@ -484,7 +466,7 @@ export class WireV2Service implements OnDestroy {
       this.refundPolicyAgreed$,
       this.owner$.pipe(
         distinctUntilChanged(),
-        tap(owner => {
+        tap((owner) => {
           // Reset the currency options when the owner obj changes
           this.currencyOptions$.next({
             tokens: true,
@@ -556,11 +538,11 @@ export class WireV2Service implements OnDestroy {
 
     // Build Wire payload snapshot
     this.wirePayloadSnapshotSubscription = this.wirePayload$.subscribe(
-      wirePayload => (this.wirePayload = wirePayload)
+      (wirePayload) => (this.wirePayload = wirePayload)
     );
 
     // Resolves the owner from the cached entity, then re-sync from the server and fetch the rewards sums
-    this.ownerResolverSubscription = this.ownerResolver$.subscribe(owner => {
+    this.ownerResolverSubscription = this.ownerResolver$.subscribe((owner) => {
       // Emit cached owner
       this.owner$.next(owner);
 
@@ -756,9 +738,8 @@ export class WireV2Service implements OnDestroy {
    */
   setUpgradeInterval(upgradeInterval: UpgradeOptionInterval): WireV2Service {
     // Update the amount when the interval changes
-    let upgradePrice = this.upgrades[this.upgradeType$.value][upgradeInterval][
-      this.type$.value
-    ];
+    let upgradePrice =
+      this.upgrades[this.upgradeType$.value][upgradeInterval][this.type$.value];
     if (upgradeInterval === 'yearly') {
       upgradePrice = upgradePrice;
     }
@@ -798,9 +779,10 @@ export class WireV2Service implements OnDestroy {
       this.upgradePricingOptions$.next(upgradePricingOptions);
 
       // Update the amount when anything changes
-      let upgradePrice = this.upgrades[this.upgradeType$.value][
-        this.upgradeInterval$.value
-      ][this.type$.value];
+      let upgradePrice =
+        this.upgrades[this.upgradeType$.value][this.upgradeInterval$.value][
+          this.type$.value
+        ];
       if (this.upgradeInterval$.value === 'yearly') {
         upgradePrice = upgradePrice;
       }
@@ -1187,7 +1169,7 @@ export class WireV2Service implements OnDestroy {
       switchMap(
         ([upgradeType, giftRecipientUsername]: [
           WireUpgradeType,
-          string
+          string,
         ]): Observable<string> => {
           let productId: GiftCardProductIdEnum;
           switch (upgradeType) {
@@ -1210,7 +1192,8 @@ export class WireV2Service implements OnDestroy {
       map((result: string): boolean => Boolean(result)),
       tap((result: boolean): void => {
         if (result) {
-          const upgradeInterval: UpgradeOptionInterval = this.upgradeInterval$.getValue();
+          const upgradeInterval: UpgradeOptionInterval =
+            this.upgradeInterval$.getValue();
           switch (this.upgradeType$.getValue()) {
             case 'pro':
               if (upgradeInterval === 'yearly') {
@@ -1237,13 +1220,11 @@ export class WireV2Service implements OnDestroy {
           }
         }
       }),
-      catchError(
-        (e: any): Observable<boolean> => {
-          console.error(e);
-          this.toasterService.error(e?.message);
-          return of(false);
-        }
-      ),
+      catchError((e: any): Observable<boolean> => {
+        console.error(e);
+        this.toasterService.error(e?.message);
+        return of(false);
+      }),
       finalize(() => {
         this.inProgress$.next(false);
       })

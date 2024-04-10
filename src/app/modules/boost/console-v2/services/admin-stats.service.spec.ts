@@ -2,7 +2,7 @@ import { of } from 'rxjs';
 import { BoostConsoleAdminStatsResponse } from '../../boost.types';
 import { BoostConsoleAdminStatsService } from './admin-stats.service';
 
-export let apiMock = new (function() {
+export let apiMock = new (function () {
   this.get = jasmine.createSpy('get');
 })();
 

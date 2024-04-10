@@ -16,9 +16,8 @@ import { IsTenantService } from '../../../services/is-tenant.service';
   styleUrls: ['./sidebar-more-trigger.component.ng.scss'],
 })
 export class SidebarMoreTriggerComponent implements AfterViewInit {
-  @Output('toggle') onToggle: EventEmitter<Boolean> = new EventEmitter<
-    Boolean
-  >();
+  @Output('toggle') onToggle: EventEmitter<Boolean> =
+    new EventEmitter<Boolean>();
 
   popperPlacement: string = 'right';
 
@@ -47,7 +46,10 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
 
   shown: boolean = false;
 
-  constructor(public session: Session, protected isTenant: IsTenantService) {}
+  constructor(
+    public session: Session,
+    protected isTenant: IsTenantService
+  ) {}
 
   ngAfterViewInit(): void {
     this.onResize();
@@ -55,11 +57,13 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
 
   popperOnShown($event): void {
     this.calculateOffset();
-    this.popperModifiers.find(x => x.name === 'eventListeners').enabled = true;
+    this.popperModifiers.find((x) => x.name === 'eventListeners').enabled =
+      true;
     this.show(true);
   }
   popperOnHide($event): void {
-    this.popperModifiers.find(x => x.name === 'eventListeners').enabled = false;
+    this.popperModifiers.find((x) => x.name === 'eventListeners').enabled =
+      false;
     this.show(false);
   }
 
@@ -117,6 +121,9 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
 
     let x = popperHeight / 2 - triggerHeight / 2;
     // ************************************
-    this.popperModifiers.find(x => x.name === 'offset').options.offset = [x, y];
+    this.popperModifiers.find((x) => x.name === 'offset').options.offset = [
+      x,
+      y,
+    ];
   }
 }

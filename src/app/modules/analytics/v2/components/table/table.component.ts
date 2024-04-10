@@ -29,8 +29,8 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
   valueColCount: number = 1;
 
   selectedMetric$ = this.analyticsService.metrics$.pipe(
-    map(metrics => {
-      return metrics.find(metric => metric.visualisation !== null);
+    map((metrics) => {
+      return metrics.find((metric) => metric.visualisation !== null);
     })
   );
   selectedMetric;
@@ -40,14 +40,14 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.metricSubscription = this.selectedMetric$.subscribe(metric => {
+    this.metricSubscription = this.selectedMetric$.subscribe((metric) => {
       this.selectedMetric = metric;
       this.visualisation = metric.visualisation;
       this.columns = metric.visualisation.columns;
       this.valueColCount = this.columns.length - 1;
 
       this.loadingSubscription = this.analyticsService.loading$.subscribe(
-        loading => {
+        (loading) => {
           this.loading = loading;
           this.detectChanges();
         }
@@ -60,7 +60,7 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
 
   reformatBuckets() {
     this.reformattedBuckets = [];
-    this.visualisation.buckets.forEach(bucket => {
+    this.visualisation.buckets.forEach((bucket) => {
       const reformattedBucket = {};
       const reformattedValues = [];
 
@@ -136,7 +136,7 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
       },
     ];
 
-    return routesByType.find(t => t.ids.indexOf(type) > -1).route;
+    return routesByType.find((t) => t.ids.indexOf(type) > -1).route;
   }
 
   detectChanges() {

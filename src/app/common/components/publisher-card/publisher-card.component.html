@@ -148,7 +148,7 @@
             class="m-publisherCard__name--secondary m-legible"
             [routerLink]="['/', publisher.username]"
           >
-            <span>@{{ publisher.username }}</span>
+            <span>&#64;{{ publisher.username }}</span>
           </a>
         </ng-container>
       </ng-container>
@@ -163,7 +163,7 @@
   <span
     *ngIf="publisher.briefdescription && showDescription"
     class="m-publisherCard__description m-legible"
-    [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags"
+    [innerHtml]="publisher.briefdescription | slice: 0 : 5000 | tags"
   ></span>
 </ng-template>
 

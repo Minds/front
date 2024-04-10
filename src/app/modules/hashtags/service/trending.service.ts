@@ -34,7 +34,7 @@ export class TrendingService implements OnDestroy {
         throttleTime(5000),
         map(() => this.fetch()),
         switchAll(),
-        tap(tags => this.tags$.next(tags))
+        tap((tags) => this.tags$.next(tags))
       )
       .subscribe(() => this.fetch());
 
@@ -67,10 +67,10 @@ export class TrendingService implements OnDestroy {
         limit: 50,
       })
       .pipe(
-        map(response =>
+        map((response) =>
           response.tags
-            .filter(tag => tag.type === 'trending')
-            .map(tag => tag.value)
+            .filter((tag) => tag.type === 'trending')
+            .map((tag) => tag.value)
         )
       );
   }

@@ -312,7 +312,7 @@ export class ActivityService implements OnDestroy {
   );
 
   isLoggedIn$: Observable<boolean> = this.session.user$.pipe(
-    map(user => user !== null)
+    map((user) => user !== null)
   );
 
   isBoost$: Observable<boolean> = this.entity$.pipe(
@@ -347,7 +347,7 @@ export class ActivityService implements OnDestroy {
       return entity &&
         entity?.remind_users &&
         entity.remind_users.filter(
-          user => user.guid === this.session.getLoggedInUser().guid
+          (user) => user.guid === this.session.getLoggedInUser().guid
         ).length > 0
         ? true
         : false;
@@ -682,7 +682,7 @@ export class ActivityService implements OnDestroy {
     let entity = this.entity$.getValue();
 
     entity['thumbs:down:user_guids'] = entity['thumbs:down:user_guids'].filter(
-      guid => guid !== this.session.getLoggedInUser().guid
+      (guid) => guid !== this.session.getLoggedInUser().guid
     );
 
     this.entity$.next(entity);
@@ -722,7 +722,7 @@ export class ActivityService implements OnDestroy {
               }
             }
           ),
-          catchError(_ => of(null))
+          catchError((_) => of(null))
         )
         .subscribe((response: ActivityHasRemindedResponse | null) => {
           if (response) {
@@ -739,7 +739,7 @@ export class ActivityService implements OnDestroy {
     this.entity$
       .pipe(
         take(1), // No need to unsubscribe from finite subscription
-        switchMap(entity => {
+        switchMap((entity) => {
           try {
             //
             return this.api.delete(
@@ -749,7 +749,7 @@ export class ActivityService implements OnDestroy {
             return null;
           }
         }),
-        catchError(e =>
+        catchError((e) =>
           this.handleError(
             e,
             'Sorry, there was an error removing this Remind. Please try again later.'

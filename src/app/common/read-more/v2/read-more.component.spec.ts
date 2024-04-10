@@ -20,39 +20,37 @@ describe('ReadMoreComponent', () => {
   let comp: ReadMoreComponent;
   let fixture: ComponentFixture<ReadMoreComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule, ReadMoreModule],
-        declarations: [ReadMoreComponent],
-        providers: [
-          {
-            provide: SiteService,
-            useValue: siteServiceMock,
-          },
-          {
-            provide: ClientMetaService,
-            useValue: MockService(ClientMetaService),
-          },
-          {
-            provide: ActivityService,
-            useValue: MockService(ActivityService, {
-              has: ['entity$'],
-              props: {
-                entity$: {
-                  get: () => new BehaviorSubject(null),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule, ReadMoreModule],
+      declarations: [ReadMoreComponent],
+      providers: [
+        {
+          provide: SiteService,
+          useValue: siteServiceMock,
+        },
+        {
+          provide: ClientMetaService,
+          useValue: MockService(ClientMetaService),
+        },
+        {
+          provide: ActivityService,
+          useValue: MockService(ActivityService, {
+            has: ['entity$'],
+            props: {
+              entity$: {
+                get: () => new BehaviorSubject(null),
               },
-            }),
-          },
-          {
-            provide: ClientMetaDirective,
-            useValue: MockService(ClientMetaDirective),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: ClientMetaDirective,
+          useValue: MockService(ClientMetaDirective),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReadMoreComponent);

@@ -42,7 +42,9 @@
       *ngFor="let member of list$ | async"
     >
       <div class="m-groupMembersListCompactMember__name">
-        <a [routerLink]="['/', member.username]"> @{{ member.username }} </a>
+        <a [routerLink]="['/', member.username]">
+          &#64;{{ member.username }}
+        </a>
         <m-tooltip
           *ngIf="showOwnerBadges && member['is:owner']"
           class="m-groupMembersListCompactMember__ownerBadge"

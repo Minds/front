@@ -1,10 +1,10 @@
 /**
  * Created by Marcelo on 29/06/2017.
  */
-export let clientMock = new (function() {
+export let clientMock = new (function () {
   this.response = null;
 
-  let callFake = url => {
+  let callFake = (url) => {
     return new Promise((resolve, reject) => {
       let res = this.response;
       if (this.response && this.response[url]) {

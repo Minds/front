@@ -66,7 +66,8 @@ export class WalletTransactionsCashComponent implements OnInit {
 
   async getStripeAccount() {
     try {
-      const account: StripeDetails = await this.walletService.loadStripeAccount();
+      const account: StripeDetails =
+        await this.walletService.loadStripeAccount();
       if (account) {
         if (account.bankAccount) {
           this.currency = account.bankAccount.currency.toUpperCase();
@@ -104,9 +105,8 @@ export class WalletTransactionsCashComponent implements OnInit {
         offset: this.offset,
       };
 
-      const response: any = await this.walletService.getStripeTransactions(
-        opts
-      );
+      const response: any =
+        await this.walletService.getStripeTransactions(opts);
 
       if (response) {
         console.log(response.transactions);

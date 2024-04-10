@@ -5,7 +5,7 @@ import { codeHighlightServiceMock } from '../../mocks/modules/code-highlight/cod
 describe('CodeHighlightPipe', () => {
   let pipe;
 
-  const setup = featureEnabled => {
+  const setup = (featureEnabled) => {
     pipe = new CodeHighlightPipe(codeHighlightServiceMock);
   };
 
