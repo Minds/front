@@ -20,15 +20,15 @@ import { IsTenantService } from '../../../../../common/services/is-tenant.servic
 })
 export class SettingsV2EmailNotificationsV3Component
   extends AbstractSubscriberComponent
-  implements OnInit {
+  implements OnInit
+{
   // holds settings
   public readonly settings$ = new BehaviorSubject<EmailNotificationSetting[]>(
     null
   );
   // when initializing.
-  public readonly initializing$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly initializing$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // map topics to text
   public textMap = {
@@ -63,13 +63,13 @@ export class SettingsV2EmailNotificationsV3Component
     this.subscriptions.push(
       this.service.emailSettings$
         .pipe(
-          map(response => {
+          map((response) => {
             // Email topics are limited for tenants
             if (this.isTenant.is()) {
               const allowedTenantEmailTopics = ['unread_notifications'];
 
               const filteredNotifications = response.notifications.filter(
-                notification => {
+                (notification) => {
                   return allowedTenantEmailTopics.includes(notification.topic);
                 }
               );
@@ -97,7 +97,7 @@ export class SettingsV2EmailNotificationsV3Component
             return response;
           })
         )
-        .subscribe(response => {
+        .subscribe((response) => {
           this.settings$.next(response.notifications);
           this.initializing$.next(false);
         })
@@ -166,10 +166,10 @@ export class SettingsV2EmailNotificationsV3Component
   ): Observable<EmailNotificationSetting[]> {
     return this.settings$.pipe(
       map(
-        settings =>
-          settings.filter(option => option.campaign === campaign) ?? []
+        (settings) =>
+          settings.filter((option) => option.campaign === campaign) ?? []
       ),
-      catchError(e => [])
+      catchError((e) => [])
     );
   }
 

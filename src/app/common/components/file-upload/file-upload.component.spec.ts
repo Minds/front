@@ -7,15 +7,13 @@ describe('File Upload', () => {
   let comp: FileUploadComponent;
   let fixture: ComponentFixture<FileUploadComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [FileUploadComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [FileUploadComponent],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(FileUploadComponent);
     comp = fixture.componentInstance;

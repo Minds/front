@@ -130,16 +130,16 @@ export class Minds implements OnInit, OnDestroy {
     // MH: does loading meta tags before the configs have been set cause issues?
     this.router$ = this.router.events
       .pipe(
-        filter(e => e instanceof NavigationEnd),
+        filter((e) => e instanceof NavigationEnd),
         map(() => this.route),
-        map(route => {
+        map((route) => {
           while (route.firstChild) route = route.firstChild;
           return route;
         }),
         // filter(route => route.outlet === 'primary')
-        mergeMap(route => route.data)
+        mergeMap((route) => route.data)
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         this.metaService.reset(data);
         // check route to see if we need to show an explainer screen.
         this.explainerScreenService.handleRouteChange(
@@ -181,8 +181,8 @@ export class Minds implements OnInit, OnDestroy {
     }
 
     this.multiFactorSuccessSubscription = this.multiFactorConfirmation.success$
-      .pipe(filter(success => success))
-      .subscribe(success => {
+      .pipe(filter((success) => success))
+      .subscribe((success) => {
         this.multiFactorConfirmation.reset();
 
         if (this.router.url === '/' || this.router.url === '/about') {
@@ -207,7 +207,7 @@ export class Minds implements OnInit, OnDestroy {
 
     this.isChatExperimentActive = this.chatExperimentService.isActive();
 
-    this.session.isLoggedIn(async is => {
+    this.session.isLoggedIn(async (is) => {
       if (is && !this.site.isProDomain) {
         const user = this.session.getLoggedInUser();
         const language = this.configs.get('language');

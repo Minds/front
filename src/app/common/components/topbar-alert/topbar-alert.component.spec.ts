@@ -18,36 +18,34 @@ describe('TopbarAlertComponent', () => {
   let comp: TopbarAlertComponent;
   let fixture: ComponentFixture<TopbarAlertComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [MarkdownModule.forRoot()],
-        declarations: [TopbarAlertComponent],
-        providers: [
-          {
-            provide: TopbarAlertService,
-            useValue: MockService(TopbarAlertService, {
-              has: ['shouldShow$', 'copyData$'],
-              props: {
-                shouldShow$: {
-                  get: () => new ReplaySubject<boolean>(),
-                },
-                copyData$: {
-                  get: () => new ReplaySubject<any>(),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [MarkdownModule.forRoot()],
+      declarations: [TopbarAlertComponent],
+      providers: [
+        {
+          provide: TopbarAlertService,
+          useValue: MockService(TopbarAlertService, {
+            has: ['shouldShow$', 'copyData$'],
+            props: {
+              shouldShow$: {
+                get: () => new ReplaySubject<boolean>(),
               },
-            }),
-          },
-          {
-            provide: AnalyticsService,
-            useValue: MockService(AnalyticsService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+              copyData$: {
+                get: () => new ReplaySubject<any>(),
+              },
+            },
+          }),
+        },
+        {
+          provide: AnalyticsService,
+          useValue: MockService(AnalyticsService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(TopbarAlertComponent);
     comp = fixture.componentInstance;
 

@@ -96,14 +96,14 @@ export class SupportTiersService {
       tap(() => this.loaded$.next(true)),
       switchAll(),
       shareReplay({ bufferSize: 1, refCount: true }),
-      map(response => (response && response.support_tiers) || [])
+      map((response) => (response && response.support_tiers) || [])
     );
 
     // Grouped
     this.groupedList$ = this.list$.pipe(
-      map(supportTiers => ({
-        tokens: supportTiers.filter(supportTier => supportTier.has_tokens),
-        usd: supportTiers.filter(supportTier => supportTier.has_usd),
+      map((supportTiers) => ({
+        tokens: supportTiers.filter((supportTier) => supportTier.has_tokens),
+        usd: supportTiers.filter((supportTier) => supportTier.has_usd),
       }))
     );
   }
@@ -151,14 +151,15 @@ export class SupportTiersService {
       map(([supportTier, groupedList]) => {
         let arr: SupportTierCurrency[] = [];
         if (
-          groupedList.tokens.filter(val => val.urn === supportTier.urn)
+          groupedList.tokens.filter((val) => val.urn === supportTier.urn)
             ?.length > 0
         ) {
           arr.push('tokens');
         }
 
         if (
-          groupedList.usd.filter(val => val.urn === supportTier.urn)?.length > 0
+          groupedList.usd.filter((val) => val.urn === supportTier.urn)?.length >
+          0
         ) {
           arr.push('usd');
         }

@@ -50,9 +50,8 @@ export class TypeaheadInputComponent implements OnInit {
   /**
    * Action event emitter
    */
-  @Output('onAction') onActionEmitter: EventEmitter<string> = new EventEmitter<
-    string
-  >();
+  @Output('onAction') onActionEmitter: EventEmitter<string> =
+    new EventEmitter<string>();
 
   /**
    * Current tag
@@ -72,16 +71,14 @@ export class TypeaheadInputComponent implements OnInit {
   /**
    * Subject for suggestions queries
    */
-  readonly typeaheadQuery$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  readonly typeaheadQuery$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   /**
    * Subject for in progress state while fetching suggestions
    */
-  readonly typeaheadInProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  readonly typeaheadInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Observable for suggestions array
@@ -111,7 +108,7 @@ export class TypeaheadInputComponent implements OnInit {
       }),
       debounceTime(100),
       this.suggested.lookupOr(() => this.recent),
-      map(suggestions => suggestions.slice(0, this.maxEntries)),
+      map((suggestions) => suggestions.slice(0, this.maxEntries)),
       tap(() => {
         this.typeaheadInProgress$.next(false);
       })

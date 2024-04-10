@@ -34,7 +34,10 @@
       }
     }
 
-    &:not(.m-onboardingStepper__circle--active, .m-onboardingStepper__circle--completed) {
+    &:not(
+        .m-onboardingStepper__circle--active,
+        .m-onboardingStepper__circle--completed
+      ) {
       visibility: hidden;
       cursor: pointer;
     }

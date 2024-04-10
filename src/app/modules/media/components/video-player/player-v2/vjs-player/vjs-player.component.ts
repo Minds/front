@@ -50,9 +50,8 @@ export class VjsPlayerComponent implements AfterViewInit, OnDestroy {
   @Output() onEnded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   /** Fires on player metadata loaded */
-  @Output() onMetadataLoaded: EventEmitter<
-    VideoJSCustomMetadata
-  > = new EventEmitter<VideoJSCustomMetadata>();
+  @Output() onMetadataLoaded: EventEmitter<VideoJSCustomMetadata> =
+    new EventEmitter<VideoJSCustomMetadata>();
 
   /** Fires on player seek - will emit the time seeked to */
   @Output() onSeeking: EventEmitter<number> = new EventEmitter<number>();
@@ -61,9 +60,8 @@ export class VjsPlayerComponent implements AfterViewInit, OnDestroy {
   @Output() onVolumeChange: EventEmitter<number> = new EventEmitter<number>();
 
   /** Fires on player - emits true when going fullscreen, false when not. */
-  @Output() onFullscreenChange: EventEmitter<boolean> = new EventEmitter<
-    boolean
-  >();
+  @Output() onFullscreenChange: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   /**
    * Options for videojs. See more at:

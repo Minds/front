@@ -17,8 +17,8 @@ import { AnalyticsDashboardService } from '../../dashboard.service';
 export class AnalyticsChartComponent implements OnDestroy, OnInit {
   metricSubscription: Subscription;
   selectedMetric$ = this.analyticsService.metrics$.pipe(
-    map(metrics => {
-      return metrics.find(metric => metric.visualisation !== null);
+    map((metrics) => {
+      return metrics.find((metric) => metric.visualisation !== null);
     })
   );
   selectedMetric;
@@ -35,15 +35,15 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.timespansSubscription = this.analyticsService.timespans$.subscribe(
-      timespans => {
+      (timespans) => {
         this.selectedTimespan = timespans.find(
-          timespan => timespan.selected === true
+          (timespan) => timespan.selected === true
         );
         this.detectChanges();
       }
     );
 
-    this.metricSubscription = this.selectedMetric$.subscribe(metric => {
+    this.metricSubscription = this.selectedMetric$.subscribe((metric) => {
       this.selectedMetric = metric;
       this.detectChanges();
     });

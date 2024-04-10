@@ -98,11 +98,13 @@ export class RelatedContentService {
     },
   };
 
-  protected onChangeEmitter: EventEmitter<
-    RelatedContentChange
-  > = new EventEmitter<RelatedContentChange>();
+  protected onChangeEmitter: EventEmitter<RelatedContentChange> =
+    new EventEmitter<RelatedContentChange>();
 
-  constructor(protected client: Client, protected entities: EntitiesService) {}
+  constructor(
+    protected client: Client,
+    protected entities: EntitiesService
+  ) {}
 
   /**
    * Filter the feed by filter type.
@@ -428,7 +430,7 @@ export class RelatedContentService {
       baseRemind && baseRemind.entity_guid ? baseRemind.entity_guid : false,
     ].filter(Boolean);
 
-    const uniqueEntities = entities.filter(entity => {
+    const uniqueEntities = entities.filter((entity) => {
       let duplicateGuid,
         duplicateEntityGuid = true;
 
@@ -471,7 +473,7 @@ export class RelatedContentService {
       // For activity modal pager, filter out all except images and vids
       if (this.parent === 'activityModal') {
         const filteredResponse = response.entities.filter(
-          e =>
+          (e) =>
             e.entity &&
             // Must be an activity
             (e.entity.entity_guid || e.entity.message) &&
@@ -486,7 +488,7 @@ export class RelatedContentService {
       } else {
         // Else, don't return quotes, reminds or non-activities
         response.entities.filter(
-          e =>
+          (e) =>
             e.entity &&
             (e.entity.entity_guid || e.entity.message) &&
             !e.entity.remind_object

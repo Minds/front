@@ -20,7 +20,8 @@ export enum ImageInputOrientationEnum {
 })
 export class NetworkAdminConsoleImageInputComponent {
   /** Enum for use in template */
-  public readonly ImageInputOrientationEnum: typeof ImageInputOrientationEnum = ImageInputOrientationEnum;
+  public readonly ImageInputOrientationEnum: typeof ImageInputOrientationEnum =
+    ImageInputOrientationEnum;
 
   /** Image to display, can be URL or blob. */
   @Input() public image: string;

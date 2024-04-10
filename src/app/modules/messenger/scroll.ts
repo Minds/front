@@ -23,7 +23,8 @@ export class MessengerScrollDirective {
     emitter.subscribe({
       next: () => {
         setTimeout(() => {
-          this._element.nativeElement.scrollTop = this._element.nativeElement.scrollHeight;
+          this._element.nativeElement.scrollTop =
+            this._element.nativeElement.scrollHeight;
         });
       },
     });

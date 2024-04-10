@@ -77,7 +77,7 @@ export class GroupMemberPreviewsComponent implements OnInit, OnDestroy {
    */
   loadMembers$: Observable<any[]> = this.service.group$.pipe(
     take(1),
-    switchMap(group => {
+    switchMap((group) => {
       this.inProgress = true;
       let endpoint = `api/v1/groups/membership/${group.guid}`;
 
@@ -88,7 +88,7 @@ export class GroupMemberPreviewsComponent implements OnInit, OnDestroy {
       return this.api.get(endpoint, params);
     }),
     // on error.
-    catchError(e => {
+    catchError((e) => {
       console.error(e);
       return of([]);
     }),
@@ -104,10 +104,10 @@ export class GroupMemberPreviewsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.memberCount$.pipe(take(1)).subscribe(count => {
+      this.service.memberCount$.pipe(take(1)).subscribe((count) => {
         this.totalCount = count;
       }),
-      this.loadMembers$.subscribe(members => {
+      this.loadMembers$.subscribe((members) => {
         if (!members || !members.length) return;
         this.members = members;
 
@@ -123,7 +123,7 @@ export class GroupMemberPreviewsComponent implements OnInit, OnDestroy {
 
         if (this.session.getLoggedInUser()) {
           loggedInUserIndex = this.members.findIndex(
-            member => member.guid === this.session.getLoggedInUser().guid
+            (member) => member.guid === this.session.getLoggedInUser().guid
           );
 
           if (loggedInUserIndex > -1) {

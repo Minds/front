@@ -49,11 +49,10 @@ export class BoostModalV2GoalSelectorComponent implements OnInit, OnDestroy {
       });
 
     // When the value form control changes, set the new value in the service
-    this.goalChangeSubscription = this.form.controls.goal.valueChanges.subscribe(
-      (goal: BoostGoal) => {
+    this.goalChangeSubscription =
+      this.form.controls.goal.valueChanges.subscribe((goal: BoostGoal) => {
         this.service.goal$.next(goal);
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {

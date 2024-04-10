@@ -35,14 +35,12 @@ export class NetworkAdminConsoleReportComponent extends AbstractSubscriberCompon
   @Input() public reportEdge: ReportEdge;
 
   /** Emits when a verdict has been provided for a report. */
-  @Output() public verdictProvided: EventEmitter<boolean> = new EventEmitter<
-    boolean
-  >();
+  @Output() public verdictProvided: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   /** Whether an action is currently in progress for the report. */
-  public readonly actionInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly actionInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     private reportUtilitiesService: ReportUtilitiesService,
@@ -96,12 +94,10 @@ export class NetworkAdminConsoleReportComponent extends AbstractSubscriberCompon
         })
         .pipe(
           take(1),
-          catchError(
-            (e: unknown): Observable<null> => {
-              console.error(e);
-              return of(null);
-            }
-          ),
+          catchError((e: unknown): Observable<null> => {
+            console.error(e);
+            return of(null);
+          }),
           finalize(() => this.actionInProgress$.next(false))
         )
         .subscribe(
@@ -139,12 +135,10 @@ export class NetworkAdminConsoleReportComponent extends AbstractSubscriberCompon
         })
         .pipe(
           take(1),
-          catchError(
-            (e: unknown): Observable<null> => {
-              console.error(e);
-              return of(null);
-            }
-          ),
+          catchError((e: unknown): Observable<null> => {
+            console.error(e);
+            return of(null);
+          }),
           finalize(() => this.actionInProgress$.next(false))
         )
         .subscribe(
@@ -186,12 +180,10 @@ export class NetworkAdminConsoleReportComponent extends AbstractSubscriberCompon
         })
         .pipe(
           take(1),
-          catchError(
-            (e: unknown): Observable<null> => {
-              console.error(e);
-              return of(null);
-            }
-          ),
+          catchError((e: unknown): Observable<null> => {
+            console.error(e);
+            return of(null);
+          }),
           finalize(() => this.actionInProgress$.next(false))
         )
         .subscribe(

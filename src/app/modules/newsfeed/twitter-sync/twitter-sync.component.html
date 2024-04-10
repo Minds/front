@@ -4,9 +4,7 @@
       <i class="material-icons">arrow_back</i><span>Back</span>
     </a>
   </div>
-  <div class="m-settingsV2__headerLabel">
-    Twitter Sync
-  </div>
+  <div class="m-settingsV2__headerLabel">Twitter Sync</div>
 </div>
 
 <div class="m-settingsV2__desc">
@@ -50,9 +48,7 @@
     </div>
   </form>
 
-  <m-button color="blue" (onAction)="disconnect($event)">
-    Disconnect
-  </m-button>
+  <m-button color="blue" (onAction)="disconnect($event)"> Disconnect </m-button>
 </div>
 
 <form
@@ -82,7 +78,7 @@
       <h4>Step 2</h4>
       <div class="m-form__row--label">
         <label for="twitter-handle"
-          >What is your Twitter handle (eg. @minds)</label
+          >What is your Twitter handle (eg. &#64;minds)</label
         >
       </div>
       <div
@@ -98,7 +94,7 @@
           formControlName="twitterHandle"
           class="form-control"
           [readonly]="isSaving"
-          placeholder="eg. @minds"
+          placeholder="eg. &#64;minds"
         />
       </div>
     </div>

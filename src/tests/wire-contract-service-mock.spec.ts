@@ -1,3 +1,3 @@
-export let wireContractServiceMock = new (function() {
+export let wireContractServiceMock = new (function () {
   this.create = jasmine.createSpy('create').and.returnValue('hash');
 })();

@@ -5,7 +5,7 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ContentSettingsModalService } from '../../../content-settings/content-settings-modal.service';
 
-export let injectorMock = new (function() {
+export let injectorMock = new (function () {
   this.get = jasmine.createSpy('get');
 })();
 
@@ -13,38 +13,36 @@ describe('UpdateTagsNoticeComponent', () => {
   let comp: UpdateTagsNoticeComponent;
   let fixture: ComponentFixture<UpdateTagsNoticeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          UpdateTagsNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon'],
-            outputs: ['dismissClick'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: ContentSettingsModalService,
-            useValue: MockService(ContentSettingsModalService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        UpdateTagsNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: ContentSettingsModalService,
+          useValue: MockService(ContentSettingsModalService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(UpdateTagsNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

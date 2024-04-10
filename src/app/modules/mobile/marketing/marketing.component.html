@@ -15,9 +15,7 @@
 
     <div class="m-marketing__grid">
       <div class="m-marketing__gridItem">
-        <div class="m-marketing__gridItemTitle">
-          Minds
-        </div>
+        <div class="m-marketing__gridItemTitle">Minds</div>
         <div class="m-marketing__gridItemImage">
           <img
             src="{{ cdnAssetsUrl }}assets/marketing/mobile/android-minds.png"
@@ -38,16 +36,12 @@
               src="{{ cdnAssetsUrl }}assets/marketing/mobile/google-play.svg"
               height="40"
           /></a>
-          <i (click)="toggleReleases()" class="material-icons">
-            history
-          </i>
+          <i (click)="toggleReleases()" class="material-icons"> history </i>
         </div>
       </div>
 
       <div class="m-marketing__gridItem">
-        <div class="m-marketing__gridItemTitle">
-          Minds Chat
-        </div>
+        <div class="m-marketing__gridItemTitle">Minds Chat</div>
         <div class="m-marketing__gridItemImage">
           <img
             src="{{ cdnAssetsUrl }}assets/marketing/mobile/android-chat.png"
@@ -77,9 +71,7 @@
   </div>
 
   <div class="m-marketing__group" *ngIf="releases.length > 0 && showReleases">
-    <h2>
-      Release History
-    </h2>
+    <h2>Release History</h2>
     <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
 
     <div *ngFor="let release of releases; let first = first">
@@ -120,9 +112,7 @@
 
     <div class="m-marketing__grid">
       <div class="m-marketing__gridItem">
-        <div class="m-marketing__gridItemTitle">
-          Minds
-        </div>
+        <div class="m-marketing__gridItemTitle">Minds</div>
         <div class="m-marketing__gridItemImage">
           <img
             src="{{ cdnAssetsUrl }}assets/marketing/mobile/ios-minds.png"
@@ -143,9 +133,7 @@
       </div>
 
       <div class="m-marketing__gridItem">
-        <div class="m-marketing__gridItemTitle">
-          Minds Chat
-        </div>
+        <div class="m-marketing__gridItemTitle">Minds Chat</div>
         <div class="m-marketing__gridItemImage">
           <img
             src="{{ cdnAssetsUrl }}assets/marketing/mobile/ios-chat.png"

@@ -58,31 +58,29 @@ xdescribe('AdminFirehose', () => {
     ];
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MindsActivityMockComponent,
-          AdminFirehoseComponent,
-          MindsSortSelectorMockComponent,
-          ButtonComponent,
-          MockComponent({
-            selector: 'm-activity',
-            inputs: ['entity'],
-          }),
-        ],
-        imports: [RouterTestingModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Client, useValue: clientMock },
-          { provide: ModalService, useValue: modalServiceMock },
-          { provide: ActivityService, useValue: activityServiceMock },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MindsActivityMockComponent,
+        AdminFirehoseComponent,
+        MindsSortSelectorMockComponent,
+        ButtonComponent,
+        MockComponent({
+          selector: 'm-activity',
+          inputs: ['entity'],
+        }),
+      ],
+      imports: [RouterTestingModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: Client, useValue: clientMock },
+        { provide: ModalService, useValue: modalServiceMock },
+        { provide: ActivityService, useValue: activityServiceMock },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(AdminFirehoseComponent);
 
     comp = fixture.componentInstance;

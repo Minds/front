@@ -1,7 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import userMock from '../mocks/responses/user.mock';
 
-export let sessionMock = new (function() {
+export let sessionMock = new (function () {
   this.user = userMock;
   this.loggedIn = true;
   this.isAdmin = () => {

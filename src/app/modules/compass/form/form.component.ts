@@ -22,7 +22,7 @@ export class CompassFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.compassService.questions$.subscribe(questions => {
+      this.compassService.questions$.subscribe((questions) => {
         if (!questions || !questions.length) {
           this.compassService.fetchQuestions();
         } else {
@@ -32,7 +32,7 @@ export class CompassFormComponent implements OnInit {
       })
     );
     this.subscriptions.push(
-      this.compassService.submitRequested$.subscribe(requested => {
+      this.compassService.submitRequested$.subscribe((requested) => {
         if (requested) {
           this.submit();
         }
@@ -44,7 +44,7 @@ export class CompassFormComponent implements OnInit {
     const controls: any = {};
 
     // Make a form control for each question
-    this.questions.forEach(q => {
+    this.questions.forEach((q) => {
       controls[q.questionId] = new UntypedFormControl(q.currentValue, {
         validators: [
           Validators.min(q.minimumRangeValue),
@@ -60,7 +60,7 @@ export class CompassFormComponent implements OnInit {
 
   setAnswers(): void {
     const answers = {};
-    this.questions.forEach(q => {
+    this.questions.forEach((q) => {
       answers[q.questionId] = this.form.get(q.questionId).value;
     });
 

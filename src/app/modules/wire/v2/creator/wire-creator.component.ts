@@ -64,7 +64,7 @@ export class WireCreatorComponent implements OnDestroy {
     private session: Session,
     private authModal: AuthModalService
   ) {
-    this.ownerSubscription = this.service.owner$.subscribe(owner =>
+    this.ownerSubscription = this.service.owner$.subscribe((owner) =>
       this.supportTiers.setEntityGuid(owner && owner.guid)
     );
     this.upgrades = configs.get('upgrades');

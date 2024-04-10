@@ -28,14 +28,12 @@ export class SettingsV2SupermindComponent implements OnInit, OnDestroy {
   public form: UntypedFormGroup;
 
   // When loading is in progress.
-  public readonly loadingInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly loadingInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // When saving/updating is in progress.
-  public readonly savingInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly savingInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // Minimum thresholds for cash and tokens.
   public minThresholds: SupermindSettings;
@@ -105,9 +103,8 @@ export class SettingsV2SupermindComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   private setupFormGroup(): void {
-    const decimalPlaceValidator: ValidatorFn = Validators.pattern(
-      /^\d+\.?\d{0,2}$/
-    );
+    const decimalPlaceValidator: ValidatorFn =
+      Validators.pattern(/^\d+\.?\d{0,2}$/);
 
     this.form = new UntypedFormGroup({
       min_offchain_tokens: new UntypedFormControl('', {
@@ -133,15 +130,16 @@ export class SettingsV2SupermindComponent implements OnInit, OnDestroy {
    */
   private setupSubscriptions(): void {
     // Setup supermind settings subscription - update form values and set loading state to false on success.
-    this.supermindSettingsSubscription = this.supermindService.settings$.subscribe(
-      (settings: SupermindSettingsGetApiResponse) => {
-        this.form.controls['min_offchain_tokens'].setValue(
-          settings['min_offchain_tokens']
-        );
-        this.form.controls['min_cash'].setValue(settings['min_cash']);
-        this.loadingInProgress$.next(false);
-      }
-    );
+    this.supermindSettingsSubscription =
+      this.supermindService.settings$.subscribe(
+        (settings: SupermindSettingsGetApiResponse) => {
+          this.form.controls['min_offchain_tokens'].setValue(
+            settings['min_offchain_tokens']
+          );
+          this.form.controls['min_cash'].setValue(settings['min_cash']);
+          this.loadingInProgress$.next(false);
+        }
+      );
   }
 
   /**

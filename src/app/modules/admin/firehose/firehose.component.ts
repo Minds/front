@@ -51,7 +51,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     protected activityService: ActivityService
   ) {
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       this.algorithm = params['algorithm'] || 'latest';
       this.period = params['period'] || '12h';
       this.customType = params['type'] || 'activities';
@@ -83,7 +83,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
     });
 
     // load feed on hashtag change skipping first emission (on load).
-    this.hashtags$.pipe(skip(1)).subscribe(hashtags => {
+    this.hashtags$.pipe(skip(1)).subscribe((hashtags) => {
       this.load();
     });
   }
@@ -114,7 +114,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
    */
   public removeTag(tag: string): void {
     this.hashtags$.next([
-      ...this.hashtags$.getValue().filter(hashtag => hashtag !== tag),
+      ...this.hashtags$.getValue().filter((hashtag) => hashtag !== tag),
     ]);
     this.updateSortRoute();
   }

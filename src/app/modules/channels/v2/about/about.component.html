@@ -12,11 +12,8 @@
           Bio
         </div>
         <div
-          class="
-            m-channelAboutField__content
-            m-channelAboutField__content--preserveBlanks
-          "
-          [innerHtml]="channel.briefdescription | slice: 0:5000 | tags"
+          class="m-channelAboutField__content m-channelAboutField__content--preserveBlanks"
+          [innerHtml]="channel.briefdescription | slice: 0 : 5000 | tags"
         ></div>
       </div>
 

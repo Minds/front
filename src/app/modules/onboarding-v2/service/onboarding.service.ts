@@ -66,7 +66,10 @@ export class OnboardingV2Service {
     return new OnboardingV2Service(client, session);
   }
 
-  constructor(private client: Client, private session: Session) {}
+  constructor(
+    private client: Client,
+    private session: Session
+  ) {}
 
   async checkProgress() {
     try {
@@ -141,13 +144,13 @@ export class OnboardingV2Service {
 
   setCurrentStep(name: string): void {
     this.currentSlide = this.steps.findIndex(
-      step => step.name.toLowerCase() === name.toLowerCase()
+      (step) => step.name.toLowerCase() === name.toLowerCase()
     );
   }
 
   getPendingItems(): string[] {
     const step = this.steps[this.currentSlide];
-    return step.items.filter(x => !step.completedItems.includes(x));
+    return step.items.filter((x) => !step.completedItems.includes(x));
   }
 
   private populateCompletedItems() {

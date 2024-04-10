@@ -49,7 +49,8 @@ export class TokenContractService {
     // Refresh default account due a bug in Metamask
     const wallet = await this.web3Wallet.getCurrentWallet();
     if (wallet) {
-      this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
+      this.instance.defaultTxObject.from =
+        await this.web3Wallet.getCurrentWallet();
       this.instance.defaultTxObject.gasPrice = this.web3Wallet.toWei(
         gasPriceGwei,
         'gwei'

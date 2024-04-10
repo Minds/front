@@ -23,7 +23,10 @@ export class SidebarWidgetComponent {
 
   @HostBinding('hidden') hidden: boolean = false;
 
-  constructor(private session: Session, private client: Client) {}
+  constructor(
+    private session: Session,
+    private client: Client
+  ) {}
 
   ngOnInit() {
     const user = this.session.getLoggedInUser();

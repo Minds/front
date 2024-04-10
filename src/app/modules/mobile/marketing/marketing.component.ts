@@ -58,7 +58,7 @@ export class MobileMarketingComponent {
 
       this.releases = await this.service.getReleases();
       this.latestRelease = this.releases.filter(
-        rel => rel.latest && !rel.unstable
+        (rel) => rel.latest && !rel.unstable
       )[0];
     } catch (e) {
       console.error(e);

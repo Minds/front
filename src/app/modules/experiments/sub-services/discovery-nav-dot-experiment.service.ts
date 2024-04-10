@@ -14,6 +14,7 @@ export class DiscoveryNavDotExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('front-5938-discovery-nav-dot', true);
+    // return this.experiments.hasVariation('front-5938-discovery-nav-dot', true);
+    return true;
   }
 }

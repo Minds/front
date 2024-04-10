@@ -43,42 +43,40 @@ describe('NotificationsComponent', () => {
   let comp: NotificationsComponent;
   let fixture: ComponentFixture<NotificationsComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MaterialMock,
-          NotificationsComponent,
-          BlankComponent,
-          MockComponent({
-            selector: 'minds-notification',
-            inputs: ['notification', 'showElapsedTime'],
-          }),
-          MockComponent({
-            selector: 'infinite-scroll',
-            inputs: ['inProgress', 'moreData', 'inProgress', 'scrollSource'],
-          }),
-          MockComponent({
-            selector: 'm-tooltip',
-          }),
-        ],
-        imports: [
-          RouterTestingModule.withRoutes([
-            { path: 'login', component: BlankComponent },
-          ]),
-        ],
-        providers: [
-          { provide: NotificationService, useValue: notificationServiceMock },
-          { provide: Client, useValue: clientMock },
-          { provide: Session, useValue: sessionMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MaterialMock,
+        NotificationsComponent,
+        BlankComponent,
+        MockComponent({
+          selector: 'minds-notification',
+          inputs: ['notification', 'showElapsedTime'],
+        }),
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: ['inProgress', 'moreData', 'inProgress', 'scrollSource'],
+        }),
+        MockComponent({
+          selector: 'm-tooltip',
+        }),
+      ],
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'login', component: BlankComponent },
+        ]),
+      ],
+      providers: [
+        { provide: NotificationService, useValue: notificationServiceMock },
+        { provide: Client, useValue: clientMock },
+        { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

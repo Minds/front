@@ -11,20 +11,18 @@ xdescribe('MultiFactorAuthTOTPRecoveryComponent', () => {
   let comp: MultiFactorAuthTOTPRecoveryComponent;
   let fixture: ComponentFixture<MultiFactorAuthTOTPRecoveryComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule],
-        declarations: [MultiFactorAuthTOTPRecoveryComponent, ButtonComponent],
-        providers: [
-          {
-            provide: MultiFactorAuthService,
-            useValue: MockService(MultiFactorAuthService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [MultiFactorAuthTOTPRecoveryComponent, ButtonComponent],
+      providers: [
+        {
+          provide: MultiFactorAuthService,
+          useValue: MockService(MultiFactorAuthService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MultiFactorAuthTOTPRecoveryComponent);

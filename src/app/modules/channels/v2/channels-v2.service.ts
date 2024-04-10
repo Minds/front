@@ -38,9 +38,8 @@ export class ChannelsV2Service {
   /**
    * Channel data
    */
-  readonly channel$: BehaviorSubject<MindsUser> = new BehaviorSubject<
-    MindsUser
-  >(null);
+  readonly channel$: BehaviorSubject<MindsUser> =
+    new BehaviorSubject<MindsUser>(null);
 
   /**
    * The user's email
@@ -142,7 +141,7 @@ export class ChannelsV2Service {
     // Set tokens$ observable
     this.tokens$ = this.channel$.pipe(
       distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
-      map(channel =>
+      map((channel) =>
         channel
           ? this.api.get(`api/v1/wire/sums/overview/${channel.guid}`, {
               merchant: channel.merchant ? 1 : 0,
@@ -154,13 +153,13 @@ export class ChannelsV2Service {
         bufferSize: 1,
         refCount: true,
       }),
-      map(response => parseFloat((response && response.tokens) || '0'))
+      map((response) => parseFloat((response && response.tokens) || '0'))
     );
 
     // Set tokensSent$ observable
     this.tokensSent$ = this.channel$.pipe(
       distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
-      map(channel =>
+      map((channel) =>
         channel ? this.api.get(`api/v1/wire/rewards/${channel.guid}`) : of(null)
       ),
       switchAll(),
@@ -168,7 +167,7 @@ export class ChannelsV2Service {
         bufferSize: 1,
         refCount: true,
       }),
-      map(response =>
+      map((response) =>
         parseFloat((response && response.sums && response.sums.tokens) || '0')
       )
     );
@@ -176,7 +175,7 @@ export class ChannelsV2Service {
     // Set groupCount$ observable
     this.groupCount$ = this.channel$.pipe(
       distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
-      map(channel =>
+      map((channel) =>
         channel
           ? this.api.get(`api/v3/channel/${channel.guid}/groups/count`)
           : of(null)
@@ -186,7 +185,7 @@ export class ChannelsV2Service {
         bufferSize: 1,
         refCount: true,
       }),
-      map(response => (response && response.count) || 0)
+      map((response) => (response && response.count) || 0)
     );
 
     // Set isOwner$ observable
@@ -255,12 +254,12 @@ export class ChannelsV2Service {
 
     // Set isAdmin$ observable
     this.isAdmin$ = this.session.user$.pipe(
-      map(channel => channel && channel.is_admin)
+      map((channel) => channel && channel.is_admin)
     );
 
     // set isDisabled$ observable
     this.isDisabled$ = this.channel$.pipe(
-      map(channel => channel && channel.enabled === 'no')
+      map((channel) => channel && channel.enabled === 'no')
     );
   }
 
@@ -291,7 +290,7 @@ export class ChannelsV2Service {
   sync(): void {
     this.api
       .get(`api/v1/channel/${this.guid$.getValue()}`)
-      .subscribe(response => {
+      .subscribe((response) => {
         this.setChannel(response.channel);
       });
   }
@@ -318,13 +317,11 @@ export class ChannelsV2Service {
     return lastValueFrom(
       this.api.get(`api/v1/channel/${identifier}`).pipe(
         take(1),
-        map(response => response?.channel),
-        catchError(
-          (e: unknown): Observable<null> => {
-            console.error(e);
-            return of(null);
-          }
-        )
+        map((response) => response?.channel),
+        catchError((e: unknown): Observable<null> => {
+          console.error(e);
+          return of(null);
+        })
       )
     );
   }

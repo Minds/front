@@ -33,17 +33,16 @@ export class BoostConsoleStatsBarComponent implements OnInit {
   public rejectionReasons: RejectionReason[] = [];
 
   // Whether CTA preview should be shown.
-  public readonly showCtaPreview$: Observable<
-    boolean
-  > = this.service.adminContext$.pipe(
-    map((adminContext: boolean): boolean => {
-      return (
-        adminContext &&
-        this.boostIsPending &&
-        Boolean(this.boost?.goal_button_url)
-      );
-    })
-  );
+  public readonly showCtaPreview$: Observable<boolean> =
+    this.service.adminContext$.pipe(
+      map((adminContext: boolean): boolean => {
+        return (
+          adminContext &&
+          this.boostIsPending &&
+          Boolean(this.boost?.goal_button_url)
+        );
+      })
+    );
 
   constructor(
     private service: BoostConsoleService,
@@ -77,7 +76,7 @@ export class BoostConsoleStatsBarComponent implements OnInit {
   }
 
   public getRejectionReasonLabel(): string | null {
-    return this.rejectionReasons.filter(reason => {
+    return this.rejectionReasons.filter((reason) => {
       return reason.code === this.boost.rejection_reason;
     })[0]?.label;
   }

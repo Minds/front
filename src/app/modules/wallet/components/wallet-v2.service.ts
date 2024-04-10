@@ -133,7 +133,7 @@ export class WalletV2Service {
       await this.loadOnchain();
 
       const tokenWallet = {};
-      tokenTypes.forEach(type => {
+      tokenTypes.forEach((type) => {
         tokenWallet[type] = this.wallet[type];
       });
       return tokenWallet;
@@ -153,7 +153,7 @@ export class WalletV2Service {
         this.totalTokens = toFriendlyCryptoVal(response.balance);
         this.wallet.tokens.balance = toFriendlyCryptoVal(response.balance);
         this.wallet.limits.wire = toFriendlyCryptoVal(response.wireCap);
-        response.addresses.forEach(address => {
+        response.addresses.forEach((address) => {
           if (address.address === 'offchain') {
             this.wallet.offchain.balance = toFriendlyCryptoVal(address.balance);
           } else if (address.label === 'Receiver') {

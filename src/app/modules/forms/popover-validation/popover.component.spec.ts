@@ -14,41 +14,39 @@ describe('PopoverComponent', () => {
   let comp: PopoverComponent;
   let fixture: ComponentFixture<PopoverComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          PopoverComponent,
-          MockComponent({
-            selector: 'm-loadingSpinner',
-            inputs: ['inProgress'],
-          }),
-          MockComponent({
-            selector: 'm-tooltip',
-          }),
-          MockComponent({
-            selector: 'm-sizeableLoadingSpinner',
-            inputs: ['inProgress', 'spinnerHeight', 'spinnerWidth'],
-          }),
-        ],
-        providers: [
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: Client,
-            useValue: MockService(Client),
-          },
-        ],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        PopoverComponent,
+        MockComponent({
+          selector: 'm-loadingSpinner',
+          inputs: ['inProgress'],
+        }),
+        MockComponent({
+          selector: 'm-tooltip',
+        }),
+        MockComponent({
+          selector: 'm-sizeableLoadingSpinner',
+          inputs: ['inProgress', 'spinnerHeight', 'spinnerWidth'],
+        }),
+      ],
+      providers: [
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: Client,
+          useValue: MockService(Client),
+        },
+      ],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(PopoverComponent);
-      comp = fixture.componentInstance;
+    fixture = TestBed.createComponent(PopoverComponent);
+    comp = fixture.componentInstance;
 
-      fixture.detectChanges();
-    })
-  );
+    fixture.detectChanges();
+  }));
 
   it('should initialize', () => {
     expect(comp).toBeTruthy();

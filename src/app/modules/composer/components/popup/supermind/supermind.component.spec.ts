@@ -48,78 +48,76 @@ describe('Composer Supermind Popup', () => {
   });
 
   const popupServiceMock: any = MockService(PopupService, {
-    create: function() {
+    create: function () {
       return this;
     },
     present: { toPromise: () => {} },
   });
 
-  const apiMock = new (function() {
+  const apiMock = new (function () {
     this.get = jasmine.createSpy('get');
   })();
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule, FormsModule, CommonModule],
-        declarations: [
-          ComposerSupermindComponent,
-          MockComponent({
-            selector: 'm-payments__selectCard',
-            inputs: ['selected'],
-          }),
-        ],
-        providers: [
-          {
-            provide: ComposerService,
-            useValue: composerServiceMock,
-          },
-          {
-            provide: PopupService,
-            useValue: popupServiceMock,
-          },
-          {
-            provide: ApiService,
-            useValue: apiMock,
-          },
-          {
-            provide: ExplainerScreensService,
-            useValue: MockService(ExplainerScreensService),
-          },
-          {
-            provide: ConfigsService,
-            useValue: MockService(ConfigsService),
-          },
-          {
-            provide: EntityResolverService,
-            useValue: MockService(EntityResolverService),
-          },
-          {
-            provide: SupermindNonStripeOffersExperimentService,
-            useValue: MockService(SupermindNonStripeOffersExperimentService),
-          },
-          {
-            provide: TwitterSupermindExperimentService,
-            useValue: MockService(TwitterSupermindExperimentService),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          {
-            provide: ModalService,
-            useValue: MockService(ModalService),
-          },
-          {
-            provide: Injector,
-            useValue: MockService(Injector),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, FormsModule, CommonModule],
+      declarations: [
+        ComposerSupermindComponent,
+        MockComponent({
+          selector: 'm-payments__selectCard',
+          inputs: ['selected'],
+        }),
+      ],
+      providers: [
+        {
+          provide: ComposerService,
+          useValue: composerServiceMock,
+        },
+        {
+          provide: PopupService,
+          useValue: popupServiceMock,
+        },
+        {
+          provide: ApiService,
+          useValue: apiMock,
+        },
+        {
+          provide: ExplainerScreensService,
+          useValue: MockService(ExplainerScreensService),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+        {
+          provide: EntityResolverService,
+          useValue: MockService(EntityResolverService),
+        },
+        {
+          provide: SupermindNonStripeOffersExperimentService,
+          useValue: MockService(SupermindNonStripeOffersExperimentService),
+        },
+        {
+          provide: TwitterSupermindExperimentService,
+          useValue: MockService(TwitterSupermindExperimentService),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: ModalService,
+          useValue: MockService(ModalService),
+        },
+        {
+          provide: Injector,
+          useValue: MockService(Injector),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ComposerSupermindComponent);
     comp = fixture.componentInstance;
 

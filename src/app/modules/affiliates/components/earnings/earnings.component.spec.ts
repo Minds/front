@@ -26,41 +26,39 @@ describe('AffiliatesEarningsComponent', () => {
     amount_tokens: 2,
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          AffiliatesEarningsComponent,
-          MockComponent({
-            selector: 'm-button',
-          }),
-        ],
-        providers: [
-          {
-            provide: AffiliatesShareModalService,
-            useValue: MockService(AffiliatesShareModalService),
-          },
-          {
-            provide: AffiliatesMetricsService,
-            useValue: MockService(AffiliatesMetricsService, {
-              has: ['metrics$', 'loading$', 'error$'],
-              props: {
-                metrics$: {
-                  get: () =>
-                    new BehaviorSubject<AffiliatesMetrics>(defaultMetrics),
-                },
-                loading$: { get: () => new BehaviorSubject<boolean>(false) },
-                error$: { get: () => new BehaviorSubject<boolean>(false) },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        AffiliatesEarningsComponent,
+        MockComponent({
+          selector: 'm-button',
+        }),
+      ],
+      providers: [
+        {
+          provide: AffiliatesShareModalService,
+          useValue: MockService(AffiliatesShareModalService),
+        },
+        {
+          provide: AffiliatesMetricsService,
+          useValue: MockService(AffiliatesMetricsService, {
+            has: ['metrics$', 'loading$', 'error$'],
+            props: {
+              metrics$: {
+                get: () =>
+                  new BehaviorSubject<AffiliatesMetrics>(defaultMetrics),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+              loading$: { get: () => new BehaviorSubject<boolean>(false) },
+              error$: { get: () => new BehaviorSubject<boolean>(false) },
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(AffiliatesEarningsComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

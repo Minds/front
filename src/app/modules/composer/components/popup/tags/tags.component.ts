@@ -56,7 +56,10 @@ export class TagsComponent {
    * @param service
    * @param configs
    */
-  constructor(protected service: ComposerService, configs: ConfigsService) {
+  constructor(
+    protected service: ComposerService,
+    configs: ConfigsService
+  ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 

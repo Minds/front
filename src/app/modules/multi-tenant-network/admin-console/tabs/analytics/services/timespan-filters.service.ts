@@ -74,10 +74,7 @@ export class NetworkAdminAnalyticsTimespanFiltersService {
           label: 'Year to date',
           selected: false,
           interval: 'month',
-          from_ts_ms: moment()
-            .startOf('year')
-            .startOf('day')
-            .unix(),
+          from_ts_ms: moment().startOf('year').startOf('day').unix(),
         },
       ],
     };
@@ -89,7 +86,7 @@ export class NetworkAdminAnalyticsTimespanFiltersService {
    * @returns { Option } - the option with the given ID.
    */
   public getOptionById(id: string): Option {
-    return this.filters?.options?.find(option => option?.id === id);
+    return this.filters?.options?.find((option) => option?.id === id);
   }
 
   /**

@@ -1,10 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
 import { Session } from '../../services/session';
-import posthog from 'posthog-js';
+import { isPlatformBrowser } from '@angular/common';
+import type { PostHog } from 'posthog-js';
+import { POSTHOG_JS } from '../../common/services/posthog/posthog-injection-tokens';
+
+type PostHogI = PostHog;
 
 @Injectable({ providedIn: 'root' })
 export class ExperimentsService {
-  constructor(private session: Session) {}
+  constructor(
+    private session: Session,
+    @Inject(POSTHOG_JS) private posthog: PostHogI,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   /**
    * Returns the variation to display.
@@ -13,7 +21,9 @@ export class ExperimentsService {
    * @returns { string } - variation to display.
    */
   public run(key: string): string | boolean {
-    return posthog.getFeatureFlag(key);
+    return (
+      isPlatformBrowser(this.platformId) && this.posthog.getFeatureFlag(key)
+    );
   }
 
   /**

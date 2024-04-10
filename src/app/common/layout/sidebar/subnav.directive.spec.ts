@@ -30,24 +30,20 @@ describe('SidebarNavigationSubnavDirective', () => {
   let component: TestNavigationItemComponent;
   let fixture: ComponentFixture<TestNavigationItemComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          TestNavigationItemComponent,
-          SidebarNavigationSubnavDirective,
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        TestNavigationItemComponent,
+        SidebarNavigationSubnavDirective,
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(
-    waitForAsync(() => {
-      fixture = TestBed.createComponent(TestNavigationItemComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    fixture = TestBed.createComponent(TestNavigationItemComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should not have popover when not hovers', () => {
     const popoverEl = fixture.debugElement.query(

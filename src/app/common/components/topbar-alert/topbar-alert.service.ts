@@ -87,45 +87,45 @@ export class TopbarAlertService {
         : of(EMPTY);
 
     this.identifier$ = this.copyData$.pipe(
-      map(copyData => copyData.attributes.identifier)
+      map((copyData) => copyData.attributes.identifier)
     );
 
     this.enabled$ = this.copyData$.pipe(
-      map(copyData => Boolean(copyData.attributes.enabled))
+      map((copyData) => Boolean(copyData.attributes.enabled))
     );
 
     this.onlyDisplayAfter$ = this.copyData$.pipe(
-      map(copyData => Date.parse(copyData.attributes.onlyDisplayAfter))
+      map((copyData) => Date.parse(copyData.attributes.onlyDisplayAfter))
     );
 
     this.shouldShow$ = isPlatformServer(this.platformId)
       ? of(false)
       : this.isTenantNetwork
-      ? of(this.config.get('tenant')?.['is_trial'] ?? false)
-      : combineLatest([
-          this.identifier$,
-          this.dismissedAlerts$,
-          this.onlyDisplayAfter$,
-          this.enabled$,
-          this.session.user$.pipe(map(user => !!user)),
-        ]).pipe(
-          map(
-            ([
-              identifier,
-              dismissedAlerts,
-              onlyDisplayAfter,
-              enabled,
-              isLoggedIn,
-            ]) => {
-              return (
-                dismissedAlerts.indexOf(identifier) === -1 &&
-                onlyDisplayAfter < Date.now() &&
-                enabled &&
-                isLoggedIn
-              );
-            }
-          )
-        );
+        ? of(this.config.get('tenant')?.['is_trial'] ?? false)
+        : combineLatest([
+            this.identifier$,
+            this.dismissedAlerts$,
+            this.onlyDisplayAfter$,
+            this.enabled$,
+            this.session.user$.pipe(map((user) => !!user)),
+          ]).pipe(
+            map(
+              ([
+                identifier,
+                dismissedAlerts,
+                onlyDisplayAfter,
+                enabled,
+                isLoggedIn,
+              ]) => {
+                return (
+                  dismissedAlerts.indexOf(identifier) === -1 &&
+                  onlyDisplayAfter < Date.now() &&
+                  enabled &&
+                  isLoggedIn
+                );
+              }
+            )
+          );
   }
 
   /**

@@ -27,7 +27,7 @@ export class FeaturedContentService implements OnDestroy {
   public async onInit(opts: BoostFeedOpts = {}): Promise<void> {
     this.boostFeedService.init(opts);
 
-    this.feedSubscription = this.boostFeedService.feed$.subscribe(feed => {
+    this.feedSubscription = this.boostFeedService.feed$.subscribe((feed) => {
       this.feedLength = feed.length;
       this.maximumOffset = this.feedLength - 1;
     });
@@ -39,11 +39,11 @@ export class FeaturedContentService implements OnDestroy {
   async fetch() {
     return await this.boostFeedService.feed$
       .pipe(
-        filter(entities => entities.length > 0),
-        mergeMap(feed => feed), // Convert feed array to stream
+        filter((entities) => entities.length > 0),
+        mergeMap((feed) => feed), // Convert feed array to stream
         skip(this.offset++),
         take(1),
-        switchMap(async entity => {
+        switchMap(async (entity) => {
           if (!entity) {
             return false;
           } else {

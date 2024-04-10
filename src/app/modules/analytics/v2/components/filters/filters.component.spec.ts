@@ -6,13 +6,11 @@ describe('AnalyticsFiltersComponent', () => {
   let component: AnalyticsFiltersComponent;
   let fixture: ComponentFixture<AnalyticsFiltersComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [AnalyticsFiltersComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [AnalyticsFiltersComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AnalyticsFiltersComponent);

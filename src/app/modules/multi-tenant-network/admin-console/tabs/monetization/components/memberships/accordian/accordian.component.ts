@@ -41,28 +41,27 @@ import { SiteMembershipsCountService } from '../../../../../../../site-membershi
 })
 export class NetworkAdminMonetizationMembershipAccordianComponent {
   /** Enum for use in template. */
-  public readonly SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum = SiteMembershipBillingPeriodEnum;
+  public readonly SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum =
+    SiteMembershipBillingPeriodEnum;
 
   /** Enum for use in template. */
-  public readonly SiteMembershipPricingModelEnum: typeof SiteMembershipPricingModelEnum = SiteMembershipPricingModelEnum;
+  public readonly SiteMembershipPricingModelEnum: typeof SiteMembershipPricingModelEnum =
+    SiteMembershipPricingModelEnum;
 
   /** Membership to display. */
   @Input() public membership: SiteMembership;
 
   /** Fires on archive. */
-  @Output('onArchive') private onArchiveEmitter: EventEmitter<
-    string
-  > = new EventEmitter<string>();
+  @Output('onArchive') private onArchiveEmitter: EventEmitter<string> =
+    new EventEmitter<string>();
 
   /** Whether or not the accordian is expanded. */
-  public readonly expanded$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly expanded$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether or not an archiving operation is in progress. */
-  public readonly archiveInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly archiveInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     private rolesService: MultiTenantRolesService,
@@ -149,11 +148,12 @@ export class NetworkAdminMonetizationMembershipAccordianComponent {
   private async archiveMembership(membership: SiteMembership): Promise<void> {
     this.archiveInProgress$.next(true);
     try {
-      const response: MutationResult<ArchiveSiteMembershipMutation> = await lastValueFrom(
-        this.archiveSiteMembershipGQL.mutate({
-          siteMembershipGuid: membership.membershipGuid,
-        })
-      );
+      const response: MutationResult<ArchiveSiteMembershipMutation> =
+        await lastValueFrom(
+          this.archiveSiteMembershipGQL.mutate({
+            siteMembershipGuid: membership.membershipGuid,
+          })
+        );
 
       if (!Boolean(response.data?.archiveSiteMembership)) {
         throw new Error(DEFAULT_ERROR_MESSAGE);

@@ -12,7 +12,7 @@ export class RecentService {
     let data = this.read(key);
 
     if (cleanupFn) {
-      data = data.filter(e => !cleanupFn(e));
+      data = data.filter((e) => !cleanupFn(e));
     }
 
     data.unshift(entry);
@@ -70,7 +70,7 @@ export class RecentService {
   fetchSuggestions(): Array<any> {
     const textSuggestions = this.read('suggestions:text');
     const publishersSuggestions = this.read('suggestions:publisher').filter(
-      user => !user.blocked
+      (user) => !user.blocked
     );
 
     let suggestions = textSuggestions.concat(publishersSuggestions);

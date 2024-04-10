@@ -50,7 +50,9 @@
           }
         }
 
-        &:not(.m-sidebarMoreDropdown__spacer):not(.m-sidebarMoreDropdown__footer):hover {
+        &:not(.m-sidebarMoreDropdown__spacer):not(
+            .m-sidebarMoreDropdown__footer
+          ):hover {
           @include m-theme() {
             background-color: themed($m-borderColor--primary);
           }

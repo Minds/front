@@ -57,31 +57,29 @@ describe('Composer NSFW Component', () => {
     },
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          NsfwComponent,
-          MockComponent({
-            selector: 'm-button',
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: ComposerService,
-            useValue: composerServiceMock,
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        NsfwComponent,
+        MockComponent({
+          selector: 'm-button',
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: ComposerService,
+          useValue: composerServiceMock,
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(NsfwComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

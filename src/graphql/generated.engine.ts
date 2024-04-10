@@ -6,13 +6,15 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 export type MakeEmpty<
   T extends { [key: string]: unknown },
-  K extends keyof T
+  K extends keyof T,
 > = { [_ in K]?: never };
 export type Incremental<T> =
   | T
@@ -1639,9 +1641,7 @@ export type Report = NodeInterface & {
   createdTimestamp: Scalars['Int']['output'];
   cursor?: Maybe<Scalars['String']['output']>;
   /** Gets entity edge from entityUrn. */
-  entityEdge?: Maybe<
-    UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge
-  >;
+  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge>;
   entityGuid?: Maybe<Scalars['String']['output']>;
   entityUrn: Scalars['String']['output'];
   /** Gets ID for GraphQL. */

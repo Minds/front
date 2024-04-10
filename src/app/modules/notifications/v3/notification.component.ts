@@ -32,7 +32,8 @@ import truncateString from '../../../helpers/truncate-string';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsV3NotificationComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @Input() notification;
 
   @ViewChild('notificationWrapper') notificationWrapper: ElementRef;
@@ -620,7 +621,7 @@ export class NotificationsV3NotificationComponent
 
     this.intersectionObserver = new IntersectionObserver(
       (entries, observer) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             this.service.markAsRead(this.notification);
           }

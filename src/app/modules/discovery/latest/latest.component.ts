@@ -55,10 +55,7 @@ export class DiscoveryLatestFeedComponent implements OnInit {
    */
   private async load(refresh: boolean = false): Promise<boolean> {
     try {
-      this.discoveryFeed
-        .setFilter('latest')
-        .setType('all')
-        .load();
+      this.discoveryFeed.setFilter('latest').setType('all').load();
       return true;
     } catch (e) {
       return false;

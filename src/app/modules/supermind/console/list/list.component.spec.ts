@@ -56,52 +56,50 @@ describe('SupermindConsoleListComponent', () => {
     },
   ];
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          SupermindConsoleListComponent,
-          MockComponent({
-            selector: 'infinite-scroll',
-            inputs: ['moreData', 'inProgress'],
-          }),
-          MockComponent({
-            selector: 'm-supermind__filterBar',
-            outputs: ['statusFilterChange'],
-          }),
-          MockComponent({
-            selector: 'm-seeLatestButton',
-            inputs: ['newCount'],
-            outputs: ['click', 'poll'],
-          }),
-        ],
-        providers: [
-          {
-            provide: SupermindConsoleService,
-            useValue: MockService(SupermindConsoleService, {
-              has: ['listType$'],
-              props: {
-                listType$: {
-                  get: () =>
-                    new BehaviorSubject<SupermindConsoleListType>('inbox'),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        SupermindConsoleListComponent,
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: ['moreData', 'inProgress'],
+        }),
+        MockComponent({
+          selector: 'm-supermind__filterBar',
+          outputs: ['statusFilterChange'],
+        }),
+        MockComponent({
+          selector: 'm-seeLatestButton',
+          inputs: ['newCount'],
+          outputs: ['click', 'poll'],
+        }),
+      ],
+      providers: [
+        {
+          provide: SupermindConsoleService,
+          useValue: MockService(SupermindConsoleService, {
+            has: ['listType$'],
+            props: {
+              listType$: {
+                get: () =>
+                  new BehaviorSubject<SupermindConsoleListType>('inbox'),
               },
-            }),
-          },
-          {
-            provide: Router,
-            useValue: MockService(Router),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(SupermindConsoleListComponent);
     comp = fixture.componentInstance;
 

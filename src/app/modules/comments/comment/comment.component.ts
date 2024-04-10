@@ -169,7 +169,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.commentAge$ = this.timeDiffService.source.pipe(
-        map(secondsElapsed => {
+        map((secondsElapsed) => {
           return this.comment.time_created - secondsElapsed;
         })
       );
@@ -265,7 +265,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
         }
         this.comment.edited = true;
       })
-      .catch(e => {
+      .catch((e) => {
         this.toasterService.error(
           e.message || 'An unknown error has occurred saving your comment.'
         );
@@ -338,14 +338,14 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
     this.attachment
       .upload(file)
-      .then(guid => {
+      .then((guid) => {
         this.canPost = true;
         this.triedToPost = false;
         if (file instanceof HTMLInputElement) {
           file.value = null;
         }
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         this.canPost = true;
         this.triedToPost = false;
@@ -375,7 +375,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
           file.value = '';
         }
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         this.canPost = true;
         this.triedToPost = false;
@@ -408,7 +408,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.translation.target = '';
     this.translationService
       .getLanguageName($event.selected)
-      .then(name => (this.translation.target = name));
+      .then((name) => (this.translation.target = name));
 
     this.translationInProgress = true;
 
@@ -426,11 +426,11 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
             this.translation.source = '';
             this.translationService
               .getLanguageName(translation[field].source)
-              .then(name => (this.translation.source = name));
+              .then((name) => (this.translation.source = name));
           }
         }
       })
-      .catch(e => {
+      .catch((e) => {
         this.translationInProgress = false;
         this.translation.error = true;
 

@@ -13,9 +13,10 @@ export class ConnectTwitterModalExperimentService {
    * @returns { boolean } true if feature is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation(
-      'minds-3477-connect-twitter-modal',
-      true
-    );
+    // return this.experiments.hasVariation(
+    //   'minds-3477-connect-twitter-modal',
+    //   true
+    // );
+    return true;
   }
 }

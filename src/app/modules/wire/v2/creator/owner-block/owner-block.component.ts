@@ -27,7 +27,10 @@ export class WireCreatorOwnerBlock {
    * @param service
    * @param configs
    */
-  constructor(public service: WireV2Service, configs: ConfigsService) {
+  constructor(
+    public service: WireV2Service,
+    configs: ConfigsService
+  ) {
     this.cdnUrl = configs.get('cdn_url');
   }
 

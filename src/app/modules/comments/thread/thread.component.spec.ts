@@ -28,60 +28,58 @@ describe('CommentsThreadComponent', () => {
   let comp: CommentsThreadComponent;
   let fixture: ComponentFixture<CommentsThreadComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockComponent({
-            selector: 'm-comment__poster',
-            inputs: [
-              'guid',
-              'routerLink',
-              'parent',
-              'entity',
-              'currentIndex',
-              'conversation',
-              'level',
-            ],
-          }),
-          MockComponent({
-            selector: 'm-comment',
-            inputs: [
-              'comment',
-              'entity',
-              'parent',
-              'level',
-              'canEdit',
-              'canDelete',
-              'showReplies',
-            ],
-            outputs: ['emitter', 'enabled'],
-          }),
-          CommentsThreadComponent,
-          CommentsScrollDirective,
-          LoadingSpinnerComponent,
-        ],
-        imports: [
-          RouterModule.forRoot([], {}),
-          HttpClientTestingModule,
-          HttpClientModule,
-        ],
-        providers: [
-          { provide: Client, useValue: clientMock },
-          { provide: Session, useValue: sessionMock },
-          {
-            provide: BlockListService,
-            useValue: MockService(BlockListService),
-          },
-          { provide: CommentsService, useValue: commentsServiceMock },
-          { provide: SocketsService, useValue: MockService(SocketsService) },
-          { provide: ActivityService, useValue: MockService(ActivityService) },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockComponent({
+          selector: 'm-comment__poster',
+          inputs: [
+            'guid',
+            'routerLink',
+            'parent',
+            'entity',
+            'currentIndex',
+            'conversation',
+            'level',
+          ],
+        }),
+        MockComponent({
+          selector: 'm-comment',
+          inputs: [
+            'comment',
+            'entity',
+            'parent',
+            'level',
+            'canEdit',
+            'canDelete',
+            'showReplies',
+          ],
+          outputs: ['emitter', 'enabled'],
+        }),
+        CommentsThreadComponent,
+        CommentsScrollDirective,
+        LoadingSpinnerComponent,
+      ],
+      imports: [
+        RouterModule.forRoot([], {}),
+        HttpClientTestingModule,
+        HttpClientModule,
+      ],
+      providers: [
+        { provide: Client, useValue: clientMock },
+        { provide: Session, useValue: sessionMock },
+        {
+          provide: BlockListService,
+          useValue: MockService(BlockListService),
+        },
+        { provide: CommentsService, useValue: commentsServiceMock },
+        { provide: SocketsService, useValue: MockService(SocketsService) },
+        { provide: ActivityService, useValue: MockService(ActivityService) },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 9999;
     jasmine.clock().uninstall();

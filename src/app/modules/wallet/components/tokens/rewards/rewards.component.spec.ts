@@ -20,130 +20,128 @@ describe('WalletTokenRewardsComponent', () => {
   let comp: WalletTokenRewardsComponent;
   let fixture: ComponentFixture<WalletTokenRewardsComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          WalletTokenRewardsComponent,
-          MockComponent({
-            selector: 'm-date-selector',
-            inputs: ['date', 'max', 'tooltipIcon', 'tooltipText', 'i18n'],
-            outputs: ['dateChange'],
-          }),
-          MockComponent({
-            selector: 'm-loadingSpinner',
-            inputs: ['inProgress'],
-          }),
-          MockComponent({
-            selector: 'm-wallet__currencyValue',
-            inputs: ['value', 'hideCurrency', 'currency'],
-          }),
-          MockComponent({
-            selector: 'm-tooltip',
-            inputs: ['icon'],
-          }),
-        ],
-        providers: [
-          {
-            provide: UniswapModalService,
-            useValue: MockService(UniswapModalService),
-          },
-          { provide: Injector, useValue: MockService(Injector) },
-          {
-            provide: OnchainTransferModalService,
-            useValue: MockService(OnchainTransferModalService),
-          },
-          { provide: WalletV2Service, useValue: MockService(WalletV2Service) },
-          {
-            provide: Session,
-            useValue: MockService(Session, {
-              has: ['userEmitter'],
-              props: {
-                userEmitter: { get: () => new BehaviorSubject<any>(null) },
-              },
-            }),
-          },
-          {
-            provide: VerifyUniquenessModalLazyService,
-            useValue: MockService(VerifyUniquenessModalLazyService),
-          },
-          {
-            provide: InAppVerificationExperimentService,
-            useValue: MockService(InAppVerificationExperimentService),
-          },
-          {
-            provide: ConnectWalletModalService,
-            useValue: MockService(ConnectWalletModalService, {
-              has: ['isConnected$'],
-              props: {
-                isConnected$: { get: () => new BehaviorSubject<boolean>(true) },
-              },
-            }),
-          },
-        ],
-      })
-        .overrideProvider(WalletTokenRewardsService, {
-          useValue: MockService(WalletTokenRewardsService, {
-            has: [
-              'hasPending$',
-              'dateTs$',
-              'contributionScores$',
-              'liquidityPositions$',
-              'rewards$',
-            ],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        WalletTokenRewardsComponent,
+        MockComponent({
+          selector: 'm-date-selector',
+          inputs: ['date', 'max', 'tooltipIcon', 'tooltipText', 'i18n'],
+          outputs: ['dateChange'],
+        }),
+        MockComponent({
+          selector: 'm-loadingSpinner',
+          inputs: ['inProgress'],
+        }),
+        MockComponent({
+          selector: 'm-wallet__currencyValue',
+          inputs: ['value', 'hideCurrency', 'currency'],
+        }),
+        MockComponent({
+          selector: 'm-tooltip',
+          inputs: ['icon'],
+        }),
+      ],
+      providers: [
+        {
+          provide: UniswapModalService,
+          useValue: MockService(UniswapModalService),
+        },
+        { provide: Injector, useValue: MockService(Injector) },
+        {
+          provide: OnchainTransferModalService,
+          useValue: MockService(OnchainTransferModalService),
+        },
+        { provide: WalletV2Service, useValue: MockService(WalletV2Service) },
+        {
+          provide: Session,
+          useValue: MockService(Session, {
+            has: ['userEmitter'],
             props: {
-              hasPending$: { get: () => new BehaviorSubject<boolean>(false) },
-              dateTs$: { get: () => new BehaviorSubject<number>(null) },
-              contributionScores$: {
-                get: () => new BehaviorSubject<ContributionMetric>(null),
-              },
-              liquidityPositions$: {
-                get: () => new BehaviorSubject<any>(null),
-              },
-              rewards$: {
-                get: () =>
-                  new BehaviorSubject<any>({
-                    total: '10000',
-                    engagement: {
+              userEmitter: { get: () => new BehaviorSubject<any>(null) },
+            },
+          }),
+        },
+        {
+          provide: VerifyUniquenessModalLazyService,
+          useValue: MockService(VerifyUniquenessModalLazyService),
+        },
+        {
+          provide: InAppVerificationExperimentService,
+          useValue: MockService(InAppVerificationExperimentService),
+        },
+        {
+          provide: ConnectWalletModalService,
+          useValue: MockService(ConnectWalletModalService, {
+            has: ['isConnected$'],
+            props: {
+              isConnected$: { get: () => new BehaviorSubject<boolean>(true) },
+            },
+          }),
+        },
+      ],
+    })
+      .overrideProvider(WalletTokenRewardsService, {
+        useValue: MockService(WalletTokenRewardsService, {
+          has: [
+            'hasPending$',
+            'dateTs$',
+            'contributionScores$',
+            'liquidityPositions$',
+            'rewards$',
+          ],
+          props: {
+            hasPending$: { get: () => new BehaviorSubject<boolean>(false) },
+            dateTs$: { get: () => new BehaviorSubject<number>(null) },
+            contributionScores$: {
+              get: () => new BehaviorSubject<ContributionMetric>(null),
+            },
+            liquidityPositions$: {
+              get: () => new BehaviorSubject<any>(null),
+            },
+            rewards$: {
+              get: () =>
+                new BehaviorSubject<any>({
+                  total: '10000',
+                  engagement: {
+                    token_amount: '1000',
+                    global_summary: {
                       token_amount: '1000',
-                      global_summary: {
-                        token_amount: '1000',
-                      },
-                      alltime_summary: {
-                        token_amount: '1000',
-                      },
-                    },
-                    holding: {
-                      token_amount: '1000',
-                      global_summary: {
-                        token_amount: '1000',
-                      },
-                      alltime_summary: {
-                        token_amount: '1000',
-                      },
-                    },
-                    liquidity: {
-                      token_amount: '1000',
-                      global_summary: {
-                        token_amount: '1000',
-                      },
-                      alltime_summary: {
-                        token_amount: '1000',
-                      },
                     },
                     alltime_summary: {
                       token_amount: '1000',
                     },
-                  }),
-              },
+                  },
+                  holding: {
+                    token_amount: '1000',
+                    global_summary: {
+                      token_amount: '1000',
+                    },
+                    alltime_summary: {
+                      token_amount: '1000',
+                    },
+                  },
+                  liquidity: {
+                    token_amount: '1000',
+                    global_summary: {
+                      token_amount: '1000',
+                    },
+                    alltime_summary: {
+                      token_amount: '1000',
+                    },
+                  },
+                  alltime_summary: {
+                    token_amount: '1000',
+                  },
+                }),
             },
-          }),
-        })
-        .compileComponents();
-    })
-  );
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(WalletTokenRewardsComponent);
     comp = fixture.componentInstance;
 
@@ -168,9 +166,7 @@ describe('WalletTokenRewardsComponent', () => {
   });
 
   it('it should know when the date is NOT today', () => {
-    comp.date = moment()
-      .subtract(2, 'days')
-      .toDate();
+    comp.date = moment().subtract(2, 'days').toDate();
     expect(comp.isToday()).toBe(false);
   });
 });

@@ -9,14 +9,12 @@ import { BoostConsoleAdminStatsResponse } from '../../boost.types';
 @Injectable({ providedIn: 'root' })
 export class BoostConsoleAdminStatsService {
   // count of pending safe boosts.
-  public readonly pendingSafeCount$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(0);
+  public readonly pendingSafeCount$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   // count of pending controversial boosts.
-  public readonly pendingControversialCount$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(0);
+  public readonly pendingControversialCount$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   constructor(private api: ApiService) {}
 

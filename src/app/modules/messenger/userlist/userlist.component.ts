@@ -99,7 +99,7 @@ export class MessengerUserlist {
         this.offset = response['load-next'];
         this.inProgress = false;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('got error' + error);
         this.inProgress = false;
       });
@@ -137,7 +137,7 @@ export class MessengerUserlist {
           this.offset = response['load-next'];
           this.inProgress = false;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log('got error' + error);
           this.inProgress = false;
         });
@@ -152,7 +152,7 @@ export class MessengerUserlist {
   listen() {
     this.socketSubscriptions.touchConversation = this.sockets.subscribe(
       'touchConversation',
-      guid => {
+      (guid) => {
         for (var i in this.dockpanes.conversations) {
           if (this.dockpanes.conversations[i].guid === guid) {
             this.dockpanes.conversations[i].unread = true;
@@ -162,7 +162,7 @@ export class MessengerUserlist {
 
         this.client
           .get(`api/v2/messenger/conversations/${guid}`)
-          .then(response => {
+          .then((response) => {
             this.openConversation(response);
           });
       }

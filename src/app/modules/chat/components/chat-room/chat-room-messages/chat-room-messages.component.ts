@@ -46,28 +46,28 @@ const LOADING_BUFFER_BOTTOM_PX: number = 300;
   imports: [NgCommonModule, CommonModule, ChatRoomMessageComponent],
   standalone: true,
 })
-export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
-  implements OnInit, OnDestroy {
+export class ChatRoomMessagesComponent
+  extends AbstractSubscriberComponent
+  implements OnInit, OnDestroy
+{
   /** Array of messages to be displayed. */
   @Input() protected messages: ChatMessageEdge[];
 
   /** Whether chat message loading is in progress. */
-  protected readonly inProgress$: Observable<boolean> = this.chatMessagesService
-    .inProgress$;
+  protected readonly inProgress$: Observable<boolean> =
+    this.chatMessagesService.inProgress$;
 
   /** Whether chat messages have a previous page. */
-  protected readonly hasPreviousPage$: Observable<
-    boolean
-  > = this.chatMessagesService.pageInfo$.pipe(
-    map((pageInfo: PageInfo) => pageInfo?.hasPreviousPage)
-  );
+  protected readonly hasPreviousPage$: Observable<boolean> =
+    this.chatMessagesService.pageInfo$.pipe(
+      map((pageInfo: PageInfo) => pageInfo?.hasPreviousPage)
+    );
 
   /** Whether chat messages have a next page (new messages). */
-  protected readonly hasNextPage$: Observable<
-    boolean
-  > = this.chatMessagesService.pageInfo$.pipe(
-    map((pageInfo: PageInfo) => pageInfo?.hasNextPage)
-  );
+  protected readonly hasNextPage$: Observable<boolean> =
+    this.chatMessagesService.pageInfo$.pipe(
+      map((pageInfo: PageInfo) => pageInfo?.hasNextPage)
+    );
 
   /** ID of the currently logged in user. */
   protected loggedInUserGuid: string = '';
@@ -92,7 +92,7 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
       // manual requests to scroll to bottom through service.
       this.chatMessagesService.scrollToBottom$
         .pipe(filter(Boolean))
-        .subscribe(message => {
+        .subscribe((message) => {
           this.scrollToBottom();
         }),
       // scroll event listener.
@@ -204,13 +204,13 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
       this.cd.detach();
       this.chatMessagesService.fetchMore();
 
-      const initialScrollHeight: number = this.elementRef.nativeElement
-        .scrollHeight;
+      const initialScrollHeight: number =
+        this.elementRef.nativeElement.scrollHeight;
 
       // await request inProgress state being false.
       await firstValueFrom(
         this.chatMessagesService.inProgress$.pipe(
-          filter(inProgress => !inProgress)
+          filter((inProgress) => !inProgress)
         )
       );
 

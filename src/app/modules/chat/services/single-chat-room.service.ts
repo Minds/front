@@ -24,14 +24,12 @@ import { ApolloQueryResult } from '@apollo/client';
 @Injectable()
 export class SingleChatRoomService {
   /** Internal subject to hold the guid of the chat room. */
-  private readonly _roomGuid$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >(null);
+  private readonly _roomGuid$: BehaviorSubject<string> =
+    new BehaviorSubject<string>(null);
 
   /** Internal subject to hold the guid of the chat room. */
-  public readonly roomGuid$: Observable<
-    string
-  > = this._roomGuid$.asObservable();
+  public readonly roomGuid$: Observable<string> =
+    this._roomGuid$.asObservable();
 
   /** Exposed observable that represents the chat room. - pulls data from server and shares replay. */
   public readonly chatRoom$: Observable<ChatRoomEdge> = this._roomGuid$.pipe(
@@ -48,18 +46,14 @@ export class SingleChatRoomService {
           { fetchPolicy: 'no-cache' }
         )
     ),
-    map(
-      (result: ApolloQueryResult<GetChatRoomQuery>): ChatRoomEdge => {
-        return (result?.data?.chatRoom as ChatRoomEdge) ?? null;
-      }
-    ),
-    catchError(
-      (e: Error): Observable<null> => {
-        this.toaster.error(e);
-        console.error(e);
-        return of(null);
-      }
-    ),
+    map((result: ApolloQueryResult<GetChatRoomQuery>): ChatRoomEdge => {
+      return (result?.data?.chatRoom as ChatRoomEdge) ?? null;
+    }),
+    catchError((e: Error): Observable<null> => {
+      this.toaster.error(e);
+      console.error(e);
+      return of(null);
+    }),
     shareReplay()
   );
 

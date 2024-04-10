@@ -38,15 +38,15 @@ export enum CarouselMoveDirection {
 })
 export class FeatureCarouselComponent implements OnInit, OnDestroy {
   /** Move direction for carousel. */
-  public readonly CarouselMoveDirection: typeof CarouselMoveDirection = CarouselMoveDirection;
+  public readonly CarouselMoveDirection: typeof CarouselMoveDirection =
+    CarouselMoveDirection;
 
   /** Items to be shown in carousel. */
   @Input() public carouselItems$: Observable<CarouselItem[]>;
 
   /** Index of currently visible carousel item. */
-  public readonly visibleCarouselIndex$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(0);
+  public readonly visibleCarouselIndex$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   /** Currently visible carousel item */
   public visibleCarouselItem$: Observable<CarouselItem>;
@@ -71,7 +71,7 @@ export class FeatureCarouselComponent implements OnInit, OnDestroy {
 
     // subscription so that external components can jump the carousel to specific indexes.
     this.jumpToItemIndexSubscription = this.service.jumpToItemIndex$.subscribe(
-      index => {
+      (index) => {
         this.jumpCarousel(index);
       }
     );
@@ -99,7 +99,7 @@ export class FeatureCarouselComponent implements OnInit, OnDestroy {
       .subscribe(
         ([carouselItems, visibleCarouselIndex]: [
           CarouselItem[],
-          number
+          number,
         ]): void => {
           let nextIndex: number;
 

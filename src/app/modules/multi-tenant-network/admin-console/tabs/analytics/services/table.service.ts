@@ -30,44 +30,36 @@ const PAGE_SIZE: number = 24;
 @Injectable()
 export class NetworkAdminAnalyticsTableService extends AbstractSubscriberComponent {
   /** Internal subject to hold whether a request is in progress. */
-  private readonly _inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  private readonly _inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Exposed observable that represents whether a request is in progress. */
-  public readonly inProgress$: Observable<
-    boolean
-  > = this._inProgress$.asObservable();
+  public readonly inProgress$: Observable<boolean> =
+    this._inProgress$.asObservable();
 
   /** Internal subject to hold whether the service has been initialized. */
-  private readonly _initialized$: Subject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  private readonly _initialized$: Subject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Exposed observable that represents whether the service has been initialized. */
-  public readonly initialized$: Observable<
-    boolean
-  > = this._initialized$.asObservable();
+  public readonly initialized$: Observable<boolean> =
+    this._initialized$.asObservable();
 
   /** Internal subject to hold the page info for the analytics table. */
-  private readonly _pageInfo$: BehaviorSubject<PageInfo> = new BehaviorSubject<
-    PageInfo
-  >(null);
+  private readonly _pageInfo$: BehaviorSubject<PageInfo> =
+    new BehaviorSubject<PageInfo>(null);
 
   /** Exposed observable that represents the page info for the analytics table. */
-  public readonly pageInfo$: Observable<
-    PageInfo
-  > = this._pageInfo$.asObservable();
+  public readonly pageInfo$: Observable<PageInfo> =
+    this._pageInfo$.asObservable();
 
   /** Internal subject to hold the edges for the analytics table. */
-  private readonly _edges$: BehaviorSubject<
-    AnalyticsTableRowEdge[]
-  > = new BehaviorSubject<AnalyticsTableRowEdge[]>([]);
+  private readonly _edges$: BehaviorSubject<AnalyticsTableRowEdge[]> =
+    new BehaviorSubject<AnalyticsTableRowEdge[]>([]);
 
   /** Exposed observable that represents the edges for the analytics table. */
-  public readonly edges$: Observable<
-    AnalyticsTableRowEdge[]
-  > = this._edges$.asObservable();
+  public readonly edges$: Observable<AnalyticsTableRowEdge[]> =
+    this._edges$.asObservable();
 
   /** Internal reference to the query. */
   private queryRef: QueryRef<
@@ -160,7 +152,7 @@ export class NetworkAdminAnalyticsTableService extends AbstractSubscriberCompone
     this.subscriptions.push(
       this.queryRef.valueChanges
         .pipe(
-          catchError(e => {
+          catchError((e) => {
             this.handleError(e);
             return of(null);
           })

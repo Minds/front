@@ -23,7 +23,7 @@ export class NsfwSettingsFormComponent implements OnInit, OnDestroy {
     id: string;
     label: string;
     selected: boolean;
-  }[] = this.discoveryFeedsService.nsfwService.reasons.map(reason => {
+  }[] = this.discoveryFeedsService.nsfwService.reasons.map((reason) => {
     return { id: reason.value, label: reason.label, selected: reason.selected };
   });
 
@@ -34,20 +34,20 @@ export class NsfwSettingsFormComponent implements OnInit, OnDestroy {
   ) {
     this.form = fb.group({
       showNsfw: fb.control(
-        this.nsfwOptions.filter(reason => reason.selected).length > 0
+        this.nsfwOptions.filter((reason) => reason.selected).length > 0
       ),
-      nsfw: fb.array(this.nsfwOptions.map(reason => reason.selected)),
+      nsfw: fb.array(this.nsfwOptions.map((reason) => reason.selected)),
     });
   }
 
   ngOnInit(): void {
     this.subscriptions = [
-      this.form.controls.showNsfw.valueChanges.subscribe(value => {
+      this.form.controls.showNsfw.valueChanges.subscribe((value) => {
         this.form.controls.nsfw.setValue(this.nsfwOptions.map(() => value));
       }),
-      this.form.controls.nsfw.valueChanges.subscribe(nsfw => {
+      this.form.controls.nsfw.valueChanges.subscribe((nsfw) => {
         if (
-          nsfw.filter(selected => selected === true).length === 0 &&
+          nsfw.filter((selected) => selected === true).length === 0 &&
           this.form.controls.showNsfw.value
         ) {
           this.form.controls.showNsfw.setValue(false);
@@ -82,9 +82,8 @@ export class NsfwSettingsFormComponent implements OnInit, OnDestroy {
     const values = this.form.value;
 
     if (this.canSubmit) {
-      const nsfwReasons = this.discoveryFeedsService.nsfwService.reasons.slice(
-        0
-      ); // Slice to clone
+      const nsfwReasons =
+        this.discoveryFeedsService.nsfwService.reasons.slice(0); // Slice to clone
       for (let i in values.nsfw) {
         nsfwReasons[i].selected = values.nsfw[i];
       }
@@ -100,7 +99,7 @@ export class NsfwSettingsFormComponent implements OnInit, OnDestroy {
 
   get hasNsfwSelections(): boolean {
     return (
-      this.form.controls.nsfw.value.filter(selected => selected === true)
+      this.form.controls.nsfw.value.filter((selected) => selected === true)
         .length > 0
     );
   }

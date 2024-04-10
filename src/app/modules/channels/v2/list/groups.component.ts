@@ -33,7 +33,10 @@ export class ChannelListGroupsComponent implements OnDestroy {
    * @param service
    * @param feed
    */
-  constructor(public service: ChannelsV2Service, public feed: FeedsService) {
+  constructor(
+    public service: ChannelsV2Service,
+    public feed: FeedsService
+  ) {
     this.guidSubscription = combineLatest([
       this.service.guid$,
       this.searchQuery$.pipe(debounceTime(300)),

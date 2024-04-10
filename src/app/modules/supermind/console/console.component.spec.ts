@@ -20,89 +20,87 @@ describe('SupermindConsoleComponent', () => {
   let comp: SupermindConsoleComponent;
   let fixture: ComponentFixture<SupermindConsoleComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          SupermindConsoleComponent,
-          MockComponent({
-            selector: 'm-tooltip',
-          }),
-          MockComponent({
-            selector: 'router-outlet',
-          }),
-          MockComponent({
-            selector: 'a',
-            inputs: ['routerLink'],
-          }),
-          MockComponent({
-            selector: 'm-addBankPrompt',
-          }),
-        ],
-        providers: [
-          {
-            provide: ActivatedRoute,
-            useValue: MockService(ActivatedRoute, {
-              has: ['firstChild', 'snapshot'],
-              props: {
-                firstChild: {
-                  get: () => {
-                    return { url: new BehaviorSubject([{ path: 'inbox' }]) };
-                  },
-                },
-                snapshot: {
-                  get: () => {
-                    return { firstChild: { url: [{ path: 'inbox' }] } };
-                  },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        SupermindConsoleComponent,
+        MockComponent({
+          selector: 'm-tooltip',
+        }),
+        MockComponent({
+          selector: 'router-outlet',
+        }),
+        MockComponent({
+          selector: 'a',
+          inputs: ['routerLink'],
+        }),
+        MockComponent({
+          selector: 'm-addBankPrompt',
+        }),
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: MockService(ActivatedRoute, {
+            has: ['firstChild', 'snapshot'],
+            props: {
+              firstChild: {
+                get: () => {
+                  return { url: new BehaviorSubject([{ path: 'inbox' }]) };
                 },
               },
-            }),
-          },
-          {
-            provide: Router,
-            useValue: MockService(Router, {
-              has: ['events'],
-              props: {
-                events: {
-                  get: () => {
-                    return new BehaviorSubject(
-                      new NavigationEnd(
-                        0,
-                        'https://example.minds.com/supermind/inbox',
-                        'https://example.minds.com/supermind/inbox'
-                      )
-                    );
-                  },
+              snapshot: {
+                get: () => {
+                  return { firstChild: { url: [{ path: 'inbox' }] } };
                 },
               },
-            }),
-          },
-          {
-            provide: SupermindConsoleService,
-            useValue: MockService(SupermindConsoleService, {
-              has: ['listType$'],
-              props: {
-                listType$: {
-                  get: () =>
-                    new BehaviorSubject<SupermindConsoleListType>('inbox'),
+            },
+          }),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router, {
+            has: ['events'],
+            props: {
+              events: {
+                get: () => {
+                  return new BehaviorSubject(
+                    new NavigationEnd(
+                      0,
+                      'https://example.minds.com/supermind/inbox',
+                      'https://example.minds.com/supermind/inbox'
+                    )
+                  );
                 },
               },
-            }),
-          },
-          {
-            provide: Session,
-            useValue: sessionMock,
-          },
-          {
-            provide: LoginReferrerService,
-            useValue: loginReferrerServiceMock,
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: SupermindConsoleService,
+          useValue: MockService(SupermindConsoleService, {
+            has: ['listType$'],
+            props: {
+              listType$: {
+                get: () =>
+                  new BehaviorSubject<SupermindConsoleListType>('inbox'),
+              },
+            },
+          }),
+        },
+        {
+          provide: Session,
+          useValue: sessionMock,
+        },
+        {
+          provide: LoginReferrerService,
+          useValue: loginReferrerServiceMock,
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(SupermindConsoleComponent);
     comp = fixture.componentInstance;
 

@@ -146,7 +146,7 @@ export class BlogView implements OnInit, OnDestroy {
   isVisible() {
     // listens every 0.6 seconds
     this.scroll_listener = this.scroll.listen(
-      e => {
+      (e) => {
         const bounds = this.element.getBoundingClientRect();
         if (
           bounds.top < this.scroll.view.clientHeight &&
@@ -246,7 +246,7 @@ export class BlogView implements OnInit, OnDestroy {
       .post(`api/v1/entities/explicit/${this.blog.guid}`, {
         value: value ? '1' : '0',
       })
-      .catch(e => {
+      .catch((e) => {
         this.blog.mature = this.blog.mature;
       });
   }

@@ -43,7 +43,7 @@ lint:
   stage: test and build
   image: minds/ci-front:16
   script:
-    - npm i -g prettier@"^1.19.1"
+    - npm i -g prettier@"^3.2.4"
     - prettier --check "src/**/*.ts"
     - prettier --check "src/**/*.scss"
     - prettier --check "src/**/*.html"

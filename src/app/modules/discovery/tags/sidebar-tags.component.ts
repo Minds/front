@@ -40,9 +40,8 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   /**
    * What is the source/category of the tags we want to display
    */
-  protected source$: BehaviorSubject<
-    DiscoverySidebarTagsSource
-  > = new BehaviorSubject<DiscoverySidebarTagsSource>(null);
+  protected source$: BehaviorSubject<DiscoverySidebarTagsSource> =
+    new BehaviorSubject<DiscoverySidebarTagsSource>(null);
 
   /**
    * Do we have tags to display?
@@ -133,11 +132,13 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
       this.limit = 12;
     }
 
-    this.isLoggedInSubscription = this.session.loggedinEmitter.subscribe(is => {
-      if (is) {
-        this.limit = this.DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT;
+    this.isLoggedInSubscription = this.session.loggedinEmitter.subscribe(
+      (is) => {
+        if (is) {
+          this.limit = this.DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT;
+        }
       }
-    });
+    );
   }
 
   ngOnDestroy() {
@@ -156,7 +157,7 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
     try {
       await this.composerModal
         .setInjector(this.injector)
-        .onPost(activity => {
+        .onPost((activity) => {
           if (this.source$.value === 'trending') {
             this.toaster.success(
               "Nice! If you added hashtags to your post, they'll show up in the sidebar in a few minutes"

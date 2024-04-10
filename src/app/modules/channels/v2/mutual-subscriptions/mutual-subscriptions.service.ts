@@ -26,13 +26,13 @@ export class MutualSubscriptionsService {
     tap(() => {
       this.inProgress$.next(true);
     }),
-    map(userGuid => {
+    map((userGuid) => {
       return this.api
         .get('api/v3/subscriptions/relational/also-subscribe-to', {
           guid: userGuid,
         })
         .pipe(
-          catchError(e => {
+          catchError((e) => {
             return EMPTY;
           })
         );
@@ -48,7 +48,7 @@ export class MutualSubscriptionsService {
    * A list of users that gets returned from apiResponse$
    */
   users$: Observable<MindsUser[]> = this.apiResponse$.pipe(
-    map(apiResponse => {
+    map((apiResponse) => {
       return apiResponse.users;
     })
   );
@@ -57,7 +57,7 @@ export class MutualSubscriptionsService {
    * The total amount of mutual subscribers, returned from apiResponse$
    */
   totalCount$: Observable<number> = this.apiResponse$.pipe(
-    map(apiResponse => {
+    map((apiResponse) => {
       return apiResponse.count;
     })
   );

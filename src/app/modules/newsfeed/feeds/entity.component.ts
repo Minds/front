@@ -55,13 +55,13 @@ export class NewsfeedEntityComponent {
     if (this.entity && this.entity.type === 'group') {
       this.clear();
 
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-        this.getComponent(this.entity.type)
-      );
+      const componentFactory =
+        this.componentFactoryResolver.resolveComponentFactory(
+          this.getComponent(this.entity.type)
+        );
 
-      let componentRef: ComponentRef<any> = this.host.viewContainerRef.createComponent(
-        componentFactory
-      );
+      let componentRef: ComponentRef<any> =
+        this.host.viewContainerRef.createComponent(componentFactory);
       componentRef.instance.entity = this.entity;
       componentRef.changeDetectorRef.detectChanges();
     }

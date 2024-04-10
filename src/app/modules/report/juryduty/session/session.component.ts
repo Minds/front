@@ -11,10 +11,13 @@ export class JuryDutySessionComponent implements AfterViewInit {
   paramsSubscription;
   juryType: string = 'appeal';
 
-  constructor(public route: ActivatedRoute, public session: Session) {}
+  constructor(
+    public route: ActivatedRoute,
+    public session: Session
+  ) {}
 
   ngOnInit() {
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       this.juryType = params['jury'];
     });
   }

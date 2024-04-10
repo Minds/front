@@ -55,16 +55,16 @@ export class BoostModalV2HeaderComponent {
   public BoostModalPanel: typeof BoostModalPanel = BoostModalPanel;
 
   // type of the entity.
-  public readonly entityType$: Observable<BoostSubject> = this.service
-    .entityType$;
+  public readonly entityType$: Observable<BoostSubject> =
+    this.service.entityType$;
 
   // currently active panel.
-  public readonly activePanel$: Observable<BoostModalPanel> = this.service
-    .activePanel$;
+  public readonly activePanel$: Observable<BoostModalPanel> =
+    this.service.activePanel$;
 
   // previous panel in the modal flow, if any.
-  public readonly previousPanel$: Observable<BoostModalPanel> = this.service
-    .previousPanel$;
+  public readonly previousPanel$: Observable<BoostModalPanel> =
+    this.service.previousPanel$;
 
   constructor(private service: BoostModalV2Service) {}
 

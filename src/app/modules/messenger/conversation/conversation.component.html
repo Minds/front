@@ -111,11 +111,11 @@
       >
         <span [innerHtml]="chatNotice"></span>
       </div>
-      <div [hidden]="!inProgress" style="width:100%; text-align:center; ">
+      <div [hidden]="!inProgress" style="width: 100%; text-align: center">
         <div
           class="mdl-spinner mdl-js-spinner is-active"
           [mdl]
-          style="margin: 16px auto;"
+          style="margin: 16px auto"
         ></div>
       </div>
       <div
@@ -196,7 +196,7 @@
         *ngIf="!blocked && invitable"
       >
         <p i18n="@@MESSENGER__CONVERSATION__NOT_USING_MESSENGER_YET">
-          Looks like <b>@{{ invitable[0].username }}</b> isn't using Minds
+          Looks like <b>&#64;{{ invitable[0].username }}</b> isn't using Minds
           Messenger yet.
         </p>
         <p>

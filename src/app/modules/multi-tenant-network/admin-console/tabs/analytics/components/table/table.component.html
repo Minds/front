@@ -68,8 +68,7 @@
                     anchor="right"
                     icon="info_outline"
                     i18n="
-                       @@NETWORK_ANALYTICS_TABLE__HEADER__ENGAGEMENTS_TOOLTIP
-                    "
+                      @@NETWORK_ANALYTICS_TABLE__HEADER__ENGAGEMENTS_TOOLTIP"
                   >
                     Engagements currently only include the number of upvotes
                   </m-tooltip>
@@ -127,18 +126,18 @@
                   <span
                     *ngIf="edge?.node?.activity?.owner?.username as username"
                     ><strong class="m-networkAdminAnalyticsTable__boldText"
-                      >@{{ username }}</strong
+                      >&#64;{{ username }}</strong
                     >:
                   </span>
-                  <span
-                    >{{edge.node.activity?.message ?? edge.node.activity?.title}}</span
-                  >
+                  <span>{{
+                    edge.node.activity?.message ?? edge.node.activity?.title
+                  }}</span>
                 </td>
                 <td class="m-networkAdminAnalyticsTable__tableCell">
-                  {{edge.node.views ?? 0}}
+                  {{ edge.node.views ?? 0 }}
                 </td>
                 <td class="m-networkAdminAnalyticsTable__tableCell">
-                  {{edge.node.engagements ?? 0}}
+                  {{ edge.node.engagements ?? 0 }}
                 </td>
               </ng-container>
 
@@ -155,7 +154,7 @@
                   }}</strong>
                 </td>
                 <td class="m-networkAdminAnalyticsTable__tableCell">
-                  {{edge.node.newMembers ?? 0}}
+                  {{ edge.node.newMembers ?? 0 }}
                 </td>
               </ng-container>
 
@@ -168,16 +167,18 @@
                   ></minds-avatar>
                   <span>
                     <strong class="m-networkAdminAnalyticsTable__boldText"
-                      >@{{ edge?.node?.user?.username }}</strong
+                      >&#64;{{ edge?.node?.user?.username }}</strong
                     >
-                    {{edge.node.activity?.message ?? edge.node.activity?.title}}
+                    {{
+                      edge.node.activity?.message ?? edge.node.activity?.title
+                    }}
                   </span>
                 </td>
                 <td class="m-networkAdminAnalyticsTable__tableCell">
-                  {{edge.node.newSubscribers ?? 0}}
+                  {{ edge.node.newSubscribers ?? 0 }}
                 </td>
                 <td class="m-networkAdminAnalyticsTable__tableCell">
-                  {{edge.node.newSubscribers.totalSubscribers ?? 0}}
+                  {{ edge.node.newSubscribers.totalSubscribers ?? 0 }}
                 </td>
               </ng-container>
             </tr>

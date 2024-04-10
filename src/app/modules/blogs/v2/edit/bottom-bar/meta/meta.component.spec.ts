@@ -16,38 +16,36 @@ xdescribe('BlogEditorMetaComponent', () => {
   let comp: BlogEditorMetaComponent;
   let fixture: ComponentFixture<BlogEditorMetaComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [BlogEditorMetaComponent],
-        imports: [RouterTestingModule, NgCommonModule, FormsModule],
-        providers: [
-          {
-            provide: BlogsEditService,
-            useValue: MockService(BlogsEditService),
-          },
-          {
-            provide: SiteService,
-            useValue: MockService(SiteService, {
-              baseUrl: 'https://www.minds.com/',
-            }),
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session, {
-              getLoggedInUser: () => {
-                return {
-                  username: 'test',
-                };
-              },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [BlogEditorMetaComponent],
+      imports: [RouterTestingModule, NgCommonModule, FormsModule],
+      providers: [
+        {
+          provide: BlogsEditService,
+          useValue: MockService(BlogsEditService),
+        },
+        {
+          provide: SiteService,
+          useValue: MockService(SiteService, {
+            baseUrl: 'https://www.minds.com/',
+          }),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session, {
+            getLoggedInUser: () => {
+              return {
+                username: 'test',
+              };
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(async done => {
+  beforeEach(async (done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

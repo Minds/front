@@ -42,12 +42,12 @@ export class NestedMenuComponent implements OnInit {
    * Remove items where shouldShow is explicitly false
    */
   private filterMenus() {
-    this.menus = this.menus.filter(menu => {
+    this.menus = this.menus.filter((menu) => {
       return !menu.shouldShow || menu.shouldShow();
     });
 
     for (let menu of this.menus) {
-      menu.items = menu.items.filter(item => {
+      menu.items = menu.items.filter((item) => {
         return !item.shouldShow || item.shouldShow();
       });
     }

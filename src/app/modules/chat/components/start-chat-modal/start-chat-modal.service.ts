@@ -24,7 +24,8 @@ export class StartChatModalService {
    * @returns { Promise<string> } - The chat room id.
    */
   public async open(openOnSuccess: boolean = false): Promise<string> {
-    const componentRef: typeof StartChatModalServiceComponent = await this.getComponentRef();
+    const componentRef: typeof StartChatModalServiceComponent =
+      await this.getComponentRef();
 
     const modal: ModalRef<any> = this.modalService.present(componentRef, {
       injector: this.injector,

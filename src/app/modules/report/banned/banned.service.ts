@@ -4,8 +4,11 @@ import { Session } from '../../../services/session';
 
 @Injectable()
 export class BannedService {
-  constructor(private router: Router, private session: Session) {
-    this.router.events.subscribe(navigationState => {
+  constructor(
+    private router: Router,
+    private session: Session
+  ) {
+    this.router.events.subscribe((navigationState) => {
       if (navigationState instanceof NavigationStart) {
         // Forward to moderation banned page if banned
         if (

@@ -77,8 +77,10 @@ export const DEFAULT_RICH_EMBED_VALUE: RichEmbedSubjectValue = null;
 export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
 export const DEFAULT_POST_TO_PERMAWEB_VALUE: PostToPermawebSubjectValue = false;
 export const DEFAULT_MONETIZATION_VALUE: MonetizationSubjectValue = null;
-export const DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE: SiteMembershipGuidsSubjectValue = null;
-export const DEFAULT_PENDING_MONETIZATION_VALUE: PendingMonetizationSubjectValue = null;
+export const DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE: SiteMembershipGuidsSubjectValue =
+  null;
+export const DEFAULT_PENDING_MONETIZATION_VALUE: PendingMonetizationSubjectValue =
+  null;
 export const DEFAULT_TAGS_VALUE: TagsSubjectValue = [];
 export const DEFAULT_SCHEDULE_VALUE: ScheduleSubjectValue = null;
 export const DEFAULT_ACCESS_ID_VALUE: AccessIdSubjectValue = '2';
@@ -97,106 +99,92 @@ export class ComposerService implements OnDestroy {
   /**
    * Message subject
    */
-  public message$: BehaviorSubject<MessageSubjectValue> = new BehaviorSubject<
-    MessageSubjectValue
-  >(DEFAULT_MESSAGE_VALUE);
+  public message$: BehaviorSubject<MessageSubjectValue> =
+    new BehaviorSubject<MessageSubjectValue>(DEFAULT_MESSAGE_VALUE);
 
   /**
    * Title subject
    */
-  readonly title$: BehaviorSubject<TitleSubjectValue> = new BehaviorSubject<
-    TitleSubjectValue
-  >(DEFAULT_TITLE_VALUE);
+  readonly title$: BehaviorSubject<TitleSubjectValue> =
+    new BehaviorSubject<TitleSubjectValue>(DEFAULT_TITLE_VALUE);
 
   /**
    * Rich-embed title subject
    */
-  readonly richEmbedTitle$: BehaviorSubject<
-    RichEmbedTitleSubjectValue
-  > = new BehaviorSubject<TitleSubjectValue>(DEFAULT_RICH_EMBED_TITLE_VALUE);
+  readonly richEmbedTitle$: BehaviorSubject<RichEmbedTitleSubjectValue> =
+    new BehaviorSubject<TitleSubjectValue>(DEFAULT_RICH_EMBED_TITLE_VALUE);
 
   /**
    * NSFW subject
    */
-  readonly nsfw$: BehaviorSubject<NsfwSubjectValue> = new BehaviorSubject<
-    NsfwSubjectValue
-  >(DEFAULT_NSFW_VALUE);
+  readonly nsfw$: BehaviorSubject<NsfwSubjectValue> =
+    new BehaviorSubject<NsfwSubjectValue>(DEFAULT_NSFW_VALUE);
 
   /**
    * Monetization subject
    */
-  monetization$: BehaviorSubject<
-    MonetizationSubjectValue
-  > = new BehaviorSubject<MonetizationSubjectValue>(DEFAULT_MONETIZATION_VALUE);
+  monetization$: BehaviorSubject<MonetizationSubjectValue> =
+    new BehaviorSubject<MonetizationSubjectValue>(DEFAULT_MONETIZATION_VALUE);
 
   /**
    * Pending monetization subject
    */
-  readonly pendingMonetization$: BehaviorSubject<
-    PendingMonetizationSubjectValue
-  > = new BehaviorSubject<PendingMonetizationSubjectValue>(
-    DEFAULT_PENDING_MONETIZATION_VALUE
-  );
+  readonly pendingMonetization$: BehaviorSubject<PendingMonetizationSubjectValue> =
+    new BehaviorSubject<PendingMonetizationSubjectValue>(
+      DEFAULT_PENDING_MONETIZATION_VALUE
+    );
 
   /**
    * Memberships subject
    * For tenant membership posts
    * might need to change this to membershipGuids$
    */
-  siteMembershipGuids$: BehaviorSubject<
-    SiteMembershipGuidsSubjectValue
-  > = new BehaviorSubject<SiteMembershipGuidsSubjectValue>(
-    DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE
-  );
+  siteMembershipGuids$: BehaviorSubject<SiteMembershipGuidsSubjectValue> =
+    new BehaviorSubject<SiteMembershipGuidsSubjectValue>(
+      DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE
+    );
 
   /**
    * Whether the prevew pane (where users set title/thumbnail for site membership posts) is visible - instead of the normal composer base
    */
-  showSiteMembershipPostPreview$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  showSiteMembershipPostPreview$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Tags subject
    */
-  readonly tags$: BehaviorSubject<TagsSubjectValue> = new BehaviorSubject<
-    TagsSubjectValue
-  >(DEFAULT_TAGS_VALUE);
+  readonly tags$: BehaviorSubject<TagsSubjectValue> =
+    new BehaviorSubject<TagsSubjectValue>(DEFAULT_TAGS_VALUE);
 
   /**
    * Schedule subject
    */
-  readonly schedule$: BehaviorSubject<
-    ScheduleSubjectValue
-  > = new BehaviorSubject<ScheduleSubjectValue>(DEFAULT_SCHEDULE_VALUE);
+  readonly schedule$: BehaviorSubject<ScheduleSubjectValue> =
+    new BehaviorSubject<ScheduleSubjectValue>(DEFAULT_SCHEDULE_VALUE);
 
   /**
    * Access ID subject
    */
-  readonly accessId$: BehaviorSubject<
-    AccessIdSubjectValue
-  > = new BehaviorSubject<AccessIdSubjectValue>(DEFAULT_ACCESS_ID_VALUE);
+  readonly accessId$: BehaviorSubject<AccessIdSubjectValue> =
+    new BehaviorSubject<AccessIdSubjectValue>(DEFAULT_ACCESS_ID_VALUE);
 
   /**
    * License subject
    */
-  readonly license$: BehaviorSubject<LicenseSubjectValue> = new BehaviorSubject<
-    LicenseSubjectValue
-  >(DEFAULT_LICENSE_VALUE);
+  readonly license$: BehaviorSubject<LicenseSubjectValue> =
+    new BehaviorSubject<LicenseSubjectValue>(DEFAULT_LICENSE_VALUE);
 
   /**
    * Remind subject
    */
-  readonly remind$: BehaviorSubject<RemindSubjectValue> = new BehaviorSubject<
-    RemindSubjectValue
-  >(DEFAULT_REMIND_VALUE);
+  readonly remind$: BehaviorSubject<RemindSubjectValue> =
+    new BehaviorSubject<RemindSubjectValue>(DEFAULT_REMIND_VALUE);
 
   /**
    * Attachments subject
    */
-  readonly attachments$: BehaviorSubject<
-    AttachmentSubjectValue
-  > = new BehaviorSubject<AttachmentSubjectValue>(DEFAULT_ATTACHMENT_VALUE);
+  readonly attachments$: BehaviorSubject<AttachmentSubjectValue> =
+    new BehaviorSubject<AttachmentSubjectValue>(DEFAULT_ATTACHMENT_VALUE);
 
   /**
    * Paywall Thumbnail subject
@@ -208,23 +196,20 @@ export class ComposerService implements OnDestroy {
   /**
    * Rich embed subject
    */
-  readonly richEmbed$: BehaviorSubject<
-    RichEmbedSubjectValue
-  > = new BehaviorSubject<RichEmbedSubjectValue>(DEFAULT_RICH_EMBED_VALUE);
+  readonly richEmbed$: BehaviorSubject<RichEmbedSubjectValue> =
+    new BehaviorSubject<RichEmbedSubjectValue>(DEFAULT_RICH_EMBED_VALUE);
 
   /**
    * Preview subject (state)
    */
-  readonly attachmentPreviews$: BehaviorSubject<
-    AttachmentPreviewResource[]
-  > = new BehaviorSubject<AttachmentPreviewResource[]>([]);
+  readonly attachmentPreviews$: BehaviorSubject<AttachmentPreviewResource[]> =
+    new BehaviorSubject<AttachmentPreviewResource[]>([]);
 
   /**
    * Preview subject (state)
    */
-  readonly richEmbedPreview$: BehaviorSubject<RichEmbed | null> = new BehaviorSubject<RichEmbed | null>(
-    null
-  );
+  readonly richEmbedPreview$: BehaviorSubject<RichEmbed | null> =
+    new BehaviorSubject<RichEmbed | null>(null);
 
   /**
    * In progress flag subject (state)
@@ -243,9 +228,8 @@ export class ComposerService implements OnDestroy {
   /**
    * Attachment error subject (state)
    */
-  readonly attachmentError$: BehaviorSubject<
-    AttachmentValidationPayload
-  > = new BehaviorSubject<AttachmentValidationPayload>(null);
+  readonly attachmentError$: BehaviorSubject<AttachmentValidationPayload> =
+    new BehaviorSubject<AttachmentValidationPayload>(null);
 
   /**
    * Post-ability check subject (state)
@@ -267,29 +251,26 @@ export class ComposerService implements OnDestroy {
   /**
    * The payload for the supermind request (null if not a supermind)
    */
-  readonly supermindRequest$: BehaviorSubject<
-    SupermindRequestSubjectValue
-  > = new BehaviorSubject(null);
+  readonly supermindRequest$: BehaviorSubject<SupermindRequestSubjectValue> =
+    new BehaviorSubject(null);
 
   /**
    * True/False helper for if we have a supermind request payload
    */
-  readonly isSupermindRequest$: Observable<
-    boolean
-  > = this.supermindRequest$.pipe(map(supermindRequest => !!supermindRequest));
+  readonly isSupermindRequest$: Observable<boolean> =
+    this.supermindRequest$.pipe(map((supermindRequest) => !!supermindRequest));
 
   /**
    * The supermind entity (used for supermind reply payload building)
    */
-  readonly supermindReply$: BehaviorSubject<
-    SupermindReplySubjectValue
-  > = new BehaviorSubject(null);
+  readonly supermindReply$: BehaviorSubject<SupermindReplySubjectValue> =
+    new BehaviorSubject(null);
 
   /**
    * True/False helper for if we have a supermind reply payload
    */
   readonly isSupermindReply$: Observable<boolean> = this.supermindReply$.pipe(
-    map(supermindReply => !!supermindReply)
+    map((supermindReply) => !!supermindReply)
   );
 
   /**
@@ -335,13 +316,11 @@ export class ComposerService implements OnDestroy {
   /**
    * Are we currently moving part of this service's state to another place? (i.e. blog editor)
    */
-  readonly isMovingContent$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  readonly isMovingContent$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
-  readonly isSiteMembershipPost$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  readonly isSiteMembershipPost$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Is group post subject
@@ -351,16 +330,16 @@ export class ComposerService implements OnDestroy {
   /**
    * Too many tags subject
    */
-  readonly tooManyTags$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  readonly tooManyTags$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Determines whether content is to be posted to Permaweb.
    */
-  readonly postToPermaweb$: BehaviorSubject<boolean> = new BehaviorSubject<
-    PostToPermawebSubjectValue
-  >(DEFAULT_POST_TO_PERMAWEB_VALUE);
+  readonly postToPermaweb$: BehaviorSubject<boolean> =
+    new BehaviorSubject<PostToPermawebSubjectValue>(
+      DEFAULT_POST_TO_PERMAWEB_VALUE
+    );
 
   /**
    * Tag count subject
@@ -370,9 +349,8 @@ export class ComposerService implements OnDestroy {
   /**
    * Size of composer
    */
-  readonly size$: BehaviorSubject<ComposerSize> = new BehaviorSubject<
-    ComposerSize
-  >(DEFAULT_COMPOSER_SIZE);
+  readonly size$: BehaviorSubject<ComposerSize> =
+    new BehaviorSubject<ComposerSize>(DEFAULT_COMPOSER_SIZE);
 
   /**
    * Whether post button is disabled
@@ -488,7 +466,7 @@ export class ComposerService implements OnDestroy {
         SupermindRequestSubjectValue,
         SupermindReplySubjectValue,
         SiteMembershipGuidsSubjectValue,
-        ActivityContainer
+        ActivityContainer,
       ]
     >([
       this.message$.pipe(distinctUntilChanged()),
@@ -503,7 +481,7 @@ export class ComposerService implements OnDestroy {
       // ----------------------
       this.accessId$.pipe(
         distinctUntilChanged(),
-        tap(accessId => {
+        tap((accessId) => {
           // This will trigger a warning about an illegal access ID operation
           if (
             this.container &&
@@ -528,22 +506,22 @@ export class ComposerService implements OnDestroy {
       combineLatest([
         this.uploaderService.files$.pipe(
           startWith([]), // will not ever resolve combineLatest unless we do this
-          map(fileUpload => {
+          map((fileUpload) => {
             if (!fileUpload) {
               return [];
             }
             this.setPreview(fileUpload);
 
-            return fileUpload.map(fileUpload => fileUpload.guid);
+            return fileUpload.map((fileUpload) => fileUpload.guid);
           })
         ),
         this.attachments$.pipe(
-          map(attachments => {
+          map((attachments) => {
             if (!attachments) return [];
 
             this.setPreview(attachments);
 
-            return attachments.map(attachment => attachment.guid);
+            return attachments.map((attachment) => attachment.guid);
           })
         ),
       ]).pipe(
@@ -629,7 +607,7 @@ export class ComposerService implements OnDestroy {
           container,
         })
       ),
-      tap(values => {
+      tap((values) => {
         ////
         // TODO: move this to its own pipe, it shouldn't be in a tap!
         ////
@@ -651,7 +629,7 @@ export class ComposerService implements OnDestroy {
         const tags = [...bodyTags, ...values.tags, ...cashTags];
 
         // get unique tags.
-        const uniqueTags = tags.filter(function(item, pos) {
+        const uniqueTags = tags.filter(function (item, pos) {
           return tags.indexOf(item) == pos;
         });
 
@@ -730,7 +708,7 @@ export class ComposerService implements OnDestroy {
     // Subscribe to data stream and re-build API payload when it changes
 
     if (isPlatformBrowser(platformId)) {
-      this.dataSubscription = this.data$.subscribe(data => {
+      this.dataSubscription = this.data$.subscribe((data) => {
         return this.buildPayload(data);
       });
     }
@@ -755,31 +733,31 @@ export class ComposerService implements OnDestroy {
     );
 
     // Subscribe to selected audience
-    this.selectedAudienceSubscription = this.audienceSelectorService.selectedAudience$.subscribe(
-      audience => {
+    this.selectedAudienceSubscription =
+      this.audienceSelectorService.selectedAudience$.subscribe((audience) => {
         if (audience) {
           // Can't have monetization when audience is selected
           this.pendingMonetization$.next(null);
         }
-      }
-    );
-
-    this.videoPermissionsErrorSubscription = this.uploaderService.videoPermissionsError$
-      .pipe(
-        throttleTime(2000) // Fire at most 2x/sec
-      )
-      .subscribe(error => {
-        if (error) {
-          // Reset attachments & previews
-          this.uploaderService.reset();
-          this.attachments$.next(DEFAULT_ATTACHMENT_VALUE);
-          this.setPreview(null);
-        }
       });
+
+    this.videoPermissionsErrorSubscription =
+      this.uploaderService.videoPermissionsError$
+        .pipe(
+          throttleTime(2000) // Fire at most 2x/sec
+        )
+        .subscribe((error) => {
+          if (error) {
+            // Reset attachments & previews
+            this.uploaderService.reset();
+            this.attachments$.next(DEFAULT_ATTACHMENT_VALUE);
+            this.setPreview(null);
+          }
+        });
 
     // Subscribe to pending monetization and format monetization$
     this.pendingMonetizationSubscription = this.pendingMonetization$.subscribe(
-      pendingMonetization => {
+      (pendingMonetization) => {
         if (pendingMonetization) {
           this.monetization$.next({
             support_tier: pendingMonetization.support_tier,
@@ -795,7 +773,7 @@ export class ComposerService implements OnDestroy {
 
     // Subscribe to message and extract any URL it finds
     this.messageUrl$ = this.message$.pipe(
-      map(message => this.richEmbed.extract(message))
+      map((message) => this.richEmbed.extract(message))
     );
 
     // Subscribe to message URL and rich embed in order to know if a URL should be resolved
@@ -987,7 +965,7 @@ export class ComposerService implements OnDestroy {
     let richEmbed: RichEmbedSubjectValue = DEFAULT_RICH_EMBED_VALUE;
 
     if (activity.custom_type === 'batch') {
-      attachments = activity.custom_data.map(item => {
+      attachments = activity.custom_data.map((item) => {
         return {
           type: 'image',
           guid: item.guid,
@@ -1264,7 +1242,7 @@ export class ComposerService implements OnDestroy {
         this.livestreamSubscription = this.livestreamService
           .getCreatedStream()
           .pipe(take(1))
-          .subscribe(stream => {
+          .subscribe((stream) => {
             if (stream) {
               this.payload.is_rich = true;
               this.payload.url = `https://minds-player.vercel.app?v=${stream.playbackId}`;

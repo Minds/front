@@ -126,40 +126,38 @@ describe('NetworkAdminConsoleReportsListComponent', () => {
     },
   };
 
-  const getReportsResponse$: BehaviorSubject<ApolloQueryResult<
-    GetReportsQuery
-  >> = new BehaviorSubject<ApolloQueryResult<GetReportsQuery>>(mockResult);
+  const getReportsResponse$: BehaviorSubject<
+    ApolloQueryResult<GetReportsQuery>
+  > = new BehaviorSubject<ApolloQueryResult<GetReportsQuery>>(mockResult);
 
   let fetchMoreSpy: jasmine.Spy;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          NetworkAdminConsoleReportsListComponent,
-          MockComponent({
-            selector: 'm-networkAdminConsole__report',
-            inputs: ['reportEdge'],
-            outputs: ['verdictProvided'],
-          }),
-          MockComponent({
-            selector: 'infinite-scroll',
-            inputs: ['moreData', 'inProgress', 'hideManual'],
-            outputs: ['load'],
-          }),
-        ],
-        providers: [
-          {
-            provide: GetReportsGQL,
-            useValue: jasmine.createSpyObj<GetReportsGQL>(['watch']),
-          },
-          ChangeDetectorRef,
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        NetworkAdminConsoleReportsListComponent,
+        MockComponent({
+          selector: 'm-networkAdminConsole__report',
+          inputs: ['reportEdge'],
+          outputs: ['verdictProvided'],
+        }),
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: ['moreData', 'inProgress', 'hideManual'],
+          outputs: ['load'],
+        }),
+      ],
+      providers: [
+        {
+          provide: GetReportsGQL,
+          useValue: jasmine.createSpyObj<GetReportsGQL>(['watch']),
+        },
+        ChangeDetectorRef,
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(NetworkAdminConsoleReportsListComponent);
 
     comp = fixture.componentInstance;

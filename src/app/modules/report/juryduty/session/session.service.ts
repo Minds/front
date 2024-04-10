@@ -6,7 +6,10 @@ import { ReportService } from './../../../../common/services/report.service';
 export class JurySessionService {
   reportReasons = this.reportService.reasons;
 
-  constructor(private client: Client, private reportService: ReportService) {}
+  constructor(
+    private client: Client,
+    private reportService: ReportService
+  ) {}
 
   async getList(opts) {
     let queryString = opts.offset ? `?offset=${opts.offset}&limit=12` : '';
@@ -43,7 +46,7 @@ export class JurySessionService {
 
   getReasonString(report) {
     return this.reportReasons
-      .filter(item => {
+      .filter((item) => {
         if (item.hasMore && item.reasons) {
           return (
             item.value === report.reason_code &&
@@ -53,7 +56,7 @@ export class JurySessionService {
         }
         return item.value === report.reason_code;
       })
-      .map(item => {
+      .map((item) => {
         if (item.hasMore && item.reasons) {
           return item.reasons[report.sub_reason_code - 1].label;
         }

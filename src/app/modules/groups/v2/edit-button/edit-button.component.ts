@@ -21,7 +21,7 @@ export class GroupEditButton implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.group$.subscribe(group => {
+      this.service.group$.subscribe((group) => {
         this.group = group;
       })
     );

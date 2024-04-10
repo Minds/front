@@ -14,7 +14,7 @@ export class TokenPricesService {
     .get('api/v3/blockchain/token-prices')
     .pipe(
       shareReplay({ bufferSize: 1, refCount: true }),
-      map(response => {
+      map((response) => {
         return {
           minds: response.minds,
           eth: response.eth,
@@ -23,10 +23,10 @@ export class TokenPricesService {
     );
 
   eth$: Observable<number> = this.tokenPrices.pipe(
-    map(tokenPrice => tokenPrice.eth)
+    map((tokenPrice) => tokenPrice.eth)
   );
   minds$: Observable<number> = this.tokenPrices.pipe(
-    map(tokenPrice => tokenPrice.minds)
+    map((tokenPrice) => tokenPrice.minds)
   );
 
   /** Eth Price */

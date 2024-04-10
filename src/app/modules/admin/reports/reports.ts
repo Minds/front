@@ -94,7 +94,7 @@ export class AdminReports {
   parseReason(reasonValue: string | number) {
     let reason = reasonValue;
 
-    this.reasons.forEach(item => {
+    this.reasons.forEach((item) => {
       if (item.value === reasonValue) {
         reason = item.label;
       }

@@ -92,9 +92,7 @@
       {{src.link_title | excerpt}}
     </h2>
     <p class="m-blurb" *ngIf="src.blurb">{{src.blurb | excerpt: '300'}}</p>
-    <p class="m-url">
-      {{src.perma_url | domain}}
-    </p>
+    <p class="m-url">{{src.perma_url | domain}}</p>
     <div class="m-activityContent__teaserFadeout" *ngIf="isPaywalled"></div>
   </a>
 </div>

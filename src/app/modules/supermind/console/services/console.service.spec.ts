@@ -6,7 +6,7 @@ import { SupermindConsoleService } from './console.service';
 describe('SupermindConsoleService', () => {
   let service: SupermindConsoleService;
 
-  let apiMock = new (function() {
+  let apiMock = new (function () {
     this.get = jasmine.createSpy('get');
   })();
 
@@ -34,7 +34,7 @@ describe('SupermindConsoleService', () => {
         error: { message: 'Error' },
       });
 
-      service.getList$().subscribe(list => {
+      service.getList$().subscribe((list) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           `api/v3/supermind/${listType}`,
           {}
@@ -55,7 +55,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next('inbox');
       (service as any).api.get.and.returnValue(of(response));
 
-      service.getList$().subscribe(list => {
+      service.getList$().subscribe((list) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           'api/v3/supermind/inbox',
           {
@@ -79,7 +79,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next('inbox');
       (service as any).api.get.and.returnValue(of(response));
 
-      service.getList$(12, offset).subscribe(list => {
+      service.getList$(12, offset).subscribe((list) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           'api/v3/supermind/inbox',
           {
@@ -104,7 +104,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next('inbox');
       (service as any).api.get.and.returnValue(of(response));
 
-      service.getList$(12, offset, status).subscribe(list => {
+      service.getList$(12, offset, status).subscribe((list) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           'api/v3/supermind/inbox',
           {
@@ -129,7 +129,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next('outbox');
       (service as any).api.get.and.returnValue(of(response));
 
-      service.getList$().subscribe(list => {
+      service.getList$().subscribe((list) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           'api/v3/supermind/outbox',
           {
@@ -153,7 +153,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next('outbox');
       (service as any).api.get.and.returnValue(of(response));
 
-      service.getList$(12, offset).subscribe(list => {
+      service.getList$(12, offset).subscribe((list) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           'api/v3/supermind/outbox',
           {
@@ -178,7 +178,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next('outbox');
       (service as any).api.get.and.returnValue(of(response));
 
-      service.getList$(12, offset, status).subscribe(list => {
+      service.getList$(12, offset, status).subscribe((list) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           'api/v3/supermind/outbox',
           {
@@ -203,7 +203,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next(listType);
       (service as any).api.get.and.returnValue(of(response));
 
-      service.getList$().subscribe(list => {
+      service.getList$().subscribe((list) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           `api/v3/supermind/${listType}`,
           {}
@@ -217,7 +217,7 @@ describe('SupermindConsoleService', () => {
       const listType = 'explore';
       service.listType$.next(listType);
 
-      service.getList$().subscribe(list => {
+      service.getList$().subscribe((list) => {
         expect((service as any).api.get).not.toHaveBeenCalled();
         expect(list).toEqual(null);
         done();
@@ -237,7 +237,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next(listType);
       (service as any).api.get.and.returnValue(of(response));
 
-      service.countAll$().subscribe(count => {
+      service.countAll$().subscribe((count) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           `api/v3/supermind/${listType}/count`,
           {}
@@ -259,7 +259,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next(listType);
       (service as any).api.get.and.returnValue(of(response));
 
-      service.countAll$(status).subscribe(count => {
+      service.countAll$(status).subscribe((count) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           `api/v3/supermind/${listType}/count`,
           {
@@ -282,7 +282,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next(listType);
       (service as any).api.get.and.returnValue(of(response));
 
-      service.countAll$().subscribe(count => {
+      service.countAll$().subscribe((count) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           `api/v3/supermind/${listType}/count`,
           {}
@@ -304,7 +304,7 @@ describe('SupermindConsoleService', () => {
       service.listType$.next(listType);
       (service as any).api.get.and.returnValue(of(response));
 
-      service.countAll$(status).subscribe(count => {
+      service.countAll$(status).subscribe((count) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           `api/v3/supermind/${listType}/count`,
           {
@@ -321,7 +321,7 @@ describe('SupermindConsoleService', () => {
       const listType = '123456790';
       service.listType$.next(listType);
 
-      service.countAll$(status).subscribe(count => {
+      service.countAll$(status).subscribe((count) => {
         expect((service as any).api.get).not.toHaveBeenCalled();
         expect(count).toEqual(1);
         done();
@@ -333,7 +333,7 @@ describe('SupermindConsoleService', () => {
       const listType = 'explore';
       service.listType$.next(listType);
 
-      service.countAll$(status).subscribe(count => {
+      service.countAll$(status).subscribe((count) => {
         expect((service as any).api.get).not.toHaveBeenCalled();
         expect(count).toEqual(null);
         done();
@@ -346,7 +346,7 @@ describe('SupermindConsoleService', () => {
 
       service.listType$.next(listType);
 
-      service.countAll$().subscribe(count => {
+      service.countAll$().subscribe((count) => {
         expect((service as any).api.get).not.toHaveBeenCalled();
         expect(count).toEqual(expectedCount);
         done();
@@ -365,7 +365,7 @@ describe('SupermindConsoleService', () => {
 
       (service as any).api.get.and.returnValue(of(response));
 
-      service.countByListType$(listType, null).subscribe(count => {
+      service.countByListType$(listType, null).subscribe((count) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           `api/v3/supermind/${listType}/count`,
           {}
@@ -386,7 +386,7 @@ describe('SupermindConsoleService', () => {
 
       (service as any).api.get.and.returnValue(of(response));
 
-      service.countByListType$(listType, status).subscribe(count => {
+      service.countByListType$(listType, status).subscribe((count) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           `api/v3/supermind/${listType}/count`,
           {
@@ -408,7 +408,7 @@ describe('SupermindConsoleService', () => {
 
       (service as any).api.get.and.returnValue(of(response));
 
-      service.countByListType$(listType, null).subscribe(count => {
+      service.countByListType$(listType, null).subscribe((count) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           `api/v3/supermind/${listType}/count`,
           {}
@@ -429,7 +429,7 @@ describe('SupermindConsoleService', () => {
 
       (service as any).api.get.and.returnValue(of(response));
 
-      service.countByListType$(listType, status).subscribe(count => {
+      service.countByListType$(listType, status).subscribe((count) => {
         expect((service as any).api.get).toHaveBeenCalledWith(
           `api/v3/supermind/${listType}/count`,
           {
@@ -445,7 +445,7 @@ describe('SupermindConsoleService', () => {
       const status: SupermindState = 7;
       const listType = '123456790';
 
-      service.countByListType$(listType, status).subscribe(count => {
+      service.countByListType$(listType, status).subscribe((count) => {
         expect((service as any).api.get).not.toHaveBeenCalled();
         expect(count).toEqual(1);
         done();
@@ -456,7 +456,7 @@ describe('SupermindConsoleService', () => {
       const status: SupermindState = 7;
       const listType = 'explore';
 
-      service.countByListType$(listType, status).subscribe(count => {
+      service.countByListType$(listType, status).subscribe((count) => {
         expect((service as any).api.get).not.toHaveBeenCalled();
         expect(count).toEqual(null);
         done();

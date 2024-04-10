@@ -23,25 +23,23 @@ describe('ProductPageBasicExplainerComponent', () => {
     text: 'text',
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ProductPageBasicExplainerComponent,
-          MockComponent({
-            selector: 'm-productPage__button',
-            inputs: ['data'],
-          }),
-          MockComponent({
-            selector: 'markdown',
-            inputs: ['data'],
-          }),
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ProductPageBasicExplainerComponent,
+        MockComponent({
+          selector: 'm-productPage__button',
+          inputs: ['data'],
+        }),
+        MockComponent({
+          selector: 'markdown',
+          inputs: ['data'],
+        }),
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ProductPageBasicExplainerComponent);
     comp = fixture.componentInstance;
 

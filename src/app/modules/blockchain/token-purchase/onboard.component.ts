@@ -9,9 +9,7 @@ import { TokenRewardsOnboardingComponent } from '../../wallet/tokens/onboarding/
 
 @Component({
   selector: 'm-blockchain--marketing--onboard',
-  template: `
-    <ng-template dynamic-host></ng-template>
-  `,
+  template: ` <ng-template dynamic-host></ng-template> `,
 })
 export class BlockchainMarketingOnboardComponent implements OnInit {
   @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
@@ -26,9 +24,10 @@ export class BlockchainMarketingOnboardComponent implements OnInit {
   }
 
   loadComponent() {
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
-        TokenRewardsOnboardingComponent
-      ),
+    const componentFactory =
+        this._componentFactoryResolver.resolveComponentFactory(
+          TokenRewardsOnboardingComponent
+        ),
       viewContainerRef = this.host.viewContainerRef;
 
     viewContainerRef.clear();

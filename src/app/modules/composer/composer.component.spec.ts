@@ -25,60 +25,58 @@ describe('Composer', () => {
   let cookieService: CookieService;
   let service: LivestreamService;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.overrideProvider(ComposerService, {
-        useValue: composerMockService,
-      });
+  beforeEach(waitForAsync(() => {
+    TestBed.overrideProvider(ComposerService, {
+      useValue: composerMockService,
+    });
 
-      TestBed.configureTestingModule({
-        declarations: [
-          ComposerComponent,
-          MockComponent({
-            selector: 'm-composer__base',
-            outputs: ['onPost'],
-          }),
-        ],
-        imports: [CookieModule, HttpClientTestingModule],
-        providers: [
-          {
-            provide: ComposerModalService,
-            useValue: MockService(ComposerModalService),
+    TestBed.configureTestingModule({
+      declarations: [
+        ComposerComponent,
+        MockComponent({
+          selector: 'm-composer__base',
+          outputs: ['onPost'],
+        }),
+      ],
+      imports: [CookieModule, HttpClientTestingModule],
+      providers: [
+        {
+          provide: ComposerModalService,
+          useValue: MockService(ComposerModalService),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: Session,
+          useValue: sessionMock,
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParamMap: new BehaviorSubject(convertToParamMap({})),
           },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          {
-            provide: Session,
-            useValue: sessionMock,
-          },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              queryParamMap: new BehaviorSubject(convertToParamMap({})),
-            },
-          },
-          {
-            provide: Router,
-            useValue: MockService(Router),
-          },
-          CookieService,
-          {
-            provide: COOKIE_OPTIONS,
-            useValue: CookieOptionsProvider,
-          },
-          {
-            provide: LivestreamService,
-            useValue: MockService(LivestreamService),
-          },
-        ],
-      }).compileComponents();
-      service = TestBed.inject(LivestreamService);
-    })
-  );
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
+        CookieService,
+        {
+          provide: COOKIE_OPTIONS,
+          useValue: CookieOptionsProvider,
+        },
+        {
+          provide: LivestreamService,
+          useValue: MockService(LivestreamService),
+        },
+      ],
+    }).compileComponents();
+    service = TestBed.inject(LivestreamService);
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     cookieService = TestBed.inject(CookieService);
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(ComposerComponent);

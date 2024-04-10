@@ -29,16 +29,15 @@ export const NOTIFICATION_SOUNDS_STORAGE_KEY = 'play_notification_sounds';
 })
 export class SettingsV2PushNotificationsV3Component
   extends AbstractSubscriberComponent
-  implements OnInit {
+  implements OnInit
+{
   // is in progress
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // is initializing
-  public readonly initializing$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly initializing$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // holds array of toggles
   private toggles: PushNotificationToggleType[] = [];
@@ -81,11 +80,12 @@ export class SettingsV2PushNotificationsV3Component
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.pushSettings$.subscribe(response => {
+      this.service.pushSettings$.subscribe((response) => {
         // Initialize all the push notification settings
         for (const setting of response.settings) {
           this.toggles.push({
-            notificationGroup: setting.notification_group as PushNotificationGroup,
+            notificationGroup:
+              setting.notification_group as PushNotificationGroup,
             state: setting.enabled ? 'on' : 'off',
             subtext: this.subtextMap[setting.notification_group],
           });
@@ -108,7 +108,7 @@ export class SettingsV2PushNotificationsV3Component
 
     let enabling = false;
 
-    this.toggles.map(option => {
+    this.toggles.map((option) => {
       if (option.notificationGroup === notificationGroup) {
         enabling = option.state === 'off' ? true : false;
         option.state = enabling ? 'on' : 'off';
@@ -128,7 +128,7 @@ export class SettingsV2PushNotificationsV3Component
    * @returns { PushNotificationToggleType[] } array of settings to be dynamically added.
    */
   public getDynamicToggles(): PushNotificationToggleType[] {
-    return this.toggles.filter(option => option.notificationGroup !== 'all');
+    return this.toggles.filter((option) => option.notificationGroup !== 'all');
   }
 
   /**
@@ -140,7 +140,7 @@ export class SettingsV2PushNotificationsV3Component
     notificationGroup: PushNotificationGroup
   ): PushNotificationToggleType {
     return this.toggles.filter(
-      option => option.notificationGroup === notificationGroup
+      (option) => option.notificationGroup === notificationGroup
     )[0];
   }
 

@@ -60,10 +60,7 @@ describe('NetworkAdminAnalyticsTimespanFiltersService', () => {
           label: 'Year to date',
           selected: false,
           interval: 'month',
-          from_ts_ms: moment()
-            .startOf('year')
-            .startOf('day')
-            .unix(),
+          from_ts_ms: moment().startOf('year').startOf('day').unix(),
         },
       ],
     });

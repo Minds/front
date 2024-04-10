@@ -13,13 +13,13 @@ import { GroupMembershipLevel, GroupReviewView } from '../group.types';
 })
 export class GroupReviewComponent {
   // Allows us to use enum in template
-  public groupMembershipLevel: typeof GroupMembershipLevel = GroupMembershipLevel;
+  public groupMembershipLevel: typeof GroupMembershipLevel =
+    GroupMembershipLevel;
   /**
    * Which review tab is active
    */
-  readonly view$: BehaviorSubject<GroupReviewView> = new BehaviorSubject<
-    GroupReviewView
-  >('feed');
+  readonly view$: BehaviorSubject<GroupReviewView> =
+    new BehaviorSubject<GroupReviewView>('feed');
 
   constructor(protected service: GroupService) {}
 }

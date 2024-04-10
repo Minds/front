@@ -2,15 +2,15 @@ import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { MultiFactorAuthService } from './multi-factor-auth-service';
 
-let routerMock = new (function() {
+let routerMock = new (function () {
   this.navigate = jasmine.createSpy('navigate');
 })();
 
-export let toasterServiceMock = new (function() {
+export let toasterServiceMock = new (function () {
   this.success = jasmine.createSpy('success').and.returnValue(this);
 })();
 
-let apiServiceMock = new (function() {
+let apiServiceMock = new (function () {
   this.post = jasmine
     .createSpy('success')
     .and.returnValue(new BehaviorSubject<any>(null));
@@ -47,7 +47,7 @@ describe('MultiFactorAuthService', () => {
       code: '123',
     };
     service.mfaPayload$.next(req);
-    (service as any).mfaPayload$.subscribe(val => {
+    (service as any).mfaPayload$.subscribe((val) => {
       expect(val).toBe(req);
     });
   });
@@ -76,7 +76,7 @@ describe('MultiFactorAuthService', () => {
     service.mfaSecretKey$.next('secretKey');
     service.completeMultiFactor('123');
 
-    const sub = service.mfaPayload$.subscribe(payload => {
+    const sub = service.mfaPayload$.subscribe((payload) => {
       expect(payload.emailSecretKey).toBe('secretKey');
       expect(payload.code).toBe('123');
     });

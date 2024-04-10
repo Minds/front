@@ -19,53 +19,50 @@ describe('BoostModalV2HeaderComponent', () => {
   const getBackButton = (): DebugElement =>
     fixture.debugElement.query(By.css('.m-boostModalV2__headerLeft m-icon'));
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule, ReactiveFormsModule],
-        declarations: [
-          BoostModalV2HeaderComponent,
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['iconId'],
-          }),
-          MockComponent({
-            selector: 'm-modalCloseButton',
-            inputs: ['color', 'absolutePosition'],
-          }),
-        ],
-        providers: [
-          {
-            provide: BoostModalV2Service,
-            useValue: MockService(BoostModalV2Service, {
-              has: ['activePanel$', 'entityType$', 'previousPanel$'],
-              props: {
-                activePanel$: {
-                  get: () =>
-                    new BehaviorSubject<BoostModalPanel>(
-                      BoostModalPanel.AUDIENCE
-                    ),
-                },
-                entityType$: {
-                  get: () =>
-                    new BehaviorSubject<BoostSubject>(BoostSubject.POST),
-                },
-                previousPanel$: {
-                  get: () => new BehaviorSubject<BoostModalPanel>(null),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule, ReactiveFormsModule],
+      declarations: [
+        BoostModalV2HeaderComponent,
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['iconId'],
+        }),
+        MockComponent({
+          selector: 'm-modalCloseButton',
+          inputs: ['color', 'absolutePosition'],
+        }),
+      ],
+      providers: [
+        {
+          provide: BoostModalV2Service,
+          useValue: MockService(BoostModalV2Service, {
+            has: ['activePanel$', 'entityType$', 'previousPanel$'],
+            props: {
+              activePanel$: {
+                get: () =>
+                  new BehaviorSubject<BoostModalPanel>(
+                    BoostModalPanel.AUDIENCE
+                  ),
               },
-            }),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+              entityType$: {
+                get: () => new BehaviorSubject<BoostSubject>(BoostSubject.POST),
+              },
+              previousPanel$: {
+                get: () => new BehaviorSubject<BoostModalPanel>(null),
+              },
+            },
+          }),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostModalV2HeaderComponent);
     comp = fixture.componentInstance;
 

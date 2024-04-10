@@ -1,4 +1,4 @@
-export let analyticsServiceMock = new (function() {
+export let analyticsServiceMock = new (function () {
   this.contexts = [];
   this.send = jasmine.createSpy('send').and.stub();
   this.onRouterInit = jasmine.createSpy('onRouterInit').and.stub();

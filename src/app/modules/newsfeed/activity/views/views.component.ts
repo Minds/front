@@ -22,7 +22,10 @@ export class ActivityViewsComponent implements OnInit {
   showViews: boolean = false;
   views: number;
 
-  constructor(public service: ActivityService, public session: Session) {}
+  constructor(
+    public service: ActivityService,
+    public session: Session
+  ) {}
 
   /**
    * Views should be visible to admins and post owners only

@@ -20,26 +20,24 @@ describe('ThumbsDownButton', () => {
   let fixture: ComponentFixture<ThumbsDownButton>;
   let mockLocalStorage = {};
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ThumbsDownButton],
-        providers: [
-          { provide: Session, useValue: MockService(Session) },
-          { provide: Client, useValue: MockService(Client) },
-          {
-            provide: AuthModalService,
-            useValue: MockService(AuthModalService),
-          },
-          { provide: ToasterService, useValue: MockService(ToasterService) },
-          {
-            provide: PermissionsService,
-            useValue: permissionsServiceMock,
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ThumbsDownButton],
+      providers: [
+        { provide: Session, useValue: MockService(Session) },
+        { provide: Client, useValue: MockService(Client) },
+        {
+          provide: AuthModalService,
+          useValue: MockService(AuthModalService),
+        },
+        { provide: ToasterService, useValue: MockService(ToasterService) },
+        {
+          provide: PermissionsService,
+          useValue: permissionsServiceMock,
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ThumbsDownButton);

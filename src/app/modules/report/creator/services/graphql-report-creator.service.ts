@@ -42,9 +42,8 @@ export class GraphQLReportCreatorService {
     variables: CreateNewReportMutationVariables
   ): Promise<boolean> {
     try {
-      const result: MutationResult<CreateNewReportMutation> = await lastValueFrom(
-        this.createNewReportGQL.mutate(variables)
-      );
+      const result: MutationResult<CreateNewReportMutation> =
+        await lastValueFrom(this.createNewReportGQL.mutate(variables));
 
       if (!result) {
         throw new Error(DEFAULT_ERROR_MESSAGE);

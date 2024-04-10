@@ -58,7 +58,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.param$ = this.route.params.subscribe(params => {
+    this.param$ = this.route.params.subscribe((params) => {
       if (params['username']) {
         this.username = params['username'];
         this.showPro = !params['pro'] || params['pro'] !== '0';

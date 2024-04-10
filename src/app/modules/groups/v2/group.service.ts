@@ -31,9 +31,8 @@ export class GroupService implements OnDestroy {
   /**
    * The group
    */
-  readonly group$: BehaviorSubject<MindsGroup> = new BehaviorSubject<
-    MindsGroup
-  >(null);
+  readonly group$: BehaviorSubject<MindsGroup> =
+    new BehaviorSubject<MindsGroup>(null);
 
   /**
    * Whether user has access to group contents (feeds, members list, etc.)
@@ -116,9 +115,8 @@ export class GroupService implements OnDestroy {
   /**
    * Whether current user is a group moderator
    */
-  readonly isModerator$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  readonly isModerator$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Whether current user is awaiting approval to join the group
@@ -247,7 +245,7 @@ export class GroupService implements OnDestroy {
     const guid = this.guid$.getValue();
     this.inProgress$.next(true);
 
-    this.api.get(`${this.baseEndpoint}group/${guid}`).subscribe(response => {
+    this.api.get(`${this.baseEndpoint}group/${guid}`).subscribe((response) => {
       this.setGroup(response.group);
       this.syncLegacyService(response.group);
     });

@@ -17,24 +17,22 @@ describe('DiscoveryNoTagsPromptComponent', () => {
   let component: DiscoveryNoTagsPromptComponent;
   let fixture: ComponentFixture<DiscoveryNoTagsPromptComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [DiscoveryNoTagsPromptComponent, ButtonComponent],
-        imports: [RouterTestingModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: Client, useValue: clientMock },
-          {
-            provide: DiscoveryTagsService,
-            useValue: MockService(DiscoveryTagsService),
-          },
-          { provide: ModalService, useValue: modalServiceMock },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [DiscoveryNoTagsPromptComponent, ButtonComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: Client, useValue: clientMock },
+        {
+          provide: DiscoveryTagsService,
+          useValue: MockService(DiscoveryTagsService),
+        },
+        { provide: ModalService, useValue: modalServiceMock },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DiscoveryNoTagsPromptComponent);

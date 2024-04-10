@@ -8,34 +8,32 @@ describe('Composer Modal', () => {
   let comp: ModalComponent;
   let fixture: ComponentFixture<ModalComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ModalComponent,
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['from', 'iconId', 'sizeFactor'],
-          }),
-          MockComponent(
-            {
-              selector: 'm-composer__base',
-              outputs: ['onPost'],
-            },
-            ['focus']
-          ),
-        ],
-        providers: [
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ModalComponent,
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['from', 'iconId', 'sizeFactor'],
+        }),
+        MockComponent(
           {
-            provide: ComposerService,
-            useValue: MockService(ComposerService),
+            selector: 'm-composer__base',
+            outputs: ['onPost'],
           },
-        ],
-      }).compileComponents();
-    })
-  );
+          ['focus']
+        ),
+      ],
+      providers: [
+        {
+          provide: ComposerService,
+          useValue: MockService(ComposerService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(ModalComponent);
     comp = fixture.componentInstance;

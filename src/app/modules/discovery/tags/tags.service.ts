@@ -25,7 +25,7 @@ export class DiscoveryTagsService {
       const other = [];
       // Prevent duplicates
       for (let tag of trending) {
-        if (tags.findIndex(i => i.value === tag.value) === -1) {
+        if (tags.findIndex((i) => i.value === tag.value) === -1) {
           other.push(tag);
         }
       }
@@ -34,7 +34,7 @@ export class DiscoveryTagsService {
   );
 
   tagCount$: Observable<number> = this.tags$.pipe(
-    map(tags => tags?.length || 0)
+    map((tags) => tags?.length || 0)
   );
 
   /**
@@ -45,11 +45,11 @@ export class DiscoveryTagsService {
     this.hashtagDefaults.tags$,
   ]).pipe(
     map(([tags, defaults]) => {
-      const rawTags = tags.map(tag => tag.value);
+      const rawTags = tags.map((tag) => tag.value);
 
       return defaults
-        .filter(item => !rawTags.includes(item))
-        .map(item => ({
+        .filter((item) => !rawTags.includes(item))
+        .map((item) => ({
           value: item,
         }));
     })
@@ -115,7 +115,7 @@ export class DiscoveryTagsService {
 
       this.foryou$.next(
         response.for_you
-          ? response.for_you.map(tag => {
+          ? response.for_you.map((tag) => {
               return {
                 value: tag.hashtag,
                 posts_count: tag.volume,
@@ -129,7 +129,7 @@ export class DiscoveryTagsService {
 
       this.activityRelated$.next(
         response.activity_related
-          ? response.activity_related.map(tag => {
+          ? response.activity_related.map((tag) => {
               return {
                 value: tag.hashtag,
                 posts_count: tag.volume,
@@ -145,14 +145,16 @@ export class DiscoveryTagsService {
   }
 
   addTag(tag: DiscoveryTag): void {
-    if (this.tags$.value.findIndex(i => i.value === tag.value) === -1) {
+    if (this.tags$.value.findIndex((i) => i.value === tag.value) === -1) {
       this.tags$.next([...this.tags$.value, tag]);
       this.tagsChanged$.next(true);
     }
   }
 
   removeTag(tag: DiscoveryTag): void {
-    const pos: number = this.tags$.value.findIndex(i => i.value === tag.value);
+    const pos: number = this.tags$.value.findIndex(
+      (i) => i.value === tag.value
+    );
     if (pos === -1) return;
 
     const selected = this.tags$.value.slice(0); // slice to clone, avoid changing original
@@ -186,12 +188,13 @@ export class DiscoveryTagsService {
     this.saving$.next(true);
     try {
       await this.client.post('api/v3/discovery/tags', {
-        selected: this.tags$.value.map(tag => tag.value),
+        selected: this.tags$.value.map((tag) => tag.value),
         deselected: this.remove$.value
           .filter(
-            tag => this.tags$.value.findIndex(i => i.value === tag.value) === -1
+            (tag) =>
+              this.tags$.value.findIndex((i) => i.value === tag.value) === -1
           )
-          .map(tag => tag.value),
+          .map((tag) => tag.value),
       });
       this.tagsChanged$.next(false);
       return true;

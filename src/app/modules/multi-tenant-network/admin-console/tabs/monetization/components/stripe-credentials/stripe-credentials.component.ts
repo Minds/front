@@ -19,21 +19,19 @@ import { StripeKeysService } from '../../services/stripe-keys.service';
   styleUrls: ['./stripe-credentials.component.ng.scss'],
 })
 export class NetworkAdminStripeCredentialsComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /** Whether the component is initializing. */
-  public readonly initializing$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly initializing$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Whether a submission is in progress. */
-  public readonly submissionInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly submissionInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether the user has stored a secret key. */
-  public readonly hasStoredSecretKey$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly hasStoredSecretKey$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Form group. */
   private formGroup: FormGroup;

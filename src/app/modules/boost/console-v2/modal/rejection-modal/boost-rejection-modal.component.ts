@@ -58,7 +58,7 @@ export class BoostRejectionModalComponent implements OnInit, OnDestroy {
       this.boostConsoleService
         .reject(this.boost)
         .pipe(
-          catchError(e => {
+          catchError((e) => {
             console.error(e);
             this.toaster.error(e.error.message);
             return of(null);

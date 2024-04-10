@@ -159,7 +159,7 @@ export class ApiService {
         )
       )
       .pipe(
-        map(event => {
+        map((event) => {
           if (event.type === HttpEventType.Response) {
             const response = event.body;
 
@@ -203,7 +203,7 @@ export class ApiService {
         )
       )
       .pipe(
-        map(response => {
+        map((response) => {
           if (
             !response ||
             ((response as any).status && (response as any).status !== 'success')
@@ -238,7 +238,7 @@ export class ApiService {
     // console.log(output);
     if (queryParams) {
       const queryString = Object.keys(queryParams)
-        .map(key => {
+        .map((key) => {
           if (Array.isArray(queryParams[key])) {
             return queryParams[key]
               .map(

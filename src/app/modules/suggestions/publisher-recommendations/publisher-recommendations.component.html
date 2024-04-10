@@ -1,5 +1,5 @@
 <div
-  style="transition: all 0.3s; overflow: hidden; flex: 1;"
+  style="transition: all 0.3s; overflow: hidden; flex: 1"
   [style.height.px]="!connection ? (containerHeight$ | async) : undefined"
   *ngIf="visible"
 >
@@ -56,7 +56,7 @@
         *ngFor="
           let publisher of recommendations$
             | async
-            | slice: 0:(listSize$ | async);
+            | slice: 0 : (listSize$ | async);
           let i = index;
           trackBy: trackByFn
         "

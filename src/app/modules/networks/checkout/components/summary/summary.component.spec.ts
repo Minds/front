@@ -219,11 +219,12 @@ describe('NetworksCheckoutSummaryComponent', () => {
           ).length
         ).toBe(2);
 
-        const addonSubtitleElements: DebugElement[] = fixture.debugElement.queryAll(
-          By.css(
-            '.m-networksCheckoutSummary__addOnSummary .m-networksCheckoutSummary__sectionSubtitle'
-          )
-        );
+        const addonSubtitleElements: DebugElement[] =
+          fixture.debugElement.queryAll(
+            By.css(
+              '.m-networksCheckoutSummary__addOnSummary .m-networksCheckoutSummary__sectionSubtitle'
+            )
+          );
 
         expect(addonSubtitleElements[0].nativeElement.innerText).toBe(
           mockSummary.addonsSummary[0].name
@@ -232,18 +233,20 @@ describe('NetworksCheckoutSummaryComponent', () => {
           mockSummary.addonsSummary[1].name
         );
 
-        const addonSectionTextElements: DebugElement[] = fixture.debugElement.queryAll(
-          By.css(
-            '.m-networksCheckoutSummary__addOnSummary .m-networksCheckoutSummary__sectionText'
-          )
-        );
+        const addonSectionTextElements: DebugElement[] =
+          fixture.debugElement.queryAll(
+            By.css(
+              '.m-networksCheckoutSummary__addOnSummary .m-networksCheckoutSummary__sectionText'
+            )
+          );
 
         expect(addonSectionTextElements[0].nativeElement.innerText).toBe(
           `$${mockSummary.addonsSummary[0].monthlyFeeCents / 100}.00 / month`
         );
         expect(addonSectionTextElements[1].nativeElement.innerText).toBe(
-          `$${mockSummary.addonsSummary[0].oneTimeFeeCents /
-            100}.00 / one time set-up*`
+          `$${
+            mockSummary.addonsSummary[0].oneTimeFeeCents / 100
+          }.00 / one time set-up*`
         );
         expect(addonSectionTextElements[2].nativeElement.innerText).toBe(
           `$${mockSummary.addonsSummary[1].monthlyFeeCents / 100}.00 / month`

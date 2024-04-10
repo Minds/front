@@ -5,7 +5,7 @@ import { MockService } from '../../../utils/mock';
 import { OnboardingV3PanelService } from './onboarding-panel.service';
 import { OnboardingV3TagsService } from './tags/tags.service';
 
-let routerMock = new (function() {
+let routerMock = new (function () {
   this.navigate = jasmine.createSpy('navigate');
 })();
 
@@ -30,7 +30,7 @@ xdescribe('OnboardingV3PanelService', () => {
 
   it('should disable suggested hashtags when three are not selected', () => {
     service.currentStep$.next('SuggestedHashtagsStep');
-    service.disableProgress$.subscribe(val => {
+    service.disableProgress$.subscribe((val) => {
       expect(val).toBeTruthy();
     });
   });
@@ -39,7 +39,7 @@ xdescribe('OnboardingV3PanelService', () => {
     service.currentStep$.next('WelcomeStep');
     (service as any).dismiss$.next(false);
     service.nextStep();
-    (service as any).dismiss$.subscribe(val => {
+    (service as any).dismiss$.subscribe((val) => {
       expect(val).toBeTruthy();
     });
   });
@@ -48,7 +48,7 @@ xdescribe('OnboardingV3PanelService', () => {
     service.currentStep$.next('SuggestedHashtagsStep');
     (service as any).dismiss$.next(false);
     service.nextStep();
-    (service as any).dismiss$.subscribe(val => {
+    (service as any).dismiss$.subscribe((val) => {
       expect(val).toBeFalsy();
     });
     expect(service.currentStep$.getValue()).toBe('WelcomeStep');

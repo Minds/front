@@ -42,7 +42,10 @@ export class YoutubeMigrationService {
 
   videos$: BehaviorSubject<any[]> = new BehaviorSubject(null);
 
-  constructor(private client: Client, protected session: Session) {}
+  constructor(
+    private client: Client,
+    protected session: Session
+  ) {}
 
   /**
    * Initialize the subscriptions that update vals
@@ -51,13 +54,13 @@ export class YoutubeMigrationService {
   setup(): void {
     this.connected$.next(this.isConnected());
 
-    this.connected$.subscribe(connected => {
+    this.connected$.subscribe((connected) => {
       if (connected) {
         this.getChannels();
       }
     });
 
-    this.selectedChannel$.subscribe(channel => {
+    this.selectedChannel$.subscribe((channel) => {
       this.autoImport$.next(channel.auto_import);
     });
   }
@@ -97,7 +100,7 @@ export class YoutubeMigrationService {
     }
 
     const selectedChannel =
-      this.channels.find(c => c.id === channelId) || this.channels[0];
+      this.channels.find((c) => c.id === channelId) || this.channels[0];
 
     this.selectedChannel$.next(selectedChannel);
     return selectedChannel;
@@ -258,8 +261,8 @@ export class YoutubeMigrationService {
    * Automatically transfer newly-uploaded youtube videos to Minds
    */
   async enableAutoImport(): Promise<any> {
-    const channels: YoutubeChannel[] = this.session.getLoggedInUser()
-      .yt_channels;
+    const channels: YoutubeChannel[] =
+      this.session.getLoggedInUser().yt_channels;
     if (!channels) {
       return;
     }
@@ -290,8 +293,8 @@ export class YoutubeMigrationService {
    * Disable automatic transfer of newly-uploaded youtube videos to Minds
    */
   async disableAutoImport(): Promise<any> {
-    const channels: YoutubeChannel[] = this.session.getLoggedInUser()
-      .yt_channels;
+    const channels: YoutubeChannel[] =
+      this.session.getLoggedInUser().yt_channels;
     if (!channels) {
       return;
     }
@@ -375,7 +378,7 @@ export class YoutubeMigrationService {
     if (!videos) {
       return;
     }
-    videos.forEach(v => {
+    videos.forEach((v) => {
       v.display = {};
 
       if (v.ownerObj) {

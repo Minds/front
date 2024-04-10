@@ -60,49 +60,47 @@ describe('OnboardingV5VerifyEmailContentComponent', () => {
     },
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule],
-        declarations: [
-          OnboardingV5VerifyEmailContentComponent,
-          MockComponent({
-            selector: 'm-onboardingV5__footer',
-            inputs: [
-              'disabledActionButton',
-              'actionButton',
-              'skipButton',
-              'saving',
-            ],
-            outputs: ['actionButtonClick', 'skipButtonClick'],
-          }),
-        ],
-        providers: [
-          {
-            provide: OnboardingV5Service,
-            useValue: MockService(OnboardingV5Service),
-          },
-          {
-            provide: EmailConfirmationV2Service,
-            useValue: MockService(EmailConfirmationV2Service),
-          },
-          { provide: ToasterService, useValue: MockService(ToasterService) },
-          {
-            provide: SettingsV2Service,
-            useValue: MockService(SettingsV2Service, {
-              has: ['settings$'],
-              props: {
-                settings$: {
-                  get: () => new BehaviorSubject<{ email?: string }>(null),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule],
+      declarations: [
+        OnboardingV5VerifyEmailContentComponent,
+        MockComponent({
+          selector: 'm-onboardingV5__footer',
+          inputs: [
+            'disabledActionButton',
+            'actionButton',
+            'skipButton',
+            'saving',
+          ],
+          outputs: ['actionButtonClick', 'skipButtonClick'],
+        }),
+      ],
+      providers: [
+        {
+          provide: OnboardingV5Service,
+          useValue: MockService(OnboardingV5Service),
+        },
+        {
+          provide: EmailConfirmationV2Service,
+          useValue: MockService(EmailConfirmationV2Service),
+        },
+        { provide: ToasterService, useValue: MockService(ToasterService) },
+        {
+          provide: SettingsV2Service,
+          useValue: MockService(SettingsV2Service, {
+            has: ['settings$'],
+            props: {
+              settings$: {
+                get: () => new BehaviorSubject<{ email?: string }>(null),
               },
-            }),
-          },
-          { provide: Session, useValue: MockService(Session) },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        { provide: Session, useValue: MockService(Session) },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OnboardingV5VerifyEmailContentComponent);

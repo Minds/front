@@ -30,7 +30,10 @@
     color="blue"
     [solid]="true"
     (onAction)="onActionButtonClick()"
-    [attr.data-ref]="explainerScreenData.continueButton?.dataRef ?? 'explainer-screen-modal-continue-button'"
+    [attr.data-ref]="
+      explainerScreenData.continueButton?.dataRef ??
+      'explainer-screen-modal-continue-button'
+    "
   >
     <ng-container *ngIf="isLoggedIn(); else joinNowTextTemplate">{{
       explainerScreenData.continueButton.text

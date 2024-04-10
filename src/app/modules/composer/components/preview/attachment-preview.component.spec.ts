@@ -26,7 +26,7 @@ describe('Composer Attachment Preview', () => {
   let comp: AttachmentPreviewComponent;
   let fixture: ComponentFixture<AttachmentPreviewComponent>;
 
-  beforeEach(done => {
+  beforeEach((done) => {
     TestBed.configureTestingModule({
       declarations: [AttachmentPreviewComponent],
       providers: [

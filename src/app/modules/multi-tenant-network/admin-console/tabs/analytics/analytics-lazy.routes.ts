@@ -2,5 +2,5 @@
 export const NetworkAdminAnalyticsLazyRoutes = {
   path: 'analytics',
   loadChildren: () =>
-    import('./analytics.module').then(m => m.NetworkAdminAnalyticsModule),
+    import('./analytics.module').then((m) => m.NetworkAdminAnalyticsModule),
 };

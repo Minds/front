@@ -28,14 +28,12 @@ import { ThemeService } from '../../../common/services/theme.service';
 @Injectable({ providedIn: 'root' })
 export class MultiTenantNetworkConfigService implements OnDestroy {
   /** Subject to store config values. */
-  public readonly config$: BehaviorSubject<
-    MultiTenantConfig
-  > = new BehaviorSubject<MultiTenantConfig>(null);
+  public readonly config$: BehaviorSubject<MultiTenantConfig> =
+    new BehaviorSubject<MultiTenantConfig>(null);
 
   /** Subject to store whether config has been loaded. */
-  public readonly configLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly configLoaded$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   private configFetchSubscription: Subscription;
   private configSubscription: Subscription;
@@ -88,12 +86,10 @@ export class MultiTenantNetworkConfigService implements OnDestroy {
           this.updateLocalState(values);
         }
       }),
-      catchError(
-        (e: unknown): Observable<boolean> => {
-          console.error(e);
-          return of(false);
-        }
-      )
+      catchError((e: unknown): Observable<boolean> => {
+        console.error(e);
+        return of(false);
+      })
     );
   }
 

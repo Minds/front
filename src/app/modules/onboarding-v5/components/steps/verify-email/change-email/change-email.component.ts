@@ -34,32 +34,29 @@ import { SettingsV2Service } from '../../../../../settings-v2/settings-v2.servic
   ],
 })
 export class OnboardingV5ChangeEmailContentComponent
-  implements OnInit, AfterViewInit, OnboardingStepContentInterface {
+  implements OnInit, AfterViewInit, OnboardingStepContentInterface
+{
   /** CMS data. */
   @Input() public data: ComponentOnboardingV5VerifyEmailStep;
 
   /** Go back click event */
-  @Output() public readonly goBackClick: EventEmitter<void> = new EventEmitter<
-    void
-  >();
+  @Output() public readonly goBackClick: EventEmitter<void> =
+    new EventEmitter<void>();
 
   /** Email changed event */
-  @Output() public readonly emailChanged: EventEmitter<void> = new EventEmitter<
-    void
-  >();
+  @Output() public readonly emailChanged: EventEmitter<void> =
+    new EventEmitter<void>();
 
   /** Whether email change request is in progress. */
-  public readonly emailChangeInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly emailChangeInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Form group. */
   public formGroup: FormGroup;
 
   /** View-child for when email change is in progress. */
-  @ViewChild('newEmailInput') public newEmailInput: ElementRef<
-    HTMLInputElement
-  >;
+  @ViewChild('newEmailInput')
+  public newEmailInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private session: Session,

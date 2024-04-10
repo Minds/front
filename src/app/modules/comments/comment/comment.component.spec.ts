@@ -43,166 +43,164 @@ describe('CommentComponentV2', () => {
   let comp: CommentComponentV2;
   let fixture: ComponentFixture<CommentComponentV2>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          CommentComponentV2,
-          TagsPipeMock,
-          CodeHighlightPipe,
-          TruncatePipe,
-          MockComponent({
-            selector: 'm-translate',
-            inputs: ['open', 'entity'],
-          }),
-          MockComponent({
-            selector: 'm-hovercard',
-            inputs: ['publisher', 'offset'],
-          }),
-          MockComponent({
-            selector: 'minds-button-thumbs-up',
-            inputs: ['object'],
-          }),
-          MockComponent({
-            selector: 'minds-button-thumbs-down',
-            inputs: ['object'],
-          }),
-          MockComponent({
-            selector: 'm-relativeTimeSpan',
-            inputs: ['entity'],
-          }),
-          MockComponent({
-            selector: 'm-channel--badges',
-            inputs: ['user'],
-          }),
-          MockComponent({
-            selector: 'm-read-more--button',
-            inputs: ['v2'],
-          }),
-          MockComponent({
-            selector: 'm-dropdownMenu',
-            inputs: ['menu', 'anchorPosition'],
-          }),
-          MockComponent({
-            selector: 'a',
-            inputs: ['routerLink'],
-          }),
-          MockComponent({
-            selector: 'div',
-            inputs: ['maxHeightAllowed'],
-          }),
-          MockComponent({
-            selector: 'm-readMore',
-            inputs: ['text', 'targetLength'],
-          }),
-        ],
-        providers: [
-          {
-            provide: CodeHighlightService,
-            useValue: MockService(CodeHighlightService),
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: Client,
-            useValue: MockService(Client),
-          },
-          {
-            provide: TranslationService,
-            useValue: MockService(TranslationService),
-          },
-          {
-            provide: UserAvatarService,
-            useValue: MockService(UserAvatarService),
-          },
-          {
-            provide: ModalService,
-            useValue: MockService(ModalService),
-          },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: TimeDiffService,
-            useValue: MockService(TimeDiffService, {
-              has: ['source'],
-              props: {
-                source: {
-                  get: () => new BehaviorSubject<any>(0),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        CommentComponentV2,
+        TagsPipeMock,
+        CodeHighlightPipe,
+        TruncatePipe,
+        MockComponent({
+          selector: 'm-translate',
+          inputs: ['open', 'entity'],
+        }),
+        MockComponent({
+          selector: 'm-hovercard',
+          inputs: ['publisher', 'offset'],
+        }),
+        MockComponent({
+          selector: 'minds-button-thumbs-up',
+          inputs: ['object'],
+        }),
+        MockComponent({
+          selector: 'minds-button-thumbs-down',
+          inputs: ['object'],
+        }),
+        MockComponent({
+          selector: 'm-relativeTimeSpan',
+          inputs: ['entity'],
+        }),
+        MockComponent({
+          selector: 'm-channel--badges',
+          inputs: ['user'],
+        }),
+        MockComponent({
+          selector: 'm-read-more--button',
+          inputs: ['v2'],
+        }),
+        MockComponent({
+          selector: 'm-dropdownMenu',
+          inputs: ['menu', 'anchorPosition'],
+        }),
+        MockComponent({
+          selector: 'a',
+          inputs: ['routerLink'],
+        }),
+        MockComponent({
+          selector: 'div',
+          inputs: ['maxHeightAllowed'],
+        }),
+        MockComponent({
+          selector: 'm-readMore',
+          inputs: ['text', 'targetLength'],
+        }),
+      ],
+      providers: [
+        {
+          provide: CodeHighlightService,
+          useValue: MockService(CodeHighlightService),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: Client,
+          useValue: MockService(Client),
+        },
+        {
+          provide: TranslationService,
+          useValue: MockService(TranslationService),
+        },
+        {
+          provide: UserAvatarService,
+          useValue: MockService(UserAvatarService),
+        },
+        {
+          provide: ModalService,
+          useValue: MockService(ModalService),
+        },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: TimeDiffService,
+          useValue: MockService(TimeDiffService, {
+            has: ['source'],
+            props: {
+              source: {
+                get: () => new BehaviorSubject<any>(0),
               },
-            }),
-          },
-          {
-            provide: ElementRef,
-            useValue: MockService(ElementRef),
-          },
-          {
-            provide: Router,
-            useValue: MockService(Router),
-          },
-          {
-            provide: ActivityService,
-            useValue: MockService(ActivityService),
-          },
-          {
-            provide: PLATFORM_ID,
-            useValue: 'browser',
-          },
-          {
-            provide: ConfigsService,
-            useValue: MockService(ConfigsService),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          {
-            provide: ActivityModalCreatorService,
-            useValue: MockService(ActivityModalCreatorService),
-          },
-          {
-            provide: Injector,
-            useValue: MockService(Injector),
-          },
-          {
-            provide: AutocompleteSuggestionsService,
-            useValue: MockService(AutocompleteSuggestionsService),
-          },
-          {
-            provide: ClientMetaService,
-            useValue: MockService(ClientMetaService),
-          },
-          {
-            provide: ClientMetaDirective,
-            useValue: MockService(ClientMetaDirective),
-          },
-          {
-            provide: PermissionsService,
-            useValue: MockService(PermissionsService),
-          },
-          {
-            provide: NsfwEnabledService,
-            useValue: MockService(NsfwEnabledService),
-          },
-          {
-            provide: ModerationActionGqlService,
-            useValue: MockService(ModerationActionGqlService),
-          },
-          { provide: IS_TENANT_NETWORK, useValue: false },
-        ],
-      })
-        .overrideProvider(AttachmentService, {
-          useValue: MockService(AttachmentService),
-        })
-        .compileComponents();
+            },
+          }),
+        },
+        {
+          provide: ElementRef,
+          useValue: MockService(ElementRef),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
+        {
+          provide: ActivityService,
+          useValue: MockService(ActivityService),
+        },
+        {
+          provide: PLATFORM_ID,
+          useValue: 'browser',
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: ActivityModalCreatorService,
+          useValue: MockService(ActivityModalCreatorService),
+        },
+        {
+          provide: Injector,
+          useValue: MockService(Injector),
+        },
+        {
+          provide: AutocompleteSuggestionsService,
+          useValue: MockService(AutocompleteSuggestionsService),
+        },
+        {
+          provide: ClientMetaService,
+          useValue: MockService(ClientMetaService),
+        },
+        {
+          provide: ClientMetaDirective,
+          useValue: MockService(ClientMetaDirective),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+        {
+          provide: NsfwEnabledService,
+          useValue: MockService(NsfwEnabledService),
+        },
+        {
+          provide: ModerationActionGqlService,
+          useValue: MockService(ModerationActionGqlService),
+        },
+        { provide: IS_TENANT_NETWORK, useValue: false },
+      ],
     })
-  );
+      .overrideProvider(AttachmentService, {
+        useValue: MockService(AttachmentService),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(CommentComponentV2);
     comp = fixture.componentInstance;
 
@@ -222,7 +220,7 @@ describe('CommentComponentV2', () => {
     comp.shouldOpenModal = true;
     (comp as any).cdnUrl = 'http://locahost';
 
-    spyOn(window, 'confirm').and.callFake(function() {
+    spyOn(window, 'confirm').and.callFake(function () {
       return true;
     });
     spyOn(console, 'error'); // mute errors.

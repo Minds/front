@@ -50,7 +50,7 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     this.session.isLoggedIn(() => this.detectChanges());
 
     this.themeSubscription = this.themeService.isDark$.subscribe(
-      isDark => (this.isDark = isDark)
+      (isDark) => (this.isDark = isDark)
     );
   }
 

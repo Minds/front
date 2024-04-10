@@ -10,7 +10,10 @@ type ModalComponent = typeof VerifyUniquenessModalComponent;
  */
 @Injectable({ providedIn: 'root' })
 export class VerifyUniquenessModalLazyService {
-  constructor(private modalService: ModalService, private injector: Injector) {}
+  constructor(
+    private modalService: ModalService,
+    private injector: Injector
+  ) {}
 
   /**
    * Lazy load modules and open modal.

@@ -19,7 +19,8 @@ import {
   styleUrls: ['./dynamic-form.component.scss'],
 })
 export class DynamicFormComponent
-  implements OnInit, AfterViewChecked, OnChanges {
+  implements OnInit, AfterViewChecked, OnChanges
+{
   @Input() fields;
   form: UntypedFormGroup;
   fieldDefinitions;
@@ -31,7 +32,7 @@ export class DynamicFormComponent
   }
 
   private updateFields() {
-    this.fieldDefinitions = Object.keys(this.fields).map(prop => {
+    this.fieldDefinitions = Object.keys(this.fields).map((prop) => {
       return Object.assign({}, { key: prop }, this.fields[prop]);
     });
 

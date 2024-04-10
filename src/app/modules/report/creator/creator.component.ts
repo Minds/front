@@ -82,7 +82,7 @@ export class ReportCreatorComponent implements AfterViewInit {
 
     const supportTierUrn: string =
       opts.entity?.wire_threshold?.support_tier?.urn;
-    this.subjects = this.reportService.reasons.filter(reason => {
+    this.subjects = this.reportService.reasons.filter((reason) => {
       return (
         reason.value !== 18 ||
         (supportTierUrn && this.plusTierUrn.isPlusTierUrn(supportTierUrn))
@@ -250,17 +250,17 @@ export class ReportCreatorComponent implements AfterViewInit {
   private async handleTenantReportSubmission(): Promise<void> {
     this.inProgress = true;
 
-    const reasonEnums: CreateReportMutationReasonEnums = this.graphQLReportCreatorService.mapLegacyReasonToEnums(
-      this.subject.value,
-      this.subReason.value
-    );
+    const reasonEnums: CreateReportMutationReasonEnums =
+      this.graphQLReportCreatorService.mapLegacyReasonToEnums(
+        this.subject.value,
+        this.subReason.value
+      );
 
-    const success: boolean = await this.graphQLReportCreatorService.createNewReport(
-      {
+    const success: boolean =
+      await this.graphQLReportCreatorService.createNewReport({
         entityUrn: this.urn,
         ...reasonEnums,
-      }
-    );
+      });
 
     this.inProgress = false;
 
