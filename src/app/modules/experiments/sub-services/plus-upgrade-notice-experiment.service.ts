@@ -14,8 +14,9 @@ export class PlusUpgradeNoticeExperimentService {
    * @returns { number } active variation. Defaults to 0.
    */
   public getActiveVariation(): number {
-    return parseInt(
-      this.experiments.run('minds-3639-plus-notice')?.toString() ?? '0'
-    );
+    // return parseInt(
+    //   this.experiments.run('minds-3639-plus-notice')?.toString() ?? '0'
+    // );
+    return 0;
   }
 }

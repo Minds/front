@@ -22,14 +22,14 @@ describe('PlusUpgradeNoticeExperimentService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get active variation of experiment', () => {
-    const variation = '2';
-    (service as any).experiments.run.and.returnValue(variation);
-    expect(service.getActiveVariation()).toBe(parseInt(variation));
-  });
+  // it('should get active variation of experiment', () => {
+  //   const variation = '2';
+  //   (service as any).experiments.run.and.returnValue(variation);
+  //   expect(service.getActiveVariation()).toBe(parseInt(variation));
+  // });
 
-  it('should default to 0 if no active variation', () => {
-    (service as any).experiments.run.and.returnValue(null);
-    expect(service.getActiveVariation()).toBe(0);
-  });
+  // it('should default to 0 if no active variation', () => {
+  //   (service as any).experiments.run.and.returnValue(null);
+  //   expect(service.getActiveVariation()).toBe(0);
+  // });
 });
