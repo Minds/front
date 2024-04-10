@@ -19,9 +19,8 @@ import { ModalService } from '../../../../../services/ux/modal.service';
 @Injectable({ providedIn: 'root' })
 export class ChannelAdminConfirmationService extends AbstractSubscriberComponent {
   // fires on complete
-  public readonly completed$: BehaviorSubject<
-    CompletedPayload
-  > = new BehaviorSubject<CompletedPayload>(null);
+  public readonly completed$: BehaviorSubject<CompletedPayload> =
+    new BehaviorSubject<CompletedPayload>(null);
 
   constructor(
     private modalService: ModalService,
@@ -71,13 +70,13 @@ export class ChannelAdminConfirmationService extends AbstractSubscriberComponent
         .put(`api/v2/admin/${type}/${userGuid}/${action}/${timespan}`)
         .pipe(
           take(1),
-          catchError(e => {
+          catchError((e) => {
             this.toast.error('An error has occurred');
             console.error(e);
             return EMPTY;
           })
         )
-        .subscribe(val => {
+        .subscribe((val) => {
           this.toast.success(`Success`);
           this.completed$.next({
             action: action,

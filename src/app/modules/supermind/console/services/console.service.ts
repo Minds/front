@@ -15,14 +15,12 @@ import {
 @Injectable({ providedIn: 'root' })
 export class SupermindConsoleService {
   // Subject containing list type for console to display.
-  public readonly listType$: BehaviorSubject<
-    SupermindConsoleListType
-  > = new BehaviorSubject<SupermindConsoleListType>('inbox');
+  public readonly listType$: BehaviorSubject<SupermindConsoleListType> =
+    new BehaviorSubject<SupermindConsoleListType>('inbox');
 
   // Whether this is a single Supermind page.
-  public readonly isSingleSupermindPage$: Observable<
-    boolean
-  > = this.listType$.pipe(map(listType => this.isNumericListType(listType)));
+  public readonly isSingleSupermindPage$: Observable<boolean> =
+    this.listType$.pipe(map((listType) => this.isNumericListType(listType)));
 
   constructor(private api: ApiService) {}
 
@@ -60,7 +58,7 @@ export class SupermindConsoleService {
 
         return this.api.get<ApiResponse>(endpoint, params);
       }),
-      catchError(e => {
+      catchError((e) => {
         if (e.status === 403) {
           return of({ redirect: true, errorMessage: e.error.message });
         }
@@ -104,7 +102,7 @@ export class SupermindConsoleService {
         return response['count'] ?? 0;
       }),
       // handle errors. WILL emit.
-      catchError(e => {
+      catchError((e) => {
         console.error(e);
         return of(null);
       })

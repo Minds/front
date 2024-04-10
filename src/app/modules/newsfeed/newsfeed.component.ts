@@ -100,12 +100,12 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
         this.router.navigate(['/login']); //force login
       }
 
-      this.renderer.listen('window', 'resize', event => {
+      this.renderer.listen('window', 'resize', (event) => {
         this.detectWidth();
       });
     }
 
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['message']) {
         this.message = params['message'];
       }

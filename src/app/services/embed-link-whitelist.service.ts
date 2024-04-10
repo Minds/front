@@ -18,8 +18,10 @@ export class EmbedLinkWhitelistService {
   private regexMap: EmbedLinkMap = {
     odysee: /^(?:https?:\/\/)?(?:www\.)?odysee\.com\/\$\/embed\/((.+)\/.+)/i,
     rumble: /^(?:https?:\/\/)?(?:www\.)?rumble\.com\/\embed\/([\w\d]+)/i,
-    livepeerLegacy: /^(http(s)?:\/\/)?(www\.)?minds-player\.withlivepeer\.com\?v=([a-zA-Z0-9]+)$/,
-    livepeer: /^(http(s)?:\/\/)?(www\.)?minds-player\.vercel\.app\?v=([a-zA-Z0-9]+)$/,
+    livepeerLegacy:
+      /^(http(s)?:\/\/)?(www\.)?minds-player\.withlivepeer\.com\?v=([a-zA-Z0-9]+)$/,
+    livepeer:
+      /^(http(s)?:\/\/)?(www\.)?minds-player\.vercel\.app\?v=([a-zA-Z0-9]+)$/,
   };
 
   /**

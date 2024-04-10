@@ -18,7 +18,7 @@ export class ScrollRestorationService {
 
   listen(): this {
     this._routerListener = this.router.events
-      .pipe(filter(e => e instanceof Scroll))
+      .pipe(filter((e) => e instanceof Scroll))
       .subscribe((e: Scroll) => {
         if (e.position) {
           this.offsetForRoute.set(e.routerEvent.url, e.position[1]);

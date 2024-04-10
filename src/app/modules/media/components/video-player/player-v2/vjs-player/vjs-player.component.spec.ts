@@ -29,16 +29,14 @@ describe('VjsPlayerComponent', () => {
     on: jasmine.createSpy('on'),
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [VjsPlayerComponent],
-        providers: [],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [VjsPlayerComponent],
+      providers: [],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(VjsPlayerComponent);
     comp = fixture.componentInstance;
 

@@ -8,14 +8,12 @@ describe('AnalyticsBenchmarkComponent', () => {
   let component: AnalyticsBenchmarkComponent;
   let fixture: ComponentFixture<AnalyticsBenchmarkComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [AnalyticsBenchmarkComponent, TooltipComponentMock],
-        // schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [AnalyticsBenchmarkComponent, TooltipComponentMock],
+      // schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AnalyticsBenchmarkComponent);

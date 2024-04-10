@@ -18,8 +18,7 @@ export const mockOnboardingV5VersionsData = {
                     media: {
                       data: {
                         attributes: {
-                          url:
-                            '/uploads/onboarding_screen_hashtag_mockup_1_3ce97d4b10.png',
+                          url: '/uploads/onboarding_screen_hashtag_mockup_1_3ce97d4b10.png',
                           height: 2241,
                           width: 1100,
                           alternativeText: null,
@@ -143,8 +142,7 @@ export const mockOnboardingV5VersionsData = {
                     media: {
                       data: {
                         attributes: {
-                          url:
-                            '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
+                          url: '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
                           height: 561,
                           width: 275,
                           alternativeText: null,
@@ -197,8 +195,7 @@ export const mockOnboardingV5VersionsData = {
                     media: {
                       data: {
                         attributes: {
-                          url:
-                            '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
+                          url: '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
                           height: 561,
                           width: 275,
                           alternativeText: null,
@@ -221,8 +218,7 @@ export const mockOnboardingV5VersionsData = {
                     media: {
                       data: {
                         attributes: {
-                          url:
-                            '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
+                          url: '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
                           height: 561,
                           width: 275,
                           alternativeText: null,
@@ -245,8 +241,7 @@ export const mockOnboardingV5VersionsData = {
                     media: {
                       data: {
                         attributes: {
-                          url:
-                            '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
+                          url: '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
                           height: 561,
                           width: 275,
                           alternativeText: null,
@@ -317,8 +312,7 @@ export const mockOnboardingV5VersionsData = {
                     media: {
                       data: {
                         attributes: {
-                          url:
-                            '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
+                          url: '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
                           height: 561,
                           width: 275,
                           alternativeText: null,
@@ -374,8 +368,7 @@ export const mockOnboardingV5VersionsData = {
                     media: {
                       data: {
                         attributes: {
-                          url:
-                            '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
+                          url: '/uploads/onboarding_screen_hashtag_mockup_63d5386ba5.png',
                           height: 561,
                           width: 275,
                           alternativeText: null,

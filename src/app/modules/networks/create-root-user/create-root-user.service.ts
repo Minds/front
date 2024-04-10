@@ -13,16 +13,14 @@ import { ToasterService } from '../../../common/services/toaster.service';
  */
 @Injectable()
 export class NetworksCreateRootUserService {
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * The nework we're creating the root user for
    */
-  public readonly network$: BehaviorSubject<Tenant> = new BehaviorSubject<
-    Tenant
-  >(null);
+  public readonly network$: BehaviorSubject<Tenant> =
+    new BehaviorSubject<Tenant>(null);
 
   constructor(
     private createTenantRootUserGQL: CreateTenantRootUserGQL,

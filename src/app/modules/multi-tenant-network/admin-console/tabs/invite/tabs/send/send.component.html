@@ -8,7 +8,7 @@
     <!-- EMAILS -->
     <!-- ------------------------------ -->
     <div class="m-networkAdminConsoleInviteSendField--emails">
-      <div class="m-networkAdminConsole__numberedFormInputHeader ">
+      <div class="m-networkAdminConsole__numberedFormInputHeader">
         <span class="m-networkAdminConsoleNumberedFormInputHeader__number">
           1
         </span>
@@ -157,18 +157,16 @@
           <p class="m-networkAdminConsole__formLabel--secondary">
             <span
               i18n="
-
-                @@NETWORK_ADMIN_CONSOLE_INVITE__BESPOKE_MESSAGE_DESC_CUSTOM_MESSAGE
-
-              "
+                @@NETWORK_ADMIN_CONSOLE_INVITE__BESPOKE_MESSAGE_DESC_CUSTOM_MESSAGE"
               >Personalize your invite email message (optional).</span
             >
             <span
-              [ngClass]="{'m-networkAdminConsole__formText--error': formGroup.get('bespokeMessage').errors?.['maxlength']}"
+              [ngClass]="{
+                'm-networkAdminConsole__formText--error':
+                  formGroup.get('bespokeMessage').errors?.['maxlength']
+              }"
               i18n="
-                 @@NETWORK_ADMIN_CONSOLE_INVITE__BESPOKE_MESSAGE_DESC_MAX_LENGTH
-
-              "
+                @@NETWORK_ADMIN_CONSOLE_INVITE__BESPOKE_MESSAGE_DESC_MAX_LENGTH"
             >
               Make sure that your email message is under 500 characters.</span
             >

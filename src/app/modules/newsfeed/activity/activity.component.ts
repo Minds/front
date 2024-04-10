@@ -173,10 +173,12 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
+    this.persistentFeedExperimentActive =
+      this.persistentFeedExperiment.isActive();
 
     this.isFixedHeight = this.service.displayOptions.fixedHeight;
-    this.isFixedHeightContainer = this.service.displayOptions.fixedHeightContainer;
+    this.isFixedHeightContainer =
+      this.service.displayOptions.fixedHeightContainer;
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
     this.noToolbar = !this.service.displayOptions.showToolbar;
     this.isFeed = this.service.displayOptions.isFeed;

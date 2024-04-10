@@ -11,8 +11,10 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   selector: 'm-feedNotice--connectWallet',
   templateUrl: 'connect-wallet-notice.component.html',
 })
-export class ConnectWalletNoticeComponent extends AbstractSubscriberComponent
-  implements OnInit {
+export class ConnectWalletNoticeComponent
+  extends AbstractSubscriberComponent
+  implements OnInit
+{
   @Input() public dismissible: boolean = true;
 
   constructor(

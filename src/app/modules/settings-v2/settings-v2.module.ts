@@ -563,13 +563,10 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
           {
             path: 'twitter-sync',
-            canActivate: [
-              MindsOnlyRedirectGuard,
-              experimentVariationGuard('front-6032-twitter-sync-settings'),
-            ],
+            canActivate: [MindsOnlyRedirectGuard],
             loadChildren: () =>
               import('../newsfeed/twitter-sync/twitter-sync.module').then(
-                m => m.TwitterSyncModule
+                (m) => m.TwitterSyncModule
               ),
             data: {
               title: 'Twitter Sync',

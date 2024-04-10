@@ -19,11 +19,11 @@ export class NetworkAdminConsoleRolesComponent implements OnInit {
   /**
    * Allows us to use enum in the template
    */
-  public multiTenantRolesView: typeof MultiTenantRolesView = MultiTenantRolesView;
+  public multiTenantRolesView: typeof MultiTenantRolesView =
+    MultiTenantRolesView;
 
-  view$: BehaviorSubject<MultiTenantRolesView> = new BehaviorSubject<
-    MultiTenantRolesView
-  >(MultiTenantRolesView.PERMISSIONS);
+  view$: BehaviorSubject<MultiTenantRolesView> =
+    new BehaviorSubject<MultiTenantRolesView>(MultiTenantRolesView.PERMISSIONS);
 
   constructor(
     protected service: MultiTenantRolesService,
@@ -31,7 +31,7 @@ export class NetworkAdminConsoleRolesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       // Get the view from the route
       if (params['view']) {
         this.view$.next(params['view']);

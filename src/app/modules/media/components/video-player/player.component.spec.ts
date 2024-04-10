@@ -9,69 +9,67 @@ describe('MindsVideoPlayerComponent', () => {
   let comp: MindsVideoPlayerComponent;
   let fixture: ComponentFixture<MindsVideoPlayerComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MindsVideoPlayerComponent,
-          MockComponent({
-            selector: 'plyr',
-            inputs: [
-              'plyrDriver',
-              'plyrPoster',
-              'plyrPlaysInline',
-              'plyrSources',
-              'plyrOptions',
-            ],
-            outputs: [
-              'plyrEnded',
-              'plyrPlay',
-              'plyrControlsShown',
-              'plyrControlsHidden',
-              'plyrEnterFullScreen',
-              'plyrExitFullScreen',
-              'plyrLoadedMetadata',
-              'plyrPlaying',
-              'plyrReady',
-              'plyrVolumeChange',
-              'plyrSeeking',
-            ],
-          }),
-        ],
-        providers: [
-          {
-            provide: ElementRef,
-            useValue: MockService(ElementRef),
-          },
-          {
-            provide: VideoPlayerService,
-            useValue: null,
-          },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: PLATFORM_ID,
-            useValue: 'browser',
-          },
-        ],
-      })
-        .overrideProvider(VideoPlayerService, {
-          useValue: MockService(VideoPlayerService, {
-            has: ['isPlayable$', 'sources$', 'onReady$'],
-            props: {
-              isPlayable$: { get: () => new BehaviorSubject<boolean>(true) },
-              sources$: { get: () => new BehaviorSubject<VideoSource[]>([]) },
-              onReady$: { get: () => new BehaviorSubject<boolean>(true) },
-            },
-          }),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MindsVideoPlayerComponent,
+        MockComponent({
+          selector: 'plyr',
+          inputs: [
+            'plyrDriver',
+            'plyrPoster',
+            'plyrPlaysInline',
+            'plyrSources',
+            'plyrOptions',
+          ],
+          outputs: [
+            'plyrEnded',
+            'plyrPlay',
+            'plyrControlsShown',
+            'plyrControlsHidden',
+            'plyrEnterFullScreen',
+            'plyrExitFullScreen',
+            'plyrLoadedMetadata',
+            'plyrPlaying',
+            'plyrReady',
+            'plyrVolumeChange',
+            'plyrSeeking',
+          ],
+        }),
+      ],
+      providers: [
+        {
+          provide: ElementRef,
+          useValue: MockService(ElementRef),
+        },
+        {
+          provide: VideoPlayerService,
+          useValue: null,
+        },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: PLATFORM_ID,
+          useValue: 'browser',
+        },
+      ],
     })
-  );
+      .overrideProvider(VideoPlayerService, {
+        useValue: MockService(VideoPlayerService, {
+          has: ['isPlayable$', 'sources$', 'onReady$'],
+          props: {
+            isPlayable$: { get: () => new BehaviorSubject<boolean>(true) },
+            sources$: { get: () => new BehaviorSubject<VideoSource[]>([]) },
+            onReady$: { get: () => new BehaviorSubject<boolean>(true) },
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(MindsVideoPlayerComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

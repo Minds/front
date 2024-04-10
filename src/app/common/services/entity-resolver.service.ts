@@ -32,6 +32,6 @@ export class EntityResolverService {
   public get$<T>(opt: EntityResolverServiceOptions): Observable<T | null> {
     return this.apiService
       .get<T>(`api/v3/entities/${opt.ref}`)
-      .pipe(catchError(e => of(null)));
+      .pipe(catchError((e) => of(null)));
   }
 }

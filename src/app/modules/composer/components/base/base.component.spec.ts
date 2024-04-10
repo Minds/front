@@ -121,7 +121,7 @@ describe('BaseComponent', () => {
         { provide: ToasterService, useValue: MockService(ToasterService) },
         {
           provide: ConfigsService,
-          useValue: new (function() {
+          useValue: new (function () {
             this.get = jasmine
               .createSpy('get')
               .and.returnValue({ support_tier_urn: '~support_tier_urn~' });
@@ -245,10 +245,9 @@ describe('BaseComponent', () => {
     (comp as any).service.showSiteMembershipPostPreview$.next(true);
     fixture.detectChanges();
 
-    const showPreviewPane = await new Promise(resolve => {
-      showMembershipPreviewPaneSubscription = comp.showMembershipPreviewPane$.subscribe(
-        value => resolve(value)
-      );
+    const showPreviewPane = await new Promise((resolve) => {
+      showMembershipPreviewPaneSubscription =
+        comp.showMembershipPreviewPane$.subscribe((value) => resolve(value));
       fixture.detectChanges();
     });
 
@@ -268,10 +267,9 @@ describe('BaseComponent', () => {
     (comp as any).service.showSiteMembershipPostPreview$.next(true);
     fixture.detectChanges();
 
-    const showPreviewPane = await new Promise(resolve => {
-      showMembershipPreviewPaneSubscription = comp.showMembershipPreviewPane$.subscribe(
-        value => resolve(value)
-      );
+    const showPreviewPane = await new Promise((resolve) => {
+      showMembershipPreviewPaneSubscription =
+        comp.showMembershipPreviewPane$.subscribe((value) => resolve(value));
       fixture.detectChanges();
     });
 
@@ -291,10 +289,9 @@ describe('BaseComponent', () => {
     (comp as any).service.showSiteMembershipPostPreview$.next(false);
     fixture.detectChanges();
 
-    const showPreviewPane = await new Promise(resolve => {
-      showMembershipPreviewPaneSubscription = comp.showMembershipPreviewPane$.subscribe(
-        value => resolve(value)
-      );
+    const showPreviewPane = await new Promise((resolve) => {
+      showMembershipPreviewPaneSubscription =
+        comp.showMembershipPreviewPane$.subscribe((value) => resolve(value));
       fixture.detectChanges();
     });
 

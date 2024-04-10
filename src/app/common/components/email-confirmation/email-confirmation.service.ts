@@ -16,9 +16,8 @@ export class EmailConfirmationService {
   private readonly fromEmailConfirmation: boolean = false;
 
   // called on email confirmation success.
-  public readonly success$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly success$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     protected client: Client,

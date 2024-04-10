@@ -45,7 +45,8 @@ import { MetaService } from '../../../../../common/services/meta.service';
   ],
 })
 export class NetworkAdminConsoleAppearanceComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /** Whether loading is in progress. */
   public loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true
@@ -55,27 +56,24 @@ export class NetworkAdminConsoleAppearanceComponent
   public formGroup: FormGroup;
 
   /** Color scheme enum for access in template.  */
-  public readonly MultiTenantColorScheme: typeof MultiTenantColorScheme = MultiTenantColorScheme;
+  public readonly MultiTenantColorScheme: typeof MultiTenantColorScheme =
+    MultiTenantColorScheme;
 
   /** Whether saving is in progress. */
-  public readonly savingInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly savingInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Storing a reference to a square logo file pre-upload. */
-  public readonly squareLogoFile$: BehaviorSubject<File> = new BehaviorSubject<
-    File
-  >(null);
+  public readonly squareLogoFile$: BehaviorSubject<File> =
+    new BehaviorSubject<File>(null);
 
   /** Storing a reference to a horizontal logo file pre-upload. */
-  public readonly horizontalLogoFile$: BehaviorSubject<
-    File
-  > = new BehaviorSubject<File>(null);
+  public readonly horizontalLogoFile$: BehaviorSubject<File> =
+    new BehaviorSubject<File>(null);
 
   /** Storing a reference to a favicon files pre-upload. */
-  public readonly faviconFile$: BehaviorSubject<File> = new BehaviorSubject<
-    File
-  >(null);
+  public readonly faviconFile$: BehaviorSubject<File> =
+    new BehaviorSubject<File>(null);
 
   /** URL for square logo  - if no file is stored pre-upload, points to server. */
   public readonly squareLogoFileUrl$: Observable<string> = combineLatest([
@@ -180,16 +178,16 @@ export class NetworkAdminConsoleAppearanceComponent
     let requests: Observable<HttpEvent<ApiResponse> | boolean>[] = [];
 
     // get list of requests for images to upload.
-    let uploadRequests: Observable<
-      HttpEvent<ApiResponse>
-    >[] = this.buildFileUploadRequests();
+    let uploadRequests: Observable<HttpEvent<ApiResponse>>[] =
+      this.buildFileUploadRequests();
 
     if (uploadRequests.length) {
       requests.push(...uploadRequests);
     }
 
     // build request to update config endpoint.
-    let updateConfigRequest: Observable<boolean> = this.buildUpdateConfigRequest();
+    let updateConfigRequest: Observable<boolean> =
+      this.buildUpdateConfigRequest();
 
     if (updateConfigRequest) {
       requests.push(updateConfigRequest);
@@ -205,12 +203,10 @@ export class NetworkAdminConsoleAppearanceComponent
     this.submitDataSubscription = forkJoin(requests)
       .pipe(
         take(1),
-        catchError(
-          (e: unknown): Observable<null> => {
-            console.error(e);
-            return of(null);
-          }
-        )
+        catchError((e: unknown): Observable<null> => {
+          console.error(e);
+          return of(null);
+        })
       )
       .subscribe((events: any): void => {
         this.savingInProgress$.next(false);

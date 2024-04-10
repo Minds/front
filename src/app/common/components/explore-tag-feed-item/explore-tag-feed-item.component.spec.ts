@@ -11,17 +11,15 @@ describe('ExploreTagFeedItemComponent', () => {
   let fixture: ComponentFixture<ExploreTagFeedItemComponent>;
   let router: Router;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule.withRoutes([])],
-        declarations: [
-          ExploreTagFeedItemComponent,
-          MockComponent({ selector: 'm-button' }),
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule.withRoutes([])],
+      declarations: [
+        ExploreTagFeedItemComponent,
+        MockComponent({ selector: 'm-button' }),
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ExploreTagFeedItemComponent);

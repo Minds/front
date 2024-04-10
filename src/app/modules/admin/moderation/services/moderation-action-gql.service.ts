@@ -44,12 +44,13 @@ export class ModerationActionGqlService {
         return;
       }
 
-      const result: MutationResult<ModerationSetUserBanStateMutation> = await lastValueFrom(
-        this.setUserBanStateGql.mutate({
-          subjectGuid: subjectGuid,
-          banState: banState,
-        })
-      );
+      const result: MutationResult<ModerationSetUserBanStateMutation> =
+        await lastValueFrom(
+          this.setUserBanStateGql.mutate({
+            subjectGuid: subjectGuid,
+            banState: banState,
+          })
+        );
 
       if (!result?.data?.setUserBanState) {
         throw new Error(DEFAULT_ERROR_MESSAGE);
@@ -84,9 +85,10 @@ export class ModerationActionGqlService {
         return;
       }
 
-      const result: MutationResult<ModerationDeleteEntityMutation> = await lastValueFrom(
-        this.deleteEntityGql.mutate({ subjectUrn: subjectUrn })
-      );
+      const result: MutationResult<ModerationDeleteEntityMutation> =
+        await lastValueFrom(
+          this.deleteEntityGql.mutate({ subjectUrn: subjectUrn })
+        );
 
       if (!result?.data?.deleteEntity) {
         throw new Error(DEFAULT_ERROR_MESSAGE);

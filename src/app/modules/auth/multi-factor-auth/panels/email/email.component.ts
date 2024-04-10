@@ -50,8 +50,8 @@ export class MultiFactorAuthEmailComponent extends AbstractMFAFormComponent {
     this.service.completeMultiFactor(null);
 
     this.timer$ = timer(0, 1000).pipe(
-      scan(acc => --acc, 30),
-      takeWhile(x => x >= 0)
+      scan((acc) => --acc, 30),
+      takeWhile((x) => x >= 0)
     );
   }
 }

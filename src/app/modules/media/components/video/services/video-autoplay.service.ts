@@ -69,7 +69,7 @@ export class VideoAutoplayService implements OnDestroy {
    * @param player
    */
   unregisterPlayer(player: MindsVideoPlayerComponent) {
-    const index = this.players.findIndex(value => value === player);
+    const index = this.players.findIndex((value) => value === player);
 
     if (index !== -1) {
       this.players.splice(index, 1);

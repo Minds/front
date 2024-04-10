@@ -106,7 +106,9 @@ describe('SiteMembershipService', () => {
       service.siteMemberships$.next([]);
       service.siteMembershipSubscriptions$.next([]);
 
-      (service as any).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
+      (
+        service as any
+      ).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
         of({
           data: {
             siteMemberships: mockSiteMemberships,
@@ -134,7 +136,9 @@ describe('SiteMembershipService', () => {
       service.siteMemberships$.next([]);
       service.siteMembershipSubscriptions$.next([]);
 
-      (service as any).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
+      (
+        service as any
+      ).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
         of({
           data: {
             siteMemberships: mockSiteMemberships,
@@ -156,7 +160,9 @@ describe('SiteMembershipService', () => {
       (service as any).siteMemberships$.next([]);
       (service as any).siteMembershipSubscriptions$.next([]);
 
-      (service as any).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
+      (
+        service as any
+      ).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
         of({
           errors: ['error'],
         })
@@ -185,7 +191,9 @@ describe('SiteMembershipService', () => {
       (service as any).siteMemberships$.next([]);
       (service as any).siteMembershipSubscriptions$.next([]);
 
-      (service as any).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
+      (
+        service as any
+      ).getSiteMembershipsAndSubscriptionsGQL.fetch.and.returnValue(
         of({
           data: {
             siteMemberships: null,
@@ -216,15 +224,14 @@ describe('SiteMembershipService', () => {
 
   describe('getLowestPriceMembershipFromArray', () => {
     it('should get the lowest price membership', () => {
-      const lowestPriceMembership = service.getLowestPriceMembershipFromArray(
-        mockSiteMemberships
-      );
+      const lowestPriceMembership =
+        service.getLowestPriceMembershipFromArray(mockSiteMemberships);
       expect(lowestPriceMembership).toEqual(mockSiteMemberships[1]);
     });
   });
 
   describe('loadMembershipByGuid', () => {
-    it('should fetch and return a SiteMembership for a valid GUID', done => {
+    it('should fetch and return a SiteMembership for a valid GUID', (done) => {
       const expectedMembership = mockSiteMemberships[1];
       const mockMembershipGuid = mockSiteMemberships[1].membershipGuid;
 
@@ -237,7 +244,7 @@ describe('SiteMembershipService', () => {
         })
       );
 
-      service.loadMembershipByGuid(mockMembershipGuid).subscribe(result => {
+      service.loadMembershipByGuid(mockMembershipGuid).subscribe((result) => {
         expect(result).toEqual(expectedMembership);
         expect(getSiteMembershipGQL.fetch).toHaveBeenCalledWith({
           membershipGuid: mockMembershipGuid,

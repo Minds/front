@@ -26,24 +26,21 @@ export class AffiliatesMetricsService {
   constructor(private api: ApiService) {}
 
   /** whether request is in progress. */
-  public readonly loading$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly loading$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** whether request has errored.  */
-  public readonly error$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly error$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Push to stream to reload. */
-  public readonly reload$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly reload$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Metrics from server */
   public readonly metrics$: Observable<AffiliatesMetrics> = this.reload$.pipe(
     // set loading state to true, and error state to false.
-    tap(_ => {
+    tap((_) => {
       this.loading$.next(true);
       this.error$.next(false);
     }),
@@ -53,13 +50,11 @@ export class AffiliatesMetricsService {
         this.api.get<AffiliatesMetrics>('api/v3/referrals/metrics')
     ),
     // catch any errors, set error state and explicitly return null.
-    catchError(
-      (e: unknown): Observable<null> => {
-        console.error(e);
-        this.error$.next(true);
-        return of(null);
-      }
-    ),
+    catchError((e: unknown): Observable<null> => {
+      console.error(e);
+      this.error$.next(true);
+      return of(null);
+    }),
     // set loading state to false.
     tap(() => this.loading$.next(false)),
     // share replay amongst subscribers.

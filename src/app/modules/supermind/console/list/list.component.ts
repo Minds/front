@@ -28,26 +28,25 @@ import { ToasterService } from '../../../../common/services/toaster.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.ng.scss'],
 })
-export class SupermindConsoleListComponent extends AbstractSubscriberComponent
-  implements OnInit {
+export class SupermindConsoleListComponent
+  extends AbstractSubscriberComponent
+  implements OnInit
+{
   // Whether request is in progress.
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // Whether there is more data.
-  public readonly moreData$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly moreData$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // List type e.g. inbox or outbox.
-  public readonly listType$: BehaviorSubject<SupermindConsoleListType> = this
-    .service.listType$;
+  public readonly listType$: BehaviorSubject<SupermindConsoleListType> =
+    this.service.listType$;
 
   // Status filter value subject.
-  public readonly statusFilterValue$: BehaviorSubject<
-    SupermindState
-  > = new BehaviorSubject<SupermindState>(null);
+  public readonly statusFilterValue$: BehaviorSubject<SupermindState> =
+    new BehaviorSubject<SupermindState>(null);
 
   // List subject.
   public readonly list$: BehaviorSubject<any[]> = new BehaviorSubject<
@@ -55,21 +54,19 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
   >([]);
 
   // True if this is a single supermind page.
-  public readonly isSingleSupermindPage$: Observable<boolean> = this.service
-    .isSingleSupermindPage$;
+  public readonly isSingleSupermindPage$: Observable<boolean> =
+    this.service.isSingleSupermindPage$;
 
   // Number of Superminds to request from API.
   private readonly requestLimit: number = 12;
 
   // First count of all entries.
-  public readonly initialCount$: BehaviorSubject<number> = new BehaviorSubject<
-    number
-  >(0);
+  public readonly initialCount$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   // Latest updated count of all entries.
-  public readonly updatedCount$: BehaviorSubject<number> = new BehaviorSubject<
-    number
-  >(0);
+  public readonly updatedCount$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   // Count of new Superminds.
   public readonly newCount$: Observable<number> = combineLatest([
@@ -111,7 +108,7 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
   public load$(): Observable<ApiResponse> {
     return combineLatest([this.listType$, this.statusFilterValue$]).pipe(
       distinctUntilChanged(),
-      tap(_ => {
+      tap((_) => {
         this.inProgress$.next(true);
         this.list$.next([]);
         this.initialCount$.next(0);
@@ -120,7 +117,7 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
       switchMap(
         ([listType, statusFilterValue]: [
           SupermindConsoleListType,
-          SupermindState
+          SupermindState,
         ]): Observable<
           ApiResponse | { redirect: boolean; errorMessage: any }
         > => {
@@ -184,7 +181,7 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
           // only call once.
           take(1),
           // switch the stream to be the actual count request and call it with the status parameter.
-          switchMap(status => this.service.countAll$(status)),
+          switchMap((status) => this.service.countAll$(status)),
           // include initial count so we can check if it is set.
           withLatestFrom(this.initialCount$)
         )
@@ -210,11 +207,7 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
       behavior: 'smooth',
       top: 0,
     });
-    this.subscriptions.push(
-      this.load$()
-        .pipe(take(1))
-        .subscribe()
-    );
+    this.subscriptions.push(this.load$().pipe(take(1)).subscribe());
   }
 
   /**

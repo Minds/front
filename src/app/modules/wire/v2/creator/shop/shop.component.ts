@@ -25,16 +25,18 @@ export class WireCreatorShopComponent {
   /**
    * Dismiss intent event emitter
    */
-  @Output('onDismissIntent') dismissIntentEmitter: EventEmitter<
-    void
-  > = new EventEmitter<void>();
+  @Output('onDismissIntent') dismissIntentEmitter: EventEmitter<void> =
+    new EventEmitter<void>();
 
   /**
    * Constructor
    * @param service
    * @param shop
    */
-  constructor(public service: WireV2Service, public shop: ShopService) {}
+  constructor(
+    public service: WireV2Service,
+    public shop: ShopService
+  ) {}
 
   /**
    * Triggers the dismiss modal event

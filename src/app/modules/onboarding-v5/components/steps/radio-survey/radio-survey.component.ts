@@ -25,7 +25,8 @@ import { OnboardingStepContentInterface } from '../step-content.interface';
   ],
 })
 export class OnboardingV5RadioSurveyContentComponent
-  implements OnInit, OnboardingStepContentInterface {
+  implements OnInit, OnboardingStepContentInterface
+{
   /** Title for section. */
   @Input() public title: string;
 

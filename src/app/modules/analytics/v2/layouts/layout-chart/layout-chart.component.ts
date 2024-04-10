@@ -33,7 +33,7 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
     this.analyticsService.metric$
   ).pipe(
     map(([metrics, id]) => {
-      return metrics.find(metric => metric.id === id);
+      return metrics.find((metric) => metric.id === id);
     })
   );
   selectedMetric;
@@ -54,21 +54,23 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
       this.userRoles.push('pro');
     }
 
-    this.selectedMetricSubscription = this.selectedMetric$.subscribe(metric => {
-      this.selectedMetric = metric;
+    this.selectedMetricSubscription = this.selectedMetric$.subscribe(
+      (metric) => {
+        this.selectedMetric = metric;
 
-      this.isTable =
-        this.selectedMetric &&
-        this.selectedMetric.visualisation &&
-        this.selectedMetric.visualisation.type === 'table';
-      this.detectChanges();
-    });
+        this.isTable =
+          this.selectedMetric &&
+          this.selectedMetric.visualisation &&
+          this.selectedMetric.visualisation.type === 'table';
+        this.detectChanges();
+      }
+    );
 
     this.metricsSubscription = this.analyticsService.metrics$.subscribe(
-      metrics => {
+      (metrics) => {
         this.tabs = [];
         for (const metric of metrics) {
-          const permissionGranted = metric.permissions.some(role =>
+          const permissionGranted = metric.permissions.some((role) =>
             this.userRoles.includes(role)
           );
 

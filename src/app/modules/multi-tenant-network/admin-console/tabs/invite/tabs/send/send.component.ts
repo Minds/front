@@ -44,9 +44,8 @@ export class NetworkAdminConsoleInviteSendComponent {
   public readonly RoleId: typeof RoleId = RoleId;
 
   /** Whether saving is in progress. */
-  public readonly savingInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly savingInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * All of the user roles on the network
@@ -56,7 +55,8 @@ export class NetworkAdminConsoleInviteSendComponent {
   protected allRoles: Role[] = [];
 
   /** Enum of auto-completable entities to use in the template */
-  public readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum = AutoCompleteEntityTypeEnum;
+  public readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum =
+    AutoCompleteEntityTypeEnum;
 
   // subscriptions
   private subscriptions: Subscription[] = [];
@@ -84,10 +84,10 @@ export class NetworkAdminConsoleInviteSendComponent {
     this.subscriptions.push(
       this.rolesService.allRoles$
         .pipe(
-          filter(roles => roles && roles.length > 0),
+          filter((roles) => roles && roles.length > 0),
           take(1)
         )
-        .subscribe(roles => {
+        .subscribe((roles) => {
           this.allRoles = roles;
           this.initializeForm();
 
@@ -98,7 +98,7 @@ export class NetworkAdminConsoleInviteSendComponent {
 
   private initializeForm(): void {
     this.initialRolesArray = this.allRoles.map(
-      role => role.id === RoleId.DEFAULT
+      (role) => role.id === RoleId.DEFAULT
     );
 
     this.formGroup = this.formBuilder.group({
@@ -107,7 +107,7 @@ export class NetworkAdminConsoleInviteSendComponent {
         Validators.minLength(5),
       ]),
       roles: this.formBuilder.array(
-        this.initialRolesArray.map(value => new FormControl(value)),
+        this.initialRolesArray.map((value) => new FormControl(value)),
         this.atLeastOneRoleSelectedValidator
       ),
       groupSelector: new FormControl<any>(''),
@@ -122,16 +122,16 @@ export class NetworkAdminConsoleInviteSendComponent {
       this.groupSelector.valueChanges
         .pipe(
           distinctUntilChanged(),
-          filter(value => value !== null)
+          filter((value) => value !== null)
         )
-        .subscribe(group => {
+        .subscribe((group) => {
           // Clear the groupSelector after a group is selected
           if (group && typeof group !== 'string') {
             this.addGroupSelection(group);
           }
         }),
-      this.groups.valueChanges.subscribe(groups => {
-        this.selectedGroupGuids = groups.map(group => group.guid);
+      this.groups.valueChanges.subscribe((groups) => {
+        this.selectedGroupGuids = groups.map((group) => group.guid);
       })
     );
   }
@@ -142,7 +142,7 @@ export class NetworkAdminConsoleInviteSendComponent {
    */
   addGroupSelection(group: MindsGroup): void {
     let currentGroups = this.groups.value;
-    if (!currentGroups.some(g => g.guid === group.guid)) {
+    if (!currentGroups.some((g) => g.guid === group.guid)) {
       currentGroups.push(group);
       this.groups.setValue(currentGroups);
     }
@@ -182,22 +182,22 @@ export class NetworkAdminConsoleInviteSendComponent {
     // Convert the FormArray roles into an array of checked role.ids
     formVals['roles'] = formVals['roles']
       .map((isChecked, index) => (isChecked ? this.allRoles[index]?.id : null))
-      .filter(roleId => roleId !== null);
+      .filter((roleId) => roleId !== null);
 
     // Provide an array of group guids
-    formVals['groups'] = formVals['groups'].map(group => group.guid);
+    formVals['groups'] = formVals['groups'].map((group) => group.guid);
 
     delete formVals['groupSelector'];
 
     // Call the createInvite method and subscribe to the observable
     this.service.createInvite(formVals).subscribe(
-      result => {
+      (result) => {
         if (result) {
           this.savingInProgress$.next(false);
           this.resetForm();
         }
       },
-      error => {
+      (error) => {
         if (error?.errors?.[0] && error.errors[0].message) {
           this.toaster.error(error.errors[0].message);
         }

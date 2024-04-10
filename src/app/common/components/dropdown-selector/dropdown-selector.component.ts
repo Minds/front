@@ -22,9 +22,8 @@ export class DropdownSelectorComponent implements OnInit {
   @Input() dropUp: boolean = false;
   @Input() showLabel: boolean = true;
   @Input() inlineLabel = false;
-  @Output() selectionMade: EventEmitter<
-    DropdownSelectorSelection
-  > = new EventEmitter<DropdownSelectorSelection>();
+  @Output() selectionMade: EventEmitter<DropdownSelectorSelection> =
+    new EventEmitter<DropdownSelectorSelection>();
 
   expanded = false;
 
@@ -34,9 +33,9 @@ export class DropdownSelectorComponent implements OnInit {
 
   ngOnInit() {
     this.selectedOption = this.filter.options[0];
-    if (this.filter.options.find(opt => opt.selected === true)) {
+    if (this.filter.options.find((opt) => opt.selected === true)) {
       this.selectedOption = this.filter.options.find(
-        opt => opt.selected === true
+        (opt) => opt.selected === true
       );
     }
   }

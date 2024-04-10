@@ -33,8 +33,8 @@ import { Observable } from 'rxjs';
 })
 export class ChatPendingRequestsWidgetComponent {
   /** Total chat requests from service. */
-  protected totalRequests$: Observable<number> = this.totalChatRequestsService
-    .totalRequests$;
+  protected totalRequests$: Observable<number> =
+    this.totalChatRequestsService.totalRequests$;
 
   constructor(
     private router: Router,

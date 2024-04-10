@@ -115,7 +115,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   ) {
     if (isPlatformBrowser(platformId)) {
       this.subscriptions.push(
-        this.service.guid$.subscribe(guid => {
+        this.service.guid$.subscribe((guid) => {
           this.feedService.guid$.next(guid);
 
           // Reset date range filter on channel change
@@ -145,10 +145,10 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.subscriptions.push(
-      this.feedService.service.feed.subscribe(feed => {
+      this.feedService.service.feed.subscribe((feed) => {
         this.feed = feed;
       }),
-      this.feedsUpdate.postEmitter.subscribe(newPost => {
+      this.feedsUpdate.postEmitter.subscribe((newPost) => {
         const currentChannelGuid: string = this.service.guid$.getValue();
 
         if (
@@ -160,7 +160,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
           this.prepend(newPost);
         }
       }),
-      this.service.onSubscriptionChanged.subscribe(subscribed =>
+      this.service.onSubscriptionChanged.subscribe((subscribed) =>
         this.shouldShowChannelRecommendation$.next(subscribed)
       ),
       // Subscribe to user entity to reset channel recommendation
@@ -224,7 +224,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
       this.feedService.type$
         .pipe(
           take(1),
-          catchError(error => {
+          catchError((error) => {
             console.error(error);
             return of(null);
           })

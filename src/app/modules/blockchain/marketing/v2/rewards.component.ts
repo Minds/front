@@ -39,7 +39,8 @@ import {
   ],
 })
 export class BlockchainMarketingRewardsV2Component
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   public data: ProductMarketingAttributes;
   public loading: boolean = true;
   public errors: readonly GraphQLError[];

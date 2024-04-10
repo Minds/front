@@ -17,14 +17,12 @@ import { Withdrawal } from './onchain-transfers.types';
 })
 export class WalletOnchainTransfersSummaryComponent implements OnInit {
   // withdrawals subject
-  public readonly withdrawals$: BehaviorSubject<
-    Withdrawal[]
-  > = new BehaviorSubject<Withdrawal[]>([]);
+  public readonly withdrawals$: BehaviorSubject<Withdrawal[]> =
+    new BehaviorSubject<Withdrawal[]>([]);
 
   // whether request is in progress
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // paging token
   public pagingToken: string = '';

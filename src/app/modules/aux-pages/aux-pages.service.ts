@@ -53,21 +53,19 @@ export class AuxPagesService {
   );
 
   // whether request to CMS is mid-flight.
-  public readonly loading$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly loading$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // whether no data has been found in CMS.
-  public readonly notFound$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly notFound$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // Data from CMS - reload will be triggered on path change.
   private readonly copyData$: Observable<AuxPageData> = this.path$.pipe(
     // filter out null paths, e.g. during init.
     filter(Boolean),
     // set loading state and reset not found state.
-    tap(_ => {
+    tap((_) => {
       this.loading$.next(true);
       this.notFound$.next(false);
     }),
@@ -77,22 +75,20 @@ export class AuxPagesService {
         this.fetchContent(path)
     ),
     // parse result.
-    map(
-      (result: ApolloQueryResult<any>): AuxPageData => {
-        if (result.loading) {
-          return null;
-        }
-
-        this.loading$.next(false);
-
-        if (result.data.auxPages.data.length) {
-          return result.data.auxPages.data[0].attributes ?? null;
-        } else {
-          this.notFound$.next(true);
-          return null;
-        }
+    map((result: ApolloQueryResult<any>): AuxPageData => {
+      if (result.loading) {
+        return null;
       }
-    ),
+
+      this.loading$.next(false);
+
+      if (result.data.auxPages.data.length) {
+        return result.data.auxPages.data[0].attributes ?? null;
+      } else {
+        this.notFound$.next(true);
+        return null;
+      }
+    }),
     // handle errors.
     catchError((e: unknown): Observable<never> => this.handleError(e))
   );
@@ -108,15 +104,14 @@ export class AuxPagesService {
   );
 
   // updated at date data.
-  public readonly updatedAtDateString$: Observable<
-    string
-  > = this.copyData$.pipe(
-    map((copyData: AuxPageData) =>
-      copyData?.updatedAt
-        ? new Date(copyData.updatedAt).toLocaleDateString()
-        : null
-    )
-  );
+  public readonly updatedAtDateString$: Observable<string> =
+    this.copyData$.pipe(
+      map((copyData: AuxPageData) =>
+        copyData?.updatedAt
+          ? new Date(copyData.updatedAt).toLocaleDateString()
+          : null
+      )
+    );
 
   public readonly metadata$: Observable<StrapiMetadata> = this.copyData$.pipe(
     map((copyData: AuxPageData) => copyData?.metadata ?? null)

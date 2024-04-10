@@ -675,7 +675,9 @@ describe('OnboardingV5Service', () => {
           },
         })
       );
-      (service as any).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
+      (
+        service as any
+      ).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockTenantOnboardingV5VersionsData)
       );
       (service as any).firstLoad = false;
@@ -720,7 +722,9 @@ describe('OnboardingV5Service', () => {
           },
         })
       );
-      (service as any).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
+      (
+        service as any
+      ).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockTenantOnboardingV5VersionsData)
       );
       (service as any).firstLoad = false;
@@ -751,7 +755,9 @@ describe('OnboardingV5Service', () => {
     });
 
     it('should start onboarding when progress check IS skipped and user has no onboarding progress', async () => {
-      (service as any).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
+      (
+        service as any
+      ).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockTenantOnboardingV5VersionsData)
       );
       (service as any).firstLoad = true;
@@ -786,7 +792,9 @@ describe('OnboardingV5Service', () => {
       (service as any).getOnboardingStepProgressGQL.fetch.and.returnValue(
         throwError(() => new Error('error'))
       );
-      (service as any).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
+      (
+        service as any
+      ).fetchMinimalOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockTenantOnboardingV5VersionsData)
       );
       (service as any).firstLoad = false;

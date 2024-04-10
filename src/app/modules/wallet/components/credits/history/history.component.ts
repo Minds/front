@@ -34,7 +34,8 @@ type StatusFilterOptions = {
   styleUrls: ['./history.component.ng.scss'],
 })
 export class WalletV2CreditsHistoryComponent implements OnInit, OnDestroy {
-  public readonly GiftCardProductIdEnum: typeof GiftCardProductIdEnum = GiftCardProductIdEnum;
+  public readonly GiftCardProductIdEnum: typeof GiftCardProductIdEnum =
+    GiftCardProductIdEnum;
 
   /** Dropdown menu options for status filter. */
   public readonly statusFilter: Filter = {
@@ -53,24 +54,20 @@ export class WalletV2CreditsHistoryComponent implements OnInit, OnDestroy {
   };
 
   /** Gift cards to display. */
-  public readonly giftCards$: BehaviorSubject<
-    GiftCardNode[]
-  > = new BehaviorSubject<GiftCardNode[]>([]);
+  public readonly giftCards$: BehaviorSubject<GiftCardNode[]> =
+    new BehaviorSubject<GiftCardNode[]>([]);
 
   /** Info for the last loaded page. */
-  private readonly pageInfo$: BehaviorSubject<PageInfo> = new BehaviorSubject<
-    PageInfo
-  >(null);
+  private readonly pageInfo$: BehaviorSubject<PageInfo> =
+    new BehaviorSubject<PageInfo>(null);
 
   /** Whether component is in it's initial loading state. */
-  public readonly loading$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly loading$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Whether fetching more is currently in progress. */
-  public readonly fetchMoreInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly fetchMoreInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Limit / pagesize of batches of cards. */
   private readonly limit: number = 10;
@@ -101,8 +98,8 @@ export class WalletV2CreditsHistoryComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const initialStatusFilterParam: GiftCardStatusFilterEnum = this.route
-      .snapshot.queryParams['statusFilter'];
+    const initialStatusFilterParam: GiftCardStatusFilterEnum =
+      this.route.snapshot.queryParams['statusFilter'];
 
     // Update the status filter option to match that of a given query param.
     this.updateSelectedStatusFilterOption(initialStatusFilterParam);
@@ -266,13 +263,11 @@ export class WalletV2CreditsHistoryComponent implements OnInit, OnDestroy {
   private updateSelectedStatusFilterOption(
     statusFilter: GiftCardStatusFilterEnum
   ): void {
-    this.statusFilter.options.map(
-      (option: Option): Option => {
-        if (option.id === statusFilter) {
-          option.selected = true;
-        }
-        return option;
+    this.statusFilter.options.map((option: Option): Option => {
+      if (option.id === statusFilter) {
+        option.selected = true;
       }
-    );
+      return option;
+    });
   }
 }

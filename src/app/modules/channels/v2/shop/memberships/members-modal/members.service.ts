@@ -36,9 +36,9 @@ export class ChannelShopMembershipsMembersService {
         : of(null);
     }),
     switchAll(),
-    map(response => (response && response.members) || []),
+    map((response) => (response && response.members) || []),
     tap(() => this.inProgress$.next(false)),
-    catchError(err => {
+    catchError((err) => {
       return of(null);
     })
   );

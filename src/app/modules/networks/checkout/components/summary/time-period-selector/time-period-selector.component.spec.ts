@@ -127,9 +127,10 @@ describe('NetworksCheckoutSummaryTimePeriodSelectorComponent', () => {
         ).length
       ).toBe(2);
 
-      const timePeriodTitleElements: DebugElement[] = fixture.debugElement.queryAll(
-        By.css('.m-networksCheckoutSummary__timePeriodTitle')
-      );
+      const timePeriodTitleElements: DebugElement[] =
+        fixture.debugElement.queryAll(
+          By.css('.m-networksCheckoutSummary__timePeriodTitle')
+        );
 
       expect(timePeriodTitleElements[0].nativeElement.textContent.trim()).toBe(
         'Annually'
@@ -138,9 +139,10 @@ describe('NetworksCheckoutSummaryTimePeriodSelectorComponent', () => {
         'Monthly'
       );
 
-      const timePeriodSubtitleElements: DebugElement[] = fixture.debugElement.queryAll(
-        By.css('.m-networksCheckoutSummary__timePeriodSubtitle')
-      );
+      const timePeriodSubtitleElements: DebugElement[] =
+        fixture.debugElement.queryAll(
+          By.css('.m-networksCheckoutSummary__timePeriodSubtitle')
+        );
 
       expect(
         timePeriodSubtitleElements[0].nativeElement.textContent.trim()
@@ -197,9 +199,10 @@ describe('NetworksCheckoutSummaryTimePeriodSelectorComponent', () => {
       );
       fixture.detectChanges();
 
-      const timePeriodContainerElements: DebugElement[] = fixture.debugElement.queryAll(
-        By.css('.m-networksCheckoutSummary__timePeriod')
-      );
+      const timePeriodContainerElements: DebugElement[] =
+        fixture.debugElement.queryAll(
+          By.css('.m-networksCheckoutSummary__timePeriod')
+        );
 
       expect(timePeriodContainerElements.length).toBe(1);
       expect(
@@ -233,9 +236,10 @@ describe('NetworksCheckoutSummaryTimePeriodSelectorComponent', () => {
       );
       fixture.detectChanges();
 
-      const timePeriodContainerElements: DebugElement[] = fixture.debugElement.queryAll(
-        By.css('.m-networksCheckoutSummary__timePeriod')
-      );
+      const timePeriodContainerElements: DebugElement[] =
+        fixture.debugElement.queryAll(
+          By.css('.m-networksCheckoutSummary__timePeriod')
+        );
 
       expect(timePeriodContainerElements.length).toBe(1);
       expect(

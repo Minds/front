@@ -29,7 +29,8 @@ import { OnboardingStepContentInterface } from '../step-content.interface';
   ],
 })
 export class OnboardingV5TagSelectorContentComponent
-  implements OnInit, OnboardingStepContentInterface {
+  implements OnInit, OnboardingStepContentInterface
+{
   /** Title for section. */
   @Input() public title: string;
 
@@ -40,12 +41,12 @@ export class OnboardingV5TagSelectorContentComponent
   @Input() public data: ComponentOnboardingV5OnboardingStep;
 
   /** Tags from tags service. */
-  public readonly tags$: Observable<DiscoveryTag[]> = this.tagsService
-    .userAndDefault$;
+  public readonly tags$: Observable<DiscoveryTag[]> =
+    this.tagsService.userAndDefault$;
 
   /** Whether tags are currently loading. */
-  public readonly tagsLoading$: Observable<boolean> = this.tagsService
-    .inProgress$;
+  public readonly tagsLoading$: Observable<boolean> =
+    this.tagsService.inProgress$;
 
   /** Whether tags are currently saving. */
   public readonly tagsSaving$: Observable<boolean> = this.tagsService.saving$;
@@ -54,17 +55,16 @@ export class OnboardingV5TagSelectorContentComponent
   public formGroup: FormGroup;
 
   /** Whether step can be considered completed based upon the amount of selected tags. */
-  public readonly isStepCompleted$: Observable<
-    boolean
-  > = this.tagsService.tags$.pipe(
-    map((tags: DiscoveryTag[]): boolean => {
-      return (
-        tags.filter((tag: DiscoveryTag): boolean => {
-          return tag.selected;
-        })?.length >= 3
-      );
-    })
-  );
+  public readonly isStepCompleted$: Observable<boolean> =
+    this.tagsService.tags$.pipe(
+      map((tags: DiscoveryTag[]): boolean => {
+        return (
+          tags.filter((tag: DiscoveryTag): boolean => {
+            return tag.selected;
+          })?.length >= 3
+        );
+      })
+    );
 
   constructor(
     private service: OnboardingV5Service,
@@ -124,9 +124,8 @@ export class OnboardingV5TagSelectorContentComponent
   public onCustomInputSubmit($event: KeyboardEvent): void {
     $event.preventDefault();
 
-    const formControl: AbstractControl<string> = this.formGroup.get(
-      'customTag'
-    );
+    const formControl: AbstractControl<string> =
+      this.formGroup.get('customTag');
     const errors: ValidationErrors = formControl.errors;
 
     if (errors) {
@@ -135,8 +134,9 @@ export class OnboardingV5TagSelectorContentComponent
       }
       if (formControl.errors.maxlength) {
         this.toast.error(
-          `Tags must be less than ${formControl.errors.maxlength
-            .requiredLength + 1} characters long.`
+          `Tags must be less than ${
+            formControl.errors.maxlength.requiredLength + 1
+          } characters long.`
         );
       }
       if (formControl.errors.minlength) {
@@ -149,7 +149,7 @@ export class OnboardingV5TagSelectorContentComponent
 
     if (
       this.tagsService.userAndDefault$.value.findIndex(
-        i => i.value.toLowerCase() === formControl.value.toLowerCase()
+        (i) => i.value.toLowerCase() === formControl.value.toLowerCase()
       ) !== -1
     ) {
       this.toast.warn('This tag has already been added');
@@ -174,7 +174,7 @@ export class OnboardingV5TagSelectorContentComponent
     if (
       this.tagsService.userAndDefault$
         .getValue()
-        .findIndex(i => i.value === tag.value) === -1
+        .findIndex((i) => i.value === tag.value) === -1
     ) {
       this.tagsService.userAndDefault$.next([
         ...this.tagsService.userAndDefault$.value,

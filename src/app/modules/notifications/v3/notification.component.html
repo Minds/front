@@ -65,7 +65,7 @@
         </div>
         <div class="m-notificationsNotification__timestamp">
           <span>{{
-            notification.created_timestamp | friendlydatediff: '':false
+            notification.created_timestamp | friendlydatediff: '' : false
           }}</span>
         </div>
         <span
@@ -84,7 +84,7 @@
           [color]="'blue'"
           [solid]="false"
           [type]="'button'"
-          style="display: inline-flex; flex: 1; flex-flow: column-reverse;"
+          style="display: inline-flex; flex: 1; flex-flow: column-reverse"
           [routerLink]="['gift-cards/claim/']"
         >
           Claim Gift

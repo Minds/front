@@ -27,16 +27,17 @@ export type BalanceResponse = {
 @Injectable({ providedIn: 'root' })
 export class TokenBalanceService {
   // offchain balance.
-  public readonly offchain$: BehaviorSubject<number> = new BehaviorSubject<
-    number
-  >(0);
+  public readonly offchain$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   // onchain balance.
-  public readonly onchain$: BehaviorSubject<number> = new BehaviorSubject<
-    number
-  >(0);
+  public readonly onchain$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
-  constructor(private api: ApiService, private toast: ToasterService) {}
+  constructor(
+    private api: ApiService,
+    private toast: ToasterService
+  ) {}
 
   /**
    * Populates service level offchain and onchain balances, and returns observable
@@ -48,7 +49,7 @@ export class TokenBalanceService {
       .get<BalanceResponse>('api/v2/blockchain/wallet/balance')
       .pipe(
         take(1),
-        map(response => {
+        map((response) => {
           const addresses = response.addresses;
 
           for (let address of addresses) {
@@ -61,7 +62,7 @@ export class TokenBalanceService {
           }
           return response;
         }),
-        catchError(e => {
+        catchError((e) => {
           console.error(e);
           this.toast.error(e.error?.message ?? e);
           return of(null);

@@ -11,11 +11,13 @@ import { MindsUser } from '../interfaces/entities';
 export class Session {
   loggedinEmitter: EventEmitter<any> = new EventEmitter();
   userEmitter: EventEmitter<any> = new EventEmitter();
-  readonly user$: BehaviorSubject<MindsUser | null> = new BehaviorSubject<MindsUser | null>(
-    null
-  );
+  readonly user$: BehaviorSubject<MindsUser | null> =
+    new BehaviorSubject<MindsUser | null>(null);
 
-  constructor(private configs: ConfigsService, private storage: Storage) {
+  constructor(
+    private configs: ConfigsService,
+    private storage: Storage
+  ) {
     this.user$.next(this.configs.get('user') || null);
   }
 
@@ -25,7 +27,7 @@ export class Session {
   isLoggedIn(observe: any = null) {
     if (observe) {
       this.loggedinEmitter.subscribe({
-        next: is => {
+        next: (is) => {
           if (is) observe(true);
           else observe(false);
         },
@@ -53,7 +55,7 @@ export class Session {
   getLoggedInUser(observe: any = null) {
     if (observe) {
       this.userEmitter.subscribe({
-        next: user => {
+        next: (user) => {
           observe(user);
         },
       });

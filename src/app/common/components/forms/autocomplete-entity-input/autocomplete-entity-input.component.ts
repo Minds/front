@@ -54,7 +54,8 @@ export type AutoCompleteEntity = {
 })
 export class AutocompleteEntityInputComponent implements ControlValueAccessor {
   /** Enum of auto-complete entity types for use in template. */
-  public readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum = AutoCompleteEntityTypeEnum;
+  public readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum =
+    AutoCompleteEntityTypeEnum;
 
   /** Placeholder of the input (optional). */
   @Input() placeholder: string = '';
@@ -85,7 +86,7 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
     // if there is no change, do nothing.
     distinctUntilChanged(),
     // replace outputted observable with the result of a server call for matches or an empty array.
-    switchMap(entityRef => {
+    switchMap((entityRef) => {
       // Check if the entityRef is a non-empty string
       if (typeof entityRef === 'string' && entityRef.trim().length > 0) {
         this.inProgress$.next(true);
@@ -107,11 +108,11 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
             map((apiResponse: any) => {
               // Filter out the entities that are in the excludeGuid array
               return apiResponse.entities.filter(
-                entity => !this.excludeGuids.includes(entity.guid)
+                (entity) => !this.excludeGuids.includes(entity.guid)
               );
             }),
             // on error.
-            catchError(e => {
+            catchError((e) => {
               console.error(e);
               return of([]);
             }),
@@ -148,7 +149,7 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
   );
 
   inputDisplayValue$: Observable<string> = this.entityRef$.pipe(
-    map(entityRef => {
+    map((entityRef) => {
       if (typeof entityRef === 'object' && entityRef !== null) {
         // If entity is selected, get its name/username from the entity based on the entityType
         return this.entityType === AutoCompleteEntityTypeEnum.Group
@@ -183,8 +184,8 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
   ngOnInit() {
     /** This subscription emits out the entity to the form parent */
     this.entityRefSubscription = this.entityRef$
-      .pipe(filter(entityRef => this.allowEmpty || Boolean(entityRef)))
-      .subscribe(entityRef => {
+      .pipe(filter((entityRef) => this.allowEmpty || Boolean(entityRef)))
+      .subscribe((entityRef) => {
         this.propagateChange(entityRef);
       });
   }

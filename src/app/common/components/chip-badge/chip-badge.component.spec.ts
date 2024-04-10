@@ -5,15 +5,13 @@ describe('ChipBadgeComponent', () => {
   let comp: ChipBadgeComponent;
   let fixture: ComponentFixture<ChipBadgeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ChipBadgeComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ChipBadgeComponent],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ChipBadgeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

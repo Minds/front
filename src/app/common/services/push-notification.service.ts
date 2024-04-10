@@ -15,9 +15,8 @@ import isBrave from '../../helpers/is-brave';
 })
 export class PushNotificationService implements OnDestroy {
   private subscriptions: Subscription[] = [];
-  private pushSubscription$: BehaviorSubject<
-    PushSubscription
-  > = new BehaviorSubject(undefined);
+  private pushSubscription$: BehaviorSubject<PushSubscription> =
+    new BehaviorSubject(undefined);
 
   constructor(
     private client: Client,
@@ -32,8 +31,8 @@ export class PushNotificationService implements OnDestroy {
 
     this.subscriptions.push(
       this.swPush.messages.subscribe(this.onMessage),
-      this.session.userEmitter.subscribe(user => this.onUserChange(user)),
-      this.swPush.subscription.subscribe(pushSubscription =>
+      this.session.userEmitter.subscribe((user) => this.onUserChange(user)),
+      this.swPush.subscription.subscribe((pushSubscription) =>
         this.pushSubscription$.next(pushSubscription)
       ),
       this.swPush.notificationClicks.subscribe(this.onNotificationClick)
@@ -41,7 +40,7 @@ export class PushNotificationService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.map(subscription => subscription.unsubscribe());
+    this.subscriptions.map((subscription) => subscription.unsubscribe());
   }
 
   /**
@@ -62,7 +61,7 @@ export class PushNotificationService implements OnDestroy {
    * @returns { Observable<boolean> }
    */
   get enabled$(): Observable<boolean> {
-    return this.pushSubscription$.pipe(map(sub => Boolean(sub)));
+    return this.pushSubscription$.pipe(map((sub) => Boolean(sub)));
   }
 
   /**

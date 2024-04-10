@@ -20,50 +20,48 @@ describe('TopbarWalletBalance', () => {
 
   const isConnectedDefaultValue: boolean = true;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          TopbarWalletBalance,
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['iconId', 'from'],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        TopbarWalletBalance,
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['iconId', 'from'],
+        }),
+      ],
+      providers: [
+        {
+          provide: WalletV2Service,
+          useValue: MockService(WalletV2Service, {
+            has: ['wallet$'],
+            props: {
+              wallet$: {
+                get: () => new BehaviorSubject<any>(walletDefaultValue),
+              },
+            },
           }),
-        ],
-        providers: [
-          {
-            provide: WalletV2Service,
-            useValue: MockService(WalletV2Service, {
-              has: ['wallet$'],
-              props: {
-                wallet$: {
-                  get: () => new BehaviorSubject<any>(walletDefaultValue),
-                },
+        },
+        {
+          provide: ConnectWalletModalService,
+          useValue: MockService(ConnectWalletModalService, {
+            has: ['isConnected$'],
+            props: {
+              isConnected$: {
+                get: () =>
+                  new BehaviorSubject<boolean>(isConnectedDefaultValue),
               },
-            }),
-          },
-          {
-            provide: ConnectWalletModalService,
-            useValue: MockService(ConnectWalletModalService, {
-              has: ['isConnected$'],
-              props: {
-                isConnected$: {
-                  get: () =>
-                    new BehaviorSubject<boolean>(isConnectedDefaultValue),
-                },
-              },
-            }),
-          },
-          {
-            provide: SettingsV2WalletService,
-            useValue: MockService(SettingsV2WalletService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: SettingsV2WalletService,
+          useValue: MockService(SettingsV2WalletService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(TopbarWalletBalance);
     comp = fixture.componentInstance;
 
@@ -91,36 +89,36 @@ describe('TopbarWalletBalance', () => {
     it('should determine when to show wallet balance', () => {
       comp.isConnected = true;
       comp.tokenBalance = 1;
-      (comp as any).walletPrivacySettings.shouldHideWalletBalance.and.returnValue(
-        false
-      );
+      (
+        comp as any
+      ).walletPrivacySettings.shouldHideWalletBalance.and.returnValue(false);
       expect(comp.showWalletBalance()).toBeTrue();
     });
 
     it('should determine when NOT to show wallet balance because a wallet is not connected', () => {
       comp.isConnected = false;
       comp.tokenBalance = 1;
-      (comp as any).walletPrivacySettings.shouldHideWalletBalance.and.returnValue(
-        false
-      );
+      (
+        comp as any
+      ).walletPrivacySettings.shouldHideWalletBalance.and.returnValue(false);
       expect(comp.showWalletBalance()).toBeFalse();
     });
 
     it('should determine when NOT to show wallet balance because token balance is null', () => {
       comp.isConnected = true;
       comp.tokenBalance = undefined;
-      (comp as any).walletPrivacySettings.shouldHideWalletBalance.and.returnValue(
-        false
-      );
+      (
+        comp as any
+      ).walletPrivacySettings.shouldHideWalletBalance.and.returnValue(false);
       expect(comp.showWalletBalance()).toBeFalse();
     });
 
     it('should determine when NOT to show wallet balance because wallet privacy settings hide it', () => {
       comp.isConnected = true;
       comp.tokenBalance = 1;
-      (comp as any).walletPrivacySettings.shouldHideWalletBalance.and.returnValue(
-        true
-      );
+      (
+        comp as any
+      ).walletPrivacySettings.shouldHideWalletBalance.and.returnValue(true);
       expect(comp.showWalletBalance()).toBeFalse();
     });
   });

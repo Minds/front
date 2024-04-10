@@ -5,19 +5,20 @@ import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-forgot-password',
-  template: `
-    <!--No template - this component redirects -->
-  `,
+  template: ` <!--No template - this component redirects --> `,
 })
 export class ForgotPasswordComponent {
   username: string = '';
   code: string = '';
   paramsSubscription: Subscription;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       let queryParams = { resetPassword: true };
 
       if (params['username'] && params['code']) {

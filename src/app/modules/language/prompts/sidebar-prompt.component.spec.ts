@@ -23,30 +23,28 @@ describe('LanguageSidebarPromptComponent', () => {
   let component: LanguageSidebarPromptComponent;
   let fixture: ComponentFixture<LanguageSidebarPromptComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          LanguageSidebarPromptComponent,
-          SidebarWidgetComponent,
-          ButtonComponent,
-        ],
-        imports: [RouterTestingModule, CookieModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: Client, useValue: clientMock },
-          CookieService,
-          { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
-          LanguageService,
-          {
-            provide: ApiService,
-            useValue: MockService(ApiService, {}),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        LanguageSidebarPromptComponent,
+        SidebarWidgetComponent,
+        ButtonComponent,
+      ],
+      imports: [RouterTestingModule, CookieModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: Client, useValue: clientMock },
+        CookieService,
+        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
+        LanguageService,
+        {
+          provide: ApiService,
+          useValue: MockService(ApiService, {}),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LanguageSidebarPromptComponent);

@@ -38,9 +38,8 @@ export class NetworkAdminConsoleGeneralComponent implements OnInit, OnDestroy {
   );
 
   /** Whether saving is in progress. */
-  public savingInProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public savingInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Form group. */
   public formGroup: FormGroup;

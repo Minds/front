@@ -35,7 +35,7 @@ export class TagSettingsComponent implements OnInit, OnDestroy {
     this.discoveryTagsService.loadTags();
 
     this.subscriptions.push(
-      this.service.submitRequested$.subscribe(requested => {
+      this.service.submitRequested$.subscribe((requested) => {
         if (requested) {
           this.submit();
         }
@@ -60,7 +60,7 @@ export class TagSettingsComponent implements OnInit, OnDestroy {
 
     if (
       this.discoveryTagsService.userAndDefault$.value.findIndex(
-        i => i.value === tag.value
+        (i) => i.value === tag.value
       ) === -1
     ) {
       this.discoveryTagsService.userAndDefault$.next([

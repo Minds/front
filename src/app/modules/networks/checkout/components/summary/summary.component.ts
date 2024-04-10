@@ -18,33 +18,35 @@ import { Router } from '@angular/router';
 })
 export class NetworksCheckoutSummaryComponent {
   /** Enum for use in template. */
-  public readonly CheckoutPageKeyEnum: typeof CheckoutPageKeyEnum = CheckoutPageKeyEnum;
+  public readonly CheckoutPageKeyEnum: typeof CheckoutPageKeyEnum =
+    CheckoutPageKeyEnum;
 
   /** Enum for use in template. */
-  public readonly CheckoutTimePeriodEnum: typeof CheckoutTimePeriodEnum = CheckoutTimePeriodEnum;
+  public readonly CheckoutTimePeriodEnum: typeof CheckoutTimePeriodEnum =
+    CheckoutTimePeriodEnum;
 
   /** Summary data. */
   public readonly summary$: Observable<Summary> = this.checkoutService.summary$;
 
   /** Selected time period.  */
-  public readonly selectedTimePeriod$: Observable<CheckoutTimePeriodEnum> = this
-    .checkoutService.selectedTimePeriod$;
+  public readonly selectedTimePeriod$: Observable<CheckoutTimePeriodEnum> =
+    this.checkoutService.selectedTimePeriod$;
 
   /** Terms markdown. */
-  public readonly termsMarkdown$: Observable<string> = this.checkoutService
-    .termsMarkdown$;
+  public readonly termsMarkdown$: Observable<string> =
+    this.checkoutService.termsMarkdown$;
 
   /** True if a summary change in progress. */
-  public readonly summaryChangeInProgress$: Observable<boolean> = this
-    .checkoutService.summaryChangeInProgress$;
+  public readonly summaryChangeInProgress$: Observable<boolean> =
+    this.checkoutService.summaryChangeInProgress$;
 
   /** True if navigation to a payment URL is in progress. */
-  public readonly navToPaymentUrlInProgress$: Observable<boolean> = this
-    .checkoutService.navToPaymentUrlInProgress$;
+  public readonly navToPaymentUrlInProgress$: Observable<boolean> =
+    this.checkoutService.navToPaymentUrlInProgress$;
 
   /** Currently active page. */
-  public readonly activePage$: Observable<CheckoutPageKeyEnum> = this
-    .checkoutService.activePage$;
+  public readonly activePage$: Observable<CheckoutPageKeyEnum> =
+    this.checkoutService.activePage$;
 
   constructor(
     private checkoutService: NetworksCheckoutService,

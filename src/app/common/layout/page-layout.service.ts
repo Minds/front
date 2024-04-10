@@ -22,7 +22,9 @@ export class PageLayoutService {
   ) {
     this.routerSubscription = this.router.events
       .pipe(
-        filter(e => e instanceof NavigationEnd || e instanceof ActivationStart)
+        filter(
+          (e) => e instanceof NavigationEnd || e instanceof ActivationStart
+        )
       )
       .subscribe((event: NavigationEnd | ActivationStart) => {
         // in ActivationStart event, check for preventLayoutReset in route data.

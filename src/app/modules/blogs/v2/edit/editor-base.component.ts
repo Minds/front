@@ -71,14 +71,14 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
     // grab current emission from params to get user GUID
     this.paramsSubscription = this.route.params
       .pipe(take(1))
-      .subscribe(params => {
+      .subscribe((params) => {
         if (params['guid'] && params['guid'] !== 'new') {
           this.service.load(params['guid']);
         }
       });
 
     // on error change, fire toaster box.
-    this.errorSubscription = this.service.error$.subscribe(val => {
+    this.errorSubscription = this.service.error$.subscribe((val) => {
       this.toasterService.error(val);
     });
   }

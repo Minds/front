@@ -61,10 +61,10 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.allRoles$.subscribe(allRoles => {
+      this.service.allRoles$.subscribe((allRoles) => {
         this.allRoles = allRoles;
       }),
-      this.service.loggedInUserRoles$.subscribe(roles => {
+      this.service.loggedInUserRoles$.subscribe((roles) => {
         this.loggedInUserRoles = roles;
       })
     );
@@ -87,10 +87,10 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         await this.service
           .unassignUserFromRole(this.userWithRoles, roleId)
-          .subscribe(success => {
+          .subscribe((success) => {
             if (success) {
               const updatedRoles = this.userWithRoles.roles.filter(
-                role => role.id !== roleId
+                (role) => role.id !== roleId
               );
 
               this.userWithRoles = {
@@ -105,9 +105,11 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         await this.service
           .assignUserToRole(this.userWithRoles, roleId)
-          .subscribe(success => {
+          .subscribe((success) => {
             if (success) {
-              const addedRole = this.allRoles.find(role => role.id === roleId);
+              const addedRole = this.allRoles.find(
+                (role) => role.id === roleId
+              );
 
               if (!addedRole) {
                 return;
@@ -148,7 +150,7 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
       /**
        * Explain why they can't click an owner checkbox
        */
-      if (!this.loggedInUserRoles.some(role => role.id === RoleId.OWNER)) {
+      if (!this.loggedInUserRoles.some((role) => role.id === RoleId.OWNER)) {
         this.toaster.error(
           'Your user role is not permitted to edit the owner role'
         );
@@ -161,7 +163,7 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
    * Gets checkbox value for role
    */
   userHasRole(roleId: RoleId): boolean {
-    return this.userWithRoles.roles.some(role => role.id === roleId);
+    return this.userWithRoles.roles.some((role) => role.id === roleId);
   }
 
   /**
@@ -171,7 +173,7 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
   isCheckboxEnabled(roleId: RoleId) {
     if (roleId === RoleId.OWNER) {
       // Are they allowed to toggle the owner role?
-      if (!this.loggedInUserRoles.some(role => role.id === RoleId.OWNER)) {
+      if (!this.loggedInUserRoles.some((role) => role.id === RoleId.OWNER)) {
         // Only owners can toggle owner roles
         return false;
       }
@@ -210,8 +212,7 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
     const modal = this.modalService.present(ConfirmV2Component, {
       data: {
         title: 'Are you sure',
-        body:
-          "Are you sure you want to revoke your owner role on this network? You can't undo this action. Do you want to proceed?",
+        body: "Are you sure you want to revoke your owner role on this network? You can't undo this action. Do you want to proceed?",
         confirmButtonColor: 'red',
         onConfirm: () => {
           this.toggleRole(RoleId.OWNER);

@@ -11,7 +11,8 @@ import { ApiResponse } from '../../../../common/api/api.service';
   templateUrl: './admin-push-notifications-history.component.html',
 })
 export class AdminPushNotificationsHistoryComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   public notifications: Array<NotificationDetails> = [];
   private notifications$: Subscription;
 
@@ -21,7 +22,7 @@ export class AdminPushNotificationsHistoryComponent
   ) {
     this.notifications$ = this.adminPushNotificationsService
       .getNotification()
-      .subscribe(notification => {
+      .subscribe((notification) => {
         this.notifications.unshift(notification);
         this.notifications.splice(12);
       });
@@ -39,11 +40,10 @@ export class AdminPushNotificationsHistoryComponent
       .get('api/v3/notifications/push/system')
       .then((response: ApiResponse) => {
         if (response.notifications.length) {
-          this.notifications = response.notifications as Array<
-            NotificationDetails
-          >;
+          this.notifications =
+            response.notifications as Array<NotificationDetails>;
         }
       })
-      .catch(e => {});
+      .catch((e) => {});
   }
 }

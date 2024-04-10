@@ -44,7 +44,7 @@ export class ComposerTitleBarDropdownComponent implements OnDestroy {
    * License items list
    */
   licenseItems: Array<LicensesEntry> = LICENSES.filter(
-    license => license.selectable
+    (license) => license.selectable
   );
 
   permawebPostClickSubscription: Subscription;

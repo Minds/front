@@ -33,9 +33,9 @@ export class AttachmentPreviewComponent implements OnChanges {
   /**
    * Orientation emitter, called when media loads
    */
-  @Output('onPortraitOrientation') onPortraitOrientationEmitter: EventEmitter<
-    boolean
-  > = new EventEmitter<boolean>();
+  @Output('onPortraitOrientation')
+  onPortraitOrientationEmitter: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   safeResourceUrl: SafeResourceUrl;
   safeVideoPosterUrl: SafeResourceUrl;

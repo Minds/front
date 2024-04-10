@@ -21,88 +21,84 @@ describe('BoostModalV2ReviewComponent', () => {
   const getGoalSection = (): DebugElement =>
     fixture.debugElement.query(By.css('.m-boostModalReview__section--goal'));
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          BoostModalV2ReviewComponent,
-          MockComponent({
-            selector: 'm-boostModalV2__paymentMethodSelector',
-          }),
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['iconId'],
-          }),
-        ],
-        providers: [
-          {
-            provide: BoostModalV2Service,
-            useValue: MockService(BoostModalV2Service, {
-              has: [
-                'paymentCategory$',
-                'audience$',
-                'duration$',
-                'dailyBudget$',
-                'totalPaymentAmountText$',
-                'estimatedReach$',
-                'activePanel$',
-                'goal$',
-                'canSetBoostGoal$',
-              ],
-              props: {
-                paymentCategory$: {
-                  get: () =>
-                    new BehaviorSubject<BoostPaymentCategory>(
-                      BoostPaymentCategory.CASH
-                    ),
-                },
-                audience$: {
-                  get: () =>
-                    new BehaviorSubject<BoostAudience>(BoostAudience.SAFE),
-                },
-                duration$: { get: () => new BehaviorSubject<number>(10) },
-                dailyBudget$: { get: () => new BehaviorSubject<number>(3) },
-                totalPaymentAmountText$: {
-                  get: () => new BehaviorSubject<string>('$3'),
-                },
-                estimatedReach$: {
-                  get: () =>
-                    new BehaviorSubject<EstimatedReach>({
-                      views: {
-                        low: 100,
-                        high: 1000,
-                      },
-                      cpm: {
-                        low: 3,
-                        high: 15,
-                      },
-                    }),
-                },
-                activePanel$: {
-                  get: () =>
-                    new BehaviorSubject<BoostModalPanel>(
-                      BoostModalPanel.REVIEW
-                    ),
-                },
-                goal$: {
-                  get: () => new BehaviorSubject<BoostGoal>(BoostGoal.VIEWS),
-                },
-                canSetBoostGoal$: {
-                  get: () => new BehaviorSubject<boolean>(true),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        BoostModalV2ReviewComponent,
+        MockComponent({
+          selector: 'm-boostModalV2__paymentMethodSelector',
+        }),
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['iconId'],
+        }),
+      ],
+      providers: [
+        {
+          provide: BoostModalV2Service,
+          useValue: MockService(BoostModalV2Service, {
+            has: [
+              'paymentCategory$',
+              'audience$',
+              'duration$',
+              'dailyBudget$',
+              'totalPaymentAmountText$',
+              'estimatedReach$',
+              'activePanel$',
+              'goal$',
+              'canSetBoostGoal$',
+            ],
+            props: {
+              paymentCategory$: {
+                get: () =>
+                  new BehaviorSubject<BoostPaymentCategory>(
+                    BoostPaymentCategory.CASH
+                  ),
               },
-            }),
-          },
-          {
-            provide: BoostGoalsExperimentService,
-            useValue: MockService(BoostGoalsExperimentService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+              audience$: {
+                get: () =>
+                  new BehaviorSubject<BoostAudience>(BoostAudience.SAFE),
+              },
+              duration$: { get: () => new BehaviorSubject<number>(10) },
+              dailyBudget$: { get: () => new BehaviorSubject<number>(3) },
+              totalPaymentAmountText$: {
+                get: () => new BehaviorSubject<string>('$3'),
+              },
+              estimatedReach$: {
+                get: () =>
+                  new BehaviorSubject<EstimatedReach>({
+                    views: {
+                      low: 100,
+                      high: 1000,
+                    },
+                    cpm: {
+                      low: 3,
+                      high: 15,
+                    },
+                  }),
+              },
+              activePanel$: {
+                get: () =>
+                  new BehaviorSubject<BoostModalPanel>(BoostModalPanel.REVIEW),
+              },
+              goal$: {
+                get: () => new BehaviorSubject<BoostGoal>(BoostGoal.VIEWS),
+              },
+              canSetBoostGoal$: {
+                get: () => new BehaviorSubject<boolean>(true),
+              },
+            },
+          }),
+        },
+        {
+          provide: BoostGoalsExperimentService,
+          useValue: MockService(BoostGoalsExperimentService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostModalV2ReviewComponent);
     comp = fixture.componentInstance;
 
@@ -147,7 +143,7 @@ describe('BoostModalV2ReviewComponent', () => {
     (comp as any).service.dailyBudget$.next(10);
     (comp as any).service.paymentCategory$.next(BoostPaymentCategory.CASH);
 
-    comp.budgetAndDurationText$.subscribe(val => {
+    comp.budgetAndDurationText$.subscribe((val) => {
       expect(val).toBe('$10 per day for 1 day');
       done();
     });
@@ -158,7 +154,7 @@ describe('BoostModalV2ReviewComponent', () => {
     (comp as any).service.dailyBudget$.next(10);
     (comp as any).service.paymentCategory$.next(BoostPaymentCategory.CASH);
 
-    comp.budgetAndDurationText$.subscribe(val => {
+    comp.budgetAndDurationText$.subscribe((val) => {
       expect(val).toBe('$10 per day for 2 days');
       done();
     });
@@ -169,7 +165,7 @@ describe('BoostModalV2ReviewComponent', () => {
     (comp as any).service.dailyBudget$.next(20);
     (comp as any).service.paymentCategory$.next(BoostPaymentCategory.TOKENS);
 
-    comp.budgetAndDurationText$.subscribe(val => {
+    comp.budgetAndDurationText$.subscribe((val) => {
       expect(val).toBe('20 tokens per day for 1 day');
       done();
     });
@@ -180,7 +176,7 @@ describe('BoostModalV2ReviewComponent', () => {
     (comp as any).service.dailyBudget$.next(20);
     (comp as any).service.paymentCategory$.next(BoostPaymentCategory.TOKENS);
 
-    comp.budgetAndDurationText$.subscribe(val => {
+    comp.budgetAndDurationText$.subscribe((val) => {
       expect(val).toBe('20 tokens per day for 2 days');
       done();
     });
@@ -198,7 +194,7 @@ describe('BoostModalV2ReviewComponent', () => {
       },
     });
 
-    comp.estimatedReachText$.subscribe(val => {
+    comp.estimatedReachText$.subscribe((val) => {
       expect(val).toBe('100 - 1000 views');
       done();
     });
@@ -207,7 +203,7 @@ describe('BoostModalV2ReviewComponent', () => {
   it('should show unknown for estimated reach text if data is not available from service', (done: DoneFn) => {
     (comp as any).service.estimatedReach$.next(null);
 
-    comp.estimatedReachText$.subscribe(val => {
+    comp.estimatedReachText$.subscribe((val) => {
       expect(val).toBe('unknown');
       done();
     });
@@ -217,7 +213,7 @@ describe('BoostModalV2ReviewComponent', () => {
     (comp as any).service.activePanel$.next(BoostModalPanel.REVIEW);
     comp.changePanel(BoostModalPanel.BUDGET);
 
-    (comp as any).service.activePanel$.subscribe(val => {
+    (comp as any).service.activePanel$.subscribe((val) => {
       expect(val).toBe(BoostModalPanel.BUDGET);
       done();
     });

@@ -23,7 +23,7 @@ describe('NetworkAdminConsoleMobileReleaseComponent', () => {
       providers: [
         {
           provide: ConfigsService,
-          useValue: new (function() {
+          useValue: new (function () {
             this.get = (value: string) => {
               if (value === 'tenant_id') {
                 return tenantId;

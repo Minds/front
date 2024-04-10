@@ -42,7 +42,7 @@ export class ChannelEditModalService {
       data: {
         channel,
         initialPane,
-        onSave: response => modal.close(response),
+        onSave: (response) => modal.close(response),
       },
       size: 'lg',
       injector,

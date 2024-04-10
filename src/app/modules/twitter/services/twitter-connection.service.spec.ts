@@ -9,11 +9,11 @@ import { of } from 'rxjs';
 describe('TwitterConnectionService', () => {
   let service: TwitterConnectionService;
 
-  let apiMock = new (function() {
+  let apiMock = new (function () {
     this.get = jasmine.createSpy('get');
   })();
 
-  let toastMock = new (function() {
+  let toastMock = new (function () {
     this.error = jasmine.createSpy('error');
   })();
 
@@ -40,7 +40,7 @@ describe('TwitterConnectionService', () => {
 
     (service as any).api.get.and.returnValue(of(mockConfig));
 
-    service.isConnected().then(isConnected => {
+    service.isConnected().then((isConnected) => {
       expect((service as any).api.get).toHaveBeenCalledWith(
         'api/v3/twitter/config'
       );

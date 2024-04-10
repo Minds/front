@@ -29,35 +29,35 @@ export class AnalyticsDashboardService {
   // Make all the different variables within the UserState observables
   // Emit the observable when something inside changes
   category$ = this.state$.pipe(
-    map(state => state.category),
+    map((state) => state.category),
     distinctUntilChanged(deepDiff)
   );
   description$ = this.state$.pipe(
-    map(state => state.description),
+    map((state) => state.description),
     distinctUntilChanged()
   );
   timespan$ = this.state$.pipe(
-    map(state => state.timespan),
+    map((state) => state.timespan),
     distinctUntilChanged(deepDiff)
   );
   timespans$ = this.state$.pipe(
-    map(state => state.timespans),
+    map((state) => state.timespans),
     distinctUntilChanged(deepDiff)
   );
   metric$ = this.state$.pipe(
-    map(state => state.metric),
+    map((state) => state.metric),
     distinctUntilChanged(deepDiff)
   );
   metrics$ = this.state$.pipe(
-    map(state => state.metrics),
+    map((state) => state.metrics),
     distinctUntilChanged(deepDiff)
   );
   filter$ = this.state$.pipe(
-    map(state => state.filter),
+    map((state) => state.filter),
     distinctUntilChanged(deepDiff)
   );
   filters$ = this.state$.pipe(
-    map(state => state.filters),
+    map((state) => state.filters),
     distinctUntilChanged(deepDiff)
   );
   loading$ = new BehaviorSubject<boolean>(false);
@@ -77,7 +77,7 @@ export class AnalyticsDashboardService {
     combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
       .pipe(
         distinctUntilChanged(deepDiff),
-        catchError(_ => {
+        catchError((_) => {
           console.log('caught error');
           return of(null);
         }),
@@ -95,9 +95,9 @@ export class AnalyticsDashboardService {
             return null;
           }
         }),
-        catchError(_ => of(null))
+        catchError((_) => of(null))
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         if (!response) {
           return;
         }
@@ -166,11 +166,11 @@ export class AnalyticsDashboardService {
     }
     const selectedFilterId = selectedFilterStr.split('::')[0];
     const filter = _state.filter;
-    const activeFilterIds = filter.map(filterStr => {
+    const activeFilterIds = filter.map((filterStr) => {
       return filterStr.split('::')[0];
     });
     const filterIndex = activeFilterIds.findIndex(
-      filterId => filterId === selectedFilterId
+      (filterId) => filterId === selectedFilterId
     );
 
     if (activeFilterIds.includes(selectedFilterId)) {
@@ -204,8 +204,8 @@ export class AnalyticsDashboardService {
         filter: filter.join(),
       })
       .pipe(
-        catchError(_ => of(null)),
-        map(response => response)
+        catchError((_) => of(null)),
+        map((response) => response)
       ) as Observable<Response>;
   }
 }

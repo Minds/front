@@ -35,9 +35,8 @@ describe('FeatureCarouselComponent', () => {
     },
   ];
 
-  const mockCarouselItems$: BehaviorSubject<CarouselItem[]> = new BehaviorSubject<
-    CarouselItem[]
-  >(mockItems);
+  const mockCarouselItems$: BehaviorSubject<CarouselItem[]> =
+    new BehaviorSubject<CarouselItem[]>(mockItems);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

@@ -51,60 +51,58 @@ describe('ReportCreatorComponent', () => {
     )[i];
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MaterialMock,
-          MdlRadioMock,
-          MaterialSwitchMock,
-          AbbrPipe,
-          ReportCreatorComponent,
-          ButtonComponent,
-          MockComponent({
-            selector: 'm-modalCloseButton',
-          }),
-        ], // declare the test component
-        imports: [FormsModule],
-        providers: [
-          { provide: Session, useValue: MockService(Session) },
-          { provide: Client, useValue: clientMock },
-          { provide: ModalService, useValue: modalServiceMock },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MaterialMock,
+        MdlRadioMock,
+        MaterialSwitchMock,
+        AbbrPipe,
+        ReportCreatorComponent,
+        ButtonComponent,
+        MockComponent({
+          selector: 'm-modalCloseButton',
+        }),
+      ], // declare the test component
+      imports: [FormsModule],
+      providers: [
+        { provide: Session, useValue: MockService(Session) },
+        { provide: Client, useValue: clientMock },
+        { provide: ModalService, useValue: modalServiceMock },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: ReportService,
+          useValue: {
+            reasons: FAKE_REASONS,
           },
-          {
-            provide: ReportService,
-            useValue: {
-              reasons: FAKE_REASONS,
-            },
+        },
+        {
+          provide: PlusTierUrnService,
+          useValue: MockService(PlusTierUrnService),
+        },
+        {
+          provide: GraphQLReportCreatorService,
+          useValue: MockService(GraphQLReportCreatorService),
+        },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: isTenantNetwork,
+        },
+        {
+          provide: WINDOW,
+          useValue: {
+            open: jasmine.createSpy('open'),
           },
-          {
-            provide: PlusTierUrnService,
-            useValue: MockService(PlusTierUrnService),
-          },
-          {
-            provide: GraphQLReportCreatorService,
-            useValue: MockService(GraphQLReportCreatorService),
-          },
-          {
-            provide: IS_TENANT_NETWORK,
-            useValue: isTenantNetwork,
-          },
-          {
-            provide: WINDOW,
-            useValue: {
-              open: jasmine.createSpy('open'),
-            },
-          },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+        },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -237,7 +235,7 @@ describe('ReportCreatorComponent', () => {
 
     spyOn(window, 'confirm').and.returnValue(true);
 
-    spyOn(window, 'alert').and.callFake(function() {
+    spyOn(window, 'alert').and.callFake(function () {
       return true;
     });
 
@@ -273,7 +271,7 @@ describe('ReportCreatorComponent', () => {
 
     spyOn(window, 'confirm').and.returnValue(true);
 
-    spyOn(window, 'alert').and.callFake(function() {
+    spyOn(window, 'alert').and.callFake(function () {
       return true;
     });
 
@@ -331,7 +329,7 @@ describe('ReportCreatorComponent', () => {
     );
     expect(next).not.toBeNull();
 
-    spyOn(window, 'open').and.callFake(function(url, tss) {
+    spyOn(window, 'open').and.callFake(function (url, tss) {
       return window;
     });
     next.nativeElement.click();
@@ -471,7 +469,7 @@ describe('ReportCreatorComponent', () => {
     const spans = fixture.debugElement.queryAll(
       By.css(`.m-reportCreatorSubjects__subject span`)
     );
-    const span = spans.find(span =>
+    const span = spans.find((span) =>
       span.nativeElement.textContent.includes('Violates Premium Content policy')
     );
     expect((comp as any).plusTierUrn.isPlusTierUrn).toHaveBeenCalledWith(
@@ -498,7 +496,7 @@ describe('ReportCreatorComponent', () => {
     const spans = fixture.debugElement.queryAll(
       By.css(`.m-reportCreatorSubjects__subject span`)
     );
-    const span = spans.find(span =>
+    const span = spans.find((span) =>
       span.nativeElement.textContent.includes('Violates Premium Content policy')
     );
     expect(span).toBeUndefined();
@@ -515,7 +513,7 @@ describe('ReportCreatorComponent', () => {
     const spans = fixture.debugElement.queryAll(
       By.css(`.m-reportCreatorSubjects__subject span`)
     );
-    const span = spans.find(span =>
+    const span = spans.find((span) =>
       span.nativeElement.textContent.includes('Violates Premium Content policy')
     );
     expect(span).toBeUndefined();
@@ -526,12 +524,12 @@ describe('ReportCreatorComponent', () => {
     (comp as any).subReason = { value: 2 };
     (comp as any).urn = 'urn:activity:123';
     (comp as any).isTenantNetwork = true;
-    (comp as any).graphQLReportCreatorService.mapLegacyReasonToEnums.and.returnValue(
-      {
-        reason: ReportReasonEnum.Illegal,
-        illegalSubReason: IllegalSubReasonEnum.Extortion,
-      }
-    );
+    (
+      comp as any
+    ).graphQLReportCreatorService.mapLegacyReasonToEnums.and.returnValue({
+      reason: ReportReasonEnum.Illegal,
+      illegalSubReason: IllegalSubReasonEnum.Extortion,
+    });
     (comp as any).graphQLReportCreatorService.createNewReport.and.returnValue(
       of(true)
     );

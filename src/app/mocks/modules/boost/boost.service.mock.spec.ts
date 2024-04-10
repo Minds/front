@@ -1,4 +1,4 @@
-export let boostServiceMock = new (function() {
+export let boostServiceMock = new (function () {
   this.accept = true;
   this.reject = true;
   this.revoke = true;

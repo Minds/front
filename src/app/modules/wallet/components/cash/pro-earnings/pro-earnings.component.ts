@@ -21,17 +21,14 @@ const SUM_CENTS = (arr): number => {
 export class WalletProEarningsCashComponent {
   earnings$: BehaviorSubject<any> = new BehaviorSubject(null);
   earningsTotal$: Observable<number> = this.earnings$.pipe(
-    map(earnings => SUM_CENTS(earnings))
+    map((earnings) => SUM_CENTS(earnings))
   );
   payouts$: BehaviorSubject<any> = new BehaviorSubject(null);
   payoutsTotal$: Observable<number> = this.payouts$.pipe(
-    map(payouts => SUM_CENTS(payouts))
+    map((payouts) => SUM_CENTS(payouts))
   );
   inProgress = false;
-  from: number = moment()
-    .utc()
-    .startOf('month')
-    .unix();
+  from: number = moment().utc().startOf('month').unix();
 
   filter: Filter = {
     id: 'month',
@@ -49,12 +46,8 @@ export class WalletProEarningsCashComponent {
    */
   private buildMonthOptions(numberOfMonths: number = 6): Option[] {
     const months = [];
-    const dateStart = moment()
-      .utc()
-      .subtract(numberOfMonths, 'month');
-    const dateEnd = moment()
-      .utc()
-      .startOf('month');
+    const dateStart = moment().utc().subtract(numberOfMonths, 'month');
+    const dateEnd = moment().utc().startOf('month');
     while (dateEnd.diff(dateStart, 'months') >= 0) {
       months.push({
         id: dateEnd.unix(),
@@ -77,11 +70,7 @@ export class WalletProEarningsCashComponent {
         'api/v3/monetization/earnings/overview',
         {
           from: this.from,
-          to: moment
-            .unix(this.from)
-            .utc()
-            .add(1, 'month')
-            .unix(),
+          to: moment.unix(this.from).utc().add(1, 'month').unix(),
         }
       );
       if (response.earnings) {

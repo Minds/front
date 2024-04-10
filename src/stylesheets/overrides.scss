@@ -173,7 +173,8 @@ hr {
 .mdl-button--raised {
   @include m-theme() {
     background-color: rgba(themed($m-grey-300), 0.2);
-    box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 2px 2px 0 rgba(themed($m-black), 0.14),
       0 3px 1px -2px rgba(themed($m-black), 0.2),
       0 1px 5px 0 rgba(themed($m-black), 0.12);
   }
@@ -181,7 +182,8 @@ hr {
 
 .mdl-button--raised:active {
   @include m-theme() {
-    box-shadow: 0 4px 5px 0 rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 4px 5px 0 rgba(themed($m-black), 0.14),
       0 1px 10px 0 rgba(themed($m-black), 0.12),
       0 2px 4px -1px rgba(themed($m-black), 0.2);
     background-color: rgba(themed($m-grey-300), 0.4);
@@ -190,7 +192,8 @@ hr {
 
 .mdl-button--raised:focus:not(:active) {
   @include m-theme() {
-    box-shadow: 0 0 8px rgba(themed($m-black), 0.18),
+    box-shadow:
+      0 0 8px rgba(themed($m-black), 0.18),
       0 8px 16px rgba(themed($m-black), 0.36);
     background-color: rgba(themed($m-grey-300), 0.4);
   }
@@ -230,7 +233,8 @@ hr {
 .mdl-button--fab {
   @include m-theme() {
     background-color: rgba(themed($m-grey-300), 0.2);
-    box-shadow: 0 1px 1.5px 0 rgba(themed($m-black), 0.12),
+    box-shadow:
+      0 1px 1.5px 0 rgba(themed($m-black), 0.12),
       0 1px 1px 0 rgba(themed($m-black), 0.24);
   }
 }
@@ -247,7 +251,8 @@ hr {
 
 .mdl-button--fab:active {
   @include m-theme() {
-    box-shadow: 0 4px 5px 0 rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 4px 5px 0 rgba(themed($m-black), 0.14),
       0 1px 10px 0 rgba(themed($m-black), 0.12),
       0 2px 4px -1px rgba(themed($m-black), 0.2);
     background-color: rgba(themed($m-grey-300), 0.4);
@@ -256,7 +261,8 @@ hr {
 
 .mdl-button--fab:focus:not(:active) {
   @include m-theme() {
-    box-shadow: 0 0 8px rgba(themed($m-black), 0.18),
+    box-shadow:
+      0 0 8px rgba(themed($m-black), 0.18),
       0 8px 16px rgba(themed($m-black), 0.36);
     background-color: rgba(themed($m-grey-300), 0.4);
   }
@@ -575,7 +581,8 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
 .mdl-menu__outline {
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
-    box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 2px 2px 0 rgba(themed($m-black), 0.14),
       0 3px 1px -2px rgba(themed($m-black), 0.2),
       0 1px 5px 0 rgba(themed($m-black), 0.12);
   }
@@ -637,9 +644,13 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
 }
 
 @supports (-webkit-appearance: none) {
-  .mdl-progress:not(.mdl-progress--indeterminate):not(.mdl-progress--indeterminate)
+  .mdl-progress:not(.mdl-progress--indeterminate):not(
+      .mdl-progress--indeterminate
+    )
     > .auxbar,
-  .mdl-progress:not(.mdl-progress__indeterminate):not(.mdl-progress__indeterminate)
+  .mdl-progress:not(.mdl-progress__indeterminate):not(
+      .mdl-progress__indeterminate
+    )
     > .auxbar {
     @include m-theme() {
       background-image: linear-gradient(
@@ -836,7 +847,9 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
   }
 }
 
-.mdl-slider.is-upgraded.is-lowest-value:focus:not(:active)::-webkit-slider-thumb {
+.mdl-slider.is-upgraded.is-lowest-value:focus:not(
+    :active
+  )::-webkit-slider-thumb {
   @include m-theme() {
     box-shadow: 0 0 0 10px rgba(themed($m-black), 0.12);
     background-color: rgba(themed($m-black), 0.12);
@@ -1008,7 +1021,8 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 .mdl-switch__thumb {
   @include m-theme() {
     background-color: themed($m-grey-50);
-    box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 2px 2px 0 rgba(themed($m-black), 0.14),
       0 3px 1px -2px rgba(themed($m-black), 0.2),
       0 1px 5px 0 rgba(themed($m-black), 0.12);
   }
@@ -1017,7 +1031,8 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 .mdl-switch.is-checked .mdl-switch__thumb {
   @include m-theme() {
     background-color: themed($m-grey-500);
-    box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 3px 4px 0 rgba(themed($m-black), 0.14),
       0 3px 3px -2px rgba(themed($m-black), 0.2),
       0 1px 8px 0 rgba(themed($m-black), 0.12);
   }
@@ -1162,7 +1177,8 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 
 .mdl-shadow--2dp {
   @include m-theme() {
-    box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.07),
+    box-shadow:
+      0 2px 2px 0 rgba(themed($m-black), 0.07),
       0 3px 1px -2px rgba(themed($m-black), 0.1),
       0 1px 5px 0 rgba(themed($m-black), 0.07);
   }
@@ -1170,7 +1186,8 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 
 .mdl-shadow--3dp {
   @include m-theme() {
-    box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 3px 4px 0 rgba(themed($m-black), 0.14),
       0 3px 3px -2px rgba(themed($m-black), 0.2),
       0 1px 8px 0 rgba(themed($m-black), 0.12);
   }
@@ -1178,7 +1195,8 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 
 .mdl-shadow--4dp {
   @include m-theme() {
-    box-shadow: 0 4px 4px 0 rgba(themed($m-black), 0.07),
+    box-shadow:
+      0 4px 4px 0 rgba(themed($m-black), 0.07),
       0 3px 1px -2px rgba(themed($m-black), 0.1),
       0 1px 5px 0 rgba(themed($m-black), 0.07);
   }
@@ -1186,7 +1204,8 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 
 .mdl-shadow--6dp {
   @include m-theme() {
-    box-shadow: 0 6px 10px 0 rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 6px 10px 0 rgba(themed($m-black), 0.14),
       0 1px 18px 0 rgba(themed($m-black), 0.12),
       0 3px 5px -1px rgba(themed($m-black), 0.2);
   }
@@ -1194,7 +1213,8 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 
 .mdl-shadow--8dp {
   @include m-theme() {
-    box-shadow: 0 8px 10px 1px rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 8px 10px 1px rgba(themed($m-black), 0.14),
       0 3px 14px 2px rgba(themed($m-black), 0.12),
       0 5px 5px -3px rgba(themed($m-black), 0.2);
   }
@@ -1202,7 +1222,8 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 
 .mdl-shadow--16dp {
   @include m-theme() {
-    box-shadow: 0 16px 24px 2px rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 16px 24px 2px rgba(themed($m-black), 0.14),
       0 6px 30px 5px rgba(themed($m-black), 0.12),
       0 8px 10px -5px rgba(themed($m-black), 0.2);
   }
@@ -1210,7 +1231,8 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 
 .mdl-shadow--24dp {
   @include m-theme() {
-    box-shadow: 0 9px 46px 8px rgba(themed($m-black), 0.14),
+    box-shadow:
+      0 9px 46px 8px rgba(themed($m-black), 0.14),
       0 11px 15px -7px rgba(themed($m-black), 0.12),
       0 24px 38px 3px rgba(0, 0, 0, 0.2);
   }

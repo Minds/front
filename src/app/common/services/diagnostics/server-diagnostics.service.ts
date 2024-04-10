@@ -19,7 +19,7 @@ export class ServerDiagnosticsService implements DiagnosticsInterface {
   }
 
   listen() {
-    this.session.getLoggedInUser(currentUser => {
+    this.session.getLoggedInUser((currentUser) => {
       this.setUser(currentUser);
     });
   }

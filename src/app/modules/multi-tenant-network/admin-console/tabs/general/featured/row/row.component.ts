@@ -31,22 +31,20 @@ export class NetworkAdminConsoleFeaturedEntityRowComponent {
   @Input() public featuredEntity: FeaturedUser | FeaturedGroup = null;
 
   /** Emits after call to delete entity - allows containing lists to respond by removing the entity. */
-  @Output() public readonly onDeletion: EventEmitter<string> = new EventEmitter<
-    string
-  >();
+  @Output() public readonly onDeletion: EventEmitter<string> =
+    new EventEmitter<string>();
 
   /** Enum for consumption in template. */
-  public readonly FeaturedEntityRowOption: typeof FeaturedEntityRowOption = FeaturedEntityRowOption;
+  public readonly FeaturedEntityRowOption: typeof FeaturedEntityRowOption =
+    FeaturedEntityRowOption;
 
   /** Whether update action is in progres. */
-  public readonly isUpdating$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly isUpdating$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether delete action is in progres. */
-  public readonly isDeleting$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly isDeleting$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     private deleteFeaturedEntityGQL: DeleteFeaturedEntityGQL,
@@ -97,11 +95,12 @@ export class NetworkAdminConsoleFeaturedEntityRowComponent {
   public async onDeleteClicked(): Promise<void> {
     try {
       this.isDeleting$.next(true);
-      const result: MutationResult<DeleteFeaturedEntityMutation> = await lastValueFrom(
-        this.deleteFeaturedEntityGQL.mutate({
-          entityGuid: this.featuredEntity.entityGuid,
-        })
-      );
+      const result: MutationResult<DeleteFeaturedEntityMutation> =
+        await lastValueFrom(
+          this.deleteFeaturedEntityGQL.mutate({
+            entityGuid: this.featuredEntity.entityGuid,
+          })
+        );
 
       if (result.data?.deleteFeaturedEntity !== true) {
         throw new Error('Failed to make entity non-featured.');

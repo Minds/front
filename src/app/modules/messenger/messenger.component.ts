@@ -38,7 +38,7 @@ export class Messenger {
   }
 
   ngOnDestroy() {
-    (<any>window).openMessengerWindow = function() {
+    (<any>window).openMessengerWindow = function () {
       return;
     };
   }

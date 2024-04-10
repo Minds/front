@@ -13,19 +13,17 @@ describe('SidebarWidgetComponent', () => {
   let component: SidebarWidgetComponent;
   let fixture: ComponentFixture<SidebarWidgetComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [SidebarWidgetComponent],
-        imports: [RouterTestingModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: Client, useValue: clientMock },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [SidebarWidgetComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: Client, useValue: clientMock },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     sessionMock.user.dismissed_widgets = ['test-widget-id'];

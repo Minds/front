@@ -13,6 +13,7 @@ export class BoostGroupExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('minds-4159-boost-groups', true);
+    // return this.experiments.hasVariation('minds-4159-boost-groups', true);
+    return true;
   }
 }

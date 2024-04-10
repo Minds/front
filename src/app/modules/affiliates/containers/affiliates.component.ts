@@ -23,7 +23,10 @@ export class AffiliatesComponent {
    */
   totalEarnings: number = 0;
 
-  constructor(private session: Session, public router: Router) {}
+  constructor(
+    private session: Session,
+    public router: Router
+  ) {}
 
   ngOnInit() {
     if (!this.session.getLoggedInUser()) {

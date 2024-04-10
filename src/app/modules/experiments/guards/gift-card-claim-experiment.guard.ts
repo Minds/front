@@ -20,13 +20,13 @@ export class GiftCardClaimExperimentGuard implements CanActivate {
    * @returns { boolean } true if route can be activated.
    */
   public canActivate(): boolean {
-    if (!this.experiments.hasVariation('minds-4126-gift-card-claim', true)) {
-      this.toast.warn(
-        'Claiming gift cards is not currently enabled, please try again later.'
-      );
-      this.router.navigate(['/']);
-      return false;
-    }
+    // if (!this.experiments.hasVariation('minds-4126-gift-card-claim', true)) {
+    //   this.toast.warn(
+    //     'Claiming gift cards is not currently enabled, please try again later.'
+    //   );
+    //   this.router.navigate(['/']);
+    //   return false;
+    // }
     return true;
   }
 }

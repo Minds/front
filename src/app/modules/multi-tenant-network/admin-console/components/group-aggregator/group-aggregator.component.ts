@@ -37,7 +37,7 @@ export class GroupAggregatorComponent implements OnInit {
       return;
     }
 
-    const groupNames = this.groups.slice(1).map(group => group.legacy.name);
+    const groupNames = this.groups.slice(1).map((group) => group.legacy.name);
 
     this.aggregatedGroupHoverText = groupNames.join(', ');
   }

@@ -15,43 +15,44 @@ import * as moment from 'moment';
 
 const mockInstantiationTimestamp: moment.Moment = moment();
 
-export const mockGetAdminAnalyticsChartAndKpisQuery: GetAdminAnalyticsChartAndKpisQuery = {
-  __typename: 'Query',
-  tenantAdminAnalyticsChart: {
-    __typename: 'AnalyticsChartType',
-    metric: AnalyticsMetricEnum.DailyActiveUsers,
-    segments: [
+export const mockGetAdminAnalyticsChartAndKpisQuery: GetAdminAnalyticsChartAndKpisQuery =
+  {
+    __typename: 'Query',
+    tenantAdminAnalyticsChart: {
+      __typename: 'AnalyticsChartType',
+      metric: AnalyticsMetricEnum.DailyActiveUsers,
+      segments: [
+        {
+          buckets: [
+            {
+              date: moment().toString(),
+              key: 'users',
+              value: 100,
+            },
+            {
+              date: moment().toString(),
+              key: 'users',
+              value: 200,
+            },
+          ],
+        },
+      ],
+    },
+    tenantAdminAnalyticsKpis: [
       {
-        buckets: [
-          {
-            date: moment().toString(),
-            key: 'users',
-            value: 100,
-          },
-          {
-            date: moment().toString(),
-            key: 'users',
-            value: 200,
-          },
-        ],
+        __typename: 'AnalyticsKpiType',
+        metric: AnalyticsMetricEnum.DailyActiveUsers,
+        value: 1000,
+        previousPeriodValue: 500,
+      },
+      {
+        __typename: 'AnalyticsKpiType',
+        metric: AnalyticsMetricEnum.MeanSessionSecs,
+        value: 30,
+        previousPeriodValue: 25,
       },
     ],
-  },
-  tenantAdminAnalyticsKpis: [
-    {
-      __typename: 'AnalyticsKpiType',
-      metric: AnalyticsMetricEnum.DailyActiveUsers,
-      value: 1000,
-      previousPeriodValue: 500,
-    },
-    {
-      __typename: 'AnalyticsKpiType',
-      metric: AnalyticsMetricEnum.MeanSessionSecs,
-      value: 30,
-      previousPeriodValue: 25,
-    },
-  ],
-};
+  };
 
 const mockFilters: Filter = {
   id: 'timespan',
@@ -91,10 +92,7 @@ const mockFilters: Filter = {
       id: 'ytd',
       label: 'Year to date',
       selected: false,
-      from_ts_ms: moment()
-        .startOf('year')
-        .startOf('day')
-        .unix(),
+      from_ts_ms: moment().startOf('year').startOf('day').unix(),
     },
   ],
 };

@@ -61,7 +61,7 @@ export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.latestPost$.subscribe(latestPost => {
+      this.service.latestPost$.subscribe((latestPost) => {
         if (!latestPost) {
           this.onDismissClick();
         } else {

@@ -61,7 +61,8 @@ import { Session } from '../../../../services/session';
   `,
 })
 export class EntityTypeaheadComponent
-  implements ControlValueAccessor, OnDestroy {
+  implements ControlValueAccessor, OnDestroy
+{
   /** Entity type. */
   @Input() protected entityType: AutoCompleteEntityTypeEnum =
     AutoCompleteEntityTypeEnum.User;
@@ -76,9 +77,8 @@ export class EntityTypeaheadComponent
   @Input() protected filterSelf: boolean = true;
 
   /** Outputs on loading state emission. */
-  @Output('loading') protected readonly loadingEmitter: EventEmitter<
-    boolean
-  > = new EventEmitter<boolean>();
+  @Output('loading') protected readonly loadingEmitter: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   protected formGroup: FormGroup;
 
@@ -100,7 +100,7 @@ export class EntityTypeaheadComponent
       .valueChanges.pipe(
         debounceTime(100),
         distinctUntilChanged(),
-        filter(searchTerm => searchTerm.trim().length > 0),
+        filter((searchTerm) => searchTerm.trim().length > 0),
         tap((_: unknown) => this.loadingEmitter.emit(true)),
         switchMap((searchTerm: string) =>
           this.api.get<EntitySearchResponse>(
@@ -117,7 +117,7 @@ export class EntityTypeaheadComponent
           )
         ),
         tap(() => this.loadingEmitter.emit(false)),
-        catchError(e => {
+        catchError((e) => {
           console.error(e);
           this.loadingEmitter.emit(false);
           return of([]);

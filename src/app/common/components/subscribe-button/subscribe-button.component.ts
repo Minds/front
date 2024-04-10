@@ -32,13 +32,11 @@ export class SubscribeButtonComponent implements OnInit {
   subscribed: boolean = false;
   inProgress: boolean = false;
 
-  @Output('subscribed') onSubscribed: EventEmitter<
-    Partial<MindsUser>
-  > = new EventEmitter();
+  @Output('subscribed') onSubscribed: EventEmitter<Partial<MindsUser>> =
+    new EventEmitter();
 
-  @Output('unsubscribed') onUnsubscribed: EventEmitter<
-    Partial<MindsUser>
-  > = new EventEmitter();
+  @Output('unsubscribed') onUnsubscribed: EventEmitter<Partial<MindsUser>> =
+    new EventEmitter();
 
   @Input() sized: boolean = false;
 
@@ -117,8 +115,8 @@ export class SubscribeButtonComponent implements OnInit {
 
     await this.subscriptionService
       .isSubscribed(this._user as MindsUser)
-      .then(subscribed => (this.subscribed = subscribed))
-      .catch(e => {
+      .then((subscribed) => (this.subscribed = subscribed))
+      .catch((e) => {
         console.error('Problem fetching channel for subscribe button', e);
       });
 

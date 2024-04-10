@@ -45,7 +45,6 @@ export class NetworkAdminAnalyticsEmptyStateCardComponent {
   @Input() protected readonly ctaIcon: string;
 
   /** Outputs on CTA button click. */
-  @Output() protected readonly onAction: EventEmitter<void> = new EventEmitter<
-    void
-  >();
+  @Output() protected readonly onAction: EventEmitter<void> =
+    new EventEmitter<void>();
 }

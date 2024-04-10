@@ -7,7 +7,10 @@ export class BlockchainService {
   protected serverWalletAddressCache: string;
   protected serverBalanceCache: number | string;
 
-  constructor(private client: Client, private session: Session) {}
+  constructor(
+    private client: Client,
+    private session: Session
+  ) {}
 
   // Wallet
 

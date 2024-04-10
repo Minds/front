@@ -29,7 +29,7 @@ export class BlockListService {
 
         this.storage.set('blocked', JSON.stringify(response.guids)); // save to storage
       })
-      .catch(err => null);
+      .catch((err) => null);
     return this;
   }
 
@@ -50,7 +50,7 @@ export class BlockListService {
     this.recentService.storeSuggestion(
       'publisher',
       { guid, blocked: true },
-      entry => entry.guid === guid
+      (entry) => entry.guid === guid
     );
   }
 

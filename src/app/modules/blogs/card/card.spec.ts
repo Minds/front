@@ -43,36 +43,34 @@ describe('BlogCard', () => {
   let comp: BlogCard;
   let fixture: ComponentFixture<BlogCard>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ExcerptPipe,
-          ThumbsUpMock,
-          ThumbsDownMock,
-          CommentsMock,
-          BlogCard,
-          TruncatePipe,
-        ],
-        imports: [
-          RouterTestingModule,
-          ReactiveFormsModule,
-          CommonModule,
-          FormsModule,
-        ],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: AttachmentService, useValue: attachmentServiceMock },
-          {
-            provide: ExperimentsService,
-            useValue: MockService(ExperimentsService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ExcerptPipe,
+        ThumbsUpMock,
+        ThumbsDownMock,
+        CommentsMock,
+        BlogCard,
+        TruncatePipe,
+      ],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        CommonModule,
+        FormsModule,
+      ],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: AttachmentService, useValue: attachmentServiceMock },
+        {
+          provide: ExperimentsService,
+          useValue: MockService(ExperimentsService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     jasmine.clock().uninstall();
     jasmine.clock().install();

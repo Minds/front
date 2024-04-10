@@ -168,8 +168,8 @@ export class SearchComponent {
   ngOnInit() {
     this.nsfw = this.legacyDiscoveryFeedsService.nsfw$
       .getValue()
-      .filter(n => n.selected)
-      .map(n => n.value);
+      .filter((n) => n.selected)
+      .map((n) => n.value);
 
     /**
      * This is the initial query
@@ -192,7 +192,7 @@ export class SearchComponent {
 
     this.edges$ = this.searchQuery.valueChanges.pipe(
       delayWhen(() => (this.isFirstRun ? interval(100) : of(undefined))), // wait 100ms if first page
-      map(result => {
+      map((result) => {
         if (result.errors) {
           console.error(result.errors);
         }
@@ -229,26 +229,26 @@ export class SearchComponent {
     );
 
     this.showEmptyFeedNotice$ = this.edges$.pipe(
-      map(edges => {
+      map((edges) => {
         const hasActivityEdge =
-          edges && edges.some(edge => edge.__typename === 'ActivityEdge');
+          edges && edges.some((edge) => edge.__typename === 'ActivityEdge');
         return !this.inProgress && !hasActivityEdge;
       })
     );
 
     this.searchData = this.searchQuery.valueChanges.pipe(
-      filter(result => !!result.data?.search),
-      map(result => result.data.search)
+      filter((result) => !!result.data?.search),
+      map((result) => result.data.search)
     );
 
     this.totalEdgeCount$ = this.searchData.pipe(
-      map(search => {
+      map((search) => {
         return search.edges.length;
       })
     );
 
     this.pageInfo$ = this.searchQuery.valueChanges.pipe(
-      map(result => {
+      map((result) => {
         const search = result.data?.search;
         if (!search?.pageInfo) {
           return <PageInfo>{
@@ -315,7 +315,7 @@ export class SearchComponent {
           this.setSeo();
         }),
       // Loading state
-      this.searchQuery.valueChanges.subscribe(result => {
+      this.searchQuery.valueChanges.subscribe((result) => {
         this.inProgress = result.loading;
       }),
       // Update the url when we change type
@@ -326,7 +326,7 @@ export class SearchComponent {
         .pipe(distinctUntilChanged(), debounceTime(300))
         .subscribe(([type, nsfw]) => {
           // Remap NSFW to valid integers
-          nsfw = nsfw.filter(n => n.selected).map(n => n.value);
+          nsfw = nsfw.filter((n) => n.selected).map((n) => n.value);
 
           // Is NSFW different to local state?
           if (nsfw !== this.nsfw) {
@@ -525,7 +525,7 @@ export class SearchComponent {
   }
 
   private toNsfwEnumArray(nsfw: number[]): SearchNsfwEnum[] {
-    return nsfw.map(n => {
+    return nsfw.map((n) => {
       switch (n) {
         case 1:
           return SearchNsfwEnum.Nudity;

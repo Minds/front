@@ -66,7 +66,7 @@ export class SettingsV2ProFooterComponent implements OnInit, OnDestroy {
      */
     this.form.valueChanges.subscribe(() => {
       if (this.init) {
-        const nonBlankLinks = this.footer_links.value.filter(item => {
+        const nonBlankLinks = this.footer_links.value.filter((item) => {
           return item.title || item.href;
         });
 
@@ -80,7 +80,7 @@ export class SettingsV2ProFooterComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.route.parent.params.subscribe(params => {
+    this.route.parent.params.subscribe((params) => {
       if (this.session.isAdmin()) {
         this.user = params.user || null;
       }

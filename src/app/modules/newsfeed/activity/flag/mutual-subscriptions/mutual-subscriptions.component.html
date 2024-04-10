@@ -16,7 +16,7 @@
         suffix-text
         class="m-userAggregator__suffixText"
         i18n="@@M__ACTIVITY_FLAG__MUTUAL_SUBSCRIPTIONS__FOLLOWS"
-        >{ (totalCount$ | async), plural, =1 {follows} other {follow} }
+        >{(totalCount$ | async), plural, =1 {follows} other {follow}}
         {{ _user.name }}</span
       >
     </m-userAggregator>

@@ -1,5 +1,5 @@
 <span class="m-activity__views m-legible" *ngIf="showViews && views > 0">
   <span class="m-activityViews__dot" *ngIf="!this.service.displayOptions.isFeed"
     >·</span
-  >{{ views | abbr }} { views, plural, =1 {view} other {views}}
+  >{{ views | abbr }} {views, plural, =1 {view} other {views}}
 </span>

@@ -16,6 +16,7 @@ import { ConfigsService } from '../common/services/configs.service';
 import posthog from 'posthog-js';
 import { Router } from '@angular/router';
 import userMock from '../mocks/responses/user.mock';
+import { POSTHOG_JS } from '../common/services/posthog/posthog-injection-tokens';
 
 describe('AnalyticsService', () => {
   let service: AnalyticsService,
@@ -24,7 +25,7 @@ describe('AnalyticsService', () => {
 
   beforeEach(() => {
     configService = {
-      get: key => {
+      get: (key) => {
         if (key === 'posthog') {
           return <any>{
             feature_flags: [],
@@ -37,6 +38,10 @@ describe('AnalyticsService', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, CookieModule],
       providers: [
+        {
+          provide: POSTHOG_JS,
+          useValue: posthog,
+        },
         { provide: Client, useValue: clientMock },
         { provide: SiteService, useValue: siteServiceMock },
         {
@@ -52,6 +57,7 @@ describe('AnalyticsService', () => {
       ],
     });
 
+    TestBed.inject(POSTHOG_JS);
     service = TestBed.inject(AnalyticsService);
     router = TestBed.inject(Router);
   });
@@ -123,8 +129,10 @@ describe('AnalyticsService', () => {
   }));
 
   it('should reset identity on logout', fakeAsync(() => {
-    (service as any).hasBeenLoggedIn = true;
-    spyOn(posthog, 'reset');
+    sessionMock.loggedinEmitter.emit(true);
+    tick();
+
+    spyOn(posthog, 'reset').and.callThrough();
 
     sessionMock.loggedinEmitter.emit(false);
     tick();

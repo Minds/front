@@ -56,7 +56,7 @@ export class CustomPageComponent implements OnInit, OnDestroy {
 
     // Get custom page from server to populate page
     this.subscriptions.push(
-      this.service.customPage$.subscribe(customPage => {
+      this.service.customPage$.subscribe((customPage) => {
         if (customPage) {
           this.customPage = customPage;
           this.displayContent = customPage.displayContent;

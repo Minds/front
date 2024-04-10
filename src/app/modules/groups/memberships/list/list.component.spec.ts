@@ -10,33 +10,31 @@ describe('GroupsMembershipsListComponent', () => {
   let component: GroupsMembershipsListComponent;
   let fixture: ComponentFixture<GroupsMembershipsListComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [GroupsMembershipsListComponent],
-        providers: [
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-        ],
-      })
-        .overrideProvider(GroupsMembershipsListService, {
-          useValue: MockService(GroupsMembershipsListService, {
-            has: ['groupMembershipLevel$', 'membershipLevelGte$'],
-            props: {
-              groupMembershipLevel$: {
-                get: () => new BehaviorSubject<any>(''),
-              },
-              membershipLevelGte$: { get: () => new BehaviorSubject<any>('') },
-            },
-          }),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [GroupsMembershipsListComponent],
+      providers: [
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+      ],
     })
-  );
+      .overrideProvider(GroupsMembershipsListService, {
+        useValue: MockService(GroupsMembershipsListService, {
+          has: ['groupMembershipLevel$', 'membershipLevelGte$'],
+          props: {
+            groupMembershipLevel$: {
+              get: () => new BehaviorSubject<any>(''),
+            },
+            membershipLevelGte$: { get: () => new BehaviorSubject<any>('') },
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(GroupsMembershipsListComponent);
     component = fixture.componentInstance;
 

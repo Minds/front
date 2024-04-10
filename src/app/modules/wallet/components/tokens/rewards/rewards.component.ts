@@ -71,33 +71,18 @@ export class WalletTokenRewardsComponent implements OnInit {
    * Obserbale to determine if estimates should be shown
    */
   showEstimates$: Observable<boolean> = this.rewards.dateTs$.pipe(
-    map(
-      dateTs =>
-        dateTs ==
-        moment()
-          .utc()
-          .startOf('d')
-          .unix()
-    )
+    map((dateTs) => dateTs == moment().utc().startOf('d').unix())
   );
 
   nextPayoutDate$: Observable<number> = timer(0, 1000).pipe(
     map(() => {
-      return (
-        moment()
-          .utc()
-          .endOf('day')
-          .unix() -
-        moment()
-          .utc()
-          .unix()
-      );
+      return moment().utc().endOf('day').unix() - moment().utc().unix();
     })
   );
 
   /** Breakdown of relative dates engangement scores */
-  contributionScores$: Observable<ContributionMetric[]> = this.rewards
-    .contributionScores$;
+  contributionScores$: Observable<ContributionMetric[]> =
+    this.rewards.contributionScores$;
 
   /** Breakdown of relative dates liquidity */
   liquidityPositions$: Observable<any> = this.rewards.liquidityPositions$;
@@ -127,18 +112,18 @@ export class WalletTokenRewardsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.rewards.rewards$.subscribe(response => {
+    this.rewards.rewards$.subscribe((response) => {
       this.total = response.total;
       this.data = response;
     });
 
-    this.session.userEmitter.subscribe(user => {
+    this.session.userEmitter.subscribe((user) => {
       this.user = user;
     });
 
     this.subscriptions.push(
       this.connectWalletModalService.isConnected$.subscribe(
-        isConnected => (this.isConnected = isConnected)
+        (isConnected) => (this.isConnected = isConnected)
       )
     );
   }
@@ -231,10 +216,7 @@ export class WalletTokenRewardsComponent implements OnInit {
   async onTransferClick(e: MouseEvent) {
     e.stopPropagation();
 
-    this.onchainTransferModal
-      .setInjector(this.injector)
-      .present()
-      .toPromise();
+    this.onchainTransferModal.setInjector(this.injector).present().toPromise();
   }
 
   /**

@@ -4,7 +4,7 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { toasterServiceMock } from '../../../modules/auth/multi-factor-auth/services/multi-factor-auth.service.spec';
 import { EmailConfirmationService } from './email-confirmation.service';
 
-export let feedNoticeMock = new (function() {
+export let feedNoticeMock = new (function () {
   this.dismiss = jasmine.createSpy('dismiss');
 })();
 

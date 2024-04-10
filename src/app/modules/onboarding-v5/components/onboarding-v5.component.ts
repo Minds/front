@@ -29,27 +29,27 @@ import { OnboardingV5MinimalModeService } from '../services/onboarding-v5-minima
 })
 export class OnboardingV5Component implements OnInit, OnDestroy {
   /** Whether fetching of steps is in progress. */
-  public stepFetchInProgress$: Observable<boolean> = this.service
-    .stepFetchInProgress$;
+  public stepFetchInProgress$: Observable<boolean> =
+    this.service.stepFetchInProgress$;
 
   /** Carousel items to be displayed. */
-  public readonly carouselItems$: Observable<CarouselItem[]> = this.service
-    .activeStepCarouselItems$;
+  public readonly carouselItems$: Observable<CarouselItem[]> =
+    this.service.activeStepCarouselItems$;
 
   /** Currently active step. */
-  public readonly activeStep$: Observable<OnboardingStep> = this.service
-    .activeStep$;
+  public readonly activeStep$: Observable<OnboardingStep> =
+    this.service.activeStep$;
 
   /**
    * Whether onboarding is in a completed state - used to show completion panel
    * before modal dismissal.
    */
-  public readonly onboardingCompleted$: Observable<boolean> = this.service
-    .onboardingCompleted$;
+  public readonly onboardingCompleted$: Observable<boolean> =
+    this.service.onboardingCompleted$;
 
   /** Tenant logo path for display instead of the carousel on tenant networks. */
-  public readonly tenantLogoPath$: Observable<string> = this
-    .tenantConfigImageService.horizontalLogoPath$;
+  public readonly tenantLogoPath$: Observable<string> =
+    this.tenantConfigImageService.horizontalLogoPath$;
 
   /** Subscription to popstate. */
   private popStateSubscription: Subscription;
@@ -70,7 +70,8 @@ export class OnboardingV5Component implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isIosMobile = isIos() && isMobile();
     this.service.start();
-    this.isOnboardingMinimalMode = this.onboardingMinimalModeService.shouldShow();
+    this.isOnboardingMinimalMode =
+      this.onboardingMinimalModeService.shouldShow();
     this.disableBackNavigation();
   }
 

@@ -10,7 +10,8 @@ import { ActivityService } from '../../activity/activity.service';
 })
 export class ActivitySupermindReplyLinkComponent
   extends AbstractSubscriberComponent
-  implements OnInit {
+  implements OnInit
+{
   subscriptions: Subscription[] = [];
   entity;
 
@@ -22,10 +23,10 @@ export class ActivitySupermindReplyLinkComponent
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.entity$.subscribe(entity => {
+      this.service.entity$.subscribe((entity) => {
         this.entity = entity;
       }),
-      this.service.isSupermindRequestWithReply$.subscribe(is => {
+      this.service.isSupermindRequestWithReply$.subscribe((is) => {
         if (is && this.entity) {
           this.supermindReplyGuid = this.entity.supermind.reply_guid;
         }

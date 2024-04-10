@@ -28,33 +28,31 @@ describe('LogoutComponent', () => {
     UrlSegment[]
   >(logoutUrlSegments);
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [LogoutComponent, RegisterForm],
-        imports: [RouterTestingModule, ReactiveFormsModule],
-        providers: [
-          { provide: Router, useValue: MockService(Router) },
-          {
-            provide: ActivatedRoute,
-            useValue: MockService(ActivatedRoute, {
-              has: ['snapshot'],
-              props: {
-                snapshot: {
-                  get: () => {
-                    return {
-                      url: urlSegments.getValue(),
-                    };
-                  },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [LogoutComponent, RegisterForm],
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      providers: [
+        { provide: Router, useValue: MockService(Router) },
+        {
+          provide: ActivatedRoute,
+          useValue: MockService(ActivatedRoute, {
+            has: ['snapshot'],
+            props: {
+              snapshot: {
+                get: () => {
+                  return {
+                    url: urlSegments.getValue(),
+                  };
                 },
               },
-            }),
-          },
-          { provide: AuthService, useValue: MockService(AuthService) },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        { provide: AuthService, useValue: MockService(AuthService) },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     urlSegments.next(logoutUrlSegments);

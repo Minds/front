@@ -53,63 +53,56 @@ import { OnboardingV5MinimalModeService } from './onboarding-v5-minimal-mode.ser
 })
 export class OnboardingV5Service implements OnDestroy {
   /** Whether fetching steps is in progress. */
-  public readonly stepFetchInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly stepFetchInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Onboarding steps. */
-  public readonly steps$: BehaviorSubject<
-    OnboardingStep[]
-  > = new BehaviorSubject<OnboardingStep[]>(null);
+  public readonly steps$: BehaviorSubject<OnboardingStep[]> =
+    new BehaviorSubject<OnboardingStep[]>(null);
 
   /** Currently active onboarding step. */
-  public readonly activeStep$: BehaviorSubject<
-    OnboardingStep
-  > = new BehaviorSubject<OnboardingStep>(null);
+  public readonly activeStep$: BehaviorSubject<OnboardingStep> =
+    new BehaviorSubject<OnboardingStep>(null);
 
   /** Completion step to be shown after onboarding. */
-  public readonly completionStep$: BehaviorSubject<
-    ComponentOnboardingV5CompletionStep
-  > = new BehaviorSubject<ComponentOnboardingV5CompletionStep>(null);
+  public readonly completionStep$: BehaviorSubject<ComponentOnboardingV5CompletionStep> =
+    new BehaviorSubject<ComponentOnboardingV5CompletionStep>(null);
 
   /** Emits when onboarding is completed - shows the completion step. */
-  public readonly onboardingCompleted$: Subject<boolean> = new Subject<
-    boolean
-  >();
+  public readonly onboardingCompleted$: Subject<boolean> =
+    new Subject<boolean>();
 
   /** Whether completion step is in progress. */
-  public readonly completionInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly completionInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Emit to dismiss modal. */
   public readonly dismiss$: Subject<boolean> = new Subject<boolean>();
 
   /** Carousel items for currently active step. */
-  public readonly activeStepCarouselItems$: Observable<
-    CarouselItem[]
-  > = this.activeStep$.pipe(
-    distinctUntilChanged(),
-    map((stepData: OnboardingStep) => {
-      if (!stepData?.data?.carousel) {
-        return [];
-      }
-      return stepData?.data?.carousel.map(
-        (carouselItem: ComponentOnboardingV5CarouselItem): CarouselItem => {
-          return {
-            title: carouselItem.title,
-            media: {
-              fullUrl:
-                this.strapiUrl + carouselItem?.media?.data?.attributes?.url,
-              altText:
-                carouselItem?.media?.data?.attributes?.alternativeText ??
-                'Onboarding carousel image',
-            },
-          };
+  public readonly activeStepCarouselItems$: Observable<CarouselItem[]> =
+    this.activeStep$.pipe(
+      distinctUntilChanged(),
+      map((stepData: OnboardingStep) => {
+        if (!stepData?.data?.carousel) {
+          return [];
         }
-      );
-    })
-  );
+        return stepData?.data?.carousel.map(
+          (carouselItem: ComponentOnboardingV5CarouselItem): CarouselItem => {
+            return {
+              title: carouselItem.title,
+              media: {
+                fullUrl:
+                  this.strapiUrl + carouselItem?.media?.data?.attributes?.url,
+                altText:
+                  carouselItem?.media?.data?.attributes?.alternativeText ??
+                  'Onboarding carousel image',
+              },
+            };
+          }
+        );
+      })
+    );
 
   /** Timestamp of Onboarding V5 release - users before this will not have their onboarding status checked. */
   private readonly releaseTimestamp: number;
@@ -181,9 +174,8 @@ export class OnboardingV5Service implements OnDestroy {
       }
 
       // else get it from the server.
-      const response: ApolloQueryResult<GetOnboardingStateQuery> = await firstValueFrom(
-        this.getOnboardingStateGQL.fetch()
-      );
+      const response: ApolloQueryResult<GetOnboardingStateQuery> =
+        await firstValueFrom(this.getOnboardingStateGQL.fetch());
 
       // user has not started onboarding.
       if (!Boolean(response.data.onboardingState)) {

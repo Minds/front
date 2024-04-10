@@ -96,21 +96,20 @@ export class NewsfeedSingleComponent {
     let previousUrl = this.routerHistory.getPreviousUrl();
     this.showBackButton = !!previousUrl;
 
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['guid']) {
         this.error = '';
         this.activity = void 0;
         if (this.route.snapshot.queryParamMap.has('comment_guid')) {
-          this.focusedCommentGuid = this.route.snapshot.queryParamMap.get(
-            'comment_guid'
-          );
+          this.focusedCommentGuid =
+            this.route.snapshot.queryParamMap.get('comment_guid');
         }
         this.load(params['guid']);
       }
     });
 
     this.queryParamsSubscription = this.route.queryParamMap.subscribe(
-      params => {
+      (params) => {
         if (params.has('editing')) {
           this.editing = !!params.get('editing');
         }
@@ -128,7 +127,7 @@ export class NewsfeedSingleComponent {
      * a race condition for resettig the default shouldReuseRoute (as it happens on ngOnDestroy)
      */
     this.shouldReuseRouteFn = this.router.routeReuseStrategy.shouldReuseRoute;
-    this.router.routeReuseStrategy.shouldReuseRoute = future => {
+    this.router.routeReuseStrategy.shouldReuseRoute = (future) => {
       return false;
     };
   }
@@ -204,7 +203,7 @@ export class NewsfeedSingleComponent {
           this.context.reset();
         }
       },
-      err => {
+      (err) => {
         this.inProgress = false;
 
         if (err.status === 0) {

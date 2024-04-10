@@ -138,8 +138,7 @@ const userMock: any = {
     },
   ],
   avatar_url: {
-    tiny:
-      'https://www.minds.com/icon/100000000000000519/tiny/1349787581/1635862076/1655219240',
+    tiny: 'https://www.minds.com/icon/100000000000000519/tiny/1349787581/1635862076/1655219240',
     small:
       'https://www.minds.com/icon/100000000000000519/small/1349787581/1635862076/1655219240',
     medium:

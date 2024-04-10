@@ -49,14 +49,12 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
   );
 
   /** Components to be rendered by template. */
-  public readonly components$: BehaviorSubject<
-    ProductPageDynamicComponent[]
-  > = new BehaviorSubject<ProductPageDynamicComponent[]>([]);
+  public readonly components$: BehaviorSubject<ProductPageDynamicComponent[]> =
+    new BehaviorSubject<ProductPageDynamicComponent[]>([]);
 
   /** True when component has loaded. */
-  public readonly footer$: BehaviorSubject<Footer> = new BehaviorSubject<
-    Footer
-  >(null);
+  public readonly footer$: BehaviorSubject<Footer> =
+    new BehaviorSubject<Footer>(null);
 
   // Subscriptions.
   private dataGetSubscription: Subscription;
@@ -95,7 +93,8 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
       .subscribe((result: GetV2ProductPageBySlugQuery): void => {
         const data: V2ProductPage = result?.v2ProductPages?.data?.[0]
           ?.attributes as V2ProductPage;
-        const components: ProductPageDynamicComponent[] = data?.productPage as ProductPageDynamicComponent[];
+        const components: ProductPageDynamicComponent[] =
+          data?.productPage as ProductPageDynamicComponent[];
 
         if (!components?.length) {
           return this.handleLoadFailure(slug);

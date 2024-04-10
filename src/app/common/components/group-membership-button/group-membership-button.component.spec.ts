@@ -64,44 +64,42 @@ describe('GroupMembershipButtonComponent', () => {
 
   /** /Helpers */
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [GroupMembershipButtonComponent, ButtonComponent],
-        imports: [RouterTestingModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
-          {
-            provide: ClientMetaService,
-            useValue: MockService(ClientMetaService),
-          },
-          {
-            provide: ClientMetaDirective,
-            useValue: MockService(ClientMetaDirective),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      })
-        .overrideProvider(GroupMembershipService, {
-          useValue: MockService(GroupMembershipService, {
-            has: ['isMember$', 'isAwaiting$', 'isInvited$', 'isBanned$'],
-            props: {
-              isMember$: { get: () => new BehaviorSubject<boolean>(false) },
-              isAwaiting$: { get: () => new BehaviorSubject<boolean>(false) },
-              isInvited$: { get: () => new BehaviorSubject<boolean>(false) },
-              isBanned$: { get: () => new BehaviorSubject<boolean>(false) },
-            },
-          }),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [GroupMembershipButtonComponent, ButtonComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
+        {
+          provide: ClientMetaService,
+          useValue: MockService(ClientMetaService),
+        },
+        {
+          provide: ClientMetaDirective,
+          useValue: MockService(ClientMetaDirective),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
     })
-  );
+      .overrideProvider(GroupMembershipService, {
+        useValue: MockService(GroupMembershipService, {
+          has: ['isMember$', 'isAwaiting$', 'isInvited$', 'isBanned$'],
+          props: {
+            isMember$: { get: () => new BehaviorSubject<boolean>(false) },
+            isAwaiting$: { get: () => new BehaviorSubject<boolean>(false) },
+            isInvited$: { get: () => new BehaviorSubject<boolean>(false) },
+            isBanned$: { get: () => new BehaviorSubject<boolean>(false) },
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(GroupMembershipButtonComponent);
     comp = fixture.componentInstance;
 

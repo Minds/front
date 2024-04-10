@@ -9,9 +9,11 @@
         clickable="true"
         (onClick)="onAggregatorClick($event)"
       >
-        <span suffix-text i18n="@@M__GROUP__MEMBER_PREVIEWS__ARE_MEMBERS"
-          >{ totalCount, plural, =1 {is a member} other {are members} }</span
-        >
+        <span
+          suffix-text
+          i18n="@@M__GROUP__MEMBER_PREVIEWS__ARE_MEMBERS"
+          >{totalCount, plural, =1 {is a member} other {are members}
+        }</span>
       </m-userAggregator>
     </ng-container>
   </div>

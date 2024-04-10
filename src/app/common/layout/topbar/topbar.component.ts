@@ -59,12 +59,12 @@ export class TopbarComponent implements OnInit, OnDestroy {
   router$;
 
   /** Whether topbar alert should be shown. */
-  protected readonly shouldShowTopbarAlert$: Observable<boolean> = this
-    .topbarAlertService.shouldShow$;
+  protected readonly shouldShowTopbarAlert$: Observable<boolean> =
+    this.topbarAlertService.shouldShow$;
 
   /** Whether topbar is to be displayed in minimal light mode. */
-  public readonly isMinimalLightMode$: BehaviorSubject<boolean> = this
-    .topbarService.isMinimalLightMode$;
+  public readonly isMinimalLightMode$: BehaviorSubject<boolean> =
+    this.topbarService.isMinimalLightMode$;
 
   constructor(
     protected sidebarService: SidebarNavigationService,

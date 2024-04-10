@@ -53,36 +53,34 @@ describe('SearchBarComponent', () => {
 
   // Setup
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-          SearchBarSuggestionsMock,
-          SearchBarComponent,
-        ],
-        imports: [
-          NgCommonModule,
-          RouterTestingModule,
-          FormsModule,
-          ReactiveFormsModule,
-          SharedModule,
-        ],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: ContextService, useValue: contextServiceMock },
-          { provide: RecentService, useValue: recentServiceMock },
-          {
-            provide: SearchGqlExperimentService,
-            useValue: MockService(SearchGqlExperimentService),
-          },
-          { provide: IS_TENANT_NETWORK, useValue: false },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        SearchBarSuggestionsMock,
+        SearchBarComponent,
+      ],
+      imports: [
+        NgCommonModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedModule,
+      ],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: ContextService, useValue: contextServiceMock },
+        { provide: RecentService, useValue: recentServiceMock },
+        {
+          provide: SearchGqlExperimentService,
+          useValue: MockService(SearchGqlExperimentService),
+        },
+        { provide: IS_TENANT_NETWORK, useValue: false },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

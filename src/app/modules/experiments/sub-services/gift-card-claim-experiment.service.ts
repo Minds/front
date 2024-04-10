@@ -13,6 +13,7 @@ export class GiftCardClaimExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('minds-4126-gift-card-claim', true);
+    // return this.experiments.hasVariation('minds-4126-gift-card-claim', true);
+    return true;
   }
 }

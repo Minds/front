@@ -50,8 +50,8 @@ export class MetaService {
     return this.site.isProDomain
       ? this.site.title + ' - ' + this.site.oneLineHeadline
       : this.isTenantNetwork
-      ? this.configs.get<string>('site_name')
-      : DEFAULT_META_TITLE;
+        ? this.configs.get<string>('site_name')
+        : DEFAULT_META_TITLE;
   }
 
   get defaultAuthor(): string {
@@ -105,7 +105,7 @@ export class MetaService {
 
     if (value && join) {
       title = [value, this.defaultTitle]
-        .filter(fragment => Boolean(fragment))
+        .filter((fragment) => Boolean(fragment))
         .join(this.sep);
     } else if (value) {
       title = value;
@@ -153,9 +153,8 @@ export class MetaService {
 
   setCanonicalUrl(value: string): MetaService {
     // Find and clear or canonical links
-    const links: HTMLLinkElement[] = this.dom.head.querySelectorAll(
-      '[rel="canonical"]'
-    );
+    const links: HTMLLinkElement[] =
+      this.dom.head.querySelectorAll('[rel="canonical"]');
     if (links.length) {
       for (const link of links) {
         this.dom.head.removeChild(link);
@@ -182,9 +181,8 @@ export class MetaService {
    * Used for pro / tenant domains
    */
   setDynamicFavicon(href: string): MetaService {
-    const existingDynamicFavicon = this.dom.head.querySelector(
-      '#dynamicFavicon'
-    );
+    const existingDynamicFavicon =
+      this.dom.head.querySelector('#dynamicFavicon');
     const favicon = this.dom.head.querySelector('#favicon');
 
     // remove default favicon if present.
@@ -205,9 +203,8 @@ export class MetaService {
       this.dom.head.appendChild(link);
     }
 
-    const appleTouchLogo: ElementRef = this.dom.head.querySelector(
-      '#appleTouchIcon'
-    );
+    const appleTouchLogo: ElementRef =
+      this.dom.head.querySelector('#appleTouchIcon');
     if (appleTouchLogo) {
       this.dom.head.removeChild(appleTouchLogo);
     }
@@ -427,9 +424,9 @@ export class MetaService {
 
     if (this.isTenantNetwork) {
       this.setDynamicFavicon(
-        `${DEFAULT_TENANT_FAVICON}?lastCache=${this.configs.get<number>(
-          'last_cache'
-        ) ?? 0}`
+        `${DEFAULT_TENANT_FAVICON}?lastCache=${
+          this.configs.get<number>('last_cache') ?? 0
+        }`
       )
         .setOgImage(DEFAULT_TENANT_HORIZONTAL_LOGO)
         .setThumbnail(DEFAULT_TENANT_HORIZONTAL_LOGO);

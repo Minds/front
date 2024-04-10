@@ -43,10 +43,7 @@
   <!-- ALL ON/OFF -->
   <!-- ---------------------------------- -->
   <div
-    class="
-      m-pushNotifSettings__optionContainer
-      m-pushNotifSettings__optionContainer--horizontal
-    "
+    class="m-pushNotifSettings__optionContainer m-pushNotifSettings__optionContainer--horizontal"
     *ngIf="getToggle('all')"
   >
     <m-toggle
@@ -64,10 +61,7 @@
   <!-- SOUND TOGGLE -->
   <!-- ---------------------------------- -->
   <div
-    class="
-      m-pushNotifSettings__optionContainer
-      m-pushNotifSettings__optionContainer--horizontal
-    "
+    class="m-pushNotifSettings__optionContainer m-pushNotifSettings__optionContainer--horizontal"
   >
     <m-toggle
       [mModel]="soundToggleState"
@@ -90,10 +84,7 @@
   </h5>
 
   <div
-    class="
-      m-pushNotifSettings__optionContainer
-      m-pushNotifSettings__optionContainer--horizontal
-    "
+    class="m-pushNotifSettings__optionContainer m-pushNotifSettings__optionContainer--horizontal"
     *ngFor="let option of getDynamicToggles()"
   >
     <m-toggle
@@ -109,7 +100,7 @@
         <ng-container [ngSwitch]="option.notificationGroup">
           <ng-template ngSwitchCase="wires">Pay</ng-template>
           <ng-template ngSwitchDefault>{{
-            option.notificationGroup | replace: '_':' ' | titlecase
+            option.notificationGroup | replace: '_' : ' ' | titlecase
           }}</ng-template>
         </ng-container></span
       >

@@ -33,33 +33,29 @@ export class GiftCardClaimRedeemPanelComponent implements OnInit, OnDestroy {
   private claimCode: string = null;
 
   /** Gift card loaded by code. */
-  public readonly giftCardNode$: BehaviorSubject<
-    GiftCardNode
-  > = new BehaviorSubject<GiftCardNode>(null);
+  public readonly giftCardNode$: BehaviorSubject<GiftCardNode> =
+    new BehaviorSubject<GiftCardNode>(null);
 
   /** Whether gift card has been loaded from code or is in progress. */
-  public readonly giftCardLoaded$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly giftCardLoaded$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether a gift card claim request is in progress. */
-  public readonly giftCardClaimInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly giftCardClaimInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** The description to be shown for the panels set productId. */
-  public readonly description$: Observable<
-    string
-  > = this.panelService.productId$.pipe(
-    map((productId: GiftCardProductIdEnum): string => {
-      switch (productId) {
-        case GiftCardProductIdEnum.Boost:
-          return $localize`:@@GIFT_CARD_PANEL_REDEEM_PANEL__BOOST_DESCRIPTION:Boost credits can be used to Boost a post or your channel, which can help increase your reach, grow your subscriber base, and enhance your engagement.`;
-        default:
-          return null;
-      }
-    })
-  );
+  public readonly description$: Observable<string> =
+    this.panelService.productId$.pipe(
+      map((productId: GiftCardProductIdEnum): string => {
+        switch (productId) {
+          case GiftCardProductIdEnum.Boost:
+            return $localize`:@@GIFT_CARD_PANEL_REDEEM_PANEL__BOOST_DESCRIPTION:Boost credits can be used to Boost a post or your channel, which can help increase your reach, grow your subscriber base, and enhance your engagement.`;
+          default:
+            return null;
+        }
+      })
+    );
 
   /** Whether the gift card is already claimed. */
   public isAlreadyClaimed$: Observable<boolean> = this.giftCardNode$.pipe(
@@ -104,12 +100,10 @@ export class GiftCardClaimRedeemPanelComponent implements OnInit, OnDestroy {
       .claimGiftCard(this.claimCode)
       .pipe(
         take(1),
-        catchError(
-          (e: unknown): Observable<null> => {
-            console.error(e);
-            return of(null);
-          }
-        )
+        catchError((e: unknown): Observable<null> => {
+          console.error(e);
+          return of(null);
+        })
       )
       .subscribe((giftCard: GiftCardNode): void => {
         this.giftCardClaimInProgress$.next(false);
@@ -133,12 +127,10 @@ export class GiftCardClaimRedeemPanelComponent implements OnInit, OnDestroy {
       .getGiftCardByCode(claimCode)
       .pipe(
         take(1),
-        catchError(
-          (e: unknown): Observable<null> => {
-            console.error(e);
-            return of(null);
-          }
-        )
+        catchError((e: unknown): Observable<null> => {
+          console.error(e);
+          return of(null);
+        })
       )
       .subscribe((giftCardNode: GiftCardNode): void => {
         if (giftCardNode) {
@@ -171,10 +163,8 @@ export class GiftCardClaimRedeemPanelComponent implements OnInit, OnDestroy {
       return $localize`:@@GIFT_RECIPIENT_MODAL__CLAIM_YOUR_GIFT:Claim your gift`;
     }
 
-    const largestPurchasableDuration: GiftRecipientGiftDuration = this.service.getLargestPurchasableUpgradeDuration(
-      productId,
-      amount
-    );
+    const largestPurchasableDuration: GiftRecipientGiftDuration =
+      this.service.getLargestPurchasableUpgradeDuration(productId, amount);
 
     switch (productId) {
       case GiftCardProductIdEnum.Plus:

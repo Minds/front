@@ -52,13 +52,13 @@
           <span
             *ngIf="subscription.entity.type == 'user'"
             class="m-settingsV2__recurringPayment__recipient"
-            ><i style="text-style: normal">@</i
+            ><i style="text-style: normal">&#64;</i
             >{{ subscription.entity.username }}</span
           >
           <span
             *ngIf="subscription.entity.type != 'user'"
             class="m-settingsV2__recurringPayment__recipient"
-            ><i style="text-style: normal">@</i
+            ><i style="text-style: normal">&#64;</i
             >{{ subscription.entity.ownerObj.username }}</span
           >
         </ng-container>
@@ -68,7 +68,7 @@
           class="m-settingsV2__recurringPayment__amount"
         >
           <ng-template ngSwitchCase="money">{{
-            subscription.amount | currency: 'USD':true
+            subscription.amount | currency: 'USD' : true
           }}</ng-template>
           <ng-template
             ngSwitchCase="tokens"

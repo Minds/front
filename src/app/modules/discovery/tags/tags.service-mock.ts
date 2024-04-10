@@ -1,11 +1,11 @@
 import { BehaviorSubject } from 'rxjs';
 import discoveryTagsMock from '../../../mocks/responses/discovery-tags.mock';
 
-export let DiscoveryTagsServiceMock = new (function() {
-  this.addSingleTag = tag => {
+export let DiscoveryTagsServiceMock = new (function () {
+  this.addSingleTag = (tag) => {
     return null;
   };
-  this.removeSingleTag = tag => {
+  this.removeSingleTag = (tag) => {
     return null;
   };
 

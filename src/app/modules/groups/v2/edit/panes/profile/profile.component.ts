@@ -37,7 +37,10 @@ export class GroupEditProfileComponent {
    * @param service
    * @param configs
    */
-  constructor(public service: GroupEditService, configs: ConfigsService) {
+  constructor(
+    public service: GroupEditService,
+    configs: ConfigsService
+  ) {
     // CDN URL
     this.cdnUrl = configs.get('cdn_url');
     this.maxNameLength = configs.get('max_name_length') ?? 50;

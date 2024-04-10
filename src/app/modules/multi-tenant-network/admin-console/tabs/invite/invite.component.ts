@@ -17,11 +17,11 @@ export class NetworkAdminConsoleInviteComponent implements OnInit {
   /**
    * Allows us to use enum in the template
    */
-  public multiTenantInviteView: typeof MultiTenantInviteView = MultiTenantInviteView;
+  public multiTenantInviteView: typeof MultiTenantInviteView =
+    MultiTenantInviteView;
 
-  view$: BehaviorSubject<MultiTenantInviteView> = new BehaviorSubject<
-    MultiTenantInviteView
-  >(MultiTenantInviteView.SEND);
+  view$: BehaviorSubject<MultiTenantInviteView> =
+    new BehaviorSubject<MultiTenantInviteView>(MultiTenantInviteView.SEND);
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +29,7 @@ export class NetworkAdminConsoleInviteComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       // Get the view from the route
       if (params['view']) {
         this.view$.next(params['view']);

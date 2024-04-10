@@ -48,7 +48,7 @@ export class SettingsV2ProCancelComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.parent.params.subscribe(params => {
+    this.route.parent.params.subscribe((params) => {
       if (this.session.isAdmin()) {
         this.user = params.user || null;
       }
@@ -82,7 +82,7 @@ export class SettingsV2ProCancelComponent implements OnInit {
     if (!this.isActive || (this.isActive && !this.hasSubscription)) {
       return;
     }
-    this.confirmCancellation().subscribe(async confirmed => {
+    this.confirmCancellation().subscribe(async (confirmed) => {
       if (!confirmed) {
         return;
       }

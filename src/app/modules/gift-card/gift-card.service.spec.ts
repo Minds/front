@@ -200,7 +200,9 @@ describe('GiftCardService', () => {
 
   describe('getGiftCardBalancesWithExpiryData', () => {
     it('should get gift card balances with additional expiry data', (done: DoneFn) => {
-      (service as any).getGiftCardBalancesWithExpiryDataGQL.fetch.and.returnValue(
+      (
+        service as any
+      ).getGiftCardBalancesWithExpiryDataGQL.fetch.and.returnValue(
         of({
           data: {
             giftCardsBalances: mockGiftCardBalances,
@@ -218,7 +220,9 @@ describe('GiftCardService', () => {
     });
 
     it('should return null when no gift card balances with additional expiry data are found', (done: DoneFn) => {
-      (service as any).getGiftCardBalancesWithExpiryDataGQL.fetch.and.returnValue(
+      (
+        service as any
+      ).getGiftCardBalancesWithExpiryDataGQL.fetch.and.returnValue(
         of({
           data: {
             giftCardsBalances: null,

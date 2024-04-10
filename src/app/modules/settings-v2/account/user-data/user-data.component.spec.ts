@@ -25,7 +25,7 @@ describe('SettingsV2UserDataComponent', () => {
 
   beforeEach(() => {
     configsService = {
-      get: key => {
+      get: (key) => {
         return <any>{};
       },
     };
@@ -94,9 +94,8 @@ describe('SettingsV2UserDataComponent', () => {
   });
 
   it('should delete a users data when clicking the button', fakeAsync(() => {
-    const btn = fixture.debugElement.nativeElement.querySelector(
-      'm-button button'
-    );
+    const btn =
+      fixture.debugElement.nativeElement.querySelector('m-button button');
     btn.click();
 
     tick();

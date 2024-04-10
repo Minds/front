@@ -13,21 +13,19 @@ describe('EnvironmentFlagComponent', () => {
   let comp: EnvironmentFlagComponent;
   let fixture: ComponentFixture<EnvironmentFlagComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [EnvironmentFlagComponent],
-        imports: [CookieModule],
-        providers: [
-          { provide: Session, useValue: MockService(Session) },
-          CookieService,
-          { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [EnvironmentFlagComponent],
+      imports: [CookieModule],
+      providers: [
+        { provide: Session, useValue: MockService(Session) },
+        CookieService,
+        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(EnvironmentFlagComponent);
     comp = fixture.componentInstance;
     (comp as any).cookies.removeAll();

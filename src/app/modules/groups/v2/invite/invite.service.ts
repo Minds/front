@@ -25,16 +25,14 @@ export class GroupInviteService implements OnDestroy {
   /**
    * Group subject, should be immutable; Used for display purposes
    */
-  readonly group$: BehaviorSubject<MindsGroup> = new BehaviorSubject<
-    MindsGroup
-  >(null);
+  readonly group$: BehaviorSubject<MindsGroup> =
+    new BehaviorSubject<MindsGroup>(null);
 
   /**
    * The currently logged in user
    */
-  readonly loggedInUser$: BehaviorSubject<MindsUser> = new BehaviorSubject<
-    MindsUser
-  >(null);
+  readonly loggedInUser$: BehaviorSubject<MindsUser> =
+    new BehaviorSubject<MindsUser>(null);
 
   /**
    * In Progress flag subject
@@ -76,17 +74,15 @@ export class GroupInviteService implements OnDestroy {
 
     const inviteResponse$ = this.group$.pipe(
       take(1),
-      switchMap(
-        (group): Observable<GroupInvitePutResponse> => {
-          let endpoint = `api/v1/groups/invitations/${group.guid}`;
-          let params: GroupInvitePutParams = {
-            guid: invitee.guid,
-          };
+      switchMap((group): Observable<GroupInvitePutResponse> => {
+        let endpoint = `api/v1/groups/invitations/${group.guid}`;
+        let params: GroupInvitePutParams = {
+          guid: invitee.guid,
+        };
 
-          return this.api.put(endpoint, params);
-        }
-      ),
-      catchError(e => {
+        return this.api.put(endpoint, params);
+      }),
+      catchError((e) => {
         this.inProgress$.next(false);
         this.handleRequestError(e, true);
         return of(null);
@@ -96,7 +92,7 @@ export class GroupInviteService implements OnDestroy {
     this.subscriptions.push(
       inviteResponse$
         .pipe(
-          map(response => {
+          map((response) => {
             this.inProgress$.next(false);
 
             if (response.error) {

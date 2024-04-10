@@ -9,7 +9,7 @@
         <span> • </span>
         <span>{{
           membership.membershipPriceInCents / 100
-            | currency: membership.priceCurrency:'symbol':'1.0-2'
+            | currency: membership.priceCurrency : 'symbol' : '1.0-2'
         }}</span>
 
         <span>
@@ -24,8 +24,7 @@
             <span
               class="m-networkMembershipAccordian__title--thin"
               i18n="
-                 @@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__ONE_TIME_FEE_BRACKETS
-              "
+                @@NETWORK_ADMIN_MEMBERSHIPS_ACCORDIAN__ONE_TIME_FEE_BRACKETS"
               >(one-time fee)</span
             >
           </ng-container>
@@ -100,7 +99,7 @@
       <p class="m-networkMembershipAccordian__summaryValue">
         {{
           membership.membershipPriceInCents / 100
-            | currency: membership.priceCurrency:'symbol':'1.2-2'
+            | currency: membership.priceCurrency : 'symbol' : '1.2-2'
         }}
       </p>
     </div>

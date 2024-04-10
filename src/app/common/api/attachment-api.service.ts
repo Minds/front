@@ -59,26 +59,27 @@ export interface UploadEvent {
  * Angular's HTTP event to our Upload Event.
  * Disabling `includeResponse` will also disable Minds API status success check!
  */
-export const httpEventToUploadEvent = (
-  type: string,
-  includeResponse: boolean = true
-): OperatorFunction<HttpEvent<ApiResponse>, UploadEvent> => input$ =>
-  input$.pipe(
-    // White-list the events we need
-    filter((event: HttpEvent<ApiResponse>) =>
-      [
-        HttpEventType.Sent,
-        HttpEventType.UploadProgress,
-        HttpEventType.ResponseHeader,
-        includeResponse && HttpEventType.Response,
-      ]
-        .filter(_ => typeof _ === 'number')
-        .includes(event.type)
-    ),
+export const httpEventToUploadEvent =
+  (
+    type: string,
+    includeResponse: boolean = true
+  ): OperatorFunction<HttpEvent<ApiResponse>, UploadEvent> =>
+  (input$) =>
+    input$.pipe(
+      // White-list the events we need
+      filter((event: HttpEvent<ApiResponse>) =>
+        [
+          HttpEventType.Sent,
+          HttpEventType.UploadProgress,
+          HttpEventType.ResponseHeader,
+          includeResponse && HttpEventType.Response,
+        ]
+          .filter((_) => typeof _ === 'number')
+          .includes(event.type)
+      ),
 
-    // Map them onto a normalized UploadEvent our app handles
-    map(
-      (event: HttpEvent<ApiResponse>): UploadEvent => {
+      // Map them onto a normalized UploadEvent our app handles
+      map((event: HttpEvent<ApiResponse>): UploadEvent => {
         switch (event.type) {
           case HttpEventType.Sent:
             return {
@@ -107,37 +108,35 @@ export const httpEventToUploadEvent = (
               },
             };
         }
-      }
-    ),
+      }),
 
-    // If something happens during the upload, replace with a static HOO
-    catchError(e => {
-      let errorMessage = 'E_CLIENT_ERROR';
+      // If something happens during the upload, replace with a static HOO
+      catchError((e) => {
+        let errorMessage = 'E_CLIENT_ERROR';
 
-      if (e.error && e.error.message) {
-        errorMessage = e.error.message;
-      } else if (e.message) {
-        errorMessage = e.message;
-      }
+        if (e.error && e.error.message) {
+          errorMessage = e.error.message;
+        } else if (e.message) {
+          errorMessage = e.message;
+        }
 
-      return of({
-        type: UploadEventType.Fail,
-        payload: {
-          request: { type },
-          response: errorMessage,
-        },
-      });
-    })
-  );
+        return of({
+          type: UploadEventType.Fail,
+          payload: {
+            request: { type },
+            response: errorMessage,
+          },
+        });
+      })
+    );
 
 /**
  * Service that handle video and image uploads as attachments
  */
 @Injectable()
 export class AttachmentApiService {
-  public readonly videoPermissionsError$: ReplaySubject<
-    boolean
-  > = new ReplaySubject<boolean>();
+  public readonly videoPermissionsError$: ReplaySubject<boolean> =
+    new ReplaySubject<boolean>();
 
   /**
    * Constructor
@@ -203,44 +202,42 @@ export class AttachmentApiService {
     const upload = this.api
       .put(`api/v2/media/upload/prepare/${file.type.split('/')[0]}`)
       .pipe(
-        map(
-          (response: ApiResponse): Observable<UploadEvent> => {
-            // Get `lease` from response
-            const { lease } = response;
+        map((response: ApiResponse): Observable<UploadEvent> => {
+          // Get `lease` from response
+          const { lease } = response;
 
-            // Setup upload to presigned URL (S3) observable
-            const uploadToPresignedUrl: Observable<UploadEvent> = this.http
-              .put(lease.presigned_url, file, {
-                headers: new HttpHeaders({
-                  'Content-Type': file.type,
-                  'Ngsw-Bypass': '1',
-                }),
-                reportProgress: true,
-                observe: 'events',
-              })
-              .pipe(httpEventToUploadEvent(fileType, false));
+          // Setup upload to presigned URL (S3) observable
+          const uploadToPresignedUrl: Observable<UploadEvent> = this.http
+            .put(lease.presigned_url, file, {
+              headers: new HttpHeaders({
+                'Content-Type': file.type,
+                'Ngsw-Bypass': '1',
+              }),
+              reportProgress: true,
+              observe: 'events',
+            })
+            .pipe(httpEventToUploadEvent(fileType, false));
 
-            // Setup complete observable
-            const complete = this.api
-              .put(
-                `api/v2/media/upload/complete/${lease.media_type}/${lease.guid}`
+          // Setup complete observable
+          const complete = this.api
+            .put(
+              `api/v2/media/upload/complete/${lease.media_type}/${lease.guid}`
+            )
+            .pipe(
+              map(
+                (): UploadEvent => ({
+                  type: UploadEventType.Success,
+                  payload: {
+                    request: { type: fileType },
+                    response: lease,
+                  },
+                })
               )
-              .pipe(
-                map(
-                  (): UploadEvent => ({
-                    type: UploadEventType.Success,
-                    payload: {
-                      request: { type: fileType },
-                      response: lease,
-                    },
-                  })
-                )
-              );
+            );
 
-            // Return an concat (one after another) observable of both follow-up operations
-            return of(uploadToPresignedUrl, complete).pipe(concatAll());
-          }
-        ),
+          // Return an concat (one after another) observable of both follow-up operations
+          return of(uploadToPresignedUrl, complete).pipe(concatAll());
+        }),
 
         // Flatten and merge all HOO
         mergeAll()

@@ -7,7 +7,9 @@
 
   .m-activity--isFeed & {
     &.m-activityContent--textlessMedia {
-      &:not(.m-activityContent--minimalMode):not(.m-activityContent--fixedHeight) {
+      &:not(.m-activityContent--minimalMode):not(
+          .m-activityContent--fixedHeight
+        ) {
         .m-activityContent__media--video,
         .m-activityContent__media--image {
           padding-top: $spacing2;
@@ -356,7 +358,9 @@
   // *********************************
 
   &.m-activityContent--supermindReply {
-    &:not(.m-activityContent--minimalMode):not(.m-activityContent--sidebarMode) {
+    &:not(.m-activityContent--minimalMode):not(
+        .m-activityContent--sidebarMode
+      ) {
       .m-activityContent__quote {
         @include supermindGradient;
         border-radius: $borderRadius--activity;
@@ -635,7 +639,9 @@
   // TRANSLATED TEXT
 
   // READ MORE
-  &:not(.m-activityContent--status):not(.m-activityContent--minimalMode):not(.m-activityContent--fixedHeight) {
+  &:not(.m-activityContent--status):not(.m-activityContent--minimalMode):not(
+      .m-activityContent--fixedHeight
+    ) {
     // Make a taller read more area
     ::ng-deep m-read-more--button {
       .m-readMoreButton--v2 {

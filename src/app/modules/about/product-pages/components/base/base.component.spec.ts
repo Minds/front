@@ -104,99 +104,97 @@ describe('ProductPageBaseComponent', () => {
     },
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ProductPageBaseComponent,
-          MockComponent({
-            selector: 'm-productPage__hero',
-            inputs: ['text', 'buttons'],
-          }),
-          MockComponent({
-            selector: 'm-productPage__imageCard',
-            inputs: ['image'],
-          }),
-          MockComponent({
-            selector: 'm-productPage__pricingCards',
-            inputs: ['savingsText', 'productPlans'],
-          }),
-          MockComponent({
-            selector: 'm-productPage__featureTable',
-            inputs: ['title', 'subtitle', 'columns'],
-          }),
-          MockComponent({
-            selector: 'm-productPage__featureShowcase',
-            inputs: ['featureShowcase'],
-          }),
-          MockComponent({
-            selector: 'm-productPage__basicExplainer',
-            inputs: ['title', 'body', 'button'],
-          }),
-          MockComponent({
-            selector: 'm-productPage__featureHighlight',
-            inputs: [
-              'title',
-              'body',
-              'button',
-              'colorScheme',
-              'image',
-              'backgroundColor',
-              'alignImage',
-              'footnotes',
-            ],
-          }),
-          MockComponent({
-            selector: 'm-productPage__closingCta',
-            inputs: ['title', 'body', 'button', 'borderImage'],
-          }),
-        ],
-        providers: [
-          {
-            provide: ProductPageService,
-            useValue: MockService(ProductPageService),
-          },
-          {
-            provide: SidebarNavigationService,
-            useValue: MockService(SidebarNavigationService),
-          },
-          {
-            provide: PageLayoutService,
-            useValue: MockService(PageLayoutService),
-          },
-          {
-            provide: TopbarService,
-            useValue: MockService(TopbarService, {
-              has: ['isMinimalLightMode$'],
-              props: {
-                isMinimalLightMode$: {
-                  get: () => new BehaviorSubject<boolean>(true),
-                },
-              },
-            }),
-          },
-          {
-            provide: StrapiMetaService,
-            useValue: MockService(StrapiMetaService),
-          },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              snapshot: {
-                paramMap: convertToParamMap({
-                  slug: defaultUrlSlug,
-                }),
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ProductPageBaseComponent,
+        MockComponent({
+          selector: 'm-productPage__hero',
+          inputs: ['text', 'buttons'],
+        }),
+        MockComponent({
+          selector: 'm-productPage__imageCard',
+          inputs: ['image'],
+        }),
+        MockComponent({
+          selector: 'm-productPage__pricingCards',
+          inputs: ['savingsText', 'productPlans'],
+        }),
+        MockComponent({
+          selector: 'm-productPage__featureTable',
+          inputs: ['title', 'subtitle', 'columns'],
+        }),
+        MockComponent({
+          selector: 'm-productPage__featureShowcase',
+          inputs: ['featureShowcase'],
+        }),
+        MockComponent({
+          selector: 'm-productPage__basicExplainer',
+          inputs: ['title', 'body', 'button'],
+        }),
+        MockComponent({
+          selector: 'm-productPage__featureHighlight',
+          inputs: [
+            'title',
+            'body',
+            'button',
+            'colorScheme',
+            'image',
+            'backgroundColor',
+            'alignImage',
+            'footnotes',
+          ],
+        }),
+        MockComponent({
+          selector: 'm-productPage__closingCta',
+          inputs: ['title', 'body', 'button', 'borderImage'],
+        }),
+      ],
+      providers: [
+        {
+          provide: ProductPageService,
+          useValue: MockService(ProductPageService),
+        },
+        {
+          provide: SidebarNavigationService,
+          useValue: MockService(SidebarNavigationService),
+        },
+        {
+          provide: PageLayoutService,
+          useValue: MockService(PageLayoutService),
+        },
+        {
+          provide: TopbarService,
+          useValue: MockService(TopbarService, {
+            has: ['isMinimalLightMode$'],
+            props: {
+              isMinimalLightMode$: {
+                get: () => new BehaviorSubject<boolean>(true),
               },
             },
+          }),
+        },
+        {
+          provide: StrapiMetaService,
+          useValue: MockService(StrapiMetaService),
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: convertToParamMap({
+                slug: defaultUrlSlug,
+              }),
+            },
           },
-          { provide: Router, useValue: MockService(Router) },
-          { provide: PLATFORM_ID, value: 'browser' },
-        ],
-      }).compileComponents();
-    })
-  );
+        },
+        { provide: Router, useValue: MockService(Router) },
+        { provide: PLATFORM_ID, value: 'browser' },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ProductPageBaseComponent);
     comp = fixture.componentInstance;
 

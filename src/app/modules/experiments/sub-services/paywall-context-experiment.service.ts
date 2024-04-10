@@ -13,6 +13,7 @@ export class PaywallContextExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('minds-3857-paywall-context', true);
+    // return this.experiments.hasVariation('minds-3857-paywall-context', true);
+    return true;
   }
 }

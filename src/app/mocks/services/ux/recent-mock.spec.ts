@@ -1,7 +1,7 @@
-export let recentServiceMock = new (function() {
+export let recentServiceMock = new (function () {
   this.storage = {
     data: [],
-    get: key => {
+    get: (key) => {
       return this.storage.data[key];
     },
     set: (key, value) => {

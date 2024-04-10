@@ -18,7 +18,7 @@ export class PublisherSearchModalService {
     const modal = this.modalService.present(PublisherSearchModalComponent, {
       data: {
         publisher,
-        onSearch: query => modal.close(query),
+        onSearch: (query) => modal.close(query),
       },
       injector,
     });

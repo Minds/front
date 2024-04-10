@@ -12,7 +12,10 @@ export class MindsHttpClient {
     return new MindsHttpClient(http, cookie);
   }
 
-  constructor(public http: HttpClient, private cookie: CookieService) {}
+  constructor(
+    public http: HttpClient,
+    private cookie: CookieService
+  ) {}
 
   /**
    * Return a GET request
@@ -57,7 +60,7 @@ export class MindsHttpClient {
 
   private buildParams(object: Object) {
     return Object.keys(object)
-      .map(k => {
+      .map((k) => {
         return encodeURIComponent(k) + '=' + encodeURIComponent(object[k]);
       })
       .join('&');

@@ -9,21 +9,19 @@ describe('OnboardingV3TagsComponent', () => {
 
   const tagsMock: any = MockService(OnboardingV3TagsService);
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [OnboardingV3TagsComponent],
-        providers: [
-          {
-            provide: OnboardingV3TagsService,
-            useValue: tagsMock,
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [OnboardingV3TagsComponent],
+      providers: [
+        {
+          provide: OnboardingV3TagsService,
+          useValue: tagsMock,
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(OnboardingV3TagsComponent);
     comp = fixture.componentInstance;

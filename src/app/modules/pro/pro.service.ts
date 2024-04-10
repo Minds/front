@@ -12,7 +12,10 @@ export class ProService {
   proSettings: any = {};
   proSettings$: BehaviorSubject<any> = new BehaviorSubject(this.proSettings);
 
-  constructor(protected client: Client, protected uploadClient: Upload) {}
+  constructor(
+    protected client: Client,
+    protected uploadClient: Upload
+  ) {}
 
   async isActive(): Promise<boolean> {
     const result: any = await this.client.get('api/v2/pro');

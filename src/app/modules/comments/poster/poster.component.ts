@@ -50,9 +50,8 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   @Input() currentIndex: number = -1;
   @Input() conversation: boolean = false;
   @Input() level: number = 0;
-  @Output('optimisticPost') optimisticPost$: EventEmitter<
-    any
-  > = new EventEmitter();
+  @Output('optimisticPost') optimisticPost$: EventEmitter<any> =
+    new EventEmitter();
   @Output('posted') posted$: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('message')
@@ -102,17 +101,17 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     this.supermindBannerPopupSeen = this.supermindBannerPopup.hasBeenSeen();
 
     this.subscriptions.push(
-      this.session.loggedinEmitter.subscribe(emitted => {
+      this.session.loggedinEmitter.subscribe((emitted) => {
         this.detectChanges();
       }),
-      this.supermindBannerPopup.visible$.subscribe(visible => {
+      this.supermindBannerPopup.visible$.subscribe((visible) => {
         if (visible && this.canShowSupermindBannerPopup) {
           // Save if banner was seen so we don't show again
           this.supermindBannerPopup.setSeen();
         }
         this.detectChanges();
       }),
-      this.supermindBannerPopup.supermindPosted$.subscribe(posted => {
+      this.supermindBannerPopup.supermindPosted$.subscribe((posted) => {
         if (posted) {
           // Reset comment if it has been converted into a supermind
           this.commentConvertedToActivity = true;
@@ -289,7 +288,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
 
     this.attachment
       .upload(file, this.detectChanges.bind(this))
-      .then(guid => {
+      .then((guid) => {
         this.canPost = true;
         this.triedToPost = false;
         if (file instanceof HTMLInputElement) {
@@ -297,7 +296,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
         }
         this.detectChanges();
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         this.canPost = true;
         this.triedToPost = false;
@@ -323,7 +322,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
         this.triedToPost = false;
         fileInput.value = null;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         this.canPost = true;
         this.triedToPost = false;

@@ -18,14 +18,15 @@ import { GiftCardProductIdEnum } from '../../../../../../../graphql/generated.en
   },
 })
 export class WireCreatorGiftRecipientInputComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /** Set recipient username. */
-  public readonly recipientUsername$: BehaviorSubject<string> = this.service
-    .giftRecipientUsername$;
+  public readonly recipientUsername$: BehaviorSubject<string> =
+    this.service.giftRecipientUsername$;
 
   /** Set whether the user has opted to create a self gift, allowing them to give the code out themselves. */
-  public readonly isSelfGift$: BehaviorSubject<boolean> = this.service
-    .isSelfGift$;
+  public readonly isSelfGift$: BehaviorSubject<boolean> =
+    this.service.isSelfGift$;
 
   // subscriptions.
   private giftRecipientUsernameSubscription: Subscription;
@@ -37,16 +38,14 @@ export class WireCreatorGiftRecipientInputComponent
   ) {}
 
   ngOnInit(): void {
-    this.giftRecipientUsernameSubscription = this.giftRecipientModal.username$.subscribe(
-      username => {
+    this.giftRecipientUsernameSubscription =
+      this.giftRecipientModal.username$.subscribe((username) => {
         this.service.setGiftRecipientUsername(username);
-      }
-    );
-    this.giftRecipientSelfGiftSubscription = this.giftRecipientModal.isSelfGift$.subscribe(
-      isSelfGift => {
+      });
+    this.giftRecipientSelfGiftSubscription =
+      this.giftRecipientModal.isSelfGift$.subscribe((isSelfGift) => {
         this.service.setIsSelfGift(isSelfGift);
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {
