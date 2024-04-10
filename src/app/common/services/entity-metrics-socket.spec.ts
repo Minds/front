@@ -4,7 +4,7 @@ import { EntityMetricsSocketService } from './entity-metrics-socket';
 describe('EntityMetricsSocketService', () => {
   let service: EntityMetricsSocketService;
 
-  let socketsMock = new (function() {
+  let socketsMock = new (function () {
     this.onReady$ = new BehaviorSubject<boolean>(false);
     this.subscribe = jasmine.createSpy('subscribe');
     this.leave = jasmine.createSpy('leave');
@@ -65,7 +65,7 @@ describe('EntityMetricsSocketService', () => {
     (service as any).updateInstanceSubjects(metricsChangedEvent);
 
     (service as any).thumbsUpCount$
-      .subscribe(val => {
+      .subscribe((val) => {
         expect(val).toBe(1);
       })
       .unsubscribe();

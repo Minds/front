@@ -29,65 +29,63 @@ describe('MindsRichEmbed', () => {
   let fixture: ComponentFixture<MindsRichEmbed>;
   let service: LivestreamService;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
-        declarations: [MindsRichEmbed],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      declarations: [MindsRichEmbed],
 
-        providers: [
-          {
-            provide: DomSanitizer,
-            useValue: {
-              bypassSecurityTrustHtml: (val: string) => val,
-            },
+      providers: [
+        {
+          provide: DomSanitizer,
+          useValue: {
+            bypassSecurityTrustHtml: (val: string) => val,
           },
-          { provide: Session, useValue: MockService(Session) },
-          {
-            provide: RichEmbedService,
-            useValue: MockService(RichEmbedService),
-          },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: MediaProxyService,
-            useValue: MockService(MediaProxyService),
-          },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: SiteService, useValue: MockService(SiteService) },
-          { provide: ModalService, useValue: MockService(ModalService) },
-          EmbedLinkWhitelistService,
-          {
-            provide: ClientMetaService,
-            useValue: MockService(ClientMetaService),
-          },
-          {
-            provide: ClientMetaDirective,
-            useValue: MockService(ClientMetaDirective),
-          },
-          {
-            provide: LivestreamService,
-            useValue: MockService(LivestreamService),
-          },
-          {
-            provide: IsTenantService,
-            useValue: MockService(IsTenantService),
-          },
-          {
-            provide: ElementRef,
-            useValue: MockService(ElementRef),
-          },
-          {
-            provide: IntersectionObserverService,
-            useValue: MockService(IntersectionObserverService),
-          },
-        ],
-      }).compileComponents();
-      service = TestBed.inject(LivestreamService);
-    })
-  );
+        },
+        { provide: Session, useValue: MockService(Session) },
+        {
+          provide: RichEmbedService,
+          useValue: MockService(RichEmbedService),
+        },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: MediaProxyService,
+          useValue: MockService(MediaProxyService),
+        },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: SiteService, useValue: MockService(SiteService) },
+        { provide: ModalService, useValue: MockService(ModalService) },
+        EmbedLinkWhitelistService,
+        {
+          provide: ClientMetaService,
+          useValue: MockService(ClientMetaService),
+        },
+        {
+          provide: ClientMetaDirective,
+          useValue: MockService(ClientMetaDirective),
+        },
+        {
+          provide: LivestreamService,
+          useValue: MockService(LivestreamService),
+        },
+        {
+          provide: IsTenantService,
+          useValue: MockService(IsTenantService),
+        },
+        {
+          provide: ElementRef,
+          useValue: MockService(ElementRef),
+        },
+        {
+          provide: IntersectionObserverService,
+          useValue: MockService(IntersectionObserverService),
+        },
+      ],
+    }).compileComponents();
+    service = TestBed.inject(LivestreamService);
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MindsRichEmbed);
@@ -166,8 +164,7 @@ describe('MindsRichEmbed', () => {
         id: 'video-livepeer-1234567890',
         className:
           'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
-        html:
-          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.vercel.app/?v=1234567890&autoplay=false" frameborder="0" allowfullscreen></iframe>',
+        html: '<iframe class="livepeer" width="640" height="360" src="https://minds-player.vercel.app/?v=1234567890&autoplay=false" frameborder="0" allowfullscreen></iframe>',
         playable: true,
       });
     });
@@ -185,8 +182,7 @@ describe('MindsRichEmbed', () => {
         id: 'video-livepeer-1234567890',
         className:
           'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
-        html:
-          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.vercel.app/?v=1234567890&autoplay=true" frameborder="0" allowfullscreen></iframe>',
+        html: '<iframe class="livepeer" width="640" height="360" src="https://minds-player.vercel.app/?v=1234567890&autoplay=true" frameborder="0" allowfullscreen></iframe>',
         playable: true,
       });
     });
@@ -204,8 +200,7 @@ describe('MindsRichEmbed', () => {
         id: 'video-livepeer-1234567890',
         className:
           'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
-        html:
-          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.vercel.app/?v=1234567890&autoplay=false" frameborder="0" allowfullscreen></iframe>',
+        html: '<iframe class="livepeer" width="640" height="360" src="https://minds-player.vercel.app/?v=1234567890&autoplay=false" frameborder="0" allowfullscreen></iframe>',
         playable: true,
       });
     });

@@ -14,7 +14,7 @@ const routes: Routes = [
       {
         path: 'claim', // '/gift-cards/claim'
         loadChildren: () =>
-          import('./claim/claim.module').then(m => m.GiftCardClaimModule),
+          import('./claim/claim.module').then((m) => m.GiftCardClaimModule),
       },
     ],
   },

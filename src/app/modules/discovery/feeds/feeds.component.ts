@@ -44,7 +44,7 @@ export class DiscoveryFeedsComponent implements OnInit, OnDestroy {
     );
 
     this.parentPathSubscription = this.discoveryService.parentPath$.subscribe(
-      parentPath => {
+      (parentPath) => {
         this.parentPath = parentPath;
       }
     );

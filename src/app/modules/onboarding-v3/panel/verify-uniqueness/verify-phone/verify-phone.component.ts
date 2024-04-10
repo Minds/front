@@ -88,8 +88,8 @@ export class OnboardingV3VerifyPhoneComponent {
    */
   private startRetryTimer(seconds: number = 30): void {
     this.retryTimer$ = timer(0, 1000).pipe(
-      scan(acc => --acc, seconds),
-      takeWhile(x => x >= 0)
+      scan((acc) => --acc, seconds),
+      takeWhile((x) => x >= 0)
     );
   }
 }

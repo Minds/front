@@ -17,7 +17,10 @@ export class PhoneVerificationService {
     false
   );
 
-  constructor(private modalService: ModalService, private session: Session) {
+  constructor(
+    private modalService: ModalService,
+    private session: Session
+  ) {
     if (this.session.getLoggedInUser().rewards) {
       this.phoneVerified$.next(true);
     }

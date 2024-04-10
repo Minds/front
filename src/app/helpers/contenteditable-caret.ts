@@ -15,9 +15,10 @@ function node_walk(node, func) {
  * correspond to the selected portion of text
  * (if start == end, caret is at given position and no text is selected)
  */
-export function getContentEditableCaretCoordinates(
-  elem
-): { start: number; end: number } {
+export function getContentEditableCaretCoordinates(elem): {
+  start: number;
+  end: number;
+} {
   var sel: any = window.getSelection();
   var cum_length = [0, 0];
 
@@ -34,7 +35,7 @@ export function getContentEditableCaretCoordinates(
     } else {
       var found: any = [0, 0];
       var i;
-      node_walk(elem, function(node) {
+      node_walk(elem, function (node) {
         for (i = 0; i < 2; i++) {
           if (node == nodes_to_find[i]) {
             found[i] = true;

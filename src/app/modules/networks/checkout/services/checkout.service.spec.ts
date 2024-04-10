@@ -254,9 +254,10 @@ describe('NetworksCheckoutService', () => {
         of({ data: { checkoutLink: checkoutLink } })
       );
       (service as any).summary$ = new BehaviorSubject<Summary>(mockSummary);
-      (service as any).selectedTimePeriod$ = new BehaviorSubject<
-        CheckoutTimePeriodEnum
-      >(CheckoutTimePeriodEnum.Monthly);
+      (service as any).selectedTimePeriod$ =
+        new BehaviorSubject<CheckoutTimePeriodEnum>(
+          CheckoutTimePeriodEnum.Monthly
+        );
 
       service.navigateToPaymentUrl();
       tick();
@@ -266,7 +267,7 @@ describe('NetworksCheckoutService', () => {
       ).toHaveBeenCalledOnceWith(
         {
           planId: mockSummary.planSummary.id,
-          addOnIds: mockSummary.addonsSummary.map(addOn => addOn.id),
+          addOnIds: mockSummary.addonsSummary.map((addOn) => addOn.id),
           timePeriod: CheckoutTimePeriodEnum.Monthly,
         },
         { fetchPolicy: 'no-cache', errorPolicy: 'all' }

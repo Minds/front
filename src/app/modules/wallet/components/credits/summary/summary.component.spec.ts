@@ -35,7 +35,9 @@ describe('WalletV2CreditsSummaryComponent', () => {
     fixture = TestBed.createComponent(WalletV2CreditsSummaryComponent);
     comp = fixture.componentInstance;
 
-    (comp as any).giftCardService.getGiftCardBalancesWithExpiryData.and.returnValue(
+    (
+      comp as any
+    ).giftCardService.getGiftCardBalancesWithExpiryData.and.returnValue(
       of(MockGiftCardBalanceByProductIdArray)
     );
   });

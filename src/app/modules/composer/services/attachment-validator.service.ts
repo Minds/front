@@ -41,7 +41,10 @@ export class AttachmentValidatorService {
   // max file size for all users in bytes.
   private readonly maxFileSize;
 
-  constructor(private session: Session, config: ConfigsService) {
+  constructor(
+    private session: Session,
+    config: ConfigsService
+  ) {
     this.maxLength = config.get('max_video_length') ?? DEFAULT_MAX_LENGTH;
     this.maxLengthPlus =
       config.get('max_video_length_plus') ?? DEFAULT_MAX_LENGTH_PLUS;
@@ -64,11 +67,11 @@ export class AttachmentValidatorService {
         let video = document.createElement('video');
         video.preload = 'metadata';
 
-        video.onloadedmetadata = function() {
+        video.onloadedmetadata = function () {
           resolve(this);
         };
 
-        video.onerror = function() {
+        video.onerror = function () {
           reject('An unknown error has occurred');
         };
 

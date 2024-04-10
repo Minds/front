@@ -40,7 +40,7 @@ export default {
       ],
     }),
     componentWrapperDecorator(
-      story =>
+      (story) =>
         `<div>${story}</div><hr><div>Note: the actual component starts with none selected, and the tags can be toggled.`
     ),
   ],

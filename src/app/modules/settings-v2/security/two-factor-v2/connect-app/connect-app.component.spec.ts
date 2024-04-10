@@ -19,32 +19,30 @@ xdescribe('SettingsTwoFactorConnectAppComponent', () => {
   let comp: SettingsTwoFactorConnectAppComponent;
   let fixture: ComponentFixture<SettingsTwoFactorConnectAppComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule],
-        declarations: [SettingsTwoFactorConnectAppComponent, ButtonComponent],
-        providers: [
-          {
-            provide: SettingsTwoFactorV2Service,
-            useValue: MockService(SettingsTwoFactorV2Service),
-          },
-          {
-            provide: Session,
-            useValue: sessionMock,
-          },
-          {
-            provide: ModalService,
-            useValue: modalServiceMock,
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [SettingsTwoFactorConnectAppComponent, ButtonComponent],
+      providers: [
+        {
+          provide: SettingsTwoFactorV2Service,
+          useValue: MockService(SettingsTwoFactorV2Service),
+        },
+        {
+          provide: Session,
+          useValue: sessionMock,
+        },
+        {
+          provide: ModalService,
+          useValue: modalServiceMock,
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorConnectAppComponent);
@@ -60,24 +58,24 @@ xdescribe('SettingsTwoFactorConnectAppComponent', () => {
   it('should derive secret object from secret and username', () => {
     (comp as any).service.secret$ = new BehaviorSubject<string>('123');
 
-    comp.secretObject$.subscribe(val => {
+    comp.secretObject$.subscribe((val) => {
       expect(val).toEqual('otpauth://totp/Minds:test?secret=123&issuer=Minds');
     });
   });
 
   it('should be disabled unless code length is 6', () => {
     comp.code$.next('123');
-    comp.disabled$.pipe(take(1)).subscribe(val => {
+    comp.disabled$.pipe(take(1)).subscribe((val) => {
       expect(val).toBeTruthy();
     });
 
     comp.code$.next('123456');
-    comp.disabled$.pipe(take(1)).subscribe(val => {
+    comp.disabled$.pipe(take(1)).subscribe((val) => {
       expect(val).toBeFalsy();
     });
 
     comp.code$.next('1234567');
-    comp.disabled$.pipe(take(1)).subscribe(val => {
+    comp.disabled$.pipe(take(1)).subscribe((val) => {
       expect(val).toBeTruthy();
     });
   });
@@ -94,13 +92,12 @@ xdescribe('SettingsTwoFactorConnectAppComponent', () => {
   });
 
   it('should set current panel to root on back button click', () => {
-    (comp as any).service.activePanel$ = new BehaviorSubject<
-      TwoFactorSetupPanel
-    >(null);
+    (comp as any).service.activePanel$ =
+      new BehaviorSubject<TwoFactorSetupPanel>(null);
 
     comp.backButtonClick();
 
-    (comp as any).service.activePanel$.subscribe(val => {
+    (comp as any).service.activePanel$.subscribe((val) => {
       expect(val).toEqual({ panel: 'root' });
     });
   });

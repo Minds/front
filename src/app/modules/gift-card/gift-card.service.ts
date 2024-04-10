@@ -43,16 +43,14 @@ export class GiftCardService {
    */
   public getGiftCardByCode(claimCode: string): Observable<GiftCardNode> {
     return this.getGiftCardByCodeGQL.fetch({ claimCode: claimCode }).pipe(
-      map(
-        (result: ApolloQueryResult<GetGiftCardByCodeQuery>): GiftCardNode => {
-          const giftCard: GiftCardNode = result?.data
-            ?.giftCardByClaimCode as GiftCardNode;
-          if (!giftCard) {
-            return null;
-          }
-          return giftCard;
+      map((result: ApolloQueryResult<GetGiftCardByCodeQuery>): GiftCardNode => {
+        const giftCard: GiftCardNode = result?.data
+          ?.giftCardByClaimCode as GiftCardNode;
+        if (!giftCard) {
+          return null;
         }
-      )
+        return giftCard;
+      })
     );
   }
 
@@ -100,16 +98,14 @@ export class GiftCardService {
    */
   public claimGiftCard(claimCode: string): Observable<GiftCardNode> {
     return this.claimGiftCardGQL.mutate({ claimCode: claimCode }).pipe(
-      map(
-        (result: ApolloQueryResult<ClaimGiftCardMutation>): GiftCardNode => {
-          const giftCard: GiftCardNode = result?.data
-            ?.claimGiftCard as GiftCardNode;
-          if (!giftCard) {
-            return null;
-          }
-          return giftCard;
+      map((result: ApolloQueryResult<ClaimGiftCardMutation>): GiftCardNode => {
+        const giftCard: GiftCardNode = result?.data
+          ?.claimGiftCard as GiftCardNode;
+        if (!giftCard) {
+          return null;
         }
-      )
+        return giftCard;
+      })
     );
   }
 
@@ -210,9 +206,8 @@ export class GiftCardService {
     productId: GiftCardProductIdEnum,
     amount: number
   ): GiftRecipientGiftDuration {
-    const upgradesConfig: GiftCardUpgradesConfig = this.config.get<
-      GiftCardUpgradesConfig
-    >('upgrades');
+    const upgradesConfig: GiftCardUpgradesConfig =
+      this.config.get<GiftCardUpgradesConfig>('upgrades');
     switch (productId) {
       case GiftCardProductIdEnum.Plus:
         if (amount >= upgradesConfig.plus.yearly.usd) {

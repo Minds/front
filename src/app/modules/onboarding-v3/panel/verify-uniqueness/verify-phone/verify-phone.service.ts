@@ -17,24 +17,21 @@ export class OnboardingV3VerifyPhoneService implements OnDestroy {
   /**
    * BehaviourSubject holding the current PhoneVerificationStep.
    */
-  public readonly verificationStep$: BehaviorSubject<
-    PhoneVerificationStep
-  > = new BehaviorSubject<PhoneVerificationStep>('InputNumberStep');
+  public readonly verificationStep$: BehaviorSubject<PhoneVerificationStep> =
+    new BehaviorSubject<PhoneVerificationStep>('InputNumberStep');
 
   /**
    * BehaviourSubject holding whether loading is in progress
    */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * BehaviourSubject holding the secret value passed to the front-end
    * by the api/v2/blockchain/rewards/verify call.
    */
-  private readonly secret$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  private readonly secret$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   constructor(
     private panel: OnboardingV3PanelService,
@@ -60,7 +57,7 @@ export class OnboardingV3VerifyPhoneService implements OnDestroy {
         .post('api/v2/blockchain/rewards/verify', { number: phoneNumber })
         .pipe(
           take(1),
-          catchError(e => this.handleError(e))
+          catchError((e) => this.handleError(e))
         )
         .subscribe((response: any) => {
           if (!response) {
@@ -92,7 +89,7 @@ export class OnboardingV3VerifyPhoneService implements OnDestroy {
         })
         .pipe(
           take(1),
-          catchError(e => this.handleError(e))
+          catchError((e) => this.handleError(e))
         )
         .subscribe((response: any) => {
           if (!response) {

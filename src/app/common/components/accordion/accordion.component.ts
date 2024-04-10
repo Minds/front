@@ -19,9 +19,7 @@ import { AccordionPaneComponent } from './accordion-pane.component';
 @Component({
   selector: 'm-accordion',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <ng-content></ng-content>
-  `,
+  template: ` <ng-content></ng-content> `,
 })
 export class AccordionComponent implements AfterContentInit, OnDestroy {
   /**
@@ -92,7 +90,7 @@ export class AccordionComponent implements AfterContentInit, OnDestroy {
    * @param pane
    */
   protected openPane(pane: AccordionPaneComponent): void {
-    this.panes.toArray().forEach(pane => pane.setOpened(false));
+    this.panes.toArray().forEach((pane) => pane.setOpened(false));
     pane.setOpened(true);
   }
 
@@ -117,7 +115,7 @@ export class AccordionComponent implements AfterContentInit, OnDestroy {
    * Remove all pane toggle subscriptions
    */
   protected tearDown(): void {
-    this.paneToggleSubscriptions.forEach(paneToggleSubscription =>
+    this.paneToggleSubscriptions.forEach((paneToggleSubscription) =>
       paneToggleSubscription.unsubscribe()
     );
     this.paneToggleSubscriptions = [];

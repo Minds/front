@@ -21,7 +21,7 @@ export default {
       declarations: [DropdownMenuComponent, DropdownMenuItemComponent],
     }),
     componentWrapperDecorator(
-      story => `<div style="min-height:200px">${story}</div>`
+      (story) => `<div style="min-height:200px">${story}</div>`
     ),
   ],
   args: {

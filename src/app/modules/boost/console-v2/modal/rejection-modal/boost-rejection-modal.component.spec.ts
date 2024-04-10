@@ -13,71 +13,69 @@ describe('BoostRejectionModalComponent', () => {
   let comp: BoostRejectionModalComponent;
   let fixture: ComponentFixture<BoostRejectionModalComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [BoostRejectionModalComponent],
-        providers: [
-          {
-            provide: ConfigsService,
-            useValue: {
-              get: () => {
-                return {
-                  rejection_reasons: [
-                    {
-                      code: 1,
-                      label: '',
-                    },
-                  ],
-                };
-              },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [BoostRejectionModalComponent],
+      providers: [
+        {
+          provide: ConfigsService,
+          useValue: {
+            get: () => {
+              return {
+                rejection_reasons: [
+                  {
+                    code: 1,
+                    label: '',
+                  },
+                ],
+              };
             },
           },
-          {
-            provide: BoostConsoleService,
-            useValue: {
-              reject: jasmine.createSpy('reject').and.returnValue(of({})),
-              decrementAdminStatCounter: jasmine.createSpy(
-                'decrementAdminStatCounter'
-              ),
-            },
+        },
+        {
+          provide: BoostConsoleService,
+          useValue: {
+            reject: jasmine.createSpy('reject').and.returnValue(of({})),
+            decrementAdminStatCounter: jasmine.createSpy(
+              'decrementAdminStatCounter'
+            ),
           },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      })
-        .overrideProvider(BoostRejectionModalService, {
-          useValue: MockService(BoostRejectionModalService, {
-            has: ['boost'],
-            props: {
-              boost: {
-                guid: '123',
-                urn: '',
-                owner_guid: '',
-                entity_guid: '',
-                entity: {},
-                target_location: BoostLocation.NEWSFEED,
-                target_suitability: BoostAudience.SAFE,
-                payment_method: 123,
-                payment_amount: 1,
-                daily_bid: 1,
-                duration_days: 1,
-                boost_status: BoostState.PENDING,
-                created_timestamp: 123,
-                updated_timestamp: 123,
-                approved_timestamp: 123,
-                rejection_reason: null,
-              },
-            },
-          }),
-        })
-        .compileComponents();
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
     })
-  );
+      .overrideProvider(BoostRejectionModalService, {
+        useValue: MockService(BoostRejectionModalService, {
+          has: ['boost'],
+          props: {
+            boost: {
+              guid: '123',
+              urn: '',
+              owner_guid: '',
+              entity_guid: '',
+              entity: {},
+              target_location: BoostLocation.NEWSFEED,
+              target_suitability: BoostAudience.SAFE,
+              payment_method: 123,
+              payment_amount: 1,
+              daily_bid: 1,
+              duration_days: 1,
+              boost_status: BoostState.PENDING,
+              created_timestamp: 123,
+              updated_timestamp: 123,
+              approved_timestamp: 123,
+              rejection_reason: null,
+            },
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostRejectionModalComponent);
     comp = fixture.componentInstance;
 

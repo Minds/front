@@ -13,7 +13,7 @@
  * ```
  */
 export default function autobind() {
-  return function(...args) {
+  return function (...args) {
     if (args.length === 1) {
       return boundClass(args[0]);
     } else {
@@ -39,7 +39,7 @@ function boundClass(target) {
     }
   }
 
-  keys.forEach(key => {
+  keys.forEach((key) => {
     // Ignore special case target method
     if (key === 'constructor') {
       return;

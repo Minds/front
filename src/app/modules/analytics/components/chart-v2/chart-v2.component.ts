@@ -109,7 +109,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       // this.swapSegmentColors();
       this.detectChanges();
     }
-    this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
+    this.themeSubscription = this.themeService.isDark$.subscribe((isDark) => {
       this.isDark = isDark;
       if (this.init) {
         this.setData();
@@ -215,7 +215,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       { interval: 'month', xTickFormat: '%m/%Y', datePipe: 'MMM y' },
     ];
     const timespanFormat =
-      timespanFormats.find(t => t.interval === this.interval) ||
+      timespanFormats.find((t) => t.interval === this.interval) ||
       timespanFormats[0];
 
     this.xTickFormat = timespanFormat.xTickFormat;
@@ -319,9 +319,8 @@ export class ChartV2Component implements OnInit, OnDestroy {
 
   emptyMarkerFill() {
     this.data.forEach((segment, i) => {
-      this.markerFills[i][this.hoverPoint] = this.getColor(
-        'm-bgColor--primary'
-      );
+      this.markerFills[i][this.hoverPoint] =
+        this.getColor('m-bgColor--primary');
       segment.marker.color = this.markerFills[i];
     });
   }
@@ -428,7 +427,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
   // * UTILITY -----------------------------------
 
   unpack(rows, key) {
-    return rows.map(row => {
+    return rows.map((row) => {
       if (key === 'date') {
         return row[key].slice(0, 10);
       } else {
@@ -453,8 +452,8 @@ export class ChartV2Component implements OnInit, OnDestroy {
     const palette = chartPalette.themeMaps;
     let colorCode = '#607d8b';
 
-    if (palette.find(color => color.id === colorId)) {
-      colorCode = palette.find(color => color.id === colorId).themeMap[
+    if (palette.find((color) => color.id === colorId)) {
+      colorCode = palette.find((color) => color.id === colorId).themeMap[
         +this.isDark
       ];
     }

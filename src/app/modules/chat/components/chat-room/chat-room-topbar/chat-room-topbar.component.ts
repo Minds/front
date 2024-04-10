@@ -38,9 +38,9 @@ export class ChatRoomTopComponent implements OnChanges {
   @Input() protected requestMode: boolean = false;
 
   /** Fires on details icon click. */
-  @Output('detailsIconClick') protected detailsIconClickEmitter: EventEmitter<
-    void
-  > = new EventEmitter<void>();
+  @Output('detailsIconClick')
+  protected detailsIconClickEmitter: EventEmitter<void> =
+    new EventEmitter<void>();
 
   constructor(
     public cd: ChangeDetectorRef,

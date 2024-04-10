@@ -46,7 +46,7 @@ export class RoleAggregatorComponent implements OnInit {
       return;
     }
 
-    const roleNames = this.roles.slice(1).map(role => role.name);
+    const roleNames = this.roles.slice(1).map((role) => role.name);
 
     this.aggregatedRoleHoverText = roleNames.join(', ');
   }

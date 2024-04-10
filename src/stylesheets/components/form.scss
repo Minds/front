@@ -401,7 +401,8 @@
         &:hover {
           transform: scale(1.04);
           @include m-theme() {
-            box-shadow: 0 3px 2px -5px rgba(themed($m-black), 0.1),
+            box-shadow:
+              0 3px 2px -5px rgba(themed($m-black), 0.1),
               0 2px 2px 0 rgba(themed($m-black), 0.04),
               0 1px 4px 0 rgba(themed($m-black), 0.05);
           }
@@ -409,7 +410,8 @@
         &:active {
           transform: scale(0.98);
           @include m-theme() {
-            box-shadow: 0 3px 1px -6px rgba(themed($m-black), 0.12),
+            box-shadow:
+              0 3px 1px -6px rgba(themed($m-black), 0.12),
               0 0px 1px 0 rgba(themed($m-black), 0.07),
               0 1px 2px 0 rgba(themed($m-black), 0.08);
           }
@@ -521,7 +523,9 @@
     }
   }
 
-  input:not(.m-phoneInput__input):not(.m-draggableList__cell):not(.m-copyableLink):not(.m-formInputSlider__input),
+  input:not(.m-phoneInput__input):not(.m-draggableList__cell):not(
+      .m-copyableLink
+    ):not(.m-formInputSlider__input),
   .m-phoneInput__wrapper,
   textarea,
   select {

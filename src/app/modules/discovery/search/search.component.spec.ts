@@ -22,116 +22,114 @@ describe('DiscoverySearchComponent', () => {
   let comp: DiscoverySearchComponent;
   let fixture: ComponentFixture<DiscoverySearchComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule.withRoutes([])],
-        declarations: [
-          DiscoverySearchComponent,
-          MockComponent({
-            selector: 'm-discovery__settingsButton',
-          }),
-          MockComponent({
-            selector: 'm-discovery__tagWidget',
-          }),
-          MockComponent({
-            selector: 'infinite-scroll',
-            inputs: ['moreData', 'inProgress'],
-          }),
-          MockDirective({
-            selector: 'm-clientMeta',
-          }),
-        ],
-        providers: [
-          {
-            provide: ActivatedRoute,
-            useValue: MockService(ActivatedRoute, {
-              has: ['queryParamMap', 'snapshot'],
-              props: {
-                queryParamMap: {
-                  get: () =>
-                    new BehaviorSubject<ParamMap>({
-                      get: (key: string) => '1',
-                      has: () => void 0,
-                      getAll: () => void 0,
-                      keys: [''],
-                    }),
-                },
-                paramMap: {
-                  get: () =>
-                    new BehaviorSubject<ParamMap>({
-                      get: (key: string) => '1',
-                      has: () => void 0,
-                      getAll: () => void 0,
-                      keys: [''],
-                    }),
-                },
-                snapshot: { get: () => new ActivatedRouteSnapshot() },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule.withRoutes([])],
+      declarations: [
+        DiscoverySearchComponent,
+        MockComponent({
+          selector: 'm-discovery__settingsButton',
+        }),
+        MockComponent({
+          selector: 'm-discovery__tagWidget',
+        }),
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: ['moreData', 'inProgress'],
+        }),
+        MockDirective({
+          selector: 'm-clientMeta',
+        }),
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: MockService(ActivatedRoute, {
+            has: ['queryParamMap', 'snapshot'],
+            props: {
+              queryParamMap: {
+                get: () =>
+                  new BehaviorSubject<ParamMap>({
+                    get: (key: string) => '1',
+                    has: () => void 0,
+                    getAll: () => void 0,
+                    keys: [''],
+                  }),
               },
-            }),
-          },
-          {
-            provider: Router,
-            useValue: MockService(Router),
-          },
-          {
-            provider: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provider: RouterHistoryService,
-            useValue: MockService(RouterHistoryService),
-          },
-          {
-            provide: SiteService,
-            useValue: MockService(SiteService),
-          },
-        ],
-      })
-        .overrideProvider(CardCarouselService, {
-          useValue: MockService(CardCarouselService, {
-            has: ['inProgress$'],
-            props: {
-              inProgress$: { get: () => new BehaviorSubject<any>(false) },
+              paramMap: {
+                get: () =>
+                  new BehaviorSubject<ParamMap>({
+                    get: (key: string) => '1',
+                    has: () => void 0,
+                    getAll: () => void 0,
+                    keys: [''],
+                  }),
+              },
+              snapshot: { get: () => new ActivatedRouteSnapshot() },
             },
           }),
-        })
-        .overrideProvider(DiscoveryFeedsService, {
-          useValue: MockService(DiscoveryFeedsService, {
-            has: [
-              'entities$',
-              'type$',
-              'inProgress$',
-              'hasMoreData$',
-              'nsfw$',
-              'filter$',
-              'period$',
-            ],
-            props: {
-              entities$: { get: () => new BehaviorSubject<any[]>([]) },
-              type$: { get: () => new BehaviorSubject<any>('type') },
-              inProgress$: { get: () => new BehaviorSubject<any>(false) },
-              hasMoreData$: { get: () => new BehaviorSubject<any>(false) },
-              nsfw$: { get: () => new BehaviorSubject<any>(false) },
-              filter$: { get: () => new BehaviorSubject<any>(null) },
-              period$: { get: () => new BehaviorSubject<any>(null) },
-            },
-          }),
-        })
-        .overrideProvider(MetaService, {
-          useValue: MockService(MetaService),
-        })
-        .overrideProvider(ConfigsService, {
-          useValue: MockService(ConfigsService),
-        })
-        .overrideProvider(Session, {
-          useValue: MockService(Session),
-        })
-        .compileComponents();
+        },
+        {
+          provider: Router,
+          useValue: MockService(Router),
+        },
+        {
+          provider: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provider: RouterHistoryService,
+          useValue: MockService(RouterHistoryService),
+        },
+        {
+          provide: SiteService,
+          useValue: MockService(SiteService),
+        },
+      ],
     })
-  );
+      .overrideProvider(CardCarouselService, {
+        useValue: MockService(CardCarouselService, {
+          has: ['inProgress$'],
+          props: {
+            inProgress$: { get: () => new BehaviorSubject<any>(false) },
+          },
+        }),
+      })
+      .overrideProvider(DiscoveryFeedsService, {
+        useValue: MockService(DiscoveryFeedsService, {
+          has: [
+            'entities$',
+            'type$',
+            'inProgress$',
+            'hasMoreData$',
+            'nsfw$',
+            'filter$',
+            'period$',
+          ],
+          props: {
+            entities$: { get: () => new BehaviorSubject<any[]>([]) },
+            type$: { get: () => new BehaviorSubject<any>('type') },
+            inProgress$: { get: () => new BehaviorSubject<any>(false) },
+            hasMoreData$: { get: () => new BehaviorSubject<any>(false) },
+            nsfw$: { get: () => new BehaviorSubject<any>(false) },
+            filter$: { get: () => new BehaviorSubject<any>(null) },
+            period$: { get: () => new BehaviorSubject<any>(null) },
+          },
+        }),
+      })
+      .overrideProvider(MetaService, {
+        useValue: MockService(MetaService),
+      })
+      .overrideProvider(ConfigsService, {
+        useValue: MockService(ConfigsService),
+      })
+      .overrideProvider(Session, {
+        useValue: MockService(Session),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(DiscoverySearchComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

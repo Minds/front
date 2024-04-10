@@ -37,27 +37,25 @@ describe('MarketingFooterComponent', () => {
     data: mockFooter,
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MarketingFooterComponent,
-          MockComponent({
-            selector: 'm-language__bar',
-          }),
-        ],
-        providers: [
-          {
-            provide: GetFooterGQL,
-            useValue: jasmine.createSpyObj<GetFooterGQL>(['fetch']),
-          },
-          { provide: STRAPI_URL, useValue: strapiUrl },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MarketingFooterComponent,
+        MockComponent({
+          selector: 'm-language__bar',
+        }),
+      ],
+      providers: [
+        {
+          provide: GetFooterGQL,
+          useValue: jasmine.createSpyObj<GetFooterGQL>(['fetch']),
+        },
+        { provide: STRAPI_URL, useValue: strapiUrl },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(MarketingFooterComponent);
     comp = fixture.componentInstance;
 

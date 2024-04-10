@@ -43,16 +43,18 @@ export class ChannelContentService {
   /**
    * Local NSFW toggle status
    */
-  readonly forceNsfwContent$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  readonly forceNsfwContent$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Constructor. Build state observable.
    * @param service
    * @param session
    */
-  constructor(public service: ChannelsV2Service, protected session: Session) {
+  constructor(
+    public service: ChannelsV2Service,
+    protected session: Session
+  ) {
     // Derive state
     this.state$ = combineLatest([
       this.service.channel$,

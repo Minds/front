@@ -1,4 +1,4 @@
-export const clientMetaServiceMock = new (function() {
+export const clientMetaServiceMock = new (function () {
   this.source = null;
   this.timestamp = null;
   this.salt = null;
@@ -9,7 +9,9 @@ export const clientMetaServiceMock = new (function() {
 
   this.inherit = jasmine.createSpy('inherit').and.callFake(() => this);
   this.getId = jasmine.createSpy('getId').and.callFake(() => this.id);
-  this.setSource = jasmine.createSpy('setSource').and.callFake(source => this);
+  this.setSource = jasmine
+    .createSpy('setSource')
+    .and.callFake((source) => this);
   this.getSource = jasmine
     .createSpy('getSource')
     .and.callFake(() => this.source);

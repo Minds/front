@@ -9,20 +9,18 @@ describe('MultiFactorAuthSMSComponent', () => {
   let comp: MultiFactorAuthSMSComponent;
   let fixture: ComponentFixture<MultiFactorAuthSMSComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule],
-        declarations: [MultiFactorAuthSMSComponent, ButtonComponent],
-        providers: [
-          {
-            provide: MultiFactorAuthService,
-            useValue: MockService(MultiFactorAuthService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [MultiFactorAuthSMSComponent, ButtonComponent],
+      providers: [
+        {
+          provide: MultiFactorAuthService,
+          useValue: MockService(MultiFactorAuthService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MultiFactorAuthSMSComponent);
@@ -44,7 +42,7 @@ describe('MultiFactorAuthSMSComponent', () => {
     comp.resendSMSTimer();
 
     expect((comp as any).service.completeMultiFactor).toHaveBeenCalled();
-    const sub = comp.timer$.subscribe(val => {
+    const sub = comp.timer$.subscribe((val) => {
       expect(val > 0);
     });
   });

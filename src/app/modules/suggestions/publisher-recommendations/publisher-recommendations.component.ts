@@ -114,9 +114,8 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   containerHeight$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   /** a list of recommended channels or groups */
-  recommendations$: BehaviorSubject<
-    (MindsUser | MindsGroup)[]
-  > = new BehaviorSubject([]);
+  recommendations$: BehaviorSubject<(MindsUser | MindsGroup)[]> =
+    new BehaviorSubject([]);
 
   /**
    * How many recommendations to show at a time?
@@ -178,7 +177,7 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
       );
 
       this.subscriptions.push(
-        this.recommendations$.pipe(take(1)).subscribe(recs => {
+        this.recommendations$.pipe(take(1)).subscribe((recs) => {
           // Makes sure we know what the publisher type is,
           // even if the recommendations are coming from gql
           let rec = recs[0];
@@ -222,10 +221,10 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
         limit: 12,
       })
       .toPromise()
-      .then(result => {
+      .then((result) => {
         this.loaded.emit(true);
         if (result) {
-          this.recommendations$.next(result.entities.map(e => e.entity));
+          this.recommendations$.next(result.entities.map((e) => e.entity));
         }
       });
   }
@@ -239,10 +238,10 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
         limit: 12,
       })
       .toPromise()
-      .then(result => {
+      .then((result) => {
         this.loaded.emit(true);
         if (result) {
-          this.recommendations$.next(result.suggestions.map(e => e.entity));
+          this.recommendations$.next(result.suggestions.map((e) => e.entity));
         }
       });
   }
@@ -312,7 +311,7 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
     }
 
     this.recommendations$.next(
-      this.recommendations$.getValue().filter(p => p.guid !== publisher.guid)
+      this.recommendations$.getValue().filter((p) => p.guid !== publisher.guid)
     );
   }
 

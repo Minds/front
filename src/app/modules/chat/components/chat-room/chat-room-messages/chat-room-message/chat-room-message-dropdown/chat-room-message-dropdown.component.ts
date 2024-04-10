@@ -41,9 +41,8 @@ export class ChatRoomMessageDropdownComponent {
   dropdownMenuContent: NgxPopperjsContentComponent;
 
   /** Whether deletion is in progress. */
-  protected deleteInProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  protected deleteInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Whether to force the showing of the dropdown. This is helpful so that

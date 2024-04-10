@@ -41,7 +41,7 @@ export class OidcLoginButtons {
   ) {}
 
   ngOnInit() {
-    firstValueFrom(this.fetchOidcProviders.fetch()).then(result => {
+    firstValueFrom(this.fetchOidcProviders.fetch()).then((result) => {
       this.providers = result.data.oidcProviders;
 
       this.hasOidcProviders.emit(this.providers?.length > 0);

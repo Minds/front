@@ -109,13 +109,13 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
             ),
       ]).pipe(
         first(),
-        switchMap(payload => {
+        switchMap((payload) => {
           if (!payload) {
             throw 'Front::TwoFactorAborted';
           }
           req = this.addHeaders(req, payload);
           return next.handle(req).pipe(
-            catchError(err => {
+            catchError((err) => {
               if (
                 err !== 'Front::TwoFactorAborted' &&
                 err?.error?.errorId !==
@@ -146,7 +146,7 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
-      catchError(err => {
+      catchError((err) => {
         return this.handleResponseError(err, req, next);
       })
     );

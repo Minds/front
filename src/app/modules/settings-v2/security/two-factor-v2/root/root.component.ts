@@ -117,7 +117,7 @@ export class SettingsTwoFactorV2RootComponent extends AbstractSubscriberComponen
    */
   public onSetupAppClick(): void {
     this.subscriptions.push(
-      this.smsEnabled$.pipe(take(1)).subscribe(smsEnabled => {
+      this.smsEnabled$.pipe(take(1)).subscribe((smsEnabled) => {
         if (smsEnabled) {
           this.toast.warn('You cannot currently enable both TOTP and SMS');
           return;

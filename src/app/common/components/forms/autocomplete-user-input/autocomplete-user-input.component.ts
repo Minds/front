@@ -71,13 +71,13 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
    */
   matchedUsersList$: Observable<MindsUser[]> = this.username$$.pipe(
     // Wait until the is a valid username value
-    filter(username => !!username),
+    filter((username) => !!username),
     // debounce request to throttle server requests
     debounceTime(100),
     // if there is no change, do nothing.
     distinctUntilChanged(),
     // replace outputted observable with the result of a server call for matches.
-    switchMap(searchTerm => {
+    switchMap((searchTerm) => {
       this.inProgress$$.next(true);
       return this.api.get(`api/v2/search/suggest/user`, {
         q: searchTerm,
@@ -86,7 +86,7 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
       });
     }),
     // on error.
-    catchError(e => {
+    catchError((e) => {
       console.error(e);
       return of([]);
     }),
@@ -159,8 +159,8 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
      * This subscription emits out the username to the form parent
      */
     this.usernameSubscription = this.username$$
-      .pipe(filter(username => this.allowEmpty || !!username))
-      .subscribe(username => this.propagateChange(username));
+      .pipe(filter((username) => this.allowEmpty || !!username))
+      .subscribe((username) => this.propagateChange(username));
   }
 
   ngOnDestroy() {

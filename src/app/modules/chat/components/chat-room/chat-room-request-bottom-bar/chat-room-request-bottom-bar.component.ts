@@ -46,22 +46,20 @@ export class ChatRoomRequestBottomBarComponent {
   @Input() protected roomType: ChatRoomTypeEnum;
 
   /** Enum for use in template. */
-  protected readonly ChatRoomTypeEnum: typeof ChatRoomTypeEnum = ChatRoomTypeEnum;
+  protected readonly ChatRoomTypeEnum: typeof ChatRoomTypeEnum =
+    ChatRoomTypeEnum;
 
   /** Whether a block action is in progress. */
-  protected readonly blockInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected readonly blockInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether a reject action is in progress. */
-  protected readonly rejectInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected readonly rejectInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether an accept action is in progress. */
-  protected readonly acceptInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected readonly acceptInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether ANY action is in progress. */
   protected anyActionInProgress$: Observable<boolean> = combineLatest([
@@ -73,7 +71,7 @@ export class ChatRoomRequestBottomBarComponent {
       ([blockInProgress, rejectInProgress, acceptInProgress]: [
         boolean,
         boolean,
-        boolean
+        boolean,
       ]): boolean => {
         return blockInProgress || rejectInProgress || acceptInProgress;
       }
@@ -147,12 +145,13 @@ export class ChatRoomRequestBottomBarComponent {
     action: ChatRoomInviteRequestActionEnum
   ): Promise<boolean> {
     try {
-      const result: MutationResult<ReplyToRoomInviteRequestMutation> = await lastValueFrom(
-        this.replyToRoomInviteRequestGql.mutate({
-          roomGuid: this.roomGuid,
-          action: action,
-        })
-      );
+      const result: MutationResult<ReplyToRoomInviteRequestMutation> =
+        await lastValueFrom(
+          this.replyToRoomInviteRequestGql.mutate({
+            roomGuid: this.roomGuid,
+            action: action,
+          })
+        );
 
       if (!result) {
         throw new Error('No result returned');

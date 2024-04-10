@@ -29,11 +29,11 @@ import * as _ from 'lodash';
   ],
 })
 export class NetworkAdminConsoleRolesUsersComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /** Whether loading is in progress. */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** List of users to be displayed. */
   public users$: BehaviorSubject<UserRoleEdge[]> = new BehaviorSubject<
@@ -47,14 +47,12 @@ export class NetworkAdminConsoleRolesUsersComponent
   >;
 
   /** Whether pagination has next page. */
-  public readonly hasNextPage$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly hasNextPage$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Role to be displayed */
-  public readonly roleFilter$: BehaviorSubject<RoleId | null> = new BehaviorSubject<RoleId | null>(
-    null
-  );
+  public readonly roleFilter$: BehaviorSubject<RoleId | null> =
+    new BehaviorSubject<RoleId | null>(null);
 
   /** Enum for display in component. */
   public readonly RoleId: typeof RoleId = RoleId;
@@ -113,13 +111,13 @@ export class NetworkAdminConsoleRolesUsersComponent
           this.inProgress$.next(false);
         }
       ),
-      this.service.allRoles$.subscribe(allRoles => {
+      this.service.allRoles$.subscribe((allRoles) => {
         if (allRoles) {
           this.buildRoleFilterOptions(allRoles);
         }
       }),
       this.assignRolesModal.updatedUserWithRoles$.subscribe(
-        updatedUserWithRoles => {
+        (updatedUserWithRoles) => {
           // Update the list when a user's role changes inside the modal
           if (updatedUserWithRoles) {
             this.updateUsersList(updatedUserWithRoles);
@@ -258,7 +256,7 @@ export class NetworkAdminConsoleRolesUsersComponent
 
     // Find the index of the user with the matching node.guid
     const indexToUpdate = currentUsers.findIndex(
-      user => user.node.guid === updatedUser.node.guid
+      (user) => user.node.guid === updatedUser.node.guid
     );
 
     if (indexToUpdate === -1) {
@@ -284,7 +282,7 @@ export class NetworkAdminConsoleRolesUsersComponent
   }
 
   protected toTitleCase(str: string) {
-    return str.replace(/\w\S*/g, function(txt) {
+    return str.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   }

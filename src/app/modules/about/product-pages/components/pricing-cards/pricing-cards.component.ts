@@ -23,12 +23,12 @@ export class ProductPagePricingCardsComponent {
   @Input() public productPlans: ProductPlanEntity[];
 
   /** Enum for use in template. */
-  public readonly ProductPageUpgradeTimePeriod: typeof ProductPageUpgradeTimePeriod = ProductPageUpgradeTimePeriod;
+  public readonly ProductPageUpgradeTimePeriod: typeof ProductPageUpgradeTimePeriod =
+    ProductPageUpgradeTimePeriod;
 
   /** Selected time period for upgrades. */
-  public readonly selectedTimePeriod$: BehaviorSubject<
-    ProductPageUpgradeTimePeriod
-  > = this.pricingService.selectedTimePeriod$;
+  public readonly selectedTimePeriod$: BehaviorSubject<ProductPageUpgradeTimePeriod> =
+    this.pricingService.selectedTimePeriod$;
 
   constructor(private pricingService: ProductPagePricingService) {}
 

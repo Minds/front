@@ -121,22 +121,22 @@ export class FeedsService implements OnDestroy {
     protected location: Location
   ) {
     this.pageSize = this.offset.pipe(
-      map(offset => this.limit.getValue() + offset)
+      map((offset) => this.limit.getValue() + offset)
     );
     this.feed = this.rawFeed.pipe(
-      tap(feed => {
+      tap((feed) => {
         if (feed.length) this.inProgress.next(true);
       }),
-      switchMap(async feed => {
+      switchMap(async (feed) => {
         return feed.slice(0, await this.pageSize.pipe(first()).toPromise());
       }),
-      switchMap(feed =>
+      switchMap((feed) =>
         this.entitiesService
           .setCastToActivities(this.castToActivities)
           .setExportUserCounts(this.exportUserCounts)
           .getFromFeed(feed)
       ),
-      tap(feed => {
+      tap((feed) => {
         if (feed.length && this.fallbackAt) {
           for (let i = 0; i < feed.length; i++) {
             const entity: any = feed[i].getValue();
@@ -152,7 +152,7 @@ export class FeedsService implements OnDestroy {
           }
         }
       }),
-      tap(feed => {
+      tap((feed) => {
         this.feedLength = feed.length;
 
         if (feed.length)
@@ -162,7 +162,7 @@ export class FeedsService implements OnDestroy {
     );
 
     // Trigger a re-run of the above pipe on blockedList emission.
-    this.blockListSubscription = blockListService.blocked.subscribe(block => {
+    this.blockListSubscription = blockListService.blocked.subscribe((block) => {
       this.rawFeed.next(this.rawFeed.getValue());
     });
 
@@ -171,7 +171,7 @@ export class FeedsService implements OnDestroy {
       this.inProgress,
       this.offset
     ).pipe(
-      map(values => {
+      map((values) => {
         const feed = values[0];
         const inProgress = values[1];
         const offset = values[2];
@@ -371,7 +371,7 @@ export class FeedsService implements OnDestroy {
           this.canFetchMore = false;
         }
       })
-      .catch(e => {
+      .catch((e) => {
         this.newPostsLastCheckedAt = oldTimestamp;
         this.newPostsCount$.next(oldCount);
       })
@@ -402,7 +402,7 @@ export class FeedsService implements OnDestroy {
         },
       })
       .pipe(tap(() => this.countInProgress$.next(false)))
-      .pipe(map(response => response?.count));
+      .pipe(map((response) => response?.count));
   }
 
   /**
@@ -504,7 +504,7 @@ export class FeedsService implements OnDestroy {
       // only poll when tab is active
       .pipe(filter(() => document.hasFocus()))
       .pipe(switchMap(() => this.count(this.newPostsLastCheckedAt)))
-      .subscribe(count => {
+      .subscribe((count) => {
         if (count) {
           this.newPostsCount$.next(this.newPostsCount$.getValue() + count);
         }
@@ -563,10 +563,10 @@ export class FeedsService implements OnDestroy {
     if (!this.persistSubscription) {
       this.persistSubscription = this.feed
         .pipe(debounceTime(1000))
-        .subscribe(feed => {
+        .subscribe((feed) => {
           if (feed.length) {
             this._persist(
-              feed.map(entity$ => {
+              feed.map((entity$) => {
                 // TODO: better type
                 const entity: any = entity$.getValue();
                 return {

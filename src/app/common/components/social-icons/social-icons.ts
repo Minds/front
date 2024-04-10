@@ -22,7 +22,10 @@ export class SocialIcons {
   embedModalOpen: boolean = false;
   embedModalClosed: EventEmitter<any> = new EventEmitter();
 
-  constructor(public embed: EmbedService, private site: SiteService) {}
+  constructor(
+    public embed: EmbedService,
+    private site: SiteService
+  ) {}
 
   set _url(value: string) {
     this.url = value;

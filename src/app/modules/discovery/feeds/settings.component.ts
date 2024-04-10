@@ -42,7 +42,7 @@ export class DiscoveryFeedsSettingsComponent implements Modal<any> {
     id: string;
     label: string;
     selected: boolean;
-  }[] = this.service.nsfwService.reasons.map(reason => {
+  }[] = this.service.nsfwService.reasons.map((reason) => {
     return { id: reason.value, label: reason.label, selected: reason.selected };
   });
 
@@ -55,9 +55,9 @@ export class DiscoveryFeedsSettingsComponent implements Modal<any> {
       period: fb.control(''),
       contentType: fb.control(''),
       showNsfw: fb.control(
-        this.nsfwOptions.filter(reason => reason.selected).length > 0
+        this.nsfwOptions.filter((reason) => reason.selected).length > 0
       ),
-      nsfw: fb.array(this.nsfwOptions.map(reason => reason.selected)),
+      nsfw: fb.array(this.nsfwOptions.map((reason) => reason.selected)),
     });
   }
 
@@ -71,18 +71,18 @@ export class DiscoveryFeedsSettingsComponent implements Modal<any> {
 
   ngOnInit() {
     this.subscriptions = [
-      this.service.period$.subscribe(period => {
+      this.service.period$.subscribe((period) => {
         this.form.controls.period.setValue(period);
       }),
-      this.service.type$.subscribe(type => {
+      this.service.type$.subscribe((type) => {
         this.form.controls.contentType.setValue(type);
       }),
-      this.form.controls.showNsfw.valueChanges.subscribe(value => {
+      this.form.controls.showNsfw.valueChanges.subscribe((value) => {
         this.form.controls.nsfw.setValue(this.nsfwOptions.map(() => value));
       }),
-      this.form.controls.nsfw.valueChanges.subscribe(nsfw => {
+      this.form.controls.nsfw.valueChanges.subscribe((nsfw) => {
         if (
-          nsfw.filter(selected => selected === true).length === 0 &&
+          nsfw.filter((selected) => selected === true).length === 0 &&
           this.form.controls.showNsfw.value
         ) {
           this.form.controls.showNsfw.setValue(false);
@@ -114,7 +114,7 @@ export class DiscoveryFeedsSettingsComponent implements Modal<any> {
 
   get hasNsfwSelections(): boolean {
     return (
-      this.form.controls.nsfw.value.filter(selected => selected === true)
+      this.form.controls.nsfw.value.filter((selected) => selected === true)
         .length > 0
     );
   }

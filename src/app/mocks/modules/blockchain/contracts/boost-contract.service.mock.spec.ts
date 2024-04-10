@@ -1,4 +1,4 @@
-export let boostContractServiceMock = new (function() {
+export let boostContractServiceMock = new (function () {
   this.instance = null;
   this.tx = '';
   this.load = jasmine.createSpy('load');

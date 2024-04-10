@@ -22,12 +22,11 @@ export class GroupsService {
   $group = this.group.asObservable();
 
   // Observable handling membership state.
-  public membershipUpdate$: BehaviorSubject<
-    MembershipUpdate
-  > = new BehaviorSubject({
-    show: null,
-    guid: null,
-  });
+  public membershipUpdate$: BehaviorSubject<MembershipUpdate> =
+    new BehaviorSubject({
+      show: null,
+      guid: null,
+    });
 
   static _(
     client: Client,
@@ -119,7 +118,7 @@ export class GroupsService {
         this.updateMembership(false, group.guid);
         return !!response.done;
       })
-      .catch(e => {
+      .catch((e) => {
         return false;
       });
   }
@@ -191,7 +190,7 @@ export class GroupsService {
       .then((response: any) => {
         return !!response.done;
       })
-      .catch(e => {
+      .catch((e) => {
         return false;
       });
   }
@@ -205,7 +204,7 @@ export class GroupsService {
       .then((response: any) => {
         return !!response.done;
       })
-      .catch(e => {
+      .catch((e) => {
         return false;
       });
   }
@@ -216,7 +215,7 @@ export class GroupsService {
       .then((response: any) => {
         return !!response.done;
       })
-      .catch(e => {
+      .catch((e) => {
         return false;
       });
   }
@@ -230,7 +229,7 @@ export class GroupsService {
       .then((response: any) => {
         return !!response['is:muted'];
       })
-      .catch(e => {
+      .catch((e) => {
         return false;
       });
   }
@@ -242,7 +241,7 @@ export class GroupsService {
       .then((response: any) => {
         return !!response['is:muted'];
       })
-      .catch(e => {
+      .catch((e) => {
         return true;
       });
   }
@@ -255,7 +254,7 @@ export class GroupsService {
       .then((response: any) => {
         return !!response.done;
       })
-      .catch(e => {
+      .catch((e) => {
         return false;
       });
   }
@@ -266,7 +265,7 @@ export class GroupsService {
       .then((response: any) => {
         return !response.done;
       })
-      .catch(e => {
+      .catch((e) => {
         return true;
       });
   }
@@ -279,7 +278,7 @@ export class GroupsService {
       .then((response: any) => {
         return !!response.done;
       })
-      .catch(e => {
+      .catch((e) => {
         return false;
       });
   }
@@ -290,7 +289,7 @@ export class GroupsService {
       .then((response: any) => {
         return !response.done;
       })
-      .catch(e => {
+      .catch((e) => {
         return true;
       });
   }
@@ -321,7 +320,7 @@ export class GroupsService {
 
         throw response.error ? response.error : 'Internal error';
       })
-      .catch(e => {
+      .catch((e) => {
         throw typeof e === 'string' ? e : 'Connectivity error';
       });
   }
@@ -332,7 +331,7 @@ export class GroupsService {
       .then((response: any) => {
         return !!response.done;
       })
-      .catch(e => {
+      .catch((e) => {
         return false;
       });
   }
@@ -343,7 +342,7 @@ export class GroupsService {
       .then((response: any) => {
         return !!response.done;
       })
-      .catch(e => {
+      .catch((e) => {
         return false;
       });
   }
@@ -382,6 +381,6 @@ export class GroupsService {
   countMembers(guid: any) {
     return this.clientService
       .get(`api/v1/groups/membership/${guid}`)
-      .then(res => res['members'].length);
+      .then((res) => res['members'].length);
   }
 }

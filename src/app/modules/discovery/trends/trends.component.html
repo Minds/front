@@ -22,7 +22,7 @@
     ></m-discoveryTrends__listItem>
   </li>
   <li
-    *ngFor="let trend of trends$ | async | slice: 0:1"
+    *ngFor="let trend of trends$ | async | slice: 0 : 1"
     class="m-discoveryTrends__trend"
   >
     <m-discoveryTrends__listItem [trend]="trend"></m-discoveryTrends__listItem>

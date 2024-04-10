@@ -51,40 +51,35 @@ export class MultiFactorAuthService {
   /**
    * Currently active panel.
    */
-  public readonly activePanel$: BehaviorSubject<
-    MultiFactorPanel
-  > = new BehaviorSubject<MultiFactorPanel>('totp');
+  public readonly activePanel$: BehaviorSubject<MultiFactorPanel> =
+    new BehaviorSubject<MultiFactorPanel>('totp');
 
   /**
    * Fired on success.
    */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(null);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(null);
 
   /**
    * This is the original request that triggered the modal
    * Mainly used for recovery reset as we need the users credentials
    */
-  public readonly originalRequest$: BehaviorSubject<
-    HttpRequest<any>
-  > = new BehaviorSubject<HttpRequest<any>>(null);
+  public readonly originalRequest$: BehaviorSubject<HttpRequest<any>> =
+    new BehaviorSubject<HttpRequest<any>>(null);
 
   /**
    * The type of 2fa being used
    * This determines how the payload is build
    */
-  public readonly mfaType$: BehaviorSubject<
-    MultiFactorRootPanel
-  > = new BehaviorSubject<MultiFactorRootPanel>(null);
+  public readonly mfaType$: BehaviorSubject<MultiFactorRootPanel> =
+    new BehaviorSubject<MultiFactorRootPanel>(null);
 
   /**
    * Email and SMS contain a a secret key with the request
    * Devices do not so should set to null
    */
-  public readonly mfaSecretKey$: BehaviorSubject<
-    string | null
-  > = new BehaviorSubject<string | null>(null);
+  public readonly mfaSecretKey$: BehaviorSubject<string | null> =
+    new BehaviorSubject<string | null>(null);
 
   /**
    * MFA Request payload for new request (interceptor will merge)

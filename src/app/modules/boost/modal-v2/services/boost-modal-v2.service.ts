@@ -62,91 +62,75 @@ import { BoostTargetExperimentService } from '../../../experiments/sub-services/
 @Injectable()
 export class BoostModalV2Service implements OnDestroy {
   // selected entity for boosting.
-  public readonly entity$: BehaviorSubject<
-    BoostableEntity
-  > = new BehaviorSubject<BoostableEntity>(null);
+  public readonly entity$: BehaviorSubject<BoostableEntity> =
+    new BehaviorSubject<BoostableEntity>(null);
 
   // currently active modal panel.
-  public readonly activePanel$: BehaviorSubject<
-    BoostModalPanel
-  > = new BehaviorSubject<BoostModalPanel>(BoostModalPanel.AUDIENCE);
+  public readonly activePanel$: BehaviorSubject<BoostModalPanel> =
+    new BehaviorSubject<BoostModalPanel>(BoostModalPanel.AUDIENCE);
 
   // currently selected goal.
-  public readonly goal$: BehaviorSubject<BoostGoal> = new BehaviorSubject<
-    BoostGoal
-  >(DEFAULT_GOAL);
+  public readonly goal$: BehaviorSubject<BoostGoal> =
+    new BehaviorSubject<BoostGoal>(DEFAULT_GOAL);
 
   // currently selected goal button text.
-  public readonly goalButtonText$: BehaviorSubject<
-    BoostGoalButtonText
-  > = new BehaviorSubject<BoostGoalButtonText>(null);
+  public readonly goalButtonText$: BehaviorSubject<BoostGoalButtonText> =
+    new BehaviorSubject<BoostGoalButtonText>(null);
 
   // currently selected goal button url.
-  public readonly goalButtonUrl$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >(null);
+  public readonly goalButtonUrl$: BehaviorSubject<string> =
+    new BehaviorSubject<string>(null);
 
   // currently selected audience.
-  public readonly audience$: BehaviorSubject<
-    BoostAudience
-  > = new BehaviorSubject<BoostAudience>(DEFAULT_AUDIENCE);
+  public readonly audience$: BehaviorSubject<BoostAudience> =
+    new BehaviorSubject<BoostAudience>(DEFAULT_AUDIENCE);
 
   // current selection for whether to target users on the web
-  public readonly targetPlatformWeb$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly targetPlatformWeb$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // current selection for whether to target android users
-  public readonly targetPlatformAndroid$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly targetPlatformAndroid$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // current selection for target iOS users
-  public readonly targetPlatformIos$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly targetPlatformIos$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // currently selected payment category.
-  public readonly paymentCategory$: BehaviorSubject<
-    BoostPaymentCategory
-  > = new BehaviorSubject<BoostPaymentCategory>(DEFAULT_PAYMENT_CATEGORY);
+  public readonly paymentCategory$: BehaviorSubject<BoostPaymentCategory> =
+    new BehaviorSubject<BoostPaymentCategory>(DEFAULT_PAYMENT_CATEGORY);
 
   // currently selected payment method.
-  public readonly paymentMethod$: BehaviorSubject<
-    BoostPaymentMethod
-  > = new BehaviorSubject<BoostPaymentMethod>(null);
+  public readonly paymentMethod$: BehaviorSubject<BoostPaymentMethod> =
+    new BehaviorSubject<BoostPaymentMethod>(null);
 
   // currently selected payment method id.
-  public readonly paymentMethodId$: BehaviorSubject<
-    BoostPaymentMethodId
-  > = new BehaviorSubject<BoostPaymentMethodId>(null);
+  public readonly paymentMethodId$: BehaviorSubject<BoostPaymentMethodId> =
+    new BehaviorSubject<BoostPaymentMethodId>(null);
 
   // currently selected daily budget.
-  public readonly dailyBudget$: BehaviorSubject<number> = new BehaviorSubject<
-    number
-  >(null);
+  public readonly dailyBudget$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(null);
 
   // currently selected duration.
-  public readonly duration$: BehaviorSubject<number> = new BehaviorSubject<
-    number
-  >(null);
+  public readonly duration$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(null);
 
   // disable safe boost audience.
-  public readonly disabledSafeAudience$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly disabledSafeAudience$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // whether boost submission is in progress.
-  public readonly boostSubmissionInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly boostSubmissionInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // Emit to call modal save intent.
   public readonly callSaveIntent$: Subject<boolean> = new Subject<boolean>();
 
   // derived entity type from entity selected for boosting.
   public entityType$: Observable<BoostSubject> = this.entity$.pipe(
-    map(entity => {
+    map((entity) => {
       switch (entity?.type) {
         case 'user':
           return BoostSubject.CHANNEL;
@@ -160,35 +144,34 @@ export class BoostModalV2Service implements OnDestroy {
 
   // A comma-separated list of the selected target platforms (web/android/iOS)
   // (or 'None', if nothing is selected)
-  public readonly targetPlatformSummaryText$: Observable<
-    string
-  > = combineLatest([
-    this.targetPlatformWeb$,
-    this.targetPlatformAndroid$,
-    this.targetPlatformIos$,
-  ]).pipe(
-    map(([web, android, ios]: [boolean, boolean, boolean]) => {
-      let text,
-        platforms: BoostTargetPlatformLabel[] = [];
+  public readonly targetPlatformSummaryText$: Observable<string> =
+    combineLatest([
+      this.targetPlatformWeb$,
+      this.targetPlatformAndroid$,
+      this.targetPlatformIos$,
+    ]).pipe(
+      map(([web, android, ios]: [boolean, boolean, boolean]) => {
+        let text,
+          platforms: BoostTargetPlatformLabel[] = [];
 
-      if (web) {
-        platforms.push('Web');
-      }
-      if (android) {
-        platforms.push('Android');
-      }
-      if (ios) {
-        platforms.push('iOS');
-      }
-      if (platforms.length > 0) {
-        text = platforms.join(', ');
-      } else {
-        text = 'None';
-      }
+        if (web) {
+          platforms.push('Web');
+        }
+        if (android) {
+          platforms.push('Android');
+        }
+        if (ios) {
+          platforms.push('iOS');
+        }
+        if (platforms.length > 0) {
+          text = platforms.join(', ');
+        } else {
+          text = 'None';
+        }
 
-      return text;
-    })
-  );
+        return text;
+      })
+    );
 
   /**
    * Whether any of the default target platform values have changed
@@ -208,7 +191,7 @@ export class BoostModalV2Service implements OnDestroy {
 
   // Whether or not the selected goal comes with a custom CTA button
   public readonly goalRequiresButton$: Observable<boolean> = this.goal$.pipe(
-    map(goal => {
+    map((goal) => {
       return goal === BoostGoal.SUBSCRIBERS || goal === BoostGoal.CLICKS;
     })
   );
@@ -228,17 +211,16 @@ export class BoostModalV2Service implements OnDestroy {
   );
 
   // first panel that should be shown, depending on entityType and goal experiment
-  public readonly firstPanel$: Observable<
-    BoostModalPanel
-  > = this.canSetBoostGoal$.pipe(
-    map((canSetBoostGoal: boolean) => {
-      if (canSetBoostGoal) {
-        return BoostModalPanel.GOAL;
-      } else {
-        return BoostModalPanel.AUDIENCE;
-      }
-    })
-  );
+  public readonly firstPanel$: Observable<BoostModalPanel> =
+    this.canSetBoostGoal$.pipe(
+      map((canSetBoostGoal: boolean) => {
+        if (canSetBoostGoal) {
+          return BoostModalPanel.GOAL;
+        } else {
+          return BoostModalPanel.AUDIENCE;
+        }
+      })
+    );
 
   // Whether the NEXT button should be disabled.
   public readonly disableSubmitButton$: Observable<boolean> = combineLatest([
@@ -266,7 +248,7 @@ export class BoostModalV2Service implements OnDestroy {
         boolean,
         boolean,
         boolean,
-        boolean
+        boolean,
       ]) => {
         let panelRequirementsAreMet = true;
 
@@ -303,7 +285,7 @@ export class BoostModalV2Service implements OnDestroy {
       ([activePanel, firstPanel, goalRequiresButton]: [
         BoostModalPanel,
         BoostModalPanel,
-        boolean
+        boolean,
       ]) => {
         switch (activePanel) {
           case BoostModalPanel.GOAL:
@@ -366,7 +348,7 @@ export class BoostModalV2Service implements OnDestroy {
         number,
         number,
         BoostPaymentCategory,
-        BoostAudience
+        BoostAudience,
       ]): Observable<any> => {
         return this.api.get('api/v3/boosts/insights/estimate', {
           daily_bid: dailyBudget,
@@ -376,97 +358,97 @@ export class BoostModalV2Service implements OnDestroy {
         });
       }
     ),
-    catchError(e => this.handleRequestError(e)),
+    catchError((e) => this.handleRequestError(e)),
     shareReplay()
   );
 
   // payload for boost submission. Has available snapshot.
-  private readonly boostSubmissionPayload$: Observable<
-    BoostSubmissionPayload
-  > = combineLatest([
-    this.entity$,
-    this.entityType$,
-    this.paymentMethod$,
-    this.paymentMethodId$,
-    this.duration$,
-    this.dailyBudget$,
-    this.audience$,
-    this.targetPlatformWeb$,
-    this.targetPlatformAndroid$,
-    this.targetPlatformIos$,
-    this.goal$,
-    this.goalButtonText$,
-    this.goalButtonUrl$,
-    this.canSetBoostGoal$,
-  ]).pipe(
-    map(
-      ([
-        entity,
-        entityType,
-        paymentMethod,
-        paymentMethodId,
-        duration,
-        dailyBudget,
-        audience,
-        targetPlatformWeb,
-        targetPlatformAndroid,
-        targetPlatformIos,
-        goal,
-        goalButtonText,
-        goalButtonUrl,
-        canSetBoostGoal,
-      ]: [
-        BoostableEntity,
-        BoostSubject,
-        BoostPaymentMethod,
-        BoostPaymentMethodId,
-        number,
-        number,
-        BoostAudience,
-        boolean,
-        boolean,
-        boolean,
-        BoostGoal,
-        BoostGoalButtonText,
-        string,
-        boolean
-      ]): BoostSubmissionPayload => {
-        let payload: BoostSubmissionPayload = {
-          entity_guid: entity?.guid,
-          target_suitability: audience,
-          target_location: [BoostSubject.CHANNEL, BoostSubject.GROUP].includes(
-            entityType
-          )
-            ? BoostLocation.SIDEBAR
-            : BoostLocation.NEWSFEED,
-          payment_method: Number(paymentMethod),
-          payment_method_id: paymentMethodId,
-          daily_bid: dailyBudget,
-          duration_days: duration,
-        };
-
-        if (this.boostTargetExperiment.isActive()) {
-          payload = {
-            ...payload,
-            target_platform_web: targetPlatformWeb,
-            target_platform_android: targetPlatformAndroid,
-            target_platform_ios: targetPlatformIos,
+  private readonly boostSubmissionPayload$: Observable<BoostSubmissionPayload> =
+    combineLatest([
+      this.entity$,
+      this.entityType$,
+      this.paymentMethod$,
+      this.paymentMethodId$,
+      this.duration$,
+      this.dailyBudget$,
+      this.audience$,
+      this.targetPlatformWeb$,
+      this.targetPlatformAndroid$,
+      this.targetPlatformIos$,
+      this.goal$,
+      this.goalButtonText$,
+      this.goalButtonUrl$,
+      this.canSetBoostGoal$,
+    ]).pipe(
+      map(
+        ([
+          entity,
+          entityType,
+          paymentMethod,
+          paymentMethodId,
+          duration,
+          dailyBudget,
+          audience,
+          targetPlatformWeb,
+          targetPlatformAndroid,
+          targetPlatformIos,
+          goal,
+          goalButtonText,
+          goalButtonUrl,
+          canSetBoostGoal,
+        ]: [
+          BoostableEntity,
+          BoostSubject,
+          BoostPaymentMethod,
+          BoostPaymentMethodId,
+          number,
+          number,
+          BoostAudience,
+          boolean,
+          boolean,
+          boolean,
+          BoostGoal,
+          BoostGoalButtonText,
+          string,
+          boolean,
+        ]): BoostSubmissionPayload => {
+          let payload: BoostSubmissionPayload = {
+            entity_guid: entity?.guid,
+            target_suitability: audience,
+            target_location: [
+              BoostSubject.CHANNEL,
+              BoostSubject.GROUP,
+            ].includes(entityType)
+              ? BoostLocation.SIDEBAR
+              : BoostLocation.NEWSFEED,
+            payment_method: Number(paymentMethod),
+            payment_method_id: paymentMethodId,
+            daily_bid: dailyBudget,
+            duration_days: duration,
           };
-        }
 
-        if (canSetBoostGoal) {
-          payload = {
-            ...payload,
-            goal: goal,
-            goal_button_text: goalButtonText,
-            goal_button_url: goalButtonUrl,
-          };
-        }
+          if (this.boostTargetExperiment.isActive()) {
+            payload = {
+              ...payload,
+              target_platform_web: targetPlatformWeb,
+              target_platform_android: targetPlatformAndroid,
+              target_platform_ios: targetPlatformIos,
+            };
+          }
 
-        return payload;
-      }
-    )
-  );
+          if (canSetBoostGoal) {
+            payload = {
+              ...payload,
+              goal: goal,
+              goal_button_text: goalButtonText,
+              goal_button_url: goalButtonUrl,
+            };
+          }
+
+          return payload;
+        }
+      )
+    );
 
   // snapshot of boost payload for boost submission.
   private boostSubmissionPayloadSnapshot: BoostSubmissionPayload;
@@ -492,7 +474,7 @@ export class BoostModalV2Service implements OnDestroy {
   ) {
     // set default duration and budgets on payment category change.
     this.paymentCategoryChangeSubscription = this.paymentCategory$.subscribe(
-      paymentCategory => {
+      (paymentCategory) => {
         this.duration$.next(
           paymentCategory === BoostPaymentCategory.CASH
             ? DEFAULT_CASH_DURATION
@@ -507,7 +489,7 @@ export class BoostModalV2Service implements OnDestroy {
     );
 
     // When the goal changes, set defaults for goal-related fields
-    this.goalSubscription = this.goal$.subscribe(goal => {
+    this.goalSubscription = this.goal$.subscribe((goal) => {
       switch (goal) {
         case BoostGoal.SUBSCRIBERS:
           this.goalButtonText$.next(DEFAULT_BUTTON_TEXT_FOR_SUBSCRIBER_GOAL);
@@ -526,10 +508,11 @@ export class BoostModalV2Service implements OnDestroy {
     });
 
     // store a snapshot of payload for subscriptionless reference.
-    this.boostSubmissionPayloadSnapshotSubscription = this.boostSubmissionPayload$.subscribe(
-      (boostSubmissionPayload: BoostSubmissionPayload) =>
-        (this.boostSubmissionPayloadSnapshot = boostSubmissionPayload)
-    );
+    this.boostSubmissionPayloadSnapshotSubscription =
+      this.boostSubmissionPayload$.subscribe(
+        (boostSubmissionPayload: BoostSubmissionPayload) =>
+          (this.boostSubmissionPayloadSnapshot = boostSubmissionPayload)
+      );
   }
 
   ngOnDestroy(): void {
@@ -603,7 +586,7 @@ export class BoostModalV2Service implements OnDestroy {
   private switchFromGoalPanel(): void {
     this.goalRequiresButtonSubscription = this.goalRequiresButton$
       .pipe(take(1))
-      .subscribe(goalRequiresButton => {
+      .subscribe((goalRequiresButton) => {
         this.activePanel$.next(
           goalRequiresButton
             ? BoostModalPanel.GOAL_BUTTON
@@ -644,7 +627,7 @@ export class BoostModalV2Service implements OnDestroy {
     this.submitBoostSubscription = this.boostSubmissionPayload$
       .pipe(
         take(1),
-        tap(_ => this.boostSubmissionInProgress$.next(true)),
+        tap((_) => this.boostSubmissionInProgress$.next(true)),
         switchMap(
           (
             boostSubmissionPayload: BoostSubmissionPayload
@@ -655,7 +638,7 @@ export class BoostModalV2Service implements OnDestroy {
             );
           }
         ),
-        tap(_ => {
+        tap((_) => {
           this.toast.success('Success! Your boost request is being processed.');
           this.callSaveIntent$.next(true);
         }),
@@ -670,8 +653,8 @@ export class BoostModalV2Service implements OnDestroy {
    * @returns { Promise<void> }
    */
   private async submitOnchainBoost(): Promise<void> {
-    const boostSubmissionPayload: BoostSubmissionPayload = this
-      .boostSubmissionPayloadSnapshot;
+    const boostSubmissionPayload: BoostSubmissionPayload =
+      this.boostSubmissionPayloadSnapshot;
     this.boostSubmissionInProgress$.next(true);
 
     try {

@@ -25,7 +25,8 @@ export const PHONE_INPUT_VALUE_ACCESSOR: any = {
   providers: [PHONE_INPUT_VALUE_ACCESSOR],
 })
 export class PhoneInputV2Component
-  implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
+  implements ControlValueAccessor, OnInit, OnChanges, OnDestroy
+{
   @Input() disabled: boolean = false;
   @Input() invalid: boolean = false;
   @Input() initCountryCode: string = '';

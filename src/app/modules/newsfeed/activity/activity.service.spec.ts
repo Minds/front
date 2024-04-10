@@ -8,17 +8,17 @@ import { ApiService } from '../../../common/api/api.service';
 describe('ActivityService', () => {
   let service: ActivityService;
 
-  let configsMock = new (function() {
+  let configsMock = new (function () {
     this.get = jasmine.createSpy('get');
   })();
 
-  let sessionsMock = new (function() {
+  let sessionsMock = new (function () {
     this.user$ = new BehaviorSubject<number>(userMock);
     this.isLoggedIn = jasmine.createSpy('isLoggedIn');
     this.getLoggedInUser = jasmine.createSpy('getLoggedInUser');
   })();
 
-  let entityMetricsSocketMock = new (function() {
+  let entityMetricsSocketMock = new (function () {
     this.listen = jasmine.createSpy('listen');
     this.leave = jasmine.createSpy('leave');
     this.thumbsUpCount$ = new BehaviorSubject<number>(0);
@@ -40,7 +40,7 @@ describe('ActivityService', () => {
       },
     });
 
-    toastMock = new (function() {
+    toastMock = new (function () {
       this.error = jasmine.createSpy('error');
     })();
 
@@ -86,7 +86,7 @@ describe('ActivityService', () => {
     );
 
     service.entity$
-      .subscribe(entity => {
+      .subscribe((entity) => {
         expect(entity['thumbs:up:count']).toBe(5);
       })
       .unsubscribe();
@@ -103,7 +103,7 @@ describe('ActivityService', () => {
     );
 
     service.entity$
-      .subscribe(entity => {
+      .subscribe((entity) => {
         expect(entity['thumbs:up:count']).toBe(2);
       })
       .unsubscribe();
@@ -142,7 +142,7 @@ describe('ActivityService', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
     (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
 
-    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+    service.shouldShowNsfwConsent$.subscribe((shouldShowNsfwConsent) => {
       expect(shouldShowNsfwConsent).toBeFalse();
       done();
     });
@@ -167,7 +167,7 @@ describe('ActivityService', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
     (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
 
-    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+    service.shouldShowNsfwConsent$.subscribe((shouldShowNsfwConsent) => {
       expect(shouldShowNsfwConsent).toBeFalse();
       done();
     });
@@ -186,7 +186,7 @@ describe('ActivityService', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
     (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
 
-    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+    service.shouldShowNsfwConsent$.subscribe((shouldShowNsfwConsent) => {
       expect(shouldShowNsfwConsent).toBeTrue();
       done();
     });
@@ -211,7 +211,7 @@ describe('ActivityService', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
     (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
 
-    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+    service.shouldShowNsfwConsent$.subscribe((shouldShowNsfwConsent) => {
       expect(shouldShowNsfwConsent).toBeTrue();
       done();
     });
@@ -236,7 +236,7 @@ describe('ActivityService', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
     (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
 
-    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+    service.shouldShowNsfwConsent$.subscribe((shouldShowNsfwConsent) => {
       expect(shouldShowNsfwConsent).toBeTrue();
       done();
     });
@@ -255,7 +255,7 @@ describe('ActivityService', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
     (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
 
-    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+    service.shouldShowNsfwConsent$.subscribe((shouldShowNsfwConsent) => {
       expect(shouldShowNsfwConsent).toBeTrue();
       done();
     });
@@ -279,7 +279,7 @@ describe('ActivityService', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
     (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
 
-    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+    service.shouldShowNsfwConsent$.subscribe((shouldShowNsfwConsent) => {
       expect(shouldShowNsfwConsent).toBeFalse();
       done();
     });
@@ -298,7 +298,7 @@ describe('ActivityService', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
     (service as any).session.getLoggedInUser.and.returnValue({ mature: true });
 
-    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+    service.shouldShowNsfwConsent$.subscribe((shouldShowNsfwConsent) => {
       expect(shouldShowNsfwConsent).toBeFalse();
       done();
     });

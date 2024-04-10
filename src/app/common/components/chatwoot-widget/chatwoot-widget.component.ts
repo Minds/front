@@ -49,9 +49,8 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     @Inject(CDN_ASSETS_URL) private cdnAssetsUrl: string
   ) {
-    const chatwootConfig: ChatwootMindsConfig = this.config.get<
-      ChatwootMindsConfig
-    >('chatwoot');
+    const chatwootConfig: ChatwootMindsConfig =
+      this.config.get<ChatwootMindsConfig>('chatwoot');
     this.websiteToken = chatwootConfig.website_token;
     this.baseUrl = chatwootConfig.base_url;
     this.scriptUrl = this.cdnAssetsUrl + 'assets/scripts/chatwoot.js';
@@ -79,9 +78,8 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
    */
   private initChatwoot(): void {
     // grab existing script elements
-    const firstScriptElement: HTMLScriptElement = document.getElementsByTagName(
-      'script'
-    )[0];
+    const firstScriptElement: HTMLScriptElement =
+      document.getElementsByTagName('script')[0];
 
     // create new script element
     let newScriptElement: HTMLScriptElement = document.createElement('script');
@@ -124,7 +122,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
 
     this.initLoginStateSubscription();
 
-    window.addEventListener('chatwoot:error', function(e) {
+    window.addEventListener('chatwoot:error', function (e) {
       console.error(e);
     });
   }

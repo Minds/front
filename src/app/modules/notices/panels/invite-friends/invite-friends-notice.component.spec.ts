@@ -17,45 +17,43 @@ describe('InviteYourFriendsComponent', () => {
   let fixture: ComponentFixture<InviteFriendsNoticeComponent>;
   let referralUrl: string = 'https://www.minds.com/register?referrer=mindsUser';
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          InviteFriendsNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon'],
-            outputs: ['dismissClick'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: ReferralUrlService,
-            useValue: MockService(ReferralUrlService),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          {
-            provide: Router,
-            useValue: MockService(Router),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        InviteFriendsNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: ReferralUrlService,
+          useValue: MockService(ReferralUrlService),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(InviteFriendsNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

@@ -33,7 +33,7 @@ const defaultNotices = [
   },
 ];
 
-export let feedNoticeDismissalService = new (function() {
+export let feedNoticeDismissalService = new (function () {
   this.dismissNotice = jasmine.createSpy('dismissNotice').and.returnValue(this);
   this.undismissNotice = jasmine
     .createSpy('undismissNotice')
@@ -43,11 +43,11 @@ export let feedNoticeDismissalService = new (function() {
     .and.returnValue(false);
 })();
 
-export let sessionMock = new (function() {
+export let sessionMock = new (function () {
   this.loggedinEmitter = new BehaviorSubject<boolean>(false);
 })();
 
-export let apiServiceMock = new (function() {
+export let apiServiceMock = new (function () {
   this.get = jasmine.createSpy('get').and.returnValue(
     of({
       status: 'success',

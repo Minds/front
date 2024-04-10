@@ -1,6 +1,6 @@
 import { PlusUpgradeNoticeExperimentService } from './plus-upgrade-notice-experiment.service';
 
-export let experimentsServiceMock = new (function() {
+export let experimentsServiceMock = new (function () {
   this.run = jasmine.createSpy('run');
 })();
 

@@ -58,17 +58,19 @@ import { GiftCardProductIdEnum } from '../../../../../../../graphql/generated.en
   styleUrls: ['./payment-method-selector.component.ng.scss'],
 })
 export class BoostModalV2PaymentMethodSelectorComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   // enums.
   public BoostPaymentMethod: typeof BoostPaymentMethod = BoostPaymentMethod;
-  public BoostPaymentCategory: typeof BoostPaymentCategory = BoostPaymentCategory;
+  public BoostPaymentCategory: typeof BoostPaymentCategory =
+    BoostPaymentCategory;
 
   // cdn url
   private readonly cdnAssetsUrl: string;
 
   // Currently active tab.
-  public paymentCategory$: BehaviorSubject<BoostPaymentCategory> = this.service
-    .paymentCategory$;
+  public paymentCategory$: BehaviorSubject<BoostPaymentCategory> =
+    this.service.paymentCategory$;
 
   public dailyBid$: BehaviorSubject<number> = this.service.dailyBudget$;
   public bidDuration$: BehaviorSubject<number> = this.service.duration$;
@@ -77,22 +79,22 @@ export class BoostModalV2PaymentMethodSelectorComponent
   public onchainBalance$: BehaviorSubject<number> = this.tokenBalance.onchain$;
 
   // Users offchain balance - must be fetched from service before it holds a value.
-  public offchainBalance$: BehaviorSubject<number> = this.tokenBalance
-    .offchain$;
+  public offchainBalance$: BehaviorSubject<number> =
+    this.tokenBalance.offchain$;
 
   // Token payment method from service.
-  public readonly paymentMethod$: BehaviorSubject<BoostPaymentMethod> = this
-    .service.paymentMethod$;
+  public readonly paymentMethod$: BehaviorSubject<BoostPaymentMethod> =
+    this.service.paymentMethod$;
 
   // Token payment method id from service.
-  public readonly paymentMethodId$: BehaviorSubject<BoostPaymentMethodId> = this
-    .service.paymentMethodId$;
+  public readonly paymentMethodId$: BehaviorSubject<BoostPaymentMethodId> =
+    this.service.paymentMethodId$;
 
   // Background of select dropdown to add a stylable dropdown icon based on theme.
   public selectBackground$: Observable<{
     background: string;
   }> = this.theme.isDark$.pipe(
-    map(isDark => {
+    map((isDark) => {
       return {
         background: `url('${this.cdnAssetsUrl}assets/icons/arrow-drop-down-${
           isDark ? 'white' : 'black'
@@ -104,9 +106,8 @@ export class BoostModalV2PaymentMethodSelectorComponent
   // subscription to load balance when active tab changes to tokens.
   private balanceLoadSubscription: Subscription;
   private paymentMethodInitSubscription: Subscription;
-  public totalPaymentAmount$: Observable<
-    number
-  > = this.service.totalPaymentAmount$?.pipe(shareReplay());
+  public totalPaymentAmount$: Observable<number> =
+    this.service.totalPaymentAmount$?.pipe(shareReplay());
 
   constructor(
     private service: BoostModalV2Service,
@@ -125,7 +126,7 @@ export class BoostModalV2PaymentMethodSelectorComponent
           (paymentCategory: BoostPaymentCategory) =>
             paymentCategory === BoostPaymentCategory.TOKENS
         ),
-        switchMap(_ => this.tokenBalance.fetch())
+        switchMap((_) => this.tokenBalance.fetch())
       )
       .subscribe();
 

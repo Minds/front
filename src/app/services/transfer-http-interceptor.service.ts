@@ -38,7 +38,7 @@ export class TransferHttpInterceptorService implements HttpInterceptor {
 
     if (isPlatformServer(this.platformId)) {
       return next.handle(request).pipe(
-        tap(event => {
+        tap((event) => {
           this.transferState.set(key, (<HttpResponse<any>>event).body);
         })
       );

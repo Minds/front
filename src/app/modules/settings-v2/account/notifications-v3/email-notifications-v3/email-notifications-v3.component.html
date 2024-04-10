@@ -16,10 +16,7 @@
 <ng-container *ngIf="!(initializing$ | async)">
   <ng-container *ngIf="(filterByCampaign$('when') | async).length">
     <h5
-      class="
-      m-pushNotifSettings__categoryTitle
-      m-pushNotifSettings__categoryTitle--first
-    "
+      class="m-pushNotifSettings__categoryTitle m-pushNotifSettings__categoryTitle--first"
       i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_WHEN"
     >
       Email me when

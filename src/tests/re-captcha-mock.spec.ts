@@ -7,9 +7,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   template: '',
 })
 export class ReCaptchaComponentMock {
-  @Output('captchaResponse') response: EventEmitter<any> = new EventEmitter<
-    any
-  >();
+  @Output('captchaResponse') response: EventEmitter<any> =
+    new EventEmitter<any>();
 
   @Input('site_key') set siteKey(key: string) {
     this.response.emit('key');

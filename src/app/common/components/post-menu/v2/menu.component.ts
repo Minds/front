@@ -127,7 +127,7 @@ export class PostMenuV2Component implements OnInit {
       this.entity.type === 'activity' &&
       this.entity.remind_users &&
       this.entity.remind_users.filter(
-        user => user.guid === this.session.getLoggedInUser().guid
+        (user) => user.guid === this.session.getLoggedInUser().guid
       ).length > 0 &&
       this.permissions.canInteract()
     );
@@ -207,7 +207,7 @@ export class PostMenuV2Component implements OnInit {
   }
 
   onNSFWSelected(reasons: Array<{ label; value; selected }>) {
-    const nsfw = reasons.map(reason => reason.value);
+    const nsfw = reasons.map((reason) => reason.value);
     this.service.setNsfw(nsfw);
     this.detectChanges();
   }

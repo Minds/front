@@ -31,9 +31,8 @@ export class SiteMembershipService {
   );
 
   /** Array of memberships */
-  public readonly siteMemberships$: ReplaySubject<
-    SiteMembership[]
-  > = new ReplaySubject();
+  public readonly siteMemberships$: ReplaySubject<SiteMembership[]> =
+    new ReplaySubject();
 
   /** Array of the logged in users membership subscriptions. */
   public readonly siteMembershipSubscriptions$: ReplaySubject<
@@ -41,16 +40,15 @@ export class SiteMembershipService {
   > = new ReplaySubject();
 
   /** Mapped array of membership subscription GUIDs */
-  public siteMembershipSubscriptionGuids$: Observable<
-    string[]
-  > = this.siteMembershipSubscriptions$.pipe(
-    map((subscriptions: SiteMembershipSubscription[]): string[] => {
-      return subscriptions.map(
-        (subscription: SiteMembershipSubscription): string =>
-          subscription.membershipGuid
-      );
-    })
-  );
+  public siteMembershipSubscriptionGuids$: Observable<string[]> =
+    this.siteMembershipSubscriptions$.pipe(
+      map((subscriptions: SiteMembershipSubscription[]): string[] => {
+        return subscriptions.map(
+          (subscription: SiteMembershipSubscription): string =>
+            subscription.membershipGuid
+        );
+      })
+    );
 
   constructor(
     private getSiteMembershipsAndSubscriptionsGQL: GetSiteMembershipsAndSubscriptionsGQL,
@@ -127,7 +125,7 @@ export class SiteMembershipService {
     return this.getSiteMembershipGQL
       .fetch({ membershipGuid: membershipGuid })
       .pipe(
-        map(response => {
+        map((response) => {
           if (!response.data?.siteMembership || response.errors?.length) {
             throw new Error(
               response.errors?.[0]?.message || 'Membership not found'
@@ -135,7 +133,7 @@ export class SiteMembershipService {
           }
           return response.data.siteMembership as SiteMembership;
         }),
-        catchError(error => {
+        catchError((error) => {
           console.error(error);
           this.toaster.error('Failed to load membership details');
           return of(null);

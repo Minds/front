@@ -43,19 +43,16 @@ export class MobileAppBuildImageService {
   );
 
   /** Storing a reference to a splash file pre-upload. */
-  public readonly splashFile$: BehaviorSubject<File> = new BehaviorSubject<
-    File
-  >(null);
+  public readonly splashFile$: BehaviorSubject<File> =
+    new BehaviorSubject<File>(null);
 
   /** Storing a reference to a square logo file pre-upload. */
-  public readonly squareLogoFile$: BehaviorSubject<File> = new BehaviorSubject<
-    File
-  >(null);
+  public readonly squareLogoFile$: BehaviorSubject<File> =
+    new BehaviorSubject<File>(null);
 
   /** Storing a reference to a horizontal logo file pre-upload. */
-  public readonly horizontalLogoFile$: BehaviorSubject<
-    File
-  > = new BehaviorSubject<File>(null);
+  public readonly horizontalLogoFile$: BehaviorSubject<File> =
+    new BehaviorSubject<File>(null);
 
   /** Observable of the icon path. */
   public readonly iconPath$: Observable<string> = this.iconFile$.pipe(
@@ -70,22 +67,20 @@ export class MobileAppBuildImageService {
   );
 
   /** Observable of the square logo path. */
-  public readonly squareLogoPath$: Observable<
-    string
-  > = this.squareLogoFile$.pipe(
-    map((file: File): string =>
-      file ? URL.createObjectURL(file) : SQUARE_LOGO_PATH
-    )
-  );
+  public readonly squareLogoPath$: Observable<string> =
+    this.squareLogoFile$.pipe(
+      map((file: File): string =>
+        file ? URL.createObjectURL(file) : SQUARE_LOGO_PATH
+      )
+    );
 
   /** Observable of the horizontal logo path. */
-  public readonly horizontalLogoPath$: Observable<
-    string
-  > = this.horizontalLogoFile$.pipe(
-    map((file: File): string =>
-      file ? URL.createObjectURL(file) : HORIZONTAL_LOGO_PATH
-    )
-  );
+  public readonly horizontalLogoPath$: Observable<string> =
+    this.horizontalLogoFile$.pipe(
+      map((file: File): string =>
+        file ? URL.createObjectURL(file) : HORIZONTAL_LOGO_PATH
+      )
+    );
 
   /**
    * Upload a file to the config image upload endpoint.

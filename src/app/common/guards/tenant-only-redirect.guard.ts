@@ -15,7 +15,10 @@ import { IsTenantService } from '../services/is-tenant.service';
  */
 @Injectable()
 export class TenantOnlyRedirectGuard implements CanActivate {
-  constructor(private isTenant: IsTenantService, private router: Router) {}
+  constructor(
+    private isTenant: IsTenantService,
+    private router: Router
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,

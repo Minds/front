@@ -142,7 +142,7 @@ export class RegisterForm implements OnInit, OnDestroy {
 
     this.passwordPopoverSubscription = this.form
       .get('password')
-      .valueChanges.subscribe(str => {
+      .valueChanges.subscribe((str) => {
         if (str.length === 0) {
           this.popover.hide();
         } else {
@@ -169,9 +169,8 @@ export class RegisterForm implements OnInit, OnDestroy {
       .get('username')
       .valueChanges.pipe(debounceTime(450))
       .subscribe((username: string) => {
-        const usernameField: AbstractControl<string> = this.form.get(
-          'username'
-        );
+        const usernameField: AbstractControl<string> =
+          this.form.get('username');
         if (!username) {
           usernameField.markAsUntouched();
           return;
@@ -262,7 +261,7 @@ export class RegisterForm implements OnInit, OnDestroy {
         this.session.login(data.user);
         this.done.next(data.user);
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
 
         // refresh CAPTCHA.

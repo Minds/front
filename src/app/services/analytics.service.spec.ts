@@ -26,7 +26,7 @@ describe('AnalyticsService', () => {
 
   beforeEach(() => {
     configService = {
-      get: key => {
+      get: (key) => {
         if (key === 'posthog') {
           return <any>{
             feature_flags: [],

@@ -88,7 +88,7 @@ export class OnboardingV3TagsService {
       this.tags$
         .pipe(
           take(1),
-          tap(tags => {
+          tap((tags) => {
             for (let i = 0; i < tags.length; i++) {
               if (tags[i].value === tagValue) {
                 let requestObservable: Observable<ApiResponse>;

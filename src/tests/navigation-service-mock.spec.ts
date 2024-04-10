@@ -1,4 +1,4 @@
-export let navigationMock = new (function() {
+export let navigationMock = new (function () {
   this.getItems = jasmine.createSpy('getItems').and.callFake(() => {
     return [
       {

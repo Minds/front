@@ -27,15 +27,14 @@ export class GroupFeedService implements OnDestroy {
   /**
    * Filter type state
    */
-  readonly type$: BehaviorSubject<GroupFeedTypeFilter> = new BehaviorSubject<
-    GroupFeedTypeFilter
-  >(DEFAULT_GROUP_FEED_TYPE_FILTER);
+  readonly type$: BehaviorSubject<GroupFeedTypeFilter> =
+    new BehaviorSubject<GroupFeedTypeFilter>(DEFAULT_GROUP_FEED_TYPE_FILTER);
 
   /**
    * Sorting algorithm
    */
   sort$: Observable<GroupFeedAlgorithm> = this.groupService.view$.pipe(
-    map(view => {
+    map((view) => {
       if (isOfTypeGroupFeedAlgorithm(view)) {
         return view;
       } else {
@@ -47,16 +46,14 @@ export class GroupFeedService implements OnDestroy {
   /**
    * How many posts are scheduled
    */
-  readonly scheduledCount$: BehaviorSubject<number> = new BehaviorSubject<
-    number
-  >(0);
+  readonly scheduledCount$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   /**
    * True if the user wants to see scheduled posts instead of the feed
    */
-  readonly viewScheduled$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  readonly viewScheduled$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     public service: FeedsService,
@@ -67,7 +64,7 @@ export class GroupFeedService implements OnDestroy {
     private client: Client
   ) {
     this.subscriptions.push(
-      this.groupService.query$.subscribe(query => {
+      this.groupService.query$.subscribe((query) => {
         // Reset scheduled filter
         if (query) {
           if (this.viewScheduled$.getValue()) {
@@ -75,7 +72,7 @@ export class GroupFeedService implements OnDestroy {
           }
         }
       }),
-      this.type$.subscribe(type => {
+      this.type$.subscribe((type) => {
         // Reset scheduled filter
         if (type !== DEFAULT_GROUP_FEED_TYPE_FILTER) {
           if (this.viewScheduled$.getValue()) {
@@ -83,7 +80,7 @@ export class GroupFeedService implements OnDestroy {
           }
         }
       }),
-      this.viewScheduled$.subscribe(viewScheduled => {
+      this.viewScheduled$.subscribe((viewScheduled) => {
         // Scheduled doesn't go with query or type filter
         if (viewScheduled) {
           if (this.groupService.query$.getValue()) {

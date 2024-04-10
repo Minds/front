@@ -100,7 +100,7 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
             }
             this.notice$.next(notice);
           }),
-          catchError(e => {
+          catchError((e) => {
             console.error(e);
             return EMPTY;
           })

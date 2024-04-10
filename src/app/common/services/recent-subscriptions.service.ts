@@ -42,7 +42,7 @@ export class RecentSubscriptionsService {
       });
     } else {
       this.subscriptions = this.subscriptions.filter(
-        p => p.channelGuid !== channel.guid
+        (p) => p.channelGuid !== channel.guid
       );
     }
 
@@ -54,13 +54,13 @@ export class RecentSubscriptionsService {
    */
   list(): string[] {
     const recentSubscriptions = this.subscriptions.filter(
-      sub => Date.now() - sub.subscribedAt < RECENT_DURATION
+      (sub) => Date.now() - sub.subscribedAt < RECENT_DURATION
     );
     if (this.subscriptions.length !== recentSubscriptions.length) {
       this.subscriptions = recentSubscriptions;
       this._persist();
     }
-    return this.subscriptions.map(sub => sub.channelGuid);
+    return this.subscriptions.map((sub) => sub.channelGuid);
   }
 
   /**

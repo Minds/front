@@ -16,34 +16,32 @@ describe('MutualSubscriptionsComponent', () => {
 
   let mockedApiResponse = new Subject();
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          MutualSubscriptionsComponent,
-          UserAggregatorComponent,
-          MockComponent({
-            selector: 'm-hovercard',
-            inputs: ['publisher', 'offset'],
-          }),
-          MockComponent({
-            selector: 'minds-avatar',
-            inputs: ['object'],
-          }),
-          TruncatePipe,
-        ],
-        providers: [
-          {
-            provide: ApiService,
-            useValue: {
-              get: () => mockedApiResponse,
-            },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        MutualSubscriptionsComponent,
+        UserAggregatorComponent,
+        MockComponent({
+          selector: 'm-hovercard',
+          inputs: ['publisher', 'offset'],
+        }),
+        MockComponent({
+          selector: 'minds-avatar',
+          inputs: ['object'],
+        }),
+        TruncatePipe,
+      ],
+      providers: [
+        {
+          provide: ApiService,
+          useValue: {
+            get: () => mockedApiResponse,
           },
-        ],
-      }).compileComponents();
-    })
-  );
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MutualSubscriptionsComponent);

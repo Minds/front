@@ -276,7 +276,7 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
       }
     );
 
-    this.sockets.subscribe('reply', guid => {
+    this.sockets.subscribe('reply', (guid) => {
       for (let i = 0; i < this.comments.length; i++) {
         if (this.comments[i]._guid == guid) {
           this.comments[i].replies_count++;

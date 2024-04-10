@@ -37,17 +37,16 @@ export enum SiteMembershipPageErrorMessage {
 })
 export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
   /** Whether component can be consider as initialized. */
-  public readonly initialized$: BehaviorSubject<boolean> = this
-    .siteMembershipsService.initialized$;
+  public readonly initialized$: BehaviorSubject<boolean> =
+    this.siteMembershipsService.initialized$;
 
   /** Array of memberships */
-  public readonly memberships$: ReplaySubject<SiteMembership[]> = this
-    .siteMembershipsService.siteMemberships$;
+  public readonly memberships$: ReplaySubject<SiteMembership[]> =
+    this.siteMembershipsService.siteMemberships$;
 
   /** Whether navigation and pre-cursor calls are in progress. */
-  public readonly navigationInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly navigationInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Localised text of the star-card title. */
   public starCardTitleText: string = null;
@@ -59,9 +58,8 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   /** Whether to show 'Memberships' at the top of the page */
-  public showPageTitle$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public showPageTitle$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   constructor(
     private siteMembershipsService: SiteMembershipService,
@@ -76,7 +74,7 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
     this.checkForErrorParams();
 
     this.subscriptions.push(
-      this.route.queryParamMap.subscribe(params => {
+      this.route.queryParamMap.subscribe((params) => {
         if (params.has('membershipRedirect')) {
           this.starCardTitleText = $localize`:@@MEMBERSHIPS__THIS_MEMBERSHIP_IS_NO_LONGER_AVAILABLE:This membership is no longer available`;
         } else {
@@ -88,7 +86,7 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
     );
 
     this.starCardDescriptionText$ = this.route.queryParamMap.pipe(
-      switchMap(params => {
+      switchMap((params) => {
         const membershipRedirect = params.get('membershipRedirect');
 
         if (membershipRedirect) {
@@ -103,9 +101,10 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
           map((memberships: SiteMembership[]): string => {
             if (!memberships?.length) return null;
 
-            const lowestPriceMembership: SiteMembership = this.siteMembershipsService.getLowestPriceMembershipFromArray(
-              memberships
-            );
+            const lowestPriceMembership: SiteMembership =
+              this.siteMembershipsService.getLowestPriceMembershipFromArray(
+                memberships
+              );
             if (!lowestPriceMembership) return null;
 
             const currencySymbol: string =
@@ -113,8 +112,9 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
                 lowestPriceMembership.priceCurrency,
                 'narrow'
               ) ?? '$';
-            return $localize`:@@MEMBERSHIPS__MEMBERSHIPS_START_AT_X_PER_MONTH:Memberships start at ${currencySymbol}${lowestPriceMembership.membershipPriceInCents /
-              100}`;
+            return $localize`:@@MEMBERSHIPS__MEMBERSHIPS_START_AT_X_PER_MONTH:Memberships start at ${currencySymbol}${
+              lowestPriceMembership.membershipPriceInCents / 100
+            }`;
           })
         );
       })
@@ -143,9 +143,8 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       // Bounce to back of event queue to avoid a race condition with lazy loading.
       setTimeout(() => {
-        const errorQueryParam: string = this.route.snapshot.queryParamMap.get(
-          'error'
-        );
+        const errorQueryParam: string =
+          this.route.snapshot.queryParamMap.get('error');
         if (errorQueryParam) {
           const errorMessage: string =
             SiteMembershipPageErrorMessage[errorQueryParam];

@@ -28,12 +28,12 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
   private routeSubscription: Subscription;
 
   /** @type { BehaviorSubject<SupermindConsoleListType> } listType$ - list type from service. */
-  public readonly listType$: BehaviorSubject<SupermindConsoleListType> = this
-    .service.listType$;
+  public readonly listType$: BehaviorSubject<SupermindConsoleListType> =
+    this.service.listType$;
 
   /** @type { Observable<boolean> } isSingleSupermindPage$ - Whether this is a single Supermind page. */
-  public readonly isSingleSupermindPage$: Observable<boolean> = this.service
-    .isSingleSupermindPage$;
+  public readonly isSingleSupermindPage$: Observable<boolean> =
+    this.service.isSingleSupermindPage$;
 
   constructor(
     private router: Router,
@@ -45,7 +45,7 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
     // listen to route changes and handle them.
     this.routeSubscription = this.router.events
       .pipe(
-        filter(e => e instanceof NavigationEnd),
+        filter((e) => e instanceof NavigationEnd),
         // switchMap into the first child.
         switchMap((_: unknown) => this.route.firstChild.url)
       )

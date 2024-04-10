@@ -51,7 +51,7 @@ export class AnalyticsService implements OnDestroy {
   ) {
     this.initPostHog();
 
-    this.router.events.subscribe(navigationState => {
+    this.router.events.subscribe((navigationState) => {
       if (navigationState instanceof NavigationEnd) {
         try {
           this.onRouteChanged(navigationState.urlAfterRedirects);
@@ -64,7 +64,7 @@ export class AnalyticsService implements OnDestroy {
     /**
      * On login event, let posthog know our new identity
      */
-    this.sessionService.loggedinEmitter.subscribe(isLoggedIn => {
+    this.sessionService.loggedinEmitter.subscribe((isLoggedIn) => {
       if (isLoggedIn) {
         this.setUser(this.sessionService.getLoggedInUser());
         this.hasBeenLoggedIn = true;
@@ -282,8 +282,8 @@ export class AnalyticsService implements OnDestroy {
     const $set = properties.$set || {};
 
     // Group together similar pages by the ng route
-    const ng_tokenized_path = this.activatedRoute.snapshot.firstChild
-      ?.routeConfig?.path;
+    const ng_tokenized_path =
+      this.activatedRoute.snapshot.firstChild?.routeConfig?.path;
     if (ng_tokenized_path) {
       properties.ng_tokenized_path = ng_tokenized_path;
     }

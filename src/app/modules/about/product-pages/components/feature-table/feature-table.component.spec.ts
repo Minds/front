@@ -117,21 +117,19 @@ describe('ProductPageFeatureShowcaseComponent', () => {
     },
   ];
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ProductPageFeatureTableComponent],
-        providers: [
-          {
-            provide: ProductPagePricingService,
-            useValue: MockService(ProductPagePricingService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ProductPageFeatureTableComponent],
+      providers: [
+        {
+          provide: ProductPagePricingService,
+          useValue: MockService(ProductPagePricingService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ProductPageFeatureTableComponent);
     comp = fixture.componentInstance;
 
@@ -178,9 +176,11 @@ describe('ProductPageFeatureShowcaseComponent', () => {
       new BehaviorSubject<number>(19)
     );
     expect(
-      (comp.getMonthlyPrice(Enum_Productplan_Tier.Networks) as BehaviorSubject<
-        number
-      >).getValue()
+      (
+        comp.getMonthlyPrice(
+          Enum_Productplan_Tier.Networks
+        ) as BehaviorSubject<number>
+      ).getValue()
     ).toBe(19);
   });
 

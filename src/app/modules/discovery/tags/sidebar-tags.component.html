@@ -13,7 +13,7 @@
           *ngIf="(source$ | async) === 'activityRelated'; else trendingTags"
         >
           <li
-            *ngFor="let tag of activityRelated$ | async | slice: 0:limit"
+            *ngFor="let tag of activityRelated$ | async | slice: 0 : limit"
             class="m-discoveryTrends__trend"
           >
             <ng-container
@@ -28,7 +28,7 @@
         <ng-template #trendingTags>
           <ng-container *ngIf="hasTags$ | async; else createATag">
             <li
-              *ngFor="let tag of trending$ | async | slice: 0:limit"
+              *ngFor="let tag of trending$ | async | slice: 0 : limit"
               class="m-discoveryTrends__trend"
             >
               <ng-container

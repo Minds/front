@@ -52,43 +52,41 @@ xdescribe('Blog view component', () => {
     thumbnail: '/thumbnail',
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [BlogView, SafePipe], // declare the test component
-        imports: [NgCommonModule, RouterTestingModule],
-        providers: [
-          {
-            provide: CommentsActivityService,
-            useValue: commentsActivityServiceMock,
-          },
-          ActivityService,
-          { provide: AnalyticsService, useValue: analyticsServiceMock },
-          { provide: AttachmentService, useValue: attachmentServiceMock },
-          { provide: Client, useValue: clientMock },
-          { provide: ContextService, useValue: contextServiceMock },
-          { provide: ScrollService, useValue: scrollServiceMock },
-          { provide: Session, useValue: sessionMock },
-          { provide: MetaService, useValue: metaServiceMock },
-          { provide: ModalService, useValue: modalServiceMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          {
-            provide: ClientMetaService,
-            useValue: MockService(ClientMetaService),
-          },
-        ],
-        schemas: [NO_ERRORS_SCHEMA],
-      })
-        .overrideProvider(CommentsActivityService, {
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [BlogView, SafePipe], // declare the test component
+      imports: [NgCommonModule, RouterTestingModule],
+      providers: [
+        {
+          provide: CommentsActivityService,
           useValue: commentsActivityServiceMock,
-        })
-        .compileComponents(); // compile template and css
+        },
+        ActivityService,
+        { provide: AnalyticsService, useValue: analyticsServiceMock },
+        { provide: AttachmentService, useValue: attachmentServiceMock },
+        { provide: Client, useValue: clientMock },
+        { provide: ContextService, useValue: contextServiceMock },
+        { provide: ScrollService, useValue: scrollServiceMock },
+        { provide: Session, useValue: sessionMock },
+        { provide: MetaService, useValue: metaServiceMock },
+        { provide: ModalService, useValue: modalServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: ClientMetaService,
+          useValue: MockService(ClientMetaService),
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
-  );
+      .overrideProvider(CommentsActivityService, {
+        useValue: commentsActivityServiceMock,
+      })
+      .compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
   beforeEach(() => {

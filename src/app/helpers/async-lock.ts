@@ -43,7 +43,7 @@ export default class AsyncLock {
       return Promise.resolve(null);
     }
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let subscription: Subscription;
 
       subscription = this.subject$.subscribe(() => {

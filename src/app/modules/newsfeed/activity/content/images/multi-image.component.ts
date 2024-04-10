@@ -18,9 +18,9 @@ import getMetaAutoCaption from '../../../../../helpers/meta-auto-caption';
 export class ActivityMultiImageComponent {
   @Output() onClick: EventEmitter<any> = new EventEmitter();
 
-  images$ = this.service.entity$.pipe(map(entity => entity.custom_data));
+  images$ = this.service.entity$.pipe(map((entity) => entity.custom_data));
 
-  count$ = this.images$.pipe(map(images => images.length));
+  count$ = this.images$.pipe(map((images) => images.length));
 
   entity$ = this.service.entity$.pipe(take(1));
 

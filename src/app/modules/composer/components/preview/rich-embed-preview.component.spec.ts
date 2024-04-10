@@ -9,23 +9,21 @@ describe('Composer Rich Embed Preview', () => {
 
   let mediaProxyMock;
 
-  beforeEach(
-    waitForAsync(() => {
-      mediaProxyMock = MockService(MediaProxyService);
+  beforeEach(waitForAsync(() => {
+    mediaProxyMock = MockService(MediaProxyService);
 
-      TestBed.configureTestingModule({
-        declarations: [RichEmbedPreviewComponent],
-        providers: [
-          {
-            provide: MediaProxyService,
-            useValue: mediaProxyMock,
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+    TestBed.configureTestingModule({
+      declarations: [RichEmbedPreviewComponent],
+      providers: [
+        {
+          provide: MediaProxyService,
+          useValue: mediaProxyMock,
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(RichEmbedPreviewComponent);
     comp = fixture.componentInstance;

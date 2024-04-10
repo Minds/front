@@ -35,7 +35,10 @@ export class ChannelEditBioComponent {
    * @param service
    * @param configs
    */
-  constructor(public service: ChannelEditService, configs: ConfigsService) {
+  constructor(
+    public service: ChannelEditService,
+    configs: ConfigsService
+  ) {
     // CDN URL
     this.cdnUrl = configs.get('cdn_url');
 

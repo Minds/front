@@ -32,22 +32,20 @@ describe('SupermindConsoleStateLabelComponent', () => {
     entity: { guid: '123' },
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [SupermindConsoleStateLabelComponent],
-        providers: [
-          {
-            provide: SupermindConsoleExpirationService,
-            useValue: MockService(SupermindConsoleExpirationService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [SupermindConsoleStateLabelComponent],
+      providers: [
+        {
+          provide: SupermindConsoleExpirationService,
+          useValue: MockService(SupermindConsoleExpirationService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(SupermindConsoleStateLabelComponent);
     comp = fixture.componentInstance;
     comp.supermind = mockSupermind;

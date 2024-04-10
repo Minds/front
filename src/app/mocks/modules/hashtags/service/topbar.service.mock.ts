@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 
-export let topbarHashtagsServiceMock = new (function() {
+export let topbarHashtagsServiceMock = new (function () {
   this.selectionChange = new EventEmitter();
   this.toggleSelection = jasmine.createSpy('toggleSelection').and.stub();
 

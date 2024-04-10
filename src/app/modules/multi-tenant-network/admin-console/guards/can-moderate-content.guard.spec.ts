@@ -32,9 +32,9 @@ describe('CanModerateContentGuard', () => {
     });
 
     guard = TestBed.inject(CanModerateContentGuard);
-    permissions = TestBed.inject(PermissionsService) as jasmine.SpyObj<
+    permissions = TestBed.inject(
       PermissionsService
-    >;
+    ) as jasmine.SpyObj<PermissionsService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     routeMock = {} as ActivatedRouteSnapshot;
     stateMock = {} as RouterStateSnapshot;

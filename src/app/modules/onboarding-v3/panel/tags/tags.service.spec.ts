@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { OnboardingV3TagsService } from './tags.service';
 
-let apiMock = new (function() {
+let apiMock = new (function () {
   this.get = jasmine.createSpy('get');
 })();
 

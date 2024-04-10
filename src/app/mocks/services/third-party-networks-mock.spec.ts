@@ -1,4 +1,4 @@
-export let thirdPartyNetworksServiceMock = new (function() {
+export let thirdPartyNetworksServiceMock = new (function () {
   this.inProgress = false;
   this.connected = false;
   this.integration = true;

@@ -7,12 +7,8 @@ import { FriendlyTimePipe } from '../../pipes/friendlytime.pipe';
 import { ChangeDetectorRef } from '@angular/core';
 
 let mockTenantConfig = {
-  trial_end: moment()
-    .add(14, 'day')
-    .unix(),
-  network_deletion_timestamp: moment()
-    .add(44, 'day')
-    .unix(),
+  trial_end: moment().add(14, 'day').unix(),
+  network_deletion_timestamp: moment().add(44, 'day').unix(),
 };
 
 describe('TopbarNetworkTrialBannerComponent', () => {
@@ -151,9 +147,7 @@ describe('TopbarNetworkTrialBannerComponent', () => {
 
     it('should render correct text for an expired trial with 20 seconds left', () => {
       (comp as any).isExpired = true;
-      (comp as any).trialDeletionTimestamp = moment()
-        .add(5, 'seconds')
-        .unix();
+      (comp as any).trialDeletionTimestamp = moment().add(5, 'seconds').unix();
       (comp as any).isPastDeletionThreshold = false;
 
       fixture.detectChanges();
@@ -263,9 +257,7 @@ describe('TopbarNetworkTrialBannerComponent', () => {
 
     it('should render correct text for an active trial with 20 seconds left', () => {
       (comp as any).isExpired = false;
-      (comp as any).trialEndTimestamp = moment()
-        .add(5, 'seconds')
-        .unix();
+      (comp as any).trialEndTimestamp = moment().add(5, 'seconds').unix();
 
       fixture.detectChanges();
       (comp as any).cd.markForCheck();

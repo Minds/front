@@ -18,9 +18,8 @@ import { ChatRoomEdge } from '../../../../../../../graphql/generated.engine';
 })
 export class ChatRoomNotificationSettingsComponent implements OnInit {
   /** Whether notifications are muted. */
-  protected readonly notificationsMuted$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected readonly notificationsMuted$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Subscription to chat room. */
   private chatRoomSubscription: Subscription;

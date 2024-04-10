@@ -142,7 +142,7 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
         this.userAvatarService.init();
         this.done.next(data.user);
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
 
         if (!e) {

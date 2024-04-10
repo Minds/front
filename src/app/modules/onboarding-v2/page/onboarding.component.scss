@@ -175,7 +175,9 @@ m-onboarding {
           }
         }
 
-        &:not(.m-onboarding__noticeTitle):not(.m-onboardingProgressbar__stepName) {
+        &:not(.m-onboarding__noticeTitle):not(
+            .m-onboardingProgressbar__stepName
+          ) {
           @media screen and (max-width: 740px) {
             @include m-theme() {
               color: themed($m-textColor--secondary);

@@ -12,20 +12,19 @@ import { ToasterService } from './toaster.service';
 @Injectable({ providedIn: 'root' })
 export class EmailResendService {
   // is in progress.
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // polls retryInSeconds for value updates.
   public readonly retryTimer$: Observable<number> = interval(1000).pipe(
     // map to seconds left till member can retry sending an email.
     // if less than 0 seconds, map to 0 seconds.
-    map(i => (this.retryInSeconds > 0 ? this.retryInSeconds : 0)),
+    map((i) => (this.retryInSeconds > 0 ? this.retryInSeconds : 0)),
     // do not emit further if the value is NOT different from the last value.
     // stops timer +-0-0-0-0-> emissions from triggering inProgress changes.
     distinctUntilChanged(),
     // set in progress to false.
-    tap(i => {
+    tap((i) => {
       this.inProgress$.next(false);
     })
   );

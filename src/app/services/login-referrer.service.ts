@@ -22,7 +22,10 @@ export class LoginReferrerService {
     return new LoginReferrerService(session, router);
   }
 
-  constructor(private session: Session, private router: Router) {}
+  constructor(
+    private session: Session,
+    private router: Router
+  ) {}
 
   listen(): this {
     this._routerListener = this.router.events.subscribe((event: Event) => {
@@ -31,7 +34,7 @@ export class LoginReferrerService {
       }
     });
 
-    this.session.isLoggedIn(loggedIn => {
+    this.session.isLoggedIn((loggedIn) => {
       if (!loggedIn) {
         this.unregister();
       }
@@ -74,7 +77,7 @@ export class LoginReferrerService {
   }
 
   avoid(urls: string[]): this {
-    this.exceptions = urls.map(url => this._trim(url));
+    this.exceptions = urls.map((url) => this._trim(url));
 
     return this;
   }

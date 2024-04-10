@@ -8,14 +8,12 @@ describe('InlineFeedHeaderComponent', () => {
   let comp: InlineFeedHeaderComponent;
   let fixture: ComponentFixture<InlineFeedHeaderComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule.withRoutes([])],
-        declarations: [InlineFeedHeaderComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule.withRoutes([])],
+      declarations: [InlineFeedHeaderComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(InlineFeedHeaderComponent);

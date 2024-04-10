@@ -112,7 +112,7 @@ export class EntitiesService {
    * @return { Observable }
    */
   singleCacheFirst(urn: string): Observable<EntityObservable> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       if (urn.indexOf('urn:') < 0) {
         // not a urn, so treat as a guid
         urn = `urn:activity:${urn}`; // and assume activity

@@ -223,7 +223,7 @@ export class MindsRichEmbed implements OnDestroy {
    * @returns { void }
    */
   provisionHtml(): void {
-    this.inlineEmbed.htmlProvisioner?.().then(html => {
+    this.inlineEmbed.htmlProvisioner?.().then((html) => {
       this.inlineEmbed = { ...this.inlineEmbed, html: html };
     });
     // @todo: catch any error here and forcefully window.open to destination
@@ -269,7 +269,8 @@ export class MindsRichEmbed implements OnDestroy {
     if (url.indexOf(siteUrl) === 0) this.mediaSource = 'minds';
 
     // YouTube
-    let youtube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/i;
+    let youtube =
+      /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/i;
 
     if ((matches = youtube.exec(url)) !== null) {
       if (matches[1]) {
@@ -316,7 +317,8 @@ export class MindsRichEmbed implements OnDestroy {
     }
 
     // SoundCloud
-    let soundcloud = /^(?:https?:\/\/)?(?:www\.)?soundcloud\.com\/([a-z0-9\-\/]+)/i;
+    let soundcloud =
+      /^(?:https?:\/\/)?(?:www\.)?soundcloud\.com\/([a-z0-9\-\/]+)/i;
 
     if ((matches = soundcloud.exec(url)) !== null) {
       if (matches[1]) {
@@ -328,7 +330,7 @@ export class MindsRichEmbed implements OnDestroy {
           htmlProvisioner: () => {
             return this.service
               .soundcloud(url, this.maxheight)
-              .then(response => {
+              .then((response) => {
                 if (!response.id) {
                   return 'Error on soundcloud embed';
                 }

@@ -15,20 +15,18 @@ xdescribe('MultiFactorAuthTOTPComponent', () => {
   let comp: MultiFactorAuthTOTPComponent;
   let fixture: ComponentFixture<MultiFactorAuthTOTPComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule],
-        declarations: [MultiFactorAuthTOTPComponent, ButtonComponentMock],
-        providers: [
-          {
-            provide: MultiFactorAuthService,
-            useValue: MockService(MultiFactorAuthService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [MultiFactorAuthTOTPComponent, ButtonComponentMock],
+      providers: [
+        {
+          provide: MultiFactorAuthService,
+          useValue: MockService(MultiFactorAuthService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MultiFactorAuthTOTPComponent);
@@ -51,7 +49,7 @@ xdescribe('MultiFactorAuthTOTPComponent', () => {
     );
     comp.onRecoveryCodeClick();
 
-    const sub = (comp as any).service.activePanel$.subscribe(val => {
+    const sub = (comp as any).service.activePanel$.subscribe((val) => {
       expect(val).toBe('totp-recovery');
     });
   });

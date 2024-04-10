@@ -28,19 +28,20 @@ export class AddFeaturedEntityModalComponent {
   public formGroup: FormGroup;
 
   /** Enum of featured entity types for modal */
-  public readonly AddFeaturedEntityModalEntityType: typeof AddFeaturedEntityModalEntityType = AddFeaturedEntityModalEntityType;
+  public readonly AddFeaturedEntityModalEntityType: typeof AddFeaturedEntityModalEntityType =
+    AddFeaturedEntityModalEntityType;
 
   /** Enum of auto-completable entities for use in modal */
-  public readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum = AutoCompleteEntityTypeEnum;
+  public readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum =
+    AutoCompleteEntityTypeEnum;
 
   /** Entity type to display suggestions for. */
   public entityType: AddFeaturedEntityModalEntityType =
     AddFeaturedEntityModalEntityType.User;
 
   /** Whether confirmation is in progress. */
-  public readonly confirmInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly confirmInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     private toaster: ToasterService,

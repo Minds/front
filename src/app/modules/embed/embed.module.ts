@@ -59,7 +59,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
     },
     {
       provide: APP_INITIALIZER,
-      useFactory: configs => () => configs.loadFromRemote(),
+      useFactory: (configs) => () => configs.loadFromRemote(),
       deps: [ConfigsService],
       multi: true,
     },

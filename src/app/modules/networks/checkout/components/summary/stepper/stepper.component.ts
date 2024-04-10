@@ -14,11 +14,12 @@ import { CheckoutPageKeyEnum } from '../../../../../../../graphql/generated.engi
 })
 export class NetworksCheckoutSummaryStepperComponent {
   /** Enum for use in template. */
-  public readonly CheckoutPageKeyEnum: typeof CheckoutPageKeyEnum = CheckoutPageKeyEnum;
+  public readonly CheckoutPageKeyEnum: typeof CheckoutPageKeyEnum =
+    CheckoutPageKeyEnum;
 
   /** Currently active page / step. */
-  public activePage$: Observable<CheckoutPageKeyEnum> = this.checkoutService
-    .activePage$;
+  public activePage$: Observable<CheckoutPageKeyEnum> =
+    this.checkoutService.activePage$;
 
   constructor(private checkoutService: NetworksCheckoutService) {}
 }

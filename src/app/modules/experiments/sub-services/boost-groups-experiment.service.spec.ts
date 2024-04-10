@@ -1,6 +1,6 @@
 import { BoostGroupExperimentService } from './boost-groups-experiment.service';
 
-export let experimentsServiceMock = new (function() {
+export let experimentsServiceMock = new (function () {
   this.hasVariation = jasmine.createSpy('hasVariation');
 })();
 

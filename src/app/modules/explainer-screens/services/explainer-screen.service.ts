@@ -38,26 +38,23 @@ export class ExplainerScreensService extends AbstractSubscriberComponent {
   /**
    * Get explainer screens from server.
    */
-  public getExplainerScreens$: Observable<
-    ExplainerScreenWeb[]
-  > = this.getExplainerScreensGQL.fetch().pipe(
-    map(
-      (
-        result: ApolloQueryResult<GetExplainerScreensQuery>
-      ): ExplainerScreenWeb[] => {
-        return result.data.explainerScreensWeb.data.map(
-          explainerScreen => explainerScreen.attributes
-        ) as ExplainerScreenWeb[];
-      }
-    ),
-    shareReplay(),
-    catchError(
-      (e: unknown): Observable<ExplainerScreenWeb[]> => {
+  public getExplainerScreens$: Observable<ExplainerScreenWeb[]> =
+    this.getExplainerScreensGQL.fetch().pipe(
+      map(
+        (
+          result: ApolloQueryResult<GetExplainerScreensQuery>
+        ): ExplainerScreenWeb[] => {
+          return result.data.explainerScreensWeb.data.map(
+            (explainerScreen) => explainerScreen.attributes
+          ) as ExplainerScreenWeb[];
+        }
+      ),
+      shareReplay(),
+      catchError((e: unknown): Observable<ExplainerScreenWeb[]> => {
         console.error(e);
         return of([]);
-      }
-    )
-  );
+      })
+    );
 
   /**
    * Trigger routes from server.
@@ -116,7 +113,7 @@ export class ExplainerScreensService extends AbstractSubscriberComponent {
       ]).subscribe(
         ([explainerScreens, dismissals]: [
           ExplainerScreenWeb[],
-          Dismissal[]
+          Dismissal[],
         ]): void => {
           // get matching explainer screen for passed route
           const explainerScreen: ExplainerScreenWeb = explainerScreens.filter(
@@ -162,7 +159,7 @@ export class ExplainerScreensService extends AbstractSubscriberComponent {
       ]).subscribe(
         ([explainerScreens, dismissals]: [
           ExplainerScreenWeb[],
-          Dismissal[]
+          Dismissal[],
         ]): void => {
           // get matching explainer screen for passed key
           const explainerScreen: ExplainerScreenWeb = explainerScreens.filter(

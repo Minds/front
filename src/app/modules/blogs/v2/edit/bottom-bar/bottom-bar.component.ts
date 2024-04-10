@@ -21,9 +21,8 @@ export class BlogEditorBottomBarComponent {
   /**
    * Currently active drawer tab.
    */
-  public readonly activeTab$: BehaviorSubject<
-    BlogsBottomBarContainerType
-  > = new BehaviorSubject<BlogsBottomBarContainerType>('');
+  public readonly activeTab$: BehaviorSubject<BlogsBottomBarContainerType> =
+    new BehaviorSubject<BlogsBottomBarContainerType>('');
 
   /**
    * Tags subscription

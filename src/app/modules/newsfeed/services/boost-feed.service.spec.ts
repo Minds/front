@@ -17,7 +17,7 @@ describe('BoostFeedService', () => {
         BoostFeedService,
         {
           provide: FeedsService,
-          useValue: new (function() {
+          useValue: new (function () {
             this.setEndpoint = jasmine
               .createSpy('setEndpoint')
               .and.returnValue(this);

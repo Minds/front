@@ -5,10 +5,7 @@ function dths(number: number, padding: number = 0): string {
     number = 0xffffffff + number + 1;
   }
 
-  return number
-    .toString(16)
-    .toLowerCase()
-    .padStart(padding, '0');
+  return number.toString(16).toLowerCase().padStart(padding, '0');
 }
 
 /**

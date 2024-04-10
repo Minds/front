@@ -75,7 +75,7 @@
 
 <ng-template #priceStringTemplate let-timePeriod="timePeriod" let-price="price">
   <span class="m-planCard__price">{{
-    price / 100 | currency: 'USD':'symbol':'1.0-2'
+    price / 100 | currency: 'USD' : 'symbol' : '1.0-2'
   }}</span>
   <span [ngSwitch]="timePeriod" class="m-planCard__priceTimePeriod"
     >&nbsp;<ng-container

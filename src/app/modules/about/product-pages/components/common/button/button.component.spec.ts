@@ -35,37 +35,35 @@ describe('ProductPageButtonComponent', () => {
   const defaultSelectedTimePeriod: ProductPageUpgradeTimePeriod =
     ProductPageUpgradeTimePeriod.Annually;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ProductPageButtonComponent],
-        providers: [
-          { provide: Session, useValue: MockService(Session) },
-          { provide: Router, useValue: MockService(Router) },
-          {
-            provide: ProductPagePricingService,
-            useValue: MockService(ProductPagePricingService, {
-              has: ['selectedTimePeriod$'],
-              props: {
-                selectedTimePeriod$: {
-                  get: () =>
-                    new BehaviorSubject<ProductPageUpgradeTimePeriod>(
-                      defaultSelectedTimePeriod
-                    ),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ProductPageButtonComponent],
+      providers: [
+        { provide: Session, useValue: MockService(Session) },
+        { provide: Router, useValue: MockService(Router) },
+        {
+          provide: ProductPagePricingService,
+          useValue: MockService(ProductPagePricingService, {
+            has: ['selectedTimePeriod$'],
+            props: {
+              selectedTimePeriod$: {
+                get: () =>
+                  new BehaviorSubject<ProductPageUpgradeTimePeriod>(
+                    defaultSelectedTimePeriod
+                  ),
               },
-            }),
-          },
-          {
-            provide: StrapiActionResolverService,
-            useValue: MockService(StrapiActionResolverService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: StrapiActionResolverService,
+          useValue: MockService(StrapiActionResolverService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ProductPageButtonComponent);
     comp = fixture.componentInstance;
 

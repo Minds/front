@@ -8,7 +8,7 @@
     <div class="m-channelAboutBrief__bio" m-read-more [maxHeightAllowed]="200">
       <div
         class="m-channelAboutBriefBio__content"
-        [innerHtml]="channel.briefdescription | slice: 0:5000 | tags"
+        [innerHtml]="channel.briefdescription | slice: 0 : 5000 | tags"
         data-ref="data-minds-channel-bio"
       ></div>
 

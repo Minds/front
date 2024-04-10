@@ -22,33 +22,31 @@ describe('BoostModalV2GoalSelectorComponent', () => {
       By.css('.m-boostGoalSelector__radioButtonRow--selected label')
     );
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule, FormsModule],
-        declarations: [BoostModalV2GoalSelectorComponent],
-        providers: [
-          {
-            provide: BoostModalV2Service,
-            useValue: MockService(BoostModalV2Service, {
-              has: ['goal$'],
-              props: {
-                goal$: {
-                  get: () => new BehaviorSubject<BoostGoal>(BoostGoal.VIEWS),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, FormsModule],
+      declarations: [BoostModalV2GoalSelectorComponent],
+      providers: [
+        {
+          provide: BoostModalV2Service,
+          useValue: MockService(BoostModalV2Service, {
+            has: ['goal$'],
+            props: {
+              goal$: {
+                get: () => new BehaviorSubject<BoostGoal>(BoostGoal.VIEWS),
               },
-            }),
-          },
-          {
-            provide: BoostGoalsExperimentService,
-            useValue: MockService(BoostGoalsExperimentService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: BoostGoalsExperimentService,
+          useValue: MockService(BoostGoalsExperimentService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostModalV2GoalSelectorComponent);
     comp = fixture.componentInstance;
 

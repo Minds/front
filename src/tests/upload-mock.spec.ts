@@ -2,10 +2,10 @@
  * Created by Nicolas on 22/09/2017.
  */
 /* tslint:disable */
-export let uploadMock = new (function() {
+export let uploadMock = new (function () {
   this.response = null;
 
-  let callFake = url => {
+  let callFake = (url) => {
     return new Promise((resolve, reject) => {
       let res = this.response;
       if (this.response && this.response[url]) {

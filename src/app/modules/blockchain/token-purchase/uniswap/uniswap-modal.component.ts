@@ -24,8 +24,8 @@ export class UniswapModalComponent {
   setModalData({ action }) {
     this.action = action;
 
-    const mindsTokenAddress = this.configService.get('blockchain').token
-      .address;
+    const mindsTokenAddress =
+      this.configService.get('blockchain').token.address;
 
     const useV2 = true;
 

@@ -3,6 +3,6 @@ import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.
 
 export const CanaryModuleLazyRoutes: Route = {
   path: 'canary',
-  loadChildren: () => import('./canary.module').then(m => m.CanaryModule),
+  loadChildren: () => import('./canary.module').then((m) => m.CanaryModule),
   canActivate: [MindsOnlyRedirectGuard],
 };

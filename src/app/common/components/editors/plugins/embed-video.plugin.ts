@@ -13,9 +13,13 @@ export class EmbedVideo {
   $place;
   $element;
   private updated: boolean = false;
-  private readonly urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+  private readonly urlRegex =
+    /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
-  constructor(options: Options, protected toasterService: ToasterService) {
+  constructor(
+    options: Options,
+    protected toasterService: ToasterService
+  ) {
     this.options = { ...options };
     this.button = document.createElement('button');
     this.button.className = 'medium-editor-action';
@@ -110,10 +114,7 @@ export class EmbedVideo {
   }
 
   public handleClick(event: any) {
-    const src = this.window
-      .getSelection()
-      .toString()
-      .trim();
+    const src = this.window.getSelection().toString().trim();
     if (this.urlRegex.exec(src)) {
       this.processLink(src);
       this.base.checkContentChanged();
@@ -242,10 +243,10 @@ export class EmbedVideo {
         `http://soundcloud.com/oembed?format=js&url=${url}&callback=getSoundcloudEmbed`,
         {
           callbackName: 'getSoundcloudEmbed',
-          onSuccess: function(json) {
+          onSuccess: function (json) {
             resolve(json.html);
           },
-          onTimeout: function() {
+          onTimeout: function () {
             reject();
           },
           timeout: 10,
@@ -258,17 +259,17 @@ export class EmbedVideo {
 class JSONP {
   public static send(src, options) {
     var callback_name = options.callbackName || 'callback',
-      on_success = options.onSuccess || function() {},
-      on_timeout = options.onTimeout || function() {},
+      on_success = options.onSuccess || function () {},
+      on_timeout = options.onTimeout || function () {},
       timeout = options.timeout || 10; // sec
 
-    var timeout_trigger = window.setTimeout(function() {
-      (window as any)[callback_name] = function() {};
+    var timeout_trigger = window.setTimeout(function () {
+      (window as any)[callback_name] = function () {};
       on_timeout();
       document.getElementsByTagName('head')[0].removeChild(script);
     }, timeout * 1000);
 
-    (window as any)[callback_name] = function(data) {
+    (window as any)[callback_name] = function (data) {
       window.clearTimeout(timeout_trigger);
       on_success(data);
       document.getElementsByTagName('head')[0].removeChild(script);

@@ -240,10 +240,11 @@ export class StrapiActionResolverService implements OnDestroy {
     // on register, unsubscribe from any existing subscription to avoid duplication.
     // listen for onboarding handler and call the action again on completion.
     this.onboardingCompletedSubscription?.unsubscribe();
-    this.onboardingCompletedSubscription = this.onboardingV5Service.onboardingCompleted$
-      .pipe(filter(Boolean), take(1))
-      .subscribe((completed: boolean): void => {
-        this.resolve(action, extraData);
-      });
+    this.onboardingCompletedSubscription =
+      this.onboardingV5Service.onboardingCompleted$
+        .pipe(filter(Boolean), take(1))
+        .subscribe((completed: boolean): void => {
+          this.resolve(action, extraData);
+        });
   }
 }

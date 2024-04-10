@@ -12,62 +12,60 @@ describe('BoostConsoleFilterBarComponent', () => {
   let comp: BoostConsoleFilterBarComponent;
   let fixture: ComponentFixture<BoostConsoleFilterBarComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          BoostConsoleFilterBarComponent,
-          MockComponent({
-            selector: 'm-dropdownMenu',
-            inputs: ['menu'],
-          }),
-          MockComponent({
-            selector: 'm-tooltip',
-          }),
-          MockComponent({
-            selector: 'm-feedNotice--boostLatestPost',
-            inputs: ['isInFeed', 'targetBoostLocation', 'dismissible'],
-          }),
-        ],
-        providers: [
-          {
-            provide: BoostConsoleService,
-            useValue: MockService(BoostConsoleService, {
-              has: ['adminContext$'],
-              props: {
-                adminContext$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        BoostConsoleFilterBarComponent,
+        MockComponent({
+          selector: 'm-dropdownMenu',
+          inputs: ['menu'],
+        }),
+        MockComponent({
+          selector: 'm-tooltip',
+        }),
+        MockComponent({
+          selector: 'm-feedNotice--boostLatestPost',
+          inputs: ['isInFeed', 'targetBoostLocation', 'dismissible'],
+        }),
+      ],
+      providers: [
+        {
+          provide: BoostConsoleService,
+          useValue: MockService(BoostConsoleService, {
+            has: ['adminContext$'],
+            props: {
+              adminContext$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
-            }),
-          },
-          {
-            provide: BoostConsoleAdminStatsService,
-            useValue: MockService(BoostConsoleAdminStatsService, {
-              has: ['pendingSafeCount$', 'pendingControversialCount$'],
-              props: {
-                pendingSafeCount$: {
-                  get: () => new BehaviorSubject<number>(0),
-                },
-                pendingControversialCount$: {
-                  get: () => new BehaviorSubject<number>(0),
-                },
+            },
+          }),
+        },
+        {
+          provide: BoostConsoleAdminStatsService,
+          useValue: MockService(BoostConsoleAdminStatsService, {
+            has: ['pendingSafeCount$', 'pendingControversialCount$'],
+            props: {
+              pendingSafeCount$: {
+                get: () => new BehaviorSubject<number>(0),
               },
-            }),
-          },
-          {
-            provide: BoostGroupExperimentService,
-            useValue: MockService(BoostGroupExperimentService),
-          },
-          { provide: Router, useValue: MockService(Router) },
-          { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
-        ],
-      }).compileComponents();
-    })
-  );
+              pendingControversialCount$: {
+                get: () => new BehaviorSubject<number>(0),
+              },
+            },
+          }),
+        },
+        {
+          provide: BoostGroupExperimentService,
+          useValue: MockService(BoostGroupExperimentService),
+        },
+        { provide: Router, useValue: MockService(Router) },
+        { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostConsoleFilterBarComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

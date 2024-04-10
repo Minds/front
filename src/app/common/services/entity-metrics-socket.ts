@@ -15,17 +15,12 @@ type MetricsChangedEvent = {
 @Injectable()
 export class EntityMetricsSocketService implements OnDestroy {
   /** @type { BehaviorSubject<number> } - used within this instance to set new values for thumbs up count */
-  private readonly thumbsUpCountSubject$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(null);
+  private readonly thumbsUpCountSubject$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(null);
 
   /** @type { Observable<number> } - observable of thumbs up count changes - distinct until changed, and debounced */
-  public readonly thumbsUpCount$: Observable<
-    number
-  > = this.thumbsUpCountSubject$.pipe(
-    distinctUntilChanged(),
-    debounceTime(500)
-  );
+  public readonly thumbsUpCount$: Observable<number> =
+    this.thumbsUpCountSubject$.pipe(distinctUntilChanged(), debounceTime(500));
 
   /** @type { boolean } isJoined - true if room is joined. */
   private isJoined = false;

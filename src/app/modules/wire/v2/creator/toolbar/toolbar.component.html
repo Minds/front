@@ -1,9 +1,10 @@
 <ng-template #typeLabel>
   <ng-container [ngSwitch]="service.type$ | async">
-    <ng-container *ngSwitchCase="'tokens'" i18n="@@WIRE_CREATOR_TOOLBAR__OTHER"
-      >{ service.amount$ | async, plural, =1 {token} other {tokens}
-      }</ng-container
-    >
+    <ng-container
+      *ngSwitchCase="'tokens'"
+      i18n="@@WIRE_CREATOR_TOOLBAR__OTHER"
+      >{service.amount$ | async, plural, =1 {token} other {tokens}
+    }</ng-container>
     <ng-container *ngSwitchCase="'usd'" i18n="currency|@@COMMON_USD"
       >USD</ng-container
     >

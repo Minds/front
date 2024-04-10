@@ -23,7 +23,10 @@ export class GroupActionsComponent {
    * Constructor
    * @param service
    */
-  constructor(public service: GroupService, private injector: Injector) {}
+  constructor(
+    public service: GroupService,
+    private injector: Injector
+  ) {}
 
   /**
    * Fires when membership changes as result of

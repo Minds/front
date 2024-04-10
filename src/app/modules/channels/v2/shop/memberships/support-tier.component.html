@@ -31,10 +31,10 @@
       *ngSwitchCase="'tokens'"
       i18n="@@SUPPORT_TIER_TOKENS_PER_MONTH_AMOUNT"
     >
-      <span
-        >{supportTier.tokens, plural, =1 {{{supportTier.tokens | number}} token}
-        other {{{supportTier.tokens | number}} tokens}}</span
-      >
+      <span>{supportTier.tokens, plural,
+        =1 {{{supportTier.tokens | number}} token}
+        other {{{supportTier.tokens | number}} tokens}
+      }</span>
       per month
     </ng-container>
 
@@ -50,10 +50,12 @@
       i18n="@@SUPPORT_TIER_TOKENS_AND_USD_PER_MONTH_AMOUNT"
     >
       <span
-        >${{ supportTier.usd | number }} - {supportTier.tokens, plural, =1
-        {{{supportTier.tokens | number}} token} other
-        {{{supportTier.tokens | number}} tokens}}</span
-      >
+        >${{ supportTier.usd | number }} -
+        {supportTier.tokens, plural,
+          =1 {{{supportTier.tokens | number}} token}
+          other {{{supportTier.tokens | number}} tokens}
+
+      }</span>
       per month
     </ng-container>
   </div>
@@ -61,10 +63,10 @@
   <div class="m-channelShopMembershipsSupportTier__stats">
     <div class="m-channelShopMembershipsSupportTierStats__entry">
       <m-icon iconId="lock"></m-icon>
-      <span i18n="@@SUPPORT_TIER_POSTS_AMOUNT"
-        >{supportTier.posts, plural, =1 {{{supportTier.posts | number}} post}
-        other {{{supportTier.posts | number}} posts}}</span
-      >
+      <span i18n="@@SUPPORT_TIER_POSTS_AMOUNT">{supportTier.posts, plural,
+        =1 {{{supportTier.posts | number}} post}
+        other {{{supportTier.posts | number}} posts}
+      }</span>
     </div>
 
     <div class="m-channelShopMembershipsSupportTierStats__entry">

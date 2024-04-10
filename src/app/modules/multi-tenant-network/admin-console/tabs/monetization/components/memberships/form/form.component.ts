@@ -48,35 +48,35 @@ import { SiteMembershipsCountService } from '../../../../../../../site-membershi
   styleUrls: ['./form.component.ng.scss'],
 })
 export class NetworkAdminMonetizationMembershipFormComponent
-  implements OnInit, OnInit, CanDeactivate<any> {
+  implements OnInit, OnInit, CanDeactivate<any>
+{
   /** Enum for use in template. */
-  public readonly SiteMembershipPricingModelEnum: typeof SiteMembershipPricingModelEnum = SiteMembershipPricingModelEnum;
+  public readonly SiteMembershipPricingModelEnum: typeof SiteMembershipPricingModelEnum =
+    SiteMembershipPricingModelEnum;
 
   /** Enum for use in template. */
-  public readonly SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum = SiteMembershipBillingPeriodEnum;
+  public readonly SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum =
+    SiteMembershipBillingPeriodEnum;
 
   /** Enum for use in template. */
-  public readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum = AutoCompleteEntityTypeEnum;
+  public readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum =
+    AutoCompleteEntityTypeEnum;
 
   /** Whether component can be considered initialized (may still have pending roles loading). */
-  public readonly initialized$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly initialized$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether the loading of roles is in progress. */
-  public readonly loadingRolesInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly loadingRolesInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether submission is in progress. */
-  public readonly submitInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly submitInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Currently selected groups. */
-  public readonly selectedGroups$: BehaviorSubject<
-    MindsGroup[]
-  > = new BehaviorSubject<MindsGroup[]>([]);
+  public readonly selectedGroups$: BehaviorSubject<MindsGroup[]> =
+    new BehaviorSubject<MindsGroup[]>([]);
 
   /** All roles to be selectable. */
   public readonly roles$: Observable<Role[]> = this.rolesService.allRoles$.pipe(
@@ -90,13 +90,12 @@ export class NetworkAdminMonetizationMembershipFormComponent
   );
 
   /** Currently selected group guids. */
-  public readonly selectedGroupGuids$: Observable<
-    string[]
-  > = this.selectedGroups$.pipe(
-    map((groups: MindsGroup[]): string[] =>
-      groups.map((group: MindsGroup): string => group?.guid)
-    )
-  );
+  public readonly selectedGroupGuids$: Observable<string[]> =
+    this.selectedGroups$.pipe(
+      map((groups: MindsGroup[]): string[] =>
+        groups.map((group: MindsGroup): string => group?.guid)
+      )
+    );
 
   /** Form group for membership details. */
   public formGroup: FormGroup;
@@ -130,9 +129,10 @@ export class NetworkAdminMonetizationMembershipFormComponent
     ) {
       this.editMode = true;
 
-      this.preloadedSiteMembership = await this.loadMembershipFromMembershipGuid(
-        this.route.snapshot.params['guid']
-      );
+      this.preloadedSiteMembership =
+        await this.loadMembershipFromMembershipGuid(
+          this.route.snapshot.params['guid']
+        );
     }
 
     this.initFormGroup();
@@ -194,9 +194,7 @@ export class NetworkAdminMonetizationMembershipFormComponent
    * Pricing model form control getter.
    * @returns { AbstractControl<SiteMembershipPricingModelEnum> } - Pricing model form control.
    */
-  get pricingModelFormControl(): AbstractControl<
-    SiteMembershipPricingModelEnum
-  > {
+  get pricingModelFormControl(): AbstractControl<SiteMembershipPricingModelEnum> {
     return this.formGroup.get('pricingModel') ?? null;
   }
 
@@ -204,9 +202,7 @@ export class NetworkAdminMonetizationMembershipFormComponent
    * Billing period form control getter.
    * @returns { AbstractControl<SiteMembershipBillingPeriodEnum> } - Billing period form control.
    */
-  get billingPeriodFormControl(): AbstractControl<
-    SiteMembershipBillingPeriodEnum
-  > {
+  get billingPeriodFormControl(): AbstractControl<SiteMembershipBillingPeriodEnum> {
     return this.formGroup.get('billingPeriod') ?? null;
   }
 
@@ -263,7 +259,8 @@ export class NetworkAdminMonetizationMembershipFormComponent
   public removeGroup(group: MindsGroup): void {
     if (!group || !group.guid) return;
 
-    const currentlySelectedGroups: MindsGroup[] = this.selectedGroups$.getValue();
+    const currentlySelectedGroups: MindsGroup[] =
+      this.selectedGroups$.getValue();
 
     this.selectedGroups$.next(
       currentlySelectedGroups.filter((selectedGroup: MindsGroup): boolean => {
@@ -385,11 +382,12 @@ export class NetworkAdminMonetizationMembershipFormComponent
     membershipGuid: string
   ): Promise<SiteMembership> {
     try {
-      const response: ApolloQueryResult<GetSiteMembershipQuery> = await lastValueFrom(
-        this.getSiteMembershipGQL.fetch({
-          membershipGuid: membershipGuid,
-        })
-      );
+      const response: ApolloQueryResult<GetSiteMembershipQuery> =
+        await lastValueFrom(
+          this.getSiteMembershipGQL.fetch({
+            membershipGuid: membershipGuid,
+          })
+        );
 
       if (!Boolean(response.data?.siteMembership)) {
         throw new Error(DEFAULT_ERROR_MESSAGE);
@@ -486,15 +484,13 @@ export class NetworkAdminMonetizationMembershipFormComponent
 
     if (this.preloadedSiteMembership?.groups) {
       preloadedSiteMembershipGroups = this.preloadedSiteMembership?.groups
-        .map(
-          (group: GroupNode): MindsGroup => {
-            try {
-              return JSON.parse(group.legacy) ?? null;
-            } catch (e) {
-              console.error(e);
-            }
+        .map((group: GroupNode): MindsGroup => {
+          try {
+            return JSON.parse(group.legacy) ?? null;
+          } catch (e) {
+            console.error(e);
           }
-        )
+        })
         .filter(Boolean);
     }
 
@@ -563,7 +559,8 @@ export class NetworkAdminMonetizationMembershipFormComponent
    * @returns { void }
    */
   private addGroup(newGroup: MindsGroup): void {
-    const currentlySelectedGroups: MindsGroup[] = this.selectedGroups$.getValue();
+    const currentlySelectedGroups: MindsGroup[] =
+      this.selectedGroups$.getValue();
 
     const alreadyAdded: boolean =
       currentlySelectedGroups.filter(

@@ -45,33 +45,32 @@ type UserRow = {
   ],
   standalone: true,
 })
-export class StartChatModalServiceComponent extends AbstractSubscriberComponent
-  implements OnInit, OnDestroy {
+export class StartChatModalServiceComponent
+  extends AbstractSubscriberComponent
+  implements OnInit, OnDestroy
+{
   /** Enum for use in template. */
-  protected readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum = AutoCompleteEntityTypeEnum;
+  protected readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum =
+    AutoCompleteEntityTypeEnum;
 
   /** Whether the component is in a loading state. */
-  protected readonly loadingResults$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected readonly loadingResults$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Form group. */
   protected formGroup: FormGroup;
 
   /** Search matches. */
-  protected readonly searchMatches$: BehaviorSubject<
-    UserRow[]
-  > = new BehaviorSubject<UserRow[]>([]);
+  protected readonly searchMatches$: BehaviorSubject<UserRow[]> =
+    new BehaviorSubject<UserRow[]>([]);
 
   /** Selected users. */
-  protected readonly selectedUsers$: BehaviorSubject<
-    MindsUser[]
-  > = new BehaviorSubject<MindsUser[]>([]);
+  protected readonly selectedUsers$: BehaviorSubject<MindsUser[]> =
+    new BehaviorSubject<MindsUser[]>([]);
 
   /** Whether chat creation is in progress. */
-  protected readonly creationInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected readonly creationInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Instantiation time of the class. */
   private readonly instantiationTime: number = Date.now();
@@ -162,9 +161,8 @@ export class StartChatModalServiceComponent extends AbstractSubscriberComponent
       const selectedUsers: MindsUser[] = this.selectedUsers$.getValue();
 
       // TODO: Add support for group chats in future.
-      const chatRoomId: string = await this.createChatRoomService.createChatRoom(
-        selectedUsers
-      );
+      const chatRoomId: string =
+        await this.createChatRoomService.createChatRoom(selectedUsers);
       this.onCompleted(chatRoomId);
     } catch (e) {
       console.error(e);

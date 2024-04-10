@@ -35,7 +35,7 @@ export class MarketingAsFeaturedInBlockchainComponent extends AbstractSubscriber
   ngOnInit(): void {
     this.subscriptions.push(
       // Force change detection on theme switch to trigger reloads after image src change.
-      this.isDarkMode$.subscribe(isDarkMode => this.detectChanges())
+      this.isDarkMode$.subscribe((isDarkMode) => this.detectChanges())
     );
   }
 

@@ -19,7 +19,10 @@ export class VideoChatService {
   >();
   heartBeatSubscription;
 
-  constructor(private client: Client, private session: Session) {}
+  constructor(
+    private client: Client,
+    private session: Session
+  ) {}
 
   async activate(entity: any) {
     if (this.isActive) {

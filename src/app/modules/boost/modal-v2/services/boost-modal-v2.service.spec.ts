@@ -16,21 +16,21 @@ import userMock from '../../../../mocks/responses/user.mock';
 describe('BoostModalV2Service', () => {
   let service: BoostModalV2Service;
 
-  let apiMock = new (function() {
+  let apiMock = new (function () {
     this.get = jasmine.createSpy('get').and.returnValue(of({}));
     this.post = jasmine.createSpy('post').and.returnValue(of({}));
   })();
 
-  let toasterMock = new (function() {
+  let toasterMock = new (function () {
     this.error = jasmine.createSpy('error');
     this.success = jasmine.createSpy('success');
   })();
 
-  let configMock = new (function() {
+  let configMock = new (function () {
     this.get = jasmine.createSpy('get');
   })();
 
-  let web3WalletMock = new (function() {
+  let web3WalletMock = new (function () {
     this.checkDeviceIsSupported = jasmine
       .createSpy('checkDeviceIsSupported')
       .and.returnValue(true);
@@ -42,19 +42,19 @@ describe('BoostModalV2Service', () => {
       .and.returnValue(Promise.resolve(true));
   })();
 
-  let boostContractMock = new (function() {
+  let boostContractMock = new (function () {
     this.create = jasmine.createSpy('create');
   })();
 
-  let boostGoalsExperimentMock = new (function() {
+  let boostGoalsExperimentMock = new (function () {
     this.isActive = jasmine.createSpy('isActive');
   })();
 
-  let boostTargetExperimentMock = new (function() {
+  let boostTargetExperimentMock = new (function () {
     this.isActive = jasmine.createSpy('isActive');
   })();
 
-  let sessionMock = new (function() {
+  let sessionMock = new (function () {
     this.getLoggedInUser = jasmine
       .createSpy('getLoggedInUser')
       .and.returnValue(userMock);
@@ -113,7 +113,7 @@ describe('BoostModalV2Service', () => {
       owner_guid: '234',
       time_created: '99999999999',
     });
-    service.entityType$.subscribe(val => {
+    service.entityType$.subscribe((val) => {
       expect(val).toBe(BoostSubject.CHANNEL);
       done();
     });
@@ -127,7 +127,7 @@ describe('BoostModalV2Service', () => {
       owner_guid: '234',
       time_created: '99999999999',
     });
-    service.entityType$.subscribe(val => {
+    service.entityType$.subscribe((val) => {
       expect(val).toBe(BoostSubject.GROUP);
       done();
     });
@@ -141,7 +141,7 @@ describe('BoostModalV2Service', () => {
       owner_guid: '234',
       time_created: '99999999999',
     });
-    service.entityType$.subscribe(val => {
+    service.entityType$.subscribe((val) => {
       expect(val).toBe(BoostSubject.POST);
       done();
     });
@@ -151,7 +151,7 @@ describe('BoostModalV2Service', () => {
     service.duration$.next(30);
     service.dailyBudget$.next(10);
 
-    service.totalPaymentAmount$.subscribe(val => {
+    service.totalPaymentAmount$.subscribe((val) => {
       expect(val).toBe(300);
       done();
     });
@@ -161,7 +161,7 @@ describe('BoostModalV2Service', () => {
     service.duration$.next(30);
     service.dailyBudget$.next(10);
 
-    service.totalPaymentAmount$.subscribe(val => {
+    service.totalPaymentAmount$.subscribe((val) => {
       expect(val).toBe(300);
       done();
     });
@@ -170,7 +170,7 @@ describe('BoostModalV2Service', () => {
   it('should get total payment amount text for tokens', (done: DoneFn) => {
     service.paymentCategory$.next(BoostPaymentCategory.TOKENS);
 
-    service.totalPaymentAmountText$.subscribe(val => {
+    service.totalPaymentAmountText$.subscribe((val) => {
       expect(val).toBe('5 tokens');
       done();
     });
@@ -181,7 +181,7 @@ describe('BoostModalV2Service', () => {
     service.duration$.next(30);
     service.dailyBudget$.next(10);
 
-    service.totalPaymentAmountText$.subscribe(val => {
+    service.totalPaymentAmountText$.subscribe((val) => {
       expect(val).toBe('$300.00');
       done();
     });
@@ -223,7 +223,7 @@ describe('BoostModalV2Service', () => {
   it('should change panel from the audience panel', (done: DoneFn) => {
     service.activePanel$.next(BoostModalPanel.AUDIENCE);
     service.changePanelFrom(BoostModalPanel.AUDIENCE);
-    service.activePanel$.subscribe(val => {
+    service.activePanel$.subscribe((val) => {
       expect(val).toBe(BoostModalPanel.BUDGET);
       done();
     });
@@ -232,7 +232,7 @@ describe('BoostModalV2Service', () => {
   it('should change panel from the audience panel', (done: DoneFn) => {
     service.activePanel$.next(BoostModalPanel.BUDGET);
     service.changePanelFrom(BoostModalPanel.BUDGET);
-    service.activePanel$.subscribe(val => {
+    service.activePanel$.subscribe((val) => {
       expect(val).toBe(BoostModalPanel.REVIEW);
       done();
     });
@@ -799,7 +799,7 @@ describe('BoostModalV2Service', () => {
   it('should navigate to previous panel from budget', (done: DoneFn) => {
     service.activePanel$.next(BoostModalPanel.BUDGET);
     service.openPreviousPanel();
-    service.activePanel$.subscribe(val => {
+    service.activePanel$.subscribe((val) => {
       expect(val).toBe(BoostModalPanel.AUDIENCE);
       done();
     });
@@ -808,7 +808,7 @@ describe('BoostModalV2Service', () => {
   it('should navigate to previous panel from review', (done: DoneFn) => {
     service.activePanel$.next(BoostModalPanel.REVIEW);
     service.openPreviousPanel();
-    service.activePanel$.subscribe(val => {
+    service.activePanel$.subscribe((val) => {
       expect(val).toBe(BoostModalPanel.BUDGET);
       done();
     });
@@ -826,7 +826,7 @@ describe('BoostModalV2Service', () => {
 
     service.activePanel$.next(BoostModalPanel.AUDIENCE);
     service.openPreviousPanel();
-    service.activePanel$.subscribe(val => {
+    service.activePanel$.subscribe((val) => {
       expect(val).toBe(BoostModalPanel.AUDIENCE);
       done();
     });

@@ -54,7 +54,7 @@ export function MockDirective(options: Directive, spies: string[] = []) {
 export function MockService(obj: any, config: any = null) {
   const spies = {};
   // spy properties first
-  const props = Object.getOwnPropertyNames(obj.prototype).filter(key => {
+  const props = Object.getOwnPropertyNames(obj.prototype).filter((key) => {
     return (
       Object.getOwnPropertyDescriptor(obj.prototype, key).get ||
       Object.getOwnPropertyDescriptor(obj.prototype, key).set
@@ -63,7 +63,8 @@ export function MockService(obj: any, config: any = null) {
 
   // get everything not a property (e.g. functions).
   const keys = Object.getOwnPropertyNames(obj.prototype).filter(
-    key => props.indexOf(key) === -1 && typeof obj.prototype[key] === 'function'
+    (key) =>
+      props.indexOf(key) === -1 && typeof obj.prototype[key] === 'function'
   );
 
   const has = (config && config.has) || [];

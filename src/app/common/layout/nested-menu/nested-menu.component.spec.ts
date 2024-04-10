@@ -8,14 +8,12 @@ describe('NestedMenuComponent', () => {
   let component: NestedMenuComponent;
   let fixture: ComponentFixture<NestedMenuComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [NestedMenuComponent],
-        imports: [RouterTestingModule],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [NestedMenuComponent],
+      imports: [RouterTestingModule],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NestedMenuComponent);

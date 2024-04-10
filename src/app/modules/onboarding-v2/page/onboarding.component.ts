@@ -37,8 +37,8 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     private pageLayoutService: PageLayoutService
   ) {
     this.routerSubscription = this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe(data => {
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe((data) => {
         this.topbarService.toggleVisibility(false);
 
         this.navigationService.setVisible(false);
@@ -58,13 +58,12 @@ export class OnboardingComponent implements OnInit, OnDestroy {
       await this.onboardingService.checkProgress();
     }
 
-    this.slideChangedSubscription = this.onboardingService.slideChanged.subscribe(
-      currentSlide => {
+    this.slideChangedSubscription =
+      this.onboardingService.slideChanged.subscribe((currentSlide) => {
         this.router.navigate([
           this.onboardingService.steps[currentSlide].route,
         ]);
-      }
-    );
+      });
 
     this.closeSubscription = this.onboardingService.close.subscribe(() => {
       this.router.navigate(['/newsfeed']);

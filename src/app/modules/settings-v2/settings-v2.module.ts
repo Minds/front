@@ -569,7 +569,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             ],
             loadChildren: () =>
               import('../newsfeed/twitter-sync/twitter-sync.module').then(
-                m => m.TwitterSyncModule
+                (m) => m.TwitterSyncModule
               ),
             data: {
               title: 'Twitter Sync',
