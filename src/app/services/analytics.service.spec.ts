@@ -3,7 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {
   CookieModule,
   CookieOptionsProvider,
-  CookieService,
   COOKIE_OPTIONS,
 } from '@mindsorg/ngx-universal';
 import { clientMock } from '../../tests/client-mock.spec';
@@ -14,7 +13,6 @@ import { Client } from './api';
 import { Session } from './session';
 import { siteServiceMock } from '../mocks/services/site-service-mock.spec';
 import { ConfigsService } from '../common/services/configs.service';
-import { MockService } from '../utils/mock';
 import posthog from 'posthog-js';
 import { Router } from '@angular/router';
 import userMock from '../mocks/responses/user.mock';
@@ -125,6 +123,7 @@ describe('AnalyticsService', () => {
   }));
 
   it('should reset identity on logout', fakeAsync(() => {
+    (service as any).hasBeenLoggedIn = true;
     spyOn(posthog, 'reset');
 
     sessionMock.loggedinEmitter.emit(false);
