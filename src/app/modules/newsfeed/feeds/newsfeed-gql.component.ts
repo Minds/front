@@ -343,7 +343,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
               //   'minds-4105-remove-rotator',
               //   true
               // );
-              true; // TODO: Remove  minds-4105-remove-rotator  featureflag
+              false; // TODO: Remove  minds-4105-remove-rotator  featureflag
           }, 50);
         }),
       /**
