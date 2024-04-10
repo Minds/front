@@ -41,6 +41,8 @@ import { EmbeddedVideoComponent } from './embedded-video.component';
 import { By } from '@angular/platform-browser';
 import { AnalyticsService } from '../../../services/analytics';
 import { siteServiceMock } from '../../../mocks/services/site-service-mock.spec';
+import { POSTHOG_JS } from '../../../common/services/posthog/posthog-injection-tokens';
+import posthog from 'posthog-js';
 
 const GUID = '1155576347020644352';
 const OWNER_GUID = '1153095520021913602';
@@ -219,12 +221,13 @@ describe('EmbeddedVideoComponent', () => {
         paramMap: new BehaviorSubject(convertToParamMap({ guid })),
       },
     });
+
     TestBed.compileComponents();
     fixture = TestBed.createComponent(EmbeddedVideoComponent);
     component = fixture.componentInstance;
   }
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     const configsServiceMock = MockService(ConfigsService, {
       get: (key) => {
         const config = {
@@ -292,8 +295,12 @@ describe('EmbeddedVideoComponent', () => {
           useValue: Sentry,
         },
         {
+          provide: POSTHOG_JS,
+          useValue: posthog,
+        },
+        {
           provide: AnalyticsService,
-          useValue: {},
+          useValue: MockService(AnalyticsService),
         },
       ],
       imports: [EmbedModule],
@@ -303,7 +310,7 @@ describe('EmbeddedVideoComponent', () => {
     siteServiceMock.cdnUrl = 'https://cdn.minds.com/';
 
     clientMock.response = CLIENT_RESPONSE;
-  }));
+  });
 
   it('should create', () => {
     setup(null, null);

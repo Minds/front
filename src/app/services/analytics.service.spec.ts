@@ -18,6 +18,7 @@ import { MockService } from '../utils/mock';
 import posthog from 'posthog-js';
 import { Router } from '@angular/router';
 import userMock from '../mocks/responses/user.mock';
+import { POSTHOG_JS } from '../common/services/posthog/posthog-injection-tokens';
 
 describe('AnalyticsService', () => {
   let service: AnalyticsService,
@@ -39,6 +40,10 @@ describe('AnalyticsService', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, CookieModule],
       providers: [
+        {
+          provide: POSTHOG_JS,
+          useValue: posthog,
+        },
         { provide: Client, useValue: clientMock },
         { provide: SiteService, useValue: siteServiceMock },
         {
@@ -54,6 +59,7 @@ describe('AnalyticsService', () => {
       ],
     });
 
+    TestBed.inject(POSTHOG_JS);
     service = TestBed.inject(AnalyticsService);
     router = TestBed.inject(Router);
   });
