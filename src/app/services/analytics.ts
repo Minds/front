@@ -304,6 +304,11 @@ export class AnalyticsService implements OnDestroy {
     $set.environment = this.configService.get('environment');
     properties.environment = this.configService.get('environment');
 
+    // Set the current user guid to the person
+    if (this.sessionService.getLoggedInUser()) {
+      $set.guid = this.sessionService.getLoggedInUser().guid;
+    }
+
     if (Object.keys($set).length) {
       properties.$set = $set;
     }
