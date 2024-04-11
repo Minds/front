@@ -6,6 +6,7 @@ import {
   NgZone,
   OnInit,
   Output,
+  PLATFORM_ID,
 } from '@angular/core';
 import {
   UntypedFormBuilder,
@@ -23,6 +24,8 @@ import { AbstractSubscriberComponent } from '../../../common/components/abstract
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
 import { AnalyticsService } from '../../../services/analytics';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { isPlatformBrowser } from '@angular/common';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -65,14 +68,14 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     public session: Session,
     public client: Client,
     fb: UntypedFormBuilder,
-    private zone: NgZone,
+    private configService: ConfigsService,
     private userAvatarService: UserAvatarService,
-    private authModal: AuthModalService,
     private router: Router,
     private regex: RegexService,
     private permissionsService: PermissionsService,
     protected site: SiteService,
-    protected analyticsService: AnalyticsService
+    protected analyticsService: AnalyticsService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     super();
     this.form = fb.group({
@@ -82,6 +85,10 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      // The browser will need to collect a new XSRF token
+      this.configService.loadFromRemote();
+    }
     this.subscriptions.push();
   }
 
