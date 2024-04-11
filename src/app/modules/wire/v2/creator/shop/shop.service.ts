@@ -11,9 +11,8 @@ export class ShopService implements OnDestroy {
   /**
    * Currently selected ID, might be manually changed or auto-selected by changing Wire values
    */
-  readonly selected$: BehaviorSubject<SupportTier> = new BehaviorSubject<
-    SupportTier
-  >(null);
+  readonly selected$: BehaviorSubject<SupportTier> =
+    new BehaviorSubject<SupportTier>(null);
 
   /**
    * Subscription to state values
@@ -76,9 +75,9 @@ export class ShopService implements OnDestroy {
 
     this.selected$.next(
       supportTiers
-        .filter(supportTier => supportTier[`has_${type}`])
+        .filter((supportTier) => supportTier[`has_${type}`])
         .reverse()
-        .find(supportTier => supportTier[type] <= amount) || null
+        .find((supportTier) => supportTier[type] <= amount) || null
     );
 
     return this;

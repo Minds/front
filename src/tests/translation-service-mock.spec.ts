@@ -1,6 +1,6 @@
 // TODO actually implement these mocks when necessary for testing
 
-export let translationServiceMock = new (function() {
+export let translationServiceMock = new (function () {
   this.getLanguages = jasmine.createSpy('getLanguages').and.stub();
   this.getUserDefaultLanguage = jasmine
     .createSpy('getUserDefaultLanguage')

@@ -38,7 +38,8 @@ export class PlusVerifyModalLazyService {
       return;
     }
 
-    const componentRef: typeof PlusVerifyModalComponent = await this.getComponentRef();
+    const componentRef: typeof PlusVerifyModalComponent =
+      await this.getComponentRef();
 
     const modal = this.modalService.present(componentRef, {
       data: {

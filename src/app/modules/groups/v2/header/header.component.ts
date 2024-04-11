@@ -26,7 +26,10 @@ export class GroupHeaderComponent {
    * @param service
    * @param configs
    */
-  constructor(public service: GroupService, configs: ConfigsService) {
+  constructor(
+    public service: GroupService,
+    configs: ConfigsService
+  ) {
     this.cdnUrl = configs.get('cdn_url');
   }
 

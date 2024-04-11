@@ -17,23 +17,20 @@ export class OnboardingV3PanelService implements OnDestroy {
   /**
    * Push new value to dismiss.
    */
-  public readonly dismiss$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly dismiss$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Current step of the modal
    */
-  public readonly currentStep$: BehaviorSubject<
-    OnboardingStepName
-  > = new BehaviorSubject<OnboardingStepName>('SuggestedHashtagsStep');
+  public readonly currentStep$: BehaviorSubject<OnboardingStepName> =
+    new BehaviorSubject<OnboardingStepName>('SuggestedHashtagsStep');
 
   /**
    * Force completion of a step.
    */
-  public readonly forceComplete$: BehaviorSubject<
-    OnboardingStepName
-  > = new BehaviorSubject<OnboardingStepName>(null);
+  public readonly forceComplete$: BehaviorSubject<OnboardingStepName> =
+    new BehaviorSubject<OnboardingStepName>(null);
 
   private subscriptions: Subscription[] = [];
 
@@ -44,7 +41,7 @@ export class OnboardingV3PanelService implements OnDestroy {
   ) {
     // fixes session bleed causing wrong panel to show at start.
     this.subscriptions.push(
-      this.session.loggedinEmitter?.subscribe(user => {
+      this.session.loggedinEmitter?.subscribe((user) => {
         if (user) {
           this.currentStep$.next('SuggestedHashtagsStep');
         }
@@ -66,7 +63,7 @@ export class OnboardingV3PanelService implements OnDestroy {
     return combineLatest([this.currentStep$, this.tags.tags$]).pipe(
       map(([currentStep, tags]) => {
         if (currentStep === 'SuggestedHashtagsStep') {
-          return tags.filter(tag => tag.selected).length < 3;
+          return tags.filter((tag) => tag.selected).length < 3;
         }
         return false;
       })
@@ -82,12 +79,12 @@ export class OnboardingV3PanelService implements OnDestroy {
       this.currentStep$
         .pipe(
           take(1),
-          catchError(e => {
+          catchError((e) => {
             console.error(e);
             return of(null);
           })
         )
-        .subscribe(currentStep => {
+        .subscribe((currentStep) => {
           if (currentStep === 'SuggestedHashtagsStep') {
             // this.currentStep$.next('WelcomeStep');
             // this.router.navigate(['/newsfeed/subscribed']);

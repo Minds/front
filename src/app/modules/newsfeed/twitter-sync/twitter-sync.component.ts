@@ -53,9 +53,8 @@ export class TwitterSyncComponent implements OnInit, OnDestroy {
   private strapiDataSubscription: Subscription;
 
   /** Whether a request from Strapi data is currently in progress. */
-  private readonly strapiDataRequestInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  private readonly strapiDataRequestInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     private session: Session,
@@ -82,7 +81,7 @@ export class TwitterSyncComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.twitterSyncService
       .getConnectedAccount()
-      .then(account => {
+      .then((account) => {
         if (account?.twitter_username) {
           this.isSetup = true;
           this.updateForm.controls.discoverable.setValue(account?.discoverable);
@@ -126,12 +125,10 @@ export class TwitterSyncComponent implements OnInit, OnDestroy {
             return twitterSyncText;
           }
         ),
-        catchError(
-          (e: unknown): Observable<string> => {
-            console.error(e);
-            return of('Follow me on @minds {url}');
-          }
-        )
+        catchError((e: unknown): Observable<string> => {
+          console.error(e);
+          return of('Follow me on @minds {url}');
+        })
       )
       .subscribe((twitterSyncText: string): void => {
         window.open(

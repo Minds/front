@@ -22,7 +22,10 @@ export class WireCreatorCurrencyToggleComponent {
    * Constructor
    * @param service
    */
-  constructor(public service: WireV2Service, private cd: ChangeDetectorRef) {}
+  constructor(
+    public service: WireV2Service,
+    private cd: ChangeDetectorRef
+  ) {}
 
   detectChanges() {
     this.cd.markForCheck();

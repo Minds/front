@@ -26,9 +26,8 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 })
 export class NetworksListComponent implements OnInit, OnDestroy {
   // Whether request is in progress.
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // List subject.
   public readonly list$: BehaviorSubject<Tenant[]> = new BehaviorSubject<

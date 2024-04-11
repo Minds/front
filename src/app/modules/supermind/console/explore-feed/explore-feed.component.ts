@@ -22,14 +22,12 @@ import { SupermindState } from '../../supermind.types';
 })
 export class SupermindConsoleExploreFeedComponent implements OnInit, OnDestroy {
   /** Whether pending supermind notice should be shown. */
-  public readonly showPendingSupermindNotice$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly showPendingSupermindNotice$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether pending count request is in progress. */
-  public readonly pendingCountRequestInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly pendingCountRequestInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Whether the component should be considered in its initial load phase. */
   public loading$: Observable<boolean> = combineLatest([
@@ -41,7 +39,7 @@ export class SupermindConsoleExploreFeedComponent implements OnInit, OnDestroy {
       ([feedLoadInProgress, pendingCountRequestInProgress, feed]: [
         boolean,
         boolean,
-        any[]
+        any[],
       ]) => {
         return (
           pendingCountRequestInProgress ||

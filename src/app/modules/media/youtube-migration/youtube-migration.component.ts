@@ -58,7 +58,7 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
     this.youtubeService.setup();
 
     this.connectedSubscription = this.youtubeService.connected$.subscribe(
-      connected => {
+      (connected) => {
         this.connected = connected;
 
         // Route to diff components based on connected state
@@ -72,14 +72,13 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
     );
 
     // Display the name of the selected channel
-    this.selectedChannelSubscription = this.youtubeService.selectedChannel$.subscribe(
-      channel => {
+    this.selectedChannelSubscription =
+      this.youtubeService.selectedChannel$.subscribe((channel) => {
         if (this.connected && channel.title) {
           this.channelTitle = channel.title;
           this.detectChanges();
         }
-      }
-    );
+      });
     this.init = true;
     this.detectChanges();
   }

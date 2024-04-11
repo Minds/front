@@ -3,6 +3,6 @@ import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.
 
 export const UpgradeModuleLazyRoutes = {
   path: 'upgrade',
-  loadChildren: () => import('./upgrade.module').then(m => m.UpgradeModule),
+  loadChildren: () => import('./upgrade.module').then((m) => m.UpgradeModule),
   canActivate: [MindsOnlyRedirectGuard, LoggedInRedirectGuard],
 };

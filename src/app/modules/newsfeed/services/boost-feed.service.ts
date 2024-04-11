@@ -14,9 +14,8 @@ export type BoostFeedOpts = {
 
 @Injectable({ providedIn: 'root' })
 export class BoostFeedService {
-  public feed$: Observable<
-    BehaviorSubject<Object>[]
-  > = this.feedsService.feed.pipe(shareReplay());
+  public feed$: Observable<BehaviorSubject<Object>[]> =
+    this.feedsService.feed.pipe(shareReplay());
 
   private initialised: boolean = false;
   private servedByGuid: string = null;

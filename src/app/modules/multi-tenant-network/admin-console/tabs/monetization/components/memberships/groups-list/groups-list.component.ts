@@ -18,7 +18,7 @@ export class NetworkAdminMonetizationGroupsListComponent {
   @Input() public showDeleteButton: boolean = false;
 
   /** Fired on delete click */
-  @Output('onDeleteClick') public onDeleteClickEmitter: EventEmitter<
-    GroupNode
-  > = new EventEmitter<GroupNode>();
+  @Output('onDeleteClick')
+  public onDeleteClickEmitter: EventEmitter<GroupNode> =
+    new EventEmitter<GroupNode>();
 }

@@ -1,6 +1,6 @@
 // TODO actually implement these mocks when necessary for testing
 
-export let web3WalletServiceMock = new (function() {
+export let web3WalletServiceMock = new (function () {
   this.wallets = ['0x123', '0x1234'];
   this.balance = 127000000000000000000;
   this.onChainInterfaceLabel = 'Metamask';

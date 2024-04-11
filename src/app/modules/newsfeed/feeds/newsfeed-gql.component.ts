@@ -80,9 +80,8 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   /**
    * The chosen algorithm, set by the router
    */
-  algorithm$: BehaviorSubject<FeedAlgorithm> = new BehaviorSubject<
-    FeedAlgorithm
-  >(null);
+  algorithm$: BehaviorSubject<FeedAlgorithm> =
+    new BehaviorSubject<FeedAlgorithm>(null);
 
   /**
    * Active subscriptions that should be unsubscribed from on destroy
@@ -218,13 +217,13 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     this.feedData = this.feedQuery.valueChanges.pipe(
-      filter(result => !!result.data?.newsfeed),
-      map(result => result.data.newsfeed)
+      filter((result) => !!result.data?.newsfeed),
+      map((result) => result.data.newsfeed)
     );
 
     this.edges$ = this.feedQuery.valueChanges.pipe(
       delayWhen(() => (this.isFirstRun ? interval(100) : of(undefined))), // wait 100ms if first page
-      map(result => {
+      map((result) => {
         if (result.errors) {
           console.error(result.errors);
         }
@@ -263,13 +262,13 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     this.totalEdgeCount$ = this.feedData.pipe(
-      map(newsfeed => {
+      map((newsfeed) => {
         return newsfeed.edges.length;
       })
     );
 
     this.pageInfo$ = this.feedQuery.valueChanges.pipe(
-      map(result => {
+      map((result) => {
         const newsfeed = result.data?.newsfeed;
         if (!newsfeed?.pageInfo) {
           return <PageInfo>{
@@ -296,12 +295,12 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     this.inFeedNoticesDelivered$ = this.edges$.pipe(
-      map(edges =>
+      map((edges) =>
         edges
-          .filter(edge => edge.__typename === 'FeedNoticeEdge')
-          .map(edge => (<FeedNoticeNode>edge.node).key)
+          .filter((edge) => edge.__typename === 'FeedNoticeEdge')
+          .map((edge) => (<FeedNoticeNode>edge.node).key)
       ),
-      map(keys => {
+      map((keys) => {
         // use a set to remove duplicates.
         return [
           ...new Set<string>([...keys, ...this.getDismissedFeedNoticeIds()]),
@@ -340,16 +339,17 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
           setTimeout(() => {
             this.showBoostRotator =
               this.isFirstRun &&
-              !this.experimentsService.hasVariation(
-                'minds-4105-remove-rotator',
-                true
-              );
+              // !this.experimentsService.hasVariation(
+              //   'minds-4105-remove-rotator',
+              //   true
+              // );
+              false; // TODO: Remove  minds-4105-remove-rotator  featureflag
           }, 50);
         }),
       /**
        * Set the algorithm to use
        */
-      this.route.params.subscribe(params => {
+      this.route.params.subscribe((params) => {
         if (params['algorithm']) {
           if (Object.values(FeedAlgorithm).includes(params['algorithm'])) {
             this.changeFeedAlgorithm(params['algorithm']);
@@ -363,7 +363,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
       /**
        * Subscribe for new posts
        */
-      this.feedsUpdate.postEmitter.subscribe(newPost => {
+      this.feedsUpdate.postEmitter.subscribe((newPost) => {
         this.prepend(newPost);
       }),
     ];
@@ -373,7 +373,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.subscriptions.push(
-      this.feedQuery.valueChanges.subscribe(result => {
+      this.feedQuery.valueChanges.subscribe((result) => {
         this.inProgress = result.loading;
       })
     );
@@ -456,7 +456,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   delete(activity) {
     const prepended = this.prepended$.value;
-    const index = prepended.findIndex(item => item.guid === activity.guid);
+    const index = prepended.findIndex((item) => item.guid === activity.guid);
 
     if (index !== -1) {
       prepended.splice(index, 1);

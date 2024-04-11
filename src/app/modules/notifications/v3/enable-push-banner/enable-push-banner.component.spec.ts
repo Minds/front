@@ -9,32 +9,30 @@ describe('NotificationsEnablePushBannerComponent', () => {
   let comp: NotificationsEnablePushBannerComponent;
   let fixture: ComponentFixture<NotificationsEnablePushBannerComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule],
-        declarations: [
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['saving'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: PushNotificationService,
-            useValue: MockService(PushNotificationService),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['saving'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: PushNotificationService,
+          useValue: MockService(PushNotificationService),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(NotificationsEnablePushBannerComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

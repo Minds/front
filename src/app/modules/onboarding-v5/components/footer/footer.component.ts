@@ -31,8 +31,8 @@ export class OnboardingV5FooterComponent {
   @Output() public readonly skipButtonClick = new EventEmitter<boolean>();
 
   /** Whether completion is in progress (used to extend loading spinner during animation delay). */
-  public readonly completionInProgress$: BehaviorSubject<boolean> = this.service
-    .completionInProgress$;
+  public readonly completionInProgress$: BehaviorSubject<boolean> =
+    this.service.completionInProgress$;
 
   constructor(private service: OnboardingV5Service) {}
 

@@ -9,7 +9,8 @@
       *ngIf="service.owner$ | async as owner"
     >
       <ng-container i18n="@@CREATOR_SHOP__HAS_SUPPORT_TIERS_OFFERS"
-        >@{{ owner?.username }} has membership exclusive offers</ng-container
+        >&#64;{{ owner?.username }} has membership exclusive
+        offers</ng-container
       >
       &middot;
       <a (click)="dismiss()" [routerLink]="['/', owner.username, 'shop']"
@@ -29,16 +30,20 @@
         [ngModel]="shop.selected$ | async"
         (ngModelChange)="shop.select($event)"
       >
-        <option value="null" disabled i18n="@@CREATOR_SHOP__SELECT_SUPPORT_TIER"
-          >Select Membership</option
+        <option
+          value="null"
+          disabled
+          i18n="@@CREATOR_SHOP__SELECT_SUPPORT_TIER"
         >
+          Select Membership
+        </option>
 
         <optgroup label="USD" i18n-label="@@CREATOR_SHOP__USD">
           <option
             *ngFor="let supportTier of groupedSupportTiers.usd"
             [ngValue]="supportTier"
           >
-            ${{ supportTier.usd | number }}
+            &#36;{{ supportTier.usd | number }}
             -
             {{ supportTier.name }}
             <ng-container *ngIf="supportTier.description">
@@ -52,11 +57,13 @@
             *ngFor="let supportTier of groupedSupportTiers.tokens"
             [ngValue]="supportTier"
           >
-            <ng-container i18n="@@CREATOR_SHOP__OTHER"
-              >{supportTier.tokens, plural, =1
-              {{{supportTier.tokens | number}} token} other
-              {{{supportTier.tokens | number}} tokens}}</ng-container
-            >
+            <ng-container
+              i18n="@@CREATOR_SHOP__OTHER"
+              >{supportTier.tokens, plural,
+                =1 {{{supportTier.tokens | number}} token}
+                other {{{supportTier.tokens | number}} tokens}
+
+            }</ng-container>
             - {{ supportTier.name }}
             <ng-container *ngIf="supportTier.description">
               - {{ supportTier.description }}

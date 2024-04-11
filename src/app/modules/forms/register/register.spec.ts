@@ -67,9 +67,7 @@ class FriendlyCaptchaComponentMock implements ControlValueAccessor {
 
 @Component({
   selector: 'm-popover',
-  template: `
-    <ng-content></ng-content>
-  `,
+  template: ` <ng-content></ng-content> `,
 })
 class PopoverComponentMock {
   @Input() password;
@@ -151,12 +149,14 @@ describe('RegisterForm', () => {
     (comp as any).passwordRiskValidator.riskValidator.and.returnValue(() =>
       Promise.resolve(true)
     );
-    (comp as any).onboardingV5ExperimentService.isGlobalOnSwitchActive.and.returnValue(
+    (
+      comp as any
+    ).onboardingV5ExperimentService.isGlobalOnSwitchActive.and.returnValue(
       false
     );
-    (comp as any).onboardingV5ExperimentService.isEnrollmentActive.and.returnValue(
-      false
-    );
+    (
+      comp as any
+    ).onboardingV5ExperimentService.isEnrollmentActive.and.returnValue(false);
 
     fixture.detectChanges();
 
@@ -213,12 +213,14 @@ describe('RegisterForm', () => {
 
   it('should register successfully a new user and set onboarding state to true if experiments are on', fakeAsync(() => {
     const user = { guid: '1234' };
-    (comp as any).onboardingV5ExperimentService.isGlobalOnSwitchActive.and.returnValue(
+    (
+      comp as any
+    ).onboardingV5ExperimentService.isGlobalOnSwitchActive.and.returnValue(
       true
     );
-    (comp as any).onboardingV5ExperimentService.isEnrollmentActive.and.returnValue(
-      true
-    );
+    (
+      comp as any
+    ).onboardingV5ExperimentService.isEnrollmentActive.and.returnValue(true);
 
     (comp as any).client.post.and.returnValue(Promise.resolve({ user: user }));
 

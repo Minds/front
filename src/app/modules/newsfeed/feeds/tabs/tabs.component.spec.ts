@@ -24,16 +24,14 @@ describe('NewsfeedTabsComponent', () => {
       span.nativeElement.textContent.includes(text)
     );
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [NewsfeedTabsComponent],
-        providers: [],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [NewsfeedTabsComponent],
+      providers: [],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(NewsfeedTabsComponent);
     comp = fixture.componentInstance;
 

@@ -35,46 +35,44 @@ describe('SettingsV2PaymentHistoryComponent', () => {
     },
   ];
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule, ReactiveFormsModule],
-        declarations: [
-          SettingsV2PaymentHistoryComponent,
-          MockComponent({
-            selector: 'm-settingsV2__header',
-          }),
-          MockComponent({
-            selector: 'm-tooltip',
-          }),
-          MockComponent({
-            selector: 'infinite-scroll',
-            inputs: ['moreData', 'inProgress'],
-          }),
-          TruncatePipe,
-        ],
-      })
-        .overrideProvider(SettingsV2PaymentHistoryService, {
-          useValue: MockService(SettingsV2PaymentHistoryService, {
-            has: ['hasMore$', 'inProgress$', 'rawList$'],
-            props: {
-              hasMore$: {
-                get: () => new BehaviorSubject<boolean>(true),
-              },
-              inProgress$: {
-                get: () => new BehaviorSubject<boolean>(false),
-              },
-              rawList$: {
-                get: () => new BehaviorSubject<Payment[]>(mockPayments),
-              },
-            },
-          }),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule, ReactiveFormsModule],
+      declarations: [
+        SettingsV2PaymentHistoryComponent,
+        MockComponent({
+          selector: 'm-settingsV2__header',
+        }),
+        MockComponent({
+          selector: 'm-tooltip',
+        }),
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: ['moreData', 'inProgress'],
+        }),
+        TruncatePipe,
+      ],
     })
-  );
+      .overrideProvider(SettingsV2PaymentHistoryService, {
+        useValue: MockService(SettingsV2PaymentHistoryService, {
+          has: ['hasMore$', 'inProgress$', 'rawList$'],
+          props: {
+            hasMore$: {
+              get: () => new BehaviorSubject<boolean>(true),
+            },
+            inProgress$: {
+              get: () => new BehaviorSubject<boolean>(false),
+            },
+            rawList$: {
+              get: () => new BehaviorSubject<Payment[]>(mockPayments),
+            },
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(SettingsV2PaymentHistoryComponent);
     comp = fixture.componentInstance;
 
@@ -100,7 +98,7 @@ describe('SettingsV2PaymentHistoryComponent', () => {
 
   it('should get hasMore$ from service', (done: DoneFn) => {
     (comp as any).service.hasMore$.next(false);
-    comp.hasMore$.subscribe(val => {
+    comp.hasMore$.subscribe((val) => {
       expect(val).toBeFalsy();
       done();
     });
@@ -108,14 +106,14 @@ describe('SettingsV2PaymentHistoryComponent', () => {
 
   it('should get inProgress$ from service', (done: DoneFn) => {
     (comp as any).service.inProgress$.next(true);
-    comp.inProgress$.subscribe(val => {
+    comp.inProgress$.subscribe((val) => {
       expect(val).toBeTruthy();
       done();
     });
   });
 
   it('should get list$ from service', (done: DoneFn) => {
-    comp.list$.subscribe(val => {
+    comp.list$.subscribe((val) => {
       expect(val).toEqual(mockPayments);
       done();
     });

@@ -25,7 +25,8 @@ import { MindsUser } from '../../../../../../interfaces/entities';
 })
 export class WalletV2CreditsProductUpgradeCardComponent {
   /** Product id enum for access in template */
-  public readonly GiftCardProductIdEnum: typeof GiftCardProductIdEnum = GiftCardProductIdEnum;
+  public readonly GiftCardProductIdEnum: typeof GiftCardProductIdEnum =
+    GiftCardProductIdEnum;
 
   /** Gift type */
   @Input() public readonly giftType: GiftCardProductIdEnum;
@@ -82,9 +83,8 @@ export class WalletV2CreditsProductUpgradeCardComponent {
     readonly config: ConfigsService,
     @Inject(CDN_ASSETS_URL) public readonly cdnAssetsUrl
   ) {
-    const upgradesConfig: GiftCardUpgradesConfig = config.get<
-      GiftCardUpgradesConfig
-    >('upgrades');
+    const upgradesConfig: GiftCardUpgradesConfig =
+      config.get<GiftCardUpgradesConfig>('upgrades');
 
     this.pricingTiers = {
       [GiftCardProductIdEnum.Plus]: [

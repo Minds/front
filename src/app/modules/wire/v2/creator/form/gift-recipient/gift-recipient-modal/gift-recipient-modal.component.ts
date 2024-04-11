@@ -29,9 +29,8 @@ export class GiftRecipientModalComponent {
   public duration: GiftRecipientGiftDuration;
 
   /** Whether a user opts into sending a shareable link instead of targeting a user.  */
-  public readonly sendShareableLink$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly sendShareableLink$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Form group. */
   public formGroup: FormGroup;

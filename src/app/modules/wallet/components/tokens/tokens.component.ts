@@ -20,7 +20,10 @@ export class WalletV2TokensComponent {
   hasOnchainAddress: boolean;
   tokenOnboardingComplete = false;
 
-  constructor(private session: Session, private cd: ChangeDetectorRef) {}
+  constructor(
+    private session: Session,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.phoneVerified = this.session.getLoggedInUser().rewards;

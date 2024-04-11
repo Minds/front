@@ -23,10 +23,10 @@ export class HashtagDefaultsService {
       })
       .pipe(
         shareReplay({ bufferSize: 1, refCount: true }),
-        map(response =>
+        map((response) =>
           response.tags
-            .filter(tag => tag.type === 'default')
-            .map(tag => tag.value)
+            .filter((tag) => tag.type === 'default')
+            .map((tag) => tag.value)
         )
       );
   }

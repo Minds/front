@@ -68,12 +68,11 @@ export class NotificationService implements OnDestroy {
     }
 
     this.notificationCountSockets.listen(this.session.getLoggedInUser().guid);
-    this.notificationCountSocketSubscription = this.notificationCountSockets.count$.subscribe(
-      (count: number): void => {
+    this.notificationCountSocketSubscription =
+      this.notificationCountSockets.count$.subscribe((count: number): void => {
         this.count = count;
         this.syncCount();
-      }
-    );
+      });
   }
 
   /**
@@ -106,9 +105,10 @@ export class NotificationService implements OnDestroy {
     const pollIntervalSeconds: number = 60;
     if (isPlatformBrowser(this.platformId)) {
       this.notificationPollTimer = timer(0, pollIntervalSeconds * 1000);
-      this.notificationPollTimerSubscription = this.notificationPollTimer.subscribe(
-        () => this.fetchNotificationCountFromServer()
-      );
+      this.notificationPollTimerSubscription =
+        this.notificationPollTimer.subscribe(() =>
+          this.fetchNotificationCountFromServer()
+        );
     }
   }
 

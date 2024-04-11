@@ -40,7 +40,7 @@ describe('NetworkAdminAnalyticsKpisService', () => {
       })
     );
 
-    service.data$.pipe(take(1)).subscribe(data => {
+    service.data$.pipe(take(1)).subscribe((data) => {
       expect(data).toBe(mockGetAdminAnalyticsChartAndKpisQuery);
       done();
     });
@@ -56,15 +56,11 @@ describe('NetworkAdminAnalyticsKpisService', () => {
         AnalyticsMetricEnum.Visitors,
         AnalyticsMetricEnum.TotalSiteMembershipSubscriptions,
       ],
-      fromUnixTs: moment()
-        .subtract(7, 'days')
-        .unix(),
+      fromUnixTs: moment().subtract(7, 'days').unix(),
       toUnixTs: moment().unix(),
     });
 
-    const newFromTs: number = moment()
-      .subtract(14, 'days')
-      .unix();
+    const newFromTs: number = moment().subtract(14, 'days').unix();
 
     service.patchParams({
       fromUnixTs: newFromTs,

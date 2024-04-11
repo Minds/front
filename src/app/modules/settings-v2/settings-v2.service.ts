@@ -14,7 +14,10 @@ export class SettingsV2Service {
   settings$: BehaviorSubject<any> = new BehaviorSubject(this.settings);
   proSettings$: BehaviorSubject<any> = new BehaviorSubject(this.proSettings);
 
-  constructor(private client: Client, protected session: Session) {}
+  constructor(
+    private client: Client,
+    protected session: Session
+  ) {}
 
   async loadSettings(guid): Promise<any> {
     try {

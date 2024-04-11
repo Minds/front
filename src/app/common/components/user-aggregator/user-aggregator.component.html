@@ -34,7 +34,7 @@
     <span *ngIf="i < slicedUsers.length - 1 && totalCount == 2"> and </span>
   </span>
   <span *ngIf="othersCount > 0; else blankSpace">
-    and {{ othersCount }} { othersCount, plural, =1 {other} other {others} }
+    and {{ othersCount }} {othersCount, plural, =1 {other} other {others}}
   </span>
   <ng-template #blankSpace>&nbsp;</ng-template>
   <ng-content select="[suffix-text]"></ng-content>

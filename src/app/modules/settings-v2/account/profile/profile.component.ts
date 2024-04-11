@@ -22,7 +22,10 @@ export class SettingsV2ProfileComponent implements OnInit {
   user: MindsUser;
   url: string;
 
-  constructor(protected cd: ChangeDetectorRef, private session: Session) {}
+  constructor(
+    protected cd: ChangeDetectorRef,
+    private session: Session
+  ) {}
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();

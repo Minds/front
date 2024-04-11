@@ -111,7 +111,7 @@ export class ThirdPartyNetworksService {
           this.session.getLoggedInUser().signup_method = 'ex-facebook';
         }
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
       });
   }
@@ -133,7 +133,7 @@ export class ThirdPartyNetworksService {
           });
         });
 
-      window.onErrorCallback = reason =>
+      window.onErrorCallback = (reason) =>
         this.zone.run(() => {
           this.inProgress = false;
           reject(reason);
@@ -156,7 +156,7 @@ export class ThirdPartyNetworksService {
         this.inProgress = false;
         this.setStatusKey('facebook', { connected: false });
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
       });
   }
@@ -175,7 +175,7 @@ export class ThirdPartyNetworksService {
           });
         });
 
-      window.onErrorCallback = reason =>
+      window.onErrorCallback = (reason) =>
         this.zone.run(() => {
           this.inProgress = false;
           reject(reason);
@@ -198,7 +198,7 @@ export class ThirdPartyNetworksService {
         this.inProgress = false;
         this.setStatusKey('twitter', { connected: false });
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
       });
   }

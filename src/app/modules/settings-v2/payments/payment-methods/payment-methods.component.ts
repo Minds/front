@@ -43,7 +43,7 @@ export class SettingsV2PaymentMethodsComponent {
           this.detectChanges();
         }
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
         this.init = true;
 

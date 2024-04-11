@@ -103,7 +103,7 @@ export class SocketsService {
       });
     });
 
-    this.socket.on('registered', guid => {
+    this.socket.on('registered', (guid) => {
       if (this.debug) console.log('[ws]::registered');
       this.nz.run(() => {
         this.registered = true;
@@ -185,7 +185,7 @@ export class SocketsService {
     }
 
     return this.subscriptions[name].subscribe({
-      next: args => {
+      next: (args) => {
         callback.apply(this, args);
       },
     });

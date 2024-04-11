@@ -9,23 +9,21 @@ xdescribe('SettingsTwoFactorV2BaseComponent', () => {
   let comp: SettingsTwoFactorV2BaseComponent;
   let fixture: ComponentFixture<SettingsTwoFactorV2BaseComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          SettingsTwoFactorV2BaseComponent,
-          SettingsV2HeaderComponent,
-        ],
-        providers: [
-          {
-            provide: SettingsTwoFactorV2Service,
-            useValue: MockService(SettingsTwoFactorV2Service),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        SettingsTwoFactorV2BaseComponent,
+        SettingsV2HeaderComponent,
+      ],
+      providers: [
+        {
+          provide: SettingsTwoFactorV2Service,
+          useValue: MockService(SettingsTwoFactorV2Service),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorV2BaseComponent);

@@ -12,7 +12,7 @@ import { ToasterService } from '../../common/services/toaster.service';
  */
 export function experimentVariationGuard(
   experimentId: string,
-  variation: string | number | boolean = true
+  variation: string | boolean = true
 ): CanActivateFn {
   return (): boolean => {
     if (!inject(ExperimentsService).hasVariation(experimentId, variation)) {

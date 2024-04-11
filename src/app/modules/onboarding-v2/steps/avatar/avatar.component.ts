@@ -56,8 +56,8 @@ export class AvatarStepComponent {
     this.userAvatarService.src$.next(this.croppedImage);
 
     fetch(this.croppedImage)
-      .then(res => res.blob())
-      .then(async blob => {
+      .then((res) => res.blob())
+      .then(async (blob) => {
         const imageFile = new File([blob], Date.now() + '', {
           type: 'image/png',
         });

@@ -33,12 +33,13 @@ export class SiteMembershipPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.siteMembershipsService.fetch();
-    this.isMember$ = this.siteMembershipsService.siteMembershipSubscriptionGuids$.pipe(
-      map(guids => guids.includes(this.membershipGuid))
-    );
+    this.isMember$ =
+      this.siteMembershipsService.siteMembershipSubscriptionGuids$.pipe(
+        map((guids) => guids.includes(this.membershipGuid))
+      );
 
     this.membership$ = this.route.paramMap.pipe(
-      switchMap(params => {
+      switchMap((params) => {
         this.membershipGuid = params.get('membershipGuid');
         if (!this.membershipGuid) {
           this.toasterService.error('Membership guid not provided');
@@ -49,7 +50,7 @@ export class SiteMembershipPageComponent implements OnInit {
           this.membershipGuid
         );
       }),
-      catchError(error => {
+      catchError((error) => {
         this.toasterService.error('Failed to load membership details');
         this.redirectToMembershipsPage();
         return of(null);
@@ -57,7 +58,7 @@ export class SiteMembershipPageComponent implements OnInit {
     );
 
     this.starCardTitle$ = this.membership$.pipe(
-      map(membership => {
+      map((membership) => {
         if (membership.archived) {
           this.redirectToMembershipsPage();
         }

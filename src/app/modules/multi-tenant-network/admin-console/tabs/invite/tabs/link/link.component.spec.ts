@@ -26,9 +26,9 @@ describe('NetworkAdminConsoleInviteLinkComponent', () => {
   let toasterServiceSpy: jasmine.SpyObj<ToasterService>;
   let configsServiceSpy: jasmine.SpyObj<ConfigsService>;
 
-  beforeEach(
-    waitForAsync(() => {
-      const getSiteMembershipsResponse: ApolloQueryResult<GetSiteMembershipsQuery> = {
+  beforeEach(waitForAsync(() => {
+    const getSiteMembershipsResponse: ApolloQueryResult<GetSiteMembershipsQuery> =
+      {
         data: {
           siteMemberships: [siteMembershipMock],
         },
@@ -36,32 +36,31 @@ describe('NetworkAdminConsoleInviteLinkComponent', () => {
         networkStatus: 7,
       };
 
-      getSiteMembershipsGQLSpy = jasmine.createSpyObj('GetSiteMembershipsGQL', [
-        'fetch',
-      ]);
-      getSiteMembershipsGQLSpy.fetch.and.returnValue(
-        of(getSiteMembershipsResponse)
-      );
+    getSiteMembershipsGQLSpy = jasmine.createSpyObj('GetSiteMembershipsGQL', [
+      'fetch',
+    ]);
+    getSiteMembershipsGQLSpy.fetch.and.returnValue(
+      of(getSiteMembershipsResponse)
+    );
 
-      toasterServiceSpy = jasmine.createSpyObj('ToasterService', ['error']);
-      configsServiceSpy = jasmine.createSpyObj('ConfigsService', ['get']);
-      configsServiceSpy.get.and.returnValue('http://example.com');
+    toasterServiceSpy = jasmine.createSpyObj('ToasterService', ['error']);
+    configsServiceSpy = jasmine.createSpyObj('ConfigsService', ['get']);
+    configsServiceSpy.get.and.returnValue('http://example.com');
 
-      TestBed.configureTestingModule({
-        declarations: [NetworkAdminConsoleInviteLinkComponent],
-        providers: [
-          FormBuilder,
-          {
-            provide: GetSiteMembershipsGQL,
-            useValue: getSiteMembershipsGQLSpy,
-          },
-          { provide: ToasterService, useValue: toasterServiceSpy },
-          { provide: ConfigsService, useValue: configsServiceSpy },
-        ],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
-    })
-  );
+    TestBed.configureTestingModule({
+      declarations: [NetworkAdminConsoleInviteLinkComponent],
+      providers: [
+        FormBuilder,
+        {
+          provide: GetSiteMembershipsGQL,
+          useValue: getSiteMembershipsGQLSpy,
+        },
+        { provide: ToasterService, useValue: toasterServiceSpy },
+        { provide: ConfigsService, useValue: configsServiceSpy },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NetworkAdminConsoleInviteLinkComponent);

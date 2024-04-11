@@ -14,8 +14,8 @@ export class TopbarWrapperComponent implements OnInit {
   public giftCardPurchaseExperimentIsActive: boolean = false;
 
   /** Whether topbar is being displayed in minimal light mode. */
-  public readonly isMinimalLightMode$: BehaviorSubject<boolean> = this
-    .topbarService.isMinimalLightMode$;
+  public readonly isMinimalLightMode$: BehaviorSubject<boolean> =
+    this.topbarService.isMinimalLightMode$;
 
   constructor(
     public session: Session,
@@ -25,7 +25,8 @@ export class TopbarWrapperComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.giftCardPurchaseExperimentIsActive = this.giftCardPurchaseExperiment.isActive();
+    this.giftCardPurchaseExperimentIsActive =
+      this.giftCardPurchaseExperiment.isActive();
   }
 
   /**

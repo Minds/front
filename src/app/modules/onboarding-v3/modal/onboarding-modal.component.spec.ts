@@ -28,23 +28,21 @@ describe('OnboardingV3ModalComponent', () => {
   let comp: OnboardingV3ModalComponent;
   let fixture: ComponentFixture<OnboardingV3ModalComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          OnboardingV3ModalComponent,
-          MockComponent({
-            selector: 'm-onboardingV3__tags',
-          }),
-          ButtonComponent,
-        ],
-        providers: [
-          { provide: OnboardingV3PanelService, useValue: panelServiceMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        OnboardingV3ModalComponent,
+        MockComponent({
+          selector: 'm-onboardingV3__tags',
+        }),
+        ButtonComponent,
+      ],
+      providers: [
+        { provide: OnboardingV3PanelService, useValue: panelServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OnboardingV3ModalComponent);
@@ -72,7 +70,7 @@ describe('OnboardingV3ModalComponent', () => {
 
   it('it should show the banner for suggested hashtags welcome step', () => {
     comp.currentStep$.next('SuggestedHashtagsStep');
-    comp.showBanner$.subscribe(val => {
+    comp.showBanner$.subscribe((val) => {
       expect(val).toBe(true);
     });
   });

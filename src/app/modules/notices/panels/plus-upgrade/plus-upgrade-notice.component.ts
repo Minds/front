@@ -26,7 +26,8 @@ export class PlusUpgradeNoticeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.experimentVariation = this.plusUpgradeNoticeExperiment.getActiveVariation();
+    this.experimentVariation =
+      this.plusUpgradeNoticeExperiment.getActiveVariation();
   }
 
   /**

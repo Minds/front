@@ -110,23 +110,27 @@ export class ProChannelService implements OnDestroy {
   }
 
   listen() {
-    this.isLoggedInSubscription = this.session.loggedinEmitter.subscribe(is => {
-      if (is) {
-        this.isLoggedIn$.next(true);
-        this.showSplash$.next(false);
+    this.isLoggedInSubscription = this.session.loggedinEmitter.subscribe(
+      (is) => {
+        if (is) {
+          this.isLoggedIn$.next(true);
+          this.showSplash$.next(false);
 
-        if (this.session.getLoggedInUser().guid === this.currentChannel.guid) {
-          this.isOwner$.next(true);
-        }
-      } else {
-        this.isLoggedIn$.next(false);
-        this.isOwner$.next(false);
+          if (
+            this.session.getLoggedInUser().guid === this.currentChannel.guid
+          ) {
+            this.isOwner$.next(true);
+          }
+        } else {
+          this.isLoggedIn$.next(false);
+          this.isOwner$.next(false);
 
-        if (this.currentChannel) {
-          this.currentChannel.subscribed = false;
+          if (this.currentChannel) {
+            this.currentChannel.subscribed = false;
+          }
         }
       }
-    });
+    );
   }
 
   ngOnDestroy() {
@@ -187,8 +191,8 @@ export class ProChannelService implements OnDestroy {
 
     if (this.route.parent) {
       root = this.route.parent.pathFromRoot
-        .map(route =>
-          route.snapshot.url.map(urlSegment => urlSegment.toString()).join('')
+        .map((route) =>
+          route.snapshot.url.map((urlSegment) => urlSegment.toString()).join('')
         )
         .join('/');
     }
@@ -297,7 +301,7 @@ export class ProChannelService implements OnDestroy {
       return;
     }
 
-    this.wireModal.present(this.currentChannel).then(payEvent => {
+    this.wireModal.present(this.currentChannel).then((payEvent) => {
       console.log({ payEvent });
       switch (payEvent.type) {
         case WireEventType.Completed:

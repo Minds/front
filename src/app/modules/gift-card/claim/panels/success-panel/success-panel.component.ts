@@ -37,44 +37,41 @@ import { UpgradeOptionInterval } from '../../../../../common/types/upgrade-optio
 })
 export class GiftCardClaimSuccessPanelComponent implements OnInit, OnDestroy {
   /** Updated user balance for product specified in panel service. */
-  public readonly balance$: BehaviorSubject<number> = new BehaviorSubject<
-    number
-  >(null);
+  public readonly balance$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(null);
 
   /** Product credit name - as displayed in template. */
-  public readonly productCreditName$: Observable<
-    string
-  > = this.giftCardPanel.productId$.pipe(
-    map((productId: GiftCardProductIdEnum): string => {
-      switch (productId) {
-        case GiftCardProductIdEnum.Boost:
-          return $localize`:@@GIFT_CARD_SUCCESS_PANEL__BOOST_CREDITS:Boost Credits`;
-        case GiftCardProductIdEnum.Plus:
-          return $localize`:@@GIFT_CARD_SUCCESS_PANEL__PLUS_CREDITS:Minds+ Credits`;
-        case GiftCardProductIdEnum.Pro:
-          return $localize`:@@GIFT_CARD_SUCCESS_PANEL__PRO_CREDITS:Minds Pro Credits`;
-        default:
-          return $localize`:@@GIFT_CARD_SUCCESS_PANEL__GENERIC_CREDITS:Credits`;
-      }
-    })
-  );
+  public readonly productCreditName$: Observable<string> =
+    this.giftCardPanel.productId$.pipe(
+      map((productId: GiftCardProductIdEnum): string => {
+        switch (productId) {
+          case GiftCardProductIdEnum.Boost:
+            return $localize`:@@GIFT_CARD_SUCCESS_PANEL__BOOST_CREDITS:Boost Credits`;
+          case GiftCardProductIdEnum.Plus:
+            return $localize`:@@GIFT_CARD_SUCCESS_PANEL__PLUS_CREDITS:Minds+ Credits`;
+          case GiftCardProductIdEnum.Pro:
+            return $localize`:@@GIFT_CARD_SUCCESS_PANEL__PRO_CREDITS:Minds Pro Credits`;
+          default:
+            return $localize`:@@GIFT_CARD_SUCCESS_PANEL__GENERIC_CREDITS:Credits`;
+        }
+      })
+    );
 
   /** Text within action button, varies depending on product ID */
-  public readonly actionButtonText$: Observable<
-    string
-  > = this.giftCardPanel.productId$.pipe(
-    map((productId: GiftCardProductIdEnum): string => {
-      switch (productId) {
-        case GiftCardProductIdEnum.Boost:
-          return $localize`:@@GIFT_CARD_SUCCESS_PANEL__CREATE_A_BOOST:Create a Boost`;
-        case GiftCardProductIdEnum.Plus:
-        case GiftCardProductIdEnum.Pro:
-          return $localize`:@@GIFT_CARD_SUCCESS_PANEL__REDEEM_CREDITS_NOW:Redeem credits now`;
-        default:
-          return $localize`:@@GIFT_CARD_SUCCESS_PANEL__VIEW_YOUR_BALANCES:View your balances`;
-      }
-    })
-  );
+  public readonly actionButtonText$: Observable<string> =
+    this.giftCardPanel.productId$.pipe(
+      map((productId: GiftCardProductIdEnum): string => {
+        switch (productId) {
+          case GiftCardProductIdEnum.Boost:
+            return $localize`:@@GIFT_CARD_SUCCESS_PANEL__CREATE_A_BOOST:Create a Boost`;
+          case GiftCardProductIdEnum.Plus:
+          case GiftCardProductIdEnum.Pro:
+            return $localize`:@@GIFT_CARD_SUCCESS_PANEL__REDEEM_CREDITS_NOW:Redeem credits now`;
+          default:
+            return $localize`:@@GIFT_CARD_SUCCESS_PANEL__VIEW_YOUR_BALANCES:View your balances`;
+        }
+      })
+    );
 
   // subscriptions.
   private actionButtonClickSubscription: Subscription;
@@ -141,17 +138,15 @@ export class GiftCardClaimSuccessPanelComponent implements OnInit, OnDestroy {
     ])
       .pipe(
         take(1),
-        catchError(
-          (e: unknown): Observable<unknown[]> => {
-            console.error(e);
-            return of([]);
-          }
-        )
+        catchError((e: unknown): Observable<unknown[]> => {
+          console.error(e);
+          return of([]);
+        })
       )
       .subscribe(
         ([giftCardBalances = [], productId = null]: [
           GiftCardBalanceByProductId[],
-          GiftCardProductIdEnum
+          GiftCardProductIdEnum,
         ]) => {
           try {
             if (!giftCardBalances?.length || !productId) {
@@ -233,10 +228,11 @@ export class GiftCardClaimSuccessPanelComponent implements OnInit, OnDestroy {
   private getUpgradeInterval(
     productId: GiftCardProductIdEnum
   ): UpgradeOptionInterval {
-    const largestPurchasableDuration: GiftRecipientGiftDuration = this.service.getLargestPurchasableUpgradeDuration(
-      productId,
-      this.balance$.getValue()
-    );
+    const largestPurchasableDuration: GiftRecipientGiftDuration =
+      this.service.getLargestPurchasableUpgradeDuration(
+        productId,
+        this.balance$.getValue()
+      );
 
     switch (largestPurchasableDuration) {
       case GiftRecipientGiftDuration.MONTH:

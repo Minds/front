@@ -24,9 +24,8 @@ export class ValuePropCardOutletComponent implements OnInit, OnDestroy {
   @Input() showBorderTop: boolean = false;
 
   /** Card to be shown (can be null). */
-  public card$: BehaviorSubject<PresentableValuePropCard> = new BehaviorSubject<
-    PresentableValuePropCard
-  >(null);
+  public card$: BehaviorSubject<PresentableValuePropCard> =
+    new BehaviorSubject<PresentableValuePropCard>(null);
 
   // array of subscriptions.
   private subscriptions: Subscription[] = [];

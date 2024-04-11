@@ -42,7 +42,8 @@ export class AddFeaturedEntityModalLazyService {
   public async open(
     entityType: AddFeaturedEntityModalEntityType = AddFeaturedEntityModalEntityType.User
   ): Promise<ModalRef<AddFeaturedEntityModalComponent>> {
-    const componentRef: typeof AddFeaturedEntityModalComponent = await this.getComponentRef();
+    const componentRef: typeof AddFeaturedEntityModalComponent =
+      await this.getComponentRef();
     const modal = this.modalService.present(componentRef, {
       size: 'md',
       data: {

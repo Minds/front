@@ -19,7 +19,7 @@ describe('WalletOnchainTransfersSummaryComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(WalletOnchainTransfersSummaryComponent);
     comp = fixture.componentInstance;

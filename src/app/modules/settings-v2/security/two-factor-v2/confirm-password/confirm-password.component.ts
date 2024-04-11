@@ -42,19 +42,18 @@ import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
 })
 export class SettingsTwoFactorPasswordComponent
   extends AbstractSubscriberComponent
-  implements OnInit {
+  implements OnInit
+{
   // amount input form
   public form: UntypedFormGroup;
 
   // password string from user
-  public readonly password$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  public readonly password$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   // is in progress
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Should progress be disabled?
@@ -101,13 +100,13 @@ export class SettingsTwoFactorPasswordComponent
               password: password,
             });
           }),
-          catchError(e => {
+          catchError((e) => {
             this.inProgress$.next(false);
             this.toast.error('Incorrect password. Please try again.');
             return of(null);
           })
         )
-        .subscribe(response => {
+        .subscribe((response) => {
           this.inProgress$.next(false);
           if (response && response.status === 'success') {
             this.onSuccess();
@@ -132,7 +131,7 @@ export class SettingsTwoFactorPasswordComponent
    */
   private onSuccess(): void {
     this.subscriptions.push(
-      this.service.activePanel$.pipe(take(1)).subscribe(activePanel => {
+      this.service.activePanel$.pipe(take(1)).subscribe((activePanel) => {
         this.service.passwordConfirmed$.next(true);
         this.password$.next('');
         switch (activePanel?.intent) {

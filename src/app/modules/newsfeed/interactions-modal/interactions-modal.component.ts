@@ -34,11 +34,12 @@ export class InteractionsModalComponent {
 
   ngOnInit() {
     this.listSubscription = this.interactionsDataService.list$.subscribe(
-      entities => (this.entities = entities)
+      (entities) => (this.entities = entities)
     );
-    this.nextPagingTokenSubscription = this.interactionsDataService.nextPagingToken$.subscribe(
-      nextPagingToken => (this.nextPagingToken = nextPagingToken)
-    );
+    this.nextPagingTokenSubscription =
+      this.interactionsDataService.nextPagingToken$.subscribe(
+        (nextPagingToken) => (this.nextPagingToken = nextPagingToken)
+      );
   }
 
   ngOnDestroy() {

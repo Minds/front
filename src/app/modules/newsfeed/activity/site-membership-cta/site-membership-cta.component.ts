@@ -14,7 +14,8 @@ import { WINDOW } from '../../../../common/injection-tokens/common-injection-tok
   styleUrls: ['./site-membership-cta.component.ng.scss'],
 })
 export class ActivitySiteMembershipCtaComponent
-  implements OnInit, AfterViewInit {
+  implements OnInit, AfterViewInit
+{
   isMinimalMode = this.service.displayOptions.minimalMode;
   entity: ActivityEntity;
   thumbnailHeightPx: number;
@@ -31,7 +32,7 @@ export class ActivitySiteMembershipCtaComponent
   ) {}
 
   ngOnInit(): void {
-    this.service.entity$.subscribe(entity => {
+    this.service.entity$.subscribe((entity) => {
       this.entity = entity;
       this.calculateThumbnailHeight();
     });

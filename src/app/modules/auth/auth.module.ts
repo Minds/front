@@ -43,7 +43,6 @@ const routes: Routes = [
     data: {
       title: 'Forgot Password',
       description: 'Reset your password',
-      preventLayoutReset: true,
     },
   },
 ];

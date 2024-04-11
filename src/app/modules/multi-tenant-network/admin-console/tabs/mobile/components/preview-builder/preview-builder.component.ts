@@ -15,19 +15,20 @@ import { MobileAppPreviewService } from '../../services/mobile-app-preview.servi
 })
 export class NetworkAdminConsoleMobilePreviewBuilderComponent {
   // enum for use in template.
-  public readonly MobilePreviewStatusEnum: typeof MobilePreviewStatusEnum = MobilePreviewStatusEnum;
+  public readonly MobilePreviewStatusEnum: typeof MobilePreviewStatusEnum =
+    MobilePreviewStatusEnum;
 
   /** preview status from service */
-  public readonly previewStatus$: Observable<MobilePreviewStatusEnum> = this
-    .MobileAppPreviewService.previewStatus$;
+  public readonly previewStatus$: Observable<MobilePreviewStatusEnum> =
+    this.MobileAppPreviewService.previewStatus$;
 
   /** preview QR code from service */
-  public readonly previewQRCode$: Observable<string> = this
-    .MobileAppPreviewService.previewQRCode$;
+  public readonly previewQRCode$: Observable<string> =
+    this.MobileAppPreviewService.previewQRCode$;
 
   /** whether setting of mobile config is in progress from service. */
-  public readonly setMobileConfigInProgress$: Observable<boolean> = this
-    .MobileAppPreviewService.setMobileConfigInProgress$;
+  public readonly setMobileConfigInProgress$: Observable<boolean> =
+    this.MobileAppPreviewService.setMobileConfigInProgress$;
 
   constructor(
     private MobileAppPreviewService: MobileAppPreviewService,

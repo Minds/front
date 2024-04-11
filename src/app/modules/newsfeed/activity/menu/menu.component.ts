@@ -121,7 +121,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         this.composerModal
           .setInjector(this.injector)
           .present()
-          .then(activity => {
+          .then((activity) => {
             if (activity) {
               this.service.setEntity(activity);
             }

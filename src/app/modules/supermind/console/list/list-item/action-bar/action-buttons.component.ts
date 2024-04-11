@@ -26,8 +26,8 @@ export class SupermindConsoleActionButtonsComponent {
   /**
    * The api state (button loading states)
    */
-  public readonly inProgress$$: BehaviorSubject<boolean> = this
-    .supermindReplyService.inProgress$$;
+  public readonly inProgress$$: BehaviorSubject<boolean> =
+    this.supermindReplyService.inProgress$$;
 
   constructor(
     private supermindReplyService: SupermindReplyService,

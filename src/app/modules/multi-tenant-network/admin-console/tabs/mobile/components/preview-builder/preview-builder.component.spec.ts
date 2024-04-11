@@ -12,7 +12,7 @@ describe('NetworkAdminConsoleMobilePreviewBuilderComponent', () => {
 
   const mockPreviewCodeUrl: string = 'https://example-qr.minds.com';
 
-  beforeEach(done => {
+  beforeEach((done) => {
     TestBed.configureTestingModule({
       declarations: [
         NetworkAdminConsoleMobilePreviewBuilderComponent,

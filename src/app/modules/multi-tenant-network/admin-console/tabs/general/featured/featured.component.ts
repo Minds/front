@@ -32,14 +32,12 @@ import { AddFeaturedEntityModalEntityType } from './add-user-modal/add-featured-
 })
 export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
   /** Whether loading is in progress. */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** List of featured entities to be displayed. */
-  public readonly featuredEntities$: BehaviorSubject<
-    FeaturedEntity[]
-  > = new BehaviorSubject<FeaturedEntity[]>([]);
+  public readonly featuredEntities$: BehaviorSubject<FeaturedEntity[]> =
+    new BehaviorSubject<FeaturedEntity[]>([]);
 
   /** Query reference for featured entities query. */
   private getFeaturedEntitiesQuery: QueryRef<
@@ -48,17 +46,16 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
   >;
 
   /** Whether pagination has next page. */
-  public readonly hasNextPage$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly hasNextPage$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Type of entity to be displayed */
-  public readonly type$: BehaviorSubject<
-    FeaturedEntityTypeEnum
-  > = new BehaviorSubject<FeaturedEntityTypeEnum>(FeaturedEntityTypeEnum.User);
+  public readonly type$: BehaviorSubject<FeaturedEntityTypeEnum> =
+    new BehaviorSubject<FeaturedEntityTypeEnum>(FeaturedEntityTypeEnum.User);
 
   /** Enum for display in component. */
-  public readonly FeaturedEntityTypeEnum: typeof FeaturedEntityTypeEnum = FeaturedEntityTypeEnum;
+  public readonly FeaturedEntityTypeEnum: typeof FeaturedEntityTypeEnum =
+    FeaturedEntityTypeEnum;
 
   /** Cursor for pagination. */
   private endCursor: number = 0;
@@ -96,15 +93,16 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
     );
 
     // Respond to value changes.
-    this.featuredEntitiesValueChangeSubscription = this.getFeaturedEntitiesQuery.valueChanges.subscribe(
-      (result: ApolloQueryResult<GetFeaturedEntitiesQuery>): void => {
-        if (result.loading) {
-          return;
+    this.featuredEntitiesValueChangeSubscription =
+      this.getFeaturedEntitiesQuery.valueChanges.subscribe(
+        (result: ApolloQueryResult<GetFeaturedEntitiesQuery>): void => {
+          if (result.loading) {
+            return;
+          }
+          this.handleQueryResult(result);
+          this.inProgress$.next(false);
         }
-        this.handleQueryResult(result);
-        this.inProgress$.next(false);
-      }
-    );
+      );
 
     // Respond to entities being added.
     this.entityAddedSubscription = this.addFeaturedEntityModal.entity$

@@ -1,4 +1,4 @@
-export let attachmentServiceMock = new (function() {
+export let attachmentServiceMock = new (function () {
   this.container = null;
   this.accessId = null;
   this.hidden = false;
@@ -20,28 +20,30 @@ export let attachmentServiceMock = new (function() {
 
   this.setContainer = jasmine
     .createSpy('setContainer')
-    .and.callFake(container => {
+    .and.callFake((container) => {
       this.container = container;
     });
   this.getContainer = jasmine.createSpy('getContainer').and.callFake(() => {
     return this.container;
   });
-  this.setAccessId = jasmine.createSpy('setAccessId').and.callFake(accessId => {
-    this.accessId = accessId;
-  });
-  this.setHidden = jasmine.createSpy('setHidden').and.callFake(hidden => {
+  this.setAccessId = jasmine
+    .createSpy('setAccessId')
+    .and.callFake((accessId) => {
+      this.accessId = accessId;
+    });
+  this.setHidden = jasmine.createSpy('setHidden').and.callFake((hidden) => {
     this.hidden = hidden;
   });
   this.isHidden = jasmine.createSpy('isHidden').and.callFake(() => {
     return this.hidden;
   });
-  this.setMature = jasmine.createSpy('setMature').and.callFake(mature => {
+  this.setMature = jasmine.createSpy('setMature').and.callFake((mature) => {
     this.mature = mature;
   });
   this.isMature = jasmine.createSpy('isMature').and.callFake(() => {
     return !!this.mature;
   });
-  this.setNSFW = jasmine.createSpy('setNSFW').and.callFake(nsfw => {
+  this.setNSFW = jasmine.createSpy('setNSFW').and.callFake((nsfw) => {
     return nsfw;
   });
   this.toggleMature = jasmine.createSpy('toggleMature').and.callFake(() => {

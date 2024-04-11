@@ -32,7 +32,7 @@
       <!------------------------>
 
       <div class="m-form__field--text stretchedField">
-        <div class="m-form__row--label ">
+        <div class="m-form__row--label">
           <label> Target Channel</label>
         </div>
         <div class="m-form__row--input">
@@ -49,7 +49,8 @@
           "
         >
           <p i18n="@@MINDS_SUPERMIND_COMPOSER__MERCHANT_INVALID">
-            @{{ formGroup.controls.username.value }} cannot receive cash offers
+            &#64;{{ formGroup.controls.username.value }} cannot receive cash
+            offers
           </p>
         </div>
       </div>
@@ -60,7 +61,7 @@
 
       <div class="m-layout__row" *ngIf="paymentMethod === PaymentMethods.CASH">
         <div class="m-layout__cell m-form__field--text stretchedField">
-          <div class="m-form__row--label ">
+          <div class="m-form__row--label">
             <label>Offer (USD)</label>
 
             <span class="m-composerSupermind__labelHint"
@@ -80,7 +81,7 @@
         <div style="width: 1rem"></div>
 
         <div class="m-layout__cell m-form__field--text stretchedField">
-          <div class="m-form__row--label ">
+          <div class="m-form__row--label">
             <label>Payment Method</label>
           </div>
 
@@ -100,7 +101,7 @@
         *ngIf="paymentMethod === PaymentMethods.TOKENS"
       >
         <div class="m-layout__cell m-form__field--text stretchedField">
-          <div class="m-form__row--label ">
+          <div class="m-form__row--label">
             <label>Offer (Tokens)</label>
             <span class="m-composerSupermind__labelHint"
               >Min: {{ TokensMin }}</span
@@ -125,7 +126,7 @@
 
       <div class="m-form__fieldsContainer">
         <div class="m-form__field--radio">
-          <div class="m-form__row--label ">
+          <div class="m-form__row--label">
             <label>Response Type</label>
           </div>
           <div class="m-form__row--input">

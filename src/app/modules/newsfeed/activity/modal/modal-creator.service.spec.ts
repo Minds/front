@@ -2,7 +2,7 @@ import { ActivityModalComponent } from '../../activity/modal/modal.component';
 import { ActivityEntity } from '../activity.service';
 import { ActivityModalCreatorService } from './modal-creator.service';
 
-export let analyticsServiceMock = new (function() {
+export let analyticsServiceMock = new (function () {
   this.getContexts = jasmine
     .createSpy('getContexts')
     .and.returnValue(undefined);
@@ -12,7 +12,7 @@ export let analyticsServiceMock = new (function() {
   this.trackClick = jasmine.createSpy('trackClick').and.returnValue(null);
 })();
 
-export let modalServiceMock = new (function() {
+export let modalServiceMock = new (function () {
   this.canOpenInModal = jasmine
     .createSpy('canOpenInModal')
     .and.returnValue(true);

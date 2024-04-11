@@ -1,0 +1,76 @@
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__ACCOUNT__USERDATA__LABEL"
+      >User Data & Analytics</span
+    >
+  </div>
+  <div class="m-settingsV2__desc">
+    <p>Your user data consists of two primary categories of data:</p>
+
+    <p>
+      (1) A record of your public contributions to the network, including your
+      public profile, posts, media uploads, and votes. These are stored
+      indefinitely (or until you remove them) so that they are available to you
+      and other public users of the app.
+    </p>
+
+    <p>
+      (2) Observational analytics, including which pages and posts you've seen,
+      which buttons you've clicked on, and contextual information like which
+      browser you're using, and where you came from. Observational analytics are
+      used internally and allow us to reduce spam, diagnose problems with the
+      app, and understand how to improve the service. They also allow us to
+      enhance your experience, e.g. by recommending only posts that you haven't
+      already seen before.
+    </p>
+
+    <p>
+      Observational analytics are not shared with outside companies for tracking
+      purposes. Moreover, we offer you the transparency to download your
+      personal analytics (coming soon) to see what's collected, and optionally
+      opt-out of collection if you prefer.
+    </p>
+
+    <p class="note">
+      <span>Note:</span>
+      By opting out of observational analytics, you may see recommendations for
+      posts you've already seen. And because observational analytics allow us to
+      detect spam engagements, opting out means that your app engagements will
+      not contribute to trending rankings and engagement rewards.
+    </p>
+  </div>
+</m-settingsV2__header>
+
+<form *ngIf="form" [formGroup]="form">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--checkbox stretchedField">
+      <div class="m-form__row--input">
+        <label for="optOut" class="m-form__customInputWrapper__checkbox">
+          <ng-container>Opt-out of observational analtytics</ng-container>
+          <input
+            type="checkbox"
+            id="optOut"
+            name="optOut"
+            formControlName="optOut"
+            class="form-control"
+            [readonly]="inProgress"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="m-settingsUserData__delete">
+  <h4>User data transparency</h4>
+
+  <p>
+    It's important to us that you're in control of your user data. If you wish
+    to delete the observational data, you may do so below.
+  </p>
+
+  <m-button color="red" [saving]="inProgress" (onAction)="deleteData()">
+    Delete my observational data
+  </m-button>
+</div>

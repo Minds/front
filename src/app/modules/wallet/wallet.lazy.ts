@@ -3,6 +3,6 @@ import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.
 
 export const WalletModuleLazyRoutes: Route = {
   path: 'wallet',
-  loadChildren: () => import('./wallet.module').then(m => m.WalletModule),
+  loadChildren: () => import('./wallet.module').then((m) => m.WalletModule),
   canActivate: [MindsOnlyRedirectGuard],
 };

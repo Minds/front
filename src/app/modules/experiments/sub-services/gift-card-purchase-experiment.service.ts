@@ -13,6 +13,7 @@ export class GiftCardPurchaseExperimentService {
    * @returns { boolean } whether minds-4302-gift-card-purchase feature is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('minds-4302-gift-card-purchase', true);
+    // return this.experiments.hasVariation('minds-4302-gift-card-purchase', true);
+    return true;
   }
 }

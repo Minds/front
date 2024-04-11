@@ -20,7 +20,7 @@ const routes: Routes = [
         path: 'checkout', // '/networks/checkout'
         canActivate: [loggedInRedirectGuard('/about/networks')],
         loadChildren: () =>
-          import('./checkout/checkout.module').then(m => m.CheckoutModule),
+          import('./checkout/checkout.module').then((m) => m.CheckoutModule),
       },
       {
         path: '', // '/networks'

@@ -197,12 +197,12 @@ describe('SiteMembershipsPageComponent', () => {
       flush();
     }));
 
-    it('should set starCardDescriptionText$ correctly when membershipRedirect query param is present', done => {
+    it('should set starCardDescriptionText$ correctly when membershipRedirect query param is present', (done) => {
       queryParamMapSubject.next(
         convertToParamMap({ membershipRedirect: 'true' })
       );
 
-      (comp as any).starCardDescriptionText$.subscribe(description => {
+      (comp as any).starCardDescriptionText$.subscribe((description) => {
         expect(description).toContain(
           'Check out these other available memberships'
         );

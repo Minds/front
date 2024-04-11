@@ -1,7 +1,7 @@
 /**
  * Created by Nico on 14/05/2017.
  */
-export let notificationServiceMock = new (function() {
+export let notificationServiceMock = new (function () {
   this.clearCount = jasmine.createSpy('clearCount').and.stub();
   this.incrementCount = jasmine.createSpy('incrementCount').and.stub();
   this.updateNotificationCount = jasmine
