@@ -65,11 +65,11 @@ describe('CustomNavigationItemsComponent', () => {
     },
     {
       id: 'channel',
-      name: '@olivia',
+      name: '@testUsername',
       type: NavigationItemTypeEnum.Core,
       visible: true,
       iconId: '',
-      path: '/olivia',
+      path: '/testUsername',
       url: null,
       action: null,
       order: 3,
