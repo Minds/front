@@ -24,9 +24,8 @@ export class ThrottledClickDirective implements OnInit {
   @Input() throttleTime: number = 600;
 
   /** Event emitter for the throttled click. */
-  @Output() throttledClick: EventEmitter<MouseEvent> = new EventEmitter<
-    MouseEvent
-  >();
+  @Output() throttledClick: EventEmitter<MouseEvent> =
+    new EventEmitter<MouseEvent>();
 
   /** Subject to hold clicks. */
   private readonly clicks: Subject<MouseEvent> = new Subject<MouseEvent>();

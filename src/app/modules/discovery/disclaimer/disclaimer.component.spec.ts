@@ -15,31 +15,29 @@ describe('DiscoveryDisclaimerComponent', () => {
   let comp: DiscoveryDisclaimerComponent;
   let fixture: ComponentFixture<DiscoveryDisclaimerComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [DiscoveryDisclaimerComponent, SidebarWidgetComponent],
-        imports: [RouterTestingModule],
-        providers: [
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: Client, useValue: clientMock },
-        ],
-      })
-        .overrideProvider(Session, {
-          useValue: MockService(Session, {
-            has: ['loggedinEmitter'],
-            props: {
-              loggedinEmitter: {
-                get: () => new BehaviorSubject<boolean>(true),
-              },
-            },
-          }),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [DiscoveryDisclaimerComponent, SidebarWidgetComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: Client, useValue: clientMock },
+      ],
     })
-  );
+      .overrideProvider(Session, {
+        useValue: MockService(Session, {
+          has: ['loggedinEmitter'],
+          props: {
+            loggedinEmitter: {
+              get: () => new BehaviorSubject<boolean>(true),
+            },
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
 
     comp = fixture.componentInstance;
@@ -67,7 +65,7 @@ describe('DiscoveryDisclaimerComponent', () => {
   });
 
   describe('dismissed state', () => {
-    beforeEach(done => {
+    beforeEach((done) => {
       fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
 
       comp = fixture.componentInstance;
@@ -97,7 +95,7 @@ describe('DiscoveryDisclaimerComponent', () => {
   });
 
   describe('not logged in state', () => {
-    beforeEach(done => {
+    beforeEach((done) => {
       fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
 
       comp = fixture.componentInstance;
@@ -125,7 +123,7 @@ describe('DiscoveryDisclaimerComponent', () => {
   });
 
   describe('not dismissed state', () => {
-    beforeEach(done => {
+    beforeEach((done) => {
       fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
 
       comp = fixture.componentInstance;

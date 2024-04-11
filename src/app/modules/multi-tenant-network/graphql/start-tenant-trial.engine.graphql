@@ -1,5 +1,5 @@
 mutation StartTenantTrial {
-    tenantTrial {
-        id
-    }
+  tenantTrial {
+    id
+  }
 }

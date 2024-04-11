@@ -8,7 +8,10 @@ import { AffiliatesShareComponent } from '../components/share/share.component';
  */
 @Injectable({ providedIn: 'root' })
 export class AffiliatesShareModalService {
-  constructor(private injector: Injector, private modal: ModalService) {}
+  constructor(
+    private injector: Injector,
+    private modal: ModalService
+  ) {}
 
   /**
    * Presents the modal.

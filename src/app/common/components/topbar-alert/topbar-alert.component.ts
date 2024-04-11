@@ -18,12 +18,12 @@ import { IsTenantService } from '../../services/is-tenant.service';
 export class TopbarAlertComponent {
   /** Markdown text to display in alert. */
   protected message$: Observable<string> = this.service.copyData$.pipe(
-    map(copyData => copyData.attributes.message)
+    map((copyData) => copyData.attributes.message)
   );
 
   /** Alert identifier. */
   protected identifier$: Observable<string> = this.service.copyData$.pipe(
-    map(copyData => copyData?.attributes?.identifier)
+    map((copyData) => copyData?.attributes?.identifier)
   );
 
   /** Whether alert should show. */

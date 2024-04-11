@@ -19,7 +19,10 @@ export class ChannelEditInfoComponent {
    * Constructor
    * @param service
    */
-  constructor(public service: ChannelEditService, configs: ConfigsService) {
+  constructor(
+    public service: ChannelEditService,
+    configs: ConfigsService
+  ) {
     this.maxNameLength = configs.get('max_name_length') ?? 50;
   }
 

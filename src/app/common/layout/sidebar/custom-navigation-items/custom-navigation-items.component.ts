@@ -62,14 +62,13 @@ export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
   public hiddenCustomNavItemsIds: Set<string> = new Set();
 
   /** Whether memberships link should be shown. */
-  public readonly shouldShowMembershipsLink$: Observable<
-    boolean
-  > = this.siteMembershipsCountService.count$.pipe(
-    distinctUntilChanged(),
-    map((count: number) => {
-      return count > 0;
-    })
-  );
+  public readonly shouldShowMembershipsLink$: Observable<boolean> =
+    this.siteMembershipsCountService.count$.pipe(
+      distinctUntilChanged(),
+      map((count: number) => {
+        return count > 0;
+      })
+    );
 
   constructor(
     public session: Session,
@@ -95,7 +94,7 @@ export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
       this.session.loggedinEmitter?.subscribe(() => {
         this.prepareCustomNavItems();
       }),
-      this.shouldShowMembershipsLink$.subscribe(should => {
+      this.shouldShowMembershipsLink$.subscribe((should) => {
         // Only show the memberships link when the site has memberships
         should
           ? this.hiddenCustomNavItemsIds.delete('memberships')
@@ -120,7 +119,8 @@ export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
     }
 
     this.setHiddenCustomNavItems();
-    this.customNavItemsRequiringExactRouteMatchIds = this.getActiveRouteMatchIds();
+    this.customNavItemsRequiringExactRouteMatchIds =
+      this.getActiveRouteMatchIds();
     this.customNavItems = this.getCustomNavItemsWithUpdatedPaths();
   }
 
@@ -166,8 +166,8 @@ export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
     // Process conditions to update hiddenCustomNavItemsIds
     conditions.forEach(({ test, add, remove }) => {
       if (test()) {
-        add.forEach(id => this.hiddenCustomNavItemsIds.add(id));
-        remove.forEach(id => this.hiddenCustomNavItemsIds.delete(id));
+        add.forEach((id) => this.hiddenCustomNavItemsIds.add(id));
+        remove.forEach((id) => this.hiddenCustomNavItemsIds.delete(id));
       }
     });
   }
@@ -177,7 +177,7 @@ export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
    * @return {Array} The adjusted list of custom navigation items.
    */
   getCustomNavItemsWithUpdatedPaths(): NavigationItem[] {
-    return this.rawCustomNavItems.map(item =>
+    return this.rawCustomNavItems.map((item) =>
       //  The 'explore' item path is different in guest mode
       item.id === 'explore' && !this.isLoggedIn()
         ? { ...item, path: '/' }
@@ -190,7 +190,7 @@ export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   public getUser(): void {
-    this.user = this.session.getLoggedInUser(user => {
+    this.user = this.session.getLoggedInUser((user) => {
       this.user = user;
     });
   }

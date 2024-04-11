@@ -30,13 +30,12 @@ export type GroupMembershipResponse = {
 export class GroupMembershipService implements OnDestroy {
   private base: string = 'api/v1/groups/';
 
-  public readonly group$: BehaviorSubject<MindsGroup> = new BehaviorSubject<
-    MindsGroup
-  >(null);
+  public readonly group$: BehaviorSubject<MindsGroup> =
+    new BehaviorSubject<MindsGroup>(null);
 
   public readonly groupGuid$: Observable<string> = this.group$.pipe(
     take(1),
-    map(group => group?.guid)
+    map((group) => group?.guid)
   );
 
   public readonly isPublic$: Observable<boolean> = this.group$.pipe(
@@ -49,56 +48,52 @@ export class GroupMembershipService implements OnDestroy {
   /**
    * Whether the current user is a member of the group
    */
-  public readonly isMember$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly isMember$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Whether the current user is the owner of the group
    */
-  public readonly isOwner$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly isOwner$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Whether the current user is the creator of the group
    */
-  public readonly isCreator$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly isCreator$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Whether the current user is waiting to hear whether their request to join a closed group was accepteed
    */
-  public readonly isAwaiting$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly isAwaiting$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Whether the current user was invited to join a group
    * and hasn't yet made a decision to accept/decline
    */
-  public readonly isInvited$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly isInvited$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Whether the current user is banned from the group
    */
-  public readonly isBanned$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly isBanned$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Whether we are currently processing a change in membership
    */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private api: ApiService, private toaster: ToasterService) {}
+  constructor(
+    private api: ApiService,
+    private toaster: ToasterService
+  ) {}
 
   setGroup(group: MindsGroup) {
     this.group$.next(group);
@@ -122,24 +117,22 @@ export class GroupMembershipService implements OnDestroy {
     const joinResponse$ = this.groupGuid$.pipe(
       take(1), // call once
       throttleTime(2000), // disallow more than 1 request every 2s
-      switchMap(
-        (groupGuid: string): Observable<GroupMembershipResponse> => {
-          // switch outer observable to api req.
-          let endpoint = `${this.base}membership/${groupGuid}`;
+      switchMap((groupGuid: string): Observable<GroupMembershipResponse> => {
+        // switch outer observable to api req.
+        let endpoint = `${this.base}membership/${groupGuid}`;
 
-          if (targetUserGuid) {
-            endpoint += `/${targetUserGuid}`;
-          }
-
-          return this.api.put(endpoint);
+        if (targetUserGuid) {
+          endpoint += `/${targetUserGuid}`;
         }
-      ),
+
+        return this.api.put(endpoint);
+      }),
       tap((response: GroupMembershipResponse): void => {
         if (!response.done) {
           throw new Error(response?.message ?? 'An unknown error has occurred');
         }
       }),
-      catchError(e => {
+      catchError((e) => {
         this.inProgress$.next(false);
         this.handleRequestError(e, true);
         return of(null);
@@ -202,12 +195,12 @@ export class GroupMembershipService implements OnDestroy {
               );
             }
           }),
-          catchError(e => {
+          catchError((e) => {
             this.handleRequestError(e, true);
             return of(null);
           })
         )
-        .subscribe(response => {
+        .subscribe((response) => {
           this.inProgress$.next(false);
           if (response && response.status === 'success') {
             this.isMember$.next(false);
@@ -245,12 +238,12 @@ export class GroupMembershipService implements OnDestroy {
               );
             }
           }),
-          catchError(e => {
+          catchError((e) => {
             this.handleRequestError(e, true);
             return of(null);
           })
         )
-        .subscribe(response => {
+        .subscribe((response) => {
           this.inProgress$.next(false);
 
           if (response && response.status === 'success') {
@@ -290,12 +283,12 @@ export class GroupMembershipService implements OnDestroy {
               );
             }
           }),
-          catchError(e => {
+          catchError((e) => {
             this.handleRequestError(e, true);
             return of(null);
           })
         )
-        .subscribe(response => {
+        .subscribe((response) => {
           this.inProgress$.next(false);
 
           if (response && response.status === 'success') {
@@ -333,12 +326,12 @@ export class GroupMembershipService implements OnDestroy {
               );
             }
           }),
-          catchError(e => {
+          catchError((e) => {
             this.handleRequestError(e, true);
             return of(null);
           })
         )
-        .subscribe(response => {
+        .subscribe((response) => {
           this.inProgress$.next(false);
 
           if (response && response.status === 'success') {

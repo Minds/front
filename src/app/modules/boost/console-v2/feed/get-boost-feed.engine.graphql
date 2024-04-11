@@ -1,13 +1,13 @@
 query GetBoostFeed(
-  $targetLocation: Int,
-  $first: Int,
+  $targetLocation: Int
+  $first: Int
   $after: Int!
   $source: String!
 ) {
   boosts(
     targetLocation: $targetLocation
-    first: $first,
-    after: $after,
+    first: $first
+    after: $after
     source: $source
   ) {
     edges {

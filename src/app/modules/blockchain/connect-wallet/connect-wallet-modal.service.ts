@@ -37,16 +37,16 @@ export class ConnectWalletModalService {
       // this.walletService.loadWallet();
     }
     this.isConnected$ = this.walletService.wallet$.pipe(
-      skipWhile(wallet => wallet.receiver.address === undefined),
-      map(wallet => !!wallet.receiver.address),
+      skipWhile((wallet) => wallet.receiver.address === undefined),
+      map((wallet) => !!wallet.receiver.address),
       distinctUntilChanged(),
-      switchMap(hasAddress => {
+      switchMap((hasAddress) => {
         if (!hasAddress) {
           return of(false);
         }
         return this.api
           .get('api/v3/blockchain/unique-onchain')
-          .pipe(map(response => response.unique));
+          .pipe(map((response) => response.unique));
       }),
       shareReplay()
     );

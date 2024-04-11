@@ -15,7 +15,10 @@ export class DiscoveryFeedItemComponent {
   @Input() openComments: boolean = false;
   readonly cdnUrl: string;
 
-  constructor(private configs: ConfigsService, private cd: ChangeDetectorRef) {
+  constructor(
+    private configs: ConfigsService,
+    private cd: ChangeDetectorRef
+  ) {
     this.cdnUrl = configs.get('cdn_url');
   }
 

@@ -95,9 +95,11 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
   get CashMin(): number {
     return (
       this.cashMin ??
-      (this.mindsConfig.get<object>('supermind')[
-        'min_thresholds'
-      ] as SupermindSettings).min_cash
+      (
+        this.mindsConfig.get<object>('supermind')[
+          'min_thresholds'
+        ] as SupermindSettings
+      ).min_cash
     );
   }
 
@@ -105,9 +107,11 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
   get TokensMin(): number {
     return (
       this.tokensMin ??
-      (this.mindsConfig.get<object>('supermind')[
-        'min_thresholds'
-      ] as SupermindSettings).min_offchain_tokens
+      (
+        this.mindsConfig.get<object>('supermind')[
+          'min_thresholds'
+        ] as SupermindSettings
+      ).min_offchain_tokens
     );
   }
 
@@ -174,34 +178,35 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       this.twitterSupermindExperimentIsActive = true;
     }
 
-    this.targetUsernameSubscription = this.formGroup.controls.username.valueChanges
-      .pipe(
-        filter((username: string) => username !== ''),
-        distinctUntilChanged(),
-        switchMap((username: string) => {
-          this.inProgress = true;
-          let options = new EntityResolverServiceOptions();
-          options.refType = 'username';
-          options.ref = username;
+    this.targetUsernameSubscription =
+      this.formGroup.controls.username.valueChanges
+        .pipe(
+          filter((username: string) => username !== ''),
+          distinctUntilChanged(),
+          switchMap((username: string) => {
+            this.inProgress = true;
+            let options = new EntityResolverServiceOptions();
+            options.refType = 'username';
+            options.ref = username;
 
-          return this.entityResolverService.get$<MindsUser>(options);
-        })
-      )
-      .subscribe(user => {
-        this.targetUser = user;
-        this.inProgress = false;
-        this.setMinimumPaymentAmountFromUser(user);
-        if (!this.supermindNonStripeOfferExperimentService.isActive()) {
-          this.refreshMerchantValidator();
-        }
-      });
+            return this.entityResolverService.get$<MindsUser>(options);
+          })
+        )
+        .subscribe((user) => {
+          this.targetUser = user;
+          this.inProgress = false;
+          this.setMinimumPaymentAmountFromUser(user);
+          if (!this.supermindNonStripeOfferExperimentService.isActive()) {
+            this.refreshMerchantValidator();
+          }
+        });
 
     /**
      * Sets the values from the composer payload
      * (note, this is only ever updated onSave() or by the composer edit functions, updating the form itself will not emit an event)
      */
-    this.supermindRequestDataSubscription = this.service.supermindRequest$.subscribe(
-      supermindRequest => {
+    this.supermindRequestDataSubscription =
+      this.service.supermindRequest$.subscribe((supermindRequest) => {
         if (!supermindRequest) {
           if (this.formGroup.dirty) {
             this.formGroup.reset();
@@ -265,17 +270,15 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
 
         // Will ensure clear button is displayed
         this.formGroup.markAsDirty();
-      }
-    );
+      });
 
     if (this.twitterSupermindExperimentIsActive) {
       this.responseTypeSubscription = this.formGroup
         .get('responseType')
         .valueChanges.subscribe(
           (responseType: SUPERMIND_RESPONSE_TYPES): void => {
-            const twitterRequiredFormControl: AbstractControl<boolean> = this.formGroup.get(
-              'twitterRequired'
-            );
+            const twitterRequiredFormControl: AbstractControl<boolean> =
+              this.formGroup.get('twitterRequired');
 
             if (Number(responseType) === SUPERMIND_RESPONSE_TYPES.LIVE) {
               if (twitterRequiredFormControl.value) {
@@ -339,8 +342,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       const modalResult = this.modalService.present(ConfirmV2Component, {
         data: {
           title: 'Live reply',
-          body:
-            "This Supermind is requesting a live reply. The recipient will respond on a live stream, podcast, or other media platform, which means that **you won't get a Minds activity post reply when they accept the offer**.",
+          body: "This Supermind is requesting a live reply. The recipient will respond on a live stream, podcast, or other media platform, which means that **you won't get a Minds activity post reply when they accept the offer**.",
           confirmButtonColor: 'blue',
           confirmButtonSolid: true,
           onConfirm: () => {

@@ -1,3 +1,9 @@
-mutation ReplyToRoomInviteRequest($roomGuid: String!, $action: ChatRoomInviteRequestActionEnum!) {
-    replyToRoomInviteRequest(roomGuid: $roomGuid, chatRoomInviteRequestActionEnum: $action)
+mutation ReplyToRoomInviteRequest(
+  $roomGuid: String!
+  $action: ChatRoomInviteRequestActionEnum!
+) {
+  replyToRoomInviteRequest(
+    roomGuid: $roomGuid
+    chatRoomInviteRequestActionEnum: $action
+  )
 }

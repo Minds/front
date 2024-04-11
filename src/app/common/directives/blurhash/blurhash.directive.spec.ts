@@ -76,13 +76,11 @@ xdescribe('BlurhashDirective', () => {
   let component: BlurhashFakeImageComponent;
   let fixture: ComponentFixture<BlurhashFakeImageComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [BlurhashDirective, BlurhashFakeImageComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [BlurhashDirective, BlurhashFakeImageComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(BlurhashFakeImageComponent);

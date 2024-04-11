@@ -150,7 +150,8 @@ export class CommentsScrollDirective {
 
   bottom(run?: boolean, stick?: boolean) {
     if (this.enabled) {
-      this.elementRef.nativeElement.scrollTop = this.elementRef.nativeElement.scrollHeight;
+      this.elementRef.nativeElement.scrollTop =
+        this.elementRef.nativeElement.scrollHeight;
 
       if (stick) {
         this.setStick('bottom');

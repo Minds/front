@@ -51,7 +51,7 @@ function transform(source, output) {
   );
 
   doc.xliff.file.body['trans-unit'] = doc.xliff.file.body['trans-unit'].map(
-    transUnit => {
+    (transUnit) => {
       const output = JSON.parse(JSON.stringify(transUnit));
 
       const note = {
@@ -97,7 +97,7 @@ function transform(source, output) {
 
 // MAIN
 
-export = () => cb => {
+export = () => (cb) => {
   run(`npx ng xi18n --out-file=messages.xlf --format=xlf`, {}, false);
   transform(
     join(APP_SRC, 'messages.xlf'),

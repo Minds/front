@@ -1,21 +1,31 @@
-query GetChatRoomMembers($roomGuid: String!, $first: Int!, $after: String, $excludeSelf: Boolean) {
-    chatRoomMembers(roomGuid: $roomGuid, first: $first, after: $after, excludeSelf: $excludeSelf) {
-        edges {
-            cursor
-            role
-            node {
-                id
-                guid
-                name
-                username
-                urn
-            }
-        }
-        pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-        }
+query GetChatRoomMembers(
+  $roomGuid: String!
+  $first: Int!
+  $after: String
+  $excludeSelf: Boolean
+) {
+  chatRoomMembers(
+    roomGuid: $roomGuid
+    first: $first
+    after: $after
+    excludeSelf: $excludeSelf
+  ) {
+    edges {
+      cursor
+      role
+      node {
+        id
+        guid
+        name
+        username
+        urn
+      }
     }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+  }
 }

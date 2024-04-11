@@ -33,9 +33,7 @@ import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.c
  */
 @Component({
   selector: 'minds-card',
-  template: `
-    <ng-template dynamic-host></ng-template>
-  `,
+  template: ` <ng-template dynamic-host></ng-template> `,
   styleUrls: ['./card.component.ng.scss'],
   providers: [ActivityService],
 })
@@ -135,9 +133,8 @@ export class MindsCard implements AfterViewInit {
       return;
     }
 
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
-        componentClass
-      ),
+    const componentFactory =
+        this._componentFactoryResolver.resolveComponentFactory(componentClass),
       viewContainerRef = this.cardHost.viewContainerRef;
 
     viewContainerRef.clear();
@@ -177,9 +174,8 @@ export class MindsCard implements AfterViewInit {
       this.componentInstance.entity = this.object;
 
       if (this.displayOptions) {
-        (<ActivityComponent>(
-          this.componentInstance
-        )).displayOptions = this.displayOptions;
+        (<ActivityComponent>this.componentInstance).displayOptions =
+          this.displayOptions;
       }
     }
 

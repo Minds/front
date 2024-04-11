@@ -71,7 +71,7 @@ export class AsyncStatePipe implements PipeTransform {
       }),
 
       // Catch errors and transform onto AsyncState
-      catchError(error =>
+      catchError((error) =>
         of({
           pending: false,
           error,

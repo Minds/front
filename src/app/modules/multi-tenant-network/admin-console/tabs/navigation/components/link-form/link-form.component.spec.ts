@@ -62,7 +62,7 @@ describe('NetworkAdminConsoleNavigationLinkFormComponent', () => {
     present: jasmine.createSpy('present').and.returnValue({
       dismiss: jasmine.createSpy('dismiss'),
       componentInstance: {
-        onConfirm: jasmine.createSpy('onConfirm').and.callFake(iconId => {
+        onConfirm: jasmine.createSpy('onConfirm').and.callFake((iconId) => {
           component.linkForm.get('iconId').setValue(iconId);
         }),
       },
@@ -81,48 +81,46 @@ describe('NetworkAdminConsoleNavigationLinkFormComponent', () => {
       .and.returnValue(of(true)),
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          NetworkAdminConsoleNavigationLinkFormComponent,
-          DummyListComponent,
-        ],
-        imports: [ReactiveFormsModule, RouterTestingModule],
-        providers: [
-          FormBuilder,
-          {
-            provide: ModalService,
-            useValue: mockModalService,
-          },
-          {
-            provide: DialogService,
-            useValue: mockDialogService,
-          },
-          {
-            provide: MultiTenantNavigationService,
-            useValue: mockNavigationService,
-          },
-          {
-            provide: Router,
-            useValue: jasmine.createSpyObj('Router', ['navigate']),
-          },
-          {
-            provide: ActivatedRoute,
-            useValue: MockService(ActivatedRoute, {
-              has: ['queryParams'],
-              props: {
-                queryParams: {
-                  get: () => new BehaviorSubject<Params>({}),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        NetworkAdminConsoleNavigationLinkFormComponent,
+        DummyListComponent,
+      ],
+      imports: [ReactiveFormsModule, RouterTestingModule],
+      providers: [
+        FormBuilder,
+        {
+          provide: ModalService,
+          useValue: mockModalService,
+        },
+        {
+          provide: DialogService,
+          useValue: mockDialogService,
+        },
+        {
+          provide: MultiTenantNavigationService,
+          useValue: mockNavigationService,
+        },
+        {
+          provide: Router,
+          useValue: jasmine.createSpyObj('Router', ['navigate']),
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: MockService(ActivatedRoute, {
+            has: ['queryParams'],
+            props: {
+              queryParams: {
+                get: () => new BehaviorSubject<Params>({}),
               },
-            }),
-          },
-        ],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(

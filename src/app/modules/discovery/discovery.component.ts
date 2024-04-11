@@ -27,23 +27,23 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
      */
     this.routerSubscription = this.router.events
       .pipe(
-        filter(e => e instanceof NavigationEnd),
+        filter((e) => e instanceof NavigationEnd),
         map(() => this.route),
-        map(route => {
+        map((route) => {
           while (route.firstChild) route = route.firstChild;
           return route;
         }),
         // filter(route => route.outlet === 'primary')
-        mergeMap(route => route.data)
+        mergeMap((route) => route.data)
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         this.service.setRouteData(data);
       });
   }
 
   ngOnInit() {
     this.isPlusPageSubscription = this.service.isPlusPage$.subscribe(
-      isPlusPage => {
+      (isPlusPage) => {
         this.isPlusPage = isPlusPage;
       }
     );

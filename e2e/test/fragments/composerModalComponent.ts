@@ -101,7 +101,7 @@ class ComposerModalComponent {
   public async clickPostAndAwait(): Promise<void> {
     await Promise.all([
       I.click(this.postButtonSelector),
-      I.waitForResponse(resp => {
+      I.waitForResponse((resp) => {
         return (
           resp.url().includes('/api/v3/newsfeed/activity') &&
           resp.status() === 200
@@ -119,7 +119,7 @@ class ComposerModalComponent {
 
     await Promise.all([
       I.click(confirmationModalComponent.confirmButtonSelector),
-      I.waitForResponse(resp => {
+      I.waitForResponse((resp) => {
         return (
           resp.url().includes('/api/v3/newsfeed/activity') &&
           resp.status() === 200
@@ -387,7 +387,7 @@ class ComposerModalComponent {
           this.fileUploadButtonSelector,
           'supporting-files/img/' + fileName
         ),
-        I.waitForResponse(resp => {
+        I.waitForResponse((resp) => {
           return resp.url().includes('/api/v1/media') && resp.status() === 200;
         }, 30),
       ]);

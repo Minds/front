@@ -24,7 +24,7 @@ export default {
       declarations: [DropdownMenuComponent, DropdownMenuItemComponent],
     }),
     componentWrapperDecorator(
-      story => `<div style="max-width:250px">${story}</div>`
+      (story) => `<div style="max-width:250px">${story}</div>`
     ),
   ],
   argTypes: {

@@ -51,11 +51,7 @@ export class FormInputCheckboxComponent implements ControlValueAccessor {
 
   constructor(private fb: UntypedFormBuilder) {
     if (!this.customId) {
-      this.customId =
-        `checkbox-` +
-        Math.random()
-          .toString(36)
-          .substring(2); // Confirm duplicates not possible?
+      this.customId = `checkbox-` + Math.random().toString(36).substring(2); // Confirm duplicates not possible?
     }
   }
 

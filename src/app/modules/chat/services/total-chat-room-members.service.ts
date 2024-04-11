@@ -26,9 +26,8 @@ export class TotalChatRoomMembersService {
   );
 
   /** Subject to hold the guid of the chat room. */
-  private readonly roomGuid$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >(null);
+  private readonly roomGuid$: BehaviorSubject<string> =
+    new BehaviorSubject<string>(null);
 
   /**
    * Observable that represents the total number of members in the chat room.

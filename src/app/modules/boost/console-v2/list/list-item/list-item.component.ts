@@ -28,7 +28,10 @@ export class BoostConsoleListItemComponent {
     isInset: true,
   };
 
-  constructor(private session: Session, configs: ConfigsService) {
+  constructor(
+    private session: Session,
+    configs: ConfigsService
+  ) {
     this.siteUrl = configs.get('site_url');
   }
   /**

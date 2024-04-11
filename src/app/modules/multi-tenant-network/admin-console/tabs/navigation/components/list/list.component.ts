@@ -29,7 +29,8 @@ export class NetworkAdminConsoleNavigationListComponent implements OnInit {
   /**
    * Allows us to use Enum in the template
    */
-  public NavigationItemTypeEnum: typeof NavigationItemTypeEnum = NavigationItemTypeEnum;
+  public NavigationItemTypeEnum: typeof NavigationItemTypeEnum =
+    NavigationItemTypeEnum;
 
   /**
    * Local array that holds processed nav items to be displayed
@@ -62,7 +63,7 @@ export class NetworkAdminConsoleNavigationListComponent implements OnInit {
     }
 
     this.subscriptions.push(
-      this.service.allNavigationItems$.subscribe(rawItems => {
+      this.service.allNavigationItems$.subscribe((rawItems) => {
         if (!rawItems?.length) return;
 
         this.navigationItemsFormArray.clear();
@@ -75,7 +76,7 @@ export class NetworkAdminConsoleNavigationListComponent implements OnInit {
          * Populate the 'channel' item from the raw list
          * with current user's username and avatar
          */
-        this.navigationItems = rawItems.map(rawItem => {
+        this.navigationItems = rawItems.map((rawItem) => {
           if (rawItem.id === 'channel') {
             return {
               ...rawItem,
@@ -96,11 +97,11 @@ export class NetworkAdminConsoleNavigationListComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   buildFormArray() {
-    this.navigationItems.forEach(item => {
+    this.navigationItems.forEach((item) => {
       this.navigationItemsFormArray.push(
         this.createFormGroupForObject(this.fb, item)
       );
@@ -132,7 +133,7 @@ export class NetworkAdminConsoleNavigationListComponent implements OnInit {
     item: NavigationItem
   ): FormGroup {
     const group = {};
-    Object.keys(item).forEach(key => {
+    Object.keys(item).forEach((key) => {
       group[key] = [item[key]];
     });
     return fb.group(group);
@@ -154,14 +155,14 @@ export class NetworkAdminConsoleNavigationListComponent implements OnInit {
 
     this.subscriptions.push(
       this.service.upsertNavigationItem(item.value).subscribe({
-        next: success => {
+        next: (success) => {
           if (!success) {
             console.warn('Failed to save navigation item.');
             // Undo the optimistic toggle in case of failure
             toggleVisibility();
           }
         },
-        error: error => {
+        error: (error) => {
           toggleVisibility();
         },
       })

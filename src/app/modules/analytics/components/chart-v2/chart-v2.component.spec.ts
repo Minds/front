@@ -10,20 +10,18 @@ describe('ChartV2Component', () => {
   let component: ChartV2Component;
   let fixture: ComponentFixture<ChartV2Component>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ChartV2Component, UtcDatePipe, AbbrPipe],
-        providers: [
-          {
-            provide: ThemeService,
-            useValue: MockService(ThemeService),
-          },
-        ],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ChartV2Component, UtcDatePipe, AbbrPipe],
+      providers: [
+        {
+          provide: ThemeService,
+          useValue: MockService(ThemeService),
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ChartV2Component);

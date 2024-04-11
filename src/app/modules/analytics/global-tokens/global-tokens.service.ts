@@ -31,33 +31,33 @@ export class AnalyticsGlobalTokensService {
   metrics$: BehaviorSubject<Metric[]> = new BehaviorSubject([]);
 
   supply$: Observable<Metric[]> = this.metrics$.pipe(
-    map(metrics =>
+    map((metrics) =>
       Object.values(metrics).filter(
-        metric => metric.id.indexOf('Supply\\') > -1
+        (metric) => metric.id.indexOf('Supply\\') > -1
       )
     )
   );
 
   transactions$: Observable<Metric[]> = this.metrics$.pipe(
-    map(metrics =>
+    map((metrics) =>
       Object.values(metrics).filter(
-        metric => metric.id.indexOf('Transactions\\') > -1
+        (metric) => metric.id.indexOf('Transactions\\') > -1
       )
     )
   );
 
   liquidity$: Observable<Metric[]> = this.metrics$.pipe(
-    map(metrics =>
+    map((metrics) =>
       Object.values(metrics).filter(
-        metric => metric.id.indexOf('Liquidity\\') > -1
+        (metric) => metric.id.indexOf('Liquidity\\') > -1
       )
     )
   );
 
   rewards$: Observable<Metric[]> = this.metrics$.pipe(
-    map(metrics =>
+    map((metrics) =>
       Object.values(metrics).filter(
-        metric => metric.id.indexOf('Rewards\\') > -1
+        (metric) => metric.id.indexOf('Rewards\\') > -1
       )
     )
   );
@@ -113,9 +113,7 @@ export class AnalyticsGlobalTokensService {
 
     // ISO 8601 format
     const endOfDate = Math.floor(
-      moment(`${year}${month}${day}T235959Z`)
-        .utc()
-        .valueOf() / 1000
+      moment(`${year}${month}${day}T235959Z`).utc().valueOf() / 1000
     );
 
     return Math.min(now, endOfDate);

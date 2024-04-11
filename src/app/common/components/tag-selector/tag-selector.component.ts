@@ -12,13 +12,11 @@ export class TagSelectorComponent {
     this._tags = value;
   }
 
-  @Output('onAdd') onAddEmitter: EventEmitter<DiscoveryTag> = new EventEmitter<
-    DiscoveryTag
-  >();
+  @Output('onAdd') onAddEmitter: EventEmitter<DiscoveryTag> =
+    new EventEmitter<DiscoveryTag>();
 
-  @Output('onRemove') onRemoveEmitter: EventEmitter<
-    DiscoveryTag
-  > = new EventEmitter<DiscoveryTag>();
+  @Output('onRemove') onRemoveEmitter: EventEmitter<DiscoveryTag> =
+    new EventEmitter<DiscoveryTag>();
 
   async addTag(tag): Promise<void> {
     tag.selected = true;
@@ -41,6 +39,6 @@ export class TagSelectorComponent {
   }
 
   getIndex(tag: DiscoveryTag): number {
-    return this._tags.findIndex(i => i.value === tag.value);
+    return this._tags.findIndex((i) => i.value === tag.value);
   }
 }

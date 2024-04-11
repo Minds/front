@@ -98,41 +98,39 @@ describe('ProductPagePricingCardsComponent', () => {
   const defaultProductPlanUpgradePeriod: ProductPageUpgradeTimePeriod =
     ProductPageUpgradeTimePeriod.Annually;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ProductPagePricingCardsComponent,
-          MockComponent({
-            selector: 'markdown',
-            inputs: ['data'],
-          }),
-          MockComponent({
-            selector: 'm-productPage__button',
-            inputs: ['data'],
-          }),
-        ],
-        providers: [
-          {
-            provide: ProductPagePricingService,
-            useValue: MockService(ProductPagePricingService, {
-              has: ['selectedTimePeriod$'],
-              props: {
-                selectedTimePeriod$: {
-                  get: () =>
-                    new BehaviorSubject<ProductPageUpgradeTimePeriod>(
-                      defaultProductPlanUpgradePeriod
-                    ),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ProductPagePricingCardsComponent,
+        MockComponent({
+          selector: 'markdown',
+          inputs: ['data'],
+        }),
+        MockComponent({
+          selector: 'm-productPage__button',
+          inputs: ['data'],
+        }),
+      ],
+      providers: [
+        {
+          provide: ProductPagePricingService,
+          useValue: MockService(ProductPagePricingService, {
+            has: ['selectedTimePeriod$'],
+            props: {
+              selectedTimePeriod$: {
+                get: () =>
+                  new BehaviorSubject<ProductPageUpgradeTimePeriod>(
+                    defaultProductPlanUpgradePeriod
+                  ),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ProductPagePricingCardsComponent);
     comp = fixture.componentInstance;
 
@@ -262,9 +260,11 @@ describe('ProductPagePricingCardsComponent', () => {
       new BehaviorSubject<number>(19)
     );
     expect(
-      (comp.getMonthlyPrice(Enum_Productplan_Tier.Networks) as BehaviorSubject<
-        number
-      >).getValue()
+      (
+        comp.getMonthlyPrice(
+          Enum_Productplan_Tier.Networks
+        ) as BehaviorSubject<number>
+      ).getValue()
     ).toBe(19);
   });
 });

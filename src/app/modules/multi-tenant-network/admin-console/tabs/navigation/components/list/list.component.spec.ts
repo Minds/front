@@ -56,31 +56,29 @@ describe('NetworkAdminConsoleNavigationListComponent', () => {
   let service: MultiTenantNavigationService;
   let session: Session;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [NetworkAdminConsoleNavigationListComponent],
-        imports: [ReactiveFormsModule],
-        providers: [
-          FormBuilder,
-          {
-            provide: MultiTenantNavigationService,
-            useClass: MockMultiTenantNavigationService,
-          },
-          { provide: Session, useClass: MockSession },
-          { provide: ConfigsService, useClass: MockConfigsService },
-        ],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [NetworkAdminConsoleNavigationListComponent],
+      imports: [ReactiveFormsModule],
+      providers: [
+        FormBuilder,
+        {
+          provide: MultiTenantNavigationService,
+          useClass: MockMultiTenantNavigationService,
+        },
+        { provide: Session, useClass: MockSession },
+        { provide: ConfigsService, useClass: MockConfigsService },
+      ],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(
-        NetworkAdminConsoleNavigationListComponent
-      );
-      component = fixture.componentInstance;
-      service = TestBed.inject(MultiTenantNavigationService);
-      session = TestBed.inject(Session);
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(
+      NetworkAdminConsoleNavigationListComponent
+    );
+    component = fixture.componentInstance;
+    service = TestBed.inject(MultiTenantNavigationService);
+    session = TestBed.inject(Session);
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

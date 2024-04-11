@@ -30,7 +30,7 @@ describe('ComposerAudienceSelectorService', () => {
 
     (service as any).api.get.and.returnValue(of(mockResponse));
 
-    service.groupsPage$.subscribe(response => {
+    service.groupsPage$.subscribe((response) => {
       expect(response).toEqual(mockResponse.groups);
       expect((service as any).api.get).toHaveBeenCalledWith(
         'api/v1/groups/member',
@@ -48,7 +48,7 @@ describe('ComposerAudienceSelectorService', () => {
       throwError(() => new Error('error'))
     );
 
-    service.groupsPage$.subscribe(response => {
+    service.groupsPage$.subscribe((response) => {
       expect(response).toBeNull();
       expect((service as any).api.get).toHaveBeenCalledWith(
         'api/v1/groups/member',

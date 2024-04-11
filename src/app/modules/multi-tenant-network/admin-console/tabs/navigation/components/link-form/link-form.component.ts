@@ -34,7 +34,8 @@ export enum NavigationLinkFormView {
   ],
 })
 export class NetworkAdminConsoleNavigationLinkFormComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /**
    * The item that we're creating/editing
    */
@@ -50,8 +51,10 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
   /**
    * Allows us to use enums in the template
    */
-  NavigationItemTypeEnum: typeof NavigationItemTypeEnum = NavigationItemTypeEnum;
-  NavigationLinkFormView: typeof NavigationLinkFormView = NavigationLinkFormView;
+  NavigationItemTypeEnum: typeof NavigationItemTypeEnum =
+    NavigationItemTypeEnum;
+  NavigationLinkFormView: typeof NavigationLinkFormView =
+    NavigationLinkFormView;
 
   linkForm: FormGroup;
 
@@ -92,11 +95,13 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
              * the matching navigation item or return null
              */
             return id
-              ? navigationItems.find(navigationItem => navigationItem.id === id)
+              ? navigationItems.find(
+                  (navigationItem) => navigationItem.id === id
+                )
               : null;
           })
         )
-        .subscribe(item => {
+        .subscribe((item) => {
           this.navigationItem = item;
 
           this.setFormView();
@@ -186,13 +191,15 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
       };
 
       this.subscriptions.push(
-        this.service.upsertNavigationItem(submittedItem).subscribe(success => {
-          if (success) {
-            // Reset the form so we don't get stopped by the deactivate guard
-            this.linkForm.markAsPristine();
-            this.navigateToListView();
-          }
-        })
+        this.service
+          .upsertNavigationItem(submittedItem)
+          .subscribe((success) => {
+            if (success) {
+              // Reset the form so we don't get stopped by the deactivate guard
+              this.linkForm.markAsPristine();
+              this.navigateToListView();
+            }
+          })
       );
     }
   }
@@ -201,7 +208,7 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
     const modal = this.modalService.present(IconSelectorComponent, {
       data: {
         selectedIconId: this.linkForm.get('iconId')?.value ?? null,
-        onConfirm: iconId => {
+        onConfirm: (iconId) => {
           this.linkForm.patchValue({ iconId: iconId });
           modal.dismiss();
         },

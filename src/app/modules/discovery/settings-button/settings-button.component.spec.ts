@@ -17,28 +17,26 @@ describe('DiscoverySettingsButtonComponent', () => {
   let component: DiscoverySettingsButtonComponent;
   let fixture: ComponentFixture<DiscoverySettingsButtonComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [DiscoverySettingsButtonComponent, TooltipComponent],
-        imports: [RouterTestingModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: Client, useValue: clientMock },
-          {
-            provide: DiscoveryTagsService,
-            useValue: MockService(DiscoveryTagsService),
-          },
-          { provide: ModalService, useValue: modalServiceMock },
-          {
-            provide: DiscoveryFeedsService,
-            useValue: MockService(DiscoveryFeedsService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [DiscoverySettingsButtonComponent, TooltipComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: Client, useValue: clientMock },
+        {
+          provide: DiscoveryTagsService,
+          useValue: MockService(DiscoveryTagsService),
+        },
+        { provide: ModalService, useValue: modalServiceMock },
+        {
+          provide: DiscoveryFeedsService,
+          useValue: MockService(DiscoveryFeedsService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DiscoverySettingsButtonComponent);

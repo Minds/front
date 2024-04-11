@@ -61,9 +61,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
   /**
    * Call to let parent functions know a thumb up event has happened
    */
-  @Output('thumbsUpChange') thumbsUpChange$: EventEmitter<
-    void
-  > = new EventEmitter();
+  @Output('thumbsUpChange') thumbsUpChange$: EventEmitter<void> =
+    new EventEmitter();
 
   @ViewChild(FriendlyCaptchaComponent)
   friendlyCaptchaEl: FriendlyCaptchaComponent;

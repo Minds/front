@@ -13,11 +13,11 @@ export class TopFeedService extends FeedsService {
   injectItems = [
     {
       type: FeedItemType.feedNotice,
-      indexes: i => i > 0 && i % 6 === 0,
+      indexes: (i) => i > 0 && i % 6 === 0,
     },
     {
       type: FeedItemType.featuredContent,
-      indexes: i => (i > 0 && i % 5 === 0) || i === 3,
+      indexes: (i) => (i > 0 && i % 5 === 0) || i === 3,
     },
     {
       type: FeedItemType.publisherRecommendations,

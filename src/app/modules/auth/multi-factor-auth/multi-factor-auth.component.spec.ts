@@ -13,27 +13,25 @@ describe('MultiFactorAuthBaseComponent', () => {
   let comp: MultiFactorAuthBaseComponent;
   let fixture: ComponentFixture<MultiFactorAuthBaseComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [MultiFactorAuthBaseComponent],
-        providers: [
-          {
-            provide: MultiFactorAuthService,
-            useValue: MockService(MultiFactorAuthService),
-          },
-          {
-            provide: EmailConfirmationService,
-            useValue: MockService(EmailConfirmationService),
-          },
-          {
-            provide: ConfigsService,
-            useValue: MockService(ConfigsService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [MultiFactorAuthBaseComponent],
+      providers: [
+        {
+          provide: MultiFactorAuthService,
+          useValue: MockService(MultiFactorAuthService),
+        },
+        {
+          provide: EmailConfirmationService,
+          useValue: MockService(EmailConfirmationService),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MultiFactorAuthBaseComponent);
@@ -46,21 +44,19 @@ describe('MultiFactorAuthBaseComponent', () => {
   });
 
   it('should set auth type in service', () => {
-    (comp as any).service.activePanel$ = new BehaviorSubject<
-      MultiFactorRootPanel
-    >('totp');
+    (comp as any).service.activePanel$ =
+      new BehaviorSubject<MultiFactorRootPanel>('totp');
 
     comp.authType = 'sms';
 
-    (comp as any).service.activePanel$.subscribe(val => {
+    (comp as any).service.activePanel$.subscribe((val) => {
       expect(val).toBe('sms');
     });
   });
 
   it('should set opts', () => {
-    (comp as any).service.activePanel$ = new BehaviorSubject<
-      MultiFactorRootPanel
-    >('totp');
+    (comp as any).service.activePanel$ =
+      new BehaviorSubject<MultiFactorRootPanel>('totp');
 
     comp.setModalData({
       onDismissIntent: () => {},
@@ -68,7 +64,7 @@ describe('MultiFactorAuthBaseComponent', () => {
       authType: 'sms',
     });
 
-    const sub = (comp as any).service.activePanel$.subscribe(val => {
+    const sub = (comp as any).service.activePanel$.subscribe((val) => {
       expect(val).toBe('sms');
     });
   });

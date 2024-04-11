@@ -1,6 +1,6 @@
 query GetFeaturedEntities(
-  $type: FeaturedEntityTypeEnum!,
-  $after: Int,
+  $type: FeaturedEntityTypeEnum!
+  $after: Int
   $first: Int
 ) {
   featuredEntities(type: $type, after: $after, first: $first) {
@@ -20,13 +20,13 @@ query GetFeaturedEntities(
         ... on FeaturedGroup {
           __typename
           entityGuid
-          id 
+          id
           autoSubscribe
           autoPostSubscription
           name
           membersCount
         }
-      } 
+      }
       cursor
     }
     pageInfo {

@@ -34,13 +34,11 @@ import { ConfirmV2Component } from '../../../../../modals/confirm-v2/confirm.com
  */
 @Injectable({ providedIn: 'root' })
 export class MultiTenantNavigationService implements OnDestroy {
-  public readonly allNavigationItems$: ReplaySubject<
-    NavigationItem[]
-  > = new ReplaySubject<NavigationItem[]>();
+  public readonly allNavigationItems$: ReplaySubject<NavigationItem[]> =
+    new ReplaySubject<NavigationItem[]>();
 
-  public readonly savingNavigationItem$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly savingNavigationItem$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   private subscriptions: Subscription[] = [];
 
@@ -106,15 +104,13 @@ export class MultiTenantNavigationService implements OnDestroy {
         this.fetchNavigationItems();
         return Boolean(result?.data?.upsertCustomNavigationItem?.id);
       }),
-      catchError(
-        (e: any): Observable<boolean> => {
-          if (e?.errors?.[0] && e.errors[0].message) {
-            this.toaster.error(e.errors[0].message);
-          }
-          console.error(e);
-          return of(false);
+      catchError((e: any): Observable<boolean> => {
+        if (e?.errors?.[0] && e.errors[0].message) {
+          this.toaster.error(e.errors[0].message);
         }
-      ),
+        console.error(e);
+        return of(false);
+      }),
       finalize(() => this.savingNavigationItem$.next(false))
     );
   }
@@ -125,7 +121,7 @@ export class MultiTenantNavigationService implements OnDestroy {
    * @returns { Observable<boolean> }
    */
   public reorderNavigationItems(items: NavigationItem[]): void {
-    const orderedIds = items.map(item => item.id);
+    const orderedIds = items.map((item) => item.id);
 
     const mutationVars: ReorderNavigationItemsMutationVariables = {
       ids: orderedIds,
@@ -168,8 +164,7 @@ export class MultiTenantNavigationService implements OnDestroy {
     const modal = this.modalService.present(ConfirmV2Component, {
       data: {
         title: 'Delete Custom Link',
-        body:
-          'Are you sure you want to delete this link? This action cannot be undone.',
+        body: 'Are you sure you want to delete this link? This action cannot be undone.',
         confirmButtonColor: 'red',
         onConfirm: () => {
           modal.dismiss();

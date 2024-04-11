@@ -76,9 +76,9 @@ export class IconSelectorComponent implements OnInit {
       .pipe(
         startWith(''),
         debounceTime(200),
-        map(searchTerm => this.filterIconsBySearchTerm(searchTerm))
+        map((searchTerm) => this.filterIconsBySearchTerm(searchTerm))
       )
-      .subscribe(filteredIcons => {
+      .subscribe((filteredIcons) => {
         this.filteredIconList = filteredIcons;
       });
   }
@@ -101,7 +101,7 @@ export class IconSelectorComponent implements OnInit {
   private filterIconsBySearchTerm(searchTerm: string): SelectableIcon[] {
     searchTerm = searchTerm.toLowerCase();
     return this.iconList.filter(
-      icon =>
+      (icon) =>
         icon.id.includes(searchTerm) ||
         icon.name.toLowerCase().includes(searchTerm)
     );

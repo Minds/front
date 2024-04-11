@@ -109,7 +109,7 @@ export class DiscoverySearchComponent {
           this.cardCarouselService.search(this.q);
           // }
         }),
-      this.entities$.subscribe(entities => {
+      this.entities$.subscribe((entities) => {
         this.setSeo();
 
         this.entities = entities;

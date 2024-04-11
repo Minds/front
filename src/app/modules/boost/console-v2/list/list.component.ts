@@ -27,41 +27,37 @@ import { BoostConsoleService } from '../services/console.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.ng.scss'],
 })
-export class BoostConsoleListComponent extends AbstractSubscriberComponent
-  implements OnInit {
+export class BoostConsoleListComponent
+  extends AbstractSubscriberComponent
+  implements OnInit
+{
   // Whether request is in progress.
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // Whether there is more data that could be added to the list.
-  public readonly moreData$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly moreData$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // Boost console context subject.
-  public readonly adminContext$: BehaviorSubject<boolean> = this.service
-    .adminContext$;
+  public readonly adminContext$: BehaviorSubject<boolean> =
+    this.service.adminContext$;
 
   // State filter value subject.
-  public readonly stateFilterValue$: BehaviorSubject<
-    BoostConsoleStateFilter
-  > = this.service.stateFilterValue$;
+  public readonly stateFilterValue$: BehaviorSubject<BoostConsoleStateFilter> =
+    this.service.stateFilterValue$;
 
   // Location type e.g. feed or sidebar.
-  public readonly locationFilterValue$: BehaviorSubject<
-    BoostConsoleLocationFilter
-  > = this.service.locationFilterValue$;
+  public readonly locationFilterValue$: BehaviorSubject<BoostConsoleLocationFilter> =
+    this.service.locationFilterValue$;
 
   // Suitability filter value subject.
-  public readonly suitabilityFilterValue$: BehaviorSubject<
-    BoostConsoleSuitabilityFilter
-  > = this.service.suitabilityFilterValue$;
+  public readonly suitabilityFilterValue$: BehaviorSubject<BoostConsoleSuitabilityFilter> =
+    this.service.suitabilityFilterValue$;
 
   // Payment method filter value subject.
-  public readonly paymentMethodFilterValue$: BehaviorSubject<
-    BoostConsolePaymentMethodFilter
-  > = this.service.paymentMethodFilterValue$;
+  public readonly paymentMethodFilterValue$: BehaviorSubject<BoostConsolePaymentMethodFilter> =
+    this.service.paymentMethodFilterValue$;
 
   // List subject.
   public readonly list$: BehaviorSubject<any[]> = new BehaviorSubject<Boost[]>(
@@ -91,7 +87,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
        * (So they don't need to manually reload
        * when response is full of deleted boosts)
        */
-      this.list$.subscribe(list => {
+      this.list$.subscribe((list) => {
         if (this.adminContext$.getValue()) {
           let boostHasEntity = false;
           for (let boost of list) {
@@ -121,7 +117,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
       this.paymentMethodFilterValue$,
     ]).pipe(
       distinctUntilChanged(),
-      tap(_ => {
+      tap((_) => {
         this.inProgress$.next(true);
         this.list$.next([]);
       }),
@@ -136,7 +132,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
           BoostConsoleLocationFilter,
           BoostConsoleStateFilter,
           BoostConsoleSuitabilityFilter,
-          BoostConsolePaymentMethodFilter
+          BoostConsolePaymentMethodFilter,
         ]): Observable<
           ApiResponse | { redirect: boolean; errorMessage: any }
         > => {

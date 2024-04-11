@@ -42,7 +42,10 @@ export class InteractionsTableComponent implements OnInit {
     beneficiaries: [],
   };
 
-  constructor(private client: Client, private cd: ChangeDetectorRef) {}
+  constructor(
+    private client: Client,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.getLeaderboard();

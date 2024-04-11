@@ -7,14 +7,12 @@ describe('ToasterComponent', () => {
   let component: ToasterComponent;
   let fixture: ComponentFixture<ToasterComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ToasterComponent],
-        providers: [ToasterService],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ToasterComponent],
+      providers: [ToasterService],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ToasterComponent);

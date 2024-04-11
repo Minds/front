@@ -55,7 +55,7 @@ export class ChannelShopMembershipsMembersComponent {
 
   ngOnInit() {
     this.supportTiersSubscription = this.supportTiersService.list$.subscribe(
-      supportTiers => {
+      (supportTiers) => {
         this.supportTiersFilter.options = [ALL_TIERS];
         for (const supportTier of supportTiers) {
           this.supportTiersFilter.options.push({

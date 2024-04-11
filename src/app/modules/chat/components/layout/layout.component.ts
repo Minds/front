@@ -58,23 +58,19 @@ export class ChatPageLayoutComponent implements OnInit, OnDestroy {
   /**
    * Whether the child route should only be rendered when full width.
    */
-  protected fullWidthOnlyChildRoute$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected fullWidthOnlyChildRoute$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Whether the component has been initialized.
    */
-  protected initialized$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  protected initialized$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Whether the viewport is to be considered narrow.
    */
-  protected isNarrowViewport$: Observable<
-    boolean
-  > = this.breakpointObserver
+  protected isNarrowViewport$: Observable<boolean> = this.breakpointObserver
     .observe([`(max-width: ${NARROW_VIEWPORT_WIDTH})`])
     .pipe(map((result: any) => result.matches));
 
@@ -98,7 +94,7 @@ export class ChatPageLayoutComponent implements OnInit, OnDestroy {
     );
 
     this.routerEventSubscription = this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
+      .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe((event: RouterEvent) => {
         this.fullWidthOnlyChildRoute$.next(
           this.route.snapshot.firstChild?.data?.fullWidthOnly
@@ -109,11 +105,10 @@ export class ChatPageLayoutComponent implements OnInit, OnDestroy {
       this.initialized$.next(true);
     }
 
-    this.topbarAlertSubscription = this.topbarAlertService.shouldShow$.subscribe(
-      (shouldShow: boolean) => {
+    this.topbarAlertSubscription =
+      this.topbarAlertService.shouldShow$.subscribe((shouldShow: boolean) => {
         this.hasTopbarAlert = shouldShow;
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {

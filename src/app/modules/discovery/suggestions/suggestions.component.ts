@@ -23,8 +23,10 @@ import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injec
   styleUrls: ['./suggestions.component.ng.scss'],
   providers: [SuggestionsService],
 })
-export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
-  implements OnInit, OnDestroy {
+export class DiscoverySuggestionsComponent
+  extends AbstractSubscriberComponent
+  implements OnInit, OnDestroy
+{
   type: string = 'user';
   contextualUser: string;
   /**
@@ -34,7 +36,7 @@ export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
   offset: string = '';
   limit: number = 24;
   entities$ = this.service.suggestions$.pipe(
-    map(suggestions => suggestions.map(suggestion => suggestion.entity))
+    map((suggestions) => suggestions.map((suggestion) => suggestion.entity))
   );
   inProgress$ = this.service.inProgress$;
   hasMoreData$ = this.service.hasMoreData$;

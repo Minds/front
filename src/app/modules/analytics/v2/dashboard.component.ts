@@ -76,17 +76,17 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     //   }
     // });
 
-    this.analyticsService.timespans$.subscribe(timespans => {
+    this.analyticsService.timespans$.subscribe((timespans) => {
       this.timespanFilter.options = timespans;
       this.detectChanges();
     });
-    this.analyticsService.category$.subscribe(category => {
+    this.analyticsService.category$.subscribe((category) => {
       this.detectChanges();
     });
-    this.analyticsService.metrics$.subscribe(metrics => {
+    this.analyticsService.metrics$.subscribe((metrics) => {
       this.detectChanges();
     });
-    this.analyticsService.filters$.subscribe(filters => {
+    this.analyticsService.filters$.subscribe((filters) => {
       // TODO: remove this once channel search is ready
       // const channelFilter = filters.find(filter => filter.id === 'channel');
       // if (channelFilter) {

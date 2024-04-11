@@ -105,7 +105,7 @@ describe('Composer Toolbar', () => {
   });
 
   const popupServiceMock: any = MockService(PopupService, {
-    create: function() {
+    create: function () {
       return this;
     },
     present: { toPromise: () => {} },
@@ -115,107 +115,105 @@ describe('Composer Toolbar', () => {
   let isTenantServiceMock: any;
   let permissionsServiceMock: any;
 
-  beforeEach(
-    waitForAsync(() => {
-      uploaderServiceMock = jasmine.createSpyObj<UploaderService>(
-        'UploaderService',
-        {},
+  beforeEach(waitForAsync(() => {
+    uploaderServiceMock = jasmine.createSpyObj<UploaderService>(
+      'UploaderService',
+      {},
+      {
+        file$$: new Subject(),
+        files$: of([]),
+        filesCount$: of(0),
+      }
+    );
+
+    isTenantServiceMock = jasmine.createSpyObj('IsTenantService', ['is']);
+
+    permissionsServiceMock = jasmine.createSpyObj('PermissionsService', [
+      'canCreatePaywall',
+    ]);
+
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, ApolloTestingModule],
+
+      declarations: [
+        ToolbarComponent,
+        ButtonComponent,
+        MockComponent(
+          {
+            selector: 'm-file-upload',
+            inputs: ['wrapperClass', 'disabled'],
+            outputs: ['onSelect'],
+          },
+          ['reset']
+        ),
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['from', 'iconId', 'sizeFactor'],
+        }),
+      ],
+      providers: [
         {
-          file$$: new Subject(),
-          files$: of([]),
-          filesCount$: of(0),
-        }
-      );
-
-      isTenantServiceMock = jasmine.createSpyObj('IsTenantService', ['is']);
-
-      permissionsServiceMock = jasmine.createSpyObj('PermissionsService', [
-        'canCreatePaywall',
-      ]);
-
-      TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule, ApolloTestingModule],
-
-        declarations: [
-          ToolbarComponent,
-          ButtonComponent,
-          MockComponent(
-            {
-              selector: 'm-file-upload',
-              inputs: ['wrapperClass', 'disabled'],
-              outputs: ['onSelect'],
-            },
-            ['reset']
-          ),
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['from', 'iconId', 'sizeFactor'],
-          }),
-        ],
-        providers: [
-          {
-            provide: ComposerService,
-            useValue: composerServiceMock,
-          },
-          {
-            provide: PopupService,
-            useValue: popupServiceMock,
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          {
-            provide: AttachmentApiService,
-            useValue: MockService(AttachmentApiService),
-          },
-          {
-            provide: UploaderService,
-            useValue: uploaderServiceMock,
-          },
-          {
-            provide: LivestreamService,
-            useValue: MockService(LivestreamService),
-          },
-          {
-            provide: ExperimentsService,
-            useValue: MockService(ExperimentsService),
-          },
-          {
-            provide: PermissionsService,
-            useValue: permissionsServiceMock,
-          },
-          {
-            provide: PermissionsService,
-            useValue: MockService(PermissionsService),
-          },
-          {
-            provide: NsfwEnabledService,
-            useValue: MockService(NsfwEnabledService),
-          },
-          { provide: IsTenantService, useValue: isTenantServiceMock },
-          {
-            provide: IfTenantDirective,
-            useValue: MockService(IfTenantDirective),
-          },
-          {
-            provide: SiteMembershipsCountService,
-            useValue: MockService(SiteMembershipsCountService, {
-              has: ['count$'],
-              props: {
-                count$: {
-                  get: () => siteMembershipCount$,
-                },
+          provide: ComposerService,
+          useValue: composerServiceMock,
+        },
+        {
+          provide: PopupService,
+          useValue: popupServiceMock,
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: AttachmentApiService,
+          useValue: MockService(AttachmentApiService),
+        },
+        {
+          provide: UploaderService,
+          useValue: uploaderServiceMock,
+        },
+        {
+          provide: LivestreamService,
+          useValue: MockService(LivestreamService),
+        },
+        {
+          provide: ExperimentsService,
+          useValue: MockService(ExperimentsService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: permissionsServiceMock,
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+        {
+          provide: NsfwEnabledService,
+          useValue: MockService(NsfwEnabledService),
+        },
+        { provide: IsTenantService, useValue: isTenantServiceMock },
+        {
+          provide: IfTenantDirective,
+          useValue: MockService(IfTenantDirective),
+        },
+        {
+          provide: SiteMembershipsCountService,
+          useValue: MockService(SiteMembershipsCountService, {
+            has: ['count$'],
+            props: {
+              count$: {
+                get: () => siteMembershipCount$,
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-      service = TestBed.inject(LivestreamService);
-    })
-  );
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+    service = TestBed.inject(LivestreamService);
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(ToolbarComponent);
     comp = fixture.componentInstance;

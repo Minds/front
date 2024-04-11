@@ -8,21 +8,19 @@ describe('GetMetamaskComponent', () => {
   let comp: GetMetamaskComponent;
   let fixture: ComponentFixture<GetMetamaskComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [GetMetamaskComponent],
-        providers: [
-          {
-            provide: ConfigsService,
-            useValue: MockService(ConfigsService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [GetMetamaskComponent],
+      providers: [
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
 
     fixture = TestBed.createComponent(GetMetamaskComponent);

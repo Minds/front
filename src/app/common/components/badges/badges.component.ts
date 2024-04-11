@@ -61,7 +61,7 @@ export class ChannelBadgesComponent {
 
   ngOnInit(): void {
     this.themeSubscription = this.themeService.isDark$.subscribe(
-      isDark => (this.isDark = isDark)
+      (isDark) => (this.isDark = isDark)
     );
   }
 

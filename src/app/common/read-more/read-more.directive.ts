@@ -17,7 +17,10 @@ export class ReadMoreDirective {
   @ContentChild(ReadMoreButtonComponent) button;
   _maxHeightAllowed: number;
 
-  constructor(private element: ElementRef, private cd: ChangeDetectorRef) {
+  constructor(
+    private element: ElementRef,
+    private cd: ChangeDetectorRef
+  ) {
     this._element = element.nativeElement;
   }
 

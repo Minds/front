@@ -51,17 +51,16 @@ export class TopbarNetworkTrialBannerComponent {
     };
   }
 
-  constructor(private config: ConfigsService, private cd: ChangeDetectorRef) {
+  constructor(
+    private config: ConfigsService,
+    private cd: ChangeDetectorRef
+  ) {
     this.trialEndTimestamp = this.config.get('tenant')?.['trial_end'];
-    this.trialDeletionTimestamp = this.config.get('tenant')?.[
-      'network_deletion_timestamp'
-    ];
+    this.trialDeletionTimestamp =
+      this.config.get('tenant')?.['network_deletion_timestamp'];
     this.isExpired = this.trialEndTimestamp < moment().unix();
     // provide a buffer to avoid weirdness if there are delays in layout rendering.
     this.isPastDeletionThreshold =
-      this.trialDeletionTimestamp <
-      moment()
-        .add(30, 'seconds')
-        .unix();
+      this.trialDeletionTimestamp < moment().add(30, 'seconds').unix();
   }
 }

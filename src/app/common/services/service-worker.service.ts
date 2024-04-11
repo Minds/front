@@ -43,16 +43,16 @@ export class ServiceWorkerService extends AbstractSubscriberComponent {
     // Allow the app to stabilize first, before starting
     // polling for updates with `interval()`.
     const appIsStable$ = this.appRef.isStable.pipe(
-      first(isStable => isStable === true)
+      first((isStable) => isStable === true)
     );
     const everySixHours$ = interval(6 * 60 * 60 * 1000);
     const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);
 
-    this.subscriptions.map(sub => sub.unsubscribe());
+    this.subscriptions.map((sub) => sub.unsubscribe());
     this.subscriptions = [
       // Listen for router events and refresh the app if we had an available update
       this.router.events
-        .pipe(filter(e => e instanceof NavigationStart))
+        .pipe(filter((e) => e instanceof NavigationStart))
         .subscribe((data: NavigationStart) => {
           if (this.shouldRefreshOnNavigation) {
             window.location.pathname = data.url;
@@ -63,7 +63,7 @@ export class ServiceWorkerService extends AbstractSubscriberComponent {
         this.swUpdate.checkForUpdate()
       ),
       // start watching updates
-      this.swUpdate.versionUpdates.subscribe(event => {
+      this.swUpdate.versionUpdates.subscribe((event) => {
         console.log('[ServiceWorker] Version update', event);
         switch (event.type) {
           case 'VERSION_DETECTED':
@@ -78,7 +78,7 @@ export class ServiceWorkerService extends AbstractSubscriberComponent {
       }),
       // if the sw was unrecoverable, refresh on navigation
       // TODO: is this really what we want?
-      this.swUpdate.unrecoverable.subscribe(event => {
+      this.swUpdate.unrecoverable.subscribe((event) => {
         console.log('[ServiceWorker] unrecoverable', event);
         this.shouldRefreshOnNavigation = true;
       }),

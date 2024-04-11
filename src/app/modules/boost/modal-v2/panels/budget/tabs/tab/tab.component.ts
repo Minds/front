@@ -27,7 +27,8 @@ import { BoostModalV2Service } from '../../../../services/boost-modal-v2.service
 })
 export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
   // enums.
-  public BoostPaymentCategory: typeof BoostPaymentCategory = BoostPaymentCategory;
+  public BoostPaymentCategory: typeof BoostPaymentCategory =
+    BoostPaymentCategory;
 
   // category for payments.
   @Input() public paymentCategory: BoostPaymentCategory =
@@ -55,17 +56,16 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
   public form: UntypedFormGroup;
 
   // text for estimated reach.
-  public readonly estimatedReachText$: Observable<
-    string
-  > = this.service.estimatedReach$.pipe(
-    map((estimatedReach: EstimatedReach): string => {
-      return estimatedReach
-        ? formatNumber(estimatedReach.views.low, this.locale) +
-            ` - ` +
-            formatNumber(estimatedReach.views.high, this.locale)
-        : 'Unknown';
-    })
-  );
+  public readonly estimatedReachText$: Observable<string> =
+    this.service.estimatedReach$.pipe(
+      map((estimatedReach: EstimatedReach): string => {
+        return estimatedReach
+          ? formatNumber(estimatedReach.views.low, this.locale) +
+              ` - ` +
+              formatNumber(estimatedReach.views.high, this.locale)
+          : 'Unknown';
+      })
+    );
 
   // subscriptions
   private dailyBudgetValueSubscription: Subscription;
@@ -89,16 +89,14 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
     this.service.duration$.next(this.initialDuration);
 
     // update service on value change.
-    this.dailyBudgetValueSubscription = this.form.controls.dailyBudget.valueChanges.subscribe(
-      (value: number) => {
+    this.dailyBudgetValueSubscription =
+      this.form.controls.dailyBudget.valueChanges.subscribe((value: number) => {
         this.service.dailyBudget$.next(value);
-      }
-    );
-    this.durationValueSubscription = this.form.controls.duration.valueChanges.subscribe(
-      (value: number) => {
+      });
+    this.durationValueSubscription =
+      this.form.controls.duration.valueChanges.subscribe((value: number) => {
         this.service.duration$.next(value);
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {

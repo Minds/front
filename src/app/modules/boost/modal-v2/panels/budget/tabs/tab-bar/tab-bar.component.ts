@@ -12,11 +12,12 @@ import { BoostModalV2Service } from '../../../../services/boost-modal-v2.service
 })
 export class BoostModalV2BudgetTabBarComponent {
   // enums.
-  public BoostPaymentCategory: typeof BoostPaymentCategory = BoostPaymentCategory;
+  public BoostPaymentCategory: typeof BoostPaymentCategory =
+    BoostPaymentCategory;
 
   // category for payment.
-  public readonly paymentCategory$: BehaviorSubject<BoostPaymentCategory> = this
-    .service.paymentCategory$;
+  public readonly paymentCategory$: BehaviorSubject<BoostPaymentCategory> =
+    this.service.paymentCategory$;
 
   constructor(
     private service: BoostModalV2Service,

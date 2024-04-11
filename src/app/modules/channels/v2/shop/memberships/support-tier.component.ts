@@ -21,15 +21,12 @@ export class ChannelShopMembershipsSupportTierComponent {
   @Input() supportTier: SupportTier;
   @Input() isOwner: boolean;
   @Input() displayCurrency: Currency | null = null;
-  @Output() onSelectIntent: EventEmitter<SupportTier> = new EventEmitter<
-    SupportTier
-  >();
-  @Output() onEditIntent: EventEmitter<SupportTier> = new EventEmitter<
-    SupportTier
-  >();
-  @Output() onDeleteIntent: EventEmitter<SupportTier> = new EventEmitter<
-    SupportTier
-  >();
+  @Output() onSelectIntent: EventEmitter<SupportTier> =
+    new EventEmitter<SupportTier>();
+  @Output() onEditIntent: EventEmitter<SupportTier> =
+    new EventEmitter<SupportTier>();
+  @Output() onDeleteIntent: EventEmitter<SupportTier> =
+    new EventEmitter<SupportTier>();
 
   get displayFilteredCurrency(): Currency | null {
     if (!this.supportTier) {

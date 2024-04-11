@@ -82,7 +82,7 @@ export class TextInputAutocompleteDirective implements OnDestroy {
    * A function that formats the selected choice once selected.
    */
   @Input()
-  getChoiceLabel: (choice: any, triggerCharacter?: any) => string = choice =>
+  getChoiceLabel: (choice: any, triggerCharacter?: any) => string = (choice) =>
     choice;
 
   /* tslint:disable member-ordering */
@@ -142,14 +142,14 @@ export class TextInputAutocompleteDirective implements OnDestroy {
             this.menu.component.instance.choiceLoading = true;
             this.menu.component.changeDetectorRef.detectChanges();
             Promise.resolve(this.findChoices(searchText, this.triggerCharacter))
-              .then(choices => {
+              .then((choices) => {
                 if (this.menu) {
                   this.menu.component.instance.choices = choices;
                   this.menu.component.instance.choiceLoading = false;
                   this.menu.component.changeDetectorRef.detectChanges();
                 }
               })
-              .catch(err => {
+              .catch((err) => {
                 if (this.menu) {
                   this.menu.component.instance.choiceLoading = false;
                   this.menu.component.instance.choiceLoadError = err;
@@ -188,9 +188,10 @@ export class TextInputAutocompleteDirective implements OnDestroy {
 
   private showMenu() {
     if (!this.menu) {
-      const menuFactory = this.componentFactoryResolver.resolveComponentFactory<
-        TextInputAutocompleteMenuComponent
-      >(this.menuComponent);
+      const menuFactory =
+        this.componentFactoryResolver.resolveComponentFactory<TextInputAutocompleteMenuComponent>(
+          this.menuComponent
+        );
       this.menu = {
         component: this.viewContainerRef.createComponent(
           menuFactory,
@@ -224,7 +225,7 @@ export class TextInputAutocompleteDirective implements OnDestroy {
       this.menu.component.changeDetectorRef.detectChanges();
       this.menu.component.instance.selectChoice
         .pipe(takeUntil(this.menuHidden$))
-        .subscribe(choice => {
+        .subscribe((choice) => {
           const label = this.getChoiceLabel(choice, this.triggerCharacter);
           let element: any = this.elm.nativeElement;
 

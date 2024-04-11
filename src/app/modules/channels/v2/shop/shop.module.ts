@@ -34,9 +34,8 @@ export class ChannelsShopModule {
   public resolveComponents(): { [selector: string]: ComponentFactory<any> } {
     const factories = {};
     for (let component of EXPORTS) {
-      const factory: ComponentFactory<any> = this.componentFactoryResolver.resolveComponentFactory(
-        component
-      );
+      const factory: ComponentFactory<any> =
+        this.componentFactoryResolver.resolveComponentFactory(component);
       factories[factory.selector] = factory;
     }
     return factories;

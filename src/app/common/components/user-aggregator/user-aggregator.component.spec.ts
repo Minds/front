@@ -11,25 +11,23 @@ describe('UserAggregatorComponent', () => {
   let comp: UserAggregatorComponent;
   let fixture: ComponentFixture<UserAggregatorComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          UserAggregatorComponent,
-          MockComponent({
-            selector: 'm-hovercard',
-            inputs: ['publisher', 'offset'],
-          }),
-          MockComponent({
-            selector: 'minds-avatar',
-            inputs: ['object'],
-          }),
-          TruncatePipe,
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        UserAggregatorComponent,
+        MockComponent({
+          selector: 'm-hovercard',
+          inputs: ['publisher', 'offset'],
+        }),
+        MockComponent({
+          selector: 'minds-avatar',
+          inputs: ['object'],
+        }),
+        TruncatePipe,
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UserAggregatorComponent);

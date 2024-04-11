@@ -81,7 +81,10 @@ export class ReadMoreButtonComponent {
 
   content: ReadMoreDirective;
 
-  constructor(private cd: ChangeDetectorRef, private router: Router) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private router: Router
+  ) {}
 
   expandIfShowingOnlyFadeout($event: MouseEvent) {
     if (this.clickDisabled || !this.showOnlyFadeout) {

@@ -1,13 +1,13 @@
 mutation AdminUpdateAccount(
-    $currentUsername: String!
-    $newUsername: String
-    $newEmail: String
-    $resetMFA: Boolean
+  $currentUsername: String!
+  $newUsername: String
+  $newEmail: String
+  $resetMFA: Boolean
 ) {
-    updateAccount(
-        currentUsername: $currentUsername
-        newUsername: $newUsername
-        newEmail: $newEmail
-        resetMFA: $resetMFA
-    )
+  updateAccount(
+    currentUsername: $currentUsername
+    newUsername: $newUsername
+    newEmail: $newEmail
+    resetMFA: $resetMFA
+  )
 }

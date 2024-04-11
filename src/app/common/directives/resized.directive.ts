@@ -42,7 +42,7 @@ export class ResizedDirective implements OnInit, OnDestroy {
     private readonly zone: NgZone
   ) {
     this.mResized = new EventEmitter<ResizedEvent>();
-    this.observer = new ResizeObserver(entries =>
+    this.observer = new ResizeObserver((entries) =>
       this.zone.run(() => this.observe(entries))
     );
   }

@@ -24,7 +24,7 @@ export class CompassHookService {
    * saved in their local storage. If they do, save them
    */
   listen(): void {
-    this.loggedInSubscription = this.session.loggedinEmitter.subscribe(is => {
+    this.loggedInSubscription = this.session.loggedinEmitter.subscribe((is) => {
       if (is) {
         const answers = JSON.parse(
           this.cookieService.get(SOCIAL_COMPASS_ANSWERS_KEY)

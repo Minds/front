@@ -20,7 +20,8 @@ export enum PlanCardPriceTimePeriodEnum {
 })
 export class PlanCardComponent {
   /** Enum for use in template. */
-  public readonly PlanCardPriceTimePeriodEnum: typeof PlanCardPriceTimePeriodEnum = PlanCardPriceTimePeriodEnum;
+  public readonly PlanCardPriceTimePeriodEnum: typeof PlanCardPriceTimePeriodEnum =
+    PlanCardPriceTimePeriodEnum;
 
   /** Card title. */
   @Input() title: string;

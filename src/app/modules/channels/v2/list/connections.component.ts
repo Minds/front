@@ -40,9 +40,8 @@ export class ChannelListConnectionsComponent implements OnDestroy {
   /**
    * Subscribe endpoint parameter subject
    */
-  readonly subscribeEndpointParam$: BehaviorSubject<
-    string
-  > = new BehaviorSubject<string>(null);
+  readonly subscribeEndpointParam$: BehaviorSubject<string> =
+    new BehaviorSubject<string>(null);
 
   /**
    * Search query
@@ -61,7 +60,10 @@ export class ChannelListConnectionsComponent implements OnDestroy {
    * @param service
    * @param feed
    */
-  constructor(public service: ChannelsV2Service, public feed: FeedsService) {
+  constructor(
+    public service: ChannelsV2Service,
+    public feed: FeedsService
+  ) {
     this.guidSubscription = combineLatest([
       this.service.guid$,
       this.subscribeEndpointParam$,

@@ -25,7 +25,7 @@ export class AdminWithdrawals {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.user = params['user'] || '';
 
       this.load(true);
@@ -80,7 +80,7 @@ export class AdminWithdrawals {
           this.moreData = false;
         }
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
       });
   }
@@ -104,8 +104,9 @@ export class AdminWithdrawals {
       withdrawal.status = 'approved';
     } catch (e) {
       this.toasterService.error(
-        `There was an issue while approving withdrawal: ${(e && e.message) ||
-          'Unknown server error'}`
+        `There was an issue while approving withdrawal: ${
+          (e && e.message) || 'Unknown server error'
+        }`
       );
     }
 
@@ -131,8 +132,9 @@ export class AdminWithdrawals {
       withdrawal.status = 'rejected';
     } catch (e) {
       this.toasterService.error(
-        `There was an issue while rejecting withdrawal: ${(e && e.message) ||
-          'Unknown server error'}`
+        `There was an issue while rejecting withdrawal: ${
+          (e && e.message) || 'Unknown server error'
+        }`
       );
     }
 

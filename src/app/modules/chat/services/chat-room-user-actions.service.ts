@@ -21,9 +21,8 @@ import { ToasterService } from '../../../common/services/toaster.service';
 @Injectable({ providedIn: 'root' })
 export class ChatRoomUserActionsService {
   /** Whether an action is in progress. */
-  private actionInProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  private actionInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     private deleteChatRoomGQL: DeleteChatRoomGQL,
@@ -46,11 +45,12 @@ export class ChatRoomUserActionsService {
     this.actionInProgress$.next(true);
 
     try {
-      const response: MutationResult<DeleteChatRoomAndBlockUserMutation> = await lastValueFrom(
-        this.deleteChatRoomAndBlockUserGQL.mutate({
-          roomGuid: chatRoom.node.guid,
-        })
-      );
+      const response: MutationResult<DeleteChatRoomAndBlockUserMutation> =
+        await lastValueFrom(
+          this.deleteChatRoomAndBlockUserGQL.mutate({
+            roomGuid: chatRoom.node.guid,
+          })
+        );
 
       if (response.errors?.length) {
         throw new Error(response.errors[0].message);
@@ -83,9 +83,10 @@ export class ChatRoomUserActionsService {
     this.actionInProgress$.next(true);
 
     try {
-      const response: MutationResult<DeleteChatRoomMutation> = await lastValueFrom(
-        this.deleteChatRoomGQL.mutate({ roomGuid: chatRoom.node.guid })
-      );
+      const response: MutationResult<DeleteChatRoomMutation> =
+        await lastValueFrom(
+          this.deleteChatRoomGQL.mutate({ roomGuid: chatRoom.node.guid })
+        );
 
       if (response.errors?.length) {
         throw new Error(response.errors[0].message);
@@ -118,9 +119,10 @@ export class ChatRoomUserActionsService {
     this.actionInProgress$.next(true);
 
     try {
-      const response: MutationResult<LeaveChatRoomMutation> = await lastValueFrom(
-        this.leaveChatRoomGQL.mutate({ roomGuid: chatRoom.node.guid })
-      );
+      const response: MutationResult<LeaveChatRoomMutation> =
+        await lastValueFrom(
+          this.leaveChatRoomGQL.mutate({ roomGuid: chatRoom.node.guid })
+        );
       if (response.errors?.length) {
         throw new Error(response.errors[0].message);
       }
@@ -156,12 +158,13 @@ export class ChatRoomUserActionsService {
     this.actionInProgress$.next(true);
 
     try {
-      const response: MutationResult<RemoveMemberFromChatRoomMutation> = await lastValueFrom(
-        this.removeMemberFromChatRoomGql.mutate({
-          roomGuid: chatRoom.node.guid,
-          memberGuid: user.guid,
-        })
-      );
+      const response: MutationResult<RemoveMemberFromChatRoomMutation> =
+        await lastValueFrom(
+          this.removeMemberFromChatRoomGql.mutate({
+            roomGuid: chatRoom.node.guid,
+            memberGuid: user.guid,
+          })
+        );
 
       if (response.errors?.length) {
         throw new Error(response.errors[0].message);

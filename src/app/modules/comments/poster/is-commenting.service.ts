@@ -10,9 +10,8 @@ export class IsCommentingService implements OnDestroy {
   /**
    * Holds true if poster reports that user is actively commenting.
    */
-  public readonly isCommenting$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly isCommenting$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   ngOnDestroy(): void {
     this.reset();
