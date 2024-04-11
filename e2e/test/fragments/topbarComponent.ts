@@ -1,3 +1,5 @@
+import { assert } from 'console';
+
 const { I } = inject();
 
 /**
@@ -10,6 +12,7 @@ class TopbarComponent {
   private joinNowButton: CodeceptJS.Locator = locate(
     `${this.topbarRootSelector} m-button`
   ).withText('Join Now');
+  private avatarSelector: string = '[data-ref=topnav-avatar] .minds-avatar';
 
   /**
    * Open notifications flyout and wait for list to load.
@@ -19,7 +22,7 @@ class TopbarComponent {
     await Promise.all([
       I.click(this.notificationButtonSelector),
       I.waitForResponse(
-        resp =>
+        (resp) =>
           resp.url().includes('/api/v3/notifications/list') &&
           resp.status() === 200,
         30
@@ -32,6 +35,24 @@ class TopbarComponent {
    */
   public clickJoinNowButton(): void {
     I.click(this.joinNowButton);
+  }
+
+  /**
+   * Verify that the avatar image is valid.
+   * @returns { Promise<void> }
+   */
+  public async verifyAvatarImageIsValid(): Promise<void> {
+    let styleAttribute: any = await I.grabAttributeFrom(
+      this.avatarSelector,
+      'style'
+    );
+    assert(
+      /^url\(.+\/icon\/\d+\/large\/\d+\"\)$/.test(
+        styleAttribute.backgroundImage
+      ),
+      'Avatar is not set correctly in the topbar, found value: ' +
+        styleAttribute.backgroundImage
+    );
   }
 }
 
