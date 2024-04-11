@@ -1,4 +1,3 @@
-import assert from 'assert';
 import modalComponent from '../fragments/modalComponent';
 import { generateARandomString } from '../utils/utils';
 
@@ -75,15 +74,7 @@ namespace CommonSteps {
     I.refreshPage();
     I.amOnPage(loginPage.loginURI);
 
-    await Promise.all([
-      loginPage.login(loginPage.validUsername, loginPage.validPassword),
-      I.waitForResponse(
-        (resp) =>
-          resp.url().includes('/api/v2/mwa/pv') && resp.status() === 200,
-        30
-      ),
-    ]);
-
+    loginPage.login(loginPage.validUsername, loginPage.validPassword);
     I.seeCookie('minds_sess');
   });
 
