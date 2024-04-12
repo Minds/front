@@ -858,6 +858,8 @@ export type MultiTenantConfig = {
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
+  customHomePageDescription?: Maybe<Scalars['String']['output']>;
+  customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
@@ -870,6 +872,8 @@ export type MultiTenantConfig = {
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
+  customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
@@ -3651,6 +3655,8 @@ export type GetMultiTenantConfigQuery = {
     canEnableFederation?: boolean | null;
     federationDisabled?: boolean | null;
     replyEmail?: string | null;
+    customHomePageEnabled?: boolean | null;
+    customHomePageDescription?: string | null;
   } | null;
 };
 
@@ -3743,6 +3749,8 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -8987,6 +8995,8 @@ export const GetMultiTenantConfigDocument = gql`
       canEnableFederation
       federationDisabled
       replyEmail
+      customHomePageEnabled
+      customHomePageDescription
     }
   }
 `;
@@ -9130,6 +9140,8 @@ export const SetMultiTenantConfigDocument = gql`
     $federationDisabled: Boolean
     $replyEmail: String
     $nsfwEnabled: Boolean
+    $customHomePageEnabled: Boolean
+    $customHomePageDescription: String
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
@@ -9139,6 +9151,8 @@ export const SetMultiTenantConfigDocument = gql`
         federationDisabled: $federationDisabled
         replyEmail: $replyEmail
         nsfwEnabled: $nsfwEnabled
+        customHomePageEnabled: $customHomePageEnabled
+        customHomePageDescription: $customHomePageDescription
       }
     )
   }

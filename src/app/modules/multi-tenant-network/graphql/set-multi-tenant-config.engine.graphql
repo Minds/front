@@ -5,6 +5,8 @@ mutation SetMultiTenantConfig(
   $federationDisabled: Boolean
   $replyEmail: String
   $nsfwEnabled: Boolean
+  $customHomePageEnabled: Boolean
+  $customHomePageDescription: String
 ) {
   multiTenantConfig(
     multiTenantConfigInput: {
@@ -14,6 +16,8 @@ mutation SetMultiTenantConfig(
       federationDisabled: $federationDisabled
       replyEmail: $replyEmail
       nsfwEnabled: $nsfwEnabled
+      customHomePageEnabled: $customHomePageEnabled
+      customHomePageDescription: $customHomePageDescription
     }
   )
 }

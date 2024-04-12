@@ -7,5 +7,7 @@ query GetMultiTenantConfig {
     canEnableFederation
     federationDisabled
     replyEmail
+    customHomePageEnabled
+    customHomePageDescription
   }
 }

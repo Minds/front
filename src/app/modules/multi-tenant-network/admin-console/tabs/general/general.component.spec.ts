@@ -27,6 +27,17 @@ describe('NetworkAdminConsoleGeneralComponent', () => {
           selector: 'm-networkAdminConsole__federationSettings',
         }),
         MockComponent({ selector: 'm-networkAdminConsole__featured' }),
+        MockComponent({
+          selector: 'm-networkAdminConsole__enableLandingPageToggle',
+        }),
+        MockComponent({
+          selector: 'm-networkAdminConsole__replyEmailSettings',
+        }),
+        MockComponent({
+          selector: 'm-networkAdminConsole__landingPageDescription',
+        }),
+        MockComponent({ selector: 'm-loadingSpinner', inputs: ['inProgress'] }),
+        MockComponent({ selector: 'm-formError', inputs: ['error'] }),
       ],
       imports: [ReactiveFormsModule],
       providers: [
