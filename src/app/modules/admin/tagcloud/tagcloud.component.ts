@@ -40,7 +40,7 @@ export class AdminTagcloud implements OnInit {
           this.hidden = hidden;
         }
       )
-      .catch(e => {
+      .catch((e) => {
         this.toasterService.error(`Error loading tags: ${e.message}`);
       });
   }
@@ -61,7 +61,7 @@ export class AdminTagcloud implements OnInit {
       .then(() => {
         this.load();
       })
-      .catch(e => {
+      .catch((e) => {
         this.load();
         this.toasterService.error(`Error deleting #${tag}!`);
       });
@@ -83,7 +83,7 @@ export class AdminTagcloud implements OnInit {
       .then(() => {
         this.load();
       })
-      .catch(e => {
+      .catch((e) => {
         this.load();
         this.toasterService.error(`Error showing #${tag}!`);
       });
@@ -101,7 +101,7 @@ export class AdminTagcloud implements OnInit {
       .then(() => {
         this.load();
       })
-      .catch(e => {
+      .catch((e) => {
         this.toasterService.error(`Error resyncing!`);
       });
   }

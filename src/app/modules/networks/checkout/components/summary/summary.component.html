@@ -49,7 +49,7 @@
           <p class="m-networksCheckoutSummary__sectionText">
             {{
               summary.planSummary?.monthlyFeeCents / 100
-                | currency: 'USD':'symbol':'1.2-2'
+                | currency: 'USD' : 'symbol' : '1.2-2'
             }}
             / month
           </p>
@@ -84,7 +84,8 @@
                 *ngIf="addon.monthlyFeeCents"
               >
                 {{
-                  addon.monthlyFeeCents / 100 | currency: 'USD':'symbol':'1.2-2'
+                  addon.monthlyFeeCents / 100
+                    | currency: 'USD' : 'symbol' : '1.2-2'
                 }}
                 / month
               </p>
@@ -93,7 +94,8 @@
                 *ngIf="addon.oneTimeFeeCents"
               >
                 {{
-                  addon.oneTimeFeeCents / 100 | currency: 'USD':'symbol':'1.2-2'
+                  addon.oneTimeFeeCents / 100
+                    | currency: 'USD' : 'symbol' : '1.2-2'
                 }}
                 / one time set-up*
               </p>
@@ -107,7 +109,7 @@
           <span class="m-networksCheckoutSummary__monthlyTotal"
             >{{
               summary.totalMonthlyFeeCents / 100
-                | currency: 'USD':'symbol':'1.2-2'
+                | currency: 'USD' : 'symbol' : '1.2-2'
             }}
             USD&nbsp;</span
           >
@@ -135,7 +137,7 @@
         <p class="m-networksCheckoutSummary__totalPaidToday">
           {{
             summary.totalInitialFeeCents / 100
-              | currency: 'USD':'symbol':'1.2-2'
+              | currency: 'USD' : 'symbol' : '1.2-2'
           }}
           USD
         </p>
@@ -143,7 +145,8 @@
       <div
         class="m-networksCheckoutSummary__ctaTermsContainer"
         [ngClass]="{
-          'm-networksCheckoutSummary__ctaTermsContainer--noText': !templateVars.termsMarkdown
+          'm-networksCheckoutSummary__ctaTermsContainer--noText':
+            !templateVars.termsMarkdown
         }"
       >
         <markdown
@@ -165,6 +168,7 @@
           [saving]="checkoutButtonVars.navToPaymentUrlInProgress"
           [disabled]="checkoutButtonVars.navToPaymentUrlInProgress"
           (onAction)="onPrimaryCtaClick(templateVars.activePage)"
+          data-ref="tenant-checkout-btn"
         >
           <ng-container [ngSwitch]="templateVars.activePage">
             <ng-container

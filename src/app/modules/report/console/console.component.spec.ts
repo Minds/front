@@ -42,38 +42,36 @@ describe('ReportConsoleComponent', () => {
   let comp: ReportConsoleComponent;
   let fixture: ComponentFixture<ReportConsoleComponent>;
   let appeals: Array<any>;
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MaterialMock,
-          InfiniteScrollMock,
-          MindsCardMock,
-          MindsCardCommentMock,
-          ReportConsoleComponent,
-        ], // declare the test component
-        imports: [FormsModule, RouterTestingModule],
-        providers: [
-          { provide: Client, useValue: clientMock },
-          JurySessionService,
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MaterialMock,
+        InfiniteScrollMock,
+        MindsCardMock,
+        MindsCardCommentMock,
+        ReportConsoleComponent,
+      ], // declare the test component
+      imports: [FormsModule, RouterTestingModule],
+      providers: [
+        { provide: Client, useValue: clientMock },
+        JurySessionService,
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: ReportService,
+          useValue: {
+            reasons: [],
           },
-          {
-            provide: ReportService,
-            useValue: {
-              reasons: [],
-            },
-          },
-        ],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents(); // compile template and css
-    })
-  );
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

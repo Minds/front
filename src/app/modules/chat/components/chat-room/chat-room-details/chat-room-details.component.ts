@@ -47,42 +47,41 @@ import { ConfirmV2Component } from '../../../../modals/confirm-v2/confirm.compon
 })
 export class ChatRoomDetailsComponent implements OnInit {
   // Enums for use in template.
-  protected readonly ChatRoomTypeEnum: typeof ChatRoomTypeEnum = ChatRoomTypeEnum;
-  protected readonly ChatRoomRoleEnum: typeof ChatRoomRoleEnum = ChatRoomRoleEnum;
+  protected readonly ChatRoomTypeEnum: typeof ChatRoomTypeEnum =
+    ChatRoomTypeEnum;
+  protected readonly ChatRoomRoleEnum: typeof ChatRoomRoleEnum =
+    ChatRoomRoleEnum;
 
   /** GUID of the chat room. */
   @Input() protected roomGuid: string;
 
   /** Handle back button click. */
-  @Output('backClick') protected backClickEmitter: EventEmitter<
-    void
-  > = new EventEmitter<void>();
+  @Output('backClick') protected backClickEmitter: EventEmitter<void> =
+    new EventEmitter<void>();
 
   /** Count of members that the room has. */
-  protected readonly membersCount$: Observable<number> = this
-    .totalChatRoomMembersService.membersCount$;
+  protected readonly membersCount$: Observable<number> =
+    this.totalChatRoomMembersService.membersCount$;
 
   /** Whether member service is initialized. */
-  protected readonly initialized$: Observable<boolean> = this
-    .chatRoomMembersService.initialized$;
+  protected readonly initialized$: Observable<boolean> =
+    this.chatRoomMembersService.initialized$;
 
   /** Chat room details are being shown for. */
-  protected readonly chatRoom$: Observable<ChatRoomEdge> = this
-    .singleChatRoomService.chatRoom$;
+  protected readonly chatRoom$: Observable<ChatRoomEdge> =
+    this.singleChatRoomService.chatRoom$;
 
   /** Type of the chat room. */
-  protected readonly chatRoomType$: Observable<
-    ChatRoomTypeEnum
-  > = this.chatRoom$.pipe(
-    map((chatRoom: ChatRoomEdge) => chatRoom?.node?.roomType)
-  );
+  protected readonly chatRoomType$: Observable<ChatRoomTypeEnum> =
+    this.chatRoom$.pipe(
+      map((chatRoom: ChatRoomEdge) => chatRoom?.node?.roomType)
+    );
 
   /** Whether the currently logged in user is the room owner. */
-  protected readonly isUserRoomOwner$: Observable<
-    boolean
-  > = this.chatRoom$.pipe(
-    map((chatRoom: ChatRoomEdge): boolean => chatRoom?.node?.isUserRoomOwner)
-  );
+  protected readonly isUserRoomOwner$: Observable<boolean> =
+    this.chatRoom$.pipe(
+      map((chatRoom: ChatRoomEdge): boolean => chatRoom?.node?.isUserRoomOwner)
+    );
 
   constructor(
     private totalChatRoomMembersService: TotalChatRoomMembersService,

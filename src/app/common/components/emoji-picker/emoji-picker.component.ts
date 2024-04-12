@@ -40,9 +40,8 @@ export class EmojiPickerComponent {
   /**
    * On Post event emitter
    */
-  @Output('emojiSelect') emojiSelectEmitter: EventEmitter<
-    any
-  > = new EventEmitter();
+  @Output('emojiSelect') emojiSelectEmitter: EventEmitter<any> =
+    new EventEmitter();
   popperModifiers: Array<any> = [];
   @ViewChild('popper') popper: NgxPopperjsContentComponent;
 
@@ -79,9 +78,8 @@ export class EmojiPickerComponent {
     const { PickerComponent } = await import('@ctrl/ngx-emoji-mart');
 
     // Resolves the available components
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      PickerComponent
-    );
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(PickerComponent);
 
     if (!this.emojiPickerOutlet) {
       console.error('Could not find emoji picker outlet');
@@ -91,9 +89,8 @@ export class EmojiPickerComponent {
     this.emojiPickerOutlet.clear();
 
     // Attach the component
-    const componentRef = this.emojiPickerOutlet.createComponent(
-      componentFactory
-    );
+    const componentRef =
+      this.emojiPickerOutlet.createComponent(componentFactory);
 
     componentRef.instance.autoFocus = true;
     componentRef.instance.isNative = true;
@@ -105,7 +102,7 @@ export class EmojiPickerComponent {
     this.onSelectSubscription?.unsubscribe();
 
     this.onSelectSubscription = componentRef.instance.emojiSelect.subscribe(
-      event => {
+      (event) => {
         this.emojiSelect(event);
       }
     );

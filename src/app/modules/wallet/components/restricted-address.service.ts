@@ -21,7 +21,7 @@ export class RestrictedAddressService {
       map((response: ApiResponse) => {
         return response?.status !== 'success';
       }),
-      catchError(e => {
+      catchError((e) => {
         console.error(e);
         return of(true);
       })

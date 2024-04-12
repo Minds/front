@@ -38,11 +38,10 @@ export class SettingsV2MessengerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     let initShow;
-    this.showLegacyMessengerSubscription = this.messengerService.showLegacyMessenger$.subscribe(
-      show => {
+    this.showLegacyMessengerSubscription =
+      this.messengerService.showLegacyMessenger$.subscribe((show) => {
         initShow = show;
-      }
-    );
+      });
 
     this.form = new UntypedFormGroup({
       legacy_messenger: new UntypedFormControl(initShow),

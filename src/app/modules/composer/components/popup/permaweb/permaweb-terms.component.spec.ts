@@ -21,22 +21,20 @@ describe('Permaweb Terms Component', () => {
     },
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule],
-        declarations: [PermawebTermsComponent, ButtonComponent],
-        providers: [
-          {
-            provide: ComposerService,
-            useValue: composerServiceMock,
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [PermawebTermsComponent, ButtonComponent],
+      providers: [
+        {
+          provide: ComposerService,
+          useValue: composerServiceMock,
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(PermawebTermsComponent);
     comp = fixture.componentInstance;

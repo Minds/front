@@ -31,8 +31,8 @@ export class BoostModalV2ReviewComponent {
 
   // selected payment category - this is separate to payment method because tokens is a payment category
   // but does not distinguish between offchain and onchain.
-  public readonly paymentCategory$: Observable<BoostPaymentCategory> = this
-    .service.paymentCategory$;
+  public readonly paymentCategory$: Observable<BoostPaymentCategory> =
+    this.service.paymentCategory$;
 
   // selected audience.
   public readonly audience$: Observable<BoostAudience> = this.service.audience$;
@@ -44,8 +44,8 @@ export class BoostModalV2ReviewComponent {
   public readonly dailyBudget$: Observable<number> = this.service.dailyBudget$;
 
   // total payment amount to be charged.
-  public readonly totalPaymentAmountText$: Observable<string> = this.service
-    .totalPaymentAmountText$;
+  public readonly totalPaymentAmountText$: Observable<string> =
+    this.service.totalPaymentAmountText$;
 
   // text for budget and duration section.
   public readonly budgetAndDurationText$: Observable<string> = combineLatest([
@@ -63,22 +63,21 @@ export class BoostModalV2ReviewComponent {
   );
 
   // estimate reach text.
-  public readonly estimatedReachText$: Observable<
-    string
-  > = this.service.estimatedReach$.pipe(
-    map((estimatedReach: EstimatedReach) => {
-      return estimatedReach
-        ? `${estimatedReach.views.low} - ${estimatedReach.views.high} views`
-        : 'unknown';
-    })
-  );
+  public readonly estimatedReachText$: Observable<string> =
+    this.service.estimatedReach$.pipe(
+      map((estimatedReach: EstimatedReach) => {
+        return estimatedReach
+          ? `${estimatedReach.views.low} - ${estimatedReach.views.high} views`
+          : 'unknown';
+      })
+    );
 
   // selected boost goal
   public readonly goal$: Observable<BoostGoal> = this.service.goal$;
 
   // whether goal section should be shown.
-  public readonly showGoalSection$: Observable<boolean> = this.service
-    .canSetBoostGoal$;
+  public readonly showGoalSection$: Observable<boolean> =
+    this.service.canSetBoostGoal$;
 
   constructor(
     protected service: BoostModalV2Service,

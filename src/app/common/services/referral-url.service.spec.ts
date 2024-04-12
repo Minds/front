@@ -6,13 +6,13 @@ describe('ReferralUrlService', () => {
   const baseUrl: string = 'https://www.minds.com/';
   const mockUser: { username: string } = { username: 'mindsUser' };
 
-  let sessionMock = new (function() {
+  let sessionMock = new (function () {
     this.getLoggedInUser = jasmine
       .createSpy('getLoggedInUser')
       .and.returnValue(mockUser);
   })();
 
-  let configMock = new (function() {
+  let configMock = new (function () {
     this.get = jasmine.createSpy('get').and.returnValue(baseUrl);
   })();
 

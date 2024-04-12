@@ -69,9 +69,8 @@ export class NetworksCreateRootUserComponent implements OnInit, OnDestroy {
         .get('username')
         .valueChanges.pipe(debounceTime(450))
         .subscribe((username: string) => {
-          const usernameField: AbstractControl<string> = this.formGroup.get(
-            'username'
-          );
+          const usernameField: AbstractControl<string> =
+            this.formGroup.get('username');
           if (!username) {
             usernameField.markAsUntouched();
             return;

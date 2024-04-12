@@ -55,17 +55,16 @@ export class TopbarComponent implements OnInit, OnDestroy {
   isMobile: boolean = false;
 
   onAuthPages: boolean = false; // sets to true if we're on login or register pages
-  onHomepage: boolean = false; // sets to true if we're on home or about pages
 
   router$;
 
   /** Whether topbar alert should be shown. */
-  protected readonly shouldShowTopbarAlert$: Observable<boolean> = this
-    .topbarAlertService.shouldShow$;
+  protected readonly shouldShowTopbarAlert$: Observable<boolean> =
+    this.topbarAlertService.shouldShow$;
 
   /** Whether topbar is to be displayed in minimal light mode. */
-  public readonly isMinimalLightMode$: BehaviorSubject<boolean> = this
-    .topbarService.isMinimalLightMode$;
+  public readonly isMinimalLightMode$: BehaviorSubject<boolean> =
+    this.topbarService.isMinimalLightMode$;
 
   constructor(
     protected sidebarService: SidebarNavigationService,
@@ -135,8 +134,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   private setPages(url) {
     this.onAuthPages = url === '/login' || url === '/register';
-    this.onHomepage =
-      (url === '/' && !this.guestModeExperiment.isActive()) || url === '/about';
     this.detectChanges();
   }
 

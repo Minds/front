@@ -72,7 +72,7 @@ export class AdminPushNotificationsFormComponent {
 
         this.resetFormFields();
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
       });
   }

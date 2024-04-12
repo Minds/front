@@ -13,9 +13,8 @@ export class GroupEditService {
   /**
    * Group subject, should be immutable; Used for display purposes
    */
-  readonly group$: BehaviorSubject<MindsGroup> = new BehaviorSubject<
-    MindsGroup
-  >(null);
+  readonly group$: BehaviorSubject<MindsGroup> =
+    new BehaviorSubject<MindsGroup>(null);
 
   /**
    * Local banner
@@ -52,7 +51,10 @@ export class GroupEditService {
    * Constructor
    * @param api
    */
-  constructor(protected api: ApiService, private toast: ToasterService) {}
+  constructor(
+    protected api: ApiService,
+    private toast: ToasterService
+  ) {}
 
   /**
    * Sets the state based on a group

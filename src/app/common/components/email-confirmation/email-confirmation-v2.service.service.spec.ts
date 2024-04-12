@@ -6,18 +6,16 @@ import { of, take } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import userMock from '../../../mocks/responses/user.mock';
 
-let apiServiceMock: jasmine.SpyObj<ApiService> = jasmine.createSpyObj<
-  ApiService
->(['post']);
+let apiServiceMock: jasmine.SpyObj<ApiService> =
+  jasmine.createSpyObj<ApiService>(['post']);
 
 let sessionMock: jasmine.SpyObj<Session> = jasmine.createSpyObj<Session>([
   'getLoggedInUser',
   'inject',
 ]);
 
-let feedNoticeServiceMock: jasmine.SpyObj<FeedNoticeService> = jasmine.createSpyObj<
-  FeedNoticeService
->(['dismiss']);
+let feedNoticeServiceMock: jasmine.SpyObj<FeedNoticeService> =
+  jasmine.createSpyObj<FeedNoticeService>(['dismiss']);
 
 describe('EmailConfirmationV2Service', () => {
   let service: EmailConfirmationV2Service;

@@ -62,22 +62,20 @@ describe('ProductPageFeatureShowcaseComponent', () => {
     },
   ];
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ProductPageFeatureShowcaseComponent,
-          MockComponent({
-            selector: 'markdown',
-            inputs: ['data'],
-          }),
-        ],
-        providers: [{ provide: STRAPI_URL, useValue: mockStrapiUrl }],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ProductPageFeatureShowcaseComponent,
+        MockComponent({
+          selector: 'markdown',
+          inputs: ['data'],
+        }),
+      ],
+      providers: [{ provide: STRAPI_URL, useValue: mockStrapiUrl }],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ProductPageFeatureShowcaseComponent);
     comp = fixture.componentInstance;
 

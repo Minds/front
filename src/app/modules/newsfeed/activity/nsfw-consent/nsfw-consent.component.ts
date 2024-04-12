@@ -24,19 +24,19 @@ export class ActivityNsfwConsentComponent {
     map((entity: ActivityEntity) => {
       this.entity = entity;
       const reasons = NSFW_REASONS.filter(
-        reason => entity.nsfw.indexOf(reason.value) > -1
+        (reason) => entity.nsfw.indexOf(reason.value) > -1
       );
       if (reasons.length === 1) {
         return reasons[0].label;
       }
       if (reasons.length === 2) {
-        return reasons.map(reason => reason.label).join(' & ');
+        return reasons.map((reason) => reason.label).join(' & ');
       }
       if (reasons.length > 2) {
         return (
           reasons
             .slice(0, reasons.length - 1)
-            .map(reason => reason.label)
+            .map((reason) => reason.label)
             .join(', ') +
           ' & ' +
           reasons[reasons.length - 1].label

@@ -40,9 +40,8 @@ export class ThumbsDownButton {
    * Emits true if a downvote was added
    * and false if a downvote was removed
    */
-  @Output('thumbsDownChange') thumbsDownChange: EventEmitter<
-    boolean
-  > = new EventEmitter<boolean>();
+  @Output('thumbsDownChange') thumbsDownChange: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   constructor(
     private cd: ChangeDetectorRef,

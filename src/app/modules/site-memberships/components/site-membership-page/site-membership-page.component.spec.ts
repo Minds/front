@@ -93,7 +93,7 @@ describe('SiteMembershipPageComponent', () => {
     component.ngOnInit();
     tick();
 
-    component.isMember$.subscribe(isMember => {
+    component.isMember$.subscribe((isMember) => {
       expect(isMember).toBeFalse();
     });
 
@@ -110,7 +110,7 @@ describe('SiteMembershipPageComponent', () => {
     component.ngOnInit();
     tick();
 
-    component.isMember$.subscribe(isMember => {
+    component.isMember$.subscribe((isMember) => {
       expect(isMember).toBeTrue();
     });
 

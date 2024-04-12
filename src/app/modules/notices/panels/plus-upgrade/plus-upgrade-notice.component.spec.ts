@@ -20,46 +20,44 @@ describe('PlusUpgradeNoticeComponent', () => {
 
   const mockHandler: { guid: string } = { guid: '123' };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          PlusUpgradeNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon', 'dismissible'],
-            outputs: ['dismissClick'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: ModalService,
-            useValue: MockService(ModalService),
-          },
-          {
-            provide: WirePaymentHandlersService,
-            useValue: MockService(WirePaymentHandlersService),
-          },
-          {
-            provide: PlusUpgradeNoticeExperimentService,
-            useValue: MockService(PlusUpgradeNoticeExperimentService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        PlusUpgradeNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon', 'dismissible'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: ModalService,
+          useValue: MockService(ModalService),
+        },
+        {
+          provide: WirePaymentHandlersService,
+          useValue: MockService(WirePaymentHandlersService),
+        },
+        {
+          provide: PlusUpgradeNoticeExperimentService,
+          useValue: MockService(PlusUpgradeNoticeExperimentService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(PlusUpgradeNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
@@ -69,9 +67,9 @@ describe('PlusUpgradeNoticeComponent', () => {
     (comp as any).modalService.present.calls.reset();
     (comp as any).wirePaymentHandlers.get.calls.reset();
 
-    (comp as any).plusUpgradeNoticeExperiment.getActiveVariation.and.returnValue(
-      true
-    );
+    (
+      comp as any
+    ).plusUpgradeNoticeExperiment.getActiveVariation.and.returnValue(true);
     (comp as any).wirePaymentHandlers.get.and.returnValue(
       Promise.resolve(mockHandler)
     );

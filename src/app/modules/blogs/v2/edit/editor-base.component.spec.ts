@@ -83,7 +83,7 @@ describe('BlogEditorV2Component', () => {
     }).compileComponents();
   });
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

@@ -29,16 +29,16 @@ import { MultiTenantConfig } from '../../../../../../../graphql/generated.engine
   ],
 })
 export class NetworkAdminConsoleReplyEmailSettingsComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /** Whether config is being loaded. */
   public loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true
   );
 
   /** Whether saving is in progress. */
-  public savingInProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public savingInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Form group. */
   public formGroup: FormGroup;

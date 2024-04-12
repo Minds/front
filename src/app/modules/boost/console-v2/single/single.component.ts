@@ -28,7 +28,7 @@ export class BoostConsoleSingleComponent implements OnInit, OnDestroy {
     this.inProgress = true;
 
     this.singleBoostGuidSubscription = this.service.singleBoostGuid$.subscribe(
-      boostGuid => {
+      (boostGuid) => {
         this.loadBoost(boostGuid);
       }
     );

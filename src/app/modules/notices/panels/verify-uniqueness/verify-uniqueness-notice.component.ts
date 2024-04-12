@@ -17,8 +17,10 @@ import { VerifyUniquenessModalLazyService } from '../../../verify-uniqueness/mod
   templateUrl: 'verify-uniqueness-notice.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VerifyUniquenessNoticeComponent extends AbstractSubscriberComponent
-  implements OnInit {
+export class VerifyUniquenessNoticeComponent
+  extends AbstractSubscriberComponent
+  implements OnInit
+{
   @Input() public dismissible: boolean = true;
 
   constructor(

@@ -3,9 +3,9 @@ import { ConnectTwitterModalService } from './connect-twitter-modal.service';
 describe('ConnectTwitterModalService', () => {
   let service: ConnectTwitterModalService;
 
-  let injectorMock = new (function() {})();
+  let injectorMock = new (function () {})();
 
-  let modalMock = new (function() {
+  let modalMock = new (function () {
     this.present = jasmine.createSpy('present');
   })();
 

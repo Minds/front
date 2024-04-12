@@ -36,9 +36,8 @@ export class ToggleComponent {
   @Input('size')
   size: ToggleSize = 'small';
 
-  @Output('mModelChange') mModelChange: EventEmitter<any> = new EventEmitter<
-    any
-  >();
+  @Output('mModelChange') mModelChange: EventEmitter<any> =
+    new EventEmitter<any>();
 
   @HostBinding('class.m-toggle--large')
   get isLarge() {

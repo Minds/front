@@ -37,9 +37,8 @@ export type UpgradePageModalData = {
 export class UpgradePageComponent implements OnInit {
   protected upgradeCards: UpgradePageCard[] = [];
 
-  protected toggle$: BehaviorSubject<
-    UpgradePageToggleValue
-  > = new BehaviorSubject<UpgradePageToggleValue>('upgrade');
+  protected toggle$: BehaviorSubject<UpgradePageToggleValue> =
+    new BehaviorSubject<UpgradePageToggleValue>('upgrade');
 
   readonly cdnAssetsUrl: string;
 
@@ -126,7 +125,9 @@ export class UpgradePageComponent implements OnInit {
       }
       // Create the card if it doesn't exist
       // and add the row to the 'upgradeCards' array
-      let foundCard = this.upgradeCards.find(card => card[0].cardId === cardId);
+      let foundCard = this.upgradeCards.find(
+        (card) => card[0].cardId === cardId
+      );
       if (!foundCard) {
         foundCard = [];
         this.upgradeCards.push(foundCard);
@@ -254,7 +255,7 @@ export class UpgradePageComponent implements OnInit {
   }
 
   protected isHero(card: UpgradePageCard): boolean {
-    return card.some(row => row.cardId === UpgradePageCardId.Hero);
+    return card.some((row) => row.cardId === UpgradePageCardId.Hero);
   }
 
   protected getCardIdClass(cardId: UpgradePageCardId): string {

@@ -1,24 +1,24 @@
 import { of } from 'rxjs';
 import { EnvironmentSelectorService } from './environment-selector.service';
 
-export let cookieServiceMock = new (function() {
+export let cookieServiceMock = new (function () {
   this.get = jasmine.createSpy('get');
   this.put = jasmine.createSpy('put');
   this.remove = jasmine.createSpy('remove');
 })();
 
-export let sessionMock = new (function() {
+export let sessionMock = new (function () {
   this.isLoggedIn = jasmine.createSpy('isLoggedIn');
   this.getLoggedInUser = jasmine.createSpy('getLoggedInUser');
 })();
 
-export let apiServiceMock = new (function() {
+export let apiServiceMock = new (function () {
   this.get = jasmine.createSpy('get');
   this.put = jasmine.createSpy('put');
   this.delete = jasmine.createSpy('delete');
 })();
 
-export let configsServiceMock = new (function() {
+export let configsServiceMock = new (function () {
   this.get = jasmine.createSpy('get');
 })();
 

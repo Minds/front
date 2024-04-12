@@ -4,16 +4,16 @@ import { sessionMock } from '../../../../../tests/session-mock.spec';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-let routerMock = new (function() {
+let routerMock = new (function () {
   this.navigate = jasmine.createSpy('navigate');
   this.events = new BehaviorSubject<any>(null);
 })();
 
-export let toasterServiceMock = new (function() {
+export let toasterServiceMock = new (function () {
   this.success = jasmine.createSpy('success').and.returnValue(this);
 })();
 
-export let settingsServiceMock = new (function() {
+export let settingsServiceMock = new (function () {
   this.loadSettings = jasmine.createSpy('loadSettings');
 })();
 
@@ -54,7 +54,7 @@ xdescribe('SettingsTwoFactorV2Service', () => {
       },
     });
 
-    service.totpEnabled$.subscribe(val => {
+    service.totpEnabled$.subscribe((val) => {
       expect(val).toBeTruthy();
     });
   });
@@ -67,7 +67,7 @@ xdescribe('SettingsTwoFactorV2Service', () => {
       },
     });
 
-    service.smsEnabled$.subscribe(val => {
+    service.smsEnabled$.subscribe((val) => {
       expect(val).toBeTruthy();
     });
   });
@@ -116,7 +116,7 @@ xdescribe('SettingsTwoFactorV2Service', () => {
     expect((service as any).api.get).toHaveBeenCalledWith(
       'api/v3/security/totp/new'
     );
-    service.secret$.subscribe(val => {
+    service.secret$.subscribe((val) => {
       expect(val).toBe('123');
     });
   });

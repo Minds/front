@@ -10,45 +10,43 @@ describe('VerifyEmailNoticeComponent', () => {
   let comp: VerifyEmailNoticeComponent;
   let fixture: ComponentFixture<VerifyEmailNoticeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          VerifyEmailNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon', 'dismissible'],
-            outputs: ['dismissClick'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
-          }),
-          MockComponent({
-            selector: 'm-tooltip',
-          }),
-        ],
-        providers: [
-          {
-            provide: EmailResendService,
-            useValue: MockService(EmailResendService),
-          },
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: EmailConfirmationService,
-            useValue: MockService(EmailConfirmationService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        VerifyEmailNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon', 'dismissible'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+        MockComponent({
+          selector: 'm-tooltip',
+        }),
+      ],
+      providers: [
+        {
+          provide: EmailResendService,
+          useValue: MockService(EmailResendService),
+        },
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: EmailConfirmationService,
+          useValue: MockService(EmailConfirmationService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(VerifyEmailNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

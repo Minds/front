@@ -14,7 +14,14 @@
 
     <div class="m-homepage__v3__firstSection__container">
       <div
-        style="display: flex; flex: 1; flex-direction: column; max-width: 1180px; padding: 0 32px; overflow: hidden"
+        style="
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          max-width: 1180px;
+          padding: 0 32px;
+          overflow: hidden;
+        "
       >
         <div class="m-homepage__v3__firstSection__actions">
           <h2 class="m-homepage__v3__title" ngPreserveWhitespaces>
@@ -80,7 +87,7 @@
         <section class="m-homepage__metrics m-grid__only--mobile">
           <div
             class="m-homepage__metric"
-            *ngFor="let stat of data.attributes.hero.heroStats | slice: 0:2"
+            *ngFor="let stat of data.attributes.hero.heroStats | slice: 0 : 2"
           >
             <span class="m-homepage__metric__title">{{ stat.number }}</span>
             <span
@@ -106,10 +113,7 @@
     >
       <div class="m-grid m-marketing__wrapper">
         <div
-          class="
-              m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile
-              m-marketing__body
-            "
+          class="m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__body"
         >
           <!-- ------------------------------------------------ -->
           <!-- Section 2 -->
@@ -121,10 +125,7 @@
           <markdown ngPreserveWhitespaces>{{ section.body }}</markdown>
         </div>
         <div
-          class="
-              m-grid__column-5 m-grid__column-6--tablet m-grid__hide--mobile
-              m-marketing__image
-            "
+          class="m-grid__column-5 m-grid__column-6--tablet m-grid__hide--mobile m-marketing__image"
         >
           <span>
             <img

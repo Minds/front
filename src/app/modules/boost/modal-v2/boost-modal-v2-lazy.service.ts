@@ -41,7 +41,8 @@ export class BoostModalV2LazyService {
     entity: BoostableEntity,
     extraOpts: BoostModalExtraOpts = {}
   ): Promise<ModalRef<PresentableBoostModalComponent>> {
-    const componentRef: PresentableBoostModalComponent = await this.getComponentRef();
+    const componentRef: PresentableBoostModalComponent =
+      await this.getComponentRef();
     const modal = this.modalService.present(componentRef, {
       data: {
         entity: entity,

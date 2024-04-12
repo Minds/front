@@ -56,7 +56,7 @@ export class PaymentsSelectCard {
   ngOnInit() {
     this.loadCards();
 
-    this.selectedSubscription = this.selected.subscribe(id => {
+    this.selectedSubscription = this.selected.subscribe((id) => {
       if (id === 'new') {
         this.onAddNewCard();
       }

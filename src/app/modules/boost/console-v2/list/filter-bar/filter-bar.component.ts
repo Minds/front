@@ -49,12 +49,12 @@ export class BoostConsoleFilterBarComponent implements OnInit {
   ];
 
   // safe pending count for admins.
-  public readonly adminPendingSafeCount$: Observable<number> = this.adminStats
-    .pendingSafeCount$;
+  public readonly adminPendingSafeCount$: Observable<number> =
+    this.adminStats.pendingSafeCount$;
 
   // controversial pending count for admins.
-  public readonly adminPendingControversialCount$: Observable<number> = this
-    .adminStats.pendingControversialCount$;
+  public readonly adminPendingControversialCount$: Observable<number> =
+    this.adminStats.pendingControversialCount$;
 
   /**
    * Whether boosting group experiment is active. Note this is intended as

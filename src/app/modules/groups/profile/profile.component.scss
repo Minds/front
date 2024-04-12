@@ -48,7 +48,9 @@
 
     .material-icons {
       @include m-theme() {
-        text-shadow: 0px 0px 1px themed($m-white), 0px 0px 1px themed($m-white);
+        text-shadow:
+          0px 0px 1px themed($m-white),
+          0px 0px 1px themed($m-white);
         color: themed($m-grey-400);
       }
     }

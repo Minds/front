@@ -55,7 +55,8 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
   providers: [PopupService],
 })
 export class BaseComponent
-  implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges
+{
   /**
    * Post event emitter
    */
@@ -143,7 +144,7 @@ export class BaseComponent
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
 
-    this.attachmentError$.pipe(distinctUntilChanged()).subscribe(error => {
+    this.attachmentError$.pipe(distinctUntilChanged()).subscribe((error) => {
       if (error) {
         this.service.removeAttachment();
       }
@@ -188,7 +189,7 @@ export class BaseComponent
     }
 
     this.subscriptions.push(
-      this.service.isDirty$.subscribe(isDirty => {
+      this.service.isDirty$.subscribe((isDirty) => {
         this.isDirty = isDirty;
       })
     );
@@ -242,7 +243,7 @@ export class BaseComponent
    * @returns { Observable<boolean> } - holds true if compact mode should be applied.
    */
   get isCompactMode$(): Observable<boolean> {
-    return this.size$.pipe(map(size => size === 'compact' && !this.isModal));
+    return this.size$.pipe(map((size) => size === 'compact' && !this.isModal));
   }
 
   /**

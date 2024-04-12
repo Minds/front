@@ -3,66 +3,6 @@
   opacity: 0;
 }
 
-.m-topbar--homepageV3 {
-  .m-topbar__leftColumn {
-    align-items: flex-start;
-    flex-direction: column;
-    justify-content: center;
-    border-right: none !important;
-    width: unset !important;
-    min-width: unset !important;
-  }
-
-  .m-pageLayout__container {
-    width: 100% !important;
-    min-width: unset !important;
-    box-sizing: border-box;
-    padding: 0 32px !important;
-    max-width: 1244px !important;
-
-    .m-pageLayout__pane--main {
-      max-width: unset !important;
-    }
-  }
-
-  .m-topbarLoginWrapper__joinMindsNow {
-    @media screen and (max-width: $max-mobile) {
-      display: none !important;
-    }
-
-    .m-button--solid,
-    .m-button--overlay {
-      color: #fff !important;
-
-      &:hover {
-        @include m-theme() {
-          background-color: themed($m-blue--contrast) !important;
-        }
-      }
-    }
-  }
-
-  .m-topbarLoginWrapper__login--white button:not(:active, :hover) {
-    color: #fff !important;
-  }
-
-  .m-topbarNav__item--hamburger {
-    display: none !important;
-  }
-
-  .m-topbarNav__item--logo {
-    display: block !important;
-
-    .m-topbar__logo--bulb {
-      display: none !important;
-    }
-
-    .m-topbar__logo--full {
-      display: block !important;
-    }
-  }
-}
-
 h1 {
   margin: 0;
 }

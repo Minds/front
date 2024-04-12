@@ -24,52 +24,50 @@ describe('BoostModalV2AudienceSelectorComponent', () => {
       By.css('.m-boostAudienceSelector__radioButtonRow--selected label')
     );
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule, FormsModule],
-        declarations: [BoostModalV2AudienceSelectorComponent],
-        providers: [
-          {
-            provide: BoostModalV2Service,
-            useValue: MockService(BoostModalV2Service, {
-              has: [
-                'audience$',
-                'disabledSafeAudience$',
-                'targetPlatformWeb$',
-                'targetPlatformAndroid$',
-                'targetPlatformIos$',
-              ],
-              props: {
-                audience$: {
-                  get: () =>
-                    new BehaviorSubject<BoostAudience>(BoostAudience.SAFE),
-                },
-                disabledSafeAudience$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
-                targetPlatformWeb$: {
-                  get: () => new BehaviorSubject<boolean>(true),
-                },
-                targetPlatformAndroid$: {
-                  get: () => new BehaviorSubject<boolean>(true),
-                },
-                targetPlatformIos$: {
-                  get: () => new BehaviorSubject<boolean>(true),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, FormsModule],
+      declarations: [BoostModalV2AudienceSelectorComponent],
+      providers: [
+        {
+          provide: BoostModalV2Service,
+          useValue: MockService(BoostModalV2Service, {
+            has: [
+              'audience$',
+              'disabledSafeAudience$',
+              'targetPlatformWeb$',
+              'targetPlatformAndroid$',
+              'targetPlatformIos$',
+            ],
+            props: {
+              audience$: {
+                get: () =>
+                  new BehaviorSubject<BoostAudience>(BoostAudience.SAFE),
               },
-            }),
-          },
-          {
-            provide: BoostTargetExperimentService,
-            useValue: MockService(BoostTargetExperimentService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+              disabledSafeAudience$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              targetPlatformWeb$: {
+                get: () => new BehaviorSubject<boolean>(true),
+              },
+              targetPlatformAndroid$: {
+                get: () => new BehaviorSubject<boolean>(true),
+              },
+              targetPlatformIos$: {
+                get: () => new BehaviorSubject<boolean>(true),
+              },
+            },
+          }),
+        },
+        {
+          provide: BoostTargetExperimentService,
+          useValue: MockService(BoostTargetExperimentService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostModalV2AudienceSelectorComponent);
     comp = fixture.componentInstance;
 

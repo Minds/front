@@ -16,15 +16,12 @@
       </div>
 
       <div
-        class="
-          m-grid__column-5 m-grid__column-12--mobile
-          m-marketing__image m-marketing__imageContainer
-        "
+        class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image m-marketing__imageContainer"
       >
         <span
           [ngClass]="{
-            'm-marketing__imageSpan--noBackgroundEffects': !data.hero
-              ?.showBackgroundEffects
+            'm-marketing__imageSpan--noBackgroundEffects':
+              !data.hero?.showBackgroundEffects
           }"
         >
           <img
@@ -78,10 +75,7 @@
         class="m-grid m-marketing__wrapper"
       >
         <div
-          class="
-            m-grid__column-12 m-grid__column-12--mobile
-            m-marketing__body m-marketing__body--extra
-          "
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
         >
           <a
             *ngIf="
@@ -99,7 +93,9 @@
           <ng-template #predefinedActionTemplate>
             <m-button
               color="blue"
-              (onAction)="resolveAction(data.footer.actionButton.action ?? null)"
+              (onAction)="
+                resolveAction(data.footer.actionButton.action ?? null)
+              "
               [attr.data-ref]="data.footer.actionButton.dataRef ?? null"
             >
               {{ data.footer.actionButton.text }}

@@ -86,7 +86,7 @@
                       class="m-walletTransactionsTable__otherUserLink"
                       [routerLink]="['/', tx.otherUser.username]"
                     >
-                      @{{ tx.otherUser.username }}</a
+                      &#64;{{ tx.otherUser.username }}</a
                     ></span
                   >
                 </div>
@@ -157,7 +157,7 @@
                     class="m-walletTransactionsTable__otherUserLink"
                     [routerLink]="['/', tx.otherUser.username]"
                   >
-                    @{{ tx.otherUser.username }}</a
+                    &#64;{{ tx.otherUser.username }}</a
                   ></span
                 >
               </div>
@@ -181,7 +181,7 @@
                       class="m-walletTransactionsTable__otherUserLink"
                       [routerLink]="['/', tx.otherUser.username]"
                     >
-                      @{{ tx.otherUser.username }}</a
+                      &#64;{{ tx.otherUser.username }}</a
                     ></span
                   >
                 </ng-container>
@@ -220,7 +220,7 @@
                   >Boost Credit<span *ngIf="tx.otherUser.username"
                     >&nbsp;from
                     <a [routerLink]="['/', tx.otherUser.username]"
-                      >@{{ tx.otherUser.username }}</a
+                      >&#64;{{ tx.otherUser.username }}</a
                     ></span
                   ></span
                 >
@@ -264,7 +264,9 @@
           <span
             class="m-walletTransactionsTable__total--int"
             *ngIf="currency !== 'tokens'"
-            >{{ tx.runningTotal.int | currency: currency | slice: 0:-3 }}</span
+            >{{
+              tx.runningTotal.int | currency: currency | slice: 0 : -3
+            }}</span
           >
           <span
             class="m-walletTransactionsTable__total--frac"

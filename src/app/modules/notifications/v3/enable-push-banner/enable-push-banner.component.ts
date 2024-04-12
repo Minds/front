@@ -13,16 +13,15 @@ import { PushNotificationService } from '../../../../common/services/push-notifi
 })
 export class NotificationsEnablePushBannerComponent {
   // true when subscription attempt is in progress.
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // true when push notifications are enabled.
   public readonly pushNotificationsEnabled$ = this.pushNotifications.enabled$;
 
   // true if push notifications are supported.
-  public readonly pushNotificationsSupported$ = this.pushNotifications
-    .supported$;
+  public readonly pushNotificationsSupported$ =
+    this.pushNotifications.supported$;
 
   constructor(
     private pushNotifications: PushNotificationService,

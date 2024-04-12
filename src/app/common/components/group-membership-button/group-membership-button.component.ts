@@ -119,9 +119,8 @@ export class GroupMembershipButtonComponent implements OnDestroy {
   @Input()
   displayAsButton: boolean = true;
 
-  @Output() onMembershipChange: EventEmitter<
-    GroupMembershipChangeOuput
-  > = new EventEmitter();
+  @Output() onMembershipChange: EventEmitter<GroupMembershipChangeOuput> =
+    new EventEmitter();
 
   subscriptions: Subscription[] = [];
 
@@ -131,31 +130,30 @@ export class GroupMembershipButtonComponent implements OnDestroy {
   /**
    * Determine which button to show (if any)
    */
-  public readonly buttonType$: Observable<
-    GroupMembershipButtonType
-  > = combineLatest([
-    this.service.isMember$,
-    this.service.isAwaiting$,
-    this.service.isInvited$,
-    this.service.isBanned$,
-  ]).pipe(
-    map(([isMember, isAwaiting, isInvited, isBanned]) => {
-      if (!isMember && !isAwaiting && !isInvited && !isBanned) {
-        this.buttonType = 'join';
-      } else if (isMember) {
-        this.buttonType = 'leave';
-      } else if (isInvited) {
-        this.buttonType = 'invited';
-      } else if (isAwaiting) {
-        this.buttonType = 'awaiting';
-      } else {
-        this.buttonType = null;
-      }
-      this.initIsMemberSubscription();
-      return this.buttonType;
-    }),
-    shareReplay()
-  );
+  public readonly buttonType$: Observable<GroupMembershipButtonType> =
+    combineLatest([
+      this.service.isMember$,
+      this.service.isAwaiting$,
+      this.service.isInvited$,
+      this.service.isBanned$,
+    ]).pipe(
+      map(([isMember, isAwaiting, isInvited, isBanned]) => {
+        if (!isMember && !isAwaiting && !isInvited && !isBanned) {
+          this.buttonType = 'join';
+        } else if (isMember) {
+          this.buttonType = 'leave';
+        } else if (isInvited) {
+          this.buttonType = 'invited';
+        } else if (isAwaiting) {
+          this.buttonType = 'awaiting';
+        } else {
+          this.buttonType = null;
+        }
+        this.initIsMemberSubscription();
+        return this.buttonType;
+      }),
+      shareReplay()
+    );
 
   constructor(
     public service: GroupMembershipService,
@@ -180,7 +178,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
     this.subscriptions.push(
       this.service.isMember$
         .pipe(skip(1), distinctUntilChanged())
-        .subscribe(is => {
+        .subscribe((is) => {
           if (is) {
             this.recordClick();
           }

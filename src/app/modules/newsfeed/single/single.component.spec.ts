@@ -44,94 +44,92 @@ describe('NewsfeedSingleComponent', () => {
   let comp: NewsfeedSingleComponent;
   let fixture: ComponentFixture<NewsfeedSingleComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MaterialMock,
-          MindsActivityMock,
-          NewsfeedSingleComponent,
-          MockComponent({
-            selector: 'm-social-icons',
-            inputs: ['url', 'title', 'embed'],
-          }),
-          MockComponent({
-            selector: 'm-activity',
-            inputs: ['entity', 'displayOptions', 'autoplayVideo'],
-          }),
-          LoadingSpinnerComponent,
-          MockDirective({
-            selector: 'm-clientMeta',
-          }),
-          MockComponent({
-            selector: 'm-newsfeed__activitySuggestions',
-            inputs: ['baseEntity'],
-          }),
-          MockComponent({
-            selector: 'm-discovery__sidebarTags',
-            inputs: ['entityGuid'],
-          }),
-          MockDirective({
-            selector: 'ng-container',
-            inputs: ['m-clientMeta'],
-          }),
-          MockComponent({
-            selector: 'm-ads-boost',
-            inputs: ['limit'],
-          }),
-        ],
-        imports: [RouterTestingModule, ReactiveFormsModule],
-        providers: [
-          { provide: Session, useValue: MockService(Session) },
-          { provide: Client, useValue: clientMock },
-          { provide: Upload, useValue: uploadMock },
-          { provide: ContextService, useValue: contextServiceMock },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              params: of({ guid: 123 }),
-              snapshot: {
-                queryParamMap: convertToParamMap({}),
-              },
-              queryParamMap: new BehaviorSubject(convertToParamMap({})),
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MaterialMock,
+        MindsActivityMock,
+        NewsfeedSingleComponent,
+        MockComponent({
+          selector: 'm-social-icons',
+          inputs: ['url', 'title', 'embed'],
+        }),
+        MockComponent({
+          selector: 'm-activity',
+          inputs: ['entity', 'displayOptions', 'autoplayVideo'],
+        }),
+        LoadingSpinnerComponent,
+        MockDirective({
+          selector: 'm-clientMeta',
+        }),
+        MockComponent({
+          selector: 'm-newsfeed__activitySuggestions',
+          inputs: ['baseEntity'],
+        }),
+        MockComponent({
+          selector: 'm-discovery__sidebarTags',
+          inputs: ['entityGuid'],
+        }),
+        MockDirective({
+          selector: 'ng-container',
+          inputs: ['m-clientMeta'],
+        }),
+        MockComponent({
+          selector: 'm-ads-boost',
+          inputs: ['limit'],
+        }),
+      ],
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      providers: [
+        { provide: Session, useValue: MockService(Session) },
+        { provide: Client, useValue: clientMock },
+        { provide: Upload, useValue: uploadMock },
+        { provide: ContextService, useValue: contextServiceMock },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ guid: 123 }),
+            snapshot: {
+              queryParamMap: convertToParamMap({}),
             },
+            queryParamMap: new BehaviorSubject(convertToParamMap({})),
           },
-          { provide: MetaService, useValue: MockService(MetaService) },
-          { provide: EntitiesService, useValue: MockService(EntitiesService) },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: HeadersService, useValue: MockService(HeadersService) },
-          {
-            provide: AuthModalService,
-            useValue: MockService(AuthModalService),
-          },
-          {
-            provide: ExperimentsService,
-            useValue: MockService(ExperimentsService),
-          },
-          { provide: JsonLdService, useValue: MockService(JsonLdService) },
-          { provide: Location, useValue: MockService(Location) },
-          {
-            provide: RouterHistoryService,
-            useValue: MockService(RouterHistoryService),
-          },
-          {
-            provide: BoostModalV2LazyService,
-            useValue: MockService(BoostModalV2LazyService),
-          },
-          {
-            provide: PLATFORM_ID,
-            useValue: 'browser',
-          },
-          {
-            provide: IsTenantService,
-            useValue: MockService(IsTenantService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+        },
+        { provide: MetaService, useValue: MockService(MetaService) },
+        { provide: EntitiesService, useValue: MockService(EntitiesService) },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: HeadersService, useValue: MockService(HeadersService) },
+        {
+          provide: AuthModalService,
+          useValue: MockService(AuthModalService),
+        },
+        {
+          provide: ExperimentsService,
+          useValue: MockService(ExperimentsService),
+        },
+        { provide: JsonLdService, useValue: MockService(JsonLdService) },
+        { provide: Location, useValue: MockService(Location) },
+        {
+          provide: RouterHistoryService,
+          useValue: MockService(RouterHistoryService),
+        },
+        {
+          provide: BoostModalV2LazyService,
+          useValue: MockService(BoostModalV2LazyService),
+        },
+        {
+          provide: PLATFORM_ID,
+          useValue: 'browser',
+        },
+        {
+          provide: IsTenantService,
+          useValue: MockService(IsTenantService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -307,9 +305,10 @@ describe('NewsfeedSingleComponent', () => {
     expect((comp as any).metaService.setDescription).toHaveBeenCalledWith(
       `${blurb}. Subscribe to @${ownerUsername} on Minds`
     );
-    expect(
-      (comp as any).metaService.setOgImage
-    ).toHaveBeenCalledWith(thumbnailSrc, { width: 2000, height: 1000 });
+    expect((comp as any).metaService.setOgImage).toHaveBeenCalledWith(
+      thumbnailSrc,
+      { width: 2000, height: 1000 }
+    );
 
     expect((comp as any).metaService.setThumbnail).toHaveBeenCalledWith(
       thumbnailSrc
@@ -407,9 +406,10 @@ describe('NewsfeedSingleComponent', () => {
       `${remindBlurb}. Subscribe to @${remindOwnerUsername} on Minds`
     );
 
-    expect(
-      (comp as any).metaService.setOgImage
-    ).toHaveBeenCalledWith(thumbnailSrc, { width: 2000, height: 1000 });
+    expect((comp as any).metaService.setOgImage).toHaveBeenCalledWith(
+      thumbnailSrc,
+      { width: 2000, height: 1000 }
+    );
 
     expect((comp as any).metaService.setThumbnail).toHaveBeenCalledWith(
       thumbnailSrc

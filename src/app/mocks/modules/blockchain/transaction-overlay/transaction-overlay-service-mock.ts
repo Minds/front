@@ -1,7 +1,7 @@
-export let transactionOverlayService = new (function() {
+export let transactionOverlayService = new (function () {
   this.component = null;
 
-  this.setComponent = comp => {
+  this.setComponent = (comp) => {
     this.component = comp;
   };
 

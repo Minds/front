@@ -38,13 +38,14 @@ export class WalletV2CreditsSummaryComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((result: GiftCardBalanceByProductId[]): void => {
         // Order results by predefined fixed order.
-        const orderedResult: GiftCardBalanceByProductId[] = PRODUCT_DISPLAY_ORDER.map(
-          (productId: GiftCardProductIdEnum): GiftCardBalanceByProductId =>
-            result.find(
-              (res: GiftCardBalanceByProductId): boolean =>
-                res?.productId === productId
-            )
-        ).filter(Boolean);
+        const orderedResult: GiftCardBalanceByProductId[] =
+          PRODUCT_DISPLAY_ORDER.map(
+            (productId: GiftCardProductIdEnum): GiftCardBalanceByProductId =>
+              result.find(
+                (res: GiftCardBalanceByProductId): boolean =>
+                  res?.productId === productId
+              )
+          ).filter(Boolean);
 
         this.giftCardBalances$.next(orderedResult);
       });

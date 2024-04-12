@@ -68,7 +68,7 @@ describe('TopbarAlertService', () => {
 
   it('should dismiss an alert', async () => {
     // Pull the identifie (will call Apollo)
-    service.identifier$.subscribe(identifier => {});
+    service.identifier$.subscribe((identifier) => {});
 
     // Apollo will expect this query
     const op = controller.expectOne(GET_TOPBAR_QUERY);

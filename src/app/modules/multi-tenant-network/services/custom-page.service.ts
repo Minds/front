@@ -27,9 +27,8 @@ import {
 @Injectable({ providedIn: 'root' })
 export class CustomPageService implements OnDestroy {
   /** Subject to store a custom page value. */
-  public readonly customPage$: BehaviorSubject<CustomPageExtended | null> = new BehaviorSubject<CustomPageExtended | null>(
-    null
-  );
+  public readonly customPage$: BehaviorSubject<CustomPageExtended | null> =
+    new BehaviorSubject<CustomPageExtended | null>(null);
 
   private subscriptions: Subscription[] = [];
 
@@ -52,9 +51,8 @@ export class CustomPageService implements OnDestroy {
     this.subscriptions.push(
       this.getCustomPage(pageType).subscribe(
         (customPage: CustomPage | null): void => {
-          const implementation: CustomPageImplementation = this.getImplementation(
-            customPage
-          );
+          const implementation: CustomPageImplementation =
+            this.getImplementation(customPage);
           const displayName = this.getDisplayName(customPage.pageType);
           const displayContent = this.getDisplayContent(
             customPage,
@@ -88,12 +86,10 @@ export class CustomPageService implements OnDestroy {
       map((result: ApolloQueryResult<any>): CustomPage | null => {
         return result.data?.customPage || null;
       }),
-      catchError(
-        (e: unknown): Observable<null> => {
-          console.error('getCustomPage Error: ', e);
-          return of(null);
-        }
-      ),
+      catchError((e: unknown): Observable<null> => {
+        console.error('getCustomPage Error: ', e);
+        return of(null);
+      }),
       take(1)
     );
   }
@@ -127,15 +123,13 @@ export class CustomPageService implements OnDestroy {
         map((result: MutationResult<SetCustomPageMutation>) => {
           return Boolean(result?.data?.setCustomPage);
         }),
-        catchError(
-          (e: any): Observable<boolean> => {
-            if (e?.errors[0] && e.errors[0].message) {
-              this.toaster.error(e.errors[0].message);
-            }
-            console.error(e);
-            return of(false);
+        catchError((e: any): Observable<boolean> => {
+          if (e?.errors[0] && e.errors[0].message) {
+            this.toaster.error(e.errors[0].message);
           }
-        )
+          console.error(e);
+          return of(false);
+        })
       );
   }
 

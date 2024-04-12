@@ -78,9 +78,8 @@ export class SupermindReplyService implements OnDestroy {
   async startReply(supermindEntity: Supermind): Promise<void> {
     this.inProgress$$.next(true);
 
-    const showConnectTwitterModal = await this.showConnectTwitterModal(
-      supermindEntity
-    );
+    const showConnectTwitterModal =
+      await this.showConnectTwitterModal(supermindEntity);
 
     if (showConnectTwitterModal) {
       const modalRef = await this.connectTwitterModal.open({
@@ -105,7 +104,7 @@ export class SupermindReplyService implements OnDestroy {
     try {
       await this.composerModal
         .setInjector(this.injector)
-        .onPost(activity => {
+        .onPost((activity) => {
           supermindEntity.status = SupermindState.ACCEPTED;
           supermindEntity.reply_activity_guid = activity.guid;
         })
@@ -134,8 +133,7 @@ export class SupermindReplyService implements OnDestroy {
     const modalResult = this.modalService.present(ConfirmV2Component, {
       data: {
         title: 'Live reply',
-        body:
-          "This Supermind is requesting a live reply. You won't need to create a post to accept this offer, just respond on your live stream, podcast, or other preferred medium.",
+        body: "This Supermind is requesting a live reply. You won't need to create a post to accept this offer, just respond on your live stream, podcast, or other preferred medium.",
         confirmButtonColor: 'blue',
         confirmButtonSolid: true,
         onConfirm: () => {

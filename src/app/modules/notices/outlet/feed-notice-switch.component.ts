@@ -75,7 +75,7 @@ export class FeedNoticeSwitchComponent implements OnInit, OnDestroy {
           this.topbarAlertShown = shouldShow;
         }),
       this.dismissalService.dismissedEvent$
-        .pipe(filter(noticeId => noticeId === this.key))
+        .pipe(filter((noticeId) => noticeId === this.key))
         .subscribe(() => (this.isDismissed = true)),
     ];
   }

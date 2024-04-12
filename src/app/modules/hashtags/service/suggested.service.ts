@@ -14,9 +14,9 @@ export class SuggestedService {
    * Lookup RxJS pipe operator. Fetches from server, aborts previous request if necessary
    */
   lookup(): OperatorFunction<string, string[]> {
-    return input$ =>
+    return (input$) =>
       input$.pipe(
-        map(query => this.fetch(query, () => [])),
+        map((query) => this.fetch(query, () => [])),
         switchAll()
       );
   }
@@ -25,9 +25,9 @@ export class SuggestedService {
    * Lookup or run fallback function RxJS pipe operator. Fetches from server, aborts previous request if necessary
    */
   lookupOr(fallbackFn: () => string[]): OperatorFunction<string, string[]> {
-    return input$ =>
+    return (input$) =>
       input$.pipe(
-        map(query => this.fetch(query, fallbackFn)),
+        map((query) => this.fetch(query, fallbackFn)),
         switchAll()
       );
   }
@@ -46,6 +46,6 @@ export class SuggestedService {
       .get(`api/v2/search/suggest/tags`, {
         q: query,
       })
-      .pipe(map(response => response.tags));
+      .pipe(map((response) => response.tags));
   }
 }

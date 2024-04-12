@@ -39,16 +39,18 @@ export class WireCreatorToolbarComponent {
    * Constructor
    * @param service
    */
-  constructor(public service: WireV2Service, private configs: ConfigsService) {
+  constructor(
+    public service: WireV2Service,
+    private configs: ConfigsService
+  ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
   }
 
   /**
    * Submit intent
    */
-  @Output('onSubmit') onSubmitEmitter: EventEmitter<void> = new EventEmitter<
-    void
-  >();
+  @Output('onSubmit') onSubmitEmitter: EventEmitter<void> =
+    new EventEmitter<void>();
 
   /**
    * Submit button event handler

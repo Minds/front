@@ -23,11 +23,10 @@ export class BoostChannelNoticeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.boostModalCompletionSubscription = this.boostModal.onComplete$.subscribe(
-      (completed: boolean) => {
+    this.boostModalCompletionSubscription =
+      this.boostModal.onComplete$.subscribe((completed: boolean) => {
         this.onDismissClick();
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {

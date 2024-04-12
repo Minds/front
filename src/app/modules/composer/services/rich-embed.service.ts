@@ -45,10 +45,10 @@ export class RichEmbedService {
   resolve(
     debounceMs: number
   ): OperatorFunction<RichEmbed | string | null, RichEmbed | null> {
-    return input$ =>
+    return (input$) =>
       input$.pipe(
         debounceTime(debounceMs),
-        map(urlOrRichEmbed => {
+        map((urlOrRichEmbed) => {
           if (!urlOrRichEmbed) {
             // If there's no URL, return a null value
             return of(null);
@@ -65,38 +65,36 @@ export class RichEmbedService {
               url: urlOrRichEmbed,
             })
             .pipe(
-              map(
-                (response: ApiResponse): RichEmbed => {
-                  // ... and cast it into a rich embed object
-                  const richEmbed: RichEmbed = {
-                    url: response.url,
-                    entityGuid: null,
-                    title: response.meta.title || '',
-                    description: response.meta.description || '',
-                  };
+              map((response: ApiResponse): RichEmbed => {
+                // ... and cast it into a rich embed object
+                const richEmbed: RichEmbed = {
+                  url: response.url,
+                  entityGuid: null,
+                  title: response.meta.title || '',
+                  description: response.meta.description || '',
+                };
 
-                  // Extract image from the first link thumbnail, which is usually the main image
-                  if (
-                    response.links &&
-                    response.links.thumbnail &&
-                    response.links.thumbnail[0]
-                  ) {
-                    richEmbed.thumbnail = response.links.thumbnail[0].href;
-                  }
-
-                  const videoHref = this.parseVideoHref(response);
-
-                  if (
-                    videoHref &&
-                    this.embedLinkWhitelist.isWhitelisted(videoHref)
-                  ) {
-                    richEmbed.url = videoHref;
-                  }
-
-                  return richEmbed;
+                // Extract image from the first link thumbnail, which is usually the main image
+                if (
+                  response.links &&
+                  response.links.thumbnail &&
+                  response.links.thumbnail[0]
+                ) {
+                  richEmbed.thumbnail = response.links.thumbnail[0].href;
                 }
-              ),
-              catchError(e => {
+
+                const videoHref = this.parseVideoHref(response);
+
+                if (
+                  videoHref &&
+                  this.embedLinkWhitelist.isWhitelisted(videoHref)
+                ) {
+                  richEmbed.url = videoHref;
+                }
+
+                return richEmbed;
+              }),
+              catchError((e) => {
                 console.error(e);
                 return of(null);
               })

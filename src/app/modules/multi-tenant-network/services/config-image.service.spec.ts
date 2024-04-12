@@ -48,10 +48,14 @@ describe('MultiTenantConfigImageService', () => {
     });
 
     service = TestBed.inject(MultiTenantConfigImageService);
-    (service as any).configImageRefreshService.horizontalLogoLastCacheTimestamp$.next(
+    (
+      service as any
+    ).configImageRefreshService.horizontalLogoLastCacheTimestamp$.next(
       mockTimestamp
     );
-    (service as any).configImageRefreshService.squareLogoLastCacheTimestamp$.next(
+    (
+      service as any
+    ).configImageRefreshService.squareLogoLastCacheTimestamp$.next(
       mockTimestamp
     );
     (service as any).configImageRefreshService.faviconLastCacheTimestamp$.next(
@@ -65,9 +69,9 @@ describe('MultiTenantConfigImageService', () => {
 
   describe('horizontalLogoPath$', () => {
     it('should get path with no timestamp when no timestamp is set', (done: DoneFn) => {
-      (service as any).configImageRefreshService.horizontalLogoLastCacheTimestamp$.next(
-        null
-      );
+      (
+        service as any
+      ).configImageRefreshService.horizontalLogoLastCacheTimestamp$.next(null);
 
       service.horizontalLogoPath$.pipe(take(1)).subscribe((path: string) => {
         expect(path).toBe(HORIZONTAL_LOGO_PATH);
@@ -76,7 +80,9 @@ describe('MultiTenantConfigImageService', () => {
     });
 
     it('should get path timestamp when refresh timestamp is set', (done: DoneFn) => {
-      (service as any).configImageRefreshService.horizontalLogoLastCacheTimestamp$.next(
+      (
+        service as any
+      ).configImageRefreshService.horizontalLogoLastCacheTimestamp$.next(
         mockTimestamp
       );
 
@@ -89,9 +95,9 @@ describe('MultiTenantConfigImageService', () => {
 
   describe('squareLogoPath$', () => {
     it('should get path with no timestamp when no timestamp is set', (done: DoneFn) => {
-      (service as any).configImageRefreshService.squareLogoLastCacheTimestamp$.next(
-        null
-      );
+      (
+        service as any
+      ).configImageRefreshService.squareLogoLastCacheTimestamp$.next(null);
 
       service.squareLogoPath$.pipe(take(1)).subscribe((path: string) => {
         expect(path).toBe(SQUARE_LOGO_PATH);
@@ -100,7 +106,9 @@ describe('MultiTenantConfigImageService', () => {
     });
 
     it('should get path timestamp when refresh timestamp is set', (done: DoneFn) => {
-      (service as any).configImageRefreshService.squareLogoLastCacheTimestamp$.next(
+      (
+        service as any
+      ).configImageRefreshService.squareLogoLastCacheTimestamp$.next(
         mockTimestamp
       );
 
@@ -113,9 +121,9 @@ describe('MultiTenantConfigImageService', () => {
 
   describe('faviconPath$', () => {
     it('should get path with no timestamp when no timestamp is set', (done: DoneFn) => {
-      (service as any).configImageRefreshService.faviconLastCacheTimestamp$.next(
-        null
-      );
+      (
+        service as any
+      ).configImageRefreshService.faviconLastCacheTimestamp$.next(null);
 
       service.faviconPath$.pipe(take(1)).subscribe((path: string) => {
         expect(path).toBe(FAVICON_PATH);
@@ -124,7 +132,9 @@ describe('MultiTenantConfigImageService', () => {
     });
 
     it('should get path timestamp when refresh timestamp is set', (done: DoneFn) => {
-      (service as any).configImageRefreshService.faviconLastCacheTimestamp$.next(
+      (
+        service as any
+      ).configImageRefreshService.faviconLastCacheTimestamp$.next(
         mockTimestamp
       );
 

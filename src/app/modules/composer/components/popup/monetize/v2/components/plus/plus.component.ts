@@ -120,7 +120,7 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
           type: 'money',
           upgradeType: 'plus',
         },
-        onComplete: wire => {
+        onComplete: (wire) => {
           completed = true;
           this.isPlus = true;
           this.detectChanges();

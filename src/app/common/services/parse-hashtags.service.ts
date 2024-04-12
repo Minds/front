@@ -21,7 +21,7 @@ export class HashtagsFromStringService {
     value = this.stripUrls(value);
 
     return (
-      value.match(this.regex.getRegex('hash'))?.map(tag => {
+      value.match(this.regex.getRegex('hash'))?.map((tag) => {
         tag = tag.trim();
 
         return tag.charAt(0) === '#' ? tag.substr(1) : tag;
@@ -42,7 +42,7 @@ export class HashtagsFromStringService {
     value = this.stripUrls(value);
 
     return (
-      value.match(this.regex.getRegex('cash'))?.map(tag => {
+      value.match(this.regex.getRegex('cash'))?.map((tag) => {
         tag = tag.trim();
 
         return tag.charAt(0) === '#' ? tag.substr(1) : tag;

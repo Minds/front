@@ -37,7 +37,7 @@ export class ChannelShopBriefComponent implements OnDestroy {
     public channelService: ChannelsV2Service,
     protected wireModal: WireModalService
   ) {
-    this.channelGuidSubscription = this.service.guid$.subscribe(guid =>
+    this.channelGuidSubscription = this.service.guid$.subscribe((guid) =>
       this.supportTiers.setEntityGuid(guid)
     );
   }

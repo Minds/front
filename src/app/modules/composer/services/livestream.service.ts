@@ -66,9 +66,7 @@ export class LivestreamService {
     const link = `${this.apiUrl}/${id}`;
 
     try {
-      const response = await this.http
-        .get<any>(link, { headers })
-        .toPromise();
+      const response = await this.http.get<any>(link, { headers }).toPromise();
       return response;
     } catch (error) {
       console.error('Error getting live stream:', error);
@@ -101,9 +99,7 @@ export class LivestreamService {
     const link = `${this.apiUrl}?playbackId=${playbackId}`;
 
     try {
-      const response = await this.http
-        .get<any>(link, { headers })
-        .toPromise();
+      const response = await this.http.get<any>(link, { headers }).toPromise();
       return response[0].id;
     } catch (error) {
       console.error('Error recording live stream:', error);
@@ -116,9 +112,7 @@ export class LivestreamService {
     const link = `https://livepeer.studio/api/asset/${streamId}`;
 
     try {
-      const response = await this.http
-        .get<any>(link, { headers })
-        .toPromise();
+      const response = await this.http.get<any>(link, { headers }).toPromise();
       return response;
     } catch (error) {
       console.error('Error getting recording:', error);

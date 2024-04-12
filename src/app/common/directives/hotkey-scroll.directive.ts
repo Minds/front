@@ -44,7 +44,7 @@ export class HotkeyScrollDirective implements OnInit {
   );
 
   ngOnInit() {
-    this.keyPresses.subscribe(val => {
+    this.keyPresses.subscribe((val) => {
       if (!this.anchors) {
         return;
       }
@@ -69,7 +69,7 @@ export class HotkeyScrollDirective implements OnInit {
 
       // get current element and index.
       const currentElArr: AnchorElement[] = arr.filter(
-        val => val.position === currentPosition
+        (val) => val.position === currentPosition
       );
 
       let currentEl: AnchorElement;
@@ -131,10 +131,10 @@ export class HotkeyScrollDirective implements OnInit {
         acc === 0
           ? position
           : position > 0 && position <= Math.abs(acc)
-          ? position
-          : position < 0 && -position < Math.abs(acc)
-          ? position
-          : acc,
+            ? position
+            : position < 0 && -position < Math.abs(acc)
+              ? position
+              : acc,
       0
     );
   }

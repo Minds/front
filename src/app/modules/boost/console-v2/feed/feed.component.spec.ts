@@ -48,7 +48,7 @@ describe('BoostConsoleFeedComponent', () => {
     },
   ];
 
-  const displayableBoosts: DisplayableBoost[] = unparsedEdges.map(edge => {
+  const displayableBoosts: DisplayableBoost[] = unparsedEdges.map((edge) => {
     return {
       guid: edge.node.guid,
       activity: {
@@ -69,42 +69,40 @@ describe('BoostConsoleFeedComponent', () => {
     },
   };
 
-  const giftCardsResponse$: BehaviorSubject<ApolloQueryResult<
-    GetBoostFeedQuery
-  >> = new BehaviorSubject<ApolloQueryResult<GetBoostFeedQuery>>(mockResult);
+  const giftCardsResponse$: BehaviorSubject<
+    ApolloQueryResult<GetBoostFeedQuery>
+  > = new BehaviorSubject<ApolloQueryResult<GetBoostFeedQuery>>(mockResult);
 
   let fetchMoreSpy: jasmine.Spy;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          BoostConsoleFeedComponent,
-          MockComponent({
-            selector: 'm-boostConsole__filterBar',
-            inputs: ['showDropdownFilters', 'boostLatestNoticeType'],
-          }),
-          MockComponent({
-            selector: 'm-activity',
-            inputs: ['m-clientMeta', 'entity', 'displayOptions'],
-          }),
-          MockComponent({
-            selector: 'infinite-scroll',
-            inputs: ['moreData', 'inProgress', 'hideManual'],
-            outputs: ['load'],
-          }),
-        ],
-        providers: [
-          {
-            provide: GetBoostFeedGQL,
-            useValue: jasmine.createSpyObj<GetBoostFeedGQL>(['watch']),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        BoostConsoleFeedComponent,
+        MockComponent({
+          selector: 'm-boostConsole__filterBar',
+          inputs: ['showDropdownFilters', 'boostLatestNoticeType'],
+        }),
+        MockComponent({
+          selector: 'm-activity',
+          inputs: ['m-clientMeta', 'entity', 'displayOptions'],
+        }),
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: ['moreData', 'inProgress', 'hideManual'],
+          outputs: ['load'],
+        }),
+      ],
+      providers: [
+        {
+          provide: GetBoostFeedGQL,
+          useValue: jasmine.createSpyObj<GetBoostFeedGQL>(['watch']),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostConsoleFeedComponent);
 
     comp = fixture.componentInstance;

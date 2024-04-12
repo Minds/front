@@ -148,7 +148,7 @@ export class TagsPipe implements PipeTransform {
     // ignore match inside others
     if (
       this.results.findIndex(
-        m => match.start >= m.start && match.end <= m.end
+        (m) => match.start >= m.start && match.end <= m.end
       ) !== -1
     ) {
       return;

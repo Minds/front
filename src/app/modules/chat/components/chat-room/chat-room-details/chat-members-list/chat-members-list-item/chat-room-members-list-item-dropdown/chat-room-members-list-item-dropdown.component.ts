@@ -43,8 +43,10 @@ import { TotalChatRoomMembersService } from '../../../../../../services/total-ch
 })
 export class ChatRoomMembersListItemDropdownComponent implements OnInit {
   // Enums for use in template.
-  protected readonly ChatRoomTypeEnum: typeof ChatRoomTypeEnum = ChatRoomTypeEnum;
-  protected readonly ChatRoomRoleEnum: typeof ChatRoomRoleEnum = ChatRoomRoleEnum;
+  protected readonly ChatRoomTypeEnum: typeof ChatRoomTypeEnum =
+    ChatRoomTypeEnum;
+  protected readonly ChatRoomRoleEnum: typeof ChatRoomRoleEnum =
+    ChatRoomRoleEnum;
 
   /** Viewchild of dropdown menu. */
   @ViewChild('dropdownMenuContent')
@@ -54,29 +56,27 @@ export class ChatRoomMembersListItemDropdownComponent implements OnInit {
   @Input() protected memberEdge: ChatRoomMemberEdge;
 
   /** Whether an action is in progress. */
-  protected readonly actionInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected readonly actionInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether remove from chat option should be shown. */
-  protected readonly showRemoveFromChatOption$: Observable<
-    boolean
-  > = combineLatest([
-    this.totalChatRoomMembersService.membersCount$,
-    this.singleChatRoomService.chatRoom$,
-  ]).pipe(
-    distinctUntilChanged(),
-    map(([membersCount, chatRoom]: [number, ChatRoomEdge]): boolean => {
-      return (
-        (chatRoom.node.roomType === ChatRoomTypeEnum.GroupOwned ||
-          chatRoom.node.roomType === ChatRoomTypeEnum.MultiUser) &&
-        chatRoom.node.isUserRoomOwner &&
-        membersCount > 2 &&
-        this.memberEdge.role !== ChatRoomRoleEnum.Owner &&
-        this.memberEdge.node.guid !== this.loggedInUserGuid
-      );
-    })
-  );
+  protected readonly showRemoveFromChatOption$: Observable<boolean> =
+    combineLatest([
+      this.totalChatRoomMembersService.membersCount$,
+      this.singleChatRoomService.chatRoom$,
+    ]).pipe(
+      distinctUntilChanged(),
+      map(([membersCount, chatRoom]: [number, ChatRoomEdge]): boolean => {
+        return (
+          (chatRoom.node.roomType === ChatRoomTypeEnum.GroupOwned ||
+            chatRoom.node.roomType === ChatRoomTypeEnum.MultiUser) &&
+          chatRoom.node.isUserRoomOwner &&
+          membersCount > 2 &&
+          this.memberEdge.role !== ChatRoomRoleEnum.Owner &&
+          this.memberEdge.node.guid !== this.loggedInUserGuid
+        );
+      })
+    );
 
   /**
    * Whether to force the showing of the dropdown.

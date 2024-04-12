@@ -1,0 +1,37 @@
+@import 'defaults.scss';
+
+:host {
+  m-settingsv2__header {
+    .m-settingsV2__desc {
+      margin-bottom: $spacing4;
+    }
+
+    .note {
+      @include _body2;
+
+      span {
+        font-weight: bold;
+        @include m-theme() {
+          color: themed($m-red);
+        }
+      }
+    }
+  }
+
+  form {
+    padding: $spacing4 0 $spacing1;
+  }
+
+  .m-settingsUserData__delete {
+    h4 {
+      @include _heading4;
+    }
+    p {
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      padding-bottom: $spacing4;
+    }
+  }
+}

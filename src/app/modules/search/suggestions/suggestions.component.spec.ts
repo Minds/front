@@ -49,36 +49,34 @@ describe('SearchBarSuggestionsComponent', () => {
     { type: 'text', value: 'test20' },
   ];
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          SearchBarSuggestionsComponent,
-          MockComponent({ selector: 'm-loadingEllipsis' }),
-        ],
-        imports: [
-          NgCommonModule,
-          RouterTestingModule,
-          FormsModule,
-          ReactiveFormsModule,
-          // CommonModule,
-        ],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Client, useValue: clientMock },
-          { provide: RecentService, useValue: recentServiceMock },
-          { provide: ContextService, useValue: contextServiceMock },
-          { provide: ConfigsService, useValue: { get: key => null } },
-          {
-            provide: SearchGqlExperimentService,
-            useValue: MockService(SearchGqlExperimentService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        SearchBarSuggestionsComponent,
+        MockComponent({ selector: 'm-loadingEllipsis' }),
+      ],
+      imports: [
+        NgCommonModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        // CommonModule,
+      ],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: Client, useValue: clientMock },
+        { provide: RecentService, useValue: recentServiceMock },
+        { provide: ContextService, useValue: contextServiceMock },
+        { provide: ConfigsService, useValue: { get: (key) => null } },
+        {
+          provide: SearchGqlExperimentService,
+          useValue: MockService(SearchGqlExperimentService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

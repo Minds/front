@@ -30,23 +30,28 @@ export class SocketsService {
     private configs: ConfigsService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.SOCKET_IO_SERVER = this.configs.get('socket_server');
+    this.SOCKET_IO_SERVER = '/api/socket.io';
   }
 
   setUp(): SocketsService {
     if (isPlatformServer(this.platformId)) return this;
-    this.SOCKET_IO_SERVER = this.configs.get('socket_server');
     this.nz.runOutsideAngular(() => {
       if (this.socket) {
         this.socket.destroy();
       }
 
-      this.socket = io(this.SOCKET_IO_SERVER, {
+      this.socket = io({
+        path: '/api/sockets/socket.io',
         reconnection: true,
         timeout: 40000,
         autoConnect: false,
-        withCredentials: true,
+        transports: ['websocket', 'polling'],
       });
+
+      this.socket.auth = {
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.2vmIQLWrytNdDX57_QxYy10C9hiSm0KcrbvRNrzXPyI',
+      };
 
       this.rooms = [];
       this.registered = false;
@@ -103,7 +108,7 @@ export class SocketsService {
       });
     });
 
-    this.socket.on('registered', guid => {
+    this.socket.on('registered', (guid) => {
       if (this.debug) console.log('[ws]::registered');
       this.nz.run(() => {
         this.registered = true;
@@ -185,7 +190,7 @@ export class SocketsService {
     }
 
     return this.subscriptions[name].subscribe({
-      next: args => {
+      next: (args) => {
         callback.apply(this, args);
       },
     });

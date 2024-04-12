@@ -16,14 +16,12 @@ import {
   providedIn: 'root',
 })
 export class ComposerSiteMembershipsService {
-  public allMemberships$: BehaviorSubject<
-    SiteMembership[]
-  > = new BehaviorSubject<SiteMembership[]>([]);
+  public allMemberships$: BehaviorSubject<SiteMembership[]> =
+    new BehaviorSubject<SiteMembership[]>([]);
 
   /** Whether loading of memberships is in progress. */
-  public readonly membershipLoadInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly membershipLoadInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     private getSiteMembershipsGQL: GetSiteMembershipsGQL,
@@ -47,9 +45,8 @@ export class ComposerSiteMembershipsService {
     this.membershipLoadInProgress$.next(true);
 
     try {
-      const response: ApolloQueryResult<GetSiteMembershipsQuery> = await lastValueFrom(
-        this.getSiteMembershipsGQL.fetch()
-      );
+      const response: ApolloQueryResult<GetSiteMembershipsQuery> =
+        await lastValueFrom(this.getSiteMembershipsGQL.fetch());
 
       if (response?.error || response?.errors?.length) {
         console.error(response?.errors ?? DEFAULT_ERROR_MESSAGE);

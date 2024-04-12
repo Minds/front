@@ -35,7 +35,7 @@ export class ScrollLock {
   }
 
   private _domWheelLock(_this) {
-    return function(event: WheelEvent) {
+    return function (event: WheelEvent) {
       let el: HTMLElement = <HTMLElement>event.currentTarget;
       if (event.ctrlKey) {
         // Zooming

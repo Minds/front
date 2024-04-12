@@ -38,19 +38,16 @@ export class BoostConsoleFeedComponent implements OnInit, OnDestroy {
   >;
 
   /** Whether fetching more is currently in progress. */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Displayable Boosts */
-  public readonly boosts$: BehaviorSubject<
-    DisplayableBoost[]
-  > = new BehaviorSubject<DisplayableBoost[]>([]);
+  public readonly boosts$: BehaviorSubject<DisplayableBoost[]> =
+    new BehaviorSubject<DisplayableBoost[]>([]);
 
   /** Cursor for pagination. */
-  public readonly hasNextPage$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly hasNextPage$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Cursor for pagination. */
   private endCursor: number = 0;
@@ -111,16 +108,17 @@ export class BoostConsoleFeedComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.boostFeedValueChangeSubscription = this.getBoostFeedQuery.valueChanges.subscribe(
-      (result: ApolloQueryResult<GetBoostFeedQuery>): void => {
-        if (result.loading) {
-          return;
-        }
+    this.boostFeedValueChangeSubscription =
+      this.getBoostFeedQuery.valueChanges.subscribe(
+        (result: ApolloQueryResult<GetBoostFeedQuery>): void => {
+          if (result.loading) {
+            return;
+          }
 
-        this.handleQueryResult(result);
-        this.inProgress$.next(false);
-      }
-    );
+          this.handleQueryResult(result);
+          this.inProgress$.next(false);
+        }
+      );
   }
 
   /**
@@ -138,7 +136,7 @@ export class BoostConsoleFeedComponent implements OnInit, OnDestroy {
       for (let edge of edges) {
         // If we've already got this activity, no need to reparse and add it again.
         // this will result in deduplication if the engine supplies duplicate Boosts.
-        if (boosts.some(boost => boost.guid === edge.node.guid)) {
+        if (boosts.some((boost) => boost.guid === edge.node.guid)) {
           continue;
         }
         boosts.push({

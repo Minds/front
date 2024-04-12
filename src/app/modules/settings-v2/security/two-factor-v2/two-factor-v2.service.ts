@@ -55,29 +55,24 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
   protected subscriptions: Subscription[] = [];
 
   // Currently active panel.
-  public readonly activePanel$: BehaviorSubject<
-    TwoFactorSetupPanel
-  > = new BehaviorSubject<TwoFactorSetupPanel>(DEFAULT_TWO_FACTOR_START_PANEL);
+  public readonly activePanel$: BehaviorSubject<TwoFactorSetupPanel> =
+    new BehaviorSubject<TwoFactorSetupPanel>(DEFAULT_TWO_FACTOR_START_PANEL);
 
   // True if password has been confirmed.
-  public readonly passwordConfirmed$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly passwordConfirmed$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // holds secret code.
-  public readonly secret$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  public readonly secret$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   // true if inprogress.
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // holds recovery code
-  public readonly recoveryCode$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  public readonly recoveryCode$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   constructor(
     private toast: ToasterService,
@@ -88,7 +83,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
   ) {
     this.subscriptions.push(
       // reset state on router back - return user to root.
-      router.events.pipe(skip(1)).subscribe(val => {
+      router.events.pipe(skip(1)).subscribe((val) => {
         if (val instanceof NavigationEnd) {
           this.reset();
         }
@@ -105,7 +100,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
    */
   get totpEnabled$(): Observable<boolean> {
     return this.settings.settings$.pipe(
-      map(settings => {
+      map((settings) => {
         return settings?.has2fa?.totp;
       })
     );
@@ -117,7 +112,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
    */
   get smsEnabled$(): Observable<boolean> {
     return this.settings.settings$.pipe(
-      map(settings => {
+      map((settings) => {
         return settings?.has2fa?.sms;
       })
     );
@@ -155,7 +150,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
         .pipe(
           take(1),
           throttleTime(2000),
-          catchError(error => {
+          catchError((error) => {
             // if there is an error, abort - send user back to root panel.
             console.error(error);
             this.toast.error(
@@ -166,7 +161,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
             return of(null);
           })
         )
-        .subscribe(val => {
+        .subscribe((val) => {
           this.inProgress$.next(false);
           if (!val || val.status === 'error') {
             return;
@@ -194,7 +189,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
         .pipe(
           take(1),
           throttleTime(2000),
-          catchError(error => {
+          catchError((error) => {
             this.toast.error(
               error.error.message ?? 'An unexpected error has occurred'
             );
@@ -202,7 +197,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
             return of(null);
           })
         )
-        .subscribe(val => {
+        .subscribe((val) => {
           this.inProgress$.next(false);
           if (!val || val.status === 'error') {
             return;
@@ -225,7 +220,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
         .pipe(
           take(1),
           throttleTime(2000),
-          catchError(error => {
+          catchError((error) => {
             console.error(error);
             this.toast.error(
               error.error.message ?? 'An unexpected error has occurred'
@@ -234,7 +229,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
             return of(null);
           })
         )
-        .subscribe(val => {
+        .subscribe((val) => {
           this.inProgress$.next(false);
 
           if (!val || val.status === 'error') {

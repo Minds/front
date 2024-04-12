@@ -18,7 +18,10 @@ export class NetworkAdminConsoleTabsComponent {
   /** Whether the user is an admin. */
   protected readonly isAdmin: boolean = false;
 
-  constructor(public session: Session, public permissions: PermissionsService) {
+  constructor(
+    public session: Session,
+    public permissions: PermissionsService
+  ) {
     this.isAdmin = this.session.isAdmin();
   }
 }

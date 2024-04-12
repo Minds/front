@@ -29,55 +29,53 @@ describe('AddBankPromptComponent', () => {
     );
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          AddBankPromptComponent,
-          MockComponent({
-            selector: 'm-loadingSpinner',
-            inputs: ['inProgress'],
-          }),
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['sizeFactor'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-          }),
-        ],
-        providers: [
-          {
-            provide: CashWalletService,
-            useValue: MockService(CashWalletService, {
-              has: [
-                'isLoading$$',
-                'hasAccount$',
-                'isRestricted$',
-                'restrictedReason$',
-              ],
-              props: {
-                isLoading$$: { get: () => new BehaviorSubject<boolean>(false) },
-                hasAccount$: { get: () => new BehaviorSubject<boolean>(false) },
-                isRestricted$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
-                restrictedReason$: {
-                  get: () => new BehaviorSubject<string>(''),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        AddBankPromptComponent,
+        MockComponent({
+          selector: 'm-loadingSpinner',
+          inputs: ['inProgress'],
+        }),
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['sizeFactor'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+        }),
+      ],
+      providers: [
+        {
+          provide: CashWalletService,
+          useValue: MockService(CashWalletService, {
+            has: [
+              'isLoading$$',
+              'hasAccount$',
+              'isRestricted$',
+              'restrictedReason$',
+            ],
+            props: {
+              isLoading$$: { get: () => new BehaviorSubject<boolean>(false) },
+              hasAccount$: { get: () => new BehaviorSubject<boolean>(false) },
+              isRestricted$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
-            }),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+              restrictedReason$: {
+                get: () => new BehaviorSubject<string>(''),
+              },
+            },
+          }),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(AddBankPromptComponent);
     comp = fixture.componentInstance;
 

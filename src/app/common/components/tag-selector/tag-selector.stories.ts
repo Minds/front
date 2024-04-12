@@ -29,7 +29,7 @@ export default {
       declarations: [TagSelectorComponent, ButtonComponent],
     }),
     componentWrapperDecorator(
-      story => `<div style="max-width: 500px;">${story}</div>`
+      (story) => `<div style="max-width: 500px;">${story}</div>`
     ),
   ],
   args: {

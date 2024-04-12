@@ -35,9 +35,8 @@ export class WireCreatorSupportTierConfirmationComponent {
   /**
    * Dismiss intent event emitter
    */
-  @Output('onDismissIntent') dismissIntentEmitter: EventEmitter<
-    void
-  > = new EventEmitter<void>();
+  @Output('onDismissIntent') dismissIntentEmitter: EventEmitter<void> =
+    new EventEmitter<void>();
 
   @ViewChild(PaymentsSelectCard) cardSelector: PaymentsSelectCard;
 
@@ -54,9 +53,8 @@ export class WireCreatorSupportTierConfirmationComponent {
    * Payment types as array of support tier currencies e.g. ['usd', 'tokens']
    * @returns { Observable<SupportTierCurrency[]> } - payment types.
    */
-  public readonly paymentTypes$: Observable<
-    SupportTierCurrency[]
-  > = this.supportTiersService.getPaymentTypes$(this.service.supportTier$);
+  public readonly paymentTypes$: Observable<SupportTierCurrency[]> =
+    this.supportTiersService.getPaymentTypes$(this.service.supportTier$);
 
   typeChangeSubscription: Subscription;
 

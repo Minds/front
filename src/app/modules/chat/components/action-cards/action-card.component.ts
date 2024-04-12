@@ -64,7 +64,6 @@ export class ChatActionCardComponent {
   @Input() protected ctaText: string = '';
 
   /** Outputs on action button click. */
-  @Output() protected actionButtonClick: EventEmitter<void> = new EventEmitter<
-    void
-  >();
+  @Output() protected actionButtonClick: EventEmitter<void> =
+    new EventEmitter<void>();
 }

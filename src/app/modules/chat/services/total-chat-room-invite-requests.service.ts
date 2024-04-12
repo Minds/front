@@ -21,24 +21,20 @@ import { ApolloQueryResult } from '@apollo/client';
 @Injectable()
 export class TotalChatRoomInviteRequestsService implements OnDestroy {
   /** Internal subject to hold total requests. */
-  private readonly _totalRequests$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(0);
+  private readonly _totalRequests$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   /** Exposed observable that represents total requests. */
-  public readonly totalRequests$: Observable<
-    number
-  > = this._totalRequests$.asObservable();
+  public readonly totalRequests$: Observable<number> =
+    this._totalRequests$.asObservable();
 
   /** Internal subject to hold total requests. */
-  private readonly _initialized$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  private readonly _initialized$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Exposed observable that represents total requests. */
-  public readonly initialized$: Observable<
-    boolean
-  > = this._initialized$.asObservable();
+  public readonly initialized$: Observable<boolean> =
+    this._initialized$.asObservable();
 
   /** Internal reference to the query. */
   private queryRef: QueryRef<

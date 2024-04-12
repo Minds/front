@@ -26,7 +26,7 @@ export class UsernameValidator {
         return control.valueChanges.pipe(
           debounceTime(500),
           take(1),
-          switchMap(_ =>
+          switchMap((_) =>
             this.client
               .get('api/v3/register/validate', {
                 username: val,
@@ -40,7 +40,7 @@ export class UsernameValidator {
                   return null;
                 }
               })
-              .catch(e => {
+              .catch((e) => {
                 console.log(e);
                 return null;
               })

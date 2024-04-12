@@ -24,7 +24,7 @@ export class ChannelShopMembershipsEditModalService {
       {
         data: {
           supportTier: supportTier || null,
-          onSave: response => modal.close(response),
+          onSave: (response) => modal.close(response),
         },
         injector: this.injector,
       }

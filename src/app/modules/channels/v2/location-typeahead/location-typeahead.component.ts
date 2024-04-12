@@ -46,16 +46,15 @@ export class ChannelLocationTypeaheadComponent implements OnInit, OnDestroy {
   /**
    * Location change emitter
    */
-  @Output('locationChange') locationChangeEmitter: EventEmitter<
-    LocationTypeaheadResponse
-  > = new EventEmitter<LocationTypeaheadResponse>();
+  @Output('locationChange')
+  locationChangeEmitter: EventEmitter<LocationTypeaheadResponse> =
+    new EventEmitter<LocationTypeaheadResponse>();
 
   /**
    * Current suggestion query
    */
-  readonly locationSuggestionQuery$: BehaviorSubject<
-    string
-  > = new BehaviorSubject<string>('');
+  readonly locationSuggestionQuery$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   /**
    * Suggestions array from API
@@ -87,15 +86,15 @@ export class ChannelLocationTypeaheadComponent implements OnInit, OnDestroy {
     // Set the lookup pipe
     this.locationSuggestions$ = this.locationSuggestionQuery$.pipe(
       debounceTime(300),
-      map(locationSuggestionQuery => this.fetch(locationSuggestionQuery)),
+      map((locationSuggestionQuery) => this.fetch(locationSuggestionQuery)),
       switchAll(),
-      map(response => {
+      map((response) => {
         if (!response || !response.results) {
           return [];
         }
 
         return response.results
-          .map(entry => this.fromApiResponse(entry))
+          .map((entry) => this.fromApiResponse(entry))
           .filter(Boolean);
       })
     );

@@ -37,7 +37,7 @@ export class OnchainTransferModalService {
       );
     }
 
-    return new Observable<any>(subscriber => {
+    return new Observable<any>((subscriber) => {
       let modal;
 
       try {

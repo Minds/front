@@ -9,20 +9,18 @@ describe('MultiFactorAuthEmailComponent', () => {
   let comp: MultiFactorAuthEmailComponent;
   let fixture: ComponentFixture<MultiFactorAuthEmailComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule],
-        declarations: [MultiFactorAuthEmailComponent, ButtonComponent],
-        providers: [
-          {
-            provide: MultiFactorAuthService,
-            useValue: MockService(MultiFactorAuthService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [MultiFactorAuthEmailComponent, ButtonComponent],
+      providers: [
+        {
+          provide: MultiFactorAuthService,
+          useValue: MockService(MultiFactorAuthService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MultiFactorAuthEmailComponent);

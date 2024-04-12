@@ -48,7 +48,7 @@ export class TranslationService {
 
             return response.languages;
           })
-          .catch(e => []);
+          .catch((e) => []);
       }
     }
 

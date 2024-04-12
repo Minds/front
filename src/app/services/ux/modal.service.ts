@@ -60,7 +60,7 @@ export class ModalService implements OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.activeInstancesSubscription = service.activeInstances.subscribe(
-      activeInstances => (this.activeInstances = activeInstances)
+      (activeInstances) => (this.activeInstances = activeInstances)
     );
   }
 
@@ -125,10 +125,10 @@ export class ModalService implements OnDestroy {
     // The error below fires whenever dismiss() is used instead of close(),
     // and is not always really an 'error'
     return {
-      dismiss: i => ref.dismiss(i),
-      close: i => ref.close(i),
+      dismiss: (i) => ref.dismiss(i),
+      close: (i) => ref.close(i),
       dismissed: ref.dismissed,
-      result: ref.result.catch(error => {
+      result: ref.result.catch((error) => {
         console.log('ERROR', error);
       }),
     };

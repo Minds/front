@@ -74,9 +74,8 @@ export class PopupComponent {
     }
 
     // Instantiate component and inject it
-    const componentFactory: ComponentFactory<C> = this.componentFactoryResolver.resolveComponentFactory(
-      component
-    );
+    const componentFactory: ComponentFactory<C> =
+      this.componentFactoryResolver.resolveComponentFactory(component);
     const viewContainerRef: ViewContainerRef = this.host.viewContainerRef;
 
     viewContainerRef.clear();
@@ -90,7 +89,7 @@ export class PopupComponent {
     // Setup popup execution scope, for now it dismisses itself when a dismissIntent is received
     // TODO: Allow "progress-like" messages that won't dismiss the modal. Use a different @Output for backwards-compat!
 
-    this.current = new Observable(subscriber => {
+    this.current = new Observable((subscriber) => {
       try {
         if (!componentRef.instance.dismissIntent) {
           // Check if component has a dismissIntent EventEmitter
@@ -109,8 +108,8 @@ export class PopupComponent {
           this.detectChanges();
 
           // Set up dismissIntent EventEmitter subscription
-          const dismissIntentSubscription: Subscription = componentRef.instance.dismissIntent.subscribe(
-            payload => {
+          const dismissIntentSubscription: Subscription =
+            componentRef.instance.dismissIntent.subscribe((payload) => {
               try {
                 // Emit and complete
                 subscriber.next(payload);
@@ -125,8 +124,7 @@ export class PopupComponent {
                 // Dismiss the modal
                 this.dismiss();
               }
-            }
-          );
+            });
 
           // Return a clean up function
           return () => {

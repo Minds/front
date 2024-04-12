@@ -21,7 +21,7 @@ class OptimizedResize {
 
   // run the actual callbacks
   private runCallbacks() {
-    this.callbacks.forEach(callback => {
+    this.callbacks.forEach((callback) => {
       callback();
     });
 

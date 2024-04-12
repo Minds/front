@@ -15,43 +15,41 @@ describe('AuthModalComponent', () => {
   let siteName: string = 'Test site';
   let isTenantNetwork: boolean = false;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          AuthModalComponent,
-          MockComponent({
-            selector: 'm-loginForm',
-            inputs: ['source'],
-            outputs: ['done', 'doneRegistered', 'showRegisterForm'],
-          }),
-          MockComponent({
-            selector: 'm-registerForm',
-            inputs: ['source'],
-            outputs: ['done', 'showLoginForm'],
-          }),
-          MockComponent({
-            selector: 'm-modalCloseButton',
-            inputs: ['color'],
-          }),
-        ],
-        providers: [
-          { provide: SiteService, useValue: MockService(SiteService) },
-          { provide: CDN_ASSETS_URL, useValue: cdnAssetsUrl },
-          { provide: SITE_NAME, useValue: siteName },
-          { provide: IS_TENANT_NETWORK, useValue: isTenantNetwork },
-          {
-            provide: AuthModalImageService,
-            useValue: MockService(AuthModalImageService),
-          },
-          {
-            provide: MultiTenantConfigImageService,
-            useValue: MockService(MultiTenantConfigImageService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        AuthModalComponent,
+        MockComponent({
+          selector: 'm-loginForm',
+          inputs: ['source'],
+          outputs: ['done', 'doneRegistered', 'showRegisterForm'],
+        }),
+        MockComponent({
+          selector: 'm-registerForm',
+          inputs: ['source'],
+          outputs: ['done', 'showLoginForm'],
+        }),
+        MockComponent({
+          selector: 'm-modalCloseButton',
+          inputs: ['color'],
+        }),
+      ],
+      providers: [
+        { provide: SiteService, useValue: MockService(SiteService) },
+        { provide: CDN_ASSETS_URL, useValue: cdnAssetsUrl },
+        { provide: SITE_NAME, useValue: siteName },
+        { provide: IS_TENANT_NETWORK, useValue: isTenantNetwork },
+        {
+          provide: AuthModalImageService,
+          useValue: MockService(AuthModalImageService),
+        },
+        {
+          provide: MultiTenantConfigImageService,
+          useValue: MockService(MultiTenantConfigImageService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AuthModalComponent);

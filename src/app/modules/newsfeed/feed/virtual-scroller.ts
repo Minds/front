@@ -494,9 +494,8 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 
   public invalidateCachedMeasurementAtIndex(index: number): void {
     if (this.enableUnequalChildrenSizes) {
-      let cachedMeasurement = this.wrapGroupDimensions.maxChildSizePerWrapGroup[
-        index
-      ];
+      let cachedMeasurement =
+        this.wrapGroupDimensions.maxChildSizePerWrapGroup[index];
       if (cachedMeasurement) {
         this.wrapGroupDimensions.maxChildSizePerWrapGroup[index] = undefined;
         --this.wrapGroupDimensions.numberOfKnownWrapGroupChildSizes;
@@ -643,7 +642,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
     let newTween = new tween.Tween(tweenConfigObj)
       .to({ scrollPosition }, animationMilliseconds)
       .easing(tween.Easing.Quadratic.Out)
-      .onUpdate(data => {
+      .onUpdate((data) => {
         if (isNaN(data.scrollPosition)) {
           return;
         }
@@ -788,11 +787,11 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 
   protected debounce(func: Function, wait: number): Function {
     const throttled = this.throttleTrailing(func, wait);
-    const result = function() {
+    const result = function () {
       throttled['cancel']();
       throttled.apply(this, arguments);
     };
-    result['cancel'] = function() {
+    result['cancel'] = function () {
       throttled['cancel']();
     };
 
@@ -802,7 +801,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
   protected throttleTrailing(func: Function, wait: number): Function {
     let timeout = undefined;
     let _arguments = arguments;
-    const result = function() {
+    const result = function () {
       const _this = this;
       _arguments = arguments;
 
@@ -813,13 +812,13 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
       if (wait <= 0) {
         func.apply(_this, _arguments);
       } else {
-        timeout = setTimeout(function() {
+        timeout = setTimeout(function () {
           timeout = undefined;
           func.apply(_this, _arguments);
         }, wait);
       }
     };
-    result['cancel'] = function() {
+    result['cancel'] = function () {
       if (timeout) {
         clearTimeout(timeout);
         timeout = undefined;
@@ -866,7 +865,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
           this.previousViewPort.scrollLength - oldViewPort.scrollLength;
         if (scrollLengthDelta > 0 && this.viewPortItems) {
           let oldStartItem = oldViewPortItems[0];
-          let oldStartItemIndex = this.items.findIndex(x =>
+          let oldStartItemIndex = this.items.findIndex((x) =>
             this.compareItems(oldStartItem, x)
           );
           if (oldStartItemIndex > this.previousViewPort.startIndexWithBuffer) {
@@ -1243,9 +1242,8 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
           oldWrapGroupDimension.childWidth || 0;
         this.wrapGroupDimensions.sumOfKnownWrapGroupChildHeights +=
           oldWrapGroupDimension.childHeight || 0;
-        this.wrapGroupDimensions.maxChildSizePerWrapGroup[
-          wrapGroupIndex
-        ] = oldWrapGroupDimension;
+        this.wrapGroupDimensions.maxChildSizePerWrapGroup[wrapGroupIndex] =
+          oldWrapGroupDimension;
       }
     }
   }
@@ -1366,9 +1364,8 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
         );
 
         if (arrayStartIndex % itemsPerWrapGroup === 0) {
-          let oldValue = this.wrapGroupDimensions.maxChildSizePerWrapGroup[
-            wrapGroupIndex
-          ];
+          let oldValue =
+            this.wrapGroupDimensions.maxChildSizePerWrapGroup[wrapGroupIndex];
           if (oldValue) {
             --this.wrapGroupDimensions.numberOfKnownWrapGroupChildSizes;
             this.wrapGroupDimensions.sumOfKnownWrapGroupChildWidths -=
@@ -1387,8 +1384,10 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
             childHeight: maxHeightForWrapGroup,
             items: items,
           };
-          this.wrapGroupDimensions.sumOfKnownWrapGroupChildWidths += maxWidthForWrapGroup;
-          this.wrapGroupDimensions.sumOfKnownWrapGroupChildHeights += maxHeightForWrapGroup;
+          this.wrapGroupDimensions.sumOfKnownWrapGroupChildWidths +=
+            maxWidthForWrapGroup;
+          this.wrapGroupDimensions.sumOfKnownWrapGroupChildHeights +=
+            maxHeightForWrapGroup;
 
           if (this.horizontal) {
             let maxVisibleWidthForWrapGroup = Math.min(

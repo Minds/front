@@ -27,8 +27,8 @@ export class PageComponent implements OnInit {
   public showSidebarV2: boolean = false;
 
   /** Whether topbar alert should be shown. */
-  protected readonly shouldShowTopbarAlert$: Observable<boolean> = this
-    .topbarAlertService.shouldShow$;
+  protected readonly shouldShowTopbarAlert$: Observable<boolean> =
+    this.topbarAlertService.shouldShow$;
 
   constructor(
     public session: Session,

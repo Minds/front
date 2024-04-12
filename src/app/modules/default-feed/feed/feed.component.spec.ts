@@ -46,70 +46,68 @@ describe('DefaultFeedComponent', () => {
     },
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.overrideComponent(DefaultFeedComponent, {
-        set: {
-          providers: [{ provide: FeedsService, useValue: feedsServiceMock }],
+  beforeEach(waitForAsync(() => {
+    TestBed.overrideComponent(DefaultFeedComponent, {
+      set: {
+        providers: [{ provide: FeedsService, useValue: feedsServiceMock }],
+      },
+    }); // https://medium.com/ngconf/how-to-override-component-providers-in-angular-unit-tests-b73b47b582e3
+    TestBed.configureTestingModule({
+      declarations: [
+        MockComponent({
+          selector: 'm-activity',
+          inputs: ['entity', 'displayOptions', 'slot'],
+        }),
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: ['moreData', 'inProgress'],
+          outputs: ['load'],
+        }),
+        MockComponent({
+          selector: 'm-feedNotice__outlet',
+          inputs: ['location'],
+        }),
+        MockComponent({
+          selector: 'm-publisherRecommendations',
+          inputs: ['location', 'dismissible', 'publisherType'],
+        }),
+        MockComponent({
+          selector: 'm-valueProp__cardOutlet',
+          inputs: ['showBorderTop'],
+        }),
+        MockComponent({
+          selector: 'm-featured-content',
+          inputs: ['slot', 'displayOptions'],
+        }),
+        DefaultFeedComponent,
+      ],
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      providers: [
+        {
+          provide: ExperimentsService,
+          useValue: MockService(ExperimentsService),
         },
-      }); // https://medium.com/ngconf/how-to-override-component-providers-in-angular-unit-tests-b73b47b582e3
-      TestBed.configureTestingModule({
-        declarations: [
-          MockComponent({
-            selector: 'm-activity',
-            inputs: ['entity', 'displayOptions', 'slot'],
-          }),
-          MockComponent({
-            selector: 'infinite-scroll',
-            inputs: ['moreData', 'inProgress'],
-            outputs: ['load'],
-          }),
-          MockComponent({
-            selector: 'm-feedNotice__outlet',
-            inputs: ['location'],
-          }),
-          MockComponent({
-            selector: 'm-publisherRecommendations',
-            inputs: ['location', 'dismissible', 'publisherType'],
-          }),
-          MockComponent({
-            selector: 'm-valueProp__cardOutlet',
-            inputs: ['showBorderTop'],
-          }),
-          MockComponent({
-            selector: 'm-featured-content',
-            inputs: ['slot', 'displayOptions'],
-          }),
-          DefaultFeedComponent,
-        ],
-        imports: [RouterTestingModule, ReactiveFormsModule],
-        providers: [
-          {
-            provide: ExperimentsService,
-            useValue: MockService(ExperimentsService),
-          },
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: DismissalService,
-            useValue: MockService(DismissalService),
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-        ],
-      })
-        .overrideProvider(FeedsService, {
-          useValue: feedsServiceMock,
-        })
-        .compileComponents();
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: DismissalService,
+          useValue: MockService(DismissalService),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+      ],
     })
-  );
+      .overrideProvider(FeedsService, {
+        useValue: feedsServiceMock,
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(DefaultFeedComponent);
 
     comp = fixture.componentInstance;

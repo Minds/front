@@ -27,7 +27,8 @@ export class OnboardingV5ExperimentService {
    * @returns { boolean } whether user is assigned into Onboarding V5 enrollment.
    */
   public isEnrollmentActive(): boolean {
-    return this.experiments.hasVariation(this.ENROLLMENT_EXPERIMENT_ID, true);
+    // return this.experiments.hasVariation(this.ENROLLMENT_EXPERIMENT_ID, true);
+    return true;
   }
 
   /**
@@ -35,9 +36,10 @@ export class OnboardingV5ExperimentService {
    * @returns { boolean } whether OnboardingV5 is active.
    */
   public isGlobalOnSwitchActive(): boolean {
-    return this.experiments.hasVariation(
-      this.GLOBAL_ON_SWITCH_EXPERIMENT_ID,
-      true
-    );
+    // return this.experiments.hasVariation(
+    //   this.GLOBAL_ON_SWITCH_EXPERIMENT_ID,
+    //   true
+    // );
+    return true;
   }
 }

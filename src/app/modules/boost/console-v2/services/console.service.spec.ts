@@ -8,19 +8,19 @@ import {
 import { BoostPaymentCategory } from '../../modal-v2/boost-modal-v2.types';
 import { BoostConsoleService } from './console.service';
 
-let sessionMock = new (function() {
+let sessionMock = new (function () {
   this.isAdmin = jasmine.createSpy('isAdmin');
 })();
 
-let apiMock = new (function() {
+let apiMock = new (function () {
   this.post = jasmine.createSpy('post');
 })();
 
-let toasterMock = new (function() {
+let toasterMock = new (function () {
   this.error = jasmine.createSpy('error');
 })();
 
-let adminStatsMock = new (function() {
+let adminStatsMock = new (function () {
   this.decrementPendingSafeCount = jasmine.createSpy(
     'decrementPendingSafeCount'
   );
@@ -29,9 +29,9 @@ let adminStatsMock = new (function() {
   );
 })();
 
-let routerMock = new (function() {})();
+let routerMock = new (function () {})();
 
-let routeMock = new (function() {})();
+let routeMock = new (function () {})();
 
 let mockBoost: Boost = {
   guid: '123',
@@ -75,7 +75,9 @@ describe('BoostConsoleService', () => {
     (service as any).session.isAdmin.and.returnValue(false);
 
     (service as any).adminStats.decrementPendingSafeCount.calls.reset();
-    (service as any).adminStats.decrementPendingControversialCount.calls.reset();
+    (
+      service as any
+    ).adminStats.decrementPendingControversialCount.calls.reset();
 
     service.suitabilityFilterValue$.next('safe');
   });

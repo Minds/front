@@ -44,9 +44,7 @@ export class DateRangeModalComponent implements OnInit, OnDestroy {
   constructor(public service: FeedService) {}
 
   ngOnInit(): void {
-    this.defaultToDate = moment(Date.now())
-      .endOf('day')
-      .valueOf();
+    this.defaultToDate = moment(Date.now()).endOf('day').valueOf();
 
     this.defaultFromDate = moment(this.defaultToDate)
       .subtract(7, 'days')
@@ -57,7 +55,7 @@ export class DateRangeModalComponent implements OnInit, OnDestroy {
     this.fromDate = this.defaultFromDate;
 
     this.subscriptions = [
-      this.service.dateRange$.subscribe(dateRange => {
+      this.service.dateRange$.subscribe((dateRange) => {
         if (!!dateRange.toDate && !!dateRange.fromDate) {
           this.fromDate = dateRange.fromDate;
           this.toDate = dateRange.toDate;
@@ -73,15 +71,11 @@ export class DateRangeModalComponent implements OnInit, OnDestroy {
   }
 
   onFromDateChange(newDate): void {
-    this.fromDate = moment(new Date(newDate))
-      .startOf('day')
-      .valueOf();
+    this.fromDate = moment(new Date(newDate)).startOf('day').valueOf();
   }
 
   onToDateChange(newDate): void {
-    this.toDate = moment(new Date(newDate))
-      .endOf('day')
-      .valueOf();
+    this.toDate = moment(new Date(newDate)).endOf('day').valueOf();
   }
 
   onApply(): void {

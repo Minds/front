@@ -99,9 +99,10 @@ describe('NetworkAdminMonetizationGroupsListComponent', () => {
       comp.showDeleteButton = false;
       fixture.detectChanges();
 
-      const deleteButtonElements: DebugElement[] = fixture.debugElement.queryAll(
-        By.css('.m-networkMembershipAccordian__groupRemoveIcon')
-      );
+      const deleteButtonElements: DebugElement[] =
+        fixture.debugElement.queryAll(
+          By.css('.m-networkMembershipAccordian__groupRemoveIcon')
+        );
 
       expect(deleteButtonElements?.length).toBeFalsy();
     });

@@ -56,7 +56,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['filter']) {
         this._filter = params['filter'];
         this.notifications = [];

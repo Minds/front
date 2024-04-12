@@ -25,47 +25,45 @@ describe('Composer Preview', () => {
     },
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          PreviewWrapperComponent,
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['from', 'iconId', 'sizeFactor'],
-          }),
-          MockComponent({
-            selector: 'm-composerPreview--attachment',
-            inputs: ['attachmentPreviewResource'],
-            outputs: ['onPortraitOrientation'],
-          }),
-          MockComponent({
-            selector: 'm-composerPreview--richEmbed',
-            inputs: ['richEmbed'],
-          }),
-        ],
-        providers: [
-          {
-            provide: ComposerService,
-            useValue: composerServiceMock,
-          },
-          {
-            provide: AttachmentApiService,
-            useValue: MockService(AttachmentApiService, {
-              has: ['videoPermissionsError$'],
-              props: {
-                videoPermissionsError$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        PreviewWrapperComponent,
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['from', 'iconId', 'sizeFactor'],
+        }),
+        MockComponent({
+          selector: 'm-composerPreview--attachment',
+          inputs: ['attachmentPreviewResource'],
+          outputs: ['onPortraitOrientation'],
+        }),
+        MockComponent({
+          selector: 'm-composerPreview--richEmbed',
+          inputs: ['richEmbed'],
+        }),
+      ],
+      providers: [
+        {
+          provide: ComposerService,
+          useValue: composerServiceMock,
+        },
+        {
+          provide: AttachmentApiService,
+          useValue: MockService(AttachmentApiService, {
+            has: ['videoPermissionsError$'],
+            props: {
+              videoPermissionsError$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(PreviewWrapperComponent);
     comp = fixture.componentInstance;

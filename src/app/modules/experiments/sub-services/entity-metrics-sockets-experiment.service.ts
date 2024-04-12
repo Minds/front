@@ -14,6 +14,7 @@ export class EntityMetricsSocketsExperimentService {
    * @returns { boolean } whether engine-1218-metrics-sockets experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('engine-1218-metrics-sockets', true);
+    //return this.experiments.hasVariation('engine-1218-metrics-sockets', true);
+    return true;
   }
 }

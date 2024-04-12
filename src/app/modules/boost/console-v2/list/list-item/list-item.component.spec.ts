@@ -29,57 +29,55 @@ describe('BoostConsoleListItemComponent', () => {
     approved_timestamp: null,
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          BoostConsoleListItemComponent,
-          MockComponent({
-            selector: 'm-chipBadge',
-          }),
-          MockComponent({
-            selector: 'm-activity',
-            inputs: [
-              'entity',
-              'canDelete',
-              'displayOptions',
-              'autoplayVideo',
-              'canRecordAnalytics',
-            ],
-          }),
-          MockComponent({
-            selector: 'm-publisherCard',
-            inputs: ['publisher', 'showSubscribeButton'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['size'],
-          }),
-          MockComponent({
-            selector: 'm-boostConsole__stateLabel',
-            inputs: ['boost'],
-          }),
-          MockComponent({
-            selector: 'm-boostConsole__actionButtons',
-            inputs: ['boost'],
-          }),
-        ],
-        providers: [
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: ConfigsService,
-            useValue: MockService(ConfigsService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        BoostConsoleListItemComponent,
+        MockComponent({
+          selector: 'm-chipBadge',
+        }),
+        MockComponent({
+          selector: 'm-activity',
+          inputs: [
+            'entity',
+            'canDelete',
+            'displayOptions',
+            'autoplayVideo',
+            'canRecordAnalytics',
+          ],
+        }),
+        MockComponent({
+          selector: 'm-publisherCard',
+          inputs: ['publisher', 'showSubscribeButton'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['size'],
+        }),
+        MockComponent({
+          selector: 'm-boostConsole__stateLabel',
+          inputs: ['boost'],
+        }),
+        MockComponent({
+          selector: 'm-boostConsole__actionButtons',
+          inputs: ['boost'],
+        }),
+      ],
+      providers: [
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostConsoleListItemComponent);
     comp = fixture.componentInstance;
 

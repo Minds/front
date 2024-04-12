@@ -47,9 +47,8 @@ export class ScheduleComponent {
   /**
    * System date/time format options
    */
-  readonly dateTimeFormatOptions: Intl.ResolvedDateTimeFormatOptions = new Intl.DateTimeFormat(
-    'default'
-  ).resolvedOptions();
+  readonly dateTimeFormatOptions: Intl.ResolvedDateTimeFormatOptions =
+    new Intl.DateTimeFormat('default').resolvedOptions();
 
   /**
    * Validation error
@@ -132,7 +131,7 @@ export class ScheduleComponent {
     const [hours, minutes] = this.state.time
       .trim()
       .split(':')
-      .map(_ => parseInt(_, 10));
+      .map((_) => parseInt(_, 10));
 
     if (
       isNaN(hours) ||

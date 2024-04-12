@@ -21,8 +21,8 @@ export class NewsfeedService {
   get nsfw(): Array<number> {
     return this.nsfwSelectorService
       .build()
-      .reasons.filter(reason => reason.selected)
-      .map(reason => reason.value);
+      .reasons.filter((reason) => reason.selected)
+      .map((reason) => reason.value);
   }
 
   public async recordView(

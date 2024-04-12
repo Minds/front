@@ -84,9 +84,8 @@ export class BlogsEditService {
     0
   );
 
-  readonly metaDescription$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  readonly metaDescription$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   readonly metaTitle$: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''
@@ -116,12 +115,11 @@ export class BlogsEditService {
     ''
   );
 
-  readonly attachmentError$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  readonly attachmentError$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
-  readonly monetize$: BehaviorSubject<MonetizationSubjectValue> = this
-    .composerService.monetization$;
+  readonly monetize$: BehaviorSubject<MonetizationSubjectValue> =
+    this.composerService.monetization$;
 
   readonly editorVersion$: BehaviorSubject<number> = new BehaviorSubject(
     DEFAULT_BLOG_EDITOR_VERSION_VALUE
@@ -331,7 +329,7 @@ export class BlogsEditService {
     this.accessIdSubscription = this.accessId$
       .pipe(
         take(1),
-        tap(id => {
+        tap((id) => {
           this.published$.next(draft ? 0 : 1);
 
           // if saving as draft force id to be 0.
@@ -410,7 +408,7 @@ export class BlogsEditService {
       this.bannerFile$.next(banner);
       const reader = new FileReader();
       reader.readAsDataURL(banner);
-      reader.onload = _event => {
+      reader.onload = (_event) => {
         this.banner$.next(reader.result.toString());
       };
     } catch (e) {
@@ -448,7 +446,7 @@ export class BlogsEditService {
    * @param { string } tag - the tag to remove.
    */
   public removeTag(tag: string): void {
-    this.tags$.next(this.tags$.getValue().filter(t => t !== tag));
+    this.tags$.next(this.tags$.getValue().filter((t) => t !== tag));
   }
 
   /**
@@ -458,7 +456,7 @@ export class BlogsEditService {
   public toggleNSFW(value: number): void {
     let current: number[] = this.nsfw$.getValue();
     if (current.indexOf(value) > -1) {
-      current = current.filter(t => t !== value);
+      current = current.filter((t) => t !== value);
       this.nsfw$.next(current);
       return;
     }

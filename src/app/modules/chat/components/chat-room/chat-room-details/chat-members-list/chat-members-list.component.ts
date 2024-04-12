@@ -30,23 +30,22 @@ export class ChatMembersListComponent {
   @Input() protected roomGuid: string;
 
   /** Chat room members. - should be initialized by calling service init in the parent component. */
-  protected readonly members$: Observable<ChatRoomMemberEdge[]> = this
-    .chatRoomMembersService.edges$;
+  protected readonly members$: Observable<ChatRoomMemberEdge[]> =
+    this.chatRoomMembersService.edges$;
 
   /** Whether loading of chat members is initialized. */
-  protected readonly initialized$: Observable<boolean> = this
-    .chatRoomMembersService.initialized$;
+  protected readonly initialized$: Observable<boolean> =
+    this.chatRoomMembersService.initialized$;
 
   /** Whether loading of chat members is in progress. */
-  protected readonly inProgress$: Observable<boolean> = this
-    .chatRoomMembersService.inProgress$;
+  protected readonly inProgress$: Observable<boolean> =
+    this.chatRoomMembersService.inProgress$;
 
   /** Whether chat members list has a next page. */
-  protected readonly hasNextPage$: Observable<
-    boolean
-  > = this.chatRoomMembersService.pageInfo$.pipe(
-    map((pageInfo: PageInfo) => pageInfo?.hasNextPage)
-  );
+  protected readonly hasNextPage$: Observable<boolean> =
+    this.chatRoomMembersService.pageInfo$.pipe(
+      map((pageInfo: PageInfo) => pageInfo?.hasNextPage)
+    );
 
   constructor(
     private chatRoomMembersService: ChatRoomMembersService,

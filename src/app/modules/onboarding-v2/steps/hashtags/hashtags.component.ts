@@ -68,7 +68,7 @@ export class HashtagsStepComponent implements OnInit {
   private validate() {
     this.error = null;
 
-    if (this.hashtags.filter(item => item.selected).length < 3) {
+    if (this.hashtags.filter((item) => item.selected).length < 3) {
       this.error = 'not:enough:hashtags';
       return false;
     }

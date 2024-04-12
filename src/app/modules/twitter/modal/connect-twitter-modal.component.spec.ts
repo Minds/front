@@ -14,52 +14,50 @@ describe('ConnectTwitterModalComponent', () => {
   let comp: ConnectTwitterModalComponent;
   let fixture: ComponentFixture<ConnectTwitterModalComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ConnectTwitterModalComponent,
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['disabled', 'saving'],
-          }),
-          MockComponent({
-            selector: 'm-modalCloseButton',
-            inputs: ['color'],
-          }),
-        ],
-        providers: [
-          {
-            provide: TwitterConnectionService,
-            useValue: MockService(TwitterConnectionService, {
-              has: [
-                'isConnected$',
-                'authUrlRequestInProgress$',
-                'authUrl$',
-                'postAuthRedirectPath$',
-              ],
-              props: {
-                isConnected$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
-                authUrlRequestInProgress$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
-                authUrl$: {
-                  get: () => new BehaviorSubject<string>('/auth'),
-                },
-                postAuthRedirectPath$: {
-                  get: () => new BehaviorSubject<string>('/redirect-path'),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ConnectTwitterModalComponent,
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['disabled', 'saving'],
+        }),
+        MockComponent({
+          selector: 'm-modalCloseButton',
+          inputs: ['color'],
+        }),
+      ],
+      providers: [
+        {
+          provide: TwitterConnectionService,
+          useValue: MockService(TwitterConnectionService, {
+            has: [
+              'isConnected$',
+              'authUrlRequestInProgress$',
+              'authUrl$',
+              'postAuthRedirectPath$',
+            ],
+            props: {
+              isConnected$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+              authUrlRequestInProgress$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              authUrl$: {
+                get: () => new BehaviorSubject<string>('/auth'),
+              },
+              postAuthRedirectPath$: {
+                get: () => new BehaviorSubject<string>('/redirect-path'),
+              },
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ConnectTwitterModalComponent);
     comp = fixture.componentInstance;
 

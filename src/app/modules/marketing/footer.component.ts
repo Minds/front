@@ -27,9 +27,8 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class MarketingFooterComponent implements OnInit, OnDestroy {
   /** Whether data is loaded / ready */
-  public readonly loaded$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly loaded$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Footer data can be provided optionally. If not provided then data will be loaded

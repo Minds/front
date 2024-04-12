@@ -45,9 +45,8 @@ export class CalendarComponent {
   /**
    * Date selection event emitter
    */
-  @Output('dateChange') dateChangeEmitter: EventEmitter<
-    Date
-  > = new EventEmitter<Date>();
+  @Output('dateChange') dateChangeEmitter: EventEmitter<Date> =
+    new EventEmitter<Date>();
 
   /**
    * Date state

@@ -19,17 +19,15 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    * notices are ready for registration.
    * @type { BehaviorSubject<boolean> }
    */
-  public readonly initialized$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly initialized$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Feed notices.
    * @type { BehaviorSubject<FeedNotice[]> }
    */
-  protected readonly notices$: BehaviorSubject<
-    FeedNotice[]
-  > = new BehaviorSubject<FeedNotice[]>([]);
+  protected readonly notices$: BehaviorSubject<FeedNotice[]> =
+    new BehaviorSubject<FeedNotice[]>([]);
 
   /**
    * The amount of feed notices to show.
@@ -70,7 +68,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
             }
             return response.notices;
           }),
-          catchError(e => {
+          catchError((e) => {
             // only reset this on error
             console.error(e);
             return EMPTY;
@@ -120,11 +118,11 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    */
   public getNoticeForPosition$(position: number): Observable<FeedNotice> {
     return this.notices$.pipe(
-      map(notices => {
+      map((notices) => {
         notices = this.filterPriorityNotices(notices);
 
         return (
-          notices.filter(notice => {
+          notices.filter((notice) => {
             return notice.position === position;
           })[0] ?? null
         );
@@ -168,7 +166,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     let notices = this.notices$.getValue();
 
     return (
-      notices.filter(notice => {
+      notices.filter((notice) => {
         return (
           this.isShowable(notice) &&
           !this.isAssignedPosition(notice) &&
@@ -205,7 +203,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    */
   protected getNextNoticePosition(): number {
     let notices = this.notices$.getValue();
-    return (Math.max(...notices.map(notice => notice.position)) ?? 0) + 1;
+    return (Math.max(...notices.map((notice) => notice.position)) ?? 0) + 1;
   }
 
   /**
@@ -239,7 +237,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     value: any = true
   ) {
     let notices = this.notices$.getValue();
-    notices = notices.map(notice => {
+    notices = notices.map((notice) => {
       if (notice.key === noticeKey) {
         notice[attribute] = value;
       }

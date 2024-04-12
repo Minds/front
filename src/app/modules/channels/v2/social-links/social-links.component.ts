@@ -50,8 +50,8 @@ export class ChannelSocialLinksComponent implements OnInit {
    */
   @Input('socialLinks') set _socialLinks(socialLinks: Array<KeyVal>) {
     this.socialLinks = buildFromV1ChannelProfile(socialLinks)
-      .filter(socialLink => socialLink.key && socialLink.value)
-      .map(socialLink => {
+      .filter((socialLink) => socialLink.key && socialLink.value)
+      .map((socialLink) => {
         socialLink = { ...socialLink }; // Clone
 
         if (!socialLink.value.toLowerCase().startsWith('http')) {

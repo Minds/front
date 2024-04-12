@@ -15,9 +15,7 @@
           overlay="true"
           size="large"
         >
-          <ng-container *ngIf="!user.canary">
-            Join
-          </ng-container>
+          <ng-container *ngIf="!user.canary"> Join </ng-container>
           <ng-container *ngIf="user.canary">
             {{ buttonHovering ? '  Disable  ' : 'Enabled' }}
           </ng-container>

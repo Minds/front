@@ -1,10 +1,10 @@
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { DiscoveryTagsService } from './tags.service';
 
-let hashtagDefaultsMock = new (function() {})();
-let discoveryServiceMock = new (function() {})();
-let experimentsServiceMock = new (function() {})();
-let configMock = new (function() {
+let hashtagDefaultsMock = new (function () {})();
+let discoveryServiceMock = new (function () {})();
+let experimentsServiceMock = new (function () {})();
+let configMock = new (function () {
   this.get = jasmine.createSpy('get');
 })();
 

@@ -56,7 +56,7 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
       published: new UntypedFormControl(''),
     });
 
-    this.route.parent.params.subscribe(params => {
+    this.route.parent.params.subscribe((params) => {
       if (this.session.isAdmin()) {
         this.user = params.user || null;
       }

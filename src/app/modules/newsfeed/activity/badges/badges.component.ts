@@ -18,7 +18,10 @@ import {
 export class ActivityBadgesComponent {
   entity$: Observable<ActivityEntity> = this.service.entity$;
 
-  constructor(public service: ActivityService, public session: Session) {}
+  constructor(
+    public service: ActivityService,
+    public session: Session
+  ) {}
 
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;

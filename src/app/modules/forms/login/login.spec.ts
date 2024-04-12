@@ -23,10 +23,10 @@ import { MultiFactorAuthService } from '../../auth/multi-factor-auth/services/mu
 import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { RegexService } from '../../../common/services/regex.service';
-import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 import { Router } from '@angular/router';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
+import { AnalyticsService } from '../../../services/analytics';
 
 export class RouterStub {
   url = '';
@@ -98,55 +98,53 @@ describe('LoginForm', () => {
 
   const activePanel$ = new BehaviorSubject<string>('');
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-          LoginForm,
-          ButtonComponent,
-        ], // declare the test component
-        imports: [RouterTestingModule, ReactiveFormsModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Client, useValue: clientMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          {
-            provide: AuthModalService,
-            useValue: MockService(AuthModalService),
-          },
-          {
-            provide: MultiFactorAuthService,
-            useValue: MockService(MultiFactorAuthService, {
-              has: ['onSuccess$', 'activePanel$'],
-              props: {
-                onSuccess$: { get: () => onSuccess$ },
-                activePanel$: { get: () => activePanel$ },
-              },
-              setMFAReqest: feature => {
-                return true;
-              },
-            }),
-          },
-          { provide: Router, useClass: RouterStub },
-          RegexService,
-          { provide: Router, useClass: RouterStub },
-          {
-            provide: ResetPasswordExperimentService,
-            useValue: MockService(ResetPasswordExperimentService),
-          },
-          {
-            provide: PermissionsService,
-            useValue: MockService(PermissionsService),
-          },
-          {
-            provide: SiteService,
-            useValue: MockService(SiteService),
-          },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        LoginForm,
+        ButtonComponent,
+      ], // declare the test component
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: Client, useValue: clientMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: AuthModalService,
+          useValue: MockService(AuthModalService),
+        },
+        {
+          provide: MultiFactorAuthService,
+          useValue: MockService(MultiFactorAuthService, {
+            has: ['onSuccess$', 'activePanel$'],
+            props: {
+              onSuccess$: { get: () => onSuccess$ },
+              activePanel$: { get: () => activePanel$ },
+            },
+            setMFAReqest: (feature) => {
+              return true;
+            },
+          }),
+        },
+        { provide: Router, useClass: RouterStub },
+        RegexService,
+        { provide: Router, useClass: RouterStub },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+        {
+          provide: SiteService,
+          useValue: MockService(SiteService),
+        },
+        {
+          provide: AnalyticsService,
+          useValue: MockService(AnalyticsService),
+        },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
   beforeEach(() => {

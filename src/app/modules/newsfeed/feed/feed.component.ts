@@ -99,7 +99,7 @@ export class FeedComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.feedItems$ = this.feedService.feed.pipe(
-      map(feed => {
+      map((feed) => {
         if (!feed.length) return [];
 
         let feedItems: IFeedItem[] = feed.map((activity$, index) => {
@@ -140,7 +140,7 @@ export class FeedComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.feedViewChildren.changes.subscribe(feedViewChildren => {
+    this.feedViewChildren.changes.subscribe((feedViewChildren) => {
       if (feedViewChildren.length > 0 && !this.isScrollRestored$.getValue()) {
         if (this.shouldRestoreScroll) {
           this.scrollRestoration.restoreScroll(this.router.url);
@@ -193,7 +193,7 @@ export class FeedComponent implements OnInit, OnDestroy, AfterViewInit {
     const ids = [];
     const uniqueFeed = [];
 
-    feed.map(item => {
+    feed.map((item) => {
       const id = this.getIDforFeedItem(item);
       if (!ids.includes(id)) {
         ids.push(id);

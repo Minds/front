@@ -102,13 +102,13 @@ export class TenantGuestModeFeedComponent implements OnInit {
     );
 
     this.feedData = this.feedQuery.valueChanges.pipe(
-      filter(result => !!result.data?.newsfeed),
-      map(result => result.data.newsfeed)
+      filter((result) => !!result.data?.newsfeed),
+      map((result) => result.data.newsfeed)
     );
 
     this.edges$ = this.feedQuery.valueChanges.pipe(
       delayWhen(() => (this.isFirstRun ? interval(100) : of(undefined))), // wait 100ms if first page
-      map(result => {
+      map((result) => {
         if (result.errors) {
           console.error(result.errors);
         }
@@ -145,13 +145,13 @@ export class TenantGuestModeFeedComponent implements OnInit {
     );
 
     this.totalEdgeCount$ = this.feedData.pipe(
-      map(newsfeed => {
+      map((newsfeed) => {
         return newsfeed.edges.length;
       })
     );
 
     this.pageInfo$ = this.feedQuery.valueChanges.pipe(
-      map(result => {
+      map((result) => {
         const newsfeed = result.data?.newsfeed;
         if (!newsfeed?.pageInfo) {
           return <PageInfo>{
@@ -178,9 +178,9 @@ export class TenantGuestModeFeedComponent implements OnInit {
     );
 
     this.showEmptyFeedNotice$ = this.edges$.pipe(
-      map(edges => {
+      map((edges) => {
         const hasActivityEdge =
-          edges && edges.some(edge => edge.__typename === 'ActivityEdge');
+          edges && edges.some((edge) => edge.__typename === 'ActivityEdge');
         return !this.inProgress && !hasActivityEdge;
       })
     );

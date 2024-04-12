@@ -9,50 +9,48 @@ describe('BoostModalV2BudgetSelectorComponent', () => {
   let comp: BoostModalV2BudgetSelectorComponent;
   let fixture: ComponentFixture<BoostModalV2BudgetSelectorComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          BoostModalV2BudgetSelectorComponent,
-          MockComponent({
-            selector: 'm-boostModalV2__budgetTabBar',
-          }),
-          MockComponent({
-            selector: 'm-boostModalV2__budgetTab',
-            inputs: [
-              'paymentCategory',
-              'minDuration',
-              'maxDuration',
-              'initialDuration',
-              'minDailyBudget',
-              'maxDailyBudget',
-              'initialDailyBudget',
-            ],
-          }),
-        ],
-        providers: [
-          {
-            provide: BoostModalV2Service,
-            useValue: MockService(BoostModalV2Service, {
-              has: ['paymentCategory$', 'dailyBudget$', 'duration$'],
-              props: {
-                paymentCategory$: {
-                  get: () =>
-                    new BehaviorSubject<BoostPaymentCategory>(
-                      BoostPaymentCategory.CASH
-                    ),
-                },
-                dailyBudget$: { get: () => new BehaviorSubject<number>(10) },
-                duration$: { get: () => new BehaviorSubject<number>(3) },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        BoostModalV2BudgetSelectorComponent,
+        MockComponent({
+          selector: 'm-boostModalV2__budgetTabBar',
+        }),
+        MockComponent({
+          selector: 'm-boostModalV2__budgetTab',
+          inputs: [
+            'paymentCategory',
+            'minDuration',
+            'maxDuration',
+            'initialDuration',
+            'minDailyBudget',
+            'maxDailyBudget',
+            'initialDailyBudget',
+          ],
+        }),
+      ],
+      providers: [
+        {
+          provide: BoostModalV2Service,
+          useValue: MockService(BoostModalV2Service, {
+            has: ['paymentCategory$', 'dailyBudget$', 'duration$'],
+            props: {
+              paymentCategory$: {
+                get: () =>
+                  new BehaviorSubject<BoostPaymentCategory>(
+                    BoostPaymentCategory.CASH
+                  ),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+              dailyBudget$: { get: () => new BehaviorSubject<number>(10) },
+              duration$: { get: () => new BehaviorSubject<number>(3) },
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostModalV2BudgetSelectorComponent);
     comp = fixture.componentInstance;
 

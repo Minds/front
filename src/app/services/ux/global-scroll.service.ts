@@ -31,15 +31,15 @@ export class GlobalScrollService {
     if (debounce) {
       eventSubscription = subscription.scrollEvent
         .pipe(debounceTime(debounce))
-        .subscribe(e => {
+        .subscribe((e) => {
           callback(subscription, e);
         });
     } else if (throttle) {
       eventSubscription = subscription.scrollEvent
         .pipe(throttleTime(throttle))
-        .subscribe(e => callback(subscription, e));
+        .subscribe((e) => callback(subscription, e));
     } else {
-      eventSubscription = subscription.scrollEvent.subscribe(e =>
+      eventSubscription = subscription.scrollEvent.subscribe((e) =>
         callback(subscription, e)
       );
     }
@@ -51,7 +51,7 @@ export class GlobalScrollService {
 
   unListen(scrollSubscription: ScrollSubscription, subscription: Subscription) {
     const subscriptionIndex = scrollSubscription.subscriptions.findIndex(
-      item => item === subscription
+      (item) => item === subscription
     );
     if (subscriptionIndex != -1) {
       scrollSubscription.subscriptions.splice(subscriptionIndex, 1);
@@ -61,7 +61,7 @@ export class GlobalScrollService {
 
     if (scrollSubscription.subscriptions.length === 0) {
       const i = this.subscriptions.findIndex(
-        item => item === scrollSubscription
+        (item) => item === scrollSubscription
       );
       this.subscriptions.splice(i, 1);
     }
@@ -74,7 +74,7 @@ export class GlobalScrollService {
     if (!subscription.viewListener) {
       subscription.viewListener = subscription.scrollEvent
         .pipe(debounceTime(30)) // wait 30ms before triggering
-        .subscribe(e => {
+        .subscribe((e) => {
           viewEmitter.next(e);
         });
     }
@@ -83,7 +83,7 @@ export class GlobalScrollService {
 
   private setScrollSource(scrollSource) {
     let subscription: ScrollSubscription = this.subscriptions.find(
-      item => item.element === scrollSource
+      (item) => item.element === scrollSource
     );
 
     if (subscription) {

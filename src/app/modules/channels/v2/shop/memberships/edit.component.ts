@@ -65,7 +65,7 @@ export class ChannelShopMembershipsEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.canSaveSubscription = this.service.canSave$.subscribe(
-      canSave => (this.canSave = canSave)
+      (canSave) => (this.canSave = canSave)
     );
   }
 

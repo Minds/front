@@ -59,10 +59,8 @@ export class TooltipComponent implements AfterContentInit {
     if (isPlatformServer(this.platformId)) {
       return;
     }
-    const {
-      width,
-      height,
-    } = this.element.nativeElement.getBoundingClientRect();
+    const { width, height } =
+      this.element.nativeElement.getBoundingClientRect();
 
     switch (this.anchor) {
       case 'top':
@@ -102,7 +100,8 @@ export class TooltipComponent implements AfterContentInit {
   anchorTop() {
     this.resetOffsets();
 
-    const clientRect: ClientRect = this.element.nativeElement.parentElement.getBoundingClientRect();
+    const clientRect: ClientRect =
+      this.element.nativeElement.parentElement.getBoundingClientRect();
     this.offsetTop = clientRect.top + clientRect.height - 8;
 
     let left = clientRect.left;
@@ -113,7 +112,8 @@ export class TooltipComponent implements AfterContentInit {
   anchorBottom() {
     this.resetOffsets();
 
-    const clientRect: ClientRect = this.element.nativeElement.parentElement.getBoundingClientRect();
+    const clientRect: ClientRect =
+      this.element.nativeElement.parentElement.getBoundingClientRect();
     this.offsetTop = clientRect.bottom;
 
     let left = clientRect.left;
@@ -124,7 +124,8 @@ export class TooltipComponent implements AfterContentInit {
   anchorLeft() {
     this.resetOffsets();
 
-    const clientRect: ClientRect = this.element.nativeElement.parentElement.getBoundingClientRect();
+    const clientRect: ClientRect =
+      this.element.nativeElement.parentElement.getBoundingClientRect();
     this.offsetTop = clientRect.top;
 
     let left = clientRect.left + clientRect.width;
@@ -140,7 +141,8 @@ export class TooltipComponent implements AfterContentInit {
   anchorRight() {
     this.resetOffsets();
 
-    const clientRect: ClientRect = this.element.nativeElement.parentElement.getBoundingClientRect();
+    const clientRect: ClientRect =
+      this.element.nativeElement.parentElement.getBoundingClientRect();
     this.offsetTop = clientRect.top;
 
     let right = window.innerWidth - clientRect.left;

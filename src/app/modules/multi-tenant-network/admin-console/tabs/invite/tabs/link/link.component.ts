@@ -33,7 +33,8 @@ import { ConfigsService } from '../../../../../../../common/services/configs.ser
   ],
 })
 export class NetworkAdminConsoleInviteLinkComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   form: FormGroup;
 
   /** Whether loading is in progress. */
@@ -49,7 +50,8 @@ export class NetworkAdminConsoleInviteLinkComponent
   /**
    * Allows us to use enum in the template
    */
-  public TenantInviteLinkType: typeof TenantInviteLinkType = TenantInviteLinkType;
+  public TenantInviteLinkType: typeof TenantInviteLinkType =
+    TenantInviteLinkType;
 
   readonly siteUrl: string = '';
 
@@ -77,9 +79,8 @@ export class NetworkAdminConsoleInviteLinkComponent
     this.loading$.next(true);
 
     try {
-      const response: ApolloQueryResult<GetSiteMembershipsQuery> = await lastValueFrom(
-        this.getSiteMembershipsGQL.fetch()
-      );
+      const response: ApolloQueryResult<GetSiteMembershipsQuery> =
+        await lastValueFrom(this.getSiteMembershipsGQL.fetch());
 
       if (response?.error || response?.errors?.length) {
         console.error(response?.errors ?? DEFAULT_ERROR_MESSAGE);
@@ -104,7 +105,7 @@ export class NetworkAdminConsoleInviteLinkComponent
     });
 
     this.subscriptions.push(
-      this.form.get('linkType').valueChanges.subscribe(value => {
+      this.form.get('linkType').valueChanges.subscribe((value) => {
         this.showDefaultLink = value === TenantInviteLinkType.DEFAULT;
         this.showMembershipLinks = value === TenantInviteLinkType.MEMBERSHIP;
       })

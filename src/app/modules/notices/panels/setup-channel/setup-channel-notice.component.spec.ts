@@ -16,58 +16,56 @@ describe('SetupChannelNoticeComponent', () => {
   let comp: SetupChannelNoticeComponent;
   let fixture: ComponentFixture<SetupChannelNoticeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          SetupChannelNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon', 'dismissible'],
-            outputs: ['dismissClick'],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        SetupChannelNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon', 'dismissible'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: Session,
+          useValue: sessionMock,
+        },
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: OnboardingV3Service,
+          useValue: MockService(OnboardingV3Service, {
+            has: ['completed$'],
+            props: {
+              completed$: { get: () => new BehaviorSubject<boolean>(false) },
+            },
           }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
+        },
+        {
+          provide: OnboardingV3PanelService,
+          useValue: MockService(OnboardingV3PanelService, {
+            has: ['currentStep$'],
+            props: {
+              currentStep$: {
+                get: () => new BehaviorSubject<OnboardingStepName>(null),
+              },
+            },
           }),
-        ],
-        providers: [
-          {
-            provide: Session,
-            useValue: sessionMock,
-          },
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: OnboardingV3Service,
-            useValue: MockService(OnboardingV3Service, {
-              has: ['completed$'],
-              props: {
-                completed$: { get: () => new BehaviorSubject<boolean>(false) },
-              },
-            }),
-          },
-          {
-            provide: OnboardingV3PanelService,
-            useValue: MockService(OnboardingV3PanelService, {
-              has: ['currentStep$'],
-              props: {
-                currentStep$: {
-                  get: () => new BehaviorSubject<OnboardingStepName>(null),
-                },
-              },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(SetupChannelNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

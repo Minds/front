@@ -99,12 +99,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptions.push(
-      this.authModal.onLoggedIn$.subscribe(loggedIn => {
+      this.authModal.onLoggedIn$.subscribe((loggedIn) => {
         if (loggedIn) {
           this.loggedin();
         }
       }),
-      this.onboardingV5Service.onboardingCompleted$.subscribe(registered => {
+      this.onboardingV5Service.onboardingCompleted$.subscribe((registered) => {
         if (registered) {
           this.registered();
         }
@@ -130,7 +130,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.redirectTo = localStorage.getItem('redirect');
 
     // Set referrer if there is one
-    this.paramsSubscription = this.route.queryParams.subscribe(params => {
+    this.paramsSubscription = this.route.queryParams.subscribe((params) => {
       if (params['referrer']) {
         this.referrer = params['referrer'];
         this.setReferrerMetaImage();
@@ -246,7 +246,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.paramsSubscription.unsubscribe();
     }
     this.topbarService.toggleVisibility(true);
-
+    this.pageLayoutService.cancelFullWidth();
     this.navigationService.setVisible(true);
   }
 

@@ -23,5 +23,6 @@ export class GroupMembersComponent {
   constructor(protected service: GroupService) {}
 
   // Allows us to use enum in template
-  public groupMembershipLevel: typeof GroupMembershipLevel = GroupMembershipLevel;
+  public groupMembershipLevel: typeof GroupMembershipLevel =
+    GroupMembershipLevel;
 }

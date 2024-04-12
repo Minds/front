@@ -18,7 +18,10 @@ export class AdminVerify {
   moreData: boolean = true;
   offset: string = '';
 
-  constructor(public client: Client, private route: ActivatedRoute) {}
+  constructor(
+    public client: Client,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.load();
@@ -49,7 +52,7 @@ export class AdminVerify {
           this.moreData = false;
         }
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
       });
   }
@@ -63,11 +66,11 @@ export class AdminVerify {
 
     this.client
       .put(`api/v1/admin/verify/${this.requests[index].guid}`)
-      .then(response => {
+      .then((response) => {
         this.removeFromList(index);
         this.inProgress = false;
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
       });
   }
@@ -81,11 +84,11 @@ export class AdminVerify {
 
     this.client
       .delete(`api/v1/admin/verify/${this.requests[index].guid}`)
-      .then(response => {
+      .then((response) => {
         this.removeFromList(index);
         this.inProgress = false;
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
       });
   }

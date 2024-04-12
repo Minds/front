@@ -328,7 +328,8 @@ minds-button-remind > a {
         padding: 0 0 0 1px;
         margin: 0;
         @include m-theme() {
-          text-shadow: -1px -1px 0 themed($m-black-always),
+          text-shadow:
+            -1px -1px 0 themed($m-black-always),
             1px -1px 0 themed($m-black-always),
             -1px 1px 0 themed($m-black-always),
             1px 1px 0 themed($m-black-always);
@@ -341,7 +342,8 @@ minds-button-remind > a {
         text-overflow: ellipsis;
         padding: 0 0 0 1px;
         @include m-theme() {
-          text-shadow: -1px -1px 0 themed($m-black-always),
+          text-shadow:
+            -1px -1px 0 themed($m-black-always),
             1px -1px 0 themed($m-black-always),
             -1px 1px 0 themed($m-black-always),
             1px 1px 0 themed($m-black-always);

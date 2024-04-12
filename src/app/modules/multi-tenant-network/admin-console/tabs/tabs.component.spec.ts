@@ -67,7 +67,7 @@ describe('NetworkAdminConsoleTabsComponent', () => {
         'monetization',
         'mobile',
       ];
-      tabsToShow.forEach(tab =>
+      tabsToShow.forEach((tab) =>
         testTabVisibility(`network-admin-console-tab-${tab}`, true)
       );
     });
@@ -125,7 +125,7 @@ describe('NetworkAdminConsoleTabsComponent', () => {
       ];
       fixture.detectChanges();
 
-      tabsToNotShow.forEach(tab =>
+      tabsToNotShow.forEach((tab) =>
         testTabVisibility(`network-admin-console-tab-${tab}`, false)
       );
       testTabVisibility('network-admin-console-tab-moderation', true);

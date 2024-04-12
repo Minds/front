@@ -11,45 +11,43 @@ describe('FeedNoticeOutletComponent', () => {
   let comp: FeedNoticeOutletComponent;
   let fixture: ComponentFixture<FeedNoticeOutletComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          FeedNoticeOutletComponent,
-          MockComponent({ selector: 'm-feedNotice--verifyEmail' }),
-          MockComponent({ selector: 'm-feedNotice--enablePushNotifications' }),
-          MockComponent({ selector: 'm-feedNotice--updateTags' }),
-        ],
-        providers: [
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService, {
-              has: ['initialized$'],
-              props: {
-                initialized$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        FeedNoticeOutletComponent,
+        MockComponent({ selector: 'm-feedNotice--verifyEmail' }),
+        MockComponent({ selector: 'm-feedNotice--enablePushNotifications' }),
+        MockComponent({ selector: 'm-feedNotice--updateTags' }),
+      ],
+      providers: [
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService, {
+            has: ['initialized$'],
+            props: {
+              initialized$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
-            }),
-          },
-          {
-            provide: TopbarAlertService,
-            useValue: MockService(TopbarAlertService, {
-              has: ['shouldShow$'],
-              props: {
-                shouldShow$: {
-                  get: () => new BehaviorSubject<boolean>(true),
-                },
+            },
+          }),
+        },
+        {
+          provide: TopbarAlertService,
+          useValue: MockService(TopbarAlertService, {
+            has: ['shouldShow$'],
+            props: {
+              shouldShow$: {
+                get: () => new BehaviorSubject<boolean>(true),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(FeedNoticeOutletComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

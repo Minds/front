@@ -42,7 +42,7 @@ describe('AffiliatesMetricsService', () => {
   it('should get metrics from server', (done: DoneFn) => {
     (service as any).api.get.and.returnValue(of(defaultMetrics));
 
-    service.metrics$.subscribe(metrics => {
+    service.metrics$.subscribe((metrics) => {
       expect(metrics).toEqual(defaultMetrics);
       expect((service as any).api.get).toHaveBeenCalledOnceWith(
         'api/v3/referrals/metrics'
@@ -56,7 +56,7 @@ describe('AffiliatesMetricsService', () => {
   it('should handle error and set error$ to true', (done: DoneFn) => {
     (service as any).api.get.and.returnValue(Promise.reject('Mocked error'));
 
-    service.metrics$.subscribe(metrics => {
+    service.metrics$.subscribe((metrics) => {
       expect(metrics).toBeNull();
       expect((service as any).api.get).toHaveBeenCalledOnceWith(
         'api/v3/referrals/metrics'
