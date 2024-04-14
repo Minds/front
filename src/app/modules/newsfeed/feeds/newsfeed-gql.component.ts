@@ -66,11 +66,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   prepended$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   /**
-   * Will toggle the boost rotator on or off
-   */
-  showBoostRotator: boolean = false;
-
-  /**
    * True/False if the feed is fetching new data
    */
   inProgress: boolean = true;
@@ -336,15 +331,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
         )
         .subscribe(() => {
           this.load();
-          setTimeout(() => {
-            this.showBoostRotator =
-              this.isFirstRun &&
-              // !this.experimentsService.hasVariation(
-              //   'minds-4105-remove-rotator',
-              //   true
-              // );
-              false; // TODO: Remove  minds-4105-remove-rotator  featureflag
-          }, 50);
         }),
       /**
        * Set the algorithm to use
@@ -480,9 +466,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.algorithm$.next(algo);
     this.feedAlgorithmHistory.lastAlgorithm = algo;
-
-    // Hide the boost rotator
-    this.showBoostRotator = false;
 
     // Reset the page size to the default
     this.pageSize$.next(PAGE_SIZE);

@@ -1,6 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
-import { DiscoveryNavDotExperimentService } from '../../../../modules/experiments/sub-services/discovery-nav-dot-experiment.service';
 import { Storage } from '../../../../services/storage';
 
 /**
@@ -18,7 +17,6 @@ import { Storage } from '../../../../services/storage';
 })
 export class SidebarNavigationNewContentDotComponent implements OnInit {
   constructor(
-    private experimentService: DiscoveryNavDotExperimentService,
     private storage: Storage,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -44,11 +42,6 @@ export class SidebarNavigationNewContentDotComponent implements OnInit {
    * Determine whether to show the dot
    */
   ngOnInit(): void {
-    // Don't show if experiment is off
-    if (!this.experimentService.isActive) {
-      return;
-    }
-
     // Show if no previous discovery click is stored
     if (!this.storage.get(this.storageKey)) {
       this.showDot = true;

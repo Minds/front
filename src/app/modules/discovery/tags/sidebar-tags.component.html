@@ -104,7 +104,7 @@
   <ng-template #tagTemplate let-tag="tag">
     <ng-container>
       <a
-        [routerLink]="parentPath + '/search'"
+        [routerLink]="parentPath + 'search'"
         [queryParams]="{ q: '#' + tag.value, f: 'top', t: 'all' }"
         data-ref="sidebar-tags-tag"
       >

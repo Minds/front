@@ -11,7 +11,6 @@ import { clientMock } from '../../../tests/client-mock.spec';
 import { ProService } from '../pro/pro.service';
 import { Router } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../common/components/loading-spinner/loading-spinner.component';
-import { TwitterSyncSettingsExperimentService } from '../experiments/sub-services/twitter-sync-settings-experiment.service';
 import { IsTenantService } from '../../common/services/is-tenant.service';
 import { PermissionsService } from '../../common/services/permissions.service';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
@@ -42,10 +41,6 @@ describe('SettingsV2Component', () => {
         {
           provide: ToasterService,
           useValue: MockService(ToasterService),
-        },
-        {
-          provide: TwitterSyncSettingsExperimentService,
-          useValue: MockService(TwitterSyncSettingsExperimentService),
         },
         {
           provide: IsTenantService,
