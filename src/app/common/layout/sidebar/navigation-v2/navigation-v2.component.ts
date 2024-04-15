@@ -72,6 +72,9 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  /** Whether chat experiment is active. */
+  private unreadChatCountSubscription: Subscription;
+
   isDarkTheme: boolean = false;
 
   // Becomes true when the discovery link is clicked.
@@ -184,18 +187,32 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
         })
     );
 
-    // if (isPlatformBrowser(this.platformId)) {
-    //   this.subscriptions.push(
-    //     this.chatReceiptService.getUnreadCount$().subscribe(count => {
-    //       this.chatUnreadCount = count;
-    //     })
-    //   );
-    // }
+    if (this.chatExperimentIsActive) {
+      this.subscriptions.push(
+        this.session.loggedinEmitter.subscribe((isLoggedIn: boolean) => {
+          if (isLoggedIn) {
+            this.initUnreadChatCountSubscription();
+          } else {
+            this.unreadChatCountSubscription?.unsubscribe();
+            this.unreadChatCountSubscription = null;
+          }
+        })
+      );
+
+      if (isPlatformBrowser(this.platformId) && this.isLoggedIn()) {
+        this.initUnreadChatCountSubscription();
+      }
+    }
   }
 
   ngOnDestroy(): void {
     if (this.groupSelectedSubscription) {
       this.groupSelectedSubscription.unsubscribe();
+    }
+
+    if (this.chatExperimentIsActive && this.unreadChatCountSubscription) {
+      this.unreadChatCountSubscription?.unsubscribe();
+      this.unreadChatCountSubscription = null;
     }
 
     for (let subscription of this.subscriptions) {
@@ -343,5 +360,21 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   public isLoggedIn(): boolean {
     return this.session.isLoggedIn();
+  }
+
+  /**
+   * Initializes the unread chat count subscription.
+   * @returns { void }
+   */
+  private initUnreadChatCountSubscription(): void {
+    if (this.unreadChatCountSubscription) {
+      console.warn('Unread chat count subscription already initialized');
+      return;
+    }
+
+    this.unreadChatCountSubscription =
+      this.chatReceiptService.unreadCount$.subscribe((count: number) => {
+        this.chatUnreadCount = count;
+      });
   }
 }

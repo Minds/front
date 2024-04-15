@@ -240,6 +240,7 @@ export type BoostsConnection = ConnectionInterface & {
 export type ChatMessageEdge = EdgeInterface & {
   __typename?: 'ChatMessageEdge';
   cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   node: ChatMessageNode;
 };
 
@@ -1323,6 +1324,7 @@ export type Query = {
   chatMessages: ChatMessagesConnection;
   /** Returns a chat room */
   chatRoom: ChatRoomEdge;
+  chatRoomGuids: Array<Scalars['String']['output']>;
   chatRoomInviteRequests: ChatRoomsConnection;
   /** Returns a list of chat rooms available to a user */
   chatRoomList: ChatRoomsConnection;
@@ -2084,6 +2086,7 @@ export type CreateChatMessageMutation = {
   __typename?: 'Mutation';
   createChatMessage: {
     __typename?: 'ChatMessageEdge';
+    id: string;
     cursor: string;
     node: {
       __typename?: 'ChatMessageNode';
@@ -2175,6 +2178,7 @@ export type GetChatMessagesQuery = {
     edges: Array<{
       __typename?: 'ChatMessageEdge';
       cursor: string;
+      id: string;
       node: {
         __typename?: 'ChatMessageNode';
         id: string;
@@ -2206,6 +2210,13 @@ export type GetChatMessagesQuery = {
       endCursor?: string | null;
     };
   };
+};
+
+export type GetChatRoomGuidsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetChatRoomGuidsQuery = {
+  __typename?: 'Query';
+  chatRoomGuids: Array<string>;
 };
 
 export type GetChatRoomInviteRequestsQueryVariables = Exact<{
@@ -2383,13 +2394,6 @@ export type GetChatRoomsListQuery = {
   };
 };
 
-export type GetChatUnreadCountQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetChatUnreadCountQuery = {
-  __typename?: 'Query';
-  chatUnreadMessagesCount: number;
-};
-
 export type GetTotalChatRoomMembersQueryVariables = Exact<{
   roomGuid: Scalars['String']['input'];
 }>;
@@ -2406,6 +2410,14 @@ export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
 export type GetTotalRoomInviteRequestsQuery = {
   __typename?: 'Query';
   totalRoomInviteRequests: number;
+};
+
+export type InitChatQueryVariables = Exact<{ [key: string]: never }>;
+
+export type InitChatQuery = {
+  __typename?: 'Query';
+  chatUnreadMessagesCount: number;
+  chatRoomGuids: Array<string>;
 };
 
 export type LeaveChatRoomMutationVariables = Exact<{
@@ -7308,6 +7320,7 @@ export class GetBoostFeedGQL extends Apollo.Query<
 export const CreateChatMessageDocument = gql`
   mutation CreateChatMessage($plainText: String!, $roomGuid: String!) {
     createChatMessage(plainText: $plainText, roomGuid: $roomGuid) {
+      id
       cursor
       node {
         id
@@ -7448,6 +7461,7 @@ export const GetChatMessagesDocument = gql`
     ) {
       edges {
         cursor
+        id
         node {
           id
           guid
@@ -7486,6 +7500,25 @@ export class GetChatMessagesGQL extends Apollo.Query<
   GetChatMessagesQueryVariables
 > {
   document = GetChatMessagesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatRoomGuidsDocument = gql`
+  query GetChatRoomGuids {
+    chatRoomGuids
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomGuidsGQL extends Apollo.Query<
+  GetChatRoomGuidsQuery,
+  GetChatRoomGuidsQueryVariables
+> {
+  document = GetChatRoomGuidsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -7689,25 +7722,6 @@ export class GetChatRoomsListGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const GetChatUnreadCountDocument = gql`
-  query GetChatUnreadCount {
-    chatUnreadMessagesCount
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetChatUnreadCountGQL extends Apollo.Query<
-  GetChatUnreadCountQuery,
-  GetChatUnreadCountQueryVariables
-> {
-  document = GetChatUnreadCountDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
 export const GetTotalChatRoomMembersDocument = gql`
   query GetTotalChatRoomMembers($roomGuid: String!) {
     chatRoom(roomGuid: $roomGuid) {
@@ -7743,6 +7757,26 @@ export class GetTotalRoomInviteRequestsGQL extends Apollo.Query<
   GetTotalRoomInviteRequestsQueryVariables
 > {
   document = GetTotalRoomInviteRequestsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const InitChatDocument = gql`
+  query InitChat {
+    chatUnreadMessagesCount
+    chatRoomGuids
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class InitChatGQL extends Apollo.Query<
+  InitChatQuery,
+  InitChatQueryVariables
+> {
+  document = InitChatDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
