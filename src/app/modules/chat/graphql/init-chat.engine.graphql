@@ -1,0 +1,4 @@
+query InitChat {
+    chatUnreadMessagesCount,
+    chatRoomGuids
+}

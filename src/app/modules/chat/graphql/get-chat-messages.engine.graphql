@@ -7,6 +7,7 @@ query GetChatMessages(
     chatMessages(after: $after, first: $first, before: $before, roomGuid: $roomGuid) {
         edges {
             cursor
+            id
             node {
                 id
                 guid
