@@ -13,9 +13,13 @@ import { BehaviorSubject } from 'rxjs';
 export class TopbarWrapperComponent implements OnInit {
   public giftCardPurchaseExperimentIsActive: boolean = false;
 
-  /** Whether topbar is being displayed in minimal light mode. */
+  /** Whether topbar is being displayed in FORCED minimal light mode. */
   public readonly isMinimalLightMode$: BehaviorSubject<boolean> =
     this.topbarService.isMinimalLightMode$;
+
+  /** Whether topbar is being displayed in minimal mode. */
+  public readonly isMinimalMode$: BehaviorSubject<boolean> =
+    this.topbarService.isMinimalMode$;
 
   constructor(
     public session: Session,

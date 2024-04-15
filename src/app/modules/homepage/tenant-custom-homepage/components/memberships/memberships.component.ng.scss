@@ -11,7 +11,7 @@ $maxMembershipWidth: 616px;
     font-weight: 900;
     line-height: 58.8px;
     letter-spacing: -1.08px;
-    margin: 0 0 $spacing10 0;
+    margin: $spacing10 0 $spacing18 0;
 
     @media screen and (max-width: $max-mobile) {
       font-size: 40px;
@@ -39,7 +39,7 @@ $maxMembershipWidth: 616px;
       min-width: $maxMembershipWidth;
       max-width: $maxMembershipWidth;
       text-align: center;
-      margin-bottom: $spacing10;
+      margin-bottom: $spacing18;
 
       @media screen and (max-width: $maxMembershipWidth) {
         width: 100%;

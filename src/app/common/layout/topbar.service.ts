@@ -8,8 +8,12 @@ type TopbarComponentT = TopbarComponent;
 export class TopbarService {
   private container: TopbarComponentT;
 
-  /** Whether topbar is in minimal light mode (intended for use on dynamic product pages). */
+  /** Whether topbar is in FORCED minimal light mode. */
   public readonly isMinimalLightMode$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  /** Whether topbar is to be displayed in minimal mode (dynamic based on light or dark theme). */
+  public readonly isMinimalMode$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
   setContainer(container: TopbarComponentT) {

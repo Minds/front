@@ -21,12 +21,12 @@ export class TenantCustomHomepageBaseComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.navigationService.setVisible(false);
     this.pageLayoutService.useFullWidth();
-    this.topbarService.isMinimalLightMode$.next(true);
+    this.topbarService.isMinimalMode$.next(true);
     this.topbarService.toggleSearchBar(false);
   }
 
   ngOnDestroy(): void {
-    this.topbarService.isMinimalLightMode$.next(false);
+    this.topbarService.isMinimalMode$.next(false);
     this.topbarService.toggleSearchBar(true);
     this.navigationService.setVisible(true);
     this.pageLayoutService.cancelFullWidth();
