@@ -40,9 +40,9 @@ describe('TenantCustomHomepageBaseComponent', () => {
         {
           provide: TopbarService,
           useValue: MockService(TopbarService, {
-            has: ['isMinimalLightMode$'],
+            has: ['isMinimalMode$'],
             props: {
-              isMinimalLightMode$: {
+              isMinimalMode$: {
                 get: () => new BehaviorSubject<boolean>(false),
               },
             },
@@ -71,9 +71,7 @@ describe('TenantCustomHomepageBaseComponent', () => {
       false
     );
     expect((comp as any).pageLayoutService.useFullWidth).toHaveBeenCalled();
-    expect((comp as any).topbarService.isMinimalLightMode$.getValue()).toBe(
-      true
-    );
+    expect((comp as any).topbarService.isMinimalMode$.getValue()).toBe(true);
     expect((comp as any).topbarService.toggleSearchBar).toHaveBeenCalledWith(
       false
     );
@@ -81,9 +79,7 @@ describe('TenantCustomHomepageBaseComponent', () => {
 
   it('should destroy', () => {
     comp.ngOnDestroy();
-    expect((comp as any).topbarService.isMinimalLightMode$.getValue()).toBe(
-      false
-    );
+    expect((comp as any).topbarService.isMinimalMode$.getValue()).toBe(false);
     expect((comp as any).topbarService.toggleSearchBar).toHaveBeenCalledWith(
       true
     );
