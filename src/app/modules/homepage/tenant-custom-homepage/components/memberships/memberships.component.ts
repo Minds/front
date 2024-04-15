@@ -12,6 +12,9 @@ import { OnboardingV5Service } from '../../../../onboarding-v5/services/onboardi
 import { SiteMembershipManagementService } from '../../../../site-memberships/services/site-membership-management.service';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 
+/**
+ * Memberships display component for custom tenant homepage.
+ */
 @Component({
   selector: 'm-customTenantHomepage__memberships',
   templateUrl: 'memberships.component.html',

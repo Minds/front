@@ -1,5 +1,10 @@
 <ng-container *ngIf="(featuredGroups$ | async)?.length">
-  <h2 class="m-tenantFeaturedGroupCards__title">Featured groups</h2>
+  <h2
+    class="m-tenantFeaturedGroupCards__title"
+    i18n="@@TENANT_HOMEPAGE__FEATURED_GROUP_CARDS__FEATURED_GROUPS"
+  >
+    Featured groups
+  </h2>
 
   <div class="m-tenantFeaturedGroupCards__container">
     <div

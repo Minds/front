@@ -1,5 +1,10 @@
 <ng-container *ngIf="(siteMemberships$ | async)?.length">
-  <h2 class="m-tenantHomepageMemberships__title">Memberships</h2>
+  <h2
+    class="m-tenantHomepageMemberships__title"
+    i18n="@@TENANT_HOMEPAGE_MEMBERSHIPS__TITLE"
+  >
+    Memberships
+  </h2>
 
   <div class="m-tenantHomepageMemberships__container">
     <div
