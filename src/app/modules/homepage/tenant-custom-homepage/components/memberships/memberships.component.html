@@ -1,0 +1,63 @@
+<ng-container *ngIf="(siteMemberships$ | async)?.length">
+  <h2 class="m-tenantHomepageMemberships__title">Memberships</h2>
+
+  <div class="m-tenantHomepageMemberships__container">
+    <div
+      *ngFor="let membership of siteMemberships$ | async"
+      class="m-tenantHomepageMembership"
+    >
+      <h5 class="m-tenantHomepageMemberships__name">
+        {{ membership.membershipName }}
+      </h5>
+
+      <p class="m-tenantHomepageMemberships__pricingPeriod">
+        <span>{{
+          membership.membershipPriceInCents / 100
+            | currency: membership.priceCurrency : 'symbol' : '1.0-2'
+        }}</span>
+        <span>&nbsp;</span>
+        <ng-container
+          *ngIf="
+            membership.membershipPricingModel ===
+              SiteMembershipPricingModelEnum.OneTime;
+            else billingPeriodTemplate
+          "
+          i18n="@@TENANT_HOMEPAGE_MEMBERSHIPS__ONE_TIME_PAYMENT"
+        >
+          / One-time payment
+        </ng-container>
+        <ng-template #billingPeriodTemplate>
+          <ng-container [ngSwitch]="membership.membershipBillingPeriod">
+            <ng-container
+              *ngSwitchCase="SiteMembershipBillingPeriodEnum.Yearly"
+              i18n="@@TENANT_HOMEPAGE_MEMBERSHIPS__PER_YEAR"
+              >/ year</ng-container
+            >
+            <ng-container
+              *ngSwitchCase="SiteMembershipBillingPeriodEnum.Monthly"
+              i18n="@@TENANT_HOMEPAGE_MEMBERSHIPS__PER_MONTH"
+              >/ month</ng-container
+            >
+          </ng-container>
+        </ng-template>
+      </p>
+      <p
+        class="m-tenantHomepageMemberships__description"
+        *ngIf="membership.membershipDescription"
+      >
+        {{ membership.membershipDescription }}
+      </p>
+      <m-button
+        class="m-tenantHomepageMemberships__joinMembershipButton"
+        color="black"
+        solid="true"
+        size="small"
+        softSquare="true"
+        (onAction)="onJoinMembershipClick(membership.membershipGuid)"
+        ><ng-container i18n="@@TENANT_HOMEPAGE_MEMBERSHIPS__JOIN_MEMBERSHIP"
+          >Join membership</ng-container
+        ></m-button
+      >
+    </div>
+  </div>
+</ng-container>

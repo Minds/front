@@ -555,6 +555,7 @@ export type FeaturedGroup = FeaturedEntityInterface &
     __typename?: 'FeaturedGroup';
     autoPostSubscription: Scalars['Boolean']['output'];
     autoSubscribe: Scalars['Boolean']['output'];
+    briefDescription?: Maybe<Scalars['String']['output']>;
     entityGuid: Scalars['String']['output'];
     id: Scalars['ID']['output'];
     /** Gets count of members. */
@@ -2755,6 +2756,7 @@ export type GetFeaturedEntitiesQuery = {
             autoSubscribe: boolean;
             autoPostSubscription: boolean;
             name: string;
+            briefDescription?: string | null;
             membersCount: number;
           }
         | {
@@ -8237,6 +8239,7 @@ export const GetFeaturedEntitiesDocument = gql`
             autoSubscribe
             autoPostSubscription
             name
+            briefDescription
             membersCount
           }
         }

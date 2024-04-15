@@ -140,7 +140,9 @@
               i18n-title="@@COMMON__LOGIN"
               data-ref="topnav-login"
               size="small"
-              [color]="'blue'"
+              [color]="
+                templateVars.isMinimalLightMode ? 'white-always' : 'blue'
+              "
               [borderless]="onHomepage || templateVars.isMinimalLightMode"
             >
               Login

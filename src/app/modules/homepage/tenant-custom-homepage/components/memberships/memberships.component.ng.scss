@@ -1,0 +1,87 @@
+@import 'defaults.scss';
+
+$maxMembershipWidth: 616px;
+
+:host {
+  .m-tenantHomepageMemberships__title {
+    text-align: center;
+    font-family: Inter;
+    font-size: 54px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 58.8px;
+    letter-spacing: -1.08px;
+    margin: 0 0 $spacing10 0;
+
+    @media screen and (max-width: $max-mobile) {
+      font-size: 40px;
+    }
+
+    @include m-theme() {
+      color: themed($m-bgColor--primaryInverted);
+    }
+  }
+
+  .m-tenantHomepageMemberships__container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing6 $spacing3;
+    margin: 0 260px;
+
+    @media screen and (max-width: $max-mobile) {
+      margin: $spacing5 $spacing8;
+    }
+
+    .m-tenantHomepageMembership {
+      width: $maxMembershipWidth;
+      min-width: $maxMembershipWidth;
+      max-width: $maxMembershipWidth;
+      text-align: center;
+      margin-bottom: $spacing10;
+
+      @media screen and (max-width: $maxMembershipWidth) {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+      }
+
+      .m-tenantHomepageMemberships__name {
+        text-align: center;
+        font-family: Inter;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 48px; /* 120% */
+        letter-spacing: -0.16px;
+        margin: $spacing6 0 $spacing6 0;
+        word-break: break-word;
+
+        @include m-theme() {
+          color: themed($m-bgColor--primaryInverted);
+        }
+      }
+
+      .m-tenantHomepageMemberships__pricingPeriod {
+        margin: 0 0 $spacing6 0;
+        word-break: break-word;
+
+        @include body1Bold;
+        @include m-theme() {
+          color: themed($m-bgColor--primaryInverted);
+        }
+      }
+
+      .m-tenantHomepageMemberships__description {
+        margin: 0 0 $spacing10 0;
+        word-break: break-word;
+
+        @include heading4Regular;
+        @include m-theme() {
+          color: themed($m-bgColor--primaryInverted);
+        }
+      }
+    }
+  }
+}

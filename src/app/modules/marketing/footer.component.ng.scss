@@ -138,6 +138,14 @@
             margin-right: 10px;
           }
         }
+
+        &.m-marketingFooter__section--legal--leftAligned {
+          text-align: left;
+        }
+
+        &.m-marketingFooter__section--legal--centerAligned {
+          text-align: center;
+        }
       }
     }
 

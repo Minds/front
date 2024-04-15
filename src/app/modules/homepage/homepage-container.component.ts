@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MetaService } from '../../common/services/meta.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ResetPasswordModalService } from '../auth/reset-password-modal/reset-password-modal.service';
 import { SiteService } from '../../common/services/site.service';
 import { IsTenantService } from '../../common/services/is-tenant.service';
 import { Session } from '../../services/session';
+import { ConfigsService } from '../../common/services/configs.service';
+import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Routes users to a "homepage" depending on active experiments.
@@ -15,6 +17,9 @@ import { Session } from '../../services/session';
   styleUrls: ['homepage-container.component.ng.scss'],
 })
 export class HomepageContainerComponent implements OnInit {
+  /** Whether the custom tenant homepage variant should be shown. */
+  protected isTenantCustomHomepage: boolean = false;
+
   constructor(
     private metaService: MetaService,
     private route: ActivatedRoute,
@@ -22,7 +27,9 @@ export class HomepageContainerComponent implements OnInit {
     private resetPasswordModal: ResetPasswordModalService,
     private site: SiteService,
     private isTenant: IsTenantService,
-    private session: Session
+    private session: Session,
+    private config: ConfigsService,
+    @Inject(IS_TENANT_NETWORK) protected readonly isTenantNetwork: boolean
   ) {}
 
   queryParams;
@@ -31,6 +38,13 @@ export class HomepageContainerComponent implements OnInit {
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
+    }
+
+    if (
+      this.isTenantNetwork &&
+      this.config.get('tenant')['custom_home_page_enabled']
+    ) {
+      this.isTenantCustomHomepage = true;
     }
 
     this.route.queryParams.subscribe((params) => {

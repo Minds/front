@@ -1,0 +1,26 @@
+<ng-container *ngIf="(featuredGroups$ | async)?.length">
+  <h2 class="m-tenantFeaturedGroupCards__title">Featured groups</h2>
+
+  <div class="m-tenantFeaturedGroupCards__container">
+    <div
+      *ngFor="let group of featuredGroups$ | async"
+      class="m-tenantFeaturedGroupCard"
+    >
+      <a [href]="'/group/' + group.entityGuid" target="_blank">
+        <minds-avatar
+          [object]="{
+            guid: group.entityGuid,
+            type: 'group'
+          }"
+        ></minds-avatar>
+      </a>
+      <h5 class="m-tenantFeaturedGroupCard__name">{{ group.name }}</h5>
+      <p
+        *ngIf="group.briefDescription"
+        class="m-tenantFeaturedGroupCard__description"
+      >
+        {{ group.briefDescription | truncate: 250 }}
+      </p>
+    </div>
+  </div>
+</ng-container>
