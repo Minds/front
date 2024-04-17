@@ -27,9 +27,13 @@
     throttledClick
     (throttledClick)="handleMessageClick()"
   >
-    <span class="m-chatRoomMessage__text" *ngIf="plainText" tabindex="0">{{
-      plainText
-    }}</span>
+    <span
+      *ngIf="plainText"
+      class="m-chatRoomMessage__text"
+      tabindex="0"
+      (click)="handleMessageTextClick($event)"
+      [innerHtml]="plainText | tags"
+    ></span>
   </div>
   <ng-container *ngIf="!isFromLoggedInUser && messageEdge">
     <ng-container *ngTemplateOutlet="dropdownEllipsisTemplate"></ng-container>
