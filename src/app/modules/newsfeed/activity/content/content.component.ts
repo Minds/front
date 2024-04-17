@@ -39,7 +39,6 @@ import { ACTIVITY_MODAL_MIN_STAGE_HEIGHT } from '../modal/modal.component';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
-import { PaywallContextExperimentService } from '../../../experiments/sub-services/paywall-context-experiment.service';
 import getMetaAutoCaption from '../../../../helpers/meta-auto-caption';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
@@ -249,7 +248,6 @@ export class ActivityContentComponent
     private injector: Injector,
     private activityModalCreator: ActivityModalCreatorService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
-    private paywallContextExperiment: PaywallContextExperimentService,
     private cd: ChangeDetectorRef,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
@@ -524,11 +522,11 @@ export class ActivityContentComponent
   }
 
   /**
-   * For paywalled posts in the experiment, show less text and
+   * For paywalled posts, show less text and
    * display the readMore toggle in a more distinctive color
    */
   get usePaywallContextStyles(): boolean {
-    return this.paywallContextExperiment.isActive() && !!this.entity?.paywall;
+    return !!this.entity?.paywall;
   }
 
   /**

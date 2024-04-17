@@ -14,12 +14,10 @@ import { MetaService } from '../../common/services/meta.service';
 import { Observable, Subject, Subscription, timer } from 'rxjs';
 import { SiteService } from '../../common/services/site.service';
 import { NotificationCountSocketsService } from './notification-count-sockets.service';
-import { NotificationCountSocketsExperimentService } from '../experiments/sub-services/notification-count-sockets-experiment.service';
 
 /**
- * Service handling the getting and updating of notification counts.
- * With `notificationCountExperiment` ON we use sockets to update the count.
- * Else count will be polled for every 60 seconds.
+ * Service handling the getting and updating
+ * of notification counts using sockets
  */
 @Injectable()
 export class NotificationService implements OnDestroy {
@@ -43,7 +41,6 @@ export class NotificationService implements OnDestroy {
     public sockets: SocketsService,
     public metaService: MetaService,
     private notificationCountSockets: NotificationCountSocketsService,
-    private notificationCountExperiment: NotificationCountSocketsExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object,
     protected site: SiteService
   ) {}
@@ -55,13 +52,11 @@ export class NotificationService implements OnDestroy {
 
   /**
    * Listen to socket events for count updates.
-   * No-op if notificationCountExperiment is not active.
    * @returns { void }
    */
   public listen(): void {
     if (
       !this.session.getLoggedInUser() ||
-      !this.notificationCountExperiment.isActive() ||
       !isPlatformBrowser(this.platformId)
     ) {
       return;
@@ -77,39 +72,23 @@ export class NotificationService implements OnDestroy {
 
   /**
    * Unlisten to all joined notification count rooms.
-   * No-op if notificationCountExperiment is not active.
    * @returns { void }
    */
   public unlisten(): void {
-    if (
-      this.notificationCountExperiment.isActive() &&
-      isPlatformBrowser(this.platformId)
-    ) {
+    if (isPlatformBrowser(this.platformId)) {
       this.notificationCountSockets.leaveAll();
       this.notificationCountSocketSubscription?.unsubscribe();
     }
   }
 
   /**
-   * Fetch the notification count. If notificationCountExperiment
-   * is active, also sets up a polling subscription to check for
+   * Fetch the notification count and sets up a
+   * polling subscription to check for
    * future updates - else this is handled via sockets.
    * @returns { void }
    */
   public updateNotificationCount(): void {
-    if (this.notificationCountExperiment.isActive()) {
-      this.fetchNotificationCountFromServer(); // run once - rest of updates come through sockets.
-      return;
-    }
-
-    const pollIntervalSeconds: number = 60;
-    if (isPlatformBrowser(this.platformId)) {
-      this.notificationPollTimer = timer(0, pollIntervalSeconds * 1000);
-      this.notificationPollTimerSubscription =
-        this.notificationPollTimer.subscribe(() =>
-          this.fetchNotificationCountFromServer()
-        );
-    }
+    this.fetchNotificationCountFromServer(); // run once - rest of updates come through sockets.
   }
 
   /**

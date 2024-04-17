@@ -32,7 +32,6 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { ContextService } from '../../../services/context.service';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { ComposerComponent } from '../../composer/composer.component';
-import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
 import { DismissalService } from '../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from '../services/feed-algorithm-history.service';
 import { QueryRef } from 'apollo-angular';
@@ -84,9 +83,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   private subscriptions: Subscription[];
 
   @ViewChild('composer') private composer: ComposerComponent;
-
-  @ViewChild('boostRotator')
-  private boostRotator: NewsfeedBoostRotatorComponent;
 
   /**
    * Whether top highlights is dismissed
@@ -376,15 +372,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.inProgress = true;
 
-    /**
-     * Rotating the boost rotator provides feedback that something has changes
-     * to the user on shorter viewports that may not be able to see the feed
-     * under the rotator.
-     */
-    if (this.boostRotator?.running) {
-      this.boostRotator?.next();
-    }
-
     if (!this.isFirstRun) {
       this.feedQuery.refetch();
     }
@@ -484,25 +471,12 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
    * scrolls to under the boost rotator. Used as an alternative to scrollToTop but
    * keeping scrolling consistency by not avoiding the rotator.
    */
-  scrollToUnderBoostRotator(): void {
+  scrollToTop(): void {
     if (isPlatformServer(this.platformId)) return;
-
-    // if boost rotator didn't exist, just scroll to top
-    if (!this.boostRotator) {
-      window.scrollTo({
-        behavior: 'smooth',
-        top: 0,
-      });
-      return;
-    }
-
-    const bottomOfBoostRotatorOffset =
-      this.boostRotator.rotatorEl?.nativeElement?.offsetTop +
-      this.boostRotator?.height;
 
     window.scrollTo({
       behavior: 'smooth',
-      top: bottomOfBoostRotatorOffset || 0,
+      top: 0,
     });
   }
 

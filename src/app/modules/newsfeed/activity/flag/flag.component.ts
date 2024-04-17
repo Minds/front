@@ -2,7 +2,6 @@ import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { Session } from '../../../../services/session';
-import { PaywallContextExperimentService } from '../../../experiments/sub-services/paywall-context-experiment.service';
 import {
   ActivityEntity,
   ActivityService,
@@ -41,8 +40,7 @@ export class ActivityFlagComponent
 
   constructor(
     public service: ActivityService,
-    public session: Session,
-    private paywallContextExperiment: PaywallContextExperimentService
+    public session: Session
   ) {
     super();
   }
@@ -85,16 +83,6 @@ export class ActivityFlagComponent
       this.activeFlag = 'supermindRequest';
       return;
     }
-
-    // Mutual subscriptions (for paywalled posts)
-    // if (
-    //   this.paywallContextExperiment.isActive() &&
-    //   !!this.entity.paywall &&
-    //   this.entity.ownerObj.guid !== this.session.getLoggedInUser().guid
-    // ) {
-    //   this.activeFlag = 'mutualSubscriptions';
-    //   return;
-    // }
   }
 
   get minimalMode(): boolean {
