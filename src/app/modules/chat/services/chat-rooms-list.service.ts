@@ -20,7 +20,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { ApolloQueryResult } from '@apollo/client';
 
 /** Size of an individual page. */
-const PAGE_SIZE: number = 24;
+export const PAGE_SIZE: number = 24;
 
 @Injectable({ providedIn: 'root' })
 export class ChatRoomsListService extends AbstractSubscriberComponent {

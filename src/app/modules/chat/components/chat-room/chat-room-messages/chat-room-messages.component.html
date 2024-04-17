@@ -19,3 +19,8 @@
     messages[i - 1]?.node.sender.node.guid === messageEdge.node.sender.node.guid
   "
 ></m-chatRoom__message>
+
+<m-loadingSpinner
+  *ngIf="hasNextPage$ | async"
+  [inProgress]="true"
+></m-loadingSpinner>
