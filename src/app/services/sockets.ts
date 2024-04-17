@@ -51,11 +51,6 @@ export class SocketsService {
         transports: ['websocket', 'polling'],
       });
 
-      this.socket.auth = {
-        token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.2vmIQLWrytNdDX57_QxYy10C9hiSm0KcrbvRNrzXPyI',
-      };
-
       this.rooms = [];
       this.setUpDefaultListeners();
 
