@@ -64,7 +64,7 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
     this.form.valueChanges.subscribe(() => {
       if (this.init) {
         // Disregard empty tags when evaluating changes
-        const nonBlankTags = this.tag_list.value.filter(item => {
+        const nonBlankTags = this.tag_list.value.filter((item) => {
           return item.label || item.tag;
         });
 
@@ -73,7 +73,7 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.route.parent.params.subscribe(params => {
+    this.route.parent.params.subscribe((params) => {
       if (this.session.isAdmin()) {
         this.user = params.user || null;
       }

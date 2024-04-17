@@ -88,7 +88,7 @@ describe('AutocompleteEntityInputComponent', () => {
 
       tick(100);
 
-      comp.showPopout$.pipe(take(1)).subscribe(showPopout => {
+      comp.showPopout$.pipe(take(1)).subscribe((showPopout) => {
         expect(showPopout).toBe(true);
       });
 

@@ -26,18 +26,16 @@ export class BoostConsoleV2Component implements OnInit {
   private subscriptions: Array<Subscription> = [];
 
   /** @type { BehaviorSubject<boolean> } are we viewing the boost console in the context of the admin console? */
-  public readonly adminContext$: BehaviorSubject<boolean> = this.service
-    .adminContext$;
+  public readonly adminContext$: BehaviorSubject<boolean> =
+    this.service.adminContext$;
 
   /** @type { BehaviorSubject<BoostConsoleStateFilter> } state filter from service. */
-  public readonly stateFilterValue$: BehaviorSubject<
-    BoostConsoleStateFilter
-  > = this.service.stateFilterValue$;
+  public readonly stateFilterValue$: BehaviorSubject<BoostConsoleStateFilter> =
+    this.service.stateFilterValue$;
 
   /** @type { BehaviorSubject<BoostConsoleSuitabilityFilter> } suitability filter from service. */
-  public readonly suitabilityFilterValue$: BehaviorSubject<
-    BoostConsoleSuitabilityFilter
-  > = this.service.suitabilityFilterValue$;
+  public readonly suitabilityFilterValue$: BehaviorSubject<BoostConsoleSuitabilityFilter> =
+    this.service.suitabilityFilterValue$;
 
   @Input() set adminContext(value: boolean) {
     if (!this.session.isAdmin()) {
@@ -74,7 +72,7 @@ export class BoostConsoleV2Component implements OnInit {
      * (The filters/tabs just change the queryParams, which are processed here)
      */
     this.subscriptions.push(
-      this.route.queryParams.subscribe(params => {
+      this.route.queryParams.subscribe((params) => {
         // BOOST FEED ONLY
         const showBoostFeed = params.explore || null;
         if (showBoostFeed) {
@@ -126,7 +124,7 @@ export class BoostConsoleV2Component implements OnInit {
 
       // If the user creates a boost while on the boost console page,
       // refresh the page so their recent boost is visible
-      this.boostModal.onComplete$.subscribe(onComplete => {
+      this.boostModal.onComplete$.subscribe((onComplete) => {
         this.reload();
       })
     );

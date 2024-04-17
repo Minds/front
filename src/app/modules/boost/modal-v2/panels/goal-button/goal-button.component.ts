@@ -26,7 +26,8 @@ import { BoostModalPanel } from '../../boost-modal-v2.types';
   styleUrls: ['goal-button.component.ng.scss'],
 })
 export class BoostModalV2GoalButtonSelectorComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   public BoostGoal: typeof BoostGoal = BoostGoal;
   public BoostGoalButtonText: typeof BoostGoalButtonText = BoostGoalButtonText;
   public form: FormGroup;
@@ -61,7 +62,7 @@ export class BoostModalV2GoalButtonSelectorComponent
           ([goal, buttonText, buttonUrl]: [
             BoostGoal,
             BoostGoalButtonText,
-            string
+            string,
           ]): void => {
             this.currentGoal = goal;
 

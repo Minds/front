@@ -63,12 +63,12 @@ export class AuthModalComponent implements OnInit {
   onDismissIntent: () => void = () => {};
 
   /** Carousel items to be displayed on minds.com */
-  public readonly carouselItems$: Observable<CarouselItem[]> = this
-    .authModalImageService.carouselItems$;
+  public readonly carouselItems$: Observable<CarouselItem[]> =
+    this.authModalImageService.carouselItems$;
 
   /** Tenant logo path for display instead of the carousel on tenant networks. */
-  public readonly tenantLogoPath$: Observable<string> = this
-    .tenantConfigImageService.horizontalLogoPath$;
+  public readonly tenantLogoPath$: Observable<string> =
+    this.tenantConfigImageService.horizontalLogoPath$;
 
   constructor(
     public siteService: SiteService,

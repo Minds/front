@@ -14,7 +14,10 @@ export class ScrollToTopService {
     return new ScrollToTopService(router, route);
   }
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   listen(): this {
     this._routerListener = this.router.events

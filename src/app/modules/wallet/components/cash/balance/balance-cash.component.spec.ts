@@ -63,61 +63,59 @@ describe('WalletBalanceCashComponent', () => {
     },
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [WalletBalanceCashComponent],
-        providers: [
-          {
-            provide: Client,
-            useValue: MockService(Client),
-          },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: WalletV2Service,
-            useValue: MockService(WalletV2Service, {
-              has: ['wallet$'],
-              props: {
-                wallet$: {
-                  get: () => new BehaviorSubject<Wallet>(defaultWallet),
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [WalletBalanceCashComponent],
+      providers: [
+        {
+          provide: Client,
+          useValue: MockService(Client),
+        },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: WalletV2Service,
+          useValue: MockService(WalletV2Service, {
+            has: ['wallet$'],
+            props: {
+              wallet$: {
+                get: () => new BehaviorSubject<Wallet>(defaultWallet),
+              },
+            },
+          }),
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: MockService(ActivatedRoute, {
+            has: ['firstChild'],
+            props: {
+              firstChild: {
+                get: () => {
+                  return { url: new BehaviorSubject([{ path: 'inbox' }]) };
                 },
               },
-            }),
-          },
-          {
-            provide: ActivatedRoute,
-            useValue: MockService(ActivatedRoute, {
-              has: ['firstChild'],
-              props: {
-                firstChild: {
-                  get: () => {
-                    return { url: new BehaviorSubject([{ path: 'inbox' }]) };
-                  },
-                },
-              },
-            }),
-          },
-          {
-            provide: PlusService,
-            useValue: MockService(PlusService),
-          },
-          {
-            provide: CashWalletService,
-            useValue: MockService(CashWalletService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: PlusService,
+          useValue: MockService(PlusService),
+        },
+        {
+          provide: CashWalletService,
+          useValue: MockService(CashWalletService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(WalletBalanceCashComponent);
     comp = fixture.componentInstance;
 

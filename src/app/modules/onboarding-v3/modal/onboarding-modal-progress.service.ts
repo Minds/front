@@ -6,9 +6,8 @@ import { BehaviorSubject } from 'rxjs';
  */
 @Injectable({ providedIn: 'root' })
 export class OnboardingV3ModalProgressService {
-  private readonly _inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  private readonly _inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   public next(inProgress): void {
     this._inProgress$.next(inProgress);

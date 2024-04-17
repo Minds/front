@@ -49,7 +49,7 @@ export default {
       ],
     }),
     componentWrapperDecorator(
-      story => `<div style="max-width: 50px;">${story}</div>`
+      (story) => `<div style="max-width: 50px;">${story}</div>`
     ),
   ],
   args: {

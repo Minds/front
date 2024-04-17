@@ -22,71 +22,68 @@ describe('BoostModalV2PaymentMethodSelectorComponent', () => {
   let comp: BoostModalV2PaymentMethodSelectorComponent;
   let fixture: ComponentFixture<BoostModalV2PaymentMethodSelectorComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          BoostModalV2PaymentMethodSelectorComponent,
-          MockComponent({
-            selector: 'm-payments__selectCard',
-            inputs: ['selected'],
-            outputs: ['selected'],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        BoostModalV2PaymentMethodSelectorComponent,
+        MockComponent({
+          selector: 'm-payments__selectCard',
+          inputs: ['selected'],
+          outputs: ['selected'],
+        }),
+      ],
+      providers: [
+        {
+          provide: BoostModalV2Service,
+          useValue: MockService(BoostModalV2Service, {
+            has: ['paymentCategory$', 'paymentMethod$', 'paymentMethodId$'],
+            props: {
+              paymentCategory$: {
+                get: () =>
+                  new BehaviorSubject<BoostPaymentCategory>(
+                    BoostPaymentCategory.CASH
+                  ),
+              },
+              paymentMethod$: {
+                get: () =>
+                  new BehaviorSubject<BoostPaymentMethod>(
+                    BoostPaymentMethod.CASH
+                  ),
+              },
+              paymentMethodId$: {
+                get: () => new BehaviorSubject<BoostPaymentMethodId>('pm_123'),
+              },
+            },
           }),
-        ],
-        providers: [
-          {
-            provide: BoostModalV2Service,
-            useValue: MockService(BoostModalV2Service, {
-              has: ['paymentCategory$', 'paymentMethod$', 'paymentMethodId$'],
-              props: {
-                paymentCategory$: {
-                  get: () =>
-                    new BehaviorSubject<BoostPaymentCategory>(
-                      BoostPaymentCategory.CASH
-                    ),
-                },
-                paymentMethod$: {
-                  get: () =>
-                    new BehaviorSubject<BoostPaymentMethod>(
-                      BoostPaymentMethod.CASH
-                    ),
-                },
-                paymentMethodId$: {
-                  get: () =>
-                    new BehaviorSubject<BoostPaymentMethodId>('pm_123'),
-                },
-              },
-            }),
-          },
-          {
-            provide: TokenBalanceService,
-            useValue: MockService(TokenBalanceService, {
-              has: ['onchain$', 'offchain$'],
-              props: {
-                onchain$: { get: () => new BehaviorSubject<number>(10) },
-                offchain$: { get: () => new BehaviorSubject<number>(100) },
-              },
-            }),
-          },
-          {
-            provide: ThemeService,
-            useValue: MockService(ThemeService, {
-              has: ['isDark$'],
-              props: {
-                isDark$: { get: () => new BehaviorSubject<boolean>(true) },
-              },
-            }),
-          },
-          {
-            provide: ConfigsService,
-            useValue: MockService(ConfigsService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+        },
+        {
+          provide: TokenBalanceService,
+          useValue: MockService(TokenBalanceService, {
+            has: ['onchain$', 'offchain$'],
+            props: {
+              onchain$: { get: () => new BehaviorSubject<number>(10) },
+              offchain$: { get: () => new BehaviorSubject<number>(100) },
+            },
+          }),
+        },
+        {
+          provide: ThemeService,
+          useValue: MockService(ThemeService, {
+            has: ['isDark$'],
+            props: {
+              isDark$: { get: () => new BehaviorSubject<boolean>(true) },
+            },
+          }),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(
       BoostModalV2PaymentMethodSelectorComponent
     );
@@ -131,7 +128,7 @@ describe('BoostModalV2PaymentMethodSelectorComponent', () => {
   it('should select icon background for light mode', (done: DoneFn) => {
     (comp as any).theme.isDark$.next(false);
 
-    comp.selectBackground$.subscribe(bg => {
+    comp.selectBackground$.subscribe((bg) => {
       expect(bg).toEqual({
         background:
           "url('nullassets/icons/arrow-drop-down-black.svg') 98% center no-repeat",
@@ -143,7 +140,7 @@ describe('BoostModalV2PaymentMethodSelectorComponent', () => {
   it('should select icon background for dark mode', (done: DoneFn) => {
     (comp as any).theme.isDark$.next(true);
 
-    comp.selectBackground$.subscribe(bg => {
+    comp.selectBackground$.subscribe((bg) => {
       expect(bg).toEqual({
         background:
           "url('nullassets/icons/arrow-drop-down-white.svg') 98% center no-repeat",

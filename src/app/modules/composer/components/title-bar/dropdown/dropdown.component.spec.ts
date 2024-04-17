@@ -25,44 +25,42 @@ describe('Composer Title Bar Dropdown', () => {
     },
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ComposerTitleBarDropdownComponent,
-          ButtonComponent,
-          MockComponent({
-            selector: 'm-dropdownMenu',
-            inputs: ['menu', 'triggerClass', 'menuClass', 'anchorPosition'],
-          }),
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['from', 'iconId', 'sizeFactor'],
-          }),
-        ],
-        providers: [
-          {
-            provide: ComposerService,
-            useValue: composerServiceMock,
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: PopupService,
-            useValue: MockService(PopupService),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ComposerTitleBarDropdownComponent,
+        ButtonComponent,
+        MockComponent({
+          selector: 'm-dropdownMenu',
+          inputs: ['menu', 'triggerClass', 'menuClass', 'anchorPosition'],
+        }),
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['from', 'iconId', 'sizeFactor'],
+        }),
+      ],
+      providers: [
+        {
+          provide: ComposerService,
+          useValue: composerServiceMock,
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: PopupService,
+          useValue: MockService(PopupService),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(ComposerTitleBarDropdownComponent);
     comp = fixture.componentInstance;

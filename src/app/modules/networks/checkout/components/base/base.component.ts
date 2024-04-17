@@ -28,11 +28,12 @@ export type CheckoutPageQueryParams = {
 })
 export class NetworksCheckoutBaseComponent implements OnInit, OnDestroy {
   /** Enum for use in template. */
-  public readonly PlanCardPriceTimePeriodEnum: typeof PlanCardPriceTimePeriodEnum = PlanCardPriceTimePeriodEnum;
+  public readonly PlanCardPriceTimePeriodEnum: typeof PlanCardPriceTimePeriodEnum =
+    PlanCardPriceTimePeriodEnum;
 
   /** Whether the site has its topbar alert shown. Used to position sticky sidebar. */
-  public readonly topbarAlertShown$: Observable<boolean> = this
-    .topbarAlertService.shouldShow$;
+  public readonly topbarAlertShown$: Observable<boolean> =
+    this.topbarAlertService.shouldShow$;
 
   /** Whether the checkout data is loaded. */
   public readonly loaded$: Observable<boolean> = this.checkoutService.loaded$;

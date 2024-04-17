@@ -8,7 +8,10 @@ import { ConnectTwitterModalOpts } from './connect-twitter-modal.types';
  */
 @Injectable({ providedIn: 'root' })
 export class ConnectTwitterModalService {
-  constructor(private injector: Injector, private modal: ModalService) {}
+  constructor(
+    private injector: Injector,
+    private modal: ModalService
+  ) {}
 
   /**
    * Presents the modal.
@@ -25,7 +28,8 @@ export class ConnectTwitterModalService {
       ConnectTwitterModalModule,
       this.injector
     );
-    const lazyConnectTwitterModalComponent = moduleRef.instance.resolveComponent();
+    const lazyConnectTwitterModalComponent =
+      moduleRef.instance.resolveComponent();
 
     return this.modal.present(lazyConnectTwitterModalComponent, {
       data: opts,

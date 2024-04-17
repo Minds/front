@@ -19,6 +19,9 @@ import {
 } from './common/services/diagnostics/browser-diagnostics.service';
 import { environment } from './../environments/environment';
 
+import posthog from 'posthog-js';
+import { POSTHOG_JS } from './common/services/posthog/posthog-injection-tokens';
+
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
   constructor() {}
@@ -53,6 +56,10 @@ export class SentryErrorHandler implements ErrorHandler {
     {
       provide: HeadersService,
       useClass: BrowserHeadersService,
+    },
+    {
+      provide: POSTHOG_JS,
+      useValue: posthog,
     },
   ],
 })

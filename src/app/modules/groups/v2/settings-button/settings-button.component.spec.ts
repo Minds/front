@@ -55,56 +55,54 @@ describe('GroupSettingsButton', () => {
     );
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockComponent({
-            selector: 'm-modal',
-            template: '<ng-content></ng-content>',
-            inputs: ['open'],
-            outputs: ['closed'],
-          }),
-          MockComponent({
-            selector: 'm-nsfwSelector',
-            inputs: ['selected'],
-            outputs: ['selected', 'selectedChange'],
-          }),
-          MockComponent({
-            selector: 'm-dropdownMenu',
-            inputs: ['menu', 'anchorPosition'],
-          }),
-          MockComponent({
-            selector: 'm-dropdownMenu__item',
-            outputs: ['click'],
-          }),
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockComponent({
+          selector: 'm-modal',
+          template: '<ng-content></ng-content>',
+          inputs: ['open'],
+          outputs: ['closed'],
+        }),
+        MockComponent({
+          selector: 'm-nsfwSelector',
+          inputs: ['selected'],
+          outputs: ['selected', 'selectedChange'],
+        }),
+        MockComponent({
+          selector: 'm-dropdownMenu',
+          inputs: ['menu', 'anchorPosition'],
+        }),
+        MockComponent({
+          selector: 'm-dropdownMenu__item',
+          outputs: ['click'],
+        }),
 
-          GroupSettingsButton,
-        ],
-        providers: [
-          { provide: GroupService, useValue: groupServiceMock },
-          { provide: Session, useValue: sessionMock },
-          { provide: ModalService, useValue: modalServiceMock },
-          {
-            provide: BoostModalV2LazyService,
-            useValue: MockService(BoostModalV2LazyService),
-          },
-          {
-            provide: BoostGroupExperimentService,
-            useValue: MockService(BoostGroupExperimentService),
-          },
-          {
-            provide: GroupEditModalService,
-            useValue: MockService(GroupEditModalService),
-          },
-          {
-            provide: NsfwEnabledService,
-            useValue: MockService(NsfwEnabledService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+        GroupSettingsButton,
+      ],
+      providers: [
+        { provide: GroupService, useValue: groupServiceMock },
+        { provide: Session, useValue: sessionMock },
+        { provide: ModalService, useValue: modalServiceMock },
+        {
+          provide: BoostModalV2LazyService,
+          useValue: MockService(BoostModalV2LazyService),
+        },
+        {
+          provide: BoostGroupExperimentService,
+          useValue: MockService(BoostGroupExperimentService),
+        },
+        {
+          provide: GroupEditModalService,
+          useValue: MockService(GroupEditModalService),
+        },
+        {
+          provide: NsfwEnabledService,
+          useValue: MockService(NsfwEnabledService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

@@ -54,9 +54,8 @@ import { TotalChatRoomInviteRequestsService } from '../../services/total-chat-ro
 })
 export class ChatRoomListComponent implements OnInit, OnDestroy {
   /** Whether a request is in progress to load / load more. */
-  protected readonly inProgress$: Observable<
-    boolean
-  > = this.chatRoomsListService.inProgress$.pipe(distinctUntilChanged());
+  protected readonly inProgress$: Observable<boolean> =
+    this.chatRoomsListService.inProgress$.pipe(distinctUntilChanged());
 
   /** Whether the component has been intiialized. */
   protected readonly initialized$: Observable<boolean> = combineLatest([
@@ -69,24 +68,22 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
   );
 
   /** Whether the paginated list has a next page. */
-  protected readonly hasNextPage$: Observable<
-    boolean
-  > = this.chatRoomsListService.pageInfo$
-    .pipe(map((pageInfo: PageInfo) => pageInfo?.hasNextPage))
-    .pipe(distinctUntilChanged());
+  protected readonly hasNextPage$: Observable<boolean> =
+    this.chatRoomsListService.pageInfo$
+      .pipe(map((pageInfo: PageInfo) => pageInfo?.hasNextPage))
+      .pipe(distinctUntilChanged());
 
-  protected edges$: Observable<ChatRoomEdge[]> = this.chatRoomsListService
-    .edges$;
+  protected edges$: Observable<ChatRoomEdge[]> =
+    this.chatRoomsListService.edges$;
 
   /** Router events subscription. */
   private routerEventsSubscription: Subscription;
 
   /** Total chat requests from service. */
-  protected hasPendingRequests$: Observable<
-    boolean
-  > = this.totalChatRequestsService.totalRequests$.pipe(
-    map((totalRequests: number): boolean => Boolean(totalRequests))
-  );
+  protected hasPendingRequests$: Observable<boolean> =
+    this.totalChatRequestsService.totalRequests$.pipe(
+      map((totalRequests: number): boolean => Boolean(totalRequests))
+    );
 
   constructor(
     private startChatModal: StartChatModalService,
@@ -98,9 +95,8 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
   ) {}
 
   /** ID of the currently selected room. */
-  protected readonly currentRoomId$: BehaviorSubject<
-    string
-  > = new BehaviorSubject<string>('');
+  protected readonly currentRoomId$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   ngOnInit(): void {
     this.chatRoomsListService.init();
@@ -109,7 +105,7 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
     this.currentRoomId$.next(this.route.snapshot.firstChild.params['roomId']);
 
     this.routerEventsSubscription = this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
+      .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe((event: RouterEvent) => {
         this.currentRoomId$.next(
           this.route.snapshot.firstChild.params['roomId']

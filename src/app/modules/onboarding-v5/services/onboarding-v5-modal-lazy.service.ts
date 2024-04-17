@@ -32,7 +32,8 @@ export class OnboardingV5ModalLazyService {
    * @returns { Promise<ModalRef<OnboardingV5ModalComponent>> } - modal reference.
    */
   public async open(): Promise<ModalRef<OnboardingV5ModalComponent>> {
-    const componentRef: typeof OnboardingV5ModalComponent = await this.getComponentRef();
+    const componentRef: typeof OnboardingV5ModalComponent =
+      await this.getComponentRef();
     const modal = this.modalService.present(componentRef, {
       data: {
         onComplete: () => {

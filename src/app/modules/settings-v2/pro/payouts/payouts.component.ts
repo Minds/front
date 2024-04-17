@@ -52,7 +52,7 @@ export class SettingsV2ProPayoutsComponent implements OnInit, OnDestroy {
       payout_method: new UntypedFormControl('usd'),
     });
 
-    this.route.parent.params.subscribe(params => {
+    this.route.parent.params.subscribe((params) => {
       if (this.session.isAdmin()) {
         this.user = params.user || null;
       }

@@ -19,22 +19,22 @@ import {
 })
 export class NetworkAdminConsoleMobileSplashConfigComponent {
   // enums for use in template.
-  public readonly MobileSplashScreenTypeEnum: typeof MobileSplashScreenTypeEnum = MobileSplashScreenTypeEnum;
-  public readonly MobileWelcomeScreenLogoTypeEnum: typeof MobileWelcomeScreenLogoTypeEnum = MobileWelcomeScreenLogoTypeEnum;
+  public readonly MobileSplashScreenTypeEnum: typeof MobileSplashScreenTypeEnum =
+    MobileSplashScreenTypeEnum;
+  public readonly MobileWelcomeScreenLogoTypeEnum: typeof MobileWelcomeScreenLogoTypeEnum =
+    MobileWelcomeScreenLogoTypeEnum;
 
   /** Splash screen type */
-  public readonly splashScreenType$: BehaviorSubject<
-    MobileSplashScreenTypeEnum
-  > = this.MobileAppPreviewService.splashScreenType$;
+  public readonly splashScreenType$: BehaviorSubject<MobileSplashScreenTypeEnum> =
+    this.MobileAppPreviewService.splashScreenType$;
 
   /** Welcome screen logo type */
-  public readonly welcomeScreenLogoType$: BehaviorSubject<
-    MobileWelcomeScreenLogoTypeEnum
-  > = this.MobileAppPreviewService.welcomeScreenLogoType$;
+  public readonly welcomeScreenLogoType$: BehaviorSubject<MobileWelcomeScreenLogoTypeEnum> =
+    this.MobileAppPreviewService.welcomeScreenLogoType$;
 
   /** Whether setting mobile config is in progress */
-  public readonly setMobileConfigInProgress$: Observable<boolean> = this
-    .MobileAppPreviewService.setMobileConfigInProgress$;
+  public readonly setMobileConfigInProgress$: Observable<boolean> =
+    this.MobileAppPreviewService.setMobileConfigInProgress$;
 
   constructor(private MobileAppPreviewService: MobileAppPreviewService) {}
 

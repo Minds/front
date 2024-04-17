@@ -132,7 +132,7 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
       classList.push(
         ...this.triggerClass
           .split(' ')
-          .map(className => className.trim())
+          .map((className) => className.trim())
           .filter(Boolean)
       );
     }
@@ -147,7 +147,7 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
       classList.push(
         ...this.menuClass
           .split(' ')
-          .map(className => className.trim())
+          .map((className) => className.trim())
           .filter(Boolean)
       );
     }

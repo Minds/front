@@ -44,7 +44,7 @@ export class JuryDutySessionSummonsComponent {
         this.socketsService.join(`moderation_summon`);
       }
     );
-    this.socketsService.subscribe(`moderation_summon`, summons => {
+    this.socketsService.subscribe(`moderation_summon`, (summons) => {
       if (this.showModal) return; // Already open
       this.report = null;
       this.accepted = false;
@@ -62,9 +62,9 @@ export class JuryDutySessionSummonsComponent {
     this.expiresCountdown$ = interval(1000)
       .pipe(
         take(this.expires),
-        map(v => --this.expires)
+        map((v) => --this.expires)
       )
-      .subscribe(expires => {
+      .subscribe((expires) => {
         this.expires = expires;
         if (this.expires <= 0 && !this.accepted) this.showModal = false;
         this.detectChanges();

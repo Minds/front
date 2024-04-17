@@ -83,7 +83,7 @@ export class ToasterService {
   isToastActive(message: string) {
     return (
       this.toasts.findIndex(
-        value => value.message === message && !value.dismissed
+        (value) => value.message === message && !value.dismissed
       ) !== -1
     );
   }

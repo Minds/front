@@ -7,33 +7,31 @@ describe('NoGroupsNoticeComponent', () => {
   let comp: NoGroupsNoticeComponent;
   let fixture: ComponentFixture<NoGroupsNoticeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          NoGroupsNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon'],
-            outputs: ['dismissClick'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        NoGroupsNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(NoGroupsNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

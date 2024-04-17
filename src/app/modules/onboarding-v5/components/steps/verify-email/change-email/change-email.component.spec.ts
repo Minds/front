@@ -37,37 +37,35 @@ describe('OnboardingV5ChangeEmailContentComponent', () => {
     changeEmailTitle: 'Change email address',
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule],
-        declarations: [
-          OnboardingV5ChangeEmailContentComponent,
-          MockComponent({
-            selector: 'm-onboardingV5__footer',
-            inputs: [
-              'disabledActionButton',
-              'actionButton',
-              'skipButton',
-              'saving',
-            ],
-            outputs: ['actionButtonClick', 'skipButtonClick'],
-          }),
-        ],
-        providers: [
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: SettingsV2Service,
-            useValue: MockService(SettingsV2Service),
-          },
-          { provide: ToasterService, useValue: MockService(ToasterService) },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule],
+      declarations: [
+        OnboardingV5ChangeEmailContentComponent,
+        MockComponent({
+          selector: 'm-onboardingV5__footer',
+          inputs: [
+            'disabledActionButton',
+            'actionButton',
+            'skipButton',
+            'saving',
+          ],
+          outputs: ['actionButtonClick', 'skipButtonClick'],
+        }),
+      ],
+      providers: [
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: SettingsV2Service,
+          useValue: MockService(SettingsV2Service),
+        },
+        { provide: ToasterService, useValue: MockService(ToasterService) },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OnboardingV5ChangeEmailContentComponent);

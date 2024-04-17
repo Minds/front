@@ -33,7 +33,7 @@ import { Router } from '@angular/router';
 import { storageMock } from '../../../../../tests/storage-mock.spec';
 import { Storage } from '../../../../services/storage';
 
-let tokenOnboardingService = new (function() {
+let tokenOnboardingService = new (function () {
   this.slide = null;
 })();
 
@@ -41,29 +41,27 @@ describe('TokenOnboardingComponent', () => {
   let comp: TokenOnboardingComponent;
   let fixture: ComponentFixture<TokenOnboardingComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [TokenOnboardingComponent],
-        imports: [FormsModule],
-        providers: [
-          { provide: Client, useValue: clientMock },
-          { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
-          { provide: Session, useValue: sessionMock },
-          { provide: Router, useValue: RouterTestingModule },
-          { provide: Storage, useValue: storageMock },
-          { provide: TokenOnboardingService, useValue: tokenOnboardingService },
-          {
-            provide: ComponentFactoryResolver,
-            useValue: ComponentFactoryResolver,
-          },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [TokenOnboardingComponent],
+      imports: [FormsModule],
+      providers: [
+        { provide: Client, useValue: clientMock },
+        { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
+        { provide: Session, useValue: sessionMock },
+        { provide: Router, useValue: RouterTestingModule },
+        { provide: Storage, useValue: storageMock },
+        { provide: TokenOnboardingService, useValue: tokenOnboardingService },
+        {
+          provide: ComponentFactoryResolver,
+          useValue: ComponentFactoryResolver,
+        },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

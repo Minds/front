@@ -3,11 +3,11 @@
  */
 import { Observable } from 'rxjs';
 
-export let mindsHttpClientMock = new (function() {
+export let mindsHttpClientMock = new (function () {
   this.response = null;
 
-  let callFake = url => {
-    return new Observable(observer => {
+  let callFake = (url) => {
+    return new Observable((observer) => {
       let res = this.response;
       if (this.response && this.response[url]) {
         res = this.response[url];

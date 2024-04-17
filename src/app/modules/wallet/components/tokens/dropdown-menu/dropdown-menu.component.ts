@@ -18,11 +18,11 @@ import { WalletV2Service } from '../../wallet-v2.service';
 })
 export class WalletTokensDropdownMenu {
   address$: Observable<string> = this.walletService.wallet$.pipe(
-    map(wallet => wallet.receiver.address)
+    map((wallet) => wallet.receiver.address)
   );
 
   canDisconnect$: Observable<boolean> = this.walletService.wallet$.pipe(
-    map(wallet => !!wallet.receiver.address)
+    map((wallet) => !!wallet.receiver.address)
   );
 
   @ViewChild('addressEl') addressElement;
@@ -40,10 +40,7 @@ export class WalletTokensDropdownMenu {
    * @param e
    */
   onTransferTokensClick(e: MouseEvent) {
-    this.onchainTransferModal
-      .setInjector(this.injector)
-      .present()
-      .toPromise();
+    this.onchainTransferModal.setInjector(this.injector).present().toPromise();
   }
 
   async onDisconnectClick(e: MouseEvent): Promise<void> {

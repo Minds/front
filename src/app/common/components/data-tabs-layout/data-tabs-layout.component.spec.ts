@@ -14,13 +14,11 @@ describe('DataTabsLayoutComponent', () => {
   let component: DataTabsLayoutComponent;
   let fixture: ComponentFixture<DataTabsLayoutComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [DataTabsLayoutComponent, DataTabsHeaderComponentMock],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [DataTabsLayoutComponent, DataTabsHeaderComponentMock],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DataTabsLayoutComponent);

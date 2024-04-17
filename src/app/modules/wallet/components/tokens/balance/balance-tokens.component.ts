@@ -113,7 +113,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     }
 
     this.subscriptions.push(
-      this.connectWalletModalService.isConnected$.subscribe(isConnected => {
+      this.connectWalletModalService.isConnected$.subscribe((isConnected) => {
         this.isConnected = isConnected;
         this.detectChanges();
 
@@ -149,10 +149,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   }
 
   async openTransferModal() {
-    this.onchainTransferModal
-      .setInjector(this.injector)
-      .present()
-      .toPromise();
+    this.onchainTransferModal.setInjector(this.injector).present().toPromise();
   }
 
   updateNextPayoutDate() {

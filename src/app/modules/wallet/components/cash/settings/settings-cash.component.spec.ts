@@ -7,30 +7,28 @@ describe('WalletSettingsCashComponent', () => {
   let comp: WalletSettingsCashComponent;
   let fixture: ComponentFixture<WalletSettingsCashComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          WalletSettingsCashComponent,
-          MockComponent({
-            selector: 'm-button',
-          }),
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['sizeFactor'],
-          }),
-        ],
-        providers: [
-          {
-            provide: CashWalletService,
-            useValue: MockService(CashWalletService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        WalletSettingsCashComponent,
+        MockComponent({
+          selector: 'm-button',
+        }),
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['sizeFactor'],
+        }),
+      ],
+      providers: [
+        {
+          provide: CashWalletService,
+          useValue: MockService(CashWalletService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(WalletSettingsCashComponent);
     comp = fixture.componentInstance;
 

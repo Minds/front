@@ -17,38 +17,36 @@ describe('ExplicitOverlayComponent', () => {
   let comp: ExplicitOverlayComponent;
   let fixture: ComponentFixture<ExplicitOverlayComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ExplicitOverlayComponent,
-          MockComponent({
-            selector: 'm-button',
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: TopbarAlertService,
-            useValue: MockService(TopbarAlertService, {
-              has: ['shouldShow$'],
-              props: {
-                shouldShow$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ExplicitOverlayComponent,
+        MockComponent({
+          selector: 'm-button',
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: TopbarAlertService,
+          useValue: MockService(TopbarAlertService, {
+            has: ['shouldShow$'],
+            props: {
+              shouldShow$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ExplicitOverlayComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

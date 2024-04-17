@@ -129,6 +129,10 @@ export class SettingsV2Component implements OnInit {
             id: 'nostr',
             shouldShow: this.isNotTenantSite.bind(this),
           },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__USERDATA__LABEL:User Data & Analytics`,
+            id: 'user-data',
+          },
         ],
       },
       {
@@ -417,11 +421,11 @@ export class SettingsV2Component implements OnInit {
       });
     }
 
-    this.route.queryParamMap.subscribe(params => {
+    this.route.queryParamMap.subscribe((params) => {
       this.onMainNav = params.get('ref') === 'main' ? true : false;
     });
 
-    this.route.url.subscribe(url => {
+    this.route.url.subscribe((url) => {
       if (url[0]) {
         this.menuHeaderId = url[0].path;
         if (this.menuHeaderId === 'pro_canary') {
@@ -435,8 +439,8 @@ export class SettingsV2Component implements OnInit {
 
     // Get the title, description and whether it's a menu
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(event => {
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
         this.setSecondaryPane();
       });
 
@@ -453,14 +457,14 @@ export class SettingsV2Component implements OnInit {
 
   setProRoutes() {
     const proMainMenuItem = this.mainMenus[0].items.find(
-      item => item.label === $localize`:@@SETTINGS__PRO__LABEL:Pro`
+      (item) => item.label === $localize`:@@SETTINGS__PRO__LABEL:Pro`
     );
 
     proMainMenuItem.id = `pro_canary/${this.user}`;
 
     const proPreviewMenuItem = this.secondaryMenus.pro_canary
-      .find(item => item.header.id === 'pro-subscription')
-      .items.find(item => item.id === 'view-pro-channel');
+      .find((item) => item.header.id === 'pro-subscription')
+      .items.find((item) => item.id === 'view-pro-channel');
 
     proPreviewMenuItem.route = `/pro/${this.user}`;
   }
@@ -513,7 +517,7 @@ export class SettingsV2Component implements OnInit {
    */
   onActivate(elementRef): void {
     if (elementRef.formSubmitted) {
-      elementRef.formSubmitted.subscribe($event => {
+      elementRef.formSubmitted.subscribe(($event) => {
         if ($event.formSubmitted) {
           this.toasterService.success('Changes saved');
         } else {
@@ -587,7 +591,7 @@ export class SettingsV2Component implements OnInit {
   private injectExperimentItems(): void {
     if (this.twitterSyncSettingsExperiment.isActive() && !this.isTenant) {
       this.secondaryMenus.other
-        .find(x => x.header.id === 'content-migration')
+        .find((x) => x.header.id === 'content-migration')
         .items.push({
           label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__TWITTER__LABEL:Twitter`,
           id: 'twitter-sync',

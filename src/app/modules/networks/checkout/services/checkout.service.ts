@@ -33,29 +33,24 @@ import { DOCUMENT } from '@angular/common';
 @Injectable()
 export class NetworksCheckoutService implements OnDestroy {
   /** Whether a summary change is in progress. */
-  public readonly summaryChangeInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly summaryChangeInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether navigation to payment URL is in progress. */
-  public readonly navToPaymentUrlInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly navToPaymentUrlInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether data is loaded. */
-  public readonly loaded$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly loaded$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Currently active page. */
-  public readonly activePage$: BehaviorSubject<
-    CheckoutPageKeyEnum
-  > = new BehaviorSubject<CheckoutPageKeyEnum>(CheckoutPageKeyEnum.Addons);
+  public readonly activePage$: BehaviorSubject<CheckoutPageKeyEnum> =
+    new BehaviorSubject<CheckoutPageKeyEnum>(CheckoutPageKeyEnum.Addons);
 
   /** Checkout page data. */
-  private readonly checkoutPage$: BehaviorSubject<
-    CheckoutPage
-  > = new BehaviorSubject<CheckoutPage>(null);
+  private readonly checkoutPage$: BehaviorSubject<CheckoutPage> =
+    new BehaviorSubject<CheckoutPage>(null);
 
   /** AddOns for display. */
   public readonly addOns$: Observable<AddOn[]> = this.checkoutPage$.pipe(
@@ -70,12 +65,13 @@ export class NetworksCheckoutService implements OnDestroy {
   );
 
   /** Page description. */
-  public readonly pageDescription$: Observable<
-    string
-  > = this.checkoutPage$.pipe(
-    distinctUntilChanged(),
-    map((checkoutPage: CheckoutPage): string => checkoutPage?.description ?? '')
-  );
+  public readonly pageDescription$: Observable<string> =
+    this.checkoutPage$.pipe(
+      distinctUntilChanged(),
+      map(
+        (checkoutPage: CheckoutPage): string => checkoutPage?.description ?? ''
+      )
+    );
 
   /** Selected plan. */
   public readonly plan$: Observable<Plan> = this.checkoutPage$.pipe(
@@ -90,26 +86,24 @@ export class NetworksCheckoutService implements OnDestroy {
   );
 
   /** Selected time period. */
-  public readonly selectedTimePeriod$: Observable<
-    CheckoutTimePeriodEnum
-  > = this.checkoutPage$.pipe(
-    distinctUntilChanged(),
-    map(
-      (checkoutPage: CheckoutPage): CheckoutTimePeriodEnum =>
-        checkoutPage?.timePeriod ?? null
-    )
-  );
+  public readonly selectedTimePeriod$: Observable<CheckoutTimePeriodEnum> =
+    this.checkoutPage$.pipe(
+      distinctUntilChanged(),
+      map(
+        (checkoutPage: CheckoutPage): CheckoutTimePeriodEnum =>
+          checkoutPage?.timePeriod ?? null
+      )
+    );
 
   /** Total annual savings in cents. */
-  public readonly totalAnnualSavingsCents$: Observable<
-    number
-  > = this.checkoutPage$.pipe(
-    distinctUntilChanged(),
-    map(
-      (checkoutPage: CheckoutPage): number =>
-        checkoutPage?.totalAnnualSavingsCents ?? null
-    )
-  );
+  public readonly totalAnnualSavingsCents$: Observable<number> =
+    this.checkoutPage$.pipe(
+      distinctUntilChanged(),
+      map(
+        (checkoutPage: CheckoutPage): number =>
+          checkoutPage?.totalAnnualSavingsCents ?? null
+      )
+    );
 
   /** Terms markdown. */
   public readonly termsMarkdown$: Observable<string> = this.checkoutPage$.pipe(
@@ -136,7 +130,7 @@ export class NetworksCheckoutService implements OnDestroy {
   ) {}
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription?.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription?.unsubscribe());
     this.getCheckoutPageQuery = null;
     this.loaded$.next(false);
   }
@@ -228,9 +222,8 @@ export class NetworksCheckoutService implements OnDestroy {
 
     this.subscriptions.push(
       this.addOns$.pipe(take(1)).subscribe((addOns: AddOn[]): void => {
-        const currentAddonKeys: string[] = this.getCurrentAddOnKeysFromAddons(
-          addOns
-        );
+        const currentAddonKeys: string[] =
+          this.getCurrentAddOnKeysFromAddons(addOns);
 
         if (currentAddonKeys.includes(addOnKey)) {
           console.warn(`AddOn with key ${addOnKey} is alread added`);
@@ -255,9 +248,8 @@ export class NetworksCheckoutService implements OnDestroy {
 
     this.subscriptions.push(
       this.addOns$.pipe(take(1)).subscribe((addOns: AddOn[]): void => {
-        const currentAddonKeys: string[] = this.getCurrentAddOnKeysFromAddons(
-          addOns
-        );
+        const currentAddonKeys: string[] =
+          this.getCurrentAddOnKeysFromAddons(addOns);
 
         if (!currentAddonKeys.includes(addOnKey)) {
           console.warn(
@@ -290,7 +282,7 @@ export class NetworksCheckoutService implements OnDestroy {
           switchMap(
             ([summary, selectedTimePeriod]: [
               Summary,
-              CheckoutTimePeriodEnum
+              CheckoutTimePeriodEnum,
             ]) => {
               return this.getCheckoutLinkGQL.fetch(
                 {

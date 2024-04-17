@@ -79,7 +79,7 @@ export class SettingsV2EmbeddedCommentsComponent implements OnInit, OnDestroy {
               result.data.embeddedCommentsSettings
           )
         )
-        .subscribe(settings => {
+        .subscribe((settings) => {
           this.form.setValue({
             domain: settings?.domain,
             pathRegex: settings?.pathRegex,
@@ -92,7 +92,7 @@ export class SettingsV2EmbeddedCommentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription?.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription?.unsubscribe());
   }
 
   async onSave() {

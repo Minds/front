@@ -33,7 +33,8 @@ import * as Macy from 'macy';
   templateUrl: './feed-grid.component.html',
 })
 export class FeedGridComponent
-  implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+  implements OnInit, AfterViewInit, OnChanges, OnDestroy
+{
   @Input() maxColumns = 3;
   @Input('entities') entities: any[];
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
@@ -79,7 +80,7 @@ export class FeedGridComponent
 
     this.windowResizeSubscription = fromEvent(window, 'resize')
       .pipe(debounceTime(300))
-      .subscribe(event => {
+      .subscribe((event) => {
         this.recalculate();
       });
   }

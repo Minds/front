@@ -36,46 +36,44 @@ describe('BoostLatestPostNoticeComponent', () => {
     }
   );
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          BoostLatestPostNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon', 'dismissible'],
-            outputs: ['dismissClick'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: BoostLatestPostNoticeService,
-            useValue: BoostLatestPostNoticeServiceMock,
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: BoostModalV2LazyService,
-            useValue: MockService(BoostModalV2LazyService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        BoostLatestPostNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon', 'dismissible'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: BoostLatestPostNoticeService,
+          useValue: BoostLatestPostNoticeServiceMock,
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: BoostModalV2LazyService,
+          useValue: MockService(BoostModalV2LazyService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostLatestPostNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

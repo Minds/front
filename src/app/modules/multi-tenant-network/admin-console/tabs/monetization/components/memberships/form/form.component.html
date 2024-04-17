@@ -23,17 +23,14 @@
       <ng-container
         *ngIf="!editMode; else editModeDescriptionTemplate"
         i18n="
-           @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__CREATE_MEMBERSHIP_DESCRIPTION
-
-        "
+          @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__CREATE_MEMBERSHIP_DESCRIPTION"
         >Create a membership for members of your community to join to get extra
         perks and benefits</ng-container
       >
       <ng-template
         #editModeDescriptionTemplate
         i18n="
-           @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EDIT_MEMBERSHIP_DESCRIPTION
-        "
+          @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EDIT_MEMBERSHIP_DESCRIPTION"
         >A membership is for members of your community to join to get extra
         perks and benefits</ng-template
       >
@@ -150,7 +147,8 @@
           <label
             class="m-adminMembershipCreateForm__radioButtonInputLabel--hidden"
             [ngClass]="{
-              'm-adminMembershipCreateForm__radioButtonInputLabel--disabled': editMode
+              'm-adminMembershipCreateForm__radioButtonInputLabel--disabled':
+                editMode
             }"
             ><!--Icon positioning element--></label
           >
@@ -180,7 +178,8 @@
           <label
             class="m-adminMembershipCreateForm__radioButtonInputLabel--hidden"
             [ngClass]="{
-              'm-adminMembershipCreateForm__radioButtonInputLabel--disabled': editMode
+              'm-adminMembershipCreateForm__radioButtonInputLabel--disabled':
+                editMode
             }"
             ><!--Icon positioning element--></label
           >
@@ -211,7 +210,8 @@
       <span
         class="m-adminMembershipCreateForm__formInput--priceInput"
         [ngClass]="{
-          'm-adminMembershipCreateForm__formInput--priceInput--disabled': editMode
+          'm-adminMembershipCreateForm__formInput--priceInput--disabled':
+            editMode
         }"
         >$<input
           type="number"
@@ -229,8 +229,7 @@
         <ng-container
           *ngIf="!editMode; else editModeChangePriceTemplate"
           i18n="
-             @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__PRICE_DESCRIPTION_CREATE
-          "
+            @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__PRICE_DESCRIPTION_CREATE"
           >To change this price in the future you will need to create a new
           membership.</ng-container
         >
@@ -262,22 +261,20 @@
         id="billingPeriod"
         formControlName="billingPeriod"
         [ngClass]="{
-          'm-adminMembershipCreateForm__formInput--selectBox--disabled': editMode
+          'm-adminMembershipCreateForm__formInput--selectBox--disabled':
+            editMode
         }"
       >
-        <option [value]="SiteMembershipBillingPeriodEnum.Monthly"
-          >Monthly</option
-        >
+        <option [value]="SiteMembershipBillingPeriodEnum.Monthly">
+          Monthly
+        </option>
         <option [value]="SiteMembershipBillingPeriodEnum.Yearly">Yearly</option>
       </select>
       <label
         class="m-adminMembershipCreateForm__formLabel m-adminMembershipCreateForm__formLabel--secondaryBottom"
         for="price"
         i18n="
-
-          @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__BILLING_PERIOD_DESCRIPTION_CREATE
-
-        "
+          @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__BILLING_PERIOD_DESCRIPTION_CREATE"
       >
         To change the billing period, you will need to a create a new
         membership.
@@ -298,8 +295,7 @@
           <p
             class="m-adminMembershipCreateForm__sectionDescription"
             i18n="
-               @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__USER_ROLES_DESCRIPTION
-            "
+              @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__USER_ROLES_DESCRIPTION"
           >
             What roles would you like the membership owner(s) to have?
           </p>
@@ -344,18 +340,14 @@
           <p
             class="m-adminMembershipCreateForm__sectionTitle"
             i18n="
-               @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EXCLUSIVE_GROUPS_TITLE
-            "
+              @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EXCLUSIVE_GROUPS_TITLE"
           >
             Exclusive groups
           </p>
           <p
             class="m-adminMembershipCreateForm__sectionDescription"
             i18n="
-
-              @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EXCLUSIVE_GROUPS_DESCRIPTION
-
-            "
+              @@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EXCLUSIVE_GROUPS_DESCRIPTION"
           >
             Optionally, what private groups would you like the membership
             owner(s) to be added to?

@@ -6,13 +6,15 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 export type MakeEmpty<
   T extends { [key: string]: unknown },
-  K extends keyof T
+  K extends keyof T,
 > = { [_ in K]?: never };
 export type Incremental<T> =
   | T
@@ -367,9 +369,7 @@ export type ComponentMarketingComponentsMarketingPageSectionFiltersInput = {
   >;
   body?: InputMaybe<StringFilterInput>;
   leftAligned?: InputMaybe<BooleanFilterInput>;
-  not?: InputMaybe<
-    ComponentMarketingComponentsMarketingPageSectionFiltersInput
-  >;
+  not?: InputMaybe<ComponentMarketingComponentsMarketingPageSectionFiltersInput>;
   or?: InputMaybe<
     Array<
       InputMaybe<ComponentMarketingComponentsMarketingPageSectionFiltersInput>
@@ -1102,9 +1102,7 @@ export type ExplainerScreenMobileEntityResponseCollection = {
 
 export type ExplainerScreenMobileFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<ExplainerScreenMobileFiltersInput>>>;
-  continueButton?: InputMaybe<
-    ComponentExplainerScreenContinueButtonFiltersInput
-  >;
+  continueButton?: InputMaybe<ComponentExplainerScreenContinueButtonFiltersInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   id?: InputMaybe<IdFilterInput>;
   key?: InputMaybe<StringFilterInput>;
@@ -1164,9 +1162,7 @@ export type ExplainerScreenWebEntityResponseCollection = {
 
 export type ExplainerScreenWebFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<ExplainerScreenWebFiltersInput>>>;
-  continueButton?: InputMaybe<
-    ComponentExplainerScreenContinueButtonFiltersInput
-  >;
+  continueButton?: InputMaybe<ComponentExplainerScreenContinueButtonFiltersInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   id?: InputMaybe<IdFilterInput>;
   key?: InputMaybe<StringFilterInput>;
@@ -1227,9 +1223,7 @@ export type FeatTableColumnEntityResponseCollection = {
 export type FeatTableColumnFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<FeatTableColumnFiltersInput>>>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
-  featTableHeader?: InputMaybe<
-    ComponentV2ProductFeatureTableHeaderFiltersInput
-  >;
+  featTableHeader?: InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>;
   id?: InputMaybe<IdFilterInput>;
   not?: InputMaybe<FeatTableColumnFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<FeatTableColumnFiltersInput>>>;
@@ -1523,9 +1517,7 @@ export type HomepageAsFeaturedInArgs = {
 };
 
 export type HomepageSectionsArgs = {
-  filters?: InputMaybe<
-    ComponentMarketingComponentsMarketingPageSectionFiltersInput
-  >;
+  filters?: InputMaybe<ComponentMarketingComponentsMarketingPageSectionFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };

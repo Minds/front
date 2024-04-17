@@ -18,10 +18,10 @@ export class CashWalletService {
   account$ = this.apiRequestTs.pipe(
     switchMapTo(
       this.api.get('api/v3/payments/stripe/connect/account').pipe(
-        catchError(err => {
+        catchError((err) => {
           return of(null);
         }),
-        map(response => {
+        map((response) => {
           this.isLoading$$.next(false);
           return response;
         })
@@ -34,28 +34,28 @@ export class CashWalletService {
    * Boolean of if there is an account connected
    */
   hasAccount$: Observable<boolean> = this.account$.pipe(
-    map(response => !!response)
+    map((response) => !!response)
   );
 
   /**
    * If the stripe account is in a restricted state
    */
   isRestricted$: Observable<boolean> = this.account$.pipe(
-    map(response => !!response?.requirements.disabled_reason)
+    map((response) => !!response?.requirements.disabled_reason)
   );
 
   /**
    * Maps the reason of a restricted state
    */
   restrictedReason$: Observable<string> = this.account$.pipe(
-    map(response => response.requirements.disabled_reason)
+    map((response) => response.requirements.disabled_reason)
   );
 
   /**
    * If payments are enabled or not. Ie. they can accept money.
    */
   paymentsEnabled$: Observable<boolean> = this.account$.pipe(
-    map(response => response.charges_enabled)
+    map((response) => response.charges_enabled)
   );
 
   /**
@@ -63,7 +63,7 @@ export class CashWalletService {
    * These could be disabled because of due requirements or admin action.
    */
   payoutsEnabled$: Observable<boolean> = this.account$.pipe(
-    map(response => response.payouts_enabled)
+    map((response) => response.payouts_enabled)
   );
 
   /**

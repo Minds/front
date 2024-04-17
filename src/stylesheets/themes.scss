@@ -156,7 +156,7 @@ $blue-grey-900: #191f28;
 $themes: (
   light: (
     //regression : Legacy light colors used here.
-      m-textColor--primary: #43434d,
+    m-textColor--primary: #43434d,
     m-textColor--primaryInverted: #ffffff,
     m-textColor--secondary: #72727c,
     m-textColor--secondaryInverted: #b8c1ca,
@@ -176,7 +176,7 @@ $themes: (
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #ececec,
     // aka #D2DBE3 @ 40%
-      m-highlight--comment: #edf0f3,
+    m-highlight--comment: #edf0f3,
     m-overlay: rgba(176, 176, 176, 0.5),
     m-alert: #e03c20,
     m-positive: #95c064,
@@ -185,10 +185,10 @@ $themes: (
       color-mix(in srgb, var(--primary-action-light), #000 20%),
     m-action-text: $white,
     //rotator button token
-      m-rotator-action: #43434d,
+    m-rotator-action: #43434d,
     m-counter-action: #43434d,
     // legacy colors
-      m-grey-900: $grey-900,
+    m-grey-900: $grey-900,
     m-grey-800: $grey-800,
     m-grey-700: $grey-700,
     m-grey-600: $grey-600,
@@ -260,10 +260,10 @@ $themes: (
     m-action--contrast: color-mix(in srgb, var(--primary-action-dark), #000 20%),
     m-action-text: $grey-900,
     //rotator button token
-      m-rotator-action: $grey-50,
+    m-rotator-action: $grey-50,
     m-counter-action: var(--primary-action-dark),
     // legacy colors
-      m-grey-900: $grey-100,
+    m-grey-900: $grey-100,
     m-grey-800: $grey-200,
     m-grey-700: $grey-300,
     m-grey-600: $grey-400,

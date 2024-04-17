@@ -186,10 +186,7 @@
           feed?.length < 1 &&
           isOwnedChannel
         "
-        class="
-          m-channelFeed__emptyFeedContainer
-          m-channelFeed__emptyFeedContainer--bordered
-        "
+        class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
       >
         <!-- EMPTY NOTICE: OWNER / NO QUERY / NO DATE RANGE / HAS CREATE POST PERMISSIONS  -->
         <ng-container *ngIf="permissions.canCreatePost()">
@@ -257,10 +254,7 @@
         *ngIf="
           !(feedService.service.inProgress | async) && feed && feed?.length < 1
         "
-        class="
-          m-channelFeed__emptyFeedContainer
-          m-channelFeed__emptyFeedContainer--bordered
-        "
+        class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
       >
         <span
           class="m-channelFeed__emptyFeedTitle"

@@ -19,35 +19,35 @@
 
 $z-index: (
   // POPOVER--MODAL: for popovers that should be visible while a modal is open
-    popover--modal: 1060,
+  popover--modal: 1060,
   // FOOTER--BANNER: for any banner that should be visible at the bottom of the page but should not overlap modals
-    footer--banner: 70,
+  footer--banner: 70,
   //
-    // **NOTE!** leave numerical space here in case of add'l stacked modals
-    //
-    // MODAL--STACKABLE: modals that go on top of other modals
-    modal--stackable: 100,
+  // **NOTE!** leave numerical space here in case of add'l stacked modals
+  //
+  // MODAL--STACKABLE: modals that go on top of other modals
+  modal--stackable: 100,
   // MODAL: for modals that go on top of the page body. Usually come with a semi-translucent overlay base layer
-    modal: 90,
+  modal: 90,
   // SPLASH: this covers everything on the page, except for potential modals
-    splash: 80,
+  splash: 80,
   // TOAST: for toast notifications that should not go on top of modals
-    toast: 70,
+  toast: 70,
   // TOOLTIP: informative popup usually triggered by mouseover
-    tooltip--stackable: 61,
+  tooltip--stackable: 61,
   tooltip: 60,
   // SIDEBAR: sidebar navigation. On mobile, needs to go over topbar on mobile so we can use a background overlay when the menu is open
-    sidebar--mobile: 55,
+  sidebar--mobile: 55,
   // TOPBAR: top navigation bar. Almost always visible. Goes on top of the page body but below the body's tooltips
-    topbar: 50,
+  topbar: 50,
   // MESSENGER: messenger dockpane and chat tabs
-    messenger: 40,
+  messenger: 40,
   // ANNOUNCEMENT: informative element that is less ephermeral than a tooltip (e.g. user action required to dismiss)
-    announcement: 30,
+  announcement: 30,
   // SIDEBAR: side navigation bar, not hidden by page body
-    sidebar: 20,
+  sidebar: 20,
   // BODY: page content that is framed by the topbar and side-nav
-    body: 10
+  body: 10
 );
 
 @function z-index($key) {

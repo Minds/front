@@ -30,7 +30,7 @@ export class PreventDoubleClickDirective implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.clicks
       .pipe(debounceTime(this.debounceTime))
-      .subscribe(e => this.singleClick.emit(e));
+      .subscribe((e) => this.singleClick.emit(e));
   }
 
   ngOnDestroy() {

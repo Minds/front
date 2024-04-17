@@ -38,7 +38,7 @@ export class ProChannelLoginComponent {
     private route: ActivatedRoute,
     private cookieService: CookieService
   ) {
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['username']) {
         this.username = params['username'];
       }

@@ -11,7 +11,10 @@ export class MessengerSounds {
     // + 'src/plugins/Messenger/sounds/sndmsg.mp3'
   };
 
-  constructor(private storage: Storage, private configs: ConfigsService) {}
+  constructor(
+    private storage: Storage,
+    private configs: ConfigsService
+  ) {}
 
   play(sound: string) {
     // if (this.canPlay()) this.sounds[sound].play();

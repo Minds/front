@@ -73,7 +73,7 @@ describe('AuxPagesService', () => {
   it('should get headerCopy on fetchContent', (done: DoneFn) => {
     service.path$.next('privacy');
 
-    (service as any).headerCopy$.subscribe(headerCopy => {
+    (service as any).headerCopy$.subscribe((headerCopy) => {
       expect(headerCopy).toBe(mockAttributes.h1);
       controller.verify();
       done();
@@ -87,7 +87,7 @@ describe('AuxPagesService', () => {
   it('should get bodyCopy on fetchContent', (done: DoneFn) => {
     service.path$.next('privacy');
 
-    (service as any).bodyCopy$.subscribe(bodyCopy => {
+    (service as any).bodyCopy$.subscribe((bodyCopy) => {
       expect(bodyCopy).toBe(mockAttributes.body);
       controller.verify();
       done();
@@ -101,7 +101,7 @@ describe('AuxPagesService', () => {
   it('should get updatedAtDateString on fetchContent', (done: DoneFn) => {
     service.path$.next('privacy');
 
-    (service as any).updatedAtDateString$.subscribe(updatedAtDateString => {
+    (service as any).updatedAtDateString$.subscribe((updatedAtDateString) => {
       expect(updatedAtDateString).toBe(
         new Date(mockAttributes.updatedAt).toLocaleDateString()
       );
@@ -117,7 +117,7 @@ describe('AuxPagesService', () => {
   it('should get metadata on fetchContent', (done: DoneFn) => {
     service.path$.next('privacy');
 
-    (service as any).metadata$.subscribe(metadata => {
+    (service as any).metadata$.subscribe((metadata) => {
       expect(metadata).toEqual(mockAttributes.metadata);
       controller.verify();
       done();

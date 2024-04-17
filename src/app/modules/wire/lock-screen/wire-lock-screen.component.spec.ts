@@ -42,42 +42,40 @@ xdescribe('WireLockScreenComponent', () => {
     sessionMock.loggedIn = loggedIn;
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [MaterialMock, WireLockScreenComponent, ButtonComponent], // declare the test component
-        imports: [],
-        providers: [
-          { provide: Client, useValue: clientMock },
-          { provide: Session, useValue: sessionMock },
-          {
-            provide: WireModalService,
-            useValue: MockService(WireModalService, {
-              present: () => of({}),
-            }),
-          },
-          {
-            provide: WirePaymentHandlersService,
-            useValue: MockService(WirePaymentHandlersService),
-          },
-          {
-            provide: ConfigsService,
-            useValue: MockService(ConfigsService, {
-              get: () => {
-                return {
-                  support_tier_urn: 'plus_support_tier',
-                };
-              },
-            }),
-          },
-          {
-            provide: AuthModalService,
-            useValue: MockService(AuthModalService),
-          },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [MaterialMock, WireLockScreenComponent, ButtonComponent], // declare the test component
+      imports: [],
+      providers: [
+        { provide: Client, useValue: clientMock },
+        { provide: Session, useValue: sessionMock },
+        {
+          provide: WireModalService,
+          useValue: MockService(WireModalService, {
+            present: () => of({}),
+          }),
+        },
+        {
+          provide: WirePaymentHandlersService,
+          useValue: MockService(WirePaymentHandlersService),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService, {
+            get: () => {
+              return {
+                support_tier_urn: 'plus_support_tier',
+              };
+            },
+          }),
+        },
+        {
+          provide: AuthModalService,
+          useValue: MockService(AuthModalService),
+        },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
   beforeEach(() => {

@@ -16,25 +16,23 @@ describe('PlusVerifyModalComponent', () => {
   let comp: PlusVerifyModalComponent;
   let fixture: ComponentFixture<PlusVerifyModalComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          PlusVerifyModalComponent,
-          TooltipComponentMock,
-          ModalMock,
-          ButtonComponent,
-        ],
-        imports: [RouterTestingModule, FormsModule, ReactiveFormsModule],
-        providers: [
-          { provide: Client, useValue: clientMock },
-          { provide: ToasterService, useValue: MockService(ToasterService) },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        PlusVerifyModalComponent,
+        TooltipComponentMock,
+        ModalMock,
+        ButtonComponent,
+      ],
+      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule],
+      providers: [
+        { provide: Client, useValue: clientMock },
+        { provide: ToasterService, useValue: MockService(ToasterService) },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

@@ -37,9 +37,8 @@ export class ChatRoomNotificationSettingsComponent implements OnInit {
   protected readonly ChatRoomNotificationStatusEnum: typeof ChatRoomNotificationStatusEnum = ChatRoomNotificationStatusEnum;
 
   /** Whether notifications are muted. */
-  protected readonly notificationsMuted$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected readonly notificationsMuted$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Subscription to chat room. */
   private chatRoomSubscription: Subscription;

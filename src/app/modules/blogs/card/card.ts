@@ -19,7 +19,10 @@ export class BlogCard {
   blog;
   access = ACCESS;
 
-  constructor(public session: Session, public attachment: AttachmentService) {}
+  constructor(
+    public session: Session,
+    public attachment: AttachmentService
+  ) {}
 
   set _blog(value: any) {
     if (!value.thumbnail_src || !value.header_bg)

@@ -43,6 +43,8 @@ import { OnboardingV5ModalLazyService } from './modules/onboarding-v5/services/o
 import { OnboardingV5Service } from './modules/onboarding-v5/services/onboarding-v5.service';
 import { OnboardingV5ExperimentService } from './modules/experiments/sub-services/onboarding-v5-experiment.service';
 import { ExplainerScreensService } from './modules/explainer-screens/services/explainer-screen.service';
+import { ChatExperimentService } from './modules/experiments/sub-services/chat-experiment.service';
+import { ChatInitService } from './modules/chat/services/chat-init.service';
 
 @Component({
   selector: 'm-app',
@@ -64,6 +66,9 @@ export class Minds implements OnInit, OnDestroy {
 
   private multiFactorSuccessSubscription: Subscription;
   private emailConfirmationLoginSubscription: Subscription;
+
+  /* Whether chat experiment is active */
+  private isChatExperimentActive: boolean = false;
 
   constructor(
     public session: Session,
@@ -99,7 +104,9 @@ export class Minds implements OnInit, OnDestroy {
     private onboardingV5Service: OnboardingV5Service,
     private onboardingV5ModalService: OnboardingV5ModalLazyService,
     private onboardingV5ExperimentService: OnboardingV5ExperimentService,
-    private explainerScreenService: ExplainerScreensService
+    private explainerScreenService: ExplainerScreensService,
+    private chatInitService: ChatInitService,
+    private chatExperimentService: ChatExperimentService
   ) {
     this.name = 'Minds';
 
@@ -123,16 +130,16 @@ export class Minds implements OnInit, OnDestroy {
     // MH: does loading meta tags before the configs have been set cause issues?
     this.router$ = this.router.events
       .pipe(
-        filter(e => e instanceof NavigationEnd),
+        filter((e) => e instanceof NavigationEnd),
         map(() => this.route),
-        map(route => {
+        map((route) => {
           while (route.firstChild) route = route.firstChild;
           return route;
         }),
         // filter(route => route.outlet === 'primary')
-        mergeMap(route => route.data)
+        mergeMap((route) => route.data)
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         this.metaService.reset(data);
         // check route to see if we need to show an explainer screen.
         this.explainerScreenService.handleRouteChange(
@@ -146,13 +153,6 @@ export class Minds implements OnInit, OnDestroy {
       // Setup sentry/diagnostic configs
       this.diagnostics.setUser(this.configs.get('user'));
       this.diagnostics.listen(); // Listen for user changes
-
-      // Setup our AB testing
-      this.experimentsService.initGrowthbook();
-
-      // if (this.sso.isRequired()) {
-      //   this.sso.connect();
-      // }
 
       if (this.session.getLoggedInUser()) {
         if (await this.shouldShowOnboardingV5()) {
@@ -181,8 +181,8 @@ export class Minds implements OnInit, OnDestroy {
     }
 
     this.multiFactorSuccessSubscription = this.multiFactorConfirmation.success$
-      .pipe(filter(success => success))
-      .subscribe(success => {
+      .pipe(filter((success) => success))
+      .subscribe((success) => {
         this.multiFactorConfirmation.reset();
 
         if (this.router.url === '/' || this.router.url === '/about') {
@@ -205,7 +205,9 @@ export class Minds implements OnInit, OnDestroy {
       this.notificationService.updateNotificationCount();
     }
 
-    this.session.isLoggedIn(async is => {
+    this.isChatExperimentActive = this.chatExperimentService.isActive();
+
+    this.session.isLoggedIn(async (is) => {
       if (is && !this.site.isProDomain) {
         const user = this.session.getLoggedInUser();
         const language = this.configs.get('language');
@@ -225,8 +227,16 @@ export class Minds implements OnInit, OnDestroy {
 
         this.notificationService.listen();
         this.notificationService.updateNotificationCount();
+
+        if (this.isChatExperimentActive) {
+          this.chatInitService.reinit();
+        }
       } else {
         this.notificationService.unlisten();
+
+        if (this.isChatExperimentActive) {
+          this.chatInitService.destroy();
+        }
       }
     });
 
@@ -253,6 +263,9 @@ export class Minds implements OnInit, OnDestroy {
 
     this.socketsService.setUp();
 
+    if (this.isChatExperimentActive && this.session.isLoggedIn()) {
+      this.chatInitService.init();
+    }
     // TODO uncomment this when we want logged out users
     // to complete the social compass questionnaire
     // this.compassHook.listen();

@@ -97,9 +97,8 @@ describe('AddFeaturedEntityModalComponent', () => {
     });
 
     it('should allow a valid entity', () => {
-      const usernameInput: AbstractControl<string> = comp.formGroup.get(
-        'entity'
-      );
+      const usernameInput: AbstractControl<string> =
+        comp.formGroup.get('entity');
       usernameInput.setValue(userMock);
       expect(usernameInput.valid).toBeTruthy();
     });

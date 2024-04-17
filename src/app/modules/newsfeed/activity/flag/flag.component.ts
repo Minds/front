@@ -26,8 +26,10 @@ export type ActivityFlagType =
   templateUrl: './flag.component.html',
   styleUrls: ['./flag.component.ng.scss'],
 })
-export class ActivityFlagComponent extends AbstractSubscriberComponent
-  implements OnInit {
+export class ActivityFlagComponent
+  extends AbstractSubscriberComponent
+  implements OnInit
+{
   entity$: Observable<ActivityEntity> = this.service.entity$;
   entity;
 
@@ -47,7 +49,7 @@ export class ActivityFlagComponent extends AbstractSubscriberComponent
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.entity$.subscribe(entity => {
+      this.service.entity$.subscribe((entity) => {
         this.entity = entity;
         this.setActiveFlag();
       })

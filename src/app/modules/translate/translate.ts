@@ -81,9 +81,11 @@ export class Translate {
       return;
     }
 
-    this.translateEventSubscription = this.translateEvent.subscribe($event => {
-      this.translate($event);
-    });
+    this.translateEventSubscription = this.translateEvent.subscribe(
+      ($event) => {
+        this.translate($event);
+      }
+    );
   }
 
   ngOnInit() {
@@ -97,7 +99,7 @@ export class Translate {
 
         this.changeDetectorRef.markForCheck();
       })
-      .catch(e => {
+      .catch((e) => {
         this.languagesInProgress = false;
         this.languagesError = true;
 
@@ -114,7 +116,7 @@ export class Translate {
   }
 
   onOpen() {
-    this.translationService.getUserDefaultLanguage().then(lang => {
+    this.translationService.getUserDefaultLanguage().then((lang) => {
       if (lang) {
         this.select(lang);
       }
@@ -167,7 +169,7 @@ export class Translate {
     }
 
     this.translation.target = '';
-    this.translationService.getLanguageName($event.selected).then(name => {
+    this.translationService.getLanguageName($event.selected).then((name) => {
       this.translation.target = name;
       this.changeDetectorRef.markForCheck();
     });
@@ -188,7 +190,7 @@ export class Translate {
             this.translation.source = '';
             this.translationService
               .getLanguageName(translation[field].source)
-              .then(name => {
+              .then((name) => {
                 this.translation.source = name;
                 this.changeDetectorRef.markForCheck();
               });
@@ -203,7 +205,7 @@ export class Translate {
 
         this.changeDetectorRef.markForCheck();
       })
-      .catch(e => {
+      .catch((e) => {
         this.translationInProgress = false;
         this.translation.error = true;
         this.toasterService.error(

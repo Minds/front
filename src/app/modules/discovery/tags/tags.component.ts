@@ -36,7 +36,7 @@ export class DiscoveryTagsComponent implements OnInit, OnDestroy {
     this.service.loadTags();
 
     this.parentPathSubscription = this.discoveryService.parentPath$.subscribe(
-      parentPath => {
+      (parentPath) => {
         this.parentPath = parentPath;
       }
     );
@@ -54,7 +54,7 @@ export class DiscoveryTagsComponent implements OnInit, OnDestroy {
     try {
       await this.composerModal
         .setInjector(this.injector)
-        .onPost(activity => {
+        .onPost((activity) => {
           this.toaster.success(
             "Nice! If you added hashtags to your post, they'll show up in the sidebar in a few minutes"
           );

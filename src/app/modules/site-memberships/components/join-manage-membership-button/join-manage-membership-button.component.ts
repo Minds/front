@@ -47,22 +47,22 @@ export class JoinManageSiteMembershipButtonComponent implements OnInit {
   > = this.siteMembershipService.siteMembershipSubscriptions$;
 
   /** Mapped array of membership subscription GUIDs */
-  public membershipSubscriptionGuids$: Observable<string[]> = this
-    .siteMembershipService.siteMembershipSubscriptionGuids$;
+  public membershipSubscriptionGuids$: Observable<string[]> =
+    this.siteMembershipService.siteMembershipSubscriptionGuids$;
 
   /** Whether navigation and pre-cursor calls are in progress. */
-  public readonly navigationInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly navigationInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Whether component can be consider as initialized. */
-  public readonly initialized$: BehaviorSubject<boolean> = this
-    .siteMembershipService.initialized$;
+  public readonly initialized$: BehaviorSubject<boolean> =
+    this.siteMembershipService.initialized$;
 
   public isMember$: Observable<boolean>;
 
   /** Enum for use in template. */
-  public readonly SiteMembershipPricingModelEnum: typeof SiteMembershipPricingModelEnum = SiteMembershipPricingModelEnum;
+  public readonly SiteMembershipPricingModelEnum: typeof SiteMembershipPricingModelEnum =
+    SiteMembershipPricingModelEnum;
 
   constructor(
     private authModal: AuthModalService,
@@ -82,11 +82,11 @@ export class JoinManageSiteMembershipButtonComponent implements OnInit {
     this.fetchAllData();
     this.membership$ = this.siteMembershipService.siteMemberships$.pipe(
       map(
-        memberships =>
-          memberships.find(m => m.membershipGuid === this.membershipGuid) ||
+        (memberships) =>
+          memberships.find((m) => m.membershipGuid === this.membershipGuid) ||
           null
       ),
-      tap(membership => {
+      tap((membership) => {
         if (!membership) {
           // Membership guid isn't found in siteMemberships$
           this.toaster.error('Membership not found');
@@ -94,13 +94,14 @@ export class JoinManageSiteMembershipButtonComponent implements OnInit {
       })
     );
 
-    this.isMember$ = this.siteMembershipService.siteMembershipSubscriptionGuids$.pipe(
-      map(guids => guids.includes(this.membershipGuid))
-    );
+    this.isMember$ =
+      this.siteMembershipService.siteMembershipSubscriptionGuids$.pipe(
+        map((guids) => guids.includes(this.membershipGuid))
+      );
 
     this.subscriptions.push(
       this.membershipSubscriptions$.subscribe(
-        membershipSubscriptions =>
+        (membershipSubscriptions) =>
           (this.membershipSubscriptionsSnapshot = membershipSubscriptions)
       )
     );
@@ -229,8 +230,8 @@ export class JoinManageSiteMembershipButtonComponent implements OnInit {
    * @returns { number } The membership subscription ID.
    */
   public getMembershipSubscriptionId(): number {
-    const subscriptions: SiteMembershipSubscription[] = this
-      .membershipSubscriptionsSnapshot;
+    const subscriptions: SiteMembershipSubscription[] =
+      this.membershipSubscriptionsSnapshot;
     if (!subscriptions?.length) return null;
     return (
       subscriptions.find(

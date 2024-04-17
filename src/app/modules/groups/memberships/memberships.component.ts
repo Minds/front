@@ -36,7 +36,8 @@ export class GroupsMembershipsComponent {
   /**
    * Allows us to use enum in the template
    */
-  public groupMembershipLevel: typeof GroupMembershipLevel = GroupMembershipLevel;
+  public groupMembershipLevel: typeof GroupMembershipLevel =
+    GroupMembershipLevel;
 
   constructor(public session: Session) {}
 

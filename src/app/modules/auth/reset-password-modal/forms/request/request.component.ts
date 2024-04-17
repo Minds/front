@@ -24,7 +24,8 @@ import {
   styleUrls: ['../../reset-password-modal.component.ng.scss'],
 })
 export class ResetPasswordModalRequestFormComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   protected form: FormGroup;
 
   private subscriptions: Subscription[] = [];
@@ -45,13 +46,13 @@ export class ResetPasswordModalRequestFormComponent
     this.service.activePanel$.next('enterUsername');
 
     this.subscriptions.push(
-      this.service.activePanel$.subscribe(activePanel => {
+      this.service.activePanel$.subscribe((activePanel) => {
         this.activePanel = activePanel;
       }),
-      this.service.inProgress$.subscribe(inProgress => {
+      this.service.inProgress$.subscribe((inProgress) => {
         this.inProgress = inProgress;
       }),
-      this.service.canSendEmail$.subscribe(canSendEmail => {
+      this.service.canSendEmail$.subscribe((canSendEmail) => {
         this.canSendEmail = canSendEmail;
       })
     );

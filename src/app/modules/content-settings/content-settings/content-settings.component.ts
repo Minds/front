@@ -65,7 +65,7 @@ export class ContentSettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.activeTab$.subscribe(tab => {
+      this.service.activeTab$.subscribe((tab) => {
         this.activeTab = tab;
       })
     );

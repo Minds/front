@@ -5,7 +5,8 @@
   [ngClass]="{
     'm-networksCheckoutSummary__timePeriod--active':
       (selectedTimePeriod$ | async) === CheckoutTimePeriodEnum.Yearly,
-    'm-networksCheckoutSummary__timePeriod--disabled': onlyShowSelectedTimePeriod
+    'm-networksCheckoutSummary__timePeriod--disabled':
+      onlyShowSelectedTimePeriod
   }"
 >
   <span
@@ -17,7 +18,7 @@
     >Save
     {{
       (totalAnnualSavingsCents$ | async) / 100
-        | currency: 'USD':'symbol':'1.0-2'
+        | currency: 'USD' : 'symbol' : '1.0-2'
     }}</span
   >
 </div>
@@ -28,7 +29,8 @@
   [ngClass]="{
     'm-networksCheckoutSummary__timePeriod--active':
       (selectedTimePeriod$ | async) === CheckoutTimePeriodEnum.Monthly,
-    'm-networksCheckoutSummary__timePeriod--disabled': onlyShowSelectedTimePeriod
+    'm-networksCheckoutSummary__timePeriod--disabled':
+      onlyShowSelectedTimePeriod
   }"
 >
   <span

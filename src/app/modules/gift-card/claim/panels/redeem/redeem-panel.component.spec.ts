@@ -339,7 +339,9 @@ describe('GiftCardClaimRedeemPanelComponent', () => {
       const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Supermind;
       const amount: number = 10;
 
-      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+      (
+        comp as any
+      ).service.getLargestPurchasableUpgradeDuration.and.returnValue(
         largestPurchasableDuration
       );
 
@@ -360,7 +362,9 @@ describe('GiftCardClaimRedeemPanelComponent', () => {
       const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Boost;
       const amount: number = 10;
 
-      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+      (
+        comp as any
+      ).service.getLargestPurchasableUpgradeDuration.and.returnValue(
         largestPurchasableDuration
       );
 
@@ -381,7 +385,9 @@ describe('GiftCardClaimRedeemPanelComponent', () => {
       const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
       const amount: number = 10;
 
-      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+      (
+        comp as any
+      ).service.getLargestPurchasableUpgradeDuration.and.returnValue(
         largestPurchasableDuration
       );
 
@@ -402,7 +408,9 @@ describe('GiftCardClaimRedeemPanelComponent', () => {
       const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
       const amount: number = 10;
 
-      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+      (
+        comp as any
+      ).service.getLargestPurchasableUpgradeDuration.and.returnValue(
         largestPurchasableDuration
       );
 
@@ -423,7 +431,9 @@ describe('GiftCardClaimRedeemPanelComponent', () => {
       const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
       const amount: number = 10;
 
-      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+      (
+        comp as any
+      ).service.getLargestPurchasableUpgradeDuration.and.returnValue(
         largestPurchasableDuration
       );
 
@@ -444,7 +454,9 @@ describe('GiftCardClaimRedeemPanelComponent', () => {
       const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
       const amount: number = 10;
 
-      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+      (
+        comp as any
+      ).service.getLargestPurchasableUpgradeDuration.and.returnValue(
         largestPurchasableDuration
       );
 

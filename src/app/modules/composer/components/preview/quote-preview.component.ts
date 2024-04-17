@@ -44,13 +44,11 @@ export class QuotePreviewComponent {
   }
 
   loadActivityModule() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      ActivityComponent
-    );
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(ActivityComponent);
 
-    const activity = this.outletRef.viewContainerRef.createComponent(
-      componentFactory
-    );
+    const activity =
+      this.outletRef.viewContainerRef.createComponent(componentFactory);
 
     activity.instance.entity = this.service.remind$.getValue();
     activity.instance.displayOptions = {

@@ -49,13 +49,10 @@ export class DiscoveryTagWidgetComponent implements OnInit, OnDestroy {
       const matchArr = q.match(this.tagRegex);
 
       if (matchArr && matchArr.length === 1) {
-        this.tag = matchArr[0]
-          .trim()
-          .toLowerCase()
-          .substring(1);
+        this.tag = matchArr[0].trim().toLowerCase().substring(1);
 
         this.alreadySubscribed = this.service.tags$.value.some(
-          t => t.value === this.tag
+          (t) => t.value === this.tag
         );
 
         return;

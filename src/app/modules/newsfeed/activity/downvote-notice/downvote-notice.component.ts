@@ -21,7 +21,10 @@ import { Observable, Subscription, catchError, take, EMPTY } from 'rxjs';
   styleUrls: ['./downvote-notice.component.ng.scss'],
 })
 export class ActivityDownvoteNoticeComponent implements OnDestroy {
-  constructor(private toast: ToasterService, private api: ApiService) {}
+  constructor(
+    private toast: ToasterService,
+    private api: ApiService
+  ) {}
   @Input() entity: ActivityEntity;
 
   // Used to remove a downvoted item from the feed.
@@ -43,7 +46,7 @@ export class ActivityDownvoteNoticeComponent implements OnDestroy {
         .put('api/v1/thumbs/' + this.entity.guid + '/down', {})
         .pipe(
           take(1),
-          catchError(e => this.handleError(e))
+          catchError((e) => this.handleError(e))
         )
         .subscribe(() => {
           this.onUndo.emit($event);

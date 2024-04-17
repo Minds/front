@@ -16,9 +16,8 @@ export class ChannelEditService {
   /**
    * Channel subject, should be immutable; Used for display purposes
    */
-  readonly channel$: BehaviorSubject<MindsUser> = new BehaviorSubject<
-    MindsUser
-  >(null);
+  readonly channel$: BehaviorSubject<MindsUser> =
+    new BehaviorSubject<MindsUser>(null);
 
   /**
    * Local banner
@@ -91,7 +90,10 @@ export class ChannelEditService {
    * Constructor
    * @param api
    */
-  constructor(protected api: ApiService, private toast: ToasterService) {}
+  constructor(
+    protected api: ApiService,
+    private toast: ToasterService
+  ) {}
 
   /**
    * Sets the state based on a channel
@@ -127,7 +129,7 @@ export class ChannelEditService {
    */
   removeHashtag(hashtag: string): void {
     this.hashtags$.next(
-      this.hashtags$.getValue().filter(entry => entry !== hashtag)
+      this.hashtags$.getValue().filter((entry) => entry !== hashtag)
     );
   }
 

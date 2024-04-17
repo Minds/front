@@ -46,7 +46,8 @@ enum Views {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletSettingsTokensComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+  implements OnInit, OnDestroy, AfterViewInit
+{
   inProgress: boolean = false;
   wallet: Wallet;
   walletSubscription: Subscription;

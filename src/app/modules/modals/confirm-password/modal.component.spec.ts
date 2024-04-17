@@ -43,33 +43,31 @@ describe('ConfirmPasswordCreatorComponent', () => {
   let comp: ConfirmPasswordModalComponent;
   let fixture: ComponentFixture<ConfirmPasswordModalComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MaterialMock,
-          MaterialSwitchMock,
-          AbbrPipe,
-          TokenPipe,
-          ConfirmPasswordModalComponent,
-          ButtonComponent,
-        ], // declare the test component
-        imports: [FormsModule, RouterTestingModule, ReactiveFormsModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Client, useValue: clientMock },
-          { provide: ModalService, useValue: modalServiceMock },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MaterialMock,
+        MaterialSwitchMock,
+        AbbrPipe,
+        TokenPipe,
+        ConfirmPasswordModalComponent,
+        ButtonComponent,
+      ], // declare the test component
+      imports: [FormsModule, RouterTestingModule, ReactiveFormsModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: Client, useValue: clientMock },
+        { provide: ModalService, useValue: modalServiceMock },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

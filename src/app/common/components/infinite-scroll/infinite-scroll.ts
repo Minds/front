@@ -66,7 +66,8 @@ export class InfiniteScroll {
   // if provided, the component won't track the feed-end event
   @Input() ignoreEndTracking: boolean = false;
   @Input()
-  endText: string = $localize`:@@COMMON__INFINITE_SCROLL__NOTHING_MORE:Nothing more to load`;
+  endText: string =
+    $localize`:@@COMMON__INFINITE_SCROLL__NOTHING_MORE:Nothing more to load`;
   /**
    * will fire when the feed ends and there's nothing to load
    */

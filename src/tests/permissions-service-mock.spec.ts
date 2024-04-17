@@ -1,6 +1,6 @@
 import { PermissionsEnum } from '../graphql/generated.engine';
 
-export const permissionsServiceMock = new (function() {
+export const permissionsServiceMock = new (function () {
   this.whitelist = [];
 
   this.isActive = jasmine.createSpy('isActive').and.callFake(() => false);

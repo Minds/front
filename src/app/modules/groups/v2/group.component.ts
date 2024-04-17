@@ -55,7 +55,7 @@ export class GroupComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.subscriptions.push(
-      this.route.params.subscribe(params => {
+      this.route.params.subscribe((params) => {
         // Get group guid, view and filter from url
         if (params['guid'] && params['guid'] !== this.currentGroup?.guid) {
           this.service.load(params['guid']);
@@ -76,7 +76,7 @@ export class GroupComponent implements OnInit, OnDestroy {
         }
       }),
 
-      this.service.query$.subscribe(query => {
+      this.service.query$.subscribe((query) => {
         this.encodedQuery = query.length ? encodeURIComponent(query) : null;
 
         this.router.navigate([], {
@@ -87,7 +87,7 @@ export class GroupComponent implements OnInit, OnDestroy {
           queryParamsHandling: 'merge',
         });
       }),
-      this.service.group$.subscribe(group => {
+      this.service.group$.subscribe((group) => {
         if (group) {
           this.currentGroup = group;
           this.seo.set(group);

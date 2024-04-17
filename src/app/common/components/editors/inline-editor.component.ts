@@ -33,16 +33,15 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
 @Component({
   moduleId: module.id,
   selector: 'm-inlineEditor',
-  template: `
-    <div #host></div>
-  `,
+  template: ` <div #host></div> `,
   host: {
     change: 'propagateChange($event.target.value)',
   },
   providers: [MEDIUM_EDITOR_VALUE_ACCESSOR],
 })
 export class InlineEditorComponent
-  implements ControlValueAccessor, OnInit, OnDestroy, OnChanges {
+  implements ControlValueAccessor, OnInit, OnDestroy, OnChanges
+{
   @Input() placeholder: string;
   el: ElementRef;
   editor: MediumEditor;

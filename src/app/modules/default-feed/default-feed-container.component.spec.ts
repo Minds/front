@@ -11,40 +11,38 @@ describe('DefaultFeedContainerComponent', () => {
   let comp: DefaultFeedContainerComponent;
   let fixture: ComponentFixture<DefaultFeedContainerComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          DefaultFeedContainerComponent,
-          MockComponent({
-            selector: 'm-defaultFeed',
-          }),
-          MockComponent({
-            selector: 'm-discovery__disclaimer',
-          }),
-          MockComponent({
-            selector: 'm-suggestions__sidebar',
-          }),
-          MockDirective({
-            selector: 'm-pageLayout__container',
-          }),
-          MockDirective({
-            selector: 'm-pageLayout__pane',
-          }),
-          MockDirective({
-            selector: 'm-stickySidebar',
-          }),
-        ],
-        imports: [RouterTestingModule, ReactiveFormsModule],
-        providers: [
-          { provide: Router, useValue: MockService(Router) },
-          { provide: Session, useValue: MockService(Session) },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        DefaultFeedContainerComponent,
+        MockComponent({
+          selector: 'm-defaultFeed',
+        }),
+        MockComponent({
+          selector: 'm-discovery__disclaimer',
+        }),
+        MockComponent({
+          selector: 'm-suggestions__sidebar',
+        }),
+        MockDirective({
+          selector: 'm-pageLayout__container',
+        }),
+        MockDirective({
+          selector: 'm-pageLayout__pane',
+        }),
+        MockDirective({
+          selector: 'm-stickySidebar',
+        }),
+      ],
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      providers: [
+        { provide: Router, useValue: MockService(Router) },
+        { provide: Session, useValue: MockService(Session) },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(DefaultFeedContainerComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

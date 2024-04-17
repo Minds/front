@@ -82,6 +82,7 @@ import { SettingsV2PlusCancelComponent } from './plus/cancel/cancel.component';
 import { SettingsV2PlusVerifyComponent } from './plus/verify/verify.component';
 import { permissionGuard } from '../../common/guards/permission.guard';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
+import { SettingsV2UserDataComponent } from './account/user-data/user-data.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -222,6 +223,14 @@ const SETTINGS_V2_ROUTES: Routes = [
               description:
                 'Configure your channel to interface outside of the Minds network.',
               id: 'nostr',
+            },
+          },
+          {
+            path: 'user-data',
+            component: SettingsV2UserDataComponent,
+            data: {
+              title: 'User data & analytics',
+              id: 'user-data',
             },
           },
 
@@ -554,13 +563,10 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
           {
             path: 'twitter-sync',
-            canActivate: [
-              MindsOnlyRedirectGuard,
-              experimentVariationGuard('front-6032-twitter-sync-settings'),
-            ],
+            canActivate: [MindsOnlyRedirectGuard],
             loadChildren: () =>
               import('../newsfeed/twitter-sync/twitter-sync.module').then(
-                m => m.TwitterSyncModule
+                (m) => m.TwitterSyncModule
               ),
             data: {
               title: 'Twitter Sync',
@@ -653,6 +659,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2ProPayoutsComponent,
     SettingsV2ProCancelComponent,
     SettingsV2AutoplayVideosComponent,
+    SettingsV2UserDataComponent,
     SettingsV2I18nHack,
     SettingsV2HeaderComponent,
     SettingsV2BoostedContentComponent,

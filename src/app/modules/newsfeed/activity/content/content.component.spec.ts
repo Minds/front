@@ -45,128 +45,126 @@ describe('ActivityContentComponent', () => {
     goal_button_url: null,
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ActivityContentComponent,
-          MockComponent({
-            selector: 'm-richEmbed',
-            inputs: ['src', 'maxheight', 'isModal', 'displayAsColumn'],
-            outputs: ['mediaModalRequested'],
-          }),
-          MockComponent({
-            selector: 'm-videoPlayer--scrollaware',
-            inputs: ['guid', 'shouldPlayInModal', 'isModal', 'isLivestream'],
-            outputs: ['mediaModalRequested'],
-          }),
-          MockComponent({
-            selector: 'm-activityContent__multiImage',
-            outputs: ['onClick'],
-          }),
-          MockComponent({
-            selector: 'm-activity__quote',
-            inputs: ['parentService', 'entity'],
-          }),
-          MockComponent({
-            selector: 'm-activity__permalink',
-          }),
-          MockComponent({
-            selector: 'm-readMore',
-            inputs: ['text', 'targetLength', 'disabled', 'paywallContext'],
-            outputs: ['onToggle'],
-          }),
-          MockComponent({
-            selector: 'm-translate',
-            inputs: ['open', 'entity', 'translateEvent'],
-            outputs: ['onTranslate', 'onTranslateError'],
-          }),
-          MockComponent({
-            selector: 'm-activity__paywall',
-            inputs: ['hideText'],
-          }),
-          TagsPipeMock,
-        ],
-        providers: [
-          {
-            provide: ActivityService,
-            useValue: MockService(ActivityService, {
-              has: [
-                'entity$',
-                'height$',
-                'paywallUnlockedEmitter',
-                'canonicalUrl$',
-                'isRemind$',
-                'isQuote$',
-                'isSupermindReply$',
-                'isMultiImage$',
-                'activeMultiImageIndex$',
-                'shouldShowPaywallBadge$',
-                'displayOptions',
-              ],
-              props: {
-                entity$: { get: () => new BehaviorSubject<any>(mockEntity) },
-                height$: { get: () => new BehaviorSubject<number>(1) },
-                paywallUnlockedEmitter: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
-                canonicalUrl$: { get: () => new BehaviorSubject<string>('') },
-                isRemind$: { get: () => new BehaviorSubject<boolean>(false) },
-                isQuote$: { get: () => new BehaviorSubject<boolean>(false) },
-                isSupermindReply$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
-                isMultiImage$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
-                activeMultiImageIndex$: {
-                  get: () => new BehaviorSubject<number>(null),
-                },
-                shouldShowPaywallBadge$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
-                displayOptions: {
-                  get: () => {
-                    return {
-                      fixedHeight: false,
-                      minimalMode: false,
-                      sidbarMode: false,
-                    };
-                  },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ActivityContentComponent,
+        MockComponent({
+          selector: 'm-richEmbed',
+          inputs: ['src', 'maxheight', 'isModal', 'displayAsColumn'],
+          outputs: ['mediaModalRequested'],
+        }),
+        MockComponent({
+          selector: 'm-videoPlayer--scrollaware',
+          inputs: ['guid', 'shouldPlayInModal', 'isModal', 'isLivestream'],
+          outputs: ['mediaModalRequested'],
+        }),
+        MockComponent({
+          selector: 'm-activityContent__multiImage',
+          outputs: ['onClick'],
+        }),
+        MockComponent({
+          selector: 'm-activity__quote',
+          inputs: ['parentService', 'entity'],
+        }),
+        MockComponent({
+          selector: 'm-activity__permalink',
+        }),
+        MockComponent({
+          selector: 'm-readMore',
+          inputs: ['text', 'targetLength', 'disabled', 'paywallContext'],
+          outputs: ['onToggle'],
+        }),
+        MockComponent({
+          selector: 'm-translate',
+          inputs: ['open', 'entity', 'translateEvent'],
+          outputs: ['onTranslate', 'onTranslateError'],
+        }),
+        MockComponent({
+          selector: 'm-activity__paywall',
+          inputs: ['hideText'],
+        }),
+        TagsPipeMock,
+      ],
+      providers: [
+        {
+          provide: ActivityService,
+          useValue: MockService(ActivityService, {
+            has: [
+              'entity$',
+              'height$',
+              'paywallUnlockedEmitter',
+              'canonicalUrl$',
+              'isRemind$',
+              'isQuote$',
+              'isSupermindReply$',
+              'isMultiImage$',
+              'activeMultiImageIndex$',
+              'shouldShowPaywallBadge$',
+              'displayOptions',
+            ],
+            props: {
+              entity$: { get: () => new BehaviorSubject<any>(mockEntity) },
+              height$: { get: () => new BehaviorSubject<number>(1) },
+              paywallUnlockedEmitter: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              canonicalUrl$: { get: () => new BehaviorSubject<string>('') },
+              isRemind$: { get: () => new BehaviorSubject<boolean>(false) },
+              isQuote$: { get: () => new BehaviorSubject<boolean>(false) },
+              isSupermindReply$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              isMultiImage$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              activeMultiImageIndex$: {
+                get: () => new BehaviorSubject<number>(null),
+              },
+              shouldShowPaywallBadge$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              displayOptions: {
+                get: () => {
+                  return {
+                    fixedHeight: false,
+                    minimalMode: false,
+                    sidbarMode: false,
+                  };
                 },
               },
-            }),
-          },
-          { provide: ModalService, useValue: MockService(ModalService) },
-          { provide: Router, useValue: MockService(Router) },
-          { provide: RedirectService, useValue: MockService(RedirectService) },
-          { provide: Session, useValue: MockService(Session) },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: Injector, useValue: MockService(Injector) },
-          {
-            provide: ActivityModalCreatorService,
-            useValue: MockService(ActivityModalCreatorService),
-          },
-          {
-            provide: PersistentFeedExperimentService,
-            useValue: MockService(PersistentFeedExperimentService),
-          },
-          {
-            provide: PaywallContextExperimentService,
-            useValue: MockService(PaywallContextExperimentService),
-          },
-          { provide: ElementRef, useValue: MockService(ElementRef) },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          { provide: IS_TENANT_NETWORK, useValue: false },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        { provide: ModalService, useValue: MockService(ModalService) },
+        { provide: Router, useValue: MockService(Router) },
+        { provide: RedirectService, useValue: MockService(RedirectService) },
+        { provide: Session, useValue: MockService(Session) },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: Injector, useValue: MockService(Injector) },
+        {
+          provide: ActivityModalCreatorService,
+          useValue: MockService(ActivityModalCreatorService),
+        },
+        {
+          provide: PersistentFeedExperimentService,
+          useValue: MockService(PersistentFeedExperimentService),
+        },
+        {
+          provide: PaywallContextExperimentService,
+          useValue: MockService(PaywallContextExperimentService),
+        },
+        { provide: ElementRef, useValue: MockService(ElementRef) },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        { provide: IS_TENANT_NETWORK, useValue: false },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ActivityContentComponent);
     comp = fixture.componentInstance;
 

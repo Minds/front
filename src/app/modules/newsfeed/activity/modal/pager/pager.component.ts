@@ -36,7 +36,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions = [
-      this.activityService.entity$.subscribe(entity => {
+      this.activityService.entity$.subscribe((entity) => {
         this.entity = entity;
 
         this.multiImageCount = this.entity.custom_data.length;
@@ -44,7 +44,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
     ];
 
     this.subscriptions.push(
-      this.activityService.activeMultiImageIndex$.subscribe(i => {
+      this.activityService.activeMultiImageIndex$.subscribe((i) => {
         this.currentIndex = i;
 
         /**

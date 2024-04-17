@@ -33,20 +33,21 @@ export class HovercardComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.offset.length === 2) {
-      this.popperModifiers.find(
-        x => x.name === 'offset'
-      ).options.offset = this.offset;
+      this.popperModifiers.find((x) => x.name === 'offset').options.offset =
+        this.offset;
     }
   }
 
   // Only calculate popper positioning changes when popper is visible
   popperOnShown() {
-    this.popperModifiers.find(x => x.name === 'eventListeners').enabled = true;
+    this.popperModifiers.find((x) => x.name === 'eventListeners').enabled =
+      true;
     this.shown = true;
   }
 
   popperOnHidden() {
-    this.popperModifiers.find(x => x.name === 'eventListeners').enabled = false;
+    this.popperModifiers.find((x) => x.name === 'eventListeners').enabled =
+      false;
     this.shown = false;
   }
 }

@@ -14,6 +14,7 @@ export class ChatwootExperimentService {
    * @returns { boolean } whether Chatwoot experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('minds-3897-chatwoot', true);
+    // return this.experiments.hasVariation('minds-3897-chatwoot', true);
+    return true;
   }
 }

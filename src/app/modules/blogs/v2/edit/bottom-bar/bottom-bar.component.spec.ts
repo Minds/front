@@ -37,24 +37,22 @@ describe('BlogEditorBottomBarComponent', () => {
   let comp: BlogEditorBottomBarComponent;
   let fixture: ComponentFixture<BlogEditorBottomBarComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [BlogEditorBottomBarComponent, ButtonComponent],
-        imports: [RouterTestingModule, NgCommonModule, FormsModule],
-        providers: [
-          { provide: BlogsEditService, useValue: blogsEditServiceMock },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          { provide: ModalService, useValue: modalServiceMock },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [BlogEditorBottomBarComponent, ButtonComponent],
+      imports: [RouterTestingModule, NgCommonModule, FormsModule],
+      providers: [
+        { provide: BlogsEditService, useValue: blogsEditServiceMock },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        { provide: ModalService, useValue: modalServiceMock },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

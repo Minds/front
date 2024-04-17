@@ -9,7 +9,10 @@ const RELEASES_JSON_URL =
 export class MobileService {
   releases: any[] = [];
 
-  constructor(protected client: HttpClient, protected session: Session) {}
+  constructor(
+    protected client: HttpClient,
+    protected session: Session
+  ) {}
 
   async getReleases() {
     const user = this.session.getLoggedInUser();
@@ -19,13 +22,13 @@ export class MobileService {
       await this.client.get(`${RELEASES_JSON_URL}?t=${timestamp}`).toPromise()
     )).versions;
 
-    const latest = this.releases.findIndex(release => !release.unstable);
+    const latest = this.releases.findIndex((release) => !release.unstable);
     if (latest > -1) {
       this.releases[latest].latest = true;
     }
 
     const releases = this.releases.filter(
-      release => !this.shouldBeStable() || !release.unstable
+      (release) => !this.shouldBeStable() || !release.unstable
     );
 
     if (user.canary) {

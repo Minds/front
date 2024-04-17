@@ -26,62 +26,55 @@ export class ValuePropService {
   /**
    * Get raw value prop cards from server.
    */
-  private getRawValuePropCards$: Observable<
-    ValuePropCard[]
-  > = this.getValuePropCardsGQL.fetch().pipe(
-    map(
-      (result: ApolloQueryResult<GetValuePropCardsQuery>): ValuePropCard[] => {
-        return result.data.valuePropCards.data.map(
-          rawCard => rawCard.attributes
-        ) as ValuePropCard[];
-      }
-    ),
-    shareReplay(),
-    catchError(
-      (e: unknown): Observable<ValuePropCard[]> => {
+  private getRawValuePropCards$: Observable<ValuePropCard[]> =
+    this.getValuePropCardsGQL.fetch().pipe(
+      map(
+        (
+          result: ApolloQueryResult<GetValuePropCardsQuery>
+        ): ValuePropCard[] => {
+          return result.data.valuePropCards.data.map(
+            (rawCard) => rawCard.attributes
+          ) as ValuePropCard[];
+        }
+      ),
+      shareReplay(),
+      catchError((e: unknown): Observable<ValuePropCard[]> => {
         console.error(e);
         return of([]);
-      }
-    )
-  );
+      })
+    );
 
   /**
    * Value prop cards cast into an easier to digest format.
    */
-  private valuePropCards$: Observable<
-    PresentableValuePropCard[]
-  > = this.getRawValuePropCards$.pipe(
-    map((rawCards: ValuePropCard[]): PresentableValuePropCard[] => {
-      return rawCards.map(rawCard =>
-        this.getPresentableCard(rawCard)
-      ) as PresentableValuePropCard[];
-    }),
-    shareReplay(),
-    catchError(
-      (e: unknown): Observable<PresentableValuePropCard[]> => {
+  private valuePropCards$: Observable<PresentableValuePropCard[]> =
+    this.getRawValuePropCards$.pipe(
+      map((rawCards: ValuePropCard[]): PresentableValuePropCard[] => {
+        return rawCards.map((rawCard) =>
+          this.getPresentableCard(rawCard)
+        ) as PresentableValuePropCard[];
+      }),
+      shareReplay(),
+      catchError((e: unknown): Observable<PresentableValuePropCard[]> => {
         console.error(e);
         return of([]);
-      }
-    )
-  );
+      })
+    );
 
   /**
    * Gets the next card that has not been shown. Will be null if there are no cards left to show.
    */
-  public readonly nextUnshownCard$: Observable<
-    PresentableValuePropCard
-  > = this.valuePropCards$.pipe(
-    take(1),
-    map(
-      (cards: PresentableValuePropCard[]): PresentableValuePropCard => {
+  public readonly nextUnshownCard$: Observable<PresentableValuePropCard> =
+    this.valuePropCards$.pipe(
+      take(1),
+      map((cards: PresentableValuePropCard[]): PresentableValuePropCard => {
         return (
           cards.filter((card: PresentableValuePropCard) => {
             return !this.hasCardBeenShown(card);
           })?.[0] ?? null
         );
-      }
-    )
-  );
+      })
+    );
 
   /**
    * Sets a card as shown in local state.

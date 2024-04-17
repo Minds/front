@@ -15,29 +15,27 @@ describe('EnvironmentSelectorComponent', () => {
   let comp: EnvironmentSelectorComponent;
   let fixture: ComponentFixture<EnvironmentSelectorComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['size', 'color', 'saving', 'disabled'],
-            outputs: ['onAction'],
-          }),
-          EnvironmentSelectorComponent,
-        ],
-        imports: [RouterTestingModule, ReactiveFormsModule],
-        providers: [
-          {
-            provide: EnvironmentSelectorService,
-            useValue: MockService(EnvironmentSelectorService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['size', 'color', 'saving', 'disabled'],
+          outputs: ['onAction'],
+        }),
+        EnvironmentSelectorComponent,
+      ],
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      providers: [
+        {
+          provide: EnvironmentSelectorService,
+          useValue: MockService(EnvironmentSelectorService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(EnvironmentSelectorComponent);
 
     comp = fixture.componentInstance;

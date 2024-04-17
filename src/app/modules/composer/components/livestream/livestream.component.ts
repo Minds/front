@@ -32,7 +32,7 @@ export class LiveStreamComponent implements OnDestroy {
   ngOnInit(): void {
     this.livestreamSubscription = this.livestreamService
       .getCreatedStream()
-      .subscribe(stream => {
+      .subscribe((stream) => {
         this.stream = stream;
         this.streamCreated = this.stream !== null;
         if (this.streamCreated) {
@@ -52,7 +52,7 @@ export class LiveStreamComponent implements OnDestroy {
     this.unsubscribeStreamCheck();
     this.streamCheckSubscription = interval(3000)
       .pipe(switchMap(() => this.livestreamService.getStream(this.stream.id)))
-      .subscribe(stream => {
+      .subscribe((stream) => {
         this.stream = stream;
         if (this.stream && this.stream.isActive) {
           this.streamUrl = `https://minds-player.vercel.app?v=${stream.playbackId}`;

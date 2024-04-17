@@ -26,7 +26,8 @@ import { AwaitablePanelComponent } from '../../modal/onboarding-modal.component'
   providers: [ChannelEditService],
 })
 export class OnboardingV3ChannelComponent
-  implements OnInit, OnDestroy, AwaitablePanelComponent {
+  implements OnInit, OnDestroy, AwaitablePanelComponent
+{
   private subscriptions: Subscription[] = [];
 
   /**
@@ -93,7 +94,7 @@ export class OnboardingV3ChannelComponent
     // setup subscriptions
     this.subscriptions.push(
       // set new avatar src on change
-      this.channelEditService.avatar$.subscribe(avatar => {
+      this.channelEditService.avatar$.subscribe((avatar) => {
         const channel = this.channelEditService.channel$.getValue();
         let src: string = '';
 

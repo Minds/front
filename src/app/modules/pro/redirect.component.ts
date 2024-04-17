@@ -12,9 +12,7 @@ import { RedirectService } from '../../common/services/redirect.service';
  */
 @Component({
   selector: 'm-pro__redirect',
-  template: `
-    Please wait...
-  `,
+  template: ` Please wait... `,
 })
 export class ProRedirectComponent {
   readonly siteUrl: string;

@@ -11,7 +11,10 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './settings-header.component.html',
 })
 export class SettingsV2HeaderComponent {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   @Output('backPress') backPress = new EventEmitter<boolean>();
 

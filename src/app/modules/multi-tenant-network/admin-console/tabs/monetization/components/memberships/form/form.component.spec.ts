@@ -361,7 +361,7 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
         membershipPricingModel: pricingModel,
         membershipPriceInCents: 1999,
         membershipBillingPeriod: billingPeriod,
-        groups: groups.map(group => group.guid),
+        groups: groups.map((group) => group.guid),
         roles: [2, 3],
       });
       expect(comp.formGroup.pristine).toBeTrue();
@@ -415,7 +415,7 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
         membershipPricingModel: pricingModel,
         membershipPriceInCents: 1999,
         membershipBillingPeriod: billingPeriod,
-        groups: groups.map(group => group.guid),
+        groups: groups.map((group) => group.guid),
         roles: [2, 3],
       });
 
@@ -465,7 +465,7 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
         membershipPricingModel: pricingModel,
         membershipPriceInCents: 1999,
         membershipBillingPeriod: billingPeriod,
-        groups: groups.map(group => group.guid),
+        groups: groups.map((group) => group.guid),
         roles: [2, 3],
       });
 
@@ -509,7 +509,7 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
           membershipGuid: siteMembershipMock.membershipGuid,
           membershipName: name,
           membershipDescription: description,
-          groups: groups.map(group => group.guid),
+          groups: groups.map((group) => group.guid),
           roles: [2, 3],
         }
       );
@@ -553,7 +553,7 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
           membershipGuid: siteMembershipMock.membershipGuid,
           membershipName: name,
           membershipDescription: description,
-          groups: groups.map(group => group.guid),
+          groups: groups.map((group) => group.guid),
           roles: [2, 3],
         }
       );
@@ -599,7 +599,7 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
           membershipGuid: siteMembershipMock.membershipGuid,
           membershipName: name,
           membershipDescription: description,
-          groups: groups.map(group => group.guid),
+          groups: groups.map((group) => group.guid),
           roles: [2, 3],
         }
       );

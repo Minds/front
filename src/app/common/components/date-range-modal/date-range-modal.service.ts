@@ -18,7 +18,7 @@ export class DateRangeModalService {
   pick(injector: Injector): Promise<FeedFilterDateRange> {
     const modal = this.modalService.present(DateRangeModalComponent, {
       data: {
-        onApply: dateRange => {
+        onApply: (dateRange) => {
           modal.close(dateRange);
         },
       },

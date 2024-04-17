@@ -3,7 +3,7 @@
  */
 import { EventEmitter } from '@angular/core';
 
-export let sessionMock = new (function() {
+export let sessionMock = new (function () {
   this.user = {
     guid: '1000',
     type: 'user',
@@ -25,7 +25,7 @@ export let sessionMock = new (function() {
 
   this.userEmitter = new EventEmitter<any>();
 
-  this.loggedInEmitter = new EventEmitter<any>();
+  this.loggedinEmitter = new EventEmitter<any>();
 
   this.getLoggedInUser = () => {
     return this.user;

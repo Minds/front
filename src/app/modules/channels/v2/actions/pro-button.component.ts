@@ -29,7 +29,10 @@ export class ChannelActionsProButtonComponent {
    * @param Router router
    * @param ChannelsV2Service service
    */
-  constructor(public router: Router, public service: ChannelsV2Service) {}
+  constructor(
+    public router: Router,
+    public service: ChannelsV2Service
+  ) {}
 
   /**
    * Navigates to the users pro channel.

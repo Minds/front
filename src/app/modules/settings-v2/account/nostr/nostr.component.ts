@@ -76,7 +76,7 @@ export class SettingsV2NostrComponent implements OnInit, OnDestroy {
     this.nostrService.user$$.next(this.session.getLoggedInUser());
 
     this.subscriptions = [
-      this.formGroup.valueChanges.subscribe(values => {
+      this.formGroup.valueChanges.subscribe((values) => {
         this.nostrService.nip26PublicKey$$.next(values.publicKey);
         this.nostrService.nip26DelegationTokenSig$$.next(
           values.signedDelegationToken
@@ -84,7 +84,7 @@ export class SettingsV2NostrComponent implements OnInit, OnDestroy {
         this.formGroup.markAsDirty();
       }),
       this.formGroup.controls.privateKey.valueChanges.subscribe(
-        async privateKey => {
+        async (privateKey) => {
           /**
            * Generate the signature for the NIP-26 delegation token
            */
@@ -99,11 +99,11 @@ export class SettingsV2NostrComponent implements OnInit, OnDestroy {
         }
       ),
       this.nostrService.nip26DelegationTokenSha256Hash$.subscribe(
-        nip26DelegationTokenSha256Hash =>
+        (nip26DelegationTokenSha256Hash) =>
           (this.nip26DelegationTokenSha256Hash = nip26DelegationTokenSha256Hash)
       ),
       this.nostrService.nip26DelegationTag$.subscribe(
-        nip26DelegationTag =>
+        (nip26DelegationTag) =>
           (this.nip26DelegationTag = JSON.stringify(
             nip26DelegationTag,
             null,

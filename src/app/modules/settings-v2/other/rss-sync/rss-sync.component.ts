@@ -91,7 +91,7 @@ export class SettingsV2RssSyncComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription?.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription?.unsubscribe());
   }
 
   /**

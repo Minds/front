@@ -37,7 +37,7 @@ export class SettingsV2SupermindService {
       // if there is no change, do nothing.
       distinctUntilChanged(),
       // on error.
-      catchError(e => this.handleError$(e)),
+      catchError((e) => this.handleError$(e)),
       // share amongst subscribers.
       share()
     );
@@ -59,7 +59,7 @@ export class SettingsV2SupermindService {
         // if there is no change, do nothing.
         distinctUntilChanged(),
         // on error
-        catchError(e => this.handleError$(e))
+        catchError((e) => this.handleError$(e))
       );
   }
 

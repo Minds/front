@@ -17,12 +17,11 @@ export class SettingsV2PaymentHistoryComponent {
   // whether there is more data to be requested.
   public readonly hasMore$: BehaviorSubject<boolean> = this.service.hasMore$;
   // whether request is in progress.
-  public readonly inProgress$: BehaviorSubject<boolean> = this.service
-    .inProgress$;
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    this.service.inProgress$;
   // Observable of list with replay shared amongst subscribers.
-  public readonly list$: Observable<Payment[]> = this.service.rawList$.pipe(
-    shareReplay()
-  );
+  public readonly list$: Observable<Payment[]> =
+    this.service.rawList$.pipe(shareReplay());
 
   constructor(private service: SettingsV2PaymentHistoryService) {}
 

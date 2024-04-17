@@ -6,10 +6,10 @@
       modalType === 'tags'
         ? 'discover-by-tags-settings-button'
         : modalType === 'feed'
-        ? 'discovery-feeds-settings-button'
-        : modalType === 'content-settings'
-        ? 'content-settings-button'
-        : null
+          ? 'discovery-feeds-settings-button'
+          : modalType === 'content-settings'
+            ? 'content-settings-button'
+            : null
     "
     (click)="openSettingsModal($event)"
   >

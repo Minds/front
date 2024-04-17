@@ -40,9 +40,8 @@ export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
   /**
    * On Post event emitter
    */
-  @Output('onPost') onPostEmitter: EventEmitter<MouseEvent> = new EventEmitter<
-    MouseEvent
-  >();
+  @Output('onPost') onPostEmitter: EventEmitter<MouseEvent> =
+    new EventEmitter<MouseEvent>();
 
   postPreviewForm: FormGroup;
 
@@ -62,7 +61,7 @@ export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
    */
   get isCompactMode$(): Observable<boolean> {
     return this.service.size$.pipe(
-      map(size => size === 'compact' && !this.isModal)
+      map((size) => size === 'compact' && !this.isModal)
     );
   }
 
@@ -81,10 +80,10 @@ export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.title$.subscribe(title => {
+      this.service.title$.subscribe((title) => {
         this.initializeTitle(title);
       }),
-      this.service.richEmbedTitle$.subscribe(richEmbedTitle => {
+      this.service.richEmbedTitle$.subscribe((richEmbedTitle) => {
         this.initializeTitle(richEmbedTitle);
       })
     );
@@ -150,7 +149,7 @@ export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
       const fileBase64: string = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result as string);
-        reader.onerror = error => reject(error);
+        reader.onerror = (error) => reject(error);
         reader.readAsDataURL(file);
       });
 

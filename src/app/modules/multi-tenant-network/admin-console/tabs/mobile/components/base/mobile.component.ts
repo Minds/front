@@ -13,8 +13,8 @@ import { Observable } from 'rxjs';
 })
 export class NetworkAdminConsoleMobileComponent implements OnInit {
   /** Whether init is in progress. */
-  public readonly initInProgress$: Observable<boolean> = this
-    .MobileAppPreviewService.initInProgress$;
+  public readonly initInProgress$: Observable<boolean> =
+    this.MobileAppPreviewService.initInProgress$;
 
   constructor(private MobileAppPreviewService: MobileAppPreviewService) {}
 

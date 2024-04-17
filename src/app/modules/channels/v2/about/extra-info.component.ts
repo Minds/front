@@ -20,7 +20,10 @@ export class ChannelAboutExtraInfoComponent {
    * @param service
    * @param session
    */
-  constructor(public service: ChannelsV2Service, public session: Session) {}
+  constructor(
+    public service: ChannelsV2Service,
+    public session: Session
+  ) {}
 
   /**
    * Builds a payment methods list string
@@ -56,7 +59,7 @@ export class ChannelAboutExtraInfoComponent {
    * @param dateStr
    */
   dobToDate(dateStr: string): Date {
-    const parts = `${dateStr}`.split('-').map(part => parseInt(part));
+    const parts = `${dateStr}`.split('-').map((part) => parseInt(part));
 
     if (parts.length !== 3) {
       return null;

@@ -26,20 +26,23 @@ export class BoostLatestPostNoticeService {
    * Latest post made by logged in user, if any
    */
   latestPost$: Observable<any> = this.loggedInUserGuid$.pipe(
-    switchMap(guid => {
+    switchMap((guid) => {
       return this.api.get(`api/v2/feeds/container/${guid}/activities`, {
         sync: 1,
         limit: 1,
       });
     }),
-    catchError(e => this.handleApiError(e)),
+    catchError((e) => this.handleApiError(e)),
     map((apiResponse: ChannelFeedResponse) => {
       return apiResponse.entities[0] || false;
     }),
     shareReplay()
   );
 
-  constructor(private api: ApiService, private session: Session) {}
+  constructor(
+    private api: ApiService,
+    private session: Session
+  ) {}
 
   /**
    * Handle errors from API.

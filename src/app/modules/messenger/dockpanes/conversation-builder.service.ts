@@ -9,9 +9,11 @@ import { Injectable } from '@angular/core';
 export class MessengerConversationBuilderService {
   constructor(public session: Session) {}
 
-  public buildConversation(
-    user: MindsUser
-  ): { guid: string; participants: MindsUser[]; open: boolean } {
+  public buildConversation(user: MindsUser): {
+    guid: string;
+    participants: MindsUser[];
+    open: boolean;
+  } {
     return {
       guid: this.permutate(user),
       participants: [user],

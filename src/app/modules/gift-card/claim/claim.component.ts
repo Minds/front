@@ -16,11 +16,12 @@ import { Session } from '../../../services/session';
 })
 export class GiftCardClaimComponent implements OnInit {
   /** Enum as class variable for use in template. */
-  public readonly GiftCardClaimPanelEnum: typeof GiftCardClaimPanelEnum = GiftCardClaimPanelEnum;
+  public readonly GiftCardClaimPanelEnum: typeof GiftCardClaimPanelEnum =
+    GiftCardClaimPanelEnum;
 
   /** Currently active panel. */
-  public readonly activePanel$: BehaviorSubject<GiftCardClaimPanelEnum> = this
-    .panelService.activePanel$;
+  public readonly activePanel$: BehaviorSubject<GiftCardClaimPanelEnum> =
+    this.panelService.activePanel$;
 
   constructor(
     private panelService: GiftCardClaimPanelService,

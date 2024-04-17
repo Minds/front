@@ -38,7 +38,7 @@ export class ThemeService {
     private configs: ConfigsService
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
-    this.isDarkSubscription = this.isDark$.subscribe(isDark => {
+    this.isDarkSubscription = this.isDark$.subscribe((isDark) => {
       this.renderTheme();
     });
     this.sessionSubscription = this.session.loggedinEmitter.subscribe(
@@ -78,9 +78,8 @@ export class ThemeService {
    * Emits an events that others can listen to
    */
   emitThemePreference(): void {
-    const themeConfig: ThemeConfig = this.configs.get<ThemeConfig>(
-      'theme_override'
-    );
+    const themeConfig: ThemeConfig =
+      this.configs.get<ThemeConfig>('theme_override');
 
     let shouldBeDark: boolean = false;
     if (themeConfig && this.isTenantNetwork) {

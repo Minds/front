@@ -32,6 +32,9 @@ import { Session } from '../../../../../services/session';
 /** How far away from the top of the scroll area loading of new elements should start. */
 const LOADING_BUFFER_TOP_PX: number = 300;
 
+/** How far away from the bottom of the scroll area loading of new elements should start. */
+const LOADING_BUFFER_BOTTOM_PX: number = 300;
+
 /**
  * Component holding messages for the chat room.
  */
@@ -43,21 +46,28 @@ const LOADING_BUFFER_TOP_PX: number = 300;
   imports: [NgCommonModule, CommonModule, ChatRoomMessageComponent],
   standalone: true,
 })
-export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
-  implements OnInit, OnDestroy {
+export class ChatRoomMessagesComponent
+  extends AbstractSubscriberComponent
+  implements OnInit, OnDestroy
+{
   /** Array of messages to be displayed. */
   @Input() protected messages: ChatMessageEdge[];
 
   /** Whether chat message loading is in progress. */
-  protected readonly inProgress$: Observable<boolean> = this.chatMessagesService
-    .inProgress$;
+  protected readonly inProgress$: Observable<boolean> =
+    this.chatMessagesService.inProgress$;
 
   /** Whether chat messages have a previous page. */
-  protected readonly hasPreviousPage$: Observable<
-    boolean
-  > = this.chatMessagesService.pageInfo$.pipe(
-    map((pageInfo: PageInfo) => pageInfo?.hasPreviousPage)
-  );
+  protected readonly hasPreviousPage$: Observable<boolean> =
+    this.chatMessagesService.pageInfo$.pipe(
+      map((pageInfo: PageInfo) => pageInfo?.hasPreviousPage)
+    );
+
+  /** Whether chat messages have a next page (new messages). */
+  protected readonly hasNextPage$: Observable<boolean> =
+    this.chatMessagesService.pageInfo$.pipe(
+      map((pageInfo: PageInfo) => pageInfo?.hasNextPage)
+    );
 
   /** ID of the currently logged in user. */
   protected loggedInUserGuid: string = '';
@@ -79,18 +89,29 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
     this.cd.detach();
 
     this.subscriptions.push(
-      this.chatMessagesService.chatMessageAppended$
+      // manual requests to scroll to bottom through service.
+      this.chatMessagesService.scrollToBottom$
         .pipe(filter(Boolean))
-        .subscribe(message => {
+        .subscribe((message) => {
           this.scrollToBottom();
         }),
+      // scroll event listener.
       fromEvent(this.elementRef.nativeElement, 'scroll')
         .pipe(debounceTime(50), skip(1))
         .subscribe((event: Event) => {
           if (this.elementRef.nativeElement.scrollTop < LOADING_BUFFER_TOP_PX) {
             this.fetchMore();
+            return;
+          }
+
+          if (
+            this.isAtBottomOfContainer() &&
+            this.chatMessagesService.hasNextPage()
+          ) {
+            this.fetchNew();
           }
         }),
+      // scroll to bottom on service init & reattach CD.
       this.chatMessagesService.initialized$
         .pipe(take(1), filter(Boolean))
         .subscribe((_: boolean) => {
@@ -100,7 +121,28 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
 
           // immediately scroll to bottom.
           this.scrollToBottom('instant');
-        })
+        }),
+      // handle scroll to bottom for new messages received.
+      this.chatMessagesService.hasNewMessage$.subscribe(() => {
+        if (this.isAtBottomOfContainer()) {
+          this.fetchNew();
+        }
+      })
+    );
+  }
+
+  /**
+   * Determine whether the scroll position of the host can be considered within
+   * a buffer range of the bottom of the area.
+   * @returns { boolean } - whether the scroll position is at the bottom.
+   */
+  private isAtBottomOfContainer(): boolean {
+    return (
+      Math.ceil(
+        this.elementRef.nativeElement.scrollHeight -
+          this.elementRef.nativeElement.scrollTop
+      ) <=
+      this.elementRef.nativeElement.clientHeight + LOADING_BUFFER_BOTTOM_PX
     );
   }
 
@@ -110,12 +152,14 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
    * @returns { void }
    */
   private scrollToBottom(behavior: 'instant' | 'smooth' = 'smooth'): void {
-    this.elementRef.nativeElement.scrollTo({
-      top: this.elementRef.nativeElement.scrollHeight,
-      behavior: behavior,
-    });
+    setTimeout(() => {
+      this.elementRef.nativeElement.scrollTo({
+        top: this.elementRef.nativeElement.scrollHeight,
+        behavior: behavior,
+      });
 
-    this.updateReadReceipt();
+      this.updateReadReceipt();
+    }, 0);
   }
 
   /**
@@ -160,13 +204,13 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
       this.cd.detach();
       this.chatMessagesService.fetchMore();
 
-      const initialScrollHeight: number = this.elementRef.nativeElement
-        .scrollHeight;
+      const initialScrollHeight: number =
+        this.elementRef.nativeElement.scrollHeight;
 
       // await request inProgress state being false.
       await firstValueFrom(
         this.chatMessagesService.inProgress$.pipe(
-          filter(inProgress => !inProgress)
+          filter((inProgress) => !inProgress)
         )
       );
 
@@ -183,5 +227,13 @@ export class ChatRoomMessagesComponent extends AbstractSubscriberComponent
         });
       }, 0);
     }
+  }
+
+  /**
+   * Fetch new messages.
+   * @returns { void }
+   */
+  protected fetchNew(): void {
+    this.chatMessagesService.fetchNew();
   }
 }

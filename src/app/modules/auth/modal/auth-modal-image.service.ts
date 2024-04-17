@@ -30,14 +30,12 @@ export class AuthModalImageService {
   private loaded: boolean = false;
 
   /** Whether fetching steps is in progress. */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Onboarding version. */
-  public readonly version$: BehaviorSubject<
-    OnboardingV5Version
-  > = new BehaviorSubject<OnboardingV5Version>(null);
+  public readonly version$: BehaviorSubject<OnboardingV5Version> =
+    new BehaviorSubject<OnboardingV5Version>(null);
 
   /**
    * Confirms that the step is a step and not an error
@@ -52,46 +50,46 @@ export class AuthModalImageService {
   }
 
   /** Unique carousel items from all the onboarding steps */
-  public readonly carouselItems$: Observable<
-    CarouselItem[]
-  > = this.version$.pipe(
-    distinctUntilChanged(),
-    map(version => {
-      if (!version || !version.steps || version.steps.length === 0) {
-        console.warn(
-          'Auth modal image service - invalid onboarding version or no steps found'
-        );
-        return [];
-      }
+  public readonly carouselItems$: Observable<CarouselItem[]> =
+    this.version$.pipe(
+      distinctUntilChanged(),
+      map((version) => {
+        if (!version || !version.steps || version.steps.length === 0) {
+          console.warn(
+            'Auth modal image service - invalid onboarding version or no steps found'
+          );
+          return [];
+        }
 
-      const carouselItems: CarouselItem[] = [];
-      const uniqueTitles = new Set<string>();
+        const carouselItems: CarouselItem[] = [];
+        const uniqueTitles = new Set<string>();
 
-      for (const step of version.steps) {
-        if (this.isOnboardingStep(step) && step.carousel) {
-          for (const carouselItem of step.carousel) {
-            // Check if the title is unique before adding to carouselItems
-            if (!uniqueTitles.has(carouselItem.title)) {
-              uniqueTitles.add(carouselItem.title);
+        for (const step of version.steps) {
+          if (this.isOnboardingStep(step) && step.carousel) {
+            for (const carouselItem of step.carousel) {
+              // Check if the title is unique before adding to carouselItems
+              if (!uniqueTitles.has(carouselItem.title)) {
+                uniqueTitles.add(carouselItem.title);
 
-              carouselItems.push({
-                title: carouselItem.title,
-                media: {
-                  fullUrl:
-                    this.strapiUrl + carouselItem?.media?.data?.attributes?.url,
-                  altText:
-                    carouselItem?.media?.data?.attributes?.alternativeText ??
-                    'Carousel image',
-                },
-              });
+                carouselItems.push({
+                  title: carouselItem.title,
+                  media: {
+                    fullUrl:
+                      this.strapiUrl +
+                      carouselItem?.media?.data?.attributes?.url,
+                    altText:
+                      carouselItem?.media?.data?.attributes?.alternativeText ??
+                      'Carousel image',
+                  },
+                });
+              }
             }
           }
         }
-      }
 
-      return carouselItems;
-    })
-  );
+        return carouselItems;
+      })
+    );
 
   constructor(
     private fetchOnboardingV5VersionsGql: FetchOnboardingV5VersionsGQL,
@@ -108,9 +106,8 @@ export class AuthModalImageService {
     }
     try {
       // get onboarding version from CMS.
-      const versionsResponse: ApolloQueryResult<FetchOnboardingV5VersionsQuery> = await firstValueFrom(
-        this.fetchOnboardingV5VersionsGql.fetch()
-      );
+      const versionsResponse: ApolloQueryResult<FetchOnboardingV5VersionsQuery> =
+        await firstValueFrom(this.fetchOnboardingV5VersionsGql.fetch());
 
       const version: OnboardingV5Version = versionsResponse?.data
         ?.onboardingV5Versions?.data[0].attributes as OnboardingV5Version;

@@ -6,13 +6,15 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 export type MakeEmpty<
   T extends { [key: string]: unknown },
-  K extends keyof T
+  K extends keyof T,
 > = { [_ in K]?: never };
 export type Incremental<T> =
   | T
@@ -928,6 +930,7 @@ export type Mutation = {
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
+  deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
@@ -1276,6 +1279,11 @@ export type PlanSummary = {
   oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
 };
 
+export type PostHogPerson = {
+  __typename?: 'PostHogPerson';
+  id: Scalars['String']['output'];
+};
+
 export type PostSubscription = {
   __typename?: 'PostSubscription';
   entityGuid: Scalars['String']['output'];
@@ -1386,6 +1394,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  postHogPerson: PostHogPerson;
   postSubscription: PostSubscription;
   /** Gets reports. */
   reports: ReportsConnection;
@@ -1644,9 +1653,7 @@ export type Report = NodeInterface & {
   createdTimestamp: Scalars['Int']['output'];
   cursor?: Maybe<Scalars['String']['output']>;
   /** Gets entity edge from entityUrn. */
-  entityEdge?: Maybe<
-    UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge
-  >;
+  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge>;
   entityGuid?: Maybe<Scalars['String']['output']>;
   entityUrn: Scalars['String']['output'];
   /** Gets ID for GraphQL. */
@@ -2091,6 +2098,7 @@ export type CreateChatMessageMutation = {
   __typename?: 'Mutation';
   createChatMessage: {
     __typename?: 'ChatMessageEdge';
+    id: string;
     cursor: string;
     node: {
       __typename?: 'ChatMessageNode';
@@ -2182,6 +2190,7 @@ export type GetChatMessagesQuery = {
     edges: Array<{
       __typename?: 'ChatMessageEdge';
       cursor: string;
+      id: string;
       node: {
         __typename?: 'ChatMessageNode';
         id: string;
@@ -2213,6 +2222,13 @@ export type GetChatMessagesQuery = {
       endCursor?: string | null;
     };
   };
+};
+
+export type GetChatRoomGuidsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetChatRoomGuidsQuery = {
+  __typename?: 'Query';
+  chatRoomGuids: Array<string>;
 };
 
 export type GetChatRoomInviteRequestsQueryVariables = Exact<{
@@ -2390,13 +2406,6 @@ export type GetChatRoomsListQuery = {
   };
 };
 
-export type GetChatUnreadCountQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetChatUnreadCountQuery = {
-  __typename?: 'Query';
-  chatUnreadMessagesCount: number;
-};
-
 export type GetTotalChatRoomMembersQueryVariables = Exact<{
   roomGuid: Scalars['String']['input'];
 }>;
@@ -2413,6 +2422,13 @@ export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
 export type GetTotalRoomInviteRequestsQuery = {
   __typename?: 'Query';
   totalRoomInviteRequests: number;
+};
+
+export type InitChatQueryVariables = Exact<{ [key: string]: never }>;
+
+export type InitChatQuery = {
+  __typename?: 'Query';
+  chatUnreadMessagesCount: number;
 };
 
 export type LeaveChatRoomMutationVariables = Exact<{
@@ -6961,6 +6977,15 @@ export type CountSearchQuery = {
   };
 };
 
+export type DeletePostHogPersonMutationVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type DeletePostHogPersonMutation = {
+  __typename?: 'Mutation';
+  deletePostHogPerson: boolean;
+};
+
 export type FetchEmbeddedCommentsSettingsQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -7316,6 +7341,7 @@ export class GetBoostFeedGQL extends Apollo.Query<
 export const CreateChatMessageDocument = gql`
   mutation CreateChatMessage($plainText: String!, $roomGuid: String!) {
     createChatMessage(plainText: $plainText, roomGuid: $roomGuid) {
+      id
       cursor
       node {
         id
@@ -7456,6 +7482,7 @@ export const GetChatMessagesDocument = gql`
     ) {
       edges {
         cursor
+        id
         node {
           id
           guid
@@ -7494,6 +7521,25 @@ export class GetChatMessagesGQL extends Apollo.Query<
   GetChatMessagesQueryVariables
 > {
   document = GetChatMessagesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatRoomGuidsDocument = gql`
+  query GetChatRoomGuids {
+    chatRoomGuids
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomGuidsGQL extends Apollo.Query<
+  GetChatRoomGuidsQuery,
+  GetChatRoomGuidsQueryVariables
+> {
+  document = GetChatRoomGuidsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -7697,25 +7743,6 @@ export class GetChatRoomsListGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const GetChatUnreadCountDocument = gql`
-  query GetChatUnreadCount {
-    chatUnreadMessagesCount
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetChatUnreadCountGQL extends Apollo.Query<
-  GetChatUnreadCountQuery,
-  GetChatUnreadCountQueryVariables
-> {
-  document = GetChatUnreadCountDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
 export const GetTotalChatRoomMembersDocument = gql`
   query GetTotalChatRoomMembers($roomGuid: String!) {
     chatRoom(roomGuid: $roomGuid) {
@@ -7751,6 +7778,25 @@ export class GetTotalRoomInviteRequestsGQL extends Apollo.Query<
   GetTotalRoomInviteRequestsQueryVariables
 > {
   document = GetTotalRoomInviteRequestsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const InitChatDocument = gql`
+  query InitChat {
+    chatUnreadMessagesCount
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class InitChatGQL extends Apollo.Query<
+  InitChatQuery,
+  InitChatQueryVariables
+> {
+  document = InitChatDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -9844,6 +9890,25 @@ export class CountSearchGQL extends Apollo.Query<
   CountSearchQueryVariables
 > {
   document = CountSearchDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const DeletePostHogPersonDocument = gql`
+  mutation DeletePostHogPerson {
+    deletePostHogPerson
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeletePostHogPersonGQL extends Apollo.Mutation<
+  DeletePostHogPersonMutation,
+  DeletePostHogPersonMutationVariables
+> {
+  document = DeletePostHogPersonDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

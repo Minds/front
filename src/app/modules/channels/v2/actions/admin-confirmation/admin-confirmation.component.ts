@@ -22,9 +22,8 @@ export class ChannelAdminConfirmationComponent extends AbstractSubscriberCompone
   public readonly period$ = new BehaviorSubject<SubscriptionTimespan>('month');
 
   // action
-  public action$: BehaviorSubject<ConfirmationAction> = new BehaviorSubject<
-    ConfirmationAction
-  >(null);
+  public action$: BehaviorSubject<ConfirmationAction> =
+    new BehaviorSubject<ConfirmationAction>(null);
 
   /**
    * Completion intent.

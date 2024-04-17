@@ -6,6 +6,7 @@ import {
   NgZone,
   OnInit,
   Output,
+  PLATFORM_ID,
 } from '@angular/core';
 import {
   UntypedFormBuilder,
@@ -20,9 +21,11 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { Router } from '@angular/router';
 import { RegexService } from '../../../common/services/regex.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
+import { AnalyticsService } from '../../../services/analytics';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { isPlatformBrowser } from '@angular/common';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -65,14 +68,14 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     public session: Session,
     public client: Client,
     fb: UntypedFormBuilder,
-    private zone: NgZone,
+    private configService: ConfigsService,
     private userAvatarService: UserAvatarService,
-    private authModal: AuthModalService,
     private router: Router,
     private regex: RegexService,
-    private resetPasswordExperiment: ResetPasswordExperimentService,
     private permissionsService: PermissionsService,
-    protected site: SiteService
+    protected site: SiteService,
+    protected analyticsService: AnalyticsService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     super();
     this.form = fb.group({
@@ -82,6 +85,10 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      // The browser will need to collect a new XSRF token
+      this.configService.loadFromRemote();
+    }
     this.subscriptions.push();
   }
 
@@ -134,11 +141,15 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
         // Set permissions
         this.permissionsService.setWhitelist(data.permissions);
 
+        if (data.opt_out_analytics) {
+          this.analyticsService.setOptOut(data.opt_out_analytics);
+        }
+
         this.session.login(data.user);
         this.userAvatarService.init();
         this.done.next(data.user);
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
 
         if (!e) {
@@ -183,12 +194,7 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
    */
   public onForgotPasswordClick(): void {
     this.done.emit(true);
-
-    if (this.resetPasswordExperiment.isActive()) {
-      this.router.navigate(['/'], { queryParams: { resetPassword: true } });
-    } else {
-      this.router.navigate(['/forgot-password']);
-    }
+    this.router.navigate(['/'], { queryParams: { resetPassword: true } });
   }
 
   /**

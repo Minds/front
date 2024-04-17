@@ -19,39 +19,37 @@ describe('SupermindConsoleFilterBarComponent', () => {
   let comp: SupermindConsoleFilterBarComponent;
   let fixture: ComponentFixture<SupermindConsoleFilterBarComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          SupermindConsoleFilterBarComponent,
-          MockComponent({
-            selector: 'm-dropdownMenu',
-          }),
-          MockComponent({
-            selector: 'm-dropdownMenu__item',
-            inputs: ['selected', 'selectable'],
-            outputs: ['click'],
-          }),
-        ],
-        providers: [
-          {
-            provide: SupermindConsoleService,
-            useValue: MockService(SupermindConsoleService, {
-              has: ['listType$'],
-              props: {
-                listType$: {
-                  get: () =>
-                    new BehaviorSubject<SupermindConsoleListType>('inbox'),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        SupermindConsoleFilterBarComponent,
+        MockComponent({
+          selector: 'm-dropdownMenu',
+        }),
+        MockComponent({
+          selector: 'm-dropdownMenu__item',
+          inputs: ['selected', 'selectable'],
+          outputs: ['click'],
+        }),
+      ],
+      providers: [
+        {
+          provide: SupermindConsoleService,
+          useValue: MockService(SupermindConsoleService, {
+            has: ['listType$'],
+            props: {
+              listType$: {
+                get: () =>
+                  new BehaviorSubject<SupermindConsoleListType>('inbox'),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(SupermindConsoleFilterBarComponent);
     comp = fixture.componentInstance;
 

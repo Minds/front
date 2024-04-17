@@ -30,28 +30,26 @@ describe('NotificationComponent', () => {
   let comp: NotificationComponent;
   let fixture: ComponentFixture<NotificationComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MaterialMock,
-          FriendlyDateDiffPipe,
-          NotificationComponent,
-          TokenPipe,
-          ExcerptPipe,
-        ],
-        imports: [RouterTestingModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: TimeDiffService, useValue: MockService(TimeDiffService) },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MaterialMock,
+        FriendlyDateDiffPipe,
+        NotificationComponent,
+        TokenPipe,
+        ExcerptPipe,
+      ],
+      imports: [RouterTestingModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: TimeDiffService, useValue: MockService(TimeDiffService) },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

@@ -17,7 +17,7 @@
       [link]="['/', getCurrentUser().username]"
       data-ref="topnav-usermenu-channel"
     >
-      @{{ getCurrentUser().username }}
+      &#64;{{ getCurrentUser().username }}
     </m-dropdownMenu__item>
 
     <ng-container *mIfTenant="false">

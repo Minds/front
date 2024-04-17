@@ -78,7 +78,7 @@ export class NewsfeedActivitySuggestionsComponent {
       return;
     }
 
-    pool.entities.forEach(e => {
+    pool.entities.forEach((e) => {
       let entity = e.entity;
       const type = getActivityContentType(entity, true, false);
       // if (type === 'image' || type === 'video' || type === 'blog') {

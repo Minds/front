@@ -6,13 +6,11 @@ describe('AnalyticsLayoutSummaryComponent', () => {
   let component: AnalyticsLayoutSummaryComponent;
   let fixture: ComponentFixture<AnalyticsLayoutSummaryComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [AnalyticsLayoutSummaryComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [AnalyticsLayoutSummaryComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AnalyticsLayoutSummaryComponent);

@@ -39,7 +39,7 @@ export class FormInputSliderV2Component implements ControlValueAccessor {
   // Custom steps
   @Input() public steps = [];
 
-  @Input() public displayFormat: (val: number) => string = val => String(val);
+  @Input() public displayFormat: (val: number) => string = (val) => String(val);
 
   // value held by slider.
   public sliderValue: number = 0;
@@ -47,7 +47,7 @@ export class FormInputSliderV2Component implements ControlValueAccessor {
   /**
    * Default format label value
    */
-  formatLabel = val => {
+  formatLabel = (val) => {
     return val;
   };
 
