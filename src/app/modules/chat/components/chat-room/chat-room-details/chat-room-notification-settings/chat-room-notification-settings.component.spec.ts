@@ -110,7 +110,9 @@ describe('ChatRoomNotificationSettingsComponent', () => {
   describe('onMuteNotificationToggle', () => {
     it('should mute notificiation toggle', fakeAsync(() => {
       (comp as any).notificationsMuted$.next(false);
-      (comp as any).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
+      (
+        comp as any
+      ).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
         of({
           data: { updateNotificationSettings: true },
         })
@@ -131,7 +133,9 @@ describe('ChatRoomNotificationSettingsComponent', () => {
 
     it('should unmute notificiation toggle', fakeAsync(() => {
       (comp as any).notificationsMuted$.next(true);
-      (comp as any).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
+      (
+        comp as any
+      ).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
         of({
           data: { updateNotificationSettings: true },
         })
@@ -153,7 +157,9 @@ describe('ChatRoomNotificationSettingsComponent', () => {
     it('should handle errors when muting notificiation toggle', fakeAsync(() => {
       const error: Error = new Error('error');
       (comp as any).notificationsMuted$.next(false);
-      (comp as any).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
+      (
+        comp as any
+      ).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
         of({
           errors: [error],
         })
@@ -174,7 +180,9 @@ describe('ChatRoomNotificationSettingsComponent', () => {
 
     it('should handle falsy response when muting notificiation toggle', fakeAsync(() => {
       (comp as any).notificationsMuted$.next(false);
-      (comp as any).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
+      (
+        comp as any
+      ).updateChatRoomNotificationSettingsGql.mutate.and.returnValue(
         of({
           data: { updateNotificationSettings: false },
         })

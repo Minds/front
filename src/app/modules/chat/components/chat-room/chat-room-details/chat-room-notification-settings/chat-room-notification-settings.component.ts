@@ -34,7 +34,8 @@ import { MutationResult } from 'apollo-angular';
 })
 export class ChatRoomNotificationSettingsComponent implements OnInit {
   /** Enum for use in template. */
-  protected readonly ChatRoomNotificationStatusEnum: typeof ChatRoomNotificationStatusEnum = ChatRoomNotificationStatusEnum;
+  protected readonly ChatRoomNotificationStatusEnum: typeof ChatRoomNotificationStatusEnum =
+    ChatRoomNotificationStatusEnum;
 
   /** Whether notifications are muted. */
   protected readonly notificationsMuted$: BehaviorSubject<boolean> =
@@ -79,14 +80,15 @@ export class ChatRoomNotificationSettingsComponent implements OnInit {
     this.notificationsMuted$.next(value);
 
     try {
-      const result: MutationResult<UpdateChatRoomNotificationSettingsMutation> = await lastValueFrom(
-        this.updateChatRoomNotificationSettingsGql.mutate({
-          roomGuid: chatRoom?.node?.guid,
-          notificationStatus: value
-            ? ChatRoomNotificationStatusEnum.Muted
-            : ChatRoomNotificationStatusEnum.All,
-        })
-      );
+      const result: MutationResult<UpdateChatRoomNotificationSettingsMutation> =
+        await lastValueFrom(
+          this.updateChatRoomNotificationSettingsGql.mutate({
+            roomGuid: chatRoom?.node?.guid,
+            notificationStatus: value
+              ? ChatRoomNotificationStatusEnum.Muted
+              : ChatRoomNotificationStatusEnum.All,
+          })
+        );
 
       if (result?.errors?.length) {
         throw new Error(result.errors[0].message);
