@@ -16,9 +16,6 @@ export class ChatInitService {
   /** The query reference. */
   private _queryRef: QueryRef<InitChatQuery>;
 
-  /** The subscription to get chat room guids. */
-  private getChatRoomGuidsSubscription: Subscription;
-
   constructor(
     private initChatGQL: InitChatGQL,
     private globalChatSocketService: GlobalChatSocketService,
@@ -35,11 +32,7 @@ export class ChatInitService {
       return;
     }
 
-    this.getChatRoomGuidsSubscription = this.getChatRoomGuids$()
-      .pipe(distinctUntilChanged())
-      .subscribe((roomGuids: string[]): void => {
-        this.globalChatSocketService.listenToRoomGuids(roomGuids);
-      });
+    this.globalChatSocketService.listen();
   }
 
   /**
@@ -48,8 +41,6 @@ export class ChatInitService {
    */
   public destroy(): void {
     this._queryRef?.resetLastResults();
-    this.getChatRoomGuidsSubscription?.unsubscribe();
-    this.globalChatSocketService.leaveAllRooms();
   }
 
   /**
@@ -80,19 +71,6 @@ export class ChatInitService {
     }
     return this.getQueryRef().valueChanges.pipe(
       map(({ data }) => data.chatUnreadMessagesCount)
-    );
-  }
-
-  /**
-   * Get chat room guids.
-   * @returns { Observable<string[]> } - the chat room guids.
-   */
-  public getChatRoomGuids$(): Observable<string[]> {
-    if (!this.session.isLoggedIn()) {
-      return of([]);
-    }
-    return this.getQueryRef().valueChanges.pipe(
-      map(({ data }) => data.chatRoomGuids)
     );
   }
 
