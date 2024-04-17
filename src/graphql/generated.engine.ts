@@ -2417,7 +2417,6 @@ export type InitChatQueryVariables = Exact<{ [key: string]: never }>;
 export type InitChatQuery = {
   __typename?: 'Query';
   chatUnreadMessagesCount: number;
-  chatRoomGuids: Array<string>;
 };
 
 export type LeaveChatRoomMutationVariables = Exact<{
@@ -7765,7 +7764,6 @@ export class GetTotalRoomInviteRequestsGQL extends Apollo.Query<
 export const InitChatDocument = gql`
   query InitChat {
     chatUnreadMessagesCount
-    chatRoomGuids
   }
 `;
 
