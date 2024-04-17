@@ -131,6 +131,15 @@
         word-break: break-word;
         white-space: pre-line;
         @include body2Regular;
+
+        ::ng-deep a {
+          color: inherit;
+          @include body2Regular;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
       }
     }
   }
