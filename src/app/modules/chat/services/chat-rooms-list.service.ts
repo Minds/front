@@ -228,7 +228,6 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
             firstMembers: 12,
             afterMembers: 0,
           },
-
           { fetchPolicy: 'network-only' }
         )
       );
