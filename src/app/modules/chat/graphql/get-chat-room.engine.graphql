@@ -4,6 +4,7 @@ query GetChatRoom(
     $afterMembers: Int!
 ) {
     chatRoom(roomGuid: $roomGuid) {
+        id
         cursor
         node {
             guid
@@ -31,5 +32,8 @@ query GetChatRoom(
                 endCursor
             }
         }
+        unreadMessagesCount
+        lastMessagePlainText,
+        lastMessageCreatedTimestamp
     }
 }
