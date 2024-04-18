@@ -27,8 +27,12 @@ export class SiteMembershipManagementService {
       if (!siteMembershipGuid) {
         throw new Error('siteMembershipGuid not provided to checkout function');
       }
+
+      const extendedRedirectPath =
+        this.addMembershipCheckoutRedirectQueryParam(redirectPath);
+
       this.window.open(
-        `/api/v3/payments/site-memberships/${siteMembershipGuid}/checkout?redirectPath=${redirectPath}`,
+        `/api/v3/payments/site-memberships/${siteMembershipGuid}/checkout?redirectPath=${extendedRedirectPath}`,
         '_self'
       );
       return true;
@@ -67,5 +71,18 @@ export class SiteMembershipManagementService {
       );
       return false;
     }
+  }
+
+  /**
+   * Adds query parameter 'membershipCheckoutRedirect=true' to a redirect URL.
+   * @param {string} url - The original URL.
+   * @returns {string} - The modified URL with the added query parameter.
+   */
+  public addMembershipCheckoutRedirectQueryParam(url: string): string {
+    const queryParam = 'membershipCheckoutRedirect=true';
+
+    const hasQueryParams = url.includes('?');
+
+    return hasQueryParams ? `${url}&${queryParam}` : `${url}?${queryParam}`;
   }
 }
