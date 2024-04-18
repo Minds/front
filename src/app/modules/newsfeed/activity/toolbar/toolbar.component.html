@@ -101,9 +101,10 @@
     <span [@counterChange]="entity['thumbs:up:count']">{{
       entity['thumbs:up:count']
     }}</span>
-    <span
-      >{ entity['thumbs:up:count'], plural, =1 {upvote} other {upvotes}}</span
-    >
+    <span>{entity['thumbs:up:count'], plural,
+      =1 {upvote}
+      other {upvotes}
+    }</span>
   </div>
 
   <div
@@ -112,7 +113,7 @@
     (click)="openInteractions('reminds')"
   >
     <span>{{ entity.reminds }}</span>
-    <span>{ entity.reminds, plural, =1 {remind} other {reminds}}</span>
+    <span>{entity.reminds, plural, =1 {remind} other {reminds}}</span>
   </div>
 
   <div
@@ -121,7 +122,7 @@
     (click)="openInteractions('quotes')"
   >
     <span>{{ entity.quotes }}</span>
-    <span>{ entity.quotes, plural, =1 {quote} other {quotes}}</span>
+    <span>{entity.quotes, plural, =1 {quote} other {quotes}}</span>
   </div>
 </div>
 <!-- ---------------------------------------------------  -->

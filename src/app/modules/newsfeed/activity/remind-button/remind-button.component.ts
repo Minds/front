@@ -30,7 +30,7 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
 })
 export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   count$: Observable<number> = this.service.entity$.pipe(
-    map(entity => entity.reminds + entity.quotes)
+    map((entity) => entity.reminds + entity.quotes)
   );
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
@@ -62,7 +62,7 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.userHasReminded$.subscribe(has => {
+      this.service.userHasReminded$.subscribe((has) => {
         if (has === null && this.session.getLoggedInUser()) {
           // Don't let the user create a new remind until we've checked
           // whether they've already made one

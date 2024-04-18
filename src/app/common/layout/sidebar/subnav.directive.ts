@@ -49,7 +49,7 @@ export class SidebarNavigationSubnavDirective {
     this.parentMouseEnterListener = this.renderer.listen(
       this.parentEl,
       'mouseenter',
-      event => {
+      (event) => {
         const rect = this.parentEl.getBoundingClientRect();
         this.isHovering = true;
         if (this.shouldShowPopover) {
@@ -66,14 +66,14 @@ export class SidebarNavigationSubnavDirective {
     this.parentMouseLeaveListener = this.renderer.listen(
       this.parentEl,
       'mouseleave',
-      event => {
+      (event) => {
         this.onMouseExit(event);
       }
     );
     this.parentMouseUpListener = this.renderer.listen(
       this.parentEl,
       'mouseup',
-      event => {
+      (event) => {
         this.onMouseExit(event);
       }
     );

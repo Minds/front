@@ -9,42 +9,40 @@ describe('TooltipHintComponent', () => {
   let comp: TooltipHintComponent;
   let fixture: ComponentFixture<TooltipHintComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          TooltipHintComponent,
-          MockComponent({
-            selector: 'm-tooltip',
-            inputs: [
-              'anchor',
-              'hidden',
-              'enabled',
-              'showArrow',
-              'arrowOffset',
-              'icon',
-              'iconStyle',
-              'tooltipBubbleStyle',
-            ],
-            outputs: ['click', 'tooltipMouseDown'],
-          }),
-        ],
-        providers: [
-          {
-            provide: Storage,
-            useValue: MockService(Storage),
-          },
-          {
-            provide: ExperimentsService,
-            useValue: MockService(ExperimentsService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        TooltipHintComponent,
+        MockComponent({
+          selector: 'm-tooltip',
+          inputs: [
+            'anchor',
+            'hidden',
+            'enabled',
+            'showArrow',
+            'arrowOffset',
+            'icon',
+            'iconStyle',
+            'tooltipBubbleStyle',
+          ],
+          outputs: ['click', 'tooltipMouseDown'],
+        }),
+      ],
+      providers: [
+        {
+          provide: Storage,
+          useValue: MockService(Storage),
+        },
+        {
+          provide: ExperimentsService,
+          useValue: MockService(ExperimentsService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(TooltipHintComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

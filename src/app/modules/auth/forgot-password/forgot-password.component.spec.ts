@@ -65,45 +65,43 @@ describe('ForgotPasswordComponent', () => {
     return fixture.debugElement.query(By.css('input#password2'));
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-          BlankComponent,
-          ForgotPasswordComponent,
-          ButtonComponent,
-        ],
-        imports: [
-          RouterTestingModule.withRoutes([
-            { path: 'newsfeed', component: BlankComponent },
-          ]),
-          ReactiveFormsModule,
-        ],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Client, useValue: clientMock },
-          {
-            provide: RegexService,
-            useValue: MockService(RegexService, {
-              getRegex: (string: string) => {
-                return { test: (string: string) => false };
-              },
-            }),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          PageLayoutService,
-          {
-            provide: ResetPasswordExperimentService,
-            useValue: MockService(ResetPasswordExperimentService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        BlankComponent,
+        ForgotPasswordComponent,
+        ButtonComponent,
+      ],
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'newsfeed', component: BlankComponent },
+        ]),
+        ReactiveFormsModule,
+      ],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: Client, useValue: clientMock },
+        {
+          provide: RegexService,
+          useValue: MockService(RegexService, {
+            getRegex: (string: string) => {
+              return { test: (string: string) => false };
+            },
+          }),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        PageLayoutService,
+        {
+          provide: ResetPasswordExperimentService,
+          useValue: MockService(ResetPasswordExperimentService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   // synchronous beforeEach
   beforeEach(() => {

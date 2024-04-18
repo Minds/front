@@ -18,56 +18,54 @@ describe('SupermindButtonComponent', () => {
   let comp: SupermindButtonComponent;
   let fixture: ComponentFixture<SupermindButtonComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          SupermindButtonComponent,
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['solid', 'borderless', 'color', 'size'],
-            outputs: ['onAction'],
-          }),
-          MockComponent({
-            selector: 'm-icon',
-            inputs: ['from', 'iconId', 'sizeFactor', 'rem'],
-          }),
-        ],
-        providers: [
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: AuthModalService,
-            useValue: MockService(AuthModalService),
-          },
-          {
-            provide: ComposerModalService,
-            useValue: MockService(ComposerModalService),
-          },
-          {
-            provide: ComposerService,
-            useValue: MockService(ComposerService, {
-              has: ['remind$', 'supermindRequest$'],
-              props: {
-                remind$: { get: () => new BehaviorSubject<any>(null) },
-                supermindRequest$: {
-                  get: () => new BehaviorSubject<any>(null),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        SupermindButtonComponent,
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['solid', 'borderless', 'color', 'size'],
+          outputs: ['onAction'],
+        }),
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['from', 'iconId', 'sizeFactor', 'rem'],
+        }),
+      ],
+      providers: [
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: AuthModalService,
+          useValue: MockService(AuthModalService),
+        },
+        {
+          provide: ComposerModalService,
+          useValue: MockService(ComposerModalService),
+        },
+        {
+          provide: ComposerService,
+          useValue: MockService(ComposerService, {
+            has: ['remind$', 'supermindRequest$'],
+            props: {
+              remind$: { get: () => new BehaviorSubject<any>(null) },
+              supermindRequest$: {
+                get: () => new BehaviorSubject<any>(null),
               },
-            }),
-          },
-          {
-            provide: Injector,
-            useValue: MockService(Injector),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: Injector,
+          useValue: MockService(Injector),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(SupermindButtonComponent);
     comp = fixture.componentInstance;
 

@@ -25,10 +25,10 @@ export class SelectCardService {
         }
       )
       .pipe(
-        map(response => {
+        map((response) => {
           return response.data?.paymentMethods;
         }),
-        catchError(error => {
+        catchError((error) => {
           console.log('error', error);
           return of(null);
         })

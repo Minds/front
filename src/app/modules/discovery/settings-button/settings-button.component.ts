@@ -68,7 +68,7 @@ export class DiscoverySettingsButtonComponent implements OnInit {
 
     const modal = this.modalService.present(component, {
       data: {
-        onSave: payload => {
+        onSave: (payload) => {
           if (this.modalType === 'tags') {
             const tags = payload;
             this.service.tags$.next(tags);

@@ -38,19 +38,20 @@ import {
   providers: [SupportTiersService, ComposerMonetizeV2Service],
 })
 export class ComposerAudienceSelectorPanelComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   subscriptions: Subscription[] = [];
 
   /** Signal event emitter to parent's popup service. */
   @Output() dismissIntent: EventEmitter<any> = new EventEmitter<any>();
 
   /** Currently selected audience. */
-  public readonly selectedAudience$: BehaviorSubject<ActivityContainer> = this
-    .audienceSelectorService.selectedAudience$;
+  public readonly selectedAudience$: BehaviorSubject<ActivityContainer> =
+    this.audienceSelectorService.selectedAudience$;
 
   /** Currently selected monetization. */
-  public readonly selectedMonetization$ = this.composerService
-    .pendingMonetization$;
+  public readonly selectedMonetization$ =
+    this.composerService.pendingMonetization$;
 
   /** Currently logged in user. */
   public loggedInUser: MindsUser = null;
@@ -62,8 +63,8 @@ export class ComposerAudienceSelectorPanelComponent
    * This value is used to prevent a channel from being
    * selected and changes various parts of the template to provide clearer context.
    */
-  public readonly shareToGroupMode$: Observable<boolean> = this
-    .audienceSelectorService.shareToGroupMode$;
+  public readonly shareToGroupMode$: Observable<boolean> =
+    this.audienceSelectorService.shareToGroupMode$;
 
   private readonly plusTierUrn: string;
 
@@ -71,34 +72,31 @@ export class ComposerAudienceSelectorPanelComponent
   // GROUPS
 
   /** Whether panels groups section is expanded. */
-  public readonly groupsExpanded$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly groupsExpanded$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** List of groups held in local state. */
-  public readonly groups$: BehaviorSubject<
-    SelectableEntity[]
-  > = new BehaviorSubject<SelectableEntity[]>([]);
+  public readonly groups$: BehaviorSubject<SelectableEntity[]> =
+    new BehaviorSubject<SelectableEntity[]>([]);
 
   /** Whether groups are currently loading. */
-  public readonly groupsLoading$: Observable<boolean> = this
-    .audienceSelectorService.groupsLoading$;
+  public readonly groupsLoading$: Observable<boolean> =
+    this.audienceSelectorService.groupsLoading$;
 
   /** Whether there are more groups to load. */
-  public readonly groupsHasNext$: Observable<boolean> = this
-    .audienceSelectorService.groupsHasNext$;
+  public readonly groupsHasNext$: Observable<boolean> =
+    this.audienceSelectorService.groupsHasNext$;
 
   // -----------------------------------------------
   // MEMBERSHIPS
 
   /** Whether panels membership section is expanded. */
-  public readonly membershipsExpanded$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly membershipsExpanded$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** List of memberships */
-  public readonly memberships$: Observable<SupportTier[]> = this.monetizeService
-    .supportTiers$;
+  public readonly memberships$: Observable<SupportTier[]> =
+    this.monetizeService.supportTiers$;
 
   constructor(
     private router: Router,
@@ -124,7 +122,7 @@ export class ComposerAudienceSelectorPanelComponent
           }
         }
       ),
-      this.monetizeService.loaded$.subscribe(loaded => {
+      this.monetizeService.loaded$.subscribe((loaded) => {
         if (!loaded) {
           this.monetizeService.loadSupportTiers(this.loggedInUser.guid);
         }
@@ -176,7 +174,7 @@ export class ComposerAudienceSelectorPanelComponent
   public toggleMembershipsExpand(): void {
     this.membershipsExpanded$.next(!this.membershipsExpanded$.getValue());
     this.subscriptions.push(
-      this.monetizeService.loaded$.subscribe(loaded => {
+      this.monetizeService.loaded$.subscribe((loaded) => {
         if (!loaded) {
           this.monetizeService.loadSupportTiers(this.loggedInUser.guid);
         }

@@ -32,11 +32,13 @@ export class SettingsTwoFactorComponent {
   @Output('saved') saved: EventEmitter<unknown> = new EventEmitter<unknown>();
 
   // emits on sms mfa disabled
-  @Output('disabled') disabled: EventEmitter<unknown> = new EventEmitter<
-    unknown
-  >();
+  @Output('disabled') disabled: EventEmitter<unknown> =
+    new EventEmitter<unknown>();
 
-  constructor(public client: Client, private modalService: ModalService) {
+  constructor(
+    public client: Client,
+    private modalService: ModalService
+  ) {
     this.load();
   }
 

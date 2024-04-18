@@ -20,7 +20,7 @@ export class NewNotificationsButtonComponent {
 
   ngOnInit() {
     this.countSubscription = this.v1Service.count$.subscribe(
-      count => (this.count = count)
+      (count) => (this.count = count)
     );
   }
 

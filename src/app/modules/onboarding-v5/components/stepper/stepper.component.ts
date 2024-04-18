@@ -17,8 +17,8 @@ export class OnboardingV5StepperComponent {
   public readonly steps$: Observable<OnboardingStep[]> = this.service.steps$;
 
   /** Active step. */
-  public readonly activeStep$: Observable<OnboardingStep> = this.service
-    .activeStep$;
+  public readonly activeStep$: Observable<OnboardingStep> =
+    this.service.activeStep$;
 
   constructor(private service: OnboardingV5Service) {}
 }

@@ -27,9 +27,8 @@ import { GrowShrinkFast } from '../../../animations';
 })
 export class FormErrorComponent {
   /** String of concatenated, parsed errors. */
-  private readonly _errorString$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >(null);
+  private readonly _errorString$: BehaviorSubject<string> =
+    new BehaviorSubject<string>(null);
 
   /** Exposed error string, debounced to avoid jumping in the event of rapid change when typing. */
   protected readonly errorString$: Observable<string> = this._errorString$.pipe(

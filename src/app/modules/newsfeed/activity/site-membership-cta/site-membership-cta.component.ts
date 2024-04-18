@@ -15,7 +15,8 @@ import { WINDOW } from '../../../../common/injection-tokens/common-injection-tok
   styleUrls: ['./site-membership-cta.component.ng.scss'],
 })
 export class ActivitySiteMembershipCtaComponent
-  implements OnInit, AfterViewInit {
+  implements OnInit, AfterViewInit
+{
   /** Whether the button should be shown,
    * e.g. false on the left side of a media modal,
    * b/c button is already shown on right side
@@ -38,7 +39,7 @@ export class ActivitySiteMembershipCtaComponent
   ) {}
 
   ngOnInit(): void {
-    this.service.entity$.subscribe(entity => {
+    this.service.entity$.subscribe((entity) => {
       this.entity = entity;
       this.calculateThumbnailHeight();
     });

@@ -19,7 +19,7 @@ import {
   SupportTiersService,
 } from '../../../../wire/v2/support-tiers.service';
 
-let configMock = new (function() {
+let configMock = new (function () {
   this.get = jasmine.createSpy('get').and.returnValue({
     plus: {
       support_tier_urn: 'urn:123',

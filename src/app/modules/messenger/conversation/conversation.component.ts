@@ -204,15 +204,18 @@ export class MessengerConversation implements OnInit, OnDestroy {
         }
       );
 
-      this.socketSubscriptions.block = this.sockets.subscribe('block', guid => {
-        if (!this.hasParticipant(guid)) return;
+      this.socketSubscriptions.block = this.sockets.subscribe(
+        'block',
+        (guid) => {
+          if (!this.hasParticipant(guid)) return;
 
-        this.blocked = true;
-      });
+          this.blocked = true;
+        }
+      );
 
       this.socketSubscriptions.unblock = this.sockets.subscribe(
         'unblock',
-        guid => {
+        (guid) => {
           if (!this.hasParticipant(guid)) return;
 
           this.blocked = false;
@@ -285,7 +288,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
 
         setTimeout(() => this.scrollEmitter.next(true), 50);
       })
-      .catch(e => {
+      .catch((e) => {
         console.error('Error while reading conversation', e);
       });
 
@@ -311,7 +314,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
       .then((response: any) => {
         this.blockingActionInProgress = false;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error('Error when deleting history', e);
         this.blockingActionInProgress = false;
       });
@@ -351,7 +354,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
         this.blockingActionInProgress = false;
         this.blocked = newState;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error('Error when toggling block on participants', e);
         this.blockingActionInProgress = false;
       });
@@ -363,7 +366,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
     }
 
     this.invited = true;
-    this.invitable.forEach(participant => {
+    this.invitable.forEach((participant) => {
       this.client.put(
         `api/v2/messenger/conversations/invite/${participant.guid}`
       );

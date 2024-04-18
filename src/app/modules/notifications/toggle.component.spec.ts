@@ -12,54 +12,52 @@ xdescribe('NotificationsTopbarToggleComponent', () => {
   let comp: NotificationsTopbarToggleComponent;
   let fixture: ComponentFixture<NotificationsTopbarToggleComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          MockComponent({
-            selector: 'm-notifications--flyout',
-            inputs: ['hidden', 'visible'],
-            outputs: ['close'],
-          }),
-          MockComponent({
-            selector: 'm-tooltip',
-          }),
-          MockDirective({
-            selector: 'm-tooltip--icon',
-          }),
-          NotificationsTopbarToggleComponent,
-        ],
-        providers: [
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: NotificationService,
-            useValue: MockService(NotificationService, {
-              has: ['count$'],
-              props: {
-                count$: {
-                  get: () => new BehaviorSubject<number>(0),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        MockComponent({
+          selector: 'm-notifications--flyout',
+          inputs: ['hidden', 'visible'],
+          outputs: ['close'],
+        }),
+        MockComponent({
+          selector: 'm-tooltip',
+        }),
+        MockDirective({
+          selector: 'm-tooltip--icon',
+        }),
+        NotificationsTopbarToggleComponent,
+      ],
+      providers: [
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: NotificationService,
+          useValue: MockService(NotificationService, {
+            has: ['count$'],
+            props: {
+              count$: {
+                get: () => new BehaviorSubject<number>(0),
               },
-            }),
-          },
-          {
-            provide: Router,
-            useValue: MockService(Router),
-          },
-          {
-            provide: Storage,
-            useValue: MockService(Storage),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
+        {
+          provide: Storage,
+          useValue: MockService(Storage),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(NotificationsTopbarToggleComponent);
     comp = fixture.componentInstance;
     comp.toggled = false;

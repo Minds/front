@@ -38,9 +38,7 @@ describe('SupermindConsoleExpirationService', () => {
   });
 
   it('should get time till expiration based on created_timestamp and expiry_threshold when hours', () => {
-    mockSupermind.created_timestamp = moment()
-      .subtract(6, 'days')
-      .unix();
+    mockSupermind.created_timestamp = moment().subtract(6, 'days').unix();
     mockSupermind.expiry_threshold = 604800;
 
     expect(service.getTimeTillExpiration(mockSupermind)).toBe('23h');

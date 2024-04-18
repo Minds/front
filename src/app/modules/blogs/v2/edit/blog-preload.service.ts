@@ -11,9 +11,8 @@ export class BlogPreloadService {
   /**
    * Message to be preloaded - publically accessible Observable
    */
-  public readonly message$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  public readonly message$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   /**
    * Set preloaded message to an empty string.

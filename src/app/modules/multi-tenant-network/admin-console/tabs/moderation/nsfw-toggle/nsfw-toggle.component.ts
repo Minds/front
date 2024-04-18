@@ -12,7 +12,7 @@ import { Observable, map } from 'rxjs';
 })
 export class NetworkAdminConsoleNsfwToggleComponent {
   public nsfwToggleVal$: Observable<string> = this.service.nsfwEnabled$.pipe(
-    map(value => (value ? 'on' : 'off'))
+    map((value) => (value ? 'on' : 'off'))
   );
 
   constructor(protected service: NsfwEnabledService) {}

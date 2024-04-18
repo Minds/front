@@ -68,7 +68,7 @@ export class NSFWSelectorComponent {
     this.service.toggle(reason);
 
     if (triggerChange) {
-      const reasons = this.service.reasons.filter(r => r.selected);
+      const reasons = this.service.reasons.filter((r) => r.selected);
       this.onSelected.next(reasons);
     }
   }

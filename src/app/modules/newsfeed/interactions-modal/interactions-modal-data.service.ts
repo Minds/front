@@ -64,15 +64,15 @@ export class InteractionsModalDataService {
     this.pagingToken$,
   ]).pipe(
     debounceTime(100), // Hack to prevent first cancelled call
-    tap(_ => this.inProgress$.next(true)),
+    tap((_) => this.inProgress$.next(true)),
     switchMap(([entityGuid, type, pagingToken]) =>
       this.apiRequest(entityGuid, type, pagingToken)
     ),
-    tap(response => {
+    tap((response) => {
       this.nextPagingToken$.next(response['load-next']);
     }),
-    map(response => response.entities || []),
-    tap(_ => this.inProgress$.next(false)),
+    map((response) => response.entities || []),
+    tap((_) => this.inProgress$.next(false)),
     scan((a, c) => [...a, ...c], [])
   );
 
@@ -101,8 +101,8 @@ export class InteractionsModalDataService {
             direction: 'up',
           })
           .pipe(
-            map(response => {
-              const entities = response.votes.map(vote => {
+            map((response) => {
+              const entities = response.votes.map((vote) => {
                 return vote.actor;
               });
               return {
@@ -120,8 +120,8 @@ export class InteractionsModalDataService {
             remind_guid: entityGuid,
           })
           .pipe(
-            map(response => {
-              response.entities = response.entities.map(entity => {
+            map((response) => {
+              response.entities = response.entities.map((entity) => {
                 if (entity?.remind_users && entity?.remind_users.length > 0) {
                   return entity.remind_users[0];
                 }
@@ -152,7 +152,7 @@ export class InteractionsModalDataService {
             offset,
           })
           .pipe(
-            map(response => ({
+            map((response) => ({
               'load-next': response?.users?.length ? offset + limit : undefined,
               status: 'success',
               entities: response?.users || [],

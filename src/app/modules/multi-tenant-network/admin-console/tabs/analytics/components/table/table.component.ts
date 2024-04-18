@@ -26,26 +26,26 @@ import { WINDOW } from '../../../../../../../common/injection-tokens/common-inje
 })
 export class NetworkAdminAnalyticsTableComponent implements OnInit, OnDestroy {
   /** Enum for use in template. */
-  protected readonly AnalyticsTableEnum: typeof AnalyticsTableEnum = AnalyticsTableEnum;
+  protected readonly AnalyticsTableEnum: typeof AnalyticsTableEnum =
+    AnalyticsTableEnum;
 
   /** Whether a request is in progress to load / load more. */
-  protected readonly inProgress$: Observable<boolean> = this.tableService
-    .inProgress$;
+  protected readonly inProgress$: Observable<boolean> =
+    this.tableService.inProgress$;
 
   /** Whether the component has been intiialized. */
-  protected readonly initialized$: Observable<boolean> = this.tableService
-    .initialized$;
+  protected readonly initialized$: Observable<boolean> =
+    this.tableService.initialized$;
 
   /** Whether the paginated list has a next page. */
-  protected readonly hasNextPage$: Observable<
-    boolean
-  > = this.tableService.pageInfo$.pipe(
-    map((pageInfo: PageInfo) => pageInfo?.hasNextPage)
-  );
+  protected readonly hasNextPage$: Observable<boolean> =
+    this.tableService.pageInfo$.pipe(
+      map((pageInfo: PageInfo) => pageInfo?.hasNextPage)
+    );
 
   /** List of analytics tabs row edges from service. */
-  protected edges$: Observable<AnalyticsTableRowEdge[]> = this.tableService
-    .edges$;
+  protected edges$: Observable<AnalyticsTableRowEdge[]> =
+    this.tableService.edges$;
 
   /** type of analytics table to be shown - drawn from route data. */
   protected type: AnalyticsTableEnum;

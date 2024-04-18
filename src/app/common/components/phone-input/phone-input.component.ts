@@ -24,7 +24,8 @@ export const PHONE_INPUT_VALUE_ACCESSOR: any = {
   providers: [PHONE_INPUT_VALUE_ACCESSOR],
 })
 export class PhoneInputComponent
-  implements ControlValueAccessor, OnInit, OnChanges {
+  implements ControlValueAccessor, OnInit, OnChanges
+{
   phoneNumber: string = '';
 
   @ViewChild('input', { static: true }) input: ElementRef;

@@ -46,8 +46,8 @@
       <p
         class="m-productPagePricingCards__priceStartingAt"
         [ngClass]="{
-          'm-productPagePricingCards__priceStartingAt--hidden': !productPlan
-            .attributes?.priceStartingAt
+          'm-productPagePricingCards__priceStartingAt--hidden':
+            !productPlan.attributes?.priceStartingAt
         }"
       >
         Starting at
@@ -59,7 +59,7 @@
         <strong>{{
           getMonthlyPrice(productPlan.attributes.tier)
             | async
-            | currency: 'USD':true:'1.0-2'
+            | currency: 'USD' : true : '1.0-2'
         }}</strong>
         / month
       </p>

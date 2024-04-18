@@ -19,37 +19,35 @@ describe('FeaturedContentComponent', () => {
   let comp: FeaturedContentComponent;
   let fixture: ComponentFixture<FeaturedContentComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [FeaturedContentComponent],
-        providers: [
-          {
-            provide: FeaturedContentService,
-            useValue: MockService(FeaturedContentService),
-          },
-          {
-            provide: ComponentFactoryResolver,
-            useValue: MockService(ComponentFactoryResolver),
-          },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: Injector,
-            useValue: MockService(Injector),
-          },
-          {
-            provide: PLATFORM_ID,
-            useValue: 'browser',
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [FeaturedContentComponent],
+      providers: [
+        {
+          provide: FeaturedContentService,
+          useValue: MockService(FeaturedContentService),
+        },
+        {
+          provide: ComponentFactoryResolver,
+          useValue: MockService(ComponentFactoryResolver),
+        },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: Injector,
+          useValue: MockService(Injector),
+        },
+        {
+          provide: PLATFORM_ID,
+          useValue: 'browser',
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(FeaturedContentComponent);
     comp = fixture.componentInstance;
 

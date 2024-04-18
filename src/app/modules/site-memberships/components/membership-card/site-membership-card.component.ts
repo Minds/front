@@ -19,10 +19,12 @@ import { CommonModule } from '../../../../common/common.module';
 })
 export class SiteMembershipCardComponent {
   /** Enum for use in template. */
-  public readonly SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum = SiteMembershipBillingPeriodEnum;
+  public readonly SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum =
+    SiteMembershipBillingPeriodEnum;
 
   /** Enum for use in template. */
-  public readonly SiteMembershipPricingModelEnum: typeof SiteMembershipPricingModelEnum = SiteMembershipPricingModelEnum;
+  public readonly SiteMembershipPricingModelEnum: typeof SiteMembershipPricingModelEnum =
+    SiteMembershipPricingModelEnum;
 
   /** Name of the membership. Used as a title. */
   @Input() public readonly name: string = '';

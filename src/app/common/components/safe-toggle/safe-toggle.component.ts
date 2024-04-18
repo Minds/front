@@ -17,9 +17,8 @@ import { Client } from '../../../services/api/client';
 })
 export class SafeToggleComponent {
   @Input('entity') entity: any;
-  @Output('entityChange') entityChange: EventEmitter<any> = new EventEmitter<
-    any
-  >();
+  @Output('entityChange') entityChange: EventEmitter<any> =
+    new EventEmitter<any>();
 
   constructor(public client: Client) {}
 
@@ -32,7 +31,7 @@ export class SafeToggleComponent {
       .then(() => {
         this.entityChange.emit(this.entity);
       })
-      .catch(e => {
+      .catch((e) => {
         this.entity.rating = this.entity.rating === 1 ? 2 : 1;
       });
 

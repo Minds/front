@@ -39,7 +39,7 @@ export class ForgotPasswordComponent {
 
   ngOnInit() {
     this.pageLayout.useFullWidth();
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       if (this.resetPasswordExperiment.isActive()) {
         let queryParams = {
           resetPassword: true,
@@ -132,7 +132,7 @@ export class ForgotPasswordComponent {
           this.session.login(response.user);
           this.router.navigate(['/newsfeed']);
         })
-        .catch(e => {
+        .catch((e) => {
           this.inProgress = false;
           this.toaster.error(e.message);
         });

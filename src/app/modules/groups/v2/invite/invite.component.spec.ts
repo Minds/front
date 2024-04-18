@@ -9,39 +9,37 @@ describe('GroupInviteComponent', () => {
   let component: GroupInviteComponent;
   let fixture: ComponentFixture<GroupInviteComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          GroupInviteComponent,
-          MockComponent({
-            selector: 'm-formInput__autocompleteUserInput',
-            inputs: ['id', 'formControlName', 'placeholder'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['type', 'color', 'disabled', 'saving'],
-            outputs: ['onAction'],
-          }),
-          MockComponent({
-            selector: 'm-modalCloseButton',
-          }),
-        ],
-        providers: [
-          {
-            provide: EntityResolverService,
-            useValue: MockService(EntityResolverService),
-          },
-        ],
-      })
-        .overrideProvider(GroupInviteService, {
-          useValue: MockService(GroupInviteService),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        GroupInviteComponent,
+        MockComponent({
+          selector: 'm-formInput__autocompleteUserInput',
+          inputs: ['id', 'formControlName', 'placeholder'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['type', 'color', 'disabled', 'saving'],
+          outputs: ['onAction'],
+        }),
+        MockComponent({
+          selector: 'm-modalCloseButton',
+        }),
+      ],
+      providers: [
+        {
+          provide: EntityResolverService,
+          useValue: MockService(EntityResolverService),
+        },
+      ],
     })
-  );
+      .overrideProvider(GroupInviteService, {
+        useValue: MockService(GroupInviteService),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(GroupInviteComponent);
     component = fixture.componentInstance;
 

@@ -63,23 +63,20 @@ export class OnboardingV3Service implements OnDestroy {
   /*
    * Holds response of progress that can be loaded using load().
    */
-  public readonly progress$: BehaviorSubject<
-    OnboardingResponse
-  > = new BehaviorSubject<OnboardingResponse>(null);
+  public readonly progress$: BehaviorSubject<OnboardingResponse> =
+    new BehaviorSubject<OnboardingResponse>(null);
 
   /**
    * True if object is completed
    */
-  public readonly completed$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly completed$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * True if still loading
    */
-  public readonly loading$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly loading$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   constructor(
     private injector: Injector,
@@ -196,7 +193,7 @@ export class OnboardingV3Service implements OnDestroy {
         .get('/api/v3/onboarding')
         .pipe(
           take(1),
-          catchError(e => {
+          catchError((e) => {
             console.error(e);
             this.loading$.next(false);
             return of(null);

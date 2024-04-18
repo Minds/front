@@ -83,9 +83,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * On Post event emitter
    */
-  @Output('onPost') onPostEmitter: EventEmitter<MouseEvent> = new EventEmitter<
-    MouseEvent
-  >();
+  @Output('onPost') onPostEmitter: EventEmitter<MouseEvent> =
+    new EventEmitter<MouseEvent>();
 
   /**
    * Is the composer in a modal?
@@ -137,7 +136,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * Boolean of if any uploads are active (selected)
    */
   uploadActive$: Observable<boolean> = this.uploadCount$.pipe(
-    map(count => count > 0)
+    map((count) => count > 0)
   );
 
   canSchedule$ = this.service.canSchedule$;
@@ -166,17 +165,16 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Whether Supermind request can be created.
    */
-  public readonly canCreateSupermindRequest$ = this.service
-    .canCreateSupermindRequest$;
+  public readonly canCreateSupermindRequest$ =
+    this.service.canCreateSupermindRequest$;
 
-  public readonly shouldShowSiteMemberships$: Observable<
-    boolean
-  > = this.siteMembershipsCountService.count$.pipe(
-    distinctUntilChanged(),
-    map((count: number) => {
-      return count > 0;
-    })
-  );
+  public readonly shouldShowSiteMemberships$: Observable<boolean> =
+    this.siteMembershipsCountService.count$.pipe(
+      distinctUntilChanged(),
+      map((count: number) => {
+        return count > 0;
+      })
+    );
 
   /**
    * Whether the post (or next or save) button is disabled
@@ -222,23 +220,23 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         .pipe(debounceTime(250))
         .subscribe(() => this.calcNarrow()),
       this.uploadCount$.subscribe(
-        uploadCount => (this.uploadCount = uploadCount)
+        (uploadCount) => (this.uploadCount = uploadCount)
       ),
-      this.service.isSupermindRequest$.subscribe(is => {
+      this.service.isSupermindRequest$.subscribe((is) => {
         this.isSupermindRequest = is;
         this.detectChanges();
       }),
-      this.service.supermindRequest$.subscribe(request => {
+      this.service.supermindRequest$.subscribe((request) => {
         this.supermindRequest = request;
       }),
-      this.service.isSupermindReply$.subscribe(is => {
+      this.service.isSupermindReply$.subscribe((is) => {
         this.isSupermindReply = is;
         this.detectChanges();
       }),
-      this.service.supermindReply$.subscribe(details => {
+      this.service.supermindReply$.subscribe((details) => {
         this.supermindReply = details;
       }),
-      this.service.monetization$.subscribe(monetized => {
+      this.service.monetization$.subscribe((monetized) => {
         /**
          * Don't show the monetize button if a post has a
          * legacy paywall because of potential
@@ -250,7 +248,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
           this.legacyPaywallEnabled = true;
         }
       }),
-      this.service.postButtonDisabled$.subscribe(disabled => {
+      this.service.postButtonDisabled$.subscribe((disabled) => {
         this.postButtonDisabled = disabled;
         this.detectChanges();
       })
@@ -404,7 +402,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @returns { Observable<boolean> } - holds true if compact mode should be applied.
    */
   get isCompactMode$(): Observable<boolean> {
-    return this.size$.pipe(map(size => size === 'compact' && !this.isModal));
+    return this.size$.pipe(map((size) => size === 'compact' && !this.isModal));
   }
 
   /**

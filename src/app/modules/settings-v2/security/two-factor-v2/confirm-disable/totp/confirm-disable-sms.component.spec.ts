@@ -11,24 +11,22 @@ describe('SettingsTwoFactorDisableTOTPComponent', () => {
   let comp: SettingsTwoFactorDisableTOTPComponent;
   let fixture: ComponentFixture<SettingsTwoFactorDisableTOTPComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule],
-        declarations: [SettingsTwoFactorDisableTOTPComponent, ButtonComponent],
-        providers: [
-          {
-            provide: SettingsTwoFactorV2Service,
-            useValue: MockService(SettingsTwoFactorV2Service),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [SettingsTwoFactorDisableTOTPComponent, ButtonComponent],
+      providers: [
+        {
+          provide: SettingsTwoFactorV2Service,
+          useValue: MockService(SettingsTwoFactorV2Service),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorDisableTOTPComponent);
@@ -42,17 +40,17 @@ describe('SettingsTwoFactorDisableTOTPComponent', () => {
 
   it('should be disabled unless code length is 6', () => {
     comp.code$.next('123');
-    comp.disabled$.pipe(take(1)).subscribe(val => {
+    comp.disabled$.pipe(take(1)).subscribe((val) => {
       expect(val).toBeTruthy();
     });
 
     comp.code$.next('123456');
-    comp.disabled$.pipe(take(1)).subscribe(val => {
+    comp.disabled$.pipe(take(1)).subscribe((val) => {
       expect(val).toBeFalsy();
     });
 
     comp.code$.next('1234567');
-    comp.disabled$.pipe(take(1)).subscribe(val => {
+    comp.disabled$.pipe(take(1)).subscribe((val) => {
       expect(val).toBeTruthy();
     });
   });

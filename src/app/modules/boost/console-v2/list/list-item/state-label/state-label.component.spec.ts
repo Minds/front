@@ -33,22 +33,20 @@ describe('BoostConsoleStateLabelComponent', () => {
     approved_timestamp: null,
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [BoostConsoleStateLabelComponent],
-        providers: [
-          {
-            provide: BoostConsoleService,
-            useValue: MockService(BoostConsoleService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [BoostConsoleStateLabelComponent],
+      providers: [
+        {
+          provide: BoostConsoleService,
+          useValue: MockService(BoostConsoleService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostConsoleStateLabelComponent);
     comp = fixture.componentInstance;
     comp.boost = mockBoost;

@@ -18,9 +18,9 @@ describe('CopyToClipboardButtonComponent', () => {
 
     fixture = TestBed.createComponent(CopyToClipboardButtonComponent);
     component = fixture.componentInstance;
-    toasterServiceSpy = TestBed.inject(ToasterService) as jasmine.SpyObj<
+    toasterServiceSpy = TestBed.inject(
       ToasterService
-    >;
+    ) as jasmine.SpyObj<ToasterService>;
     fixture.detectChanges();
   });
 

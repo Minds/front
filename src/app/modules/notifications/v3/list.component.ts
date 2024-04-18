@@ -56,12 +56,12 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.listSubscription = this.list$.subscribe(list => {
+    this.listSubscription = this.list$.subscribe((list) => {
       this.list = list;
     });
 
     this.nextPagingTokenSubscription = this.nextPagingToken$.subscribe(
-      nextPagingToken => (this.nextPagingToken = nextPagingToken)
+      (nextPagingToken) => (this.nextPagingToken = nextPagingToken)
     );
     if (this.scrollSource) {
       this.scrollSubscriptions = this.scrollService.listen(

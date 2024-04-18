@@ -1020,7 +1020,9 @@ describe('NetworkAdminConsoleReportComponent', () => {
   describe('reasonLabel', () => {
     it('should get reason label', () => {
       const reasonLabel: string = 'reasonLabel';
-      (comp as any).reportUtilitiesService.getReasonLabelFromReport.and.returnValue(
+      (
+        comp as any
+      ).reportUtilitiesService.getReasonLabelFromReport.and.returnValue(
         reasonLabel
       );
 

@@ -64,22 +64,20 @@ export class InviteService implements OnDestroy {
       map((result: MutationResult<CreateInviteMutation>) => {
         return Boolean(result?.data);
       }),
-      tap(inviteCreated => {
+      tap((inviteCreated) => {
         if (inviteCreated) {
           this.toaster.success('Your invitation has been created');
         }
       }),
-      catchError(
-        (e: any): Observable<boolean> => {
-          if (e?.errors?.[0] && e.errors[0].message) {
-            this.toaster.error(e.errors[0].message);
-          } else {
-            this.toaster.error('Something went wrong. Please try again');
-          }
-          console.error(e);
-          return of(false);
+      catchError((e: any): Observable<boolean> => {
+        if (e?.errors?.[0] && e.errors[0].message) {
+          this.toaster.error(e.errors[0].message);
+        } else {
+          this.toaster.error('Something went wrong. Please try again');
         }
-      )
+        console.error(e);
+        return of(false);
+      })
     );
   }
 
@@ -97,20 +95,18 @@ export class InviteService implements OnDestroy {
       map((result: MutationResult<CancelInviteMutation>) => {
         return 'cancelInvite' in (result?.data ?? {});
       }),
-      tap(inviteCanceled => {
+      tap((inviteCanceled) => {
         if (inviteCanceled) {
           this.toaster.inform('The invitation has been canceled');
         }
       }),
-      catchError(
-        (e: any): Observable<boolean> => {
-          if (e?.errors?.[0] && e.errors[0].message) {
-            this.toaster.error(e.errors[0].message);
-          }
-          console.error(e);
-          return of(false);
+      catchError((e: any): Observable<boolean> => {
+        if (e?.errors?.[0] && e.errors[0].message) {
+          this.toaster.error(e.errors[0].message);
         }
-      )
+        console.error(e);
+        return of(false);
+      })
     );
   }
 
@@ -128,20 +124,18 @@ export class InviteService implements OnDestroy {
       map((result: MutationResult<ResendInviteMutation>) => {
         return 'resendInvite' in (result?.data ?? {});
       }),
-      tap(inviteResent => {
+      tap((inviteResent) => {
         if (inviteResent) {
           this.toaster.success('The invitation has been resent');
         }
       }),
-      catchError(
-        (e: any): Observable<boolean> => {
-          if (e?.errors?.[0] && e.errors[0].message) {
-            this.toaster.error(e.errors[0].message);
-          }
-          console.error(e);
-          return of(false);
+      catchError((e: any): Observable<boolean> => {
+        if (e?.errors?.[0] && e.errors[0].message) {
+          this.toaster.error(e.errors[0].message);
         }
-      )
+        console.error(e);
+        return of(false);
+      })
     );
   }
 }

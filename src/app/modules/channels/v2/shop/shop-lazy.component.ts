@@ -13,9 +13,7 @@ import {
  */
 @Component({
   selector: 'm-channelShop__lazy',
-  template: `
-    <ng-template #anchor></ng-template>
-  `,
+  template: ` <ng-template #anchor></ng-template> `,
 })
 export class ChannelShopLazyComponent {
   @Input() component: string;
@@ -35,9 +33,8 @@ export class ChannelShopLazyComponent {
     // Import our module
     const { ChannelsShopModule } = await import('./shop.module');
 
-    const moduleFactory = await this.compiler.compileModuleAsync(
-      ChannelsShopModule
-    );
+    const moduleFactory =
+      await this.compiler.compileModuleAsync(ChannelsShopModule);
     const moduleRef = moduleFactory.create(this.injector);
 
     // Resolves the available components

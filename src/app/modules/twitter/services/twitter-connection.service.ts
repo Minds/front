@@ -20,11 +20,13 @@ import {
  */
 @Injectable({ providedIn: 'root' })
 export class TwitterConnectionService {
-  public readonly configRequestInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly configRequestInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
-  constructor(private api: ApiService, private toast: ToasterService) {}
+  constructor(
+    private api: ApiService,
+    private toast: ToasterService
+  ) {}
 
   async isConnected(showErrorToast: boolean = true): Promise<boolean> {
     this.configRequestInProgress$.next(true);

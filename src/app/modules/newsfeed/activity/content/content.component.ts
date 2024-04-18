@@ -72,7 +72,8 @@ import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-in
   styleUrls: ['./content.component.ng.scss'],
 })
 export class ActivityContentComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+  implements OnInit, AfterViewInit, OnDestroy
+{
   /**
    * Whether or not we allow autoplay on scroll
    */
@@ -317,7 +318,7 @@ export class ActivityContentComponent
       })
     );
     this.subscriptions.push(
-      this.service.canonicalUrl$.subscribe(canonicalUrl => {
+      this.service.canonicalUrl$.subscribe((canonicalUrl) => {
         if (!this.entity) return;
         /**
          * Record pageviews
@@ -326,22 +327,22 @@ export class ActivityContentComponent
       })
     );
     this.subscriptions.push(
-      this.service.isRemind$.subscribe(is => {
+      this.service.isRemind$.subscribe((is) => {
         this.isRemind = is;
       })
     );
     this.subscriptions.push(
-      this.service.isQuote$.subscribe(isQuote => {
+      this.service.isQuote$.subscribe((isQuote) => {
         this.isQuote = isQuote;
       })
     );
     this.subscriptions.push(
-      this.service.isSupermindReply$.subscribe(is => {
+      this.service.isSupermindReply$.subscribe((is) => {
         this.isSupermindReply = is;
       })
     );
     this.subscriptions.push(
-      this.service.isMultiImage$.subscribe(is => {
+      this.service.isMultiImage$.subscribe((is) => {
         this.isMultiImage = is;
       })
     );

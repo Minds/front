@@ -48,8 +48,10 @@ export class DismissalService extends AbstractSubscriberComponent {
    * @returns { [DismissIdentifier] } dismissed items
    */
   dismissedItems$ = this.dismisses$.pipe(
-    map(dismisses =>
-      dismisses.filter(item => Date.now() <= item.expiry).map(item => item.id)
+    map((dismisses) =>
+      dismisses
+        .filter((item) => Date.now() <= item.expiry)
+        .map((item) => item.id)
     )
   );
 
@@ -60,7 +62,7 @@ export class DismissalService extends AbstractSubscriberComponent {
    */
   dismissed(id: DismissIdentifier): Observable<boolean> {
     return this.dismissedItems$.pipe(
-      map(dismissedItems => dismissedItems.includes(id))
+      map((dismissedItems) => dismissedItems.includes(id))
     );
   }
 
@@ -72,8 +74,8 @@ export class DismissalService extends AbstractSubscriberComponent {
   isDismissed(id: DismissIdentifier): boolean {
     const dismisses = this.dismisses$.getValue();
     const dismissedItems = dismisses
-      .filter(item => Date.now() <= item.expiry)
-      .map(item => item.id);
+      .filter((item) => Date.now() <= item.expiry)
+      .map((item) => item.id);
     return dismissedItems.includes(id);
   }
 
@@ -100,7 +102,7 @@ export class DismissalService extends AbstractSubscriberComponent {
       if (dismissesStringified) {
         const dismisses = JSON.parse(dismissesStringified)
           // discard expired dismisses
-          .filter(item => item.expiry >= Date.now()) as DismissItem[];
+          .filter((item) => item.expiry >= Date.now()) as DismissItem[];
         this.dismisses$.next(dismisses);
       }
       this.subscriptions.push(this._persist());
@@ -116,7 +118,7 @@ export class DismissalService extends AbstractSubscriberComponent {
    * Watches the dismisses$ and persists its state by writing to localstorage
    */
   private _persist(): Subscription {
-    return this.dismisses$.pipe(debounceTime(500)).subscribe(dismisses => {
+    return this.dismisses$.pipe(debounceTime(500)).subscribe((dismisses) => {
       try {
         localStorage.setItem(
           DismissalService.STORAGE_KEY,

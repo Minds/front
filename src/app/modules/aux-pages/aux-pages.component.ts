@@ -25,8 +25,8 @@ export class AuxComponent implements OnInit, OnDestroy {
   public readonly bodyCopy$: Observable<string> = this.service.bodyCopy$;
 
   // updated at date string.
-  public readonly updatedAtDateString$: Observable<string> = this.service
-    .updatedAtDateString$;
+  public readonly updatedAtDateString$: Observable<string> =
+    this.service.updatedAtDateString$;
 
   // whether request to load from CMS is in flight.
   public readonly loading$: Observable<boolean> = this.service.loading$;

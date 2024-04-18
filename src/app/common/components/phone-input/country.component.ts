@@ -67,7 +67,7 @@ export class PhoneInputCountryComponent implements OnInit {
   }
 
   protected fetchCountryData(): void {
-    this.countryCodeData.countries.forEach(c => {
+    this.countryCodeData.countries.forEach((c) => {
       let country = new Country();
       country.name = c[0].toString();
       country.iso2 = c[1].toString();

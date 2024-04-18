@@ -24,7 +24,7 @@ export class ChannelListComponent implements OnInit {
 
   ngOnInit() {
     this.feedsService.clear();
-    this.feedsService.feed.subscribe(async entities => {
+    this.feedsService.feed.subscribe(async (entities) => {
       if (!entities.length) {
         return;
       }

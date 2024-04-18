@@ -24,27 +24,27 @@ import { ComposerService } from '../../services/composer.service';
   },
 })
 export class ComposerAudienceSelectorButtonComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /** bind disabled class to host component. */
   @HostBinding('class.m-composerAudienceSelector__host--disabled')
   disabled: boolean = false;
 
-  public readonly audienceDisplayName$: Observable<string> = this
-    .audienceSelectorService.audienceDisplayName$;
+  public readonly audienceDisplayName$: Observable<string> =
+    this.audienceSelectorService.audienceDisplayName$;
 
   /** Display name */
-  public readonly selectedAudienceDisplayName$: Observable<
-    string
-  > = combineLatest([
-    this.composerService.pendingMonetization$,
-    this.audienceSelectorService.audienceDisplayName$,
-  ]).pipe(
-    map(([monetization, audienceName]) => {
-      if (monetization && monetization.name) {
-        return monetization.name;
-      } else return audienceName;
-    })
-  );
+  public readonly selectedAudienceDisplayName$: Observable<string> =
+    combineLatest([
+      this.composerService.pendingMonetization$,
+      this.audienceSelectorService.audienceDisplayName$,
+    ]).pipe(
+      map(([monetization, audienceName]) => {
+        if (monetization && monetization.name) {
+          return monetization.name;
+        } else return audienceName;
+      })
+    );
 
   /** subscription to variables that change disabled state */
   private disableStateSubscription: Subscription;

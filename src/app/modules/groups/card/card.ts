@@ -30,10 +30,10 @@ export class GroupsCard {
   }
 
   ngOnInit() {
-    this.$updateMarker = this.updateMarkers.markers.subscribe(markers => {
+    this.$updateMarker = this.updateMarkers.markers.subscribe((markers) => {
       if (!markers) return;
       this.hasMarker = markers.filter(
-        marker =>
+        (marker) =>
           marker.read_timestamp < marker.updated_timestamp &&
           marker.entity_guid == this.group.guid
       ).length;

@@ -101,7 +101,7 @@ export class GroupInviteComponent implements OnInit, OnDestroy {
             }
           })
         )
-        .subscribe(user => {
+        .subscribe((user) => {
           this.inProgress = false;
           this.invitee = user;
           this.refreshEligibilityValidator();

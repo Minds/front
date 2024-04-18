@@ -36,26 +36,24 @@ describe('ProductPageFeatureHighlightComponent', () => {
   const defaultBackgroundColor: string = '#000';
   const mockStrapiUrl: string = 'https://example-strapi.minds.com';
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ProductPageFeatureHighlightComponent,
-          MockComponent({
-            selector: 'm-productPage__button',
-            inputs: ['data', 'colorScheme'],
-          }),
-          MockComponent({
-            selector: 'markdown',
-            inputs: ['data'],
-          }),
-        ],
-        providers: [{ provide: STRAPI_URL, useValue: mockStrapiUrl }],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ProductPageFeatureHighlightComponent,
+        MockComponent({
+          selector: 'm-productPage__button',
+          inputs: ['data', 'colorScheme'],
+        }),
+        MockComponent({
+          selector: 'markdown',
+          inputs: ['data'],
+        }),
+      ],
+      providers: [{ provide: STRAPI_URL, useValue: mockStrapiUrl }],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ProductPageFeatureHighlightComponent);
     comp = fixture.componentInstance;
 

@@ -120,7 +120,7 @@ export class WireLockScreenComponent implements OnInit {
         this.inProgress = false;
         this.detectChanges();
       })
-      .catch(e => {
+      .catch((e) => {
         this.inProgress = false;
         this.detectChanges();
 

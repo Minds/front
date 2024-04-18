@@ -35,16 +35,14 @@ export class SupermindConsoleFilterBarComponent implements OnInit, OnDestroy {
   ];
 
   // status filter values.
-  public readonly statusFilterValue$: BehaviorSubject<
-    SupermindConsoleStatusFilterType
-  > = new BehaviorSubject<SupermindConsoleStatusFilterType>(null);
+  public readonly statusFilterValue$: BehaviorSubject<SupermindConsoleStatusFilterType> =
+    new BehaviorSubject<SupermindConsoleStatusFilterType>(null);
 
   private listTypeSubscription: Subscription;
 
   // fired on filter state change.
-  @Output() statusFilterChange: EventEmitter<SupermindState> = new EventEmitter<
-    SupermindState
-  >();
+  @Output() statusFilterChange: EventEmitter<SupermindState> =
+    new EventEmitter<SupermindState>();
 
   constructor(private service: SupermindConsoleService) {}
 

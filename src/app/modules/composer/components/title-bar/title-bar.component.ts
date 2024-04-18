@@ -32,9 +32,8 @@ export class TitleBarComponent {
   /**
    * Create blog intent
    */
-  @Output('onCreateBlog') onCreateBlogEmitter: EventEmitter<
-    void
-  > = new EventEmitter<void>();
+  @Output('onCreateBlog') onCreateBlogEmitter: EventEmitter<void> =
+    new EventEmitter<void>();
 
   remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
@@ -42,7 +41,7 @@ export class TitleBarComponent {
    * Has attachments
    */
   hasAttachments$: Observable<boolean> = this.service.data$.pipe(
-    map(values => values.attachmentGuids?.length > 0)
+    map((values) => values.attachmentGuids?.length > 0)
   );
 
   /**

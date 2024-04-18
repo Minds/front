@@ -1,6 +1,6 @@
 import { BoostGoalsExperimentService } from './boost-goals-experiment.service';
 
-export let experimentsServiceMock = new (function() {
+export let experimentsServiceMock = new (function () {
   this.hasVariation = jasmine.createSpy('hasVariation');
 })();
 

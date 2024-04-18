@@ -13,7 +13,7 @@ export class MessengerConversationDockpanesService {
     public session: Session,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
-    this.session.getLoggedInUser(user => this.onLogOut(user));
+    this.session.getLoggedInUser((user) => this.onLogOut(user));
 
     if (isPlatformBrowser(platformId)) {
       this.loadFromCache();

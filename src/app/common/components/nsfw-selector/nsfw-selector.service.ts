@@ -50,7 +50,7 @@ export class NSFWSelectorService {
   saveToCookie(): void {
     this.cookieService.put(
       `nsfw:${this.cacheKey}`,
-      JSON.stringify(this.reasons.filter(r => r.selected).map(r => r.value))
+      JSON.stringify(this.reasons.filter((r) => r.selected).map((r) => r.value))
     );
   }
 }

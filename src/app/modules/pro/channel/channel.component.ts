@@ -213,7 +213,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   }
 
   listen() {
-    this.params$ = this.route.params.subscribe(params => {
+    this.params$ = this.route.params.subscribe((params) => {
       if (params['username']) {
         this.username = params['username'];
       }
@@ -230,25 +230,25 @@ export class ProChannelComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.loggedIn$ = this.session.loggedinEmitter.subscribe(is => {
+    this.loggedIn$ = this.session.loggedinEmitter.subscribe((is) => {
       if (is) {
         this.reload();
       }
     });
 
     this.routerEventsSubscription = this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe(data => {
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe((data) => {
         this.pageLayoutService.useFullWidth();
       });
 
     this.supportTiersSubscription = this.supportTiers.list$.subscribe(
-      supportTiers => {
+      (supportTiers) => {
         if (supportTiers[0]) {
           this.channelService.lowestSupportTier$.next(supportTiers[0]);
 
           this.channelService.userIsMember$.next(
-            supportTiers.some(supportTier => supportTier.subscription_urn)
+            supportTiers.some((supportTier) => supportTier.subscription_urn)
           );
         }
         this.detectChanges();
@@ -256,7 +256,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     );
 
     this.showLoginRowSubscription = this.channelService.showLoginRow$.subscribe(
-      show => {
+      (show) => {
         this.showLoginRow = show;
         this.detectChanges();
       }

@@ -17,7 +17,7 @@ export class LanguageModalService {
   present(injector: Injector): Promise<string> {
     const modal = this.modalService.present(LanguageModalComponent, {
       data: {
-        onSave: language => modal.close(language),
+        onSave: (language) => modal.close(language),
       },
       injector,
     });

@@ -17,7 +17,7 @@ export type GroupFeedTypeFilter =
  * (note: top actually uses GroupTop sorting algo)
  */
 export const groupFeedAlgorithms = ['latest', 'top'] as const;
-export type GroupFeedAlgorithm = typeof groupFeedAlgorithms[number];
+export type GroupFeedAlgorithm = (typeof groupFeedAlgorithms)[number];
 
 export function isOfTypeGroupFeedAlgorithm(
   algo: string

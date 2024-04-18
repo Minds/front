@@ -139,20 +139,21 @@ export const MockGiftCardBalanceByProductId: GiftCardBalanceByProductId = {
   productId: GiftCardProductIdEnum.Boost,
 };
 
-export const MockGiftCardBalanceByProductIdArray: GiftCardBalanceByProductId[] = [
-  {
-    balance: 1.23,
-    earliestExpiringGiftCard: MockGiftCardNodeArray[2],
-    productId: GiftCardProductIdEnum.Boost,
-  },
-  {
-    balance: 2.34,
-    earliestExpiringGiftCard: MockGiftCardNodeArray[1],
-    productId: GiftCardProductIdEnum.Plus,
-  },
-  {
-    balance: 3.45,
-    earliestExpiringGiftCard: MockGiftCardNodeArray[2],
-    productId: GiftCardProductIdEnum.Pro,
-  },
-];
+export const MockGiftCardBalanceByProductIdArray: GiftCardBalanceByProductId[] =
+  [
+    {
+      balance: 1.23,
+      earliestExpiringGiftCard: MockGiftCardNodeArray[2],
+      productId: GiftCardProductIdEnum.Boost,
+    },
+    {
+      balance: 2.34,
+      earliestExpiringGiftCard: MockGiftCardNodeArray[1],
+      productId: GiftCardProductIdEnum.Plus,
+    },
+    {
+      balance: 3.45,
+      earliestExpiringGiftCard: MockGiftCardNodeArray[2],
+      productId: GiftCardProductIdEnum.Pro,
+    },
+  ];

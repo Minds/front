@@ -76,7 +76,8 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.isGiftCardClaimExperimentActive = this.giftCardClaimExperiment.isActive();
+    this.isGiftCardClaimExperimentActive =
+      this.giftCardClaimExperiment.isActive();
 
     this.walletService.loadWallet();
 
@@ -98,7 +99,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   updateTabs() {
     this.tabs = [];
     const headerCurrencies: string[] = ['cash', 'tokens', 'eth', 'btc'];
-    headerCurrencies.forEach(currency => {
+    headerCurrencies.forEach((currency) => {
       const headerTab: DataTab = {
         id: currency,
         label: this.wallet[currency].label,

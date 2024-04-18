@@ -70,9 +70,7 @@ describe('ChannelActionsPostSubscriptionsComponent', () => {
 
     comp.onClick();
 
-    expect(comp.submitting)
-      .withContext('should be submitting')
-      .toBe(true);
+    expect(comp.submitting).withContext('should be submitting').toBe(true);
 
     tick();
 
@@ -82,9 +80,7 @@ describe('ChannelActionsPostSubscriptionsComponent', () => {
 
     tick();
 
-    expect(comp.submitting)
-      .withContext('should not be submitting')
-      .toBe(false);
+    expect(comp.submitting).withContext('should not be submitting').toBe(false);
 
     expect(comp.frequency).toBe(PostSubscriptionFrequencyEnum.Always);
   }));

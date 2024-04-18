@@ -28,8 +28,8 @@ export class SupermindReplyConfirmModalComponent implements OnInit {
   public isTwitterReplyRequired: boolean = false;
 
   // whether request for config is in progress.
-  public configRequestInProgress$: BehaviorSubject<boolean> = this
-    .twitterConnection.configRequestInProgress$;
+  public configRequestInProgress$: BehaviorSubject<boolean> =
+    this.twitterConnection.configRequestInProgress$;
 
   constructor(private twitterConnection: TwitterConnectionService) {}
 

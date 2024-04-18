@@ -110,10 +110,10 @@ export class ProChannelContentListComponent implements OnChanges {
    */
   onActivityDelete(activity: any): void {
     this.entities$ = this.entities$.pipe(
-      map(val =>
-        val.filter(entity => entity.getValue()['guid'] !== activity.guid)
+      map((val) =>
+        val.filter((entity) => entity.getValue()['guid'] !== activity.guid)
       ),
-      catchError(error => {
+      catchError((error) => {
         console.error(error);
         return this.entities$;
       })

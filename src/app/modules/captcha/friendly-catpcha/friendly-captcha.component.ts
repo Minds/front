@@ -23,9 +23,7 @@ export type FriendlyCaptchaOrigin = 'registration' | 'vote_up' | null;
  */
 @Component({
   selector: 'm-friendlyCaptcha',
-  template: `
-    <div #friendlyWidget></div>
-  `,
+  template: ` <div #friendlyWidget></div> `,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -35,7 +33,8 @@ export type FriendlyCaptchaOrigin = 'registration' | 'vote_up' | null;
   ],
 })
 export class FriendlyCaptchaComponent
-  implements AfterViewInit, ControlValueAccessor {
+  implements AfterViewInit, ControlValueAccessor
+{
   // Instance of widget.
   private widget: WidgetInstance;
 

@@ -57,16 +57,14 @@ export class FileUploadComponent {
   /**
    * OnSelect event
    */
-  @Output('onSelect') onSelectEmitter: EventEmitter<
-    FileUploadSelectEvent
-  > = new EventEmitter<FileUploadSelectEvent>();
+  @Output('onSelect') onSelectEmitter: EventEmitter<FileUploadSelectEvent> =
+    new EventEmitter<FileUploadSelectEvent>();
 
   /**
    * Wrapper <form> DOM element. Used for a reliable reset().
    */
-  @ViewChild('fileForm', { static: true }) fileForm: ElementRef<
-    HTMLFormElement
-  >;
+  @ViewChild('fileForm', { static: true })
+  fileForm: ElementRef<HTMLFormElement>;
 
   /**
    * <input type=file> DOM element. Used in spec tests.

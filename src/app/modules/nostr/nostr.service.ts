@@ -29,11 +29,11 @@ export class NostrService implements OnDestroy {
    * The nostr public key (minds.com owned keypair)
    */
   public publicKey$: Observable<string | null> = this.user$$.pipe(
-    takeWhile(user => Boolean(user)),
-    switchMap(user =>
+    takeWhile((user) => Boolean(user)),
+    switchMap((user) =>
       this.api.get(`.well-known/nostr.json?name=${user?.username}`)
     ),
-    map(response => Object.values(response?.names || {})[0] as string),
+    map((response) => Object.values(response?.names || {})[0] as string),
     share()
   );
 
@@ -41,10 +41,10 @@ export class NostrService implements OnDestroy {
    * Returns configured NIP26
    */
   public configuredNip26Tag$: Observable<Array<string>> = this.user$$.pipe(
-    takeWhile(user => Boolean(user)),
-    switchMap(user => this.api.get(`api/v3/nostr/nip26-delegation`)),
+    takeWhile((user) => Boolean(user)),
+    switchMap((user) => this.api.get(`api/v3/nostr/nip26-delegation`)),
     catchError(() => of(null)),
-    map(response => response?.tag),
+    map((response) => response?.tag),
     share()
   );
 
@@ -52,7 +52,7 @@ export class NostrService implements OnDestroy {
    * Returns if NIP26 delegation is setup
    */
   public isNip26Setup$: Observable<boolean> = this.configuredNip26Tag$.pipe(
-    map(configuredNip26Tag => !!configuredNip26Tag)
+    map((configuredNip26Tag) => !!configuredNip26Tag)
   );
 
   /**
@@ -66,7 +66,7 @@ export class NostrService implements OnDestroy {
   public nip26QueryString$: Observable<string> = of(
     Math.round(Date.now() / 1000)
   ).pipe(
-    map(createdAt => {
+    map((createdAt) => {
       // createdAt is unix timestamp
       return `kind=1&created_at>${createdAt}`;
     })
@@ -87,16 +87,15 @@ export class NostrService implements OnDestroy {
   /**
    * The SHA256 hash of the NIP26 delegation token
    */
-  public nip26DelegationTokenSha256Hash$: Observable<
-    string
-  > = this.nip26DelegationToken$.pipe(
-    map(nip26DelegationToken => {
-      const tokenHash = createHash('sha256')
-        .update(Buffer.from(nip26DelegationToken))
-        .digest();
-      return Buffer.from(tokenHash).toString('hex');
-    })
-  );
+  public nip26DelegationTokenSha256Hash$: Observable<string> =
+    this.nip26DelegationToken$.pipe(
+      map((nip26DelegationToken) => {
+        const tokenHash = createHash('sha256')
+          .update(Buffer.from(nip26DelegationToken))
+          .digest();
+        return Buffer.from(tokenHash).toString('hex');
+      })
+    );
 
   /**
    * The signed delegation token
@@ -130,7 +129,7 @@ export class NostrService implements OnDestroy {
    * Will return the NIP-05 username for the provided user
    */
   public nip05Alias$: Observable<string> = this.user$$.pipe(
-    map(user => {
+    map((user) => {
       return user.username + '@minds.com'; // Fix this so we support other non-minds.com domains
     })
   );
@@ -140,7 +139,7 @@ export class NostrService implements OnDestroy {
   constructor(private api: ApiService) {
     this.subscriptions = [
       this.nip26DelegationTag$.subscribe(
-        nip26DelegationTag =>
+        (nip26DelegationTag) =>
           (this.nip26DelegationTagSnapshot = nip26DelegationTag)
       ),
     ];

@@ -47,7 +47,7 @@ export class DraggableListComponent {
       (event.dropEffect === 'copy' || event.dropEffect === 'move')
     ) {
       let dragIndex = this.data.findIndex(
-        item => event.data[this.id] === item[this.id]
+        (item) => event.data[this.id] === item[this.id]
       );
       let dropIndex = event.index;
       // remove element

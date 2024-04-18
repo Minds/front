@@ -14,46 +14,44 @@ describe('EnablePushNotificationsNoticeComponent', () => {
 
   let routerMock = { navigate: jasmine.createSpy('navigate') };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          EnablePushNotificationsNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon'],
-            outputs: ['dismissClick'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: Router,
-            useValue: routerMock,
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: NotificationsSettingsV2Service,
-            useValue: MockService(NotificationsSettingsV2Service),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        EnablePushNotificationsNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: Router,
+          useValue: routerMock,
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: NotificationsSettingsV2Service,
+          useValue: MockService(NotificationsSettingsV2Service),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(EnablePushNotificationsNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

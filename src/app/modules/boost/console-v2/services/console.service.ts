@@ -32,57 +32,47 @@ export class BoostConsoleService {
    * Whether we're looking at a list of boosts, a single boost,
    * or the sitewide boost feed
    */
-  public readonly view$: BehaviorSubject<
-    BoostConsoleView
-  > = new BehaviorSubject<BoostConsoleView>('list');
+  public readonly view$: BehaviorSubject<BoostConsoleView> =
+    new BehaviorSubject<BoostConsoleView>('list');
 
   // Subject containing whether or not we are viewing
   // the boost console in the context of the admin console
   // (as opposed to user context)
-  public readonly adminContext$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly adminContext$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // Subject containing location filter for console to display.
   // (e.g. feed or sidebar)
-  public readonly locationFilterValue$: BehaviorSubject<
-    BoostConsoleLocationFilter
-  > = new BehaviorSubject<BoostConsoleLocationFilter>('feed');
+  public readonly locationFilterValue$: BehaviorSubject<BoostConsoleLocationFilter> =
+    new BehaviorSubject<BoostConsoleLocationFilter>('feed');
 
   // Subject containing status filter for console to display.
   // (Used in user boost context only)
-  public readonly stateFilterValue$: BehaviorSubject<
-    BoostConsoleStateFilter
-  > = new BehaviorSubject<BoostConsoleStateFilter>('all');
+  public readonly stateFilterValue$: BehaviorSubject<BoostConsoleStateFilter> =
+    new BehaviorSubject<BoostConsoleStateFilter>('all');
 
   // Subject containing suitability filter for console to display.
   // (Used in admin context only)
-  public readonly suitabilityFilterValue$: BehaviorSubject<
-    BoostConsoleSuitabilityFilter
-  > = new BehaviorSubject<BoostConsoleSuitabilityFilter>('safe');
+  public readonly suitabilityFilterValue$: BehaviorSubject<BoostConsoleSuitabilityFilter> =
+    new BehaviorSubject<BoostConsoleSuitabilityFilter>('safe');
 
   // Subject containing payment method filter for console to display.
   // (Used in admin context only)
-  public readonly paymentMethodFilterValue$: BehaviorSubject<
-    BoostConsolePaymentMethodFilter
-  > = new BehaviorSubject<BoostConsolePaymentMethodFilter>('all');
+  public readonly paymentMethodFilterValue$: BehaviorSubject<BoostConsolePaymentMethodFilter> =
+    new BehaviorSubject<BoostConsolePaymentMethodFilter>('all');
 
   // The state of the api - whether it's in progress
-  public readonly inProgress$$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
-  public readonly singleBoostGuid$: BehaviorSubject<
-    string
-  > = new BehaviorSubject<string>(null);
+  public readonly singleBoostGuid$: BehaviorSubject<string> =
+    new BehaviorSubject<string>(null);
 
-  public readonly singleBoost$: BehaviorSubject<Boost> = new BehaviorSubject<
-    Boost
-  >(null);
+  public readonly singleBoost$: BehaviorSubject<Boost> =
+    new BehaviorSubject<Boost>(null);
 
-  public readonly remoteUserGuid$: BehaviorSubject<
-    string
-  > = new BehaviorSubject<string>(null);
+  public readonly remoteUserGuid$: BehaviorSubject<string> =
+    new BehaviorSubject<string>(null);
 
   constructor(
     public session: Session,
@@ -155,15 +145,13 @@ export class BoostConsoleService {
             const paymentMethod = this.paymentMethodFilterValue$.getValue();
 
             if (suitability) {
-              params.audience = this.getBoostSuitabilityFromFilterValue(
-                suitability
-              );
+              params.audience =
+                this.getBoostSuitabilityFromFilterValue(suitability);
             }
 
             if (paymentMethod) {
-              params.payment_method = this.getBoostPaymentMethodFromFilterValue(
-                paymentMethod
-              );
+              params.payment_method =
+                this.getBoostPaymentMethodFromFilterValue(paymentMethod);
             }
           } else {
             const remoteUserGuid = this.remoteUserGuid$.getValue();
@@ -176,7 +164,7 @@ export class BoostConsoleService {
         // -------------------------------------------
         return this.api.get<ApiResponse>(endpoint, params);
       }),
-      catchError(e => {
+      catchError((e) => {
         if (e.status === 403) {
           return of({ redirect: true, errorMessage: e.error.message });
         }

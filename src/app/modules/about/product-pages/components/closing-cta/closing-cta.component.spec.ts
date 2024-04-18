@@ -37,29 +37,27 @@ describe('ProductPageClosingCtaComponent', () => {
   const mockAssetsUrl: string = 'https://example-assets.minds.com';
   const mockStrapiUrl: string = 'https://example-strapi.minds.com';
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ProductPageClosingCtaComponent,
-          MockComponent({
-            selector: 'm-productPage__button',
-            inputs: ['data'],
-          }),
-          MockComponent({
-            selector: 'markdown',
-            inputs: ['data'],
-          }),
-        ],
-        providers: [
-          { provide: CDN_ASSETS_URL, useValue: mockAssetsUrl },
-          { provide: STRAPI_URL, useValue: mockStrapiUrl },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ProductPageClosingCtaComponent,
+        MockComponent({
+          selector: 'm-productPage__button',
+          inputs: ['data'],
+        }),
+        MockComponent({
+          selector: 'markdown',
+          inputs: ['data'],
+        }),
+      ],
+      providers: [
+        { provide: CDN_ASSETS_URL, useValue: mockAssetsUrl },
+        { provide: STRAPI_URL, useValue: mockStrapiUrl },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ProductPageClosingCtaComponent);
     comp = fixture.componentInstance;
 

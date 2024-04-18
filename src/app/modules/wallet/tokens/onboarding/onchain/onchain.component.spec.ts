@@ -38,7 +38,7 @@ let blockchainService: any = MockService(BlockchainService, {
   getWallet: null,
 });
 
-let web3walletMock = new (function() {
+let web3walletMock = new (function () {
   this.getWallets = jasmine
     .createSpy('getWallets')
     .and.stub()
@@ -73,34 +73,32 @@ xdescribe('TokenOnChainOnboardingComponent', () => {
   let comp: TokenOnChainOnboardingComponent;
   let fixture: ComponentFixture<TokenOnChainOnboardingComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          TokenOnChainOnboardingComponent,
-          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-          MockComponent({
-            selector: 'm-token--onboarding--video',
-            inputs: ['src'],
-          }),
-        ],
-        imports: [FormsModule],
-        providers: [
-          { provide: Client, useValue: clientMock },
-          { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
-          { provide: Session, useValue: sessionMock },
-          { provide: Router, useValue: RouterTestingModule },
-          { provide: BlockchainService, useValue: blockchainService },
-          { provide: Web3WalletService, useValue: web3walletMock },
-          { provide: Storage, useValue: storageMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        TokenOnChainOnboardingComponent,
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        MockComponent({
+          selector: 'm-token--onboarding--video',
+          inputs: ['src'],
+        }),
+      ],
+      imports: [FormsModule],
+      providers: [
+        { provide: Client, useValue: clientMock },
+        { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
+        { provide: Session, useValue: sessionMock },
+        { provide: Router, useValue: RouterTestingModule },
+        { provide: BlockchainService, useValue: blockchainService },
+        { provide: Web3WalletService, useValue: web3walletMock },
+        { provide: Storage, useValue: storageMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

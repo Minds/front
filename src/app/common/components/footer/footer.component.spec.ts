@@ -9,26 +9,24 @@ describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          FooterComponent,
-          MockComponent({
-            selector: 'a',
-            inputs: ['routerLink'],
-          }),
-        ],
-        providers: [
-          {
-            provide: NavigationService,
-            useValue: MockService(NavigationService),
-          },
-          { provide: PagesService, useValue: MockService(PagesService) },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        FooterComponent,
+        MockComponent({
+          selector: 'a',
+          inputs: ['routerLink'],
+        }),
+      ],
+      providers: [
+        {
+          provide: NavigationService,
+          useValue: MockService(NavigationService),
+        },
+        { provide: PagesService, useValue: MockService(PagesService) },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FooterComponent);

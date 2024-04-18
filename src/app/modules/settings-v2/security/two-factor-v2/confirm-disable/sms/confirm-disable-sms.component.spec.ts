@@ -16,36 +16,34 @@ describe('SettingsTwoFactorDisableSMSComponent', () => {
   let comp: SettingsTwoFactorDisableSMSComponent;
   let fixture: ComponentFixture<SettingsTwoFactorDisableSMSComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule],
-        declarations: [
-          SettingsTwoFactorDisableSMSComponent,
-          MockComponent({
-            selector: 'm-settings--two-factor',
-            outputs: ['onSave', 'onDisable'],
-          }),
-          ButtonComponent,
-        ],
-        providers: [
-          {
-            provide: SettingsTwoFactorV2Service,
-            useValue: MockService(SettingsTwoFactorV2Service),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          {
-            provide: Client,
-            useValue: clientMock,
-          },
-          { provide: ModalService, useValue: modalServiceMock },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [
+        SettingsTwoFactorDisableSMSComponent,
+        MockComponent({
+          selector: 'm-settings--two-factor',
+          outputs: ['onSave', 'onDisable'],
+        }),
+        ButtonComponent,
+      ],
+      providers: [
+        {
+          provide: SettingsTwoFactorV2Service,
+          useValue: MockService(SettingsTwoFactorV2Service),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: Client,
+          useValue: clientMock,
+        },
+        { provide: ModalService, useValue: modalServiceMock },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorDisableSMSComponent);
@@ -63,7 +61,7 @@ describe('SettingsTwoFactorDisableSMSComponent', () => {
 
     expect((comp as any).toast.success).toHaveBeenCalled();
     expect((comp as any).service.reloadSettings).toHaveBeenCalled();
-    (comp as any).service.activePanel$.subscribe(val => {
+    (comp as any).service.activePanel$.subscribe((val) => {
       expect(val).toEqual({ panel: 'root', intent: 'enabled-sms' });
     });
   });
@@ -76,10 +74,10 @@ describe('SettingsTwoFactorDisableSMSComponent', () => {
     expect((comp as any).service.reloadSettings).toHaveBeenCalled();
 
     (comp as any).service.activePanel$.subscribe(
-      val => {
+      (val) => {
         expect(val).toEqual({ panel: 'root', intent: 'disabled-sms' });
       },
-      err => {
+      (err) => {
         console.error(err);
         fail('An error occurred in confirm-disable-sms');
       }

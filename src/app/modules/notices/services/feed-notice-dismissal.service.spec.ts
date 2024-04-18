@@ -1,7 +1,7 @@
 import moment = require('moment');
 import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
 
-export let objectLocalStorageServiceMock = new (function() {
+export let objectLocalStorageServiceMock = new (function () {
   this.setSingle = jasmine.createSpy('setSingle').and.returnValue(this);
   this.removeSingle = jasmine.createSpy('removeSingle').and.returnValue(this);
   this.getAll = jasmine.createSpy('getAll').and.returnValue(this);
@@ -51,9 +51,7 @@ describe('FeedNoticeDismissalService', () => {
   it('should determine if notice dismissal is expired', () => {
     (service as any).objectStorage.getAll.and.returnValue({
       'boost-channel': {
-        timestamp: moment()
-          .subtract(90, 'days')
-          .toDate(),
+        timestamp: moment().subtract(90, 'days').toDate(),
       },
     });
     expect(service.isNoticeDismissed('boost-channel')).toBeFalsy();

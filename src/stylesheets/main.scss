@@ -330,8 +330,12 @@ body.m-theme-in-transition,
 body.m-theme-in-transition *,
 body.m-theme-in-transition *:before,
 body.m-theme-in-transition *:after {
-  transition: background-color 0.75s ease 0s, border-color 0.75s ease 0s,
-    box-shadow 0.75s ease 0s, stroke 0.75s ease 0s, fill 0.75s ease 0s !important;
+  transition:
+    background-color 0.75s ease 0s,
+    border-color 0.75s ease 0s,
+    box-shadow 0.75s ease 0s,
+    stroke 0.75s ease 0s,
+    fill 0.75s ease 0s !important;
 }
 
 .m-disableScrollbars {

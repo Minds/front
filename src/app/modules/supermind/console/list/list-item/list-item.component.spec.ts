@@ -25,43 +25,41 @@ describe('SupermindConsoleListItemComponent', () => {
     entity: { guid: '123' },
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          SupermindConsoleListItemComponent,
-          MockComponent({
-            selector: 'm-chipBadge',
-          }),
-          MockComponent({
-            selector: 'm-activity',
-            inputs: [
-              'entity',
-              'canDelete',
-              'displayOptions',
-              'autoplayVideo',
-              'canRecordAnalytics',
-            ],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['size'],
-          }),
-          MockComponent({
-            selector: 'm-supermind__stateLabel',
-            inputs: ['supermind'],
-          }),
-          MockComponent({
-            selector: 'm-supermind__actionButtons',
-            inputs: ['supermind'],
-          }),
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        SupermindConsoleListItemComponent,
+        MockComponent({
+          selector: 'm-chipBadge',
+        }),
+        MockComponent({
+          selector: 'm-activity',
+          inputs: [
+            'entity',
+            'canDelete',
+            'displayOptions',
+            'autoplayVideo',
+            'canRecordAnalytics',
+          ],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['size'],
+        }),
+        MockComponent({
+          selector: 'm-supermind__stateLabel',
+          inputs: ['supermind'],
+        }),
+        MockComponent({
+          selector: 'm-supermind__actionButtons',
+          inputs: ['supermind'],
+        }),
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(SupermindConsoleListItemComponent);
     comp = fixture.componentInstance;
 

@@ -39,7 +39,7 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
     this.boostGroupsExperimentIsActive = this.boostGroupsExperiment.isActive();
 
     this.subscriptions.push(
-      this.service.group$.subscribe(group => {
+      this.service.group$.subscribe((group) => {
         this.group = group;
       })
     );
@@ -106,8 +106,7 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
     const modal = this.modalService.present(ConfirmV2Component, {
       data: {
         title: 'Delete Group',
-        body:
-          'Are you sure you want to delete this? This action cannot be undone.',
+        body: 'Are you sure you want to delete this? This action cannot be undone.',
         confirmButtonColor: 'red',
         onConfirm: () => {
           modal.dismiss();

@@ -56,14 +56,15 @@ export class TokenOnboardingComponent {
       return;
     }
 
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
-      this.service.slide
-    );
+    const componentFactory =
+      this._componentFactoryResolver.resolveComponentFactory(
+        this.service.slide
+      );
 
     let componentRef = viewContainerRef.createComponent(componentFactory);
 
     if (componentRef.instance.next) {
-      componentRef.instance.next.subscribe(next => {
+      componentRef.instance.next.subscribe((next) => {
         this.service.next();
         this.loadSlide();
         this.detectChanges();

@@ -14,49 +14,47 @@ describe('NotificationsV3NotificationComponent', () => {
   let comp: NotificationsV3NotificationComponent;
   let fixture: ComponentFixture<NotificationsV3NotificationComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [NotificationsV3NotificationComponent],
-        providers: [
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: ConfigsService,
-            useValue: MockService(ConfigsService),
-          },
-          {
-            provide: ElementRef,
-            useValue: MockService(ElementRef),
-          },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: InteractionsModalService,
-            useValue: MockService(InteractionsModalService),
-          },
-        ],
-      })
-        .overrideProvider(NotificationsV3Service, {
-          useValue: MockService(NotificationsV3Service),
-        })
-        .overrideProvider(ActivityService, {
-          useValue: MockService(ActivityService),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [NotificationsV3NotificationComponent],
+      providers: [
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+        {
+          provide: ElementRef,
+          useValue: MockService(ElementRef),
+        },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: InteractionsModalService,
+          useValue: MockService(InteractionsModalService),
+        },
+      ],
     })
-  );
+      .overrideProvider(NotificationsV3Service, {
+        useValue: MockService(NotificationsV3Service),
+      })
+      .overrideProvider(ActivityService, {
+        useValue: MockService(ActivityService),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(NotificationsV3NotificationComponent);
     comp = fixture.componentInstance;
 

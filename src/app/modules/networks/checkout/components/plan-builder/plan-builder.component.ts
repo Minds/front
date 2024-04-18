@@ -20,10 +20,12 @@ import { Router } from '@angular/router';
 })
 export class NetworksCheckoutPlanBuilderComponent {
   /** Enum for use in template. */
-  public readonly PlanCardPriceTimePeriodEnum: typeof PlanCardPriceTimePeriodEnum = PlanCardPriceTimePeriodEnum;
+  public readonly PlanCardPriceTimePeriodEnum: typeof PlanCardPriceTimePeriodEnum =
+    PlanCardPriceTimePeriodEnum;
 
   /** Enum for use in template. */
-  public readonly CheckoutPageKeyEnum: typeof CheckoutPageKeyEnum = CheckoutPageKeyEnum;
+  public readonly CheckoutPageKeyEnum: typeof CheckoutPageKeyEnum =
+    CheckoutPageKeyEnum;
 
   /** AddOn's for display - when NOT on addons page returns only AddOns in basket. */
   public readonly addOnsToDisplay$: Observable<AddOn[]> = combineLatest([
@@ -39,26 +41,23 @@ export class NetworksCheckoutPlanBuilderComponent {
   );
 
   /** Title of the page. */
-  public readonly pageTitle$: Observable<string> = this.checkoutService
-    .pageTitle$;
+  public readonly pageTitle$: Observable<string> =
+    this.checkoutService.pageTitle$;
 
   /** Description of the page. */
-  public readonly pageDescription$: Observable<string> = this.checkoutService
-    .pageDescription$;
+  public readonly pageDescription$: Observable<string> =
+    this.checkoutService.pageDescription$;
 
   /** Selected plan. */
   public readonly plan$: Observable<Plan> = this.checkoutService.plan$;
 
   /** Whether a summary change is in progress (e.g. a calculation). */
-  public readonly summaryChangeInProgress$: Observable<
-    boolean
-  > = this.checkoutService.summaryChangeInProgress$.pipe(
-    distinctUntilChanged()
-  );
+  public readonly summaryChangeInProgress$: Observable<boolean> =
+    this.checkoutService.summaryChangeInProgress$.pipe(distinctUntilChanged());
 
   /** Currently active page. */
-  public readonly activePage$: Observable<CheckoutPageKeyEnum> = this
-    .checkoutService.activePage$;
+  public readonly activePage$: Observable<CheckoutPageKeyEnum> =
+    this.checkoutService.activePage$;
 
   constructor(
     private checkoutService: NetworksCheckoutService,

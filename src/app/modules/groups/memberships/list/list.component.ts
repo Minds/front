@@ -36,22 +36,20 @@ export class GroupsMembershipsListComponent implements OnInit, OnDestroy {
   /**
    * Allows us to use enum in the template
    */
-  public groupMembershipLevel: typeof GroupMembershipLevel = GroupMembershipLevel;
+  public groupMembershipLevel: typeof GroupMembershipLevel =
+    GroupMembershipLevel;
 
   // Whether request is in progress.
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // The next offset to load from
-  public readonly offset$: BehaviorSubject<number> = new BehaviorSubject<
-    number
-  >(0);
+  public readonly offset$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   // Whether there is more data that could be added to the list.
-  public readonly moreData$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly moreData$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // List subject.
   public readonly list$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(
@@ -106,13 +104,12 @@ export class GroupsMembershipsListComponent implements OnInit, OnDestroy {
   private loadSubscription: Subscription;
 
   /** Via service - which membership level do we want to present? */
-  public readonly groupMembershipLevel$: BehaviorSubject<
-    GroupMembershipLevel
-  > = this.service.groupMembershipLevel$;
+  public readonly groupMembershipLevel$: BehaviorSubject<GroupMembershipLevel> =
+    this.service.groupMembershipLevel$;
 
   /** Via service - whether to show all levels above the specified level as well */
-  public readonly membershipLevelGte$: BehaviorSubject<boolean> = this.service
-    .membershipLevelGte$;
+  public readonly membershipLevelGte$: BehaviorSubject<boolean> =
+    this.service.membershipLevelGte$;
 
   constructor(
     private service: GroupsMembershipsListService,
@@ -151,7 +148,7 @@ export class GroupsMembershipsListComponent implements OnInit, OnDestroy {
   > {
     return this.groupMembershipLevel$.pipe(
       distinctUntilChanged(),
-      tap(_ => {
+      tap((_) => {
         this.inProgress$.next(true);
         this.list$.next([]);
       }),

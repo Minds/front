@@ -15,9 +15,8 @@ export class AssignRolesModalService {
   /**
    * Emits when a user's roles have been changed
    */
-  public readonly updatedUserWithRoles$: BehaviorSubject<
-    UserRoleEdge
-  > = new BehaviorSubject<UserRoleEdge>(null);
+  public readonly updatedUserWithRoles$: BehaviorSubject<UserRoleEdge> =
+    new BehaviorSubject<UserRoleEdge>(null);
 
   constructor(
     private modalService: ModalService,

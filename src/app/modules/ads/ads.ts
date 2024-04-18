@@ -72,7 +72,7 @@ export class BoostAds implements OnInit {
         return;
       }
 
-      this.boosts = response.boosts.map(boost => boost.entity);
+      this.boosts = response.boosts.map((boost) => boost.entity);
     } catch (e) {
       console.error(e);
     }

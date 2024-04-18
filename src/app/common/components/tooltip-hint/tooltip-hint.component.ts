@@ -46,14 +46,12 @@ export class TooltipHintComponent implements OnInit {
   @Input() public experimentId: string;
 
   // whether tooltip should be forced to show.
-  public readonly shouldShow$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly shouldShow$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // whether tooltip hover behaviour is enabled.
-  public readonly tooltipHoverEnabled$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly tooltipHoverEnabled$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     private storage: Storage,

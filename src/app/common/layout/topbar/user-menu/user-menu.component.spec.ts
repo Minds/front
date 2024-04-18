@@ -20,51 +20,49 @@ describe('UserMenuComponent', () => {
   let comp: UserMenuComponent;
   let fixture: ComponentFixture<UserMenuComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockComponent({
-            selector: 'minds-avatar',
-            inputs: ['object', 'src', 'editMode', 'waitForDoneSignal'],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockComponent({
+          selector: 'minds-avatar',
+          inputs: ['object', 'src', 'editMode', 'waitForDoneSignal'],
+        }),
+        MockComponent({
+          selector: 'm-dropdownMenu',
+          inputs: ['menu', 'anchorPosition'],
+        }),
+        MockComponent({
+          selector: 'm-dropdownMenu__item',
+          inputs: ['link', 'externalLink'],
+        }),
+        UserMenuComponent,
+      ],
+      providers: [
+        { provide: Session, useValue: MockService(Session) },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: ThemeService,
+          useValue: MockService(ThemeService, {
+            has: ['isDark$'],
+            props: {
+              isDark$: { get: () => new BehaviorSubject<boolean>(true) },
+            },
           }),
-          MockComponent({
-            selector: 'm-dropdownMenu',
-            inputs: ['menu', 'anchorPosition'],
-          }),
-          MockComponent({
-            selector: 'm-dropdownMenu__item',
-            inputs: ['link', 'externalLink'],
-          }),
-          UserMenuComponent,
-        ],
-        providers: [
-          { provide: Session, useValue: MockService(Session) },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: ThemeService,
-            useValue: MockService(ThemeService, {
-              has: ['isDark$'],
-              props: {
-                isDark$: { get: () => new BehaviorSubject<boolean>(true) },
-              },
-            }),
-          },
-          {
-            provide: HelpdeskRedirectService,
-            useValue: MockService(HelpdeskRedirectService),
-          },
-          {
-            provide: BoostModalV2LazyService,
-            useValue: MockService(BoostModalV2LazyService),
-          },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+        },
+        {
+          provide: HelpdeskRedirectService,
+          useValue: MockService(HelpdeskRedirectService),
+        },
+        {
+          provide: BoostModalV2LazyService,
+          useValue: MockService(BoostModalV2LazyService),
+        },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   beforeEach(() => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

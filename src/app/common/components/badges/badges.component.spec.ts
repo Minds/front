@@ -28,21 +28,19 @@ describe('ChannelBadgesComponent', () => {
     return fixture.debugElement.query(By.css('.m-channel--badges li'));
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [TooltipComponentMock, ChannelBadgesComponent],
-        imports: [RouterTestingModule, ReactiveFormsModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Client, useValue: clientMock },
-          { provide: ThemeService, useValue: themeServiceMock },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [TooltipComponentMock, ChannelBadgesComponent],
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: Client, useValue: clientMock },
+        { provide: ThemeService, useValue: themeServiceMock },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ChannelBadgesComponent);
 
     comp = fixture.componentInstance;

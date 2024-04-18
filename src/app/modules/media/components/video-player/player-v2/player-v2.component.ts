@@ -359,9 +359,8 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
    * @returns { void }
    */
   removeSources(): void {
-    const sources = this.elementRef.nativeElement.getElementsByTagName(
-      'source'
-    );
+    const sources =
+      this.elementRef.nativeElement.getElementsByTagName('source');
 
     // remove <source> from the DOM
     for (const source of sources) {
@@ -369,9 +368,8 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
     }
 
     // reload video so it frees up resources
-    const video: HTMLVideoElement = this.elementRef.nativeElement.getElementsByTagName(
-      'video'
-    )[0];
+    const video: HTMLVideoElement =
+      this.elementRef.nativeElement.getElementsByTagName('video')[0];
     if (video) {
       try {
         video.load();

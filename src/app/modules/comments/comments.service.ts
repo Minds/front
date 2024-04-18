@@ -11,9 +11,12 @@ export class CommentsService {
   focusedUrn: string;
   comments: Array<any> = [];
 
-  constructor(private route: ActivatedRoute, private client: Client) {
+  constructor(
+    private route: ActivatedRoute,
+    private client: Client
+  ) {
     this.queryParamsSubscription$ = this.route.queryParamMap.subscribe(
-      params => {
+      (params) => {
         this.focusedUrn = params.get('focusedCommentUrn');
       }
     );

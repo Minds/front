@@ -26,13 +26,12 @@ export type MonetizationTabType = 'plus' | 'membership' | 'custom';
 })
 export class ComposerMonetizeV2Component implements OnInit {
   type: MonetizationTabType = 'plus';
-  hasSupportTiers$: Observable<
-    boolean
-  > = this.monetizeService.supportTiers$.pipe(
-    map(supportTiers => {
-      return supportTiers.length > 0;
-    })
-  );
+  hasSupportTiers$: Observable<boolean> =
+    this.monetizeService.supportTiers$.pipe(
+      map((supportTiers) => {
+        return supportTiers.length > 0;
+      })
+    );
 
   isEditingPlus: boolean = false;
 
@@ -81,7 +80,7 @@ export class ComposerMonetizeV2Component implements OnInit {
       return;
     }
 
-    this.service.isGroupPost$.subscribe(is => {
+    this.service.isGroupPost$.subscribe((is) => {
       this.isGroupPost = is;
       this.type = is ? 'membership' : 'plus';
     });

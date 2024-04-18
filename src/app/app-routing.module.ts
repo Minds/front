@@ -54,7 +54,7 @@ const routes: Routes = [
     path: ':username/:filter',
     loadChildren: () =>
       import('./modules/channel-container/channel-container.module').then(
-        m => m.ChannelContainerModule
+        (m) => m.ChannelContainerModule
       ),
   },
 ];

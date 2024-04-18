@@ -19,7 +19,8 @@ import { ModalService } from '../../../../../services/ux/modal.service';
 })
 export class SettingsTwoFactorConnectAppComponent
   extends AbstractSubscriberComponent
-  implements OnInit {
+  implements OnInit
+{
   /**
    * User entered code from auth app.
    */

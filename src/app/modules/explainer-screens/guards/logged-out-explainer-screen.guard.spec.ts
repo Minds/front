@@ -8,9 +8,8 @@ const sessionMock: jasmine.SpyObj<Session> = jasmine.createSpyObj<Session>([
   'isLoggedIn',
 ]);
 
-const explainerScreenMock: jasmine.SpyObj<ExplainerScreensService> = jasmine.createSpyObj<
-  ExplainerScreensService
->(['handleRouteChange']);
+const explainerScreenMock: jasmine.SpyObj<ExplainerScreensService> =
+  jasmine.createSpyObj<ExplainerScreensService>(['handleRouteChange']);
 
 const routerMock: jasmine.SpyObj<Router> = jasmine.createSpyObj<Router>([
   'getCurrentNavigation',

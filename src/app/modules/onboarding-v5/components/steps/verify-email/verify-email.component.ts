@@ -53,7 +53,8 @@ export enum EmailSendSuccessMessage {
   ],
 })
 export class OnboardingV5VerifyEmailContentComponent
-  implements OnInit, OnDestroy, AfterViewInit, OnboardingStepContentInterface {
+  implements OnInit, OnDestroy, AfterViewInit, OnboardingStepContentInterface
+{
   /** Content title. */
   @Input() public title: string;
 
@@ -70,27 +71,25 @@ export class OnboardingV5VerifyEmailContentComponent
   public confirmationKey: string;
 
   /** When email sending is in progress */
-  public readonly emailSendInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly emailSendInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** When code submission is in progress */
-  public readonly codeSubmissionInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly codeSubmissionInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Seconds remaining before a user can try to request a new email again. */
   public retrySecondsRemaining = 0;
 
   /** Allow enum to be used in template by pulling it into the controller. */
-  public readonly OnboardingV5VerifyEmailSubPanel: typeof OnboardingV5VerifyEmailSubPanel = OnboardingV5VerifyEmailSubPanel;
+  public readonly OnboardingV5VerifyEmailSubPanel: typeof OnboardingV5VerifyEmailSubPanel =
+    OnboardingV5VerifyEmailSubPanel;
 
   /** Verify email component has a sub-panel for changing email address. */
-  public readonly activeSubPanel$: BehaviorSubject<
-    OnboardingV5VerifyEmailSubPanel
-  > = new BehaviorSubject<OnboardingV5VerifyEmailSubPanel>(
-    OnboardingV5VerifyEmailSubPanel.CODE_INPUT
-  );
+  public readonly activeSubPanel$: BehaviorSubject<OnboardingV5VerifyEmailSubPanel> =
+    new BehaviorSubject<OnboardingV5VerifyEmailSubPanel>(
+      OnboardingV5VerifyEmailSubPanel.CODE_INPUT
+    );
 
   /** Code input element ViewChild. */
   @ViewChild('codeInput') public codeInput: ElementRef<HTMLInputElement>;

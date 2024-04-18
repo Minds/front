@@ -17,9 +17,8 @@ import { Subject } from 'rxjs';
   templateUrl: 'text-input-autocomplete-menu.component.html',
 })
 export class TextInputAutocompleteMenuComponent implements OnInit {
-  @ViewChild('dropdownMenu', { static: true }) dropdownMenuElement: ElementRef<
-    HTMLUListElement
-  >;
+  @ViewChild('dropdownMenu', { static: true })
+  dropdownMenuElement: ElementRef<HTMLUListElement>;
   @ViewChild('defaultItemTemplate', { static: true }) defaultItemTemplate;
   itemTemplate: any;
   position: { top: number; left: number };
@@ -78,7 +77,8 @@ export class TextInputAutocompleteMenuComponent implements OnInit {
   private scrollToChoice(index: number) {
     this.activeChoice = this._choices[index];
     if (this.dropdownMenuElement) {
-      const ulPosition = this.dropdownMenuElement.nativeElement.getBoundingClientRect();
+      const ulPosition =
+        this.dropdownMenuElement.nativeElement.getBoundingClientRect();
       const li = this.dropdownMenuElement.nativeElement.children[index];
       const liPosition = li.getBoundingClientRect();
       if (liPosition.top < ulPosition.top) {

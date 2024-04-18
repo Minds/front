@@ -11,7 +11,10 @@ import { Session } from '../../services/session';
   styleUrls: ['./default-feed-container.component.ng.scss'],
 })
 export class DefaultFeedContainerComponent implements OnInit {
-  constructor(private router: Router, private session: Session) {}
+  constructor(
+    private router: Router,
+    private session: Session
+  ) {}
 
   public ngOnInit(): void {
     if (this.session.isLoggedIn()) {

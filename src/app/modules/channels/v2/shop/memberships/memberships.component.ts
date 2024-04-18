@@ -31,9 +31,8 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
   /**
    * Currency filter subject
    */
-  readonly currencyFilter$: BehaviorSubject<Currency> = new BehaviorSubject<
-    Currency
-  >('usd');
+  readonly currencyFilter$: BehaviorSubject<Currency> =
+    new BehaviorSubject<Currency>('usd');
 
   /**
    * Is the current view a draft?
@@ -53,7 +52,7 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
   ]).pipe(
     map(
       ([currencyFilter, isOwner, supportTiers]): Array<SupportTier> =>
-        supportTiers.filter(supportTier => {
+        supportTiers.filter((supportTier) => {
           return true;
           // if (isOwner) {
           //   return true;
@@ -93,7 +92,7 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
     protected wireModal: WireModalService,
     protected modalService: ModalService
   ) {
-    this.channelGuidSubscription = this.channel.guid$.subscribe(guid =>
+    this.channelGuidSubscription = this.channel.guid$.subscribe((guid) =>
       this.supportTiers.setEntityGuid(guid)
     );
   }

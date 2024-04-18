@@ -53,7 +53,7 @@ export class BlogViewInfinite {
   }
 
   ngOnInit() {
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       let load = false;
 
       if (params['guid']) {
@@ -125,7 +125,7 @@ export class BlogViewInfinite {
         this.applicationRef.tick();
         this.inProgress = false;
       })
-      .catch(e => {
+      .catch((e) => {
         if (this.blogs.length === 0) {
           this.error = 'Sorry, there was a problem loading the blog';
         }
@@ -147,8 +147,8 @@ export class BlogViewInfinite {
     const description = blog.custom_meta['description']
       ? blog.custom_meta['description']
       : blog.description.length > 140
-      ? blog.excerpt.substr(0, 140) + '...'
-      : blog.excerpt;
+        ? blog.excerpt.substr(0, 140) + '...'
+        : blog.excerpt;
 
     const author = blog.custom_meta['author'] || `@${blog.ownerObj.username}`;
 

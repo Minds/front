@@ -5,7 +5,10 @@ import { ModalService } from '../../../services/ux/modal.service';
 
 @Injectable({ providedIn: 'root' })
 export class InteractionsModalService {
-  constructor(private modalService: ModalService, private injector: Injector) {}
+  constructor(
+    private modalService: ModalService,
+    private injector: Injector
+  ) {}
 
   async open(type: InteractionType, entityGuid: string): Promise<any> {
     const { InteractionsModalModule } = await import(

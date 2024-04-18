@@ -12,31 +12,32 @@ import * as moment from 'moment';
 import { of } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client';
 
-const mockGetTenantAnalyticsTableQueryResponse: ApolloQueryResult<GetTenantAnalyticsTableQuery> = {
-  loading: false,
-  networkStatus: 7,
-  data: {
-    tenantAdminAnalyticsTable: {
-      edges: [
-        {
-          node: {
-            id: '123',
-            engagements: 100,
-            activity: { guid: '123' } as ActivityNode,
+const mockGetTenantAnalyticsTableQueryResponse: ApolloQueryResult<GetTenantAnalyticsTableQuery> =
+  {
+    loading: false,
+    networkStatus: 7,
+    data: {
+      tenantAdminAnalyticsTable: {
+        edges: [
+          {
+            node: {
+              id: '123',
+              engagements: 100,
+              activity: { guid: '123' } as ActivityNode,
+            },
+            cursor: '123',
           },
-          cursor: '123',
+        ],
+        pageInfo: {
+          __typename: 'PageInfo',
+          endCursor: null,
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: null,
         },
-      ],
-      pageInfo: {
-        __typename: 'PageInfo',
-        endCursor: null,
-        hasNextPage: false,
-        hasPreviousPage: false,
-        startCursor: null,
       },
     },
-  },
-};
+  };
 
 describe('NetworkAdminAnalyticsTableService', () => {
   let service: NetworkAdminAnalyticsTableService;
@@ -62,9 +63,7 @@ describe('NetworkAdminAnalyticsTableService', () => {
 
   it('should initialise query and subscriptions', fakeAsync(() => {
     const tableType: AnalyticsTableEnum = AnalyticsTableEnum.PopularActivities;
-    const fromUnixTimestamp: number = moment()
-      .subtract(1, 'day')
-      .unix();
+    const fromUnixTimestamp: number = moment().subtract(1, 'day').unix();
     const toUnixTimestamp: number = moment().unix();
 
     (service as any).getTenantAnalyticsTableGQL.watch.and.returnValue({

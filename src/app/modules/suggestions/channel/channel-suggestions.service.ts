@@ -65,7 +65,7 @@ export class SuggestionsService {
               }
             )
             .toPromise();
-          suggestions = response.users.map(user => {
+          suggestions = response.users.map((user) => {
             return {
               entity: user,
             };
@@ -129,7 +129,8 @@ export class SuggestionsService {
       );
 
       const suggestions = response.data.filter(
-        entity => !this.storage.get(`suggestion:${entity.entity_guid}:removed`)
+        (entity) =>
+          !this.storage.get(`suggestion:${entity.entity_guid}:removed`)
       );
 
       this.suggestions$.next([...this.suggestions$.getValue(), ...suggestions]);

@@ -63,7 +63,7 @@ export class SettingsV2ProDomainComponent implements OnInit, OnDestroy {
       custom_head: new UntypedFormControl(''),
     });
 
-    this.route.parent.params.subscribe(params => {
+    this.route.parent.params.subscribe((params) => {
       if (this.session.isAdmin()) {
         this.user = params.user || null;
       }

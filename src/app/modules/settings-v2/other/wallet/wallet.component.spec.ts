@@ -7,7 +7,7 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { SettingsV2WalletComponent } from './wallet.component';
 import { SettingsV2WalletService } from './wallet.service';
 
-let routerMock = new (function() {
+let routerMock = new (function () {
   this.navigate = jasmine.createSpy('navigate');
 })();
 
@@ -15,35 +15,33 @@ describe('SettingsV2WalletComponent', () => {
   let comp: SettingsV2WalletComponent;
   let fixture: ComponentFixture<SettingsV2WalletComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          SettingsV2WalletComponent,
-          MockComponent({
-            selector: 'm-button',
-          }),
-          MockComponent({
-            selector: 'm-formInput__checkbox',
-          }),
-        ],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Router, useValue: routerMock },
-          {
-            provide: SettingsV2WalletService,
-            useValue: MockService(SettingsV2WalletService),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        SettingsV2WalletComponent,
+        MockComponent({
+          selector: 'm-button',
+        }),
+        MockComponent({
+          selector: 'm-formInput__checkbox',
+        }),
+      ],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: Router, useValue: routerMock },
+        {
+          provide: SettingsV2WalletService,
+          useValue: MockService(SettingsV2WalletService),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 

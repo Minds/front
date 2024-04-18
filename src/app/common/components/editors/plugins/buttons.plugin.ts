@@ -491,7 +491,7 @@ export class ButtonsPlugin {
     input.setAttribute('placeholder', this.options.placeholder);
     input.classList.add('medium-insert-link-input');
 
-    input.addEventListener('keypress', e => {
+    input.addEventListener('keypress', (e) => {
       if (e.keyCode == 13) {
         this.addonAction($a, input.value);
         e.preventDefault();
@@ -557,7 +557,7 @@ export class ButtonsPlugin {
     };
     reader.readAsDataURL(file);
 
-    this.options.uploadFunction(fileInput).then(result => {
+    this.options.uploadFunction(fileInput).then((result) => {
       this.window.dispatchEvent(
         new CustomEvent('attachment-upload-finished', {
           detail: {

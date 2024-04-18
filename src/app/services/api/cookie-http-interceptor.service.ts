@@ -27,10 +27,7 @@ export class CookieHttpInterceptorService implements HttpInterceptor {
     if (!isPlatformBrowser(this.platformId)) {
       request = request.clone({ withCredentials: true });
       let req: express.Request = this.injector.get(REQUEST);
-      let rootDomain = req.hostname
-        .split('.')
-        .slice(-2)
-        .join('.');
+      let rootDomain = req.hostname.split('.').slice(-2).join('.');
       const matches = request.url.match(/^https?:\/\/([^/:]+)/);
       if (matches && matches[1].endsWith(rootDomain)) {
         let cookieString = Object.keys(req.cookies).reduce(
