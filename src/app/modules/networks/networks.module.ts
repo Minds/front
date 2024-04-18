@@ -44,7 +44,6 @@ const routes: Routes = [
   providers: [
     NetworksCreateRootUserModalService,
     NetworksCreateRootUserService,
-    AutoLoginService,
   ],
 })
 export class NetworksModule {}

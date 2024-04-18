@@ -951,7 +951,8 @@ export type Mutation = {
   siteMembership: SiteMembership;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
-  tenantTrial: Tenant;
+  /** Create a trial tenant network. */
+  tenantTrial: TenantLoginRedirectDetails;
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
@@ -1859,6 +1860,13 @@ export type TenantInput = {
   config?: InputMaybe<MultiTenantConfigInput>;
   domain?: InputMaybe<Scalars['String']['input']>;
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type TenantLoginRedirectDetails = {
+  __typename?: 'TenantLoginRedirectDetails';
+  jwtToken?: Maybe<Scalars['String']['output']>;
+  loginUrl?: Maybe<Scalars['String']['output']>;
+  tenant: Tenant;
 };
 
 export enum TenantPlanEnum {
@@ -3786,7 +3794,12 @@ export type StartTenantTrialMutationVariables = Exact<{ [key: string]: never }>;
 
 export type StartTenantTrialMutation = {
   __typename?: 'Mutation';
-  tenantTrial: { __typename?: 'Tenant'; id: number };
+  tenantTrial: {
+    __typename?: 'TenantLoginRedirectDetails';
+    loginUrl?: string | null;
+    jwtToken?: string | null;
+    tenant: { __typename?: 'Tenant'; id: number };
+  };
 };
 
 export type UnassignUserFromRoleMutationVariables = Exact<{
@@ -9205,7 +9218,11 @@ export class SetRolePermissionGQL extends Apollo.Mutation<
 export const StartTenantTrialDocument = gql`
   mutation StartTenantTrial {
     tenantTrial {
-      id
+      tenant {
+        id
+      }
+      loginUrl
+      jwtToken
     }
   }
 `;
