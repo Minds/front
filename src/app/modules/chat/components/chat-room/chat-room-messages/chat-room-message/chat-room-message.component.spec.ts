@@ -3,11 +3,12 @@ import { ChatRoomMessageComponent } from './chat-room-message.component';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { ChatDatePipe } from '../../../../pipes/chat-date-pipe';
 import { WINDOW } from '../../../../../../common/injection-tokens/common-injection-tokens';
-import { MockComponent } from '../../../../../../utils/mock';
+import { MockComponent, MockPipe } from '../../../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { ChangeDetectorRef } from '@angular/core';
 import { mockChatMessageEdge } from '../../../../../../mocks/chat.mock';
+import { TagsPipe } from '../../../../../../common/pipes/tags';
 
 describe('ChatRoomMessageComponent', () => {
   let comp: ChatRoomMessageComponent;
@@ -16,6 +17,7 @@ describe('ChatRoomMessageComponent', () => {
   beforeEach((done: DoneFn) => {
     TestBed.configureTestingModule({
       imports: [ChatRoomMessageComponent],
+      declarations: [TagsPipe],
       providers: [
         ChangeDetectorRef,
         { provide: WINDOW, useValue: jasmine.createSpyObj<Window>(['open']) },
@@ -26,6 +28,10 @@ describe('ChatRoomMessageComponent', () => {
           NgCommonModule,
           RouterTestingModule,
           ChatDatePipe,
+          MockPipe({
+            name: 'tags',
+            standalone: true,
+          }),
           MockComponent({
             selector: 'minds-avatar',
             inputs: ['object'],
@@ -247,6 +253,34 @@ describe('ChatRoomMessageComponent', () => {
           fixture.debugElement.query(By.css('m-chatRoomMessage__richEmbed'))
         ).toBeFalsy();
       });
+    });
+  });
+
+  describe('message text', () => {
+    it('should stop propagation when handling text clicks on anchor tag targets', () => {
+      let event = {
+        stopPropagation: jasmine.createSpy('stopPropagation'),
+        target: {
+          tagName: 'A',
+        },
+      };
+
+      (comp as any).handleMessageTextClick(event);
+
+      expect(event.stopPropagation).toHaveBeenCalled();
+    });
+
+    it('should stop propagation when handling text clicks on NON anchor tag targets', () => {
+      let event = {
+        stopPropagation: jasmine.createSpy('stopPropagation'),
+        target: {
+          tagName: 'SPAN',
+        },
+      };
+
+      (comp as any).handleMessageTextClick(event);
+
+      expect(event.stopPropagation).not.toHaveBeenCalled();
     });
   });
 });

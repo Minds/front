@@ -114,6 +114,17 @@ export class ChatRoomMessageComponent {
   }
 
   /**
+   * Handle message text click.
+   * @param { MouseEvent } $event - The click event.
+   * @returns { void }
+   */
+  protected handleMessageTextClick($event: MouseEvent) {
+    if (($event.target as HTMLElement).tagName === 'A') {
+      $event.stopPropagation();
+    }
+  }
+
+  /**
    * Handles middle mouse click on an avatar by opening the users channel
    * in a new tab.
    */
