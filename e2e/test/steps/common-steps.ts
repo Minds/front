@@ -18,26 +18,23 @@ namespace CommonSteps {
    * Create a new user.
    * @return { void }
    */
-  Given(
-    'I create a new user',
-    async (): Promise<void> => {
-      const username = generateARandomString();
-      const email = 'noreply@minds.com';
-      const password = generateARandomString() + 'A1!';
+  Given('I create a new user', async (): Promise<void> => {
+    const username = generateARandomString();
+    const email = 'noreply@minds.com';
+    const password = generateARandomString() + 'A1!';
 
-      I.clearCookie();
-      registerPage.navigateToByUrl();
-      registerPage.setupRegistrationBypassCookies();
-      registerPage.fillForm(username, password, email);
-      registerPage.clickJoinNow();
+    I.clearCookie();
+    registerPage.navigateToByUrl();
+    registerPage.setupRegistrationBypassCookies();
+    registerPage.fillForm(username, password, email);
+    registerPage.clickJoinNow();
 
-      I.waitForNavigation({ timeout: 30000 });
+    I.waitForNavigation({ timeout: 30000 });
 
-      await onboardingV5ModalComponent.completeOnboarding();
-      upgradeModalComponent.isVisible();
-      upgradeModalComponent.dismiss();
-    }
-  );
+    await onboardingV5ModalComponent.completeOnboarding();
+    upgradeModalComponent.isVisible();
+    upgradeModalComponent.dismiss();
+  });
 
   /**
    * Note: this requires that the modal is using m-modalCloseButton
@@ -51,9 +48,8 @@ namespace CommonSteps {
       // We only want to close the modal if it exists
       if (modalVisible) {
         const closeButton = locate('[data-ref=modal-close-button]');
-        const closeButtonVisible = await I.grabNumberOfVisibleElements(
-          closeButton
-        );
+        const closeButtonVisible =
+          await I.grabNumberOfVisibleElements(closeButton);
 
         if (closeButtonVisible) {
           const modalCloseButton = closeButton.inside(modal);
@@ -69,28 +65,17 @@ namespace CommonSteps {
    * Is not not meant to switch users.
    * @return { Promise<void> }
    */
-  Given(
-    'I am logged in',
-    async (): Promise<void> => {
-      if (await I.grabCookie('minds_sess')) {
-        return;
-      }
-      I.clearCookie();
-      I.refreshPage();
-      I.amOnPage(loginPage.loginURI);
-
-      await Promise.all([
-        loginPage.login(loginPage.validUsername, loginPage.validPassword),
-        I.waitForResponse(
-          resp =>
-            resp.url().includes('/api/v2/mwa/pv') && resp.status() === 200,
-          30
-        ),
-      ]);
-
-      I.seeCookie('minds_sess');
+  Given('I am logged in', async (): Promise<void> => {
+    if (await I.grabCookie('minds_sess')) {
+      return;
     }
-  );
+    I.clearCookie();
+    I.refreshPage();
+    I.amOnPage(loginPage.loginURI);
+
+    loginPage.login(loginPage.validUsername, loginPage.validPassword);
+    I.seeCookie('minds_sess');
+  });
 
   /**
    * Will clear cookies and login as the specified user - useful for user switching.
@@ -133,7 +118,7 @@ namespace CommonSteps {
     I.clearCookie('minds_sess');
   });
 
-  Given('I am on the {string} channel page', username => {
+  Given('I am on the {string} channel page', (username) => {
     I.amOnPage('/' + username);
     channelPage.waitForContentComponent();
   });
@@ -195,7 +180,7 @@ namespace CommonSteps {
     modalComponent.isVisible(locate(selector));
   });
 
-  Then('I should see an explainer screen modal', num => {
+  Then('I should see an explainer screen modal', (num) => {
     explainerScreenModalComponent.shouldBeVisible(true);
   });
 

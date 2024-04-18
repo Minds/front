@@ -1,4 +1,10 @@
-import { Component, Directive, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Directive,
+  EventEmitter,
+  Pipe,
+  PipeTransform,
+} from '@angular/core';
 
 export function Mock(opts: any = {}) {
   return (
@@ -17,6 +23,8 @@ export function MockComponent(options: Component, spies: string[] = []) {
     template: options.template || '',
     inputs: options.inputs,
     outputs: options.outputs,
+    providers: options.providers,
+    standalone: options.standalone,
   };
   const component = class _ {};
   if (options.outputs) {
@@ -35,6 +43,7 @@ export function MockDirective(options: Directive, spies: string[] = []) {
     selector: options.selector,
     inputs: options.inputs,
     outputs: options.outputs,
+    standalone: options.standalone,
   };
   const directive = class _ {};
   if (options.outputs) {
@@ -46,6 +55,16 @@ export function MockDirective(options: Directive, spies: string[] = []) {
     directive.prototype[spy] = jasmine.createSpy(spy);
   }
   return Directive(metadata)(directive);
+}
+
+export function MockPipe(metadata: Pipe) {
+  return Pipe(metadata)(
+    class MockPipe implements PipeTransform {
+      transform(value: string) {
+        return value;
+      }
+    }
+  );
 }
 
 export function MockService(obj: any, config: any = null) {

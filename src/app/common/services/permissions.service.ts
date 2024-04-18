@@ -47,10 +47,11 @@ export class PermissionsService {
   }
 
   /**
-   * True if the `front-6121-rbac-permissions` experiment is enabled in growthbook
+   * True if the `front-6121-rbac-permissions` experiment is enabled in PostHog feature flags
    */
   private isActive(): boolean {
-    return this.experimentsService.hasVariation('front-6121-rbac-permissions');
+    // return this.experimentsService.hasVariation('front-6121-rbac-permissions');
+    return true;
   }
 
   /**

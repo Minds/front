@@ -3,5 +3,6 @@ query GetCustomPage($pageType: String!) {
     pageType
     content
     externalLink
+    defaultContent
   }
 }

@@ -237,6 +237,117 @@ export type BoostsConnection = ConnectionInterface & {
   pageInfo: PageInfo;
 };
 
+export type ChatMessageEdge = EdgeInterface & {
+  __typename?: 'ChatMessageEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: ChatMessageNode;
+};
+
+export type ChatMessageNode = NodeInterface & {
+  __typename?: 'ChatMessageNode';
+  /** The unique guid of the message */
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  /** The plaintext (non-encrypted) message */
+  plainText: Scalars['String']['output'];
+  /** The guid of the room the message belongs to */
+  roomGuid: Scalars['String']['output'];
+  sender: UserEdge;
+  /** The timestamp the message was sent at */
+  timeCreatedISO8601: Scalars['String']['output'];
+  /** The timestamp the message was sent at */
+  timeCreatedUnix: Scalars['String']['output'];
+};
+
+export type ChatMessagesConnection = ConnectionInterface & {
+  __typename?: 'ChatMessagesConnection';
+  edges: Array<ChatMessageEdge>;
+  pageInfo: PageInfo;
+};
+
+export type ChatRoomEdge = EdgeInterface & {
+  __typename?: 'ChatRoomEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  lastMessageCreatedTimestamp?: Maybe<Scalars['Int']['output']>;
+  lastMessagePlainText?: Maybe<Scalars['String']['output']>;
+  members: ChatRoomMembersConnection;
+  messages: ChatMessagesConnection;
+  node: ChatRoomNode;
+  totalMembers: Scalars['Int']['output'];
+  unreadMessagesCount: Scalars['Int']['output'];
+};
+
+export type ChatRoomEdgeMembersArgs = {
+  after?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ChatRoomEdgeMessagesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export enum ChatRoomInviteRequestActionEnum {
+  Accept = 'ACCEPT',
+  Reject = 'REJECT',
+  RejectAndBlock = 'REJECT_AND_BLOCK',
+}
+
+export type ChatRoomMemberEdge = EdgeInterface & {
+  __typename?: 'ChatRoomMemberEdge';
+  cursor: Scalars['String']['output'];
+  node: UserNode;
+  role: ChatRoomRoleEnum;
+  /** The timestamp the message was sent at */
+  timeJoinedISO8601: Scalars['String']['output'];
+  /** The timestamp the message was sent at */
+  timeJoinedUnix: Scalars['String']['output'];
+};
+
+export type ChatRoomMembersConnection = ConnectionInterface & {
+  __typename?: 'ChatRoomMembersConnection';
+  edges: Array<ChatRoomMemberEdge>;
+  pageInfo: PageInfo;
+};
+
+export type ChatRoomNode = NodeInterface & {
+  __typename?: 'ChatRoomNode';
+  areChatRoomNotificationsMuted?: Maybe<Scalars['Boolean']['output']>;
+  /** The unique guid of the room */
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  isChatRequest: Scalars['Boolean']['output'];
+  isUserRoomOwner?: Maybe<Scalars['Boolean']['output']>;
+  /** The type of room. i.e. one-to-one, multi-user, or group-owned */
+  roomType: ChatRoomTypeEnum;
+  /** The timestamp the room was created at */
+  timeCreatedISO8601: Scalars['String']['output'];
+  /** The timestamp the roomt was created at */
+  timeCreatedUnix: Scalars['String']['output'];
+};
+
+export enum ChatRoomRoleEnum {
+  Member = 'MEMBER',
+  Owner = 'OWNER',
+}
+
+export enum ChatRoomTypeEnum {
+  GroupOwned = 'GROUP_OWNED',
+  MultiUser = 'MULTI_USER',
+  OneToOne = 'ONE_TO_ONE',
+}
+
+export type ChatRoomsConnection = ConnectionInterface & {
+  __typename?: 'ChatRoomsConnection';
+  edges: Array<ChatRoomEdge>;
+  pageInfo: PageInfo;
+};
+
 export type CheckoutPage = {
   __typename?: 'CheckoutPage';
   addOns: Array<AddOn>;
@@ -328,6 +439,7 @@ export enum CustomHostnameStatusEnum {
 export type CustomPage = NodeInterface & {
   __typename?: 'CustomPage';
   content?: Maybe<Scalars['String']['output']>;
+  defaultContent?: Maybe<Scalars['String']['output']>;
   externalLink?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   pageType: CustomPageTypesEnum;
@@ -792,6 +904,10 @@ export type Mutation = {
   claimGiftCard: GiftCardNode;
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
+  /** Creates a new message in a chat room */
+  createChatMessage: ChatMessageEdge;
+  /** Creates a new chat room */
+  createChatRoom: ChatRoomEdge;
   /** Creates a comment on a remote url */
   createEmbeddedComment: CommentEdge;
   createGiftCard: GiftCardNode;
@@ -801,20 +917,29 @@ export type Mutation = {
   createNewReport: Scalars['Boolean']['output'];
   createRssFeed: RssFeed;
   createTenant: Tenant;
+  deleteChatMessage: Scalars['Boolean']['output'];
+  deleteChatRoom: Scalars['Boolean']['output'];
+  deleteChatRoomAndBlockUser: Scalars['Boolean']['output'];
   /** Delete an entity. */
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
+  deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
+  leaveChatRoom: Scalars['Boolean']['output'];
   mobileConfig: MobileConfig;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
   provideVerdict: Scalars['Boolean']['output'];
+  /** Updates the read receipt of a room */
+  readReceipt: ChatRoomEdge;
   refreshRssFeed: RssFeed;
+  removeMemberFromChatRoom: Scalars['Boolean']['output'];
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
+  replyToRoomInviteRequest: Scalars['Boolean']['output'];
   resendInvite?: Maybe<Scalars['Void']['output']>;
   setCustomPage: Scalars['Boolean']['output'];
   /** Creates a comment on a remote url */
@@ -861,6 +986,16 @@ export type MutationCompleteOnboardingStepArgs = {
   stepType: Scalars['String']['input'];
 };
 
+export type MutationCreateChatMessageArgs = {
+  plainText: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+};
+
+export type MutationCreateChatRoomArgs = {
+  otherMemberGuids?: Array<Scalars['String']['input']>;
+  roomType?: InputMaybe<ChatRoomTypeEnum>;
+};
+
 export type MutationCreateEmbeddedCommentArgs = {
   body: Scalars['String']['input'];
   ownerGuid: Scalars['String']['input'];
@@ -896,6 +1031,19 @@ export type MutationCreateTenantArgs = {
   tenant?: InputMaybe<TenantInput>;
 };
 
+export type MutationDeleteChatMessageArgs = {
+  messageGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteChatRoomArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteChatRoomAndBlockUserArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationDeleteEntityArgs = {
   subjectUrn: Scalars['String']['input'];
 };
@@ -915,6 +1063,10 @@ export type MutationInviteArgs = {
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
+export type MutationLeaveChatRoomArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationMobileConfigArgs = {
   mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
   mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
@@ -929,12 +1081,27 @@ export type MutationProvideVerdictArgs = {
   verdictInput: VerdictInput;
 };
 
+export type MutationReadReceiptArgs = {
+  messageGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationRefreshRssFeedArgs = {
   feedId: Scalars['String']['input'];
 };
 
+export type MutationRemoveMemberFromChatRoomArgs = {
+  memberGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationRemoveRssFeedArgs = {
   feedId: Scalars['String']['input'];
+};
+
+export type MutationReplyToRoomInviteRequestArgs = {
+  chatRoomInviteRequestActionEnum: ChatRoomInviteRequestActionEnum;
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationResendInviteArgs = {
@@ -1100,6 +1267,11 @@ export type PlanSummary = {
   oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
 };
 
+export type PostHogPerson = {
+  __typename?: 'PostHogPerson';
+  id: Scalars['String']['output'];
+};
+
 export type PostSubscription = {
   __typename?: 'PostSubscription';
   entityGuid: Scalars['String']['output'];
@@ -1148,6 +1320,18 @@ export type Query = {
   assignedRoles: Array<Role>;
   /** Gets Boosts. */
   boosts: BoostsConnection;
+  /** Returns a list of messages for a given chat room */
+  chatMessages: ChatMessagesConnection;
+  /** Returns a chat room */
+  chatRoom: ChatRoomEdge;
+  chatRoomGuids: Array<Scalars['String']['output']>;
+  chatRoomInviteRequests: ChatRoomsConnection;
+  /** Returns a list of chat rooms available to a user */
+  chatRoomList: ChatRoomsConnection;
+  /** Returns the members of a chat room */
+  chatRoomMembers: ChatRoomMembersConnection;
+  /** Returns the total count of unread messages a user has */
+  chatUnreadMessagesCount: Scalars['Int']['output'];
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
   customPage: CustomPage;
@@ -1198,6 +1382,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  postHogPerson: PostHogPerson;
   postSubscription: PostSubscription;
   /** Gets reports. */
   reports: ReportsConnection;
@@ -1218,6 +1403,7 @@ export type Query = {
   tenantAssets: AssetConnection;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
+  totalRoomInviteRequests: Scalars['Int']['output'];
   userAssets: AssetConnection;
   userQuotaUsage: QuotaDetails;
   /** Returns users and their roles */
@@ -1245,6 +1431,36 @@ export type QueryBoostsArgs = {
   source?: InputMaybe<Scalars['String']['input']>;
   targetAudience?: InputMaybe<Scalars['Int']['input']>;
   targetLocation?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryChatMessagesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  roomGuid: Scalars['String']['input'];
+};
+
+export type QueryChatRoomArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
+export type QueryChatRoomInviteRequestsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryChatRoomListArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryChatRoomMembersArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['Int']['input']>;
+  excludeSelf?: InputMaybe<Scalars['Boolean']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  roomGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryCheckoutLinkArgs = {
@@ -1425,7 +1641,7 @@ export type Report = NodeInterface & {
   createdTimestamp: Scalars['Int']['output'];
   cursor?: Maybe<Scalars['String']['output']>;
   /** Gets entity edge from entityUrn. */
-  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdge>;
+  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge>;
   entityGuid?: Maybe<Scalars['String']['output']>;
   entityUrn: Scalars['String']['output'];
   /** Gets ID for GraphQL. */
@@ -1679,8 +1895,9 @@ export enum TenantUserRoleEnum {
   User = 'USER',
 }
 
-export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdge =
+export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge =
   | ActivityEdge
+  | ChatMessageEdge
   | CommentEdge
   | GroupEdge
   | UserEdge;
@@ -1857,6 +2074,391 @@ export type GetBoostFeedQuery = {
       endCursor?: string | null;
       startCursor?: string | null;
     };
+  };
+};
+
+export type CreateChatMessageMutationVariables = Exact<{
+  plainText: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type CreateChatMessageMutation = {
+  __typename?: 'Mutation';
+  createChatMessage: {
+    __typename?: 'ChatMessageEdge';
+    id: string;
+    cursor: string;
+    node: {
+      __typename?: 'ChatMessageNode';
+      id: string;
+      guid: string;
+      roomGuid: string;
+      plainText: string;
+      timeCreatedISO8601: string;
+      timeCreatedUnix: string;
+      sender: {
+        __typename?: 'UserEdge';
+        id: string;
+        type: string;
+        cursor: string;
+        node: {
+          __typename?: 'UserNode';
+          name: string;
+          username: string;
+          guid: string;
+          id: string;
+        };
+      };
+    };
+  };
+};
+
+export type CreateChatRoomMutationVariables = Exact<{
+  otherMemberGuids:
+    | Array<Scalars['String']['input']>
+    | Scalars['String']['input'];
+  roomType?: InputMaybe<ChatRoomTypeEnum>;
+}>;
+
+export type CreateChatRoomMutation = {
+  __typename?: 'Mutation';
+  createChatRoom: {
+    __typename?: 'ChatRoomEdge';
+    cursor: string;
+    node: {
+      __typename?: 'ChatRoomNode';
+      id: string;
+      guid: string;
+      roomType: ChatRoomTypeEnum;
+      timeCreatedISO8601: string;
+      timeCreatedUnix: string;
+    };
+  };
+};
+
+export type DeleteChatMessageMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  messageGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteChatMessageMutation = {
+  __typename?: 'Mutation';
+  deleteChatMessage: boolean;
+};
+
+export type DeleteChatRoomAndBlockUserMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteChatRoomAndBlockUserMutation = {
+  __typename?: 'Mutation';
+  deleteChatRoomAndBlockUser: boolean;
+};
+
+export type DeleteChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteChatRoomMutation = {
+  __typename?: 'Mutation';
+  deleteChatRoom: boolean;
+};
+
+export type GetChatMessagesQueryVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetChatMessagesQuery = {
+  __typename?: 'Query';
+  chatMessages: {
+    __typename?: 'ChatMessagesConnection';
+    edges: Array<{
+      __typename?: 'ChatMessageEdge';
+      cursor: string;
+      id: string;
+      node: {
+        __typename?: 'ChatMessageNode';
+        id: string;
+        guid: string;
+        roomGuid: string;
+        plainText: string;
+        timeCreatedISO8601: string;
+        timeCreatedUnix: string;
+        sender: {
+          __typename?: 'UserEdge';
+          id: string;
+          type: string;
+          cursor: string;
+          node: {
+            __typename?: 'UserNode';
+            name: string;
+            username: string;
+            id: string;
+            guid: string;
+          };
+        };
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
+};
+
+export type GetChatRoomGuidsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetChatRoomGuidsQuery = {
+  __typename?: 'Query';
+  chatRoomGuids: Array<string>;
+};
+
+export type GetChatRoomInviteRequestsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetChatRoomInviteRequestsQuery = {
+  __typename?: 'Query';
+  chatRoomInviteRequests: {
+    __typename?: 'ChatRoomsConnection';
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+    edges: Array<{
+      __typename?: 'ChatRoomEdge';
+      cursor: string;
+      lastMessagePlainText?: string | null;
+      lastMessageCreatedTimestamp?: number | null;
+      node: {
+        __typename?: 'ChatRoomNode';
+        id: string;
+        guid: string;
+        roomType: ChatRoomTypeEnum;
+        timeCreatedISO8601: string;
+        timeCreatedUnix: string;
+      };
+      members: {
+        __typename?: 'ChatRoomMembersConnection';
+        edges: Array<{
+          __typename?: 'ChatRoomMemberEdge';
+          cursor: string;
+          node: {
+            __typename?: 'UserNode';
+            id: string;
+            guid: string;
+            username: string;
+            name: string;
+          };
+        }>;
+      };
+    }>;
+  };
+};
+
+export type GetChatRoomMembersQueryVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  excludeSelf?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+export type GetChatRoomMembersQuery = {
+  __typename?: 'Query';
+  chatRoomMembers: {
+    __typename?: 'ChatRoomMembersConnection';
+    edges: Array<{
+      __typename?: 'ChatRoomMemberEdge';
+      cursor: string;
+      role: ChatRoomRoleEnum;
+      node: {
+        __typename?: 'UserNode';
+        id: string;
+        guid: string;
+        name: string;
+        username: string;
+        urn: string;
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
+};
+
+export type GetChatRoomQueryVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  firstMembers: Scalars['Int']['input'];
+  afterMembers: Scalars['Int']['input'];
+}>;
+
+export type GetChatRoomQuery = {
+  __typename?: 'Query';
+  chatRoom: {
+    __typename?: 'ChatRoomEdge';
+    cursor: string;
+    node: {
+      __typename?: 'ChatRoomNode';
+      guid: string;
+      roomType: ChatRoomTypeEnum;
+      id: string;
+      isChatRequest: boolean;
+      isUserRoomOwner?: boolean | null;
+      areChatRoomNotificationsMuted?: boolean | null;
+    };
+    members: {
+      __typename?: 'ChatRoomMembersConnection';
+      edges: Array<{
+        __typename?: 'ChatRoomMemberEdge';
+        cursor: string;
+        role: ChatRoomRoleEnum;
+        node: {
+          __typename?: 'UserNode';
+          name: string;
+          username: string;
+          id: string;
+          guid: string;
+        };
+      }>;
+      pageInfo: {
+        __typename?: 'PageInfo';
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      };
+    };
+  };
+};
+
+export type GetChatRoomsListQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetChatRoomsListQuery = {
+  __typename?: 'Query';
+  chatRoomList: {
+    __typename?: 'ChatRoomsConnection';
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+    edges: Array<{
+      __typename?: 'ChatRoomEdge';
+      id: string;
+      cursor: string;
+      unreadMessagesCount: number;
+      lastMessagePlainText?: string | null;
+      lastMessageCreatedTimestamp?: number | null;
+      node: {
+        __typename?: 'ChatRoomNode';
+        id: string;
+        guid: string;
+        roomType: ChatRoomTypeEnum;
+        timeCreatedISO8601: string;
+        timeCreatedUnix: string;
+      };
+      members: {
+        __typename?: 'ChatRoomMembersConnection';
+        edges: Array<{
+          __typename?: 'ChatRoomMemberEdge';
+          cursor: string;
+          node: {
+            __typename?: 'UserNode';
+            id: string;
+            guid: string;
+            username: string;
+            name: string;
+          };
+        }>;
+      };
+    }>;
+  };
+};
+
+export type GetTotalChatRoomMembersQueryVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type GetTotalChatRoomMembersQuery = {
+  __typename?: 'Query';
+  chatRoom: { __typename?: 'ChatRoomEdge'; totalMembers: number };
+};
+
+export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetTotalRoomInviteRequestsQuery = {
+  __typename?: 'Query';
+  totalRoomInviteRequests: number;
+};
+
+export type InitChatQueryVariables = Exact<{ [key: string]: never }>;
+
+export type InitChatQuery = {
+  __typename?: 'Query';
+  chatUnreadMessagesCount: number;
+};
+
+export type LeaveChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type LeaveChatRoomMutation = {
+  __typename?: 'Mutation';
+  leaveChatRoom: boolean;
+};
+
+export type RemoveMemberFromChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  memberGuid: Scalars['String']['input'];
+}>;
+
+export type RemoveMemberFromChatRoomMutation = {
+  __typename?: 'Mutation';
+  removeMemberFromChatRoom: boolean;
+};
+
+export type ReplyToRoomInviteRequestMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  action: ChatRoomInviteRequestActionEnum;
+}>;
+
+export type ReplyToRoomInviteRequestMutation = {
+  __typename?: 'Mutation';
+  replyToRoomInviteRequest: boolean;
+};
+
+export type SetReadReceiptMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  messageGuid: Scalars['String']['input'];
+}>;
+
+export type SetReadReceiptMutation = {
+  __typename?: 'Mutation';
+  readReceipt: {
+    __typename?: 'ChatRoomEdge';
+    id: string;
+    unreadMessagesCount: number;
   };
 };
 
@@ -2095,6 +2697,8 @@ export type GetTenantAnalyticsTableQuery = {
             user: { __typename?: 'UserNode'; guid: string; username: string };
           }
         | { __typename?: 'BoostNode'; id: string }
+        | { __typename?: 'ChatMessageNode'; id: string }
+        | { __typename?: 'ChatRoomNode'; id: string }
         | { __typename?: 'CommentNode'; id: string }
         | { __typename?: 'CustomPage'; id: string }
         | { __typename?: 'FeaturedEntity'; id: string }
@@ -2145,6 +2749,8 @@ export type GetFeaturedEntitiesQuery = {
         | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
         | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
         | { __typename?: 'BoostNode'; id: string }
+        | { __typename?: 'ChatMessageNode'; id: string }
+        | { __typename?: 'ChatRoomNode'; id: string }
         | { __typename?: 'CommentNode'; id: string }
         | { __typename?: 'CustomPage'; id: string }
         | { __typename?: 'FeaturedEntity'; id: string }
@@ -2321,6 +2927,8 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
+            | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
@@ -2364,6 +2972,31 @@ export type GetReportsQuery = {
                   | {
                       __typename?: 'ActivityEdge';
                       node: { __typename?: 'ActivityNode'; legacy: string };
+                    }
+                  | {
+                      __typename?: 'ChatMessageEdge';
+                      node: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                        guid: string;
+                        roomGuid: string;
+                        plainText: string;
+                        timeCreatedISO8601: string;
+                        timeCreatedUnix: string;
+                        sender: {
+                          __typename?: 'UserEdge';
+                          id: string;
+                          type: string;
+                          cursor: string;
+                          node: {
+                            __typename?: 'UserNode';
+                            name: string;
+                            username: string;
+                            id: string;
+                            guid: string;
+                          };
+                        };
+                      };
                     }
                   | {
                       __typename?: 'CommentEdge';
@@ -2387,6 +3020,21 @@ export type GetReportsQuery = {
           node: { __typename?: 'BoostNode'; id: string };
         }
       | {
+          __typename?: 'ChatMessageEdge';
+          cursor: string;
+          node: { __typename?: 'ChatMessageNode'; id: string };
+        }
+      | {
+          __typename?: 'ChatRoomEdge';
+          cursor: string;
+          node: { __typename?: 'ChatRoomNode'; id: string };
+        }
+      | {
+          __typename?: 'ChatRoomMemberEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; id: string };
+        }
+      | {
           __typename?: 'CommentEdge';
           cursor: string;
           node: { __typename?: 'CommentNode'; id: string };
@@ -2400,6 +3048,8 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
+            | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
@@ -2443,6 +3093,31 @@ export type GetReportsQuery = {
                   | {
                       __typename?: 'ActivityEdge';
                       node: { __typename?: 'ActivityNode'; legacy: string };
+                    }
+                  | {
+                      __typename?: 'ChatMessageEdge';
+                      node: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                        guid: string;
+                        roomGuid: string;
+                        plainText: string;
+                        timeCreatedISO8601: string;
+                        timeCreatedUnix: string;
+                        sender: {
+                          __typename?: 'UserEdge';
+                          id: string;
+                          type: string;
+                          cursor: string;
+                          node: {
+                            __typename?: 'UserNode';
+                            name: string;
+                            username: string;
+                            id: string;
+                            guid: string;
+                          };
+                        };
+                      };
                     }
                   | {
                       __typename?: 'CommentEdge';
@@ -2470,6 +3145,8 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
+            | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
@@ -2513,6 +3190,31 @@ export type GetReportsQuery = {
                   | {
                       __typename?: 'ActivityEdge';
                       node: { __typename?: 'ActivityNode'; legacy: string };
+                    }
+                  | {
+                      __typename?: 'ChatMessageEdge';
+                      node: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                        guid: string;
+                        roomGuid: string;
+                        plainText: string;
+                        timeCreatedISO8601: string;
+                        timeCreatedUnix: string;
+                        sender: {
+                          __typename?: 'UserEdge';
+                          id: string;
+                          type: string;
+                          cursor: string;
+                          node: {
+                            __typename?: 'UserNode';
+                            name: string;
+                            username: string;
+                            id: string;
+                            guid: string;
+                          };
+                        };
+                      };
                     }
                   | {
                       __typename?: 'CommentEdge';
@@ -2600,6 +3302,31 @@ export type GetReportsQuery = {
               | {
                   __typename?: 'ActivityEdge';
                   node: { __typename?: 'ActivityNode'; legacy: string };
+                }
+              | {
+                  __typename?: 'ChatMessageEdge';
+                  node: {
+                    __typename?: 'ChatMessageNode';
+                    id: string;
+                    guid: string;
+                    roomGuid: string;
+                    plainText: string;
+                    timeCreatedISO8601: string;
+                    timeCreatedUnix: string;
+                    sender: {
+                      __typename?: 'UserEdge';
+                      id: string;
+                      type: string;
+                      cursor: string;
+                      node: {
+                        __typename?: 'UserNode';
+                        name: string;
+                        username: string;
+                        id: string;
+                        guid: string;
+                      };
+                    };
+                  };
                 }
               | {
                   __typename?: 'CommentEdge';
@@ -2874,6 +3601,7 @@ export type GetCustomPageQuery = {
     pageType: CustomPageTypesEnum;
     content?: string | null;
     externalLink?: string | null;
+    defaultContent?: string | null;
   };
 };
 
@@ -3243,6 +3971,8 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
@@ -3316,6 +4046,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -3359,6 +4091,28 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: {
+                        __typename?: 'ChatRoomNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       publisherNode: { __typename?: 'CommentNode'; id: string };
                     }
@@ -3383,6 +4137,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -3439,6 +4195,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -3584,6 +4342,21 @@ export type FetchNewsfeedQuery = {
           };
         }
       | {
+          __typename?: 'ChatMessageEdge';
+          cursor: string;
+          node: { __typename?: 'ChatMessageNode'; id: string };
+        }
+      | {
+          __typename?: 'ChatRoomEdge';
+          cursor: string;
+          node: { __typename?: 'ChatRoomNode'; id: string };
+        }
+      | {
+          __typename?: 'ChatRoomMemberEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; id: string };
+        }
+      | {
           __typename?: 'CommentEdge';
           cursor: string;
           node: { __typename?: 'CommentNode'; id: string };
@@ -3603,6 +4376,8 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
@@ -3676,6 +4451,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -3719,6 +4496,28 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: {
+                        __typename?: 'ChatRoomNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       publisherNode: { __typename?: 'CommentNode'; id: string };
                     }
@@ -3743,6 +4542,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -3799,6 +4600,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -3948,6 +4751,8 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
@@ -4021,6 +4826,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -4064,6 +4871,28 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: {
+                        __typename?: 'ChatRoomNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       publisherNode: { __typename?: 'CommentNode'; id: string };
                     }
@@ -4088,6 +4917,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -4144,6 +4975,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -4360,6 +5193,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
@@ -4389,6 +5224,22 @@ export type FetchNewsfeedQuery = {
                   };
                 }
               | {
+                  __typename?: 'ChatMessageEdge';
+                  publisherNode: { __typename?: 'ChatMessageNode'; id: string };
+                }
+              | {
+                  __typename?: 'ChatRoomEdge';
+                  publisherNode: { __typename?: 'ChatRoomNode'; id: string };
+                }
+              | {
+                  __typename?: 'ChatRoomMemberEdge';
+                  publisherNode: {
+                    __typename?: 'UserNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+              | {
                   __typename?: 'CommentEdge';
                   publisherNode: { __typename?: 'CommentNode'; id: string };
                 }
@@ -4403,6 +5254,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
@@ -4435,6 +5288,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
@@ -4706,6 +5561,8 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
@@ -4759,6 +5616,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -4802,6 +5661,28 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: {
+                        __typename?: 'ChatRoomNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       publisherNode: { __typename?: 'CommentNode'; id: string };
                     }
@@ -4826,6 +5707,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -4882,6 +5765,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -5027,6 +5912,21 @@ export type FetchSearchQuery = {
           };
         }
       | {
+          __typename?: 'ChatMessageEdge';
+          cursor: string;
+          node: { __typename?: 'ChatMessageNode'; id: string };
+        }
+      | {
+          __typename?: 'ChatRoomEdge';
+          cursor: string;
+          node: { __typename?: 'ChatRoomNode'; id: string };
+        }
+      | {
+          __typename?: 'ChatRoomMemberEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; legacy: string; id: string };
+        }
+      | {
           __typename?: 'CommentEdge';
           cursor: string;
           node: { __typename?: 'CommentNode'; id: string };
@@ -5046,6 +5946,8 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
@@ -5099,6 +6001,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -5142,6 +6046,28 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: {
+                        __typename?: 'ChatRoomNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       publisherNode: { __typename?: 'CommentNode'; id: string };
                     }
@@ -5166,6 +6092,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -5222,6 +6150,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -5371,6 +6301,8 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
             | { __typename?: 'FeaturedEntity'; id: string }
@@ -5424,6 +6356,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -5467,6 +6401,28 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename?: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: {
+                        __typename?: 'ChatRoomNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       publisherNode: { __typename?: 'CommentNode'; id: string };
                     }
@@ -5491,6 +6447,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -5547,6 +6505,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
                         | { __typename?: 'FeaturedEntity'; id: string }
@@ -5747,6 +6707,8 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
@@ -5776,6 +6738,22 @@ export type FetchSearchQuery = {
                   };
                 }
               | {
+                  __typename?: 'ChatMessageEdge';
+                  publisherNode: { __typename?: 'ChatMessageNode'; id: string };
+                }
+              | {
+                  __typename?: 'ChatRoomEdge';
+                  publisherNode: { __typename?: 'ChatRoomNode'; id: string };
+                }
+              | {
+                  __typename?: 'ChatRoomMemberEdge';
+                  publisherNode: {
+                    __typename?: 'UserNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+              | {
                   __typename?: 'CommentEdge';
                   publisherNode: { __typename?: 'CommentNode'; id: string };
                 }
@@ -5790,6 +6768,8 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
@@ -5822,6 +6802,8 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
                     | { __typename?: 'FeaturedEntity'; id: string }
@@ -5971,6 +6953,15 @@ export type CountSearchQuery = {
       endCursor?: string | null;
     };
   };
+};
+
+export type DeletePostHogPersonMutationVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type DeletePostHogPersonMutation = {
+  __typename?: 'Mutation';
+  deletePostHogPerson: boolean;
 };
 
 export type FetchEmbeddedCommentsSettingsQueryVariables = Exact<{
@@ -6320,6 +7311,555 @@ export class GetBoostFeedGQL extends Apollo.Query<
   GetBoostFeedQueryVariables
 > {
   document = GetBoostFeedDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateChatMessageDocument = gql`
+  mutation CreateChatMessage($plainText: String!, $roomGuid: String!) {
+    createChatMessage(plainText: $plainText, roomGuid: $roomGuid) {
+      id
+      cursor
+      node {
+        id
+        guid
+        roomGuid
+        plainText
+        timeCreatedISO8601
+        timeCreatedUnix
+        sender {
+          id
+          type
+          cursor
+          node {
+            name
+            username
+            guid
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateChatMessageGQL extends Apollo.Mutation<
+  CreateChatMessageMutation,
+  CreateChatMessageMutationVariables
+> {
+  document = CreateChatMessageDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateChatRoomDocument = gql`
+  mutation CreateChatRoom(
+    $otherMemberGuids: [String!]!
+    $roomType: ChatRoomTypeEnum
+  ) {
+    createChatRoom(otherMemberGuids: $otherMemberGuids, roomType: $roomType) {
+      cursor
+      node {
+        id
+        guid
+        roomType
+        timeCreatedISO8601
+        timeCreatedUnix
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateChatRoomGQL extends Apollo.Mutation<
+  CreateChatRoomMutation,
+  CreateChatRoomMutationVariables
+> {
+  document = CreateChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const DeleteChatMessageDocument = gql`
+  mutation DeleteChatMessage($roomGuid: String!, $messageGuid: String!) {
+    deleteChatMessage(roomGuid: $roomGuid, messageGuid: $messageGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteChatMessageGQL extends Apollo.Mutation<
+  DeleteChatMessageMutation,
+  DeleteChatMessageMutationVariables
+> {
+  document = DeleteChatMessageDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const DeleteChatRoomAndBlockUserDocument = gql`
+  mutation DeleteChatRoomAndBlockUser($roomGuid: String!) {
+    deleteChatRoomAndBlockUser(roomGuid: $roomGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteChatRoomAndBlockUserGQL extends Apollo.Mutation<
+  DeleteChatRoomAndBlockUserMutation,
+  DeleteChatRoomAndBlockUserMutationVariables
+> {
+  document = DeleteChatRoomAndBlockUserDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const DeleteChatRoomDocument = gql`
+  mutation DeleteChatRoom($roomGuid: String!) {
+    deleteChatRoom(roomGuid: $roomGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteChatRoomGQL extends Apollo.Mutation<
+  DeleteChatRoomMutation,
+  DeleteChatRoomMutationVariables
+> {
+  document = DeleteChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatMessagesDocument = gql`
+  query GetChatMessages(
+    $roomGuid: String!
+    $first: Int!
+    $after: String
+    $before: String
+  ) {
+    chatMessages(
+      after: $after
+      first: $first
+      before: $before
+      roomGuid: $roomGuid
+    ) {
+      edges {
+        cursor
+        id
+        node {
+          id
+          guid
+          roomGuid
+          plainText
+          timeCreatedISO8601
+          timeCreatedUnix
+          sender {
+            id
+            type
+            cursor
+            node {
+              name
+              username
+              id
+              guid
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatMessagesGQL extends Apollo.Query<
+  GetChatMessagesQuery,
+  GetChatMessagesQueryVariables
+> {
+  document = GetChatMessagesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatRoomGuidsDocument = gql`
+  query GetChatRoomGuids {
+    chatRoomGuids
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomGuidsGQL extends Apollo.Query<
+  GetChatRoomGuidsQuery,
+  GetChatRoomGuidsQueryVariables
+> {
+  document = GetChatRoomGuidsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatRoomInviteRequestsDocument = gql`
+  query GetChatRoomInviteRequests($first: Int, $after: String) {
+    chatRoomInviteRequests(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          id
+          guid
+          roomType
+          timeCreatedISO8601
+          timeCreatedUnix
+        }
+        members(first: 3) {
+          edges {
+            cursor
+            node {
+              id
+              guid
+              username
+              name
+            }
+          }
+        }
+        lastMessagePlainText
+        lastMessageCreatedTimestamp
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomInviteRequestsGQL extends Apollo.Query<
+  GetChatRoomInviteRequestsQuery,
+  GetChatRoomInviteRequestsQueryVariables
+> {
+  document = GetChatRoomInviteRequestsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatRoomMembersDocument = gql`
+  query GetChatRoomMembers(
+    $roomGuid: String!
+    $first: Int!
+    $after: String
+    $excludeSelf: Boolean
+  ) {
+    chatRoomMembers(
+      roomGuid: $roomGuid
+      first: $first
+      after: $after
+      excludeSelf: $excludeSelf
+    ) {
+      edges {
+        cursor
+        role
+        node {
+          id
+          guid
+          name
+          username
+          urn
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomMembersGQL extends Apollo.Query<
+  GetChatRoomMembersQuery,
+  GetChatRoomMembersQueryVariables
+> {
+  document = GetChatRoomMembersDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatRoomDocument = gql`
+  query GetChatRoom(
+    $roomGuid: String!
+    $firstMembers: Int!
+    $afterMembers: Int!
+  ) {
+    chatRoom(roomGuid: $roomGuid) {
+      cursor
+      node {
+        guid
+        roomType
+        id
+        isChatRequest
+        isUserRoomOwner
+        areChatRoomNotificationsMuted
+      }
+      members(first: $firstMembers, after: $afterMembers) {
+        edges {
+          cursor
+          role
+          node {
+            name
+            username
+            id
+            guid
+          }
+        }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomGQL extends Apollo.Query<
+  GetChatRoomQuery,
+  GetChatRoomQueryVariables
+> {
+  document = GetChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatRoomsListDocument = gql`
+  query GetChatRoomsList($first: Int, $after: String) {
+    chatRoomList(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        id
+        cursor
+        node {
+          id
+          guid
+          roomType
+          timeCreatedISO8601
+          timeCreatedUnix
+        }
+        members(first: 3) {
+          edges {
+            cursor
+            node {
+              id
+              guid
+              username
+              name
+            }
+          }
+        }
+        unreadMessagesCount
+        lastMessagePlainText
+        lastMessageCreatedTimestamp
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomsListGQL extends Apollo.Query<
+  GetChatRoomsListQuery,
+  GetChatRoomsListQueryVariables
+> {
+  document = GetChatRoomsListDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetTotalChatRoomMembersDocument = gql`
+  query GetTotalChatRoomMembers($roomGuid: String!) {
+    chatRoom(roomGuid: $roomGuid) {
+      totalMembers
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetTotalChatRoomMembersGQL extends Apollo.Query<
+  GetTotalChatRoomMembersQuery,
+  GetTotalChatRoomMembersQueryVariables
+> {
+  document = GetTotalChatRoomMembersDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetTotalRoomInviteRequestsDocument = gql`
+  query GetTotalRoomInviteRequests {
+    totalRoomInviteRequests
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetTotalRoomInviteRequestsGQL extends Apollo.Query<
+  GetTotalRoomInviteRequestsQuery,
+  GetTotalRoomInviteRequestsQueryVariables
+> {
+  document = GetTotalRoomInviteRequestsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const InitChatDocument = gql`
+  query InitChat {
+    chatUnreadMessagesCount
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class InitChatGQL extends Apollo.Query<
+  InitChatQuery,
+  InitChatQueryVariables
+> {
+  document = InitChatDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const LeaveChatRoomDocument = gql`
+  mutation LeaveChatRoom($roomGuid: String!) {
+    leaveChatRoom(roomGuid: $roomGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class LeaveChatRoomGQL extends Apollo.Mutation<
+  LeaveChatRoomMutation,
+  LeaveChatRoomMutationVariables
+> {
+  document = LeaveChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const RemoveMemberFromChatRoomDocument = gql`
+  mutation RemoveMemberFromChatRoom($roomGuid: String!, $memberGuid: String!) {
+    removeMemberFromChatRoom(roomGuid: $roomGuid, memberGuid: $memberGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RemoveMemberFromChatRoomGQL extends Apollo.Mutation<
+  RemoveMemberFromChatRoomMutation,
+  RemoveMemberFromChatRoomMutationVariables
+> {
+  document = RemoveMemberFromChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ReplyToRoomInviteRequestDocument = gql`
+  mutation ReplyToRoomInviteRequest(
+    $roomGuid: String!
+    $action: ChatRoomInviteRequestActionEnum!
+  ) {
+    replyToRoomInviteRequest(
+      roomGuid: $roomGuid
+      chatRoomInviteRequestActionEnum: $action
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ReplyToRoomInviteRequestGQL extends Apollo.Mutation<
+  ReplyToRoomInviteRequestMutation,
+  ReplyToRoomInviteRequestMutationVariables
+> {
+  document = ReplyToRoomInviteRequestDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetReadReceiptDocument = gql`
+  mutation SetReadReceipt($roomGuid: String!, $messageGuid: String!) {
+    readReceipt(roomGuid: $roomGuid, messageGuid: $messageGuid) {
+      id
+      unreadMessagesCount
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetReadReceiptGQL extends Apollo.Mutation<
+  SetReadReceiptMutation,
+  SetReadReceiptMutationVariables
+> {
+  document = SetReadReceiptDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -6964,6 +8504,27 @@ export const GetReportsDocument = gql`
                   legacy
                 }
               }
+              ... on ChatMessageEdge {
+                node {
+                  id
+                  guid
+                  roomGuid
+                  plainText
+                  timeCreatedISO8601
+                  timeCreatedUnix
+                  sender {
+                    id
+                    type
+                    cursor
+                    node {
+                      name
+                      username
+                      id
+                      guid
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -7383,6 +8944,7 @@ export const GetCustomPageDocument = gql`
       pageType
       content
       externalLink
+      defaultContent
     }
   }
 `;
@@ -8281,6 +9843,25 @@ export class CountSearchGQL extends Apollo.Query<
   CountSearchQueryVariables
 > {
   document = CountSearchDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const DeletePostHogPersonDocument = gql`
+  mutation DeletePostHogPerson {
+    deletePostHogPerson
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeletePostHogPersonGQL extends Apollo.Mutation<
+  DeletePostHogPersonMutation,
+  DeletePostHogPersonMutationVariables
+> {
+  document = DeletePostHogPersonDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

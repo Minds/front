@@ -19,7 +19,7 @@
       }"
     ></minds-avatar>
     <a class="m-reportV2__reportedByUsername" [href]="'/' + username"
-      >@{{ username }}</a
+      >&#64;{{ username }}</a
     >
   </div>
   <ng-container [ngSwitch]="reportEdge.node.entityEdge.node.__typename">
@@ -54,6 +54,18 @@
       class="m-reportV2__group"
       [publisher]="entity"
     ></m-publisherCard>
+    <m-chatRoom__message
+      *ngSwitchCase="'ChatMessageNode'"
+      class="m-reportV2__chatMessage"
+      [senderName]="entity.sender?.node?.name"
+      [plainText]="entity.plainText"
+      [timeCreatedUnix]="entity.timeCreatedUnix"
+      [senderGuid]="entity.sender?.node?.guid"
+      [senderUsername]="entity.sender?.node?.username"
+      [isMessageOwner]="false"
+      [isNextMessageFromSameSender]="false"
+      [isPreviousMessageFromSameSender]="false"
+    ></m-chatRoom__message>
   </ng-container>
   <div
     class="m-reportV2__actionBar"

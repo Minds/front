@@ -23,10 +23,10 @@ import { MultiFactorAuthService } from '../../auth/multi-factor-auth/services/mu
 import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { RegexService } from '../../../common/services/regex.service';
-import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 import { Router } from '@angular/router';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
+import { AnalyticsService } from '../../../services/analytics';
 
 export class RouterStub {
   url = '';
@@ -131,16 +131,16 @@ describe('LoginForm', () => {
         RegexService,
         { provide: Router, useClass: RouterStub },
         {
-          provide: ResetPasswordExperimentService,
-          useValue: MockService(ResetPasswordExperimentService),
-        },
-        {
           provide: PermissionsService,
           useValue: MockService(PermissionsService),
         },
         {
           provide: SiteService,
           useValue: MockService(SiteService),
+        },
+        {
+          provide: AnalyticsService,
+          useValue: MockService(AnalyticsService),
         },
       ],
     }).compileComponents(); // compile template and css

@@ -15,9 +15,10 @@ export class NotificationCountSocketsExperimentService {
    * @returns { boolean } whether experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation(
-      'engine-2592-notification-count-sockets',
-      true
-    );
+    // return this.experiments.hasVariation(
+    //   'engine-2592-notification-count-sockets',
+    //   true
+    // );
+    return true;
   }
 }

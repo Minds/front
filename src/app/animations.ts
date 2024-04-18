@@ -167,3 +167,29 @@ export const GrowShrinkFast: AnimationTriggerMetadata = trigger('growShrink', [
     ),
   ]),
 ]);
+
+/**
+ * Grows and shrinks smoothly on enter and leave without a horizontal margin shift.
+ */
+export const GrowShrinkFastNoMarginShift: AnimationTriggerMetadata = trigger(
+  'growShrinkNoMarginShift',
+  [
+    state(
+      'in',
+      style({ height: '*', opacity: 1, marginTop: '*', marginBottom: '*' })
+    ),
+    transition(':enter', [
+      style({ height: '0px', opacity: 0, marginTop: 0, marginBottom: 0 }),
+      animate(
+        '0.3s cubic-bezier(0.24, 1, 0.32, 1)',
+        style({ height: '*', opacity: 1, marginTop: '*', marginBottom: '*' })
+      ),
+    ]),
+    transition(':leave', [
+      animate(
+        '0.3s cubic-bezier(0.24, 1, 0.32, 1)',
+        style({ height: '0px', opacity: 0, marginTop: 0, marginBottom: 0 })
+      ),
+    ]),
+  ]
+);

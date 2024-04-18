@@ -16,7 +16,6 @@
   [class.m-topbar__top--noBackground]="
     !(pageLayoutService.hasTopbarBackground$ | async)
   "
-  [class.m-topbar--homepageV3]="onHomepage"
   [class.m-topbar__top--loggedOut]="!getCurrentUser()"
   [class.m-topbar__top--minimalLightMode]="templateVars.isMinimalLightMode"
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"

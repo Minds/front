@@ -74,10 +74,11 @@ export class ActivityToolbarComponent {
         // this.allowReminds = !showBadge;
       });
 
-    this.supermindButtonExperiment = this.experimentsService.hasVariation(
-      'front-5812-supermind-button',
-      true
-    );
+    // this.supermindButtonExperiment = this.experimentsService.hasVariation(
+    //   'front-5812-supermind-button',
+    //   true
+    // );
+    this.supermindButtonExperiment = true;
   }
 
   ngOnDestroy() {

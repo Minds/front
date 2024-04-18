@@ -1,0 +1,15 @@
+<div class="m-chatRoomNotificationSettings__muteNotificationsRow">
+  <label
+    class="m-chatRoomNotificationSettings__muteNotificationsLabel"
+    i18n="@@CHAT_ROOM__NOTIFICATION_SETTINGS__MUTE_NOTIFICATIONS_FOR_CHAT"
+    >Mute notifications for this chat</label
+  >
+  <m-toggle
+    class="m-chatRoomNotificationSettings__muteNotificationsToggle"
+    [mModel]="notificationsMuted$ | async"
+    (mModelChange)="onMuteNotificationToggle($event)"
+    [leftValue]="false"
+    [rightValue]="true"
+    [offState]="false"
+  ></m-toggle>
+</div>

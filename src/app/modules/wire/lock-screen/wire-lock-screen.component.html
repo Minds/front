@@ -63,14 +63,14 @@
             *ngIf="entity?.ownerObj?.username"
             i18n="@@WIRE__LOCK_SCREEN__TO_USERNAME_PART"
           >
-            to @{{ entity.ownerObj.username }}
+            to &#64;{{ entity.ownerObj.username }}
           </ng-container>
         </ng-container>
 
         <ng-template #supportTierText>
           <ng-container *ngIf="!isPlus">
             <ng-container i18n="@@WIRE__SUPPORT__TIER__TEXT" *ngIf="!isCustom">
-              Join @{{ entity.ownerObj.username }}'s
+              Join &#64;{{ entity.ownerObj.username }}'s
               {{ entity.wire_threshold.support_tier?.name }}
               Membership to see this post
             </ng-container>
@@ -78,9 +78,8 @@
               i18n="@@WIRE__SUPPORT__TIER__TEXT__RECURRING"
               *ngIf="isCustom"
             >
-              Join @{{ entity.ownerObj.username }}'s Custom Membership for ${{
-                entity.wire_threshold.support_tier.usd
-              }}
+              Join &#64;{{ entity.ownerObj.username }}'s Custom Membership for
+              ${{ entity.wire_threshold.support_tier.usd }}
               per month to see this post
             </ng-container>
           </ng-container>

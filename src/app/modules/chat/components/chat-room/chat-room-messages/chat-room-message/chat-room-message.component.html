@@ -1,0 +1,59 @@
+<a
+  class="m-chatRoomMessage__senderName"
+  *ngIf="senderName && !isFromLoggedInUser && !isPreviousMessageFromSameSender"
+  [routerLink]="['/' + senderUsername]"
+  (mouseup)="$event.which == 2 ? openSenderChannelInNewTab() : null"
+  >{{ senderName }}</a
+>
+<div class="m-chatMessage__contentRow">
+  <ng-container *ngIf="isFromLoggedInUser && messageEdge">
+    <ng-container *ngTemplateOutlet="dropdownEllipsisTemplate"></ng-container>
+  </ng-container>
+  <div *ngIf="!isFromLoggedInUser" class="m-chatRoomMessage__avatarContainer">
+    <minds-avatar
+      *ngIf="!isNextMessageFromSameSender"
+      [object]="{ guid: senderGuid, type: 'user' }"
+      [routerLink]="['/' + senderUsername]"
+      (mouseup)="$event.which == 2 ? openSenderChannelInNewTab() : null"
+      tabindex="0"
+      [attr.aria-label]="senderName + 's channel'"
+    ></minds-avatar>
+  </div>
+  <div
+    class="m-chatRoomMessage__bubble"
+    [ngClass]="{
+      'm-chatRoomMessage__bubble--clickable': isNextMessageFromSameSender
+    }"
+    throttledClick
+    (throttledClick)="handleMessageClick()"
+  >
+    <span
+      *ngIf="plainText"
+      class="m-chatRoomMessage__text"
+      tabindex="0"
+      (click)="handleMessageTextClick($event)"
+      [innerHtml]="plainText | tags"
+    ></span>
+  </div>
+  <ng-container *ngIf="!isFromLoggedInUser && messageEdge">
+    <ng-container *ngTemplateOutlet="dropdownEllipsisTemplate"></ng-container>
+  </ng-container>
+</div>
+<p
+  *ngIf="
+    timeCreatedUnix && (!isNextMessageFromSameSender || isManuallyExpanded)
+  "
+  class="m-chatRoomMessage__timestamp"
+  [@.disabled]="!isNextMessageFromSameSender"
+  [@growShrinkNoMarginShift]
+>
+  {{ timeCreatedUnix | chatDate: false }}
+</p>
+
+<ng-template #dropdownEllipsisTemplate>
+  <m-chatRoomMessage__dropdown
+    [messageEdge]="messageEdge"
+    [hoverSourceElement]="elementRef"
+    [isMessageOwner]="isFromLoggedInUser"
+  ></m-chatRoomMessage__dropdown>
+</ng-template>

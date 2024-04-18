@@ -1,0 +1,122 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: $spacing4;
+  padding: $spacing4 $spacing6;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover,
+  &.m-chat__roomListItem--active {
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+  }
+
+  .m-chatRoomListItem__containerLeft {
+    max-width: 40px;
+
+    .m-chatRoomListItem__avatarContainer {
+      max-width: 48px;
+      max-height: 48px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+
+      ::ng-deep .minds-avatar {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin: 0;
+        background-position: center;
+        background-size: cover;
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+      }
+
+      &--multiAvatar {
+        position: relative;
+
+        minds-avatar {
+          position: absolute;
+
+          &:nth-of-type(1) {
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+          }
+
+          &:nth-of-type(2) {
+            right: 0;
+            top: 0;
+          }
+
+          ::ng-deep .minds-avatar {
+            width: 32px;
+            height: 32px;
+          }
+        }
+      }
+    }
+  }
+
+  .m-chatRoomListItem__containerRight {
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 1;
+    overflow-x: hidden;
+    position: relative;
+
+    .m-chatRoomListItem__topRow {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: $spacing1;
+      gap: $spacing10;
+
+      .m-chatRoomListItem__roomName {
+        @include body2Medium;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .m-chatRoomListItem__lastMessageTimestamp {
+        text-wrap: nowrap;
+        @include body3Regular;
+      }
+    }
+
+    .m-chatRoomListItem__lastMessage {
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin-bottom: 0;
+      @include body3Regular;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-chatRoomListItem__unreadDot {
+      position: absolute;
+      right: 0;
+      width: $spacing2;
+      height: $spacing2;
+      border-radius: 50%;
+      top: 50%;
+
+      @include m-theme() {
+        background-color: themed($m-action);
+      }
+    }
+  }
+}

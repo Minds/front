@@ -1,0 +1,23 @@
+<div class="m-chatMemberListItem__leftContainer">
+  <minds-avatar
+    [object]="{ guid: memberEdge.node.guid, type: 'user' }"
+    [routerLink]="'/' + memberEdge.node.username"
+  ></minds-avatar>
+  <div class="m-chatMemberListItem__nameContainer">
+    <span
+      class="m-chatMemberListItem__name"
+      [title]="memberEdge.node.name"
+      [routerLink]="'/' + memberEdge.node.username"
+      >{{ memberEdge.node.name }}</span
+    >
+    <span
+      class="m-chatMemberListItem__username"
+      [title]="memberEdge.node.username"
+      [routerLink]="'/' + memberEdge.node.username"
+      >&#64;{{ memberEdge.node.username }}</span
+    >
+  </div>
+</div>
+<m-chatRoomMembersListItem__dropdown
+  [memberEdge]="memberEdge"
+></m-chatRoomMembersListItem__dropdown>

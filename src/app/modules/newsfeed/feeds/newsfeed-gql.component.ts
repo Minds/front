@@ -339,10 +339,11 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
           setTimeout(() => {
             this.showBoostRotator =
               this.isFirstRun &&
-              !this.experimentsService.hasVariation(
-                'minds-4105-remove-rotator',
-                true
-              );
+              // !this.experimentsService.hasVariation(
+              //   'minds-4105-remove-rotator',
+              //   true
+              // );
+              false; // TODO: Remove  minds-4105-remove-rotator  featureflag
           }, 50);
         }),
       /**

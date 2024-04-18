@@ -205,7 +205,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     public modalService: ModalService,
     private injector: Injector,
     private permissions: PermissionsService,
-    private readonly experimentService: ExperimentsService,
     protected nsfwEnabledService: NsfwEnabledService,
     protected siteMembershipsCountService: SiteMembershipsCountService
   ) {}
@@ -372,10 +371,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public get shouldShowLivestreamButton(): boolean {
-    return (
-      this.experimentService.hasVariation('minds-4157-livepeer') &&
-      this.permissions.canUploadVideo()
-    );
+    return this.permissions.canUploadVideo();
   }
 
   /**

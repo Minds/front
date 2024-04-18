@@ -15,7 +15,6 @@ import {
 } from '../../custom-pages/custom-pages.types';
 import { ApolloQueryResult } from '@apollo/client';
 import { MutationResult } from 'apollo-angular';
-import { DEFAULT_PRIVACY_POLICY_CONTENT } from '../../custom-pages/default-content/default-privacy-policy.constant';
 
 describe('CustomPageService', () => {
   let service: CustomPageService;
@@ -57,6 +56,7 @@ describe('CustomPageService', () => {
         pageType: CustomPageTypesEnum.PrivacyPolicy,
         content: 'Privacy Policy Content',
         externalLink: null,
+        defaultContent: 'Default Privacy Policy Content',
       };
       const mockResult: ApolloQueryResult<any> = {
         data: { customPage: mockPage },
@@ -74,6 +74,7 @@ describe('CustomPageService', () => {
         expect(customPageExtended).toEqual(
           jasmine.objectContaining({
             content: 'Privacy Policy Content',
+            defaultContent: 'Default Privacy Policy Content',
             implementation: CustomPageImplementation.CUSTOM,
             displayName: 'privacy policy',
             displayContent: 'Privacy Policy Content',
@@ -161,6 +162,7 @@ describe('CustomPageService', () => {
       const customPage = {
         content: 'Some Content',
         externalLink: null,
+        defaultContent: 'Default Privacy Policy Content',
         id: 'some-id',
         pageType: CustomPageTypesEnum.PrivacyPolicy,
       };
@@ -173,6 +175,7 @@ describe('CustomPageService', () => {
       const customPage = {
         content: null,
         externalLink: 'https://example.com',
+        defaultContent: 'Default Privacy Policy Content',
         id: 'some-id',
         pageType: CustomPageTypesEnum.PrivacyPolicy,
       };
@@ -185,6 +188,7 @@ describe('CustomPageService', () => {
       const customPage = {
         content: null,
         externalLink: null,
+        defaultContent: 'Default Privacy Policy Content',
         id: 'some-id',
         pageType: CustomPageTypesEnum.PrivacyPolicy,
       };
@@ -199,6 +203,7 @@ describe('CustomPageService', () => {
       const customPage = {
         content: 'Custom Content',
         externalLink: null,
+        defaultContent: 'Default Privacy Policy Content',
         id: 'some-id',
         pageType: CustomPageTypesEnum.PrivacyPolicy,
       };
@@ -211,6 +216,7 @@ describe('CustomPageService', () => {
       const customPage = {
         content: null,
         externalLink: 'https://example.com',
+        defaultContent: 'Default Privacy Policy Content',
         id: 'some-id',
         pageType: CustomPageTypesEnum.PrivacyPolicy,
       };
@@ -223,12 +229,13 @@ describe('CustomPageService', () => {
       const customPage = {
         content: null,
         externalLink: null,
+        defaultContent: 'Default Privacy Policy Content',
         id: 'some-id',
         pageType: CustomPageTypesEnum.PrivacyPolicy,
       };
       expect(
         service.getDisplayContent(customPage, CustomPageImplementation.DEFAULT)
-      ).toEqual(DEFAULT_PRIVACY_POLICY_CONTENT);
+      ).toEqual('Default Privacy Policy Content');
     });
   });
 });

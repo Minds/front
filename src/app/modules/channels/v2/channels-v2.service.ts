@@ -6,6 +6,7 @@ import {
   lastValueFrom,
   Observable,
   of,
+  ReplaySubject,
 } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { Session } from '../../../services/session';
@@ -273,7 +274,9 @@ export class ChannelsV2Service {
       query = decodeURIComponent(params.get('query'));
     }
 
-    this.query$.next(query);
+    if (this.query$.value !== query) {
+      this.query$.next(query);
+    }
 
     this.guid$.next(typeof channel === 'object' ? channel.guid : channel);
     this.setChannel(typeof channel === 'object' ? channel : null);

@@ -25,6 +25,7 @@ import {
 } from './common/services/diagnostics/server-diagnostics.service';
 import { SENTRY } from './common/services/diagnostics/diagnostics.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { POSTHOG_JS } from './common/services/posthog/posthog-injection-tokens';
 
 PlotlyModule.plotlyjs = {
   react: () => {},
@@ -70,6 +71,10 @@ export const SERVER_PROVIDERS = [
   {
     provide: HlsjsPlyrDriver,
     useClass: DefaultPlyrDriver,
+  },
+  {
+    provide: POSTHOG_JS,
+    useValue: {},
   },
 ];
 

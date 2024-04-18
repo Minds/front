@@ -1,0 +1,22 @@
+@import 'defaults.scss';
+
+:host {
+  form {
+    margin: 0;
+
+    input {
+      max-width: 100%;
+      width: 100%;
+      outline: none;
+      border-radius: 4px;
+      padding: $spacing2 $spacing4;
+      @include body3Regular;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+        background: themed($m-bgColor--primary);
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}

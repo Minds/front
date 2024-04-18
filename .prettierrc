@@ -1,8 +1,10 @@
-# .prettierrc
-# Use this file to define your defaults for prettier
-# For a list of all available options:
-# https://prettier.io/docs/en/options.html
-trailingComma: 'es5'
-printWidth: 80
-singleQuote: true
-semi: true
+{
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "singleQuote": true,
+  "semi": true,
+  "quoteProps": "preserve",
+  "bracketSpacing": true
+}

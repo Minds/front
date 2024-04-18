@@ -1,0 +1,23 @@
+<div class="m-chatRoomTop__leftContainer">
+  <div class="m-chatRoomTop__avatarsList">
+    <minds-avatar
+      *ngFor="let roomMember of roomMembers.slice(0, 3)"
+      [object]="{ guid: roomMember.node.guid, type: 'user' }"
+      [routerLink]="['/' + roomMember.node.username]"
+      (mouseup)="
+        $event.which == 2 ? openChannelInNewTab(roomMember.node.username) : null
+      "
+    ></minds-avatar>
+  </div>
+  <span class="m-chatRoomTop__roomName" tabindex="0">{{ roomName }}</span>
+</div>
+<div class="m-chatRoomTop__rightContainer" *ngIf="!requestMode">
+  <i
+    class="material-icons"
+    aria-label="Chat details panel"
+    tabindex="0"
+    (click)="detailsIconClickEmitter.emit()"
+    (keyup.enter)="detailsIconClickEmitter.emit()"
+    >info</i
+  >
+</div>

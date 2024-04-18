@@ -129,6 +129,10 @@ export class SettingsV2Component implements OnInit {
             id: 'nostr',
             shouldShow: this.isNotTenantSite.bind(this),
           },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__USERDATA__LABEL:User Data & Analytics`,
+            id: 'user-data',
+          },
         ],
       },
       {

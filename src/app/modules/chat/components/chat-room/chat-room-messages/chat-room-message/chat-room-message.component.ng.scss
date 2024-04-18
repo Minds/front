@@ -1,0 +1,150 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-bottom: $spacing4;
+
+  &.m-chatRoom__message--left {
+    align-items: flex-start;
+
+    .m-chatRoomMessage__bubble {
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+      }
+
+      .m-chatRoomMessage__text {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+
+    .m-chatRoomMessage__timestamp,
+    .m-chatRoomMessage__senderName {
+      margin-left: $spacing14;
+    }
+
+    .m-chatMessage__contentRow {
+      .m-chatRoomMessage__avatarContainer {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: flex-end;
+        margin-right: $spacing3;
+        min-width: 36px;
+        height: 100%;
+        align-self: flex-end;
+
+        ::ng-deep .minds-avatar {
+          cursor: pointer;
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          margin: 0;
+          background-position: center;
+          background-size: cover;
+
+          @include m-theme() {
+            border: 1px solid themed($m-borderColor--primary);
+          }
+        }
+      }
+    }
+  }
+
+  &.m-chatRoom__message--right {
+    align-items: flex-end;
+
+    .m-chatMessage__contentRow {
+      justify-content: flex-end;
+
+      .m-chatRoomMessage__bubble {
+        @include m-theme() {
+          background-color: color-by-theme($m-action, 'light');
+        }
+
+        .m-chatRoomMessage__text {
+          @include m-theme() {
+            color: color-by-theme($m-textColor--primaryInverted, 'light');
+          }
+        }
+      }
+    }
+
+    .m-chatRoomMessage__timestamp,
+    .m-chatRoomMessage__senderName {
+      margin-right: $spacing1;
+    }
+  }
+
+  &.m-chatRoom__message--nextMessageIsFromSameSender {
+    margin-bottom: $spacing1;
+  }
+
+  .m-chatRoomMessage__senderName {
+    margin-bottom: $spacing1;
+    max-width: 100%;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    text-decoration: none;
+
+    @include body3Bold;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .m-chatRoomMessage__timestamp {
+    margin-top: $spacing1;
+
+    @include body3Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-chatMessage__contentRow {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width: 100%;
+
+    .m-chatRoomMessage__bubble {
+      display: flex;
+      max-width: 80%;
+      padding: $spacing2 $spacing3;
+      align-items: flex-start;
+      gap: $spacing2;
+      border-radius: 16px;
+
+      &--clickable {
+        cursor: pointer;
+      }
+
+      .m-chatRoomMessage__text {
+        word-break: break-word;
+        white-space: pre-line;
+        @include body2Regular;
+
+        ::ng-deep a {
+          color: inherit;
+          @include body2Regular;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+
+  m-chatRoomMessage__dropdown {
+    margin: 0 $spacing3;
+  }
+}
