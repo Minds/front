@@ -1,5 +1,6 @@
 import {
   Component,
+  HostBinding,
   Inject,
   OnDestroy,
   OnInit,
@@ -26,6 +27,12 @@ export enum SiteMembershipPageErrorMessage {
   SUBSCRIPTION_ALREADY_CANCELLED = 'This subscription is already cancelled',
   SUBSCRIPTION_ALREADY_EXISTS = 'You are already subscribed to this membership',
 }
+
+export type SiteMembershipsPageModalData = {
+  isModal: boolean;
+  onDismissIntent: () => any;
+  onJoinClick: () => any;
+};
 
 /**
  * Base site memberships page component.
@@ -60,6 +67,20 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
   /** Whether to show 'Memberships' at the top of the page */
   public showPageTitle$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(true);
+
+  /** True if this is being displayed as a modal */
+  @HostBinding('class.m-membershipsPage__modal')
+  isModal: boolean = false;
+
+  /**
+   * Dismiss intent.
+   */
+  onDismissIntent: () => void = () => {};
+
+  /**
+   * User joined a site membership
+   */
+  onJoinClick: () => void = () => {};
 
   constructor(
     private siteMembershipsService: SiteMembershipService,
@@ -155,5 +176,22 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
         }
       }, 0);
     }
+  }
+
+  /**
+   * Set modal data.
+   * @param { SiteMembershipsPageModalData } data - data for modal version of this component
+   */
+  public setModalData({
+    isModal,
+    onDismissIntent,
+    onJoinClick,
+  }: SiteMembershipsPageModalData) {
+    this.isModal = isModal;
+    if (this.isModal) {
+      this.showPageTitle$.next(false);
+    }
+    this.onDismissIntent = onDismissIntent ?? (() => {});
+    this.onJoinClick = onJoinClick ?? (() => {});
   }
 }

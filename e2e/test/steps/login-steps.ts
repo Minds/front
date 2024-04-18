@@ -9,7 +9,7 @@ namespace LoginSteps {
     loginPage.login(loginPage.validUsername, loginPage.validPassword);
   });
 
-  When('I pass invalid credentials', table => {
+  When('I pass invalid credentials', (table) => {
     const tableByHeader = table.parse().hashes();
     for (const row of tableByHeader) {
       const username = row.username;
