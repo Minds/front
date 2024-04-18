@@ -11,39 +11,37 @@ describe('BoostModalV2BudgetTabBarComponent', () => {
   let comp: BoostModalV2BudgetTabBarComponent;
   let fixture: ComponentFixture<BoostModalV2BudgetTabBarComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [BoostModalV2BudgetTabBarComponent],
-        providers: [
-          {
-            provide: BoostModalV2Service,
-            useValue: MockService(BoostModalV2Service, {
-              has: ['paymentCategory$'],
-              props: {
-                paymentCategory$: {
-                  get: () =>
-                    new BehaviorSubject<BoostPaymentCategory>(
-                      BoostPaymentCategory.CASH
-                    ),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [BoostModalV2BudgetTabBarComponent],
+      providers: [
+        {
+          provide: BoostModalV2Service,
+          useValue: MockService(BoostModalV2Service, {
+            has: ['paymentCategory$'],
+            props: {
+              paymentCategory$: {
+                get: () =>
+                  new BehaviorSubject<BoostPaymentCategory>(
+                    BoostPaymentCategory.CASH
+                  ),
               },
-            }),
-          },
-          {
-            provide: ModalService,
-            useValue: MockService(ModalService),
-          },
-          {
-            provide: Injector,
-            useValue: MockService(Injector),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: ModalService,
+          useValue: MockService(ModalService),
+        },
+        {
+          provide: Injector,
+          useValue: MockService(Injector),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostModalV2BudgetTabBarComponent);
     comp = fixture.componentInstance;
 

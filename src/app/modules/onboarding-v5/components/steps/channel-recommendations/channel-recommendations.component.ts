@@ -18,7 +18,8 @@ import { OnboardingStepContentInterface } from '../step-content.interface';
   ],
 })
 export class OnboardingV5ChannelRecommendationsContentComponent
-  implements OnboardingStepContentInterface {
+  implements OnboardingStepContentInterface
+{
   /** Threshold for minimum subscriptions. */
   private readonly MIN_SUBSCRIPTION_THRESHOLD = 1;
 
@@ -40,9 +41,8 @@ export class OnboardingV5ChannelRecommendationsContentComponent
   );
 
   /** Count of subscriptions. */
-  private subscriptionsCount$: BehaviorSubject<number> = new BehaviorSubject<
-    number
-  >(0);
+  private subscriptionsCount$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   /** Whether step can be considered completed. */
   public hasCompletedStep$: Observable<boolean> = this.subscriptionsCount$.pipe(

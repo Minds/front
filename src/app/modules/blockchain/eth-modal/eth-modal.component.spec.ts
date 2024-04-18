@@ -25,56 +25,54 @@ describe('BlockchainEthModalComponent', () => {
     },
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          BlockchainEthModalComponent,
-          ButtonComponent,
-          MockComponent({
-            selector: 'm-modal',
-            inputs: [],
-          }),
-          MockComponent({
-            selector: 'input',
-            inputs: ['ngModel'],
-          }),
-        ],
-        providers: [
-          {
-            provide: Web3WalletService,
-            useValue: MockService(Web3WalletService),
-          },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: SendWyreService,
-            useValue: sendWyreMock,
-          },
-          {
-            provide: Session,
-            useValue: sessionMock,
-          },
-          {
-            provide: SiteService,
-            useValue: siteServiceMock,
-          },
-          {
-            provide: ConfigsService,
-            useValue: configsServiceMock,
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        BlockchainEthModalComponent,
+        ButtonComponent,
+        MockComponent({
+          selector: 'm-modal',
+          inputs: [],
+        }),
+        MockComponent({
+          selector: 'input',
+          inputs: ['ngModel'],
+        }),
+      ],
+      providers: [
+        {
+          provide: Web3WalletService,
+          useValue: MockService(Web3WalletService),
+        },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: SendWyreService,
+          useValue: sendWyreMock,
+        },
+        {
+          provide: Session,
+          useValue: sessionMock,
+        },
+        {
+          provide: SiteService,
+          useValue: siteServiceMock,
+        },
+        {
+          provide: ConfigsService,
+          useValue: configsServiceMock,
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
 
     fixture = TestBed.createComponent(BlockchainEthModalComponent);

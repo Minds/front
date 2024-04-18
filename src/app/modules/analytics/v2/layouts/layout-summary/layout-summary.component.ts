@@ -94,7 +94,7 @@ export class AnalyticsLayoutSummaryComponent implements OnInit {
   }
 
   async getTiles() {
-    this.tiles.forEach(async tile => {
+    this.tiles.forEach(async (tile) => {
       try {
         const response: any = await this.client.get(tile.endpoint, tile.params);
         await this.formatResponse(tile, response);
@@ -107,7 +107,7 @@ export class AnalyticsLayoutSummaryComponent implements OnInit {
   }
 
   async formatResponse(tile, response) {
-    const metric = response.dashboard.metrics.find(m => m.id === tile.id);
+    const metric = response.dashboard.metrics.find((m) => m.id === tile.id);
     if (!metric) return;
     tile.metric = metric;
     const buckets = metric.visualisation

@@ -35,7 +35,8 @@ export class SiteMembershipsPageModal {
       this.injector
     );
 
-    const siteMembershipsPageComponent = moduleRef.instance.resolveSiteMembershipsPageComponent();
+    const siteMembershipsPageComponent =
+      moduleRef.instance.resolveSiteMembershipsPageComponent();
 
     const modal = this.modalService.present(siteMembershipsPageComponent, {
       data: {

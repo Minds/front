@@ -13,15 +13,16 @@ import { CheckoutTimePeriodEnum } from '../../../../../../../graphql/generated.e
 })
 export class NetworksCheckoutSummaryTimePeriodSelectorComponent {
   /** Enum for use in template. */
-  public readonly CheckoutTimePeriodEnum: typeof CheckoutTimePeriodEnum = CheckoutTimePeriodEnum;
+  public readonly CheckoutTimePeriodEnum: typeof CheckoutTimePeriodEnum =
+    CheckoutTimePeriodEnum;
 
   /** Currently selected time period. */
-  public readonly selectedTimePeriod$: Observable<CheckoutTimePeriodEnum> = this
-    .checkoutService.selectedTimePeriod$;
+  public readonly selectedTimePeriod$: Observable<CheckoutTimePeriodEnum> =
+    this.checkoutService.selectedTimePeriod$;
 
   /** Total annual savings in cents. */
-  public readonly totalAnnualSavingsCents$: Observable<number> = this
-    .checkoutService.totalAnnualSavingsCents$;
+  public readonly totalAnnualSavingsCents$: Observable<number> =
+    this.checkoutService.totalAnnualSavingsCents$;
 
   /** Whether to only show the currently selected time period - disables selection. */
   @Input() public readonly onlyShowSelectedTimePeriod: boolean = false;

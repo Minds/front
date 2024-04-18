@@ -1,6 +1,6 @@
 import { OnboardingV5ExperimentService } from './onboarding-v5-experiment.service';
 
-export let experimentsServiceMock = new (function() {
+export let experimentsServiceMock = new (function () {
   this.hasVariation = jasmine.createSpy('hasVariation');
 })();
 

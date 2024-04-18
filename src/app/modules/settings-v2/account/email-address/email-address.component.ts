@@ -74,7 +74,7 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
 
     const modal = this.modalService.present(ConfirmPasswordModalComponent, {
       data: {
-        onComplete: wire => {
+        onComplete: (wire) => {
           this.submit();
           modal.close(wire);
         },

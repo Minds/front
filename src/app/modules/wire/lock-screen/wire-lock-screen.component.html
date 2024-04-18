@@ -40,7 +40,9 @@
             i18n="@@WIRE__LOCK_SCREEN__OVER_USD_PER_MONTH"
           >
             over
-            {{ entity.wire_threshold.min | currency: 'USD':true:'1.0-0' }}/month
+            {{
+              entity.wire_threshold.min | currency: 'USD' : true : '1.0-0'
+            }}/month
           </ng-container>
 
           <ng-container

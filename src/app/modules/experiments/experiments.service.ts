@@ -28,7 +28,7 @@ export class ExperimentsService implements OnDestroy {
     private router: Router
   ) {
     this.routerEventsSubscription = this.router.events.subscribe(
-      navigationState => {
+      (navigationState) => {
         if (navigationState instanceof NavigationEnd) {
           this.syncAttributes({
             route: navigationState.urlAfterRedirects,
@@ -36,7 +36,7 @@ export class ExperimentsService implements OnDestroy {
         }
       }
     );
-    this.session.loggedinEmitter.subscribe(isLoggedIn => {
+    this.session.loggedinEmitter.subscribe((isLoggedIn) => {
       this.syncAttributes();
     });
   }
@@ -141,16 +141,10 @@ export class ExperimentsService implements OnDestroy {
     let cookieValue = this.cookieService.get(cookieName);
 
     if (!cookieValue) {
-      cookieValue =
-        'exp-' +
-        Math.random()
-          .toString(36)
-          .substr(2, 16);
+      cookieValue = 'exp-' + Math.random().toString(36).substr(2, 16);
 
       this.cookieService.put(cookieName, cookieValue, {
-        expires: moment()
-          .add(1, 'year')
-          .toDate(),
+        expires: moment().add(1, 'year').toDate(),
       });
     }
 

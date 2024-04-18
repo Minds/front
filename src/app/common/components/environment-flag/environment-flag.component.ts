@@ -20,7 +20,10 @@ export type EnvironmentFlag = 'Canary' | 'Staging' | '';
   styleUrls: ['./environment-flag.component.ng.scss'],
 })
 export class EnvironmentFlagComponent {
-  constructor(private session: Session, private cookies: CookieService) {}
+  constructor(
+    private session: Session,
+    private cookies: CookieService
+  ) {}
 
   /**
    * Gets currently active flag.
@@ -30,8 +33,8 @@ export class EnvironmentFlagComponent {
     return this.isStagingMode()
       ? 'Staging'
       : this.isCanaryMode()
-      ? 'Canary'
-      : '';
+        ? 'Canary'
+        : '';
   }
 
   /**

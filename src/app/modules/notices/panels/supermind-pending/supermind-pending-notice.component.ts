@@ -9,7 +9,10 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 export class SupermindPendingNoticeComponent {
   @Input() public dismissible: boolean = false;
 
-  constructor(private router: Router, private feedNotice: FeedNoticeService) {}
+  constructor(
+    private router: Router,
+    private feedNotice: FeedNoticeService
+  ) {}
 
   /**
    * Called on primary option click.

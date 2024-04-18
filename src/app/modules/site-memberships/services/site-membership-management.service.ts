@@ -28,9 +28,8 @@ export class SiteMembershipManagementService {
         throw new Error('siteMembershipGuid not provided to checkout function');
       }
 
-      const extendedRedirectPath = this.addMembershipCheckoutRedirectQueryParam(
-        redirectPath
-      );
+      const extendedRedirectPath =
+        this.addMembershipCheckoutRedirectQueryParam(redirectPath);
 
       this.window.open(
         `/api/v3/payments/site-memberships/${siteMembershipGuid}/checkout?redirectPath=${extendedRedirectPath}`,

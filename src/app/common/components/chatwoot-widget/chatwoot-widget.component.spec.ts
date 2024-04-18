@@ -16,7 +16,7 @@ import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
 import { ChatwootWidgetComponent } from './chatwoot-widget.component';
 
-let configMock = new (function() {
+let configMock = new (function () {
   this.get = jasmine.createSpy('get').and.returnValue({
     website_token: '~website_token~',
     base_url: '~base_url~',
@@ -28,34 +28,32 @@ describe('ChatwootWidgetComponent', () => {
   let comp: ChatwootWidgetComponent;
   let fixture: ComponentFixture<ChatwootWidgetComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ChatwootWidgetComponent],
-        providers: [
-          {
-            provide: Session,
-            useValue: MockService(Session, {
-              has: ['loggedinEmitter'],
-              props: {
-                loggedinEmitter: { get: () => new EventEmitter<boolean>() },
-              },
-            }),
-          },
-          { provide: ApiService, useValue: MockService(ApiService) },
-          { provide: ConfigsService, useValue: configMock },
-          {
-            provide: UserAvatarService,
-            useValue: MockService(UserAvatarService),
-          },
-          { provide: PLATFORM_ID, useValue: 'browser' },
-          { provide: CDN_ASSETS_URL, useValue: 'localhost:4200/static/en/' },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ChatwootWidgetComponent],
+      providers: [
+        {
+          provide: Session,
+          useValue: MockService(Session, {
+            has: ['loggedinEmitter'],
+            props: {
+              loggedinEmitter: { get: () => new EventEmitter<boolean>() },
+            },
+          }),
+        },
+        { provide: ApiService, useValue: MockService(ApiService) },
+        { provide: ConfigsService, useValue: configMock },
+        {
+          provide: UserAvatarService,
+          useValue: MockService(UserAvatarService),
+        },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: CDN_ASSETS_URL, useValue: 'localhost:4200/static/en/' },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ChatwootWidgetComponent);
     comp = fixture.componentInstance;
 

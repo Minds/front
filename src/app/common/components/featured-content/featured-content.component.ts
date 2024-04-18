@@ -89,15 +89,15 @@ export class FeaturedContentComponent implements OnInit {
     }
 
     if (component) {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory<
-        any
-      >(component);
+      const componentFactory =
+        this.componentFactoryResolver.resolveComponentFactory<any>(component);
 
-      const componentRef: ComponentRef<any> = this.dynamicHost.viewContainerRef.createComponent(
-        componentFactory,
-        void 0,
-        this.injector
-      );
+      const componentRef: ComponentRef<any> =
+        this.dynamicHost.viewContainerRef.createComponent(
+          componentFactory,
+          void 0,
+          this.injector
+        );
       injector.call(this, componentRef, this.entity);
     }
   }

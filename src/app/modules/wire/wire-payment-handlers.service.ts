@@ -8,7 +8,10 @@ export type WirePaymentHandler = 'plus' | 'pro';
 @Injectable()
 export class WirePaymentHandlersService {
   readonly handlers; // TODO: add types
-  constructor(protected entities: EntitiesService, configs: ConfigsService) {
+  constructor(
+    protected entities: EntitiesService,
+    configs: ConfigsService
+  ) {
     this.handlers = configs.get('handlers');
   }
 

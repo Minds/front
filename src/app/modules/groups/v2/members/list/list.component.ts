@@ -35,14 +35,12 @@ import { Session } from '../../../../../services/session';
 })
 export class GroupMembersListComponent implements OnInit, OnDestroy {
   // Whether request is in progress.
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // Whether there is more data that could be added to the list.
-  public readonly moreData$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly moreData$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   // List subject.
   public readonly list$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(
@@ -53,17 +51,16 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
   public readonly group$: BehaviorSubject<MindsGroup> = this.service.group$;
 
   /** Value from service - which membership level do we want to present? */
-  public readonly groupMembershipLevel$: BehaviorSubject<
-    GroupMembershipLevel
-  > = this.service.groupMembershipLevel$;
+  public readonly groupMembershipLevel$: BehaviorSubject<GroupMembershipLevel> =
+    this.service.groupMembershipLevel$;
 
   /** Value from service - whether to show all levels above the specified level as well */
-  public readonly membershipLevelGte$: BehaviorSubject<boolean> = this.service
-    .membershipLevelGte$;
+  public readonly membershipLevelGte$: BehaviorSubject<boolean> =
+    this.service.membershipLevelGte$;
 
   /** Value from service - search for a specific user */
-  public readonly searchQuery$: BehaviorSubject<string> = this.service
-    .searchQuery$;
+  public readonly searchQuery$: BehaviorSubject<string> =
+    this.service.searchQuery$;
 
   // Number of members to request from API.
   private readonly requestLimit: number = 12;
@@ -176,7 +173,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
       this.searchQuery$,
     ]).pipe(
       distinctUntilChanged(),
-      tap(_ => {
+      tap((_) => {
         this.inProgress$.next(true);
         this.list$.next([]);
       }),
@@ -185,7 +182,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
           MindsGroup,
           GroupMembershipLevel,
           boolean,
-          string
+          string,
         ]): Observable<
           ApiResponse | { redirect: boolean; errorMessage: any }
         > => {
@@ -245,7 +242,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
   onKick(member) {
     const prunedList = this.list$
       .getValue()
-      .filter(e => e.guid !== member.guid);
+      .filter((e) => e.guid !== member.guid);
 
     this.list$.next(prunedList);
   }

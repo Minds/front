@@ -78,14 +78,12 @@ export class SeeLatestButtonComponent implements OnInit, OnDestroy {
   @Input() pollingInterval: number = 30000;
 
   // Outputs in intervals based on the pollingInterval. Should call a function that polls the server.
-  @Output('poll') onPollEmitter: EventEmitter<boolean> = new EventEmitter<
-    boolean
-  >();
+  @Output('poll') onPollEmitter: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   // Called on See Latest click. Should call to refresh the feed or update content.
-  @Output('clickSeeLatest') onClickEmitter: EventEmitter<
-    boolean
-  > = new EventEmitter<boolean>();
+  @Output('clickSeeLatest') onClickEmitter: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   // Subscription to interval.
   private intervalSubscription: Subscription;
@@ -96,7 +94,7 @@ export class SeeLatestButtonComponent implements OnInit, OnDestroy {
     if (!isPlatformBrowser(this.platformId)) return;
     // setup interval subscription - will emit to `onPollEmitter` every `pollingInterval`.
     this.intervalSubscription = interval(this.pollingInterval).subscribe(
-      interval => {
+      (interval) => {
         if (document.hidden) {
           return;
         }

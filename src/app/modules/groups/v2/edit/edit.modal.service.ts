@@ -20,7 +20,7 @@ export class GroupEditModalService {
     const modal = this.modalService.present(GroupEditComponent, {
       data: {
         group,
-        onSave: editedGroup => {
+        onSave: (editedGroup) => {
           modal.close(editedGroup);
         },
       },

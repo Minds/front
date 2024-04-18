@@ -58,7 +58,7 @@ export class WireModalService {
       data: {
         ...options,
         entity,
-        onComplete: wire =>
+        onComplete: (wire) =>
           modal.close({
             type: WireEventType.Completed,
             payload: wire,

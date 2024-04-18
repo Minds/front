@@ -27,9 +27,9 @@ describe('PermissionsService', () => {
     experimentsServiceSpy = TestBed.inject(
       ExperimentsService
     ) as jasmine.SpyObj<ExperimentsService>;
-    configsServiceSpy = TestBed.inject(ConfigsService) as jasmine.SpyObj<
+    configsServiceSpy = TestBed.inject(
       ConfigsService
-    >;
+    ) as jasmine.SpyObj<ConfigsService>;
   });
 
   it('should disallow posting if permission is not in whitelist and experiment is enabled', () => {

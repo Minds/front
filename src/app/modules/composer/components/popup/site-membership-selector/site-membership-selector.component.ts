@@ -23,7 +23,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['site-membership-selector.component.ng.scss'],
 })
 export class ComposerSiteMembershipSelectorComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /**
    * Signal event emitter to parent's popup service
    */
@@ -35,7 +36,8 @@ export class ComposerSiteMembershipSelectorComponent
   /**
    * Allows us to use roleId enums in the template
    */
-  public SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum = SiteMembershipBillingPeriodEnum;
+  public SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum =
+    SiteMembershipBillingPeriodEnum;
 
   constructor(
     private fb: FormBuilder,
@@ -50,15 +52,17 @@ export class ComposerSiteMembershipSelectorComponent
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.siteMembershipsService.allMemberships$.subscribe(allMemberships => {
-        this.setUpFormControls(allMemberships);
+      this.siteMembershipsService.allMemberships$.subscribe(
+        (allMemberships) => {
+          this.setUpFormControls(allMemberships);
 
-        this.subscriptions.push(
-          this.composerService.siteMembershipGuids$.subscribe(guids => {
-            this.checkSelectedMemberships(guids, allMemberships);
-          })
-        );
-      })
+          this.subscriptions.push(
+            this.composerService.siteMembershipGuids$.subscribe((guids) => {
+              this.checkSelectedMemberships(guids, allMemberships);
+            })
+          );
+        }
+      )
     );
 
     this.siteMembershipsService.fetchMemberships();
@@ -78,7 +82,7 @@ export class ComposerSiteMembershipSelectorComponent
     ) as FormArray;
 
     // Reset all checkboxes to false initially
-    membershipsArray.controls.forEach(control =>
+    membershipsArray.controls.forEach((control) =>
       control.setValue(false, { emitEvent: false })
     );
     this.selectAllCheckbox.setValue(false, { emitEvent: false });
@@ -87,7 +91,7 @@ export class ComposerSiteMembershipSelectorComponent
     if (Array.isArray(guids)) {
       if (guids.length === 1 && guids[0] === -1) {
         // If guids is [-1], select all memberships
-        membershipsArray.controls.forEach(control =>
+        membershipsArray.controls.forEach((control) =>
           control.setValue(true, { emitEvent: false })
         );
         this.selectAllCheckbox.setValue(true, { emitEvent: false });
@@ -100,7 +104,7 @@ export class ComposerSiteMembershipSelectorComponent
         });
 
         // Check if all memberships are selected and update 'Select All' checkbox
-        const allSelected = membershipsArray.value.every(value => value);
+        const allSelected = membershipsArray.value.every((value) => value);
         this.selectAllCheckbox.setValue(allSelected, { emitEvent: false });
       }
     }
@@ -116,20 +120,20 @@ export class ComposerSiteMembershipSelectorComponent
 
     this.subscriptions.push(
       // Subscribe to changes in individual checkboxes to update 'Select All'
-      membershipsArray.valueChanges.subscribe(values => {
-        const allChecked = values.every(value => value);
+      membershipsArray.valueChanges.subscribe((values) => {
+        const allChecked = values.every((value) => value);
         this.selectAllCheckbox.setValue(allChecked, { emitEvent: false });
       }),
 
       // Handle 'Select All' changes
-      this.selectAllCheckbox.valueChanges.subscribe(value => {
-        membershipsArray.controls.forEach(control => control.setValue(value));
+      this.selectAllCheckbox.valueChanges.subscribe((value) => {
+        membershipsArray.controls.forEach((control) => control.setValue(value));
       })
     );
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   /**

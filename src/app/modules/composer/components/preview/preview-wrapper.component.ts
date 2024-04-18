@@ -84,10 +84,10 @@ export class PreviewWrapperComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions = [
-      this.attachmentPreviews$.subscribe(attachmentPreviews => {
+      this.attachmentPreviews$.subscribe((attachmentPreviews) => {
         this.processIncomingMediaAttachmentData(attachmentPreviews);
       }),
-      this.richEmbedPreview$.subscribe(richEmbedPreview => {
+      this.richEmbedPreview$.subscribe((richEmbedPreview) => {
         this.richEmbedPreview = richEmbedPreview;
         this.detectChanges();
       }),

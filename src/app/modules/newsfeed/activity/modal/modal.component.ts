@@ -144,19 +144,19 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         this.cd.detectChanges();
       }),
 
-      this.activityService.activeMultiImageIndex$.subscribe(i => {
+      this.activityService.activeMultiImageIndex$.subscribe((i) => {
         this.activeMultiImageIndex = i;
       }),
 
-      this.activityService.isQuote$.subscribe(is => {
+      this.activityService.isQuote$.subscribe((is) => {
         this.isQuote = is;
       }),
 
-      this.activityService.isMultiImage$.subscribe(is => {
+      this.activityService.isMultiImage$.subscribe((is) => {
         this.isMultiImage = is;
       }),
 
-      this.activityService.canonicalUrl$.subscribe(canonicalUrl => {
+      this.activityService.canonicalUrl$.subscribe((canonicalUrl) => {
         if (!this.entity) return;
         /**
          * Record pageviews

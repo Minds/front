@@ -6,6 +6,7 @@ export default function entityToBannerUrl(
     return '';
   }
 
-  return `fs/v1/banners/${entity.guid}/${sizeOrTop}/${entity.banner ||
-    entity.icontime}`;
+  return `fs/v1/banners/${entity.guid}/${sizeOrTop}/${
+    entity.banner || entity.icontime
+  }`;
 }

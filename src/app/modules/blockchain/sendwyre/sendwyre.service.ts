@@ -13,7 +13,10 @@ export class SendWyreService {
   // Amount to be purchased in USD.
   public amountUsd: string = '40';
 
-  constructor(private client: Client, private toaster: ToasterService) {}
+  constructor(
+    private client: Client,
+    private toaster: ToasterService
+  ) {}
 
   /**
    * Requests Wallet order reservation link to redirect to.

@@ -17,7 +17,7 @@ export class DiscoveryTrendsListItemComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.parentPathSubscription = this.discoveryService.parentPath$.subscribe(
-      parentPath => {
+      (parentPath) => {
         this.parentPath = parentPath;
       }
     );

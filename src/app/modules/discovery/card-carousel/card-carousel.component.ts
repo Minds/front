@@ -46,7 +46,7 @@ export class DiscoveryCardCarouselComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isPlusPageSubscription = this.discoveryService.isPlusPage$.subscribe(
-      isPlusPage => {
+      (isPlusPage) => {
         this.isPlusPage = isPlusPage;
       }
     );
@@ -57,7 +57,7 @@ export class DiscoveryCardCarouselComponent implements OnInit, OnDestroy {
 
     if (this.type === 'search') {
       this.searchSubscription = this.cardCarouselService.searchCards$.subscribe(
-        searchCards => {
+        (searchCards) => {
           this.cards = searchCards;
         }
       );
@@ -71,11 +71,10 @@ export class DiscoveryCardCarouselComponent implements OnInit, OnDestroy {
       type: 'user',
     });
 
-    this.suggestionsSubscription = this.suggestionsService.suggestions$.subscribe(
-      suggestions => {
+    this.suggestionsSubscription =
+      this.suggestionsService.suggestions$.subscribe((suggestions) => {
         this.cards = suggestions;
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {

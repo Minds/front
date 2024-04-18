@@ -22,37 +22,34 @@ export class MultiTenantConfigImageService {
   ) {}
 
   /** Horizontal logo path, with cache-busting query parameter. */
-  public readonly horizontalLogoPath$: Observable<
-    string
-  > = this.configImageRefreshService.horizontalLogoLastCacheTimestamp$.pipe(
-    map((lastCacheTimestamp: number): string => {
-      return Boolean(lastCacheTimestamp)
-        ? `${HORIZONTAL_LOGO_PATH}?lastCache=${lastCacheTimestamp}`
-        : HORIZONTAL_LOGO_PATH;
-    })
-  );
+  public readonly horizontalLogoPath$: Observable<string> =
+    this.configImageRefreshService.horizontalLogoLastCacheTimestamp$.pipe(
+      map((lastCacheTimestamp: number): string => {
+        return Boolean(lastCacheTimestamp)
+          ? `${HORIZONTAL_LOGO_PATH}?lastCache=${lastCacheTimestamp}`
+          : HORIZONTAL_LOGO_PATH;
+      })
+    );
 
   /** Square logo path, with cache-busting query parameter. */
-  public readonly squareLogoPath$: Observable<
-    string
-  > = this.configImageRefreshService.squareLogoLastCacheTimestamp$.pipe(
-    map((lastCacheTimestamp: number): string => {
-      return Boolean(lastCacheTimestamp)
-        ? `${SQUARE_LOGO_PATH}?lastCache=${lastCacheTimestamp}`
-        : SQUARE_LOGO_PATH;
-    })
-  );
+  public readonly squareLogoPath$: Observable<string> =
+    this.configImageRefreshService.squareLogoLastCacheTimestamp$.pipe(
+      map((lastCacheTimestamp: number): string => {
+        return Boolean(lastCacheTimestamp)
+          ? `${SQUARE_LOGO_PATH}?lastCache=${lastCacheTimestamp}`
+          : SQUARE_LOGO_PATH;
+      })
+    );
 
   /** Favicon path, with cache-busting query parameter. */
-  public readonly faviconPath$: Observable<
-    string
-  > = this.configImageRefreshService.faviconLastCacheTimestamp$.pipe(
-    map((lastCacheTimestamp: number): string => {
-      return Boolean(lastCacheTimestamp)
-        ? `${FAVICON_PATH}?lastCache=${lastCacheTimestamp}`
-        : FAVICON_PATH;
-    })
-  );
+  public readonly faviconPath$: Observable<string> =
+    this.configImageRefreshService.faviconLastCacheTimestamp$.pipe(
+      map((lastCacheTimestamp: number): string => {
+        return Boolean(lastCacheTimestamp)
+          ? `${FAVICON_PATH}?lastCache=${lastCacheTimestamp}`
+          : FAVICON_PATH;
+      })
+    );
 
   /**
    * Upload a file to the config image upload endpoint/

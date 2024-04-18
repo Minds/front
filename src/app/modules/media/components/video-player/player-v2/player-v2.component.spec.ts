@@ -15,59 +15,57 @@ describe('MindsVideoPlayerV2Component', () => {
   let comp: MindsVideoPlayerV2Component;
   let fixture: ComponentFixture<MindsVideoPlayerV2Component>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MindsVideoPlayerV2Component,
-          MockComponent({
-            selector: 'm-videoJsPlayer',
-            inputs: ['options'],
-            outputs: [
-              'onReady',
-              'onPlay',
-              'onEnded',
-              'onMetadataLoaded',
-              'onSeeking',
-              'onVolumeChange',
-              'onFullscreenChange',
-            ],
-          }),
-        ],
-        providers: [
-          {
-            provide: ElementRef,
-            useValue: MockService(ElementRef),
-          },
-          {
-            provide: VideoPlayerService,
-            useValue: null,
-          },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: PLATFORM_ID,
-            useValue: 'browser',
-          },
-        ],
-      })
-        .overrideProvider(VideoPlayerService, {
-          useValue: MockService(VideoPlayerService, {
-            has: ['isPlayable$', 'sources$', 'onReady$'],
-            props: {
-              isPlayable$: { get: () => new BehaviorSubject<boolean>(true) },
-              sources$: { get: () => new BehaviorSubject<VideoSource[]>([]) },
-              onReady$: { get: () => new BehaviorSubject<boolean>(true) },
-            },
-          }),
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MindsVideoPlayerV2Component,
+        MockComponent({
+          selector: 'm-videoJsPlayer',
+          inputs: ['options'],
+          outputs: [
+            'onReady',
+            'onPlay',
+            'onEnded',
+            'onMetadataLoaded',
+            'onSeeking',
+            'onVolumeChange',
+            'onFullscreenChange',
+          ],
+        }),
+      ],
+      providers: [
+        {
+          provide: ElementRef,
+          useValue: MockService(ElementRef),
+        },
+        {
+          provide: VideoPlayerService,
+          useValue: null,
+        },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: PLATFORM_ID,
+          useValue: 'browser',
+        },
+      ],
     })
-  );
+      .overrideProvider(VideoPlayerService, {
+        useValue: MockService(VideoPlayerService, {
+          has: ['isPlayable$', 'sources$', 'onReady$'],
+          props: {
+            isPlayable$: { get: () => new BehaviorSubject<boolean>(true) },
+            sources$: { get: () => new BehaviorSubject<VideoSource[]>([]) },
+            onReady$: { get: () => new BehaviorSubject<boolean>(true) },
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(MindsVideoPlayerV2Component);
     comp = fixture.componentInstance;
 

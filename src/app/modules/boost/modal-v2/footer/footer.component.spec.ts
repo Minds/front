@@ -23,57 +23,54 @@ describe('BoostModalV2FooterComponent', () => {
       By.css('.m-boostModalFooter__descriptionTextInnerContainer span')
     )?.nativeElement?.textContent ?? null;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule, ReactiveFormsModule],
-        declarations: [
-          BoostModalV2FooterComponent,
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['solid', 'saving', 'disabled'],
-          }),
-        ],
-        providers: [
-          {
-            provide: BoostModalV2Service,
-            useValue: MockService(BoostModalV2Service, {
-              has: [
-                'activePanel$',
-                'entityType$',
-                'boostSubmissionInProgress$',
-                'disableSubmitButton$',
-              ],
-              props: {
-                activePanel$: {
-                  get: () =>
-                    new BehaviorSubject<BoostModalPanel>(
-                      BoostModalPanel.AUDIENCE
-                    ),
-                },
-                entityType$: {
-                  get: () =>
-                    new BehaviorSubject<BoostSubject>(BoostSubject.POST),
-                },
-                boostSubmissionInProgress$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
-                disableSubmitButton$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule, ReactiveFormsModule],
+      declarations: [
+        BoostModalV2FooterComponent,
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['solid', 'saving', 'disabled'],
+        }),
+      ],
+      providers: [
+        {
+          provide: BoostModalV2Service,
+          useValue: MockService(BoostModalV2Service, {
+            has: [
+              'activePanel$',
+              'entityType$',
+              'boostSubmissionInProgress$',
+              'disableSubmitButton$',
+            ],
+            props: {
+              activePanel$: {
+                get: () =>
+                  new BehaviorSubject<BoostModalPanel>(
+                    BoostModalPanel.AUDIENCE
+                  ),
               },
-            }),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+              entityType$: {
+                get: () => new BehaviorSubject<BoostSubject>(BoostSubject.POST),
+              },
+              boostSubmissionInProgress$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              disableSubmitButton$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+            },
+          }),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostModalV2FooterComponent);
     comp = fixture.componentInstance;
 

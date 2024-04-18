@@ -17,19 +17,16 @@ export class MultiTenantConfigImageRefreshService {
   }
 
   /** Last cache timestamp for the square logo. */
-  public squareLogoLastCacheTimestamp$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(0);
+  public squareLogoLastCacheTimestamp$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   /** Last cache timestamp for the favicon. */
-  public faviconLastCacheTimestamp$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(0);
+  public faviconLastCacheTimestamp$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   /** Last cache timestamp for the horizontal logo. */
-  public horizontalLogoLastCacheTimestamp$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(0);
+  public horizontalLogoLastCacheTimestamp$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   /**
    * Updates the last cache timestamp for the square logo.

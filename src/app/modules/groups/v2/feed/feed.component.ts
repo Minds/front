@@ -52,9 +52,8 @@ export class GroupFeedComponent implements OnDestroy, OnInit {
 
   showNoQueryResultsNotice: boolean = false;
 
-  protected readonly inProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  protected readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     public feedService: GroupFeedService,
@@ -73,16 +72,16 @@ export class GroupFeedComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.subscriptions.push(
-      this.service.group$.subscribe(group => {
+      this.service.group$.subscribe((group) => {
         this.group = group;
       }),
-      this.feedService.service.feed.subscribe(feed => {
+      this.feedService.service.feed.subscribe((feed) => {
         this.feed = feed;
       }),
-      this.feedsUpdate.postEmitter.subscribe(newPost => {
+      this.feedsUpdate.postEmitter.subscribe((newPost) => {
         this.prepend(newPost);
       }),
-      this.route.queryParams.subscribe(params => {
+      this.route.queryParams.subscribe((params) => {
         // listen for type filter
         if (params['filter']) {
           this.feedService.type$.next(params['filter']);

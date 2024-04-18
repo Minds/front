@@ -1,4 +1,4 @@
-export let metaServiceMock = new (function() {
+export let metaServiceMock = new (function () {
   this.setCounter = jasmine.createSpy('setCounter').and.returnValue(this);
   this.setDescription = jasmine
     .createSpy('setDescription')

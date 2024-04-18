@@ -17,13 +17,9 @@ describe('FriendlyDateDiff', () => {
   it('should transform into an absolute date with year when there is a difference of 1 year or greater', () => {
     let pipe = new FriendlyDateDiffPipe();
 
-    let testDate = moment()
-      .subtract(1, 'years')
-      .unix();
+    let testDate = moment().subtract(1, 'years').unix();
 
-    let result = moment()
-      .subtract(1, 'years')
-      .format('MMM D YYYY');
+    let result = moment().subtract(1, 'years').format('MMM D YYYY');
 
     let transformedDate = pipe.transform(<any>testDate);
     expect(transformedDate).toEqual(result);
@@ -32,13 +28,9 @@ describe('FriendlyDateDiff', () => {
   it('should transform into an absolute date without year when there is a difference of 1 day or greater', () => {
     let pipe = new FriendlyDateDiffPipe();
 
-    let testDate = moment()
-      .subtract(1, 'days')
-      .unix();
+    let testDate = moment().subtract(1, 'days').unix();
 
-    let result = moment()
-      .subtract(1, 'days')
-      .format('MMM D');
+    let result = moment().subtract(1, 'days').format('MMM D');
 
     let transformedDate = pipe.transform(<any>testDate);
     expect(transformedDate).toEqual(result);
@@ -47,9 +39,7 @@ describe('FriendlyDateDiff', () => {
   it('should transform into a relative time with a 23 hour difference', () => {
     let pipe = new FriendlyDateDiffPipe();
 
-    let testDate = moment()
-      .subtract(23, 'hours')
-      .unix();
+    let testDate = moment().subtract(23, 'hours').unix();
 
     let result = '23h';
 
@@ -60,9 +50,7 @@ describe('FriendlyDateDiff', () => {
   it('should transform into a relative time with a 1 minute difference', () => {
     let pipe = new FriendlyDateDiffPipe();
 
-    let testDate = moment()
-      .subtract(1, 'minute')
-      .unix();
+    let testDate = moment().subtract(1, 'minute').unix();
 
     let result = '1m';
 
@@ -87,9 +75,7 @@ describe('FriendlyDateDiff', () => {
 
   it('should transform number inputs', () => {
     let pipe = new FriendlyDateDiffPipe();
-    let testDate = moment()
-      .subtract(2, 'minutes')
-      .unix();
+    let testDate = moment().subtract(2, 'minutes').unix();
     let referenceDate = moment().unix();
     let transformedDate = pipe.transform(<any>testDate, referenceDate);
     expect(transformedDate).toEqual('2m');
@@ -97,13 +83,8 @@ describe('FriendlyDateDiff', () => {
 
   it('should transform string inputs', () => {
     let pipe = new FriendlyDateDiffPipe();
-    let testDate = moment()
-      .subtract(2, 'minutes')
-      .unix()
-      .toString();
-    let referenceDate = moment()
-      .unix()
-      .toString();
+    let testDate = moment().subtract(2, 'minutes').unix().toString();
+    let referenceDate = moment().unix().toString();
     let transformedDate = pipe.transform(<any>testDate, referenceDate);
     expect(transformedDate).toEqual('2m');
   });

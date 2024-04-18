@@ -16,12 +16,15 @@ export class UserAvatarService {
   public src$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public loggedIn$: Subscription;
 
-  constructor(public session: Session, private configs: ConfigsService) {
+  constructor(
+    public session: Session,
+    private configs: ConfigsService
+  ) {
     this.init();
 
     // Subscribe to loggedIn$ and on login, update src$.
     if (this.session.loggedinEmitter) {
-      this.loggedIn$ = this.session.loggedinEmitter.subscribe(is => {
+      this.loggedIn$ = this.session.loggedinEmitter.subscribe((is) => {
         if (is) {
           this.src$.next(this.getSrc());
         }

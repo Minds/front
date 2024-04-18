@@ -13,7 +13,7 @@ import { AnalyticsService } from '../../../services/analytics';
 import { Subject } from 'rxjs';
 import { IntersectionObserverService } from '../../../common/services/intersection-observer.service';
 
-let intersectionObserverServiceMock = new (function() {
+let intersectionObserverServiceMock = new (function () {
   this.subject$ = new Subject<boolean>();
   this.createAndObserve = jasmine
     .createSpy('createAndObserve')
@@ -24,30 +24,28 @@ describe('FeedNoticeComponent', () => {
   let comp: FeedNoticeComponent;
   let fixture: ComponentFixture<FeedNoticeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [FeedNoticeComponent],
-        providers: [
-          {
-            provide: ElementRef,
-            useValue: MockService(ElementRef),
-          },
-          {
-            provide: AnalyticsService,
-            useValue: MockService(AnalyticsService),
-          },
-          {
-            provide: IntersectionObserverService,
-            useValue: intersectionObserverServiceMock,
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [FeedNoticeComponent],
+      providers: [
+        {
+          provide: ElementRef,
+          useValue: MockService(ElementRef),
+        },
+        {
+          provide: AnalyticsService,
+          useValue: MockService(AnalyticsService),
+        },
+        {
+          provide: IntersectionObserverService,
+          useValue: intersectionObserverServiceMock,
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(FeedNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

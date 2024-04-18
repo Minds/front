@@ -70,7 +70,7 @@ describe('CustomPageService', () => {
 
       tick();
 
-      service.customPage$.pipe(take(1)).subscribe(customPageExtended => {
+      service.customPage$.pipe(take(1)).subscribe((customPageExtended) => {
         expect(customPageExtended).toEqual(
           jasmine.objectContaining({
             content: 'Privacy Policy Content',
@@ -117,7 +117,7 @@ describe('CustomPageService', () => {
       service
         .setCustomPage(pageType, content, externalLink)
         .pipe(take(1))
-        .subscribe(success => {
+        .subscribe((success) => {
           expect(success).toBeTrue();
           expect(setCustomPageGQLMock.mutate).toHaveBeenCalledWith(
             jasmine.objectContaining(mutationVariables),

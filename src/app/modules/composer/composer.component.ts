@@ -79,9 +79,8 @@ export class ComposerComponent implements OnInit, OnDestroy {
   /**
    * Posting error event emitter
    */
-  @Output('onPostError') onPostErrorEmitter: EventEmitter<
-    any
-  > = new EventEmitter<any>();
+  @Output('onPostError') onPostErrorEmitter: EventEmitter<any> =
+    new EventEmitter<any>();
 
   /**
    * Is the modal open?
@@ -129,7 +128,7 @@ export class ComposerComponent implements OnInit, OnDestroy {
     public router: Router
   ) {
     this.tooManyTagsSubscription = this.service.tooManyTags$.subscribe(
-      value => {
+      (value) => {
         if (value) {
           const message = 'You may include up to 5 hashtags';
 

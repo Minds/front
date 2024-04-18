@@ -32,7 +32,7 @@ export class NetworkAdminConsoleRolesPermissionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.allRoles$.subscribe(roles => {
+      this.service.allRoles$.subscribe((roles) => {
         this.allRoles = roles;
       })
     );
@@ -45,7 +45,7 @@ export class NetworkAdminConsoleRolesPermissionsComponent implements OnInit {
     roleId: number,
     permission: PermissionsEnum
   ): RolePermissionToggleValue {
-    const role = this.allRoles.find(r => r.id === roleId);
+    const role = this.allRoles.find((r) => r.id === roleId);
 
     if (role && role.permissions) {
       return role.permissions.includes(permission) ? 'on' : 'off';

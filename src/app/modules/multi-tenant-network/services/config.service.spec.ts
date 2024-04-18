@@ -108,7 +108,7 @@ describe('MultiTenantNetworkConfigService', () => {
       service
         .updateConfig(values)
         .pipe(take(1))
-        .subscribe(val => {
+        .subscribe((val) => {
           expect(
             (service as any).setMultiTenantConfigGQL.mutate
           ).toHaveBeenCalledWith(values);
@@ -142,7 +142,7 @@ describe('MultiTenantNetworkConfigService', () => {
       service
         .updateConfig(values)
         .pipe(take(1))
-        .subscribe(val => {
+        .subscribe((val) => {
           expect(
             (service as any).setMultiTenantConfigGQL.mutate
           ).toHaveBeenCalledWith(values);

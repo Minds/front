@@ -77,24 +77,25 @@ export class AdminAccountsFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.targetUser$ = this.accountsForm.controls.currentUsername.valueChanges.pipe(
-      distinctUntilChanged(),
-      switchMap((username: string) => {
-        if (!username) {
-          return of(null);
-        }
-        this.inProgress = true;
-        const options = new EntityResolverServiceOptions();
-        options.refType = 'username';
-        options.ref = username;
+    this.targetUser$ =
+      this.accountsForm.controls.currentUsername.valueChanges.pipe(
+        distinctUntilChanged(),
+        switchMap((username: string) => {
+          if (!username) {
+            return of(null);
+          }
+          this.inProgress = true;
+          const options = new EntityResolverServiceOptions();
+          options.refType = 'username';
+          options.ref = username;
 
-        return this.entityResolverService.get$<MindsUser>(options);
-      }),
-      tap(() => {
-        this.inProgress = false;
-      }),
-      shareReplay(1)
-    );
+          return this.entityResolverService.get$<MindsUser>(options);
+        }),
+        tap(() => {
+          this.inProgress = false;
+        }),
+        shareReplay(1)
+      );
     this.targetUserSubscription = this.targetUser$.subscribe();
   }
 

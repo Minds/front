@@ -1,6 +1,6 @@
 import { GiftCardPurchaseExperimentService } from './gift-card-purchase-experiment.service';
 
-export let experimentsServiceMock = new (function() {
+export let experimentsServiceMock = new (function () {
   this.hasVariation = jasmine.createSpy('hasVariation');
 })();
 

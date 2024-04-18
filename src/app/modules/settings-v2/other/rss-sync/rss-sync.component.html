@@ -60,12 +60,8 @@
       *ngIf="(rssFeeds$ | async)?.length > 0"
       class="m-settingsV2RSSSync__feeds--headers"
     >
-      <div class="m-settingsV2RSSSync__feeds--headers--header">
-        Feed name
-      </div>
-      <div class="m-settingsV2RSSSync__feeds--headers--header">
-        URL
-      </div>
+      <div class="m-settingsV2RSSSync__feeds--headers--header">Feed name</div>
+      <div class="m-settingsV2RSSSync__feeds--headers--header">URL</div>
     </div>
     <div
       *ngFor="let rssFeed of rssFeeds$ | async"
@@ -74,7 +70,9 @@
       <div class="m-settingsV2RSSSync__feed--basic_details">
         <div>{{ rssFeed.title }}</div>
         <div>
-          {{ (rssFeed.lastFetchAtTimestamp | friendlydatediff : "" :true ) ?? "" }}
+          {{
+            (rssFeed.lastFetchAtTimestamp | friendlydatediff: '' : true) ?? ''
+          }}
         </div>
       </div>
       <div class="m-settingsV2RSSSync__feed--advanced_details">

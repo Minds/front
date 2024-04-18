@@ -67,9 +67,8 @@ export class ChannelComponent implements OnInit, OnDestroy {
   /**
    * Active view
    */
-  readonly view$: BehaviorSubject<ChannelView> = new BehaviorSubject<
-    ChannelView
-  >('activities');
+  readonly view$: BehaviorSubject<ChannelView> =
+    new BehaviorSubject<ChannelView>('activities');
 
   /**
    * Active layout
@@ -154,7 +153,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Subscribe to the active route param
     // TODO: When v1 channels are deprecated, move this and Pro to router-outlet
-    this.routeSubscription = this.route.params.subscribe(params => {
+    this.routeSubscription = this.route.params.subscribe((params) => {
       if (typeof params['filter'] !== 'undefined') {
         if (params['filter'] === 'wire') {
           this.view$.next('activities');
@@ -171,7 +170,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.viewSubscription = this.view$.subscribe(view => {
+    this.viewSubscription = this.view$.subscribe((view) => {
       this.isFeedView = ['activities', 'images', 'videos', 'blogs'].includes(
         view
       );
@@ -190,16 +189,18 @@ export class ChannelComponent implements OnInit, OnDestroy {
       this.onChannelChange(user, username, currentUser);
     });
 
-    this.queryParamSubscription = this.route.queryParamMap.subscribe(params => {
-      if (params.has('layout')) {
-        this.layout = params.get('layout');
-        this.detectChanges();
-      }
+    this.queryParamSubscription = this.route.queryParamMap.subscribe(
+      (params) => {
+        if (params.has('layout')) {
+          this.layout = params.get('layout');
+          this.detectChanges();
+        }
 
-      if (params.has('editing') && JSON.parse(params.get('editing'))) {
-        this.channelEditIntent.edit();
+        if (params.has('editing') && JSON.parse(params.get('editing'))) {
+          this.channelEditIntent.edit();
+        }
       }
-    });
+    );
 
     // update seo on navigation events
     this.routerSubscription = this.router.events.subscribe(
@@ -210,7 +211,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.querySubscription = this.service.query$.subscribe(query => {
+    this.querySubscription = this.service.query$.subscribe((query) => {
       this.encodedQuery = query.length ? encodeURIComponent(query) : null;
 
       this.router.navigate([], {
@@ -243,7 +244,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
         this.recent.storeSuggestion(
           'publisher',
           user,
-          entry => entry.guid === user.guid
+          (entry) => entry.guid === user.guid
         );
       }
 

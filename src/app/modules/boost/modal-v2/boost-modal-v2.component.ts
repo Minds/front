@@ -22,8 +22,8 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
   public BoostModalPanel: typeof BoostModalPanel = BoostModalPanel;
 
   // currently active panel.
-  public readonly activePanel$: BehaviorSubject<BoostModalPanel> = this.service
-    .activePanel$;
+  public readonly activePanel$: BehaviorSubject<BoostModalPanel> =
+    this.service.activePanel$;
 
   // subscriptions.
   private subscriptions: Subscription[] = [];
@@ -35,7 +35,7 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.callSaveIntent$.subscribe(onSaveIntent => {
+      this.service.callSaveIntent$.subscribe((onSaveIntent) => {
         this.onSaveIntent();
       }),
       this.service.firstPanel$.subscribe((firstPanel: BoostModalPanel) => {

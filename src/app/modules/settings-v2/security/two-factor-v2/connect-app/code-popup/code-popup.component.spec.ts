@@ -8,15 +8,13 @@ xdescribe('SettingsTwoFactorCodePopupComponent', () => {
   let comp: SettingsTwoFactorCodePopupComponent;
   let fixture: ComponentFixture<SettingsTwoFactorCodePopupComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule],
-        declarations: [SettingsTwoFactorCodePopupComponent, ButtonComponent],
-        providers: [],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [SettingsTwoFactorCodePopupComponent, ButtonComponent],
+      providers: [],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorCodePopupComponent);

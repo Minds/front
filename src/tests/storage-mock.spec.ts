@@ -1,7 +1,7 @@
 /**
  * @author emi
  */
-export let storageMock = new (function() {
+export let storageMock = new (function () {
   let _storage: any = {};
 
   this.get = (key: string) => _storage[key] || null;

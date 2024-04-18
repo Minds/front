@@ -20,12 +20,10 @@ describe('TwitterSyncComponent', () => {
   let comp: TwitterSyncComponent;
   let fixture: ComponentFixture<TwitterSyncComponent>;
 
-  const configsMock: jasmine.SpyObj<ConfigsService> = jasmine.createSpyObj<
-    ConfigsService
-  >(['get']);
-  const twitterSyncTweetMessageGqlMock: jasmine.SpyObj<TwitterSyncTweetMessageGQL> = jasmine.createSpyObj<
-    TwitterSyncTweetMessageGQL
-  >(['fetch']);
+  const configsMock: jasmine.SpyObj<ConfigsService> =
+    jasmine.createSpyObj<ConfigsService>(['get']);
+  const twitterSyncTweetMessageGqlMock: jasmine.SpyObj<TwitterSyncTweetMessageGQL> =
+    jasmine.createSpyObj<TwitterSyncTweetMessageGQL>(['fetch']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

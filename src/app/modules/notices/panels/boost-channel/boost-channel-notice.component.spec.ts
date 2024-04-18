@@ -21,47 +21,45 @@ describe('BoostChannelNoticeComponent', () => {
     guid: '123',
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          BoostChannelNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon', 'dismissible'],
-            outputs: ['dismissClick'],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        BoostChannelNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon', 'dismissible'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: BoostModalV2LazyService,
+          useValue: MockService(BoostModalV2LazyService, {
+            has: ['onComplete$'],
+            props: {
+              onComplete$: { get: () => new Subject<boolean>() },
+            },
           }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: BoostModalV2LazyService,
-            useValue: MockService(BoostModalV2LazyService, {
-              has: ['onComplete$'],
-              props: {
-                onComplete$: { get: () => new Subject<boolean>() },
-              },
-            }),
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostChannelNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

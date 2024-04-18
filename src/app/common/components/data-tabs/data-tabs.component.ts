@@ -44,9 +44,8 @@ export class DataTabsComponent implements AfterViewInit {
       if (this.tabs[i].description) {
         const mouseEnterTabEl = document.querySelector(`#m-dataTab--${i}`);
 
-        const bubbleEl = mouseEnterTabEl.getElementsByClassName(
-          'm-tooltip--bubble'
-        )[0];
+        const bubbleEl =
+          mouseEnterTabEl.getElementsByClassName('m-tooltip--bubble')[0];
 
         const leftPx = i * this.tabWidth - this.container.scrollLeft;
         bubbleEl.setAttribute('style', `left: ${leftPx}px;`);

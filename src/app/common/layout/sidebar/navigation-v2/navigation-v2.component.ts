@@ -145,10 +145,10 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     this.settingsLink = '/settings';
 
     this.subscriptions.push(
-      this.themeService.isDark$.subscribe(isDark => {
+      this.themeService.isDark$.subscribe((isDark) => {
         this.isDarkTheme = isDark;
       }),
-      this.sidebarNavigationService.isOpened$.subscribe(isOpened => {
+      this.sidebarNavigationService.isOpened$.subscribe((isOpened) => {
         if (this.layoutMode === 'phone') {
           this.isOpened = isOpened;
 
@@ -163,7 +163,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
       }),
       // Temporarily disable routerLinkActive class for the 'discovery' item so only 'discovery/plus' is highlighted.
       this.router.events
-        .pipe(filter(e => e instanceof NavigationEnd))
+        .pipe(filter((e) => e instanceof NavigationEnd))
         .subscribe((event: Event) => {
           if (event['url'].slice(0, 15) === '/discovery/plus') {
             this.plusPageActive = true;
@@ -189,7 +189,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    * @returns { void }
    */
   public getUser(): void {
-    this.user = this.session.getLoggedInUser(user => {
+    this.user = this.session.getLoggedInUser((user) => {
       this.user = user;
     });
   }

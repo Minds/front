@@ -23,9 +23,8 @@ export class NetworkAdminAnalyticsBaseComponent implements OnInit {
   protected filters: Filter = this.timespanFiltersService.filters;
 
   /** Chart and KPIs data. */
-  protected readonly data$: Observable<
-    GetAdminAnalyticsChartAndKpisQuery
-  > = this.kpisService.data$;
+  protected readonly data$: Observable<GetAdminAnalyticsChartAndKpisQuery> =
+    this.kpisService.data$;
 
   /** Whether loading is in progress. */
   protected inProgress$: Observable<boolean> = this.kpisService.inProgress$;
@@ -62,9 +61,8 @@ export class NetworkAdminAnalyticsBaseComponent implements OnInit {
    * @returns { void }
    */
   private updateTimespan(timespanString: string): void {
-    const option: Option = this.timespanFiltersService.getOptionById(
-      timespanString
-    );
+    const option: Option =
+      this.timespanFiltersService.getOptionById(timespanString);
     this.kpisService.patchParams({
       fromUnixTs: option?.from_ts_ms,
       toUnixTs: this.timespanFiltersService.instantiationTimestamp.unix(),

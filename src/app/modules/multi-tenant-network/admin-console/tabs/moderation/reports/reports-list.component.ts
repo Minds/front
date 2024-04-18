@@ -30,7 +30,8 @@ import { ApolloQueryResult } from '@apollo/client';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NetworkAdminConsoleReportsListComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /** Page size. */
   private readonly pageSize: number = 12;
 
@@ -40,14 +41,12 @@ export class NetworkAdminConsoleReportsListComponent
   );
 
   /** Cursor for pagination. */
-  public readonly hasNextPage$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly hasNextPage$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Report edges. */
-  public readonly reportEdges$: BehaviorSubject<
-    ReportEdge[]
-  > = new BehaviorSubject<ReportEdge[]>([]);
+  public readonly reportEdges$: BehaviorSubject<ReportEdge[]> =
+    new BehaviorSubject<ReportEdge[]>([]);
 
   /** Get reports query reference. */
   private getReportsQuery: QueryRef<GetReportsQuery, GetReportsQueryVariables>;
@@ -79,16 +78,17 @@ export class NetworkAdminConsoleReportsListComponent
       }
     );
 
-    this.getReportsValueChangeSubscription = this.getReportsQuery.valueChanges.subscribe(
-      (result: ApolloQueryResult<GetReportsQuery>): void => {
-        if (result.loading) {
-          return;
-        }
+    this.getReportsValueChangeSubscription =
+      this.getReportsQuery.valueChanges.subscribe(
+        (result: ApolloQueryResult<GetReportsQuery>): void => {
+          if (result.loading) {
+            return;
+          }
 
-        this.handleQueryResult(result);
-        this.inProgress$.next(false);
-      }
-    );
+          this.handleQueryResult(result);
+          this.inProgress$.next(false);
+        }
+      );
   }
 
   ngOnDestroy(): void {

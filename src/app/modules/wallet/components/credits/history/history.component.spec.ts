@@ -34,7 +34,7 @@ describe('WalletV2CreditsHistoryComponent', () => {
   const mockPage: any = {
     data: {
       giftCards: {
-        edges: MockGiftCardNodeArray.map(card => {
+        edges: MockGiftCardNodeArray.map((card) => {
           return {
             node: card,
           };
@@ -150,19 +150,13 @@ describe('WalletV2CreditsHistoryComponent', () => {
   describe('isExpired', () => {
     it('should check whether a payment IS expired', () => {
       let giftCard: GiftCardNode = MockGiftCardNode;
-      giftCard.expiresAt =
-        moment()
-          .subtract(1, 'day')
-          .unix() - 1000;
+      giftCard.expiresAt = moment().subtract(1, 'day').unix() - 1000;
       expect(comp.isExpired(giftCard)).toBeTrue();
     });
 
     it('should check whether a payment is NOT expired', () => {
       let giftCard: GiftCardNode = MockGiftCardNode;
-      giftCard.expiresAt =
-        moment()
-          .add(1, 'day')
-          .unix() - 1000;
+      giftCard.expiresAt = moment().add(1, 'day').unix() - 1000;
       expect(comp.isExpired(giftCard)).toBeFalse();
     });
   });

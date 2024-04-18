@@ -9,14 +9,10 @@ import { GiftCardProductIdEnum } from '../../../../../graphql/generated.engine';
 @Injectable({ providedIn: 'root' })
 export class GiftCardClaimPanelService {
   /** Currently active panel. */
-  public readonly activePanel$: BehaviorSubject<
-    GiftCardClaimPanelEnum
-  > = new BehaviorSubject<GiftCardClaimPanelEnum>(
-    GiftCardClaimPanelEnum.Redeem
-  );
+  public readonly activePanel$: BehaviorSubject<GiftCardClaimPanelEnum> =
+    new BehaviorSubject<GiftCardClaimPanelEnum>(GiftCardClaimPanelEnum.Redeem);
 
   /** Currently active product id for the card the user is redeeming. */
-  public readonly productId$: BehaviorSubject<
-    GiftCardProductIdEnum
-  > = new BehaviorSubject<GiftCardProductIdEnum>(GiftCardProductIdEnum.Boost);
+  public readonly productId$: BehaviorSubject<GiftCardProductIdEnum> =
+    new BehaviorSubject<GiftCardProductIdEnum>(GiftCardProductIdEnum.Boost);
 }

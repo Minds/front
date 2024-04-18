@@ -69,11 +69,10 @@ export class ActivityToolbarComponent {
       }
     );
 
-    this.paywallBadgeSubscription = this.service.shouldShowPaywallBadge$.subscribe(
-      (showBadge: boolean) => {
+    this.paywallBadgeSubscription =
+      this.service.shouldShowPaywallBadge$.subscribe((showBadge: boolean) => {
         // this.allowReminds = !showBadge;
-      }
-    );
+      });
 
     this.supermindButtonExperiment = this.experimentsService.hasVariation(
       'front-5812-supermind-button',
@@ -110,8 +109,8 @@ export class ActivityToolbarComponent {
       return;
     }
 
-    this.service.displayOptions.showOnlyCommentsToggle = !this.service
-      .displayOptions.showOnlyCommentsToggle;
+    this.service.displayOptions.showOnlyCommentsToggle =
+      !this.service.displayOptions.showOnlyCommentsToggle;
   }
 
   async openBoostModal(e: MouseEvent): Promise<void> {

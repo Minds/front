@@ -29,7 +29,8 @@ import { ComposerMonetizeV2Service } from '../monetize.service';
   templateUrl: './memberships.component.html',
 })
 export class ComposerMonetizeV2MembershipsComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   hasSupportTiers: boolean = false;
   supportTiers: SupportTier[] = [];
   plusTierUrn: string = '';
@@ -57,8 +58,8 @@ export class ComposerMonetizeV2MembershipsComponent
       urn: new UntypedFormControl('none'),
     });
 
-    this.supportTiersSubscription = this.monetizeService.supportTiers$.subscribe(
-      tiers => {
+    this.supportTiersSubscription =
+      this.monetizeService.supportTiers$.subscribe((tiers) => {
         if (tiers) {
           this.supportTiers = tiers;
           this.filterMembershipTiers(this.supportTiers);
@@ -70,8 +71,7 @@ export class ComposerMonetizeV2MembershipsComponent
         }
 
         this.setInitialState();
-      }
-    );
+      });
   }
 
   /**
@@ -89,7 +89,7 @@ export class ComposerMonetizeV2MembershipsComponent
     }
     if (monetization.support_tier && monetization.support_tier.urn) {
       const savedTier = this.supportTiers.find(
-        tier => tier.urn === monetization.support_tier.urn
+        (tier) => tier.urn === monetization.support_tier.urn
       );
       if (savedTier) {
         this.urn.setValue(savedTier.urn);
@@ -109,7 +109,7 @@ export class ComposerMonetizeV2MembershipsComponent
    */
   filterMembershipTiers(tiers: SupportTier[]): void {
     tiers = tiers.filter(
-      support_tier =>
+      (support_tier) =>
         support_tier.public === true && support_tier.urn !== this.plusTierUrn
     );
 
@@ -133,7 +133,8 @@ export class ComposerMonetizeV2MembershipsComponent
     } else {
       this.service.pendingMonetization$.next({
         type: 'membership',
-        name: this.supportTiers.find(tier => tier.urn === this.urn.value).name,
+        name: this.supportTiers.find((tier) => tier.urn === this.urn.value)
+          .name,
         support_tier: {
           urn: this.urn.value,
         },

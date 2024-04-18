@@ -25,21 +25,19 @@ describe('ProductPageHeroComponent', () => {
     },
   ];
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ProductPageHeroComponent,
-          MockComponent({
-            selector: 'markdown',
-            inputs: ['data'],
-          }),
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ProductPageHeroComponent,
+        MockComponent({
+          selector: 'markdown',
+          inputs: ['data'],
+        }),
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ProductPageHeroComponent);
     comp = fixture.componentInstance;
 

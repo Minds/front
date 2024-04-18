@@ -112,7 +112,7 @@ export class SupermindButtonComponent {
     try {
       await this.composerModalService
         .setInjector(this.injector)
-        .onPost(activity => {
+        .onPost((activity) => {
           this.onSupermindPosted.emit(true);
         })
         .present();

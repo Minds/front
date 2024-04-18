@@ -79,7 +79,7 @@ describe('DismissalV2Service', () => {
     it('should get dismissals from server when cache is empty', (done: DoneFn) => {
       spyOn(localStorage.__proto__, 'getItem').and.returnValue(null);
 
-      (service as any).getDismissals().subscribe(_mockDismissals => {
+      (service as any).getDismissals().subscribe((_mockDismissals) => {
         expect(mockDismissals).toEqual(_mockDismissals);
         controller.verify();
         done();
@@ -96,7 +96,7 @@ describe('DismissalV2Service', () => {
     it('should get dismissals from server when cache is NOT empty, but we opt to bypass the cache', (done: DoneFn) => {
       spyOn(localStorage.__proto__, 'getItem').and.returnValue(mockDismissals);
 
-      (service as any).getDismissals(true).subscribe(_mockDismissals => {
+      (service as any).getDismissals(true).subscribe((_mockDismissals) => {
         expect(mockDismissals).toEqual(_mockDismissals);
         controller.verify();
         done();
@@ -137,7 +137,7 @@ describe('DismissalV2Service', () => {
 
       (service as any)
         .isDismissed(mockDismissals[0].key)
-        .subscribe(isDismissed => {
+        .subscribe((isDismissed) => {
           expect(isDismissed).toBe(true);
           controller.verify();
           done();
@@ -156,7 +156,7 @@ describe('DismissalV2Service', () => {
 
       (service as any)
         .isDismissed(`${mockDismissals[0].key}-fake-key`)
-        .subscribe(isDismissed => {
+        .subscribe((isDismissed) => {
           expect(isDismissed).toBe(false);
           controller.verify();
           done();

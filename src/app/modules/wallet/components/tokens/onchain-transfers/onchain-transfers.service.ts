@@ -9,7 +9,10 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
  */
 @Injectable({ providedIn: 'root' })
 export class WalletOnchainTransfersSummaryService {
-  constructor(private api: ApiService, private toast: ToasterService) {}
+  constructor(
+    private api: ApiService,
+    private toast: ToasterService
+  ) {}
 
   /**
    * Gets withdrawals from server.
@@ -19,7 +22,7 @@ export class WalletOnchainTransfersSummaryService {
   public getWithdrawals$(offset: string = ''): Observable<ApiResponse> {
     return this.api.get('api/v3/rewards/withdrawals', { offset: offset }).pipe(
       take(1),
-      catchError(e => this.handleError(e))
+      catchError((e) => this.handleError(e))
     );
   }
 

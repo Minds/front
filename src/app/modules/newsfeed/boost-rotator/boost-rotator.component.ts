@@ -115,7 +115,7 @@ export class NewsfeedBoostRotatorComponent {
     this.subscriptions.push(
       this.viewsCollector$
         .pipe(distinctUntilChanged(), debounceTime(BOOST_VIEW_THRESHOLD))
-        .subscribe(position => {
+        .subscribe((position) => {
           if (this.boosts[position] && this.boosts[position].boosted_guid) {
             this.newsfeedService.recordView(
               this.boosts[position],
@@ -155,7 +155,7 @@ export class NewsfeedBoostRotatorComponent {
     this.paused = !user.boost_autorotate;
 
     this.subscriptions.push(
-      this.boostFeedService.feed$.subscribe(async boosts => {
+      this.boostFeedService.feed$.subscribe(async (boosts) => {
         if (!boosts.length) return;
         this.boosts = [];
         for (const boost of boosts) {
@@ -206,7 +206,7 @@ export class NewsfeedBoostRotatorComponent {
     if (this.rotator) window.clearInterval(this.rotator);
 
     this.running = true;
-    this.rotator = setInterval(e => {
+    this.rotator = setInterval((e) => {
       if (!this.windowFocused) {
         return;
       }
@@ -219,7 +219,8 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   get bounds() {
-    const bounds = this.element.nativeElement.parentElement.getBoundingClientRect();
+    const bounds =
+      this.element.nativeElement.parentElement.getBoundingClientRect();
     return bounds;
   }
 

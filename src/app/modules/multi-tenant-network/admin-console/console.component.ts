@@ -14,19 +14,18 @@ import { MultiTenantConfig } from '../../../../graphql/generated.engine';
 })
 export class NetworkAdminConsoleComponent implements OnInit {
   /** Whether config has been loaded. */
-  public configLoaded$: Observable<boolean> = this.multiTenantConfigService
-    .configLoaded$;
+  public configLoaded$: Observable<boolean> =
+    this.multiTenantConfigService.configLoaded$;
 
   /** Title for console. */
-  public title$: Observable<
-    string
-  > = this.multiTenantConfigService.config$.pipe(
-    map((config: MultiTenantConfig): string => {
-      return config?.siteName
-        ? this.formatTitle(config.siteName)
-        : 'Your Network';
-    })
-  );
+  public title$: Observable<string> =
+    this.multiTenantConfigService.config$.pipe(
+      map((config: MultiTenantConfig): string => {
+        return config?.siteName
+          ? this.formatTitle(config.siteName)
+          : 'Your Network';
+      })
+    );
 
   constructor(
     private multiTenantConfigService: MultiTenantNetworkConfigService

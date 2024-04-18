@@ -24,7 +24,7 @@ export class GroupListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.feedsService.feed.subscribe(async entities => {
+    this.feedsService.feed.subscribe(async (entities) => {
       if (!entities.length) {
         return;
       }

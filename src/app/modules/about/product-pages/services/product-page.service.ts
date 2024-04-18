@@ -28,12 +28,10 @@ export class ProductPageService {
           result: ApolloQueryResult<GetV2ProductPageBySlugQuery>
         ): GetV2ProductPageBySlugQuery => result?.data
       ),
-      catchError(
-        (e: unknown): Observable<null> => {
-          console.error(e);
-          return of(null);
-        }
-      )
+      catchError((e: unknown): Observable<null> => {
+        console.error(e);
+        return of(null);
+      })
     );
   }
 }

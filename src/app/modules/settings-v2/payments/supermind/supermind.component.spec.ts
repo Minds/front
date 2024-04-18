@@ -11,54 +11,52 @@ describe('SettingsV2SupermindComponent', () => {
   let comp: SettingsV2SupermindComponent;
   let fixture: ComponentFixture<SettingsV2SupermindComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule, ReactiveFormsModule],
-        declarations: [
-          SettingsV2SupermindComponent,
-          MockComponent({
-            selector: 'm-settingsV2__header',
-          }),
-          MockComponent({
-            selector: 'm-loadingSpinner',
-            inputs: ['inProgress'],
-          }),
-          MockComponent({
-            selector: 'm-addBankPrompt',
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['disabled', 'saving'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: SettingsV2SupermindService,
-            useValue: MockService(SettingsV2SupermindService, {
-              has: ['settings$'],
-              props: {
-                settings$: {
-                  get: () =>
-                    new BehaviorSubject<SupermindSettings>({
-                      min_cash: 20,
-                      min_offchain_tokens: 2,
-                    }),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule, ReactiveFormsModule],
+      declarations: [
+        SettingsV2SupermindComponent,
+        MockComponent({
+          selector: 'm-settingsV2__header',
+        }),
+        MockComponent({
+          selector: 'm-loadingSpinner',
+          inputs: ['inProgress'],
+        }),
+        MockComponent({
+          selector: 'm-addBankPrompt',
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['disabled', 'saving'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: SettingsV2SupermindService,
+          useValue: MockService(SettingsV2SupermindService, {
+            has: ['settings$'],
+            props: {
+              settings$: {
+                get: () =>
+                  new BehaviorSubject<SupermindSettings>({
+                    min_cash: 20,
+                    min_offchain_tokens: 2,
+                  }),
               },
-            }),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(SettingsV2SupermindComponent);
     comp = fixture.componentInstance;
 

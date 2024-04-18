@@ -39,13 +39,13 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
     });
 
     this.autoImportSubscription = this.youtubeService.autoImport$.subscribe(
-      autoImport => {
+      (autoImport) => {
         this.autoImport.patchValue(autoImport);
         this.detectChanges();
       }
     );
 
-    this.autoImport.valueChanges.subscribe(val => {
+    this.autoImport.valueChanges.subscribe((val) => {
       if (this.init) {
         this.submit();
       }

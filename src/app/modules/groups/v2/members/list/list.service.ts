@@ -25,24 +25,20 @@ export class GroupMembersListService {
   constructor(private api: ApiService) {}
 
   // The group
-  public readonly group$: BehaviorSubject<MindsGroup> = new BehaviorSubject<
-    MindsGroup
-  >(null);
+  public readonly group$: BehaviorSubject<MindsGroup> =
+    new BehaviorSubject<MindsGroup>(null);
 
   // Which membership level do we want to present?
-  public readonly groupMembershipLevel$: BehaviorSubject<
-    GroupMembershipLevel
-  > = new BehaviorSubject<GroupMembershipLevel>(GroupMembershipLevel.MEMBER);
+  public readonly groupMembershipLevel$: BehaviorSubject<GroupMembershipLevel> =
+    new BehaviorSubject<GroupMembershipLevel>(GroupMembershipLevel.MEMBER);
 
   // Show all members above the specified level
-  public readonly membershipLevelGte$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly membershipLevelGte$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   // Search for a member
-  public readonly searchQuery$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  public readonly searchQuery$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   /**
    * Get list of members from API
@@ -66,7 +62,7 @@ export class GroupMembersListService {
           MindsGroup,
           GroupMembershipLevel,
           boolean,
-          string
+          string,
         ]) => {
           let endpoint = `api/v1/groups/membership/${group.guid}`;
 
@@ -90,7 +86,7 @@ export class GroupMembersListService {
           return this.api.get<ApiResponse>(endpoint, params);
         }
       ),
-      catchError(e => {
+      catchError((e) => {
         return of(null);
       }),
       shareReplay()

@@ -10,7 +10,10 @@ export { DiagnosticsService } from './diagnostics.service';
 @Injectable()
 export class BrowserDiagnosticsService implements DiagnosticsInterface {
   readonly environment: string;
-  constructor(protected session: Session, configs: ConfigsService) {
+  constructor(
+    protected session: Session,
+    configs: ConfigsService
+  ) {
     this.environment = configs.get('environment');
     // Sentry.init({
     //   dsn: 'https://3f786f8407e042db9053434a3ab527a2@sentry.io/1538008', // TODO: do not hardcard
@@ -29,7 +32,7 @@ export class BrowserDiagnosticsService implements DiagnosticsInterface {
   }
 
   listen() {
-    this.session.getLoggedInUser(currentUser => {
+    this.session.getLoggedInUser((currentUser) => {
       this.setUser(currentUser);
     });
   }

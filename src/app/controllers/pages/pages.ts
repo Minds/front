@@ -38,7 +38,7 @@ export class Pages {
   ngOnInit() {
     this.setUpMenu();
 
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['page']) {
         this.page = params['page'];
         this.load();

@@ -14,7 +14,10 @@ type ModalComponent = typeof BoostRejectionModalComponent;
  */
 @Injectable({ providedIn: 'root' })
 export class BoostRejectionModalService {
-  constructor(private modalService: ModalService, private injector: Injector) {}
+  constructor(
+    private modalService: ModalService,
+    private injector: Injector
+  ) {}
 
   /**
    * Lazy load modules and open modal.

@@ -78,7 +78,7 @@ export class SettingsV2PasswordComponent implements OnInit {
 
     this.form.setValidators(this.validatePasswordMatch());
 
-    this.form.get('password').valueChanges.subscribe(val => {
+    this.form.get('password').valueChanges.subscribe((val) => {
       if (this.passwordIncorrect) {
         this.passwordIncorrect = false;
         this.detectChanges();
@@ -88,7 +88,7 @@ export class SettingsV2PasswordComponent implements OnInit {
     this.form
       .get('newPassword')
       .valueChanges.pipe(distinctUntilChanged())
-      .subscribe(str => {
+      .subscribe((str) => {
         if (str.length === 0) {
           this.popover.hide();
         } else {

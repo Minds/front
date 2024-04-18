@@ -15,7 +15,8 @@ import { GenericToggleValue } from '../../../../../../common/components/toggle/t
   styleUrls: ['./federation-settings.component.ng.scss'],
 })
 export class NetworkAdminConsoleFederationSettingsComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   /** Enabled toggle state. */
   public enabledToggleState: GenericToggleValue = 'on';
 

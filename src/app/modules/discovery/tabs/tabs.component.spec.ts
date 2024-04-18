@@ -14,35 +14,33 @@ describe('DiscoveryTabsComponent', () => {
   let comp: DiscoveryTabsComponent;
   let fixture: ComponentFixture<DiscoveryTabsComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockComponent({
-            selector: 'm-discovery__settingsButton',
-            inputs: ['modalType'],
-          }),
-          DiscoveryTabsComponent,
-        ],
-        imports: [RouterTestingModule],
-        providers: [
-          { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
-          {
-            provide: DiscoveryService,
-            useValue: MockService(DiscoveryService, {
-              has: ['isPlusPage$'],
-              props: {
-                isPlusPage$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockComponent({
+          selector: 'm-discovery__settingsButton',
+          inputs: ['modalType'],
+        }),
+        DiscoveryTabsComponent,
+      ],
+      imports: [RouterTestingModule],
+      providers: [
+        { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
+        {
+          provide: DiscoveryService,
+          useValue: MockService(DiscoveryService, {
+            has: ['isPlusPage$'],
+            props: {
+              isPlusPage$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
-            }),
-          },
-          { provide: Session, useValue: MockService(Session) },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+        { provide: Session, useValue: MockService(Session) },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DiscoveryTabsComponent);

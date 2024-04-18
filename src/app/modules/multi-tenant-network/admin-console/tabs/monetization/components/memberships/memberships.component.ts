@@ -24,9 +24,8 @@ import { StripeKeysService } from '../../services/stripe-keys.service';
 })
 export class NetworkAdminMonetizationMembershipsComponent implements OnInit {
   /** Whether loading of memberships is in progress. */
-  public readonly membershipLoadInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(true);
+  public readonly membershipLoadInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   /** Max amount of memberships that a user is permitted. */
   public readonly maxMemberships: number;
@@ -35,13 +34,12 @@ export class NetworkAdminMonetizationMembershipsComponent implements OnInit {
   public readonly maxMembershipsString: string;
 
   /** Site memberships array. */
-  public readonly memberships$: BehaviorSubject<
-    SiteMembership[]
-  > = new BehaviorSubject<SiteMembership[]>([]);
+  public readonly memberships$: BehaviorSubject<SiteMembership[]> =
+    new BehaviorSubject<SiteMembership[]>([]);
 
   /** Whether a user has set stripe keys already. */
-  public readonly hasSetStripeKeys$: Observable<boolean> = this
-    .stripeKeysService.hasSetStripeKeys$;
+  public readonly hasSetStripeKeys$: Observable<boolean> =
+    this.stripeKeysService.hasSetStripeKeys$;
 
   constructor(
     private getSiteMembershipsGQL: GetSiteMembershipsGQL,
@@ -76,11 +74,12 @@ export class NetworkAdminMonetizationMembershipsComponent implements OnInit {
     this.membershipLoadInProgress$.next(true);
 
     try {
-      const response: ApolloQueryResult<GetSiteMembershipsQuery> = await lastValueFrom(
-        this.getSiteMembershipsGQL.fetch(null, {
-          fetchPolicy: 'network-only',
-        })
-      );
+      const response: ApolloQueryResult<GetSiteMembershipsQuery> =
+        await lastValueFrom(
+          this.getSiteMembershipsGQL.fetch(null, {
+            fetchPolicy: 'network-only',
+          })
+        );
 
       if (response?.error || response?.errors?.length) {
         console.error(response?.errors ?? DEFAULT_ERROR_MESSAGE);

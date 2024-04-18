@@ -30,22 +30,19 @@ export class ResetPasswordModalService implements OnDestroy {
   /**
    * currently active modal panel
    */
-  public readonly activePanel$: BehaviorSubject<
-    ResetPasswordModalPanel
-  > = new BehaviorSubject<ResetPasswordModalPanel>('enterUsername');
+  public readonly activePanel$: BehaviorSubject<ResetPasswordModalPanel> =
+    new BehaviorSubject<ResetPasswordModalPanel>('enterUsername');
 
   /**
    * False if we've already sent an email too recently
    */
-  public readonly canSendEmail$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
+  public readonly canSendEmail$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
   /**
    * Whether we are waiting for something to load
    */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly inProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /** Keeps track of whether enough time has passed since last email was sent to re-enable the resend button */
   private emailTimer;

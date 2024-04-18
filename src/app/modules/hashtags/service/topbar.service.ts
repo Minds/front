@@ -46,8 +46,8 @@ export class TopbarHashtagsService {
 
     // By type
     const typeOrder = ['default', 'trending', 'implicit', 'user']; // Reversed, first ones are less relevant
-    const aTypeWeight = typeOrder.findIndex(type => a.type === type);
-    const bTypeWeight = typeOrder.findIndex(type => b.type === type);
+    const aTypeWeight = typeOrder.findIndex((type) => a.type === type);
+    const bTypeWeight = typeOrder.findIndex((type) => b.type === type);
 
     if (aTypeWeight > bTypeWeight) {
       return -1;

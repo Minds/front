@@ -29,9 +29,8 @@ export class ProductPageFeatureTableComponent implements OnInit {
   public mobileTabs: ProductPageFeatTableMobileTab[];
 
   /** Index of the selected mobile tab. */
-  public readonly selectedMobileTabIndex$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(0);
+  public readonly selectedMobileTabIndex$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   constructor(private pricingService: ProductPagePricingService) {}
 

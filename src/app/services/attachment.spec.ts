@@ -32,89 +32,87 @@ describe('Service: Attachment Service', () => {
   let service: AttachmentService;
   let mockObject;
   let httpMock;
-  let toasterMock = new (function() {
+  let toasterMock = new (function () {
     this.error = jasmine.createSpy('error');
     this.success = jasmine.createSpy('success');
   })();
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
-        //declarations: [ AttachmentService ],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Upload, useValue: uploadMock },
-          { provide: Client, useValue: clientMock },
-          { provide: TextParserService, useValue: TextParserService },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          {
-            provide: PermissionsService,
-            useValue: MockService(PermissionsService),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      });
-      clientMock.response = {};
-
-      clientMock.response[`/api/v1/newsfeed/preview`] = { status: 'success' };
-
-      httpMock = TestBed.inject(HttpTestingController);
-      service = new AttachmentService(
-        sessionMock,
-        clientMock,
-        uploadMock,
-        httpMock,
-        new TextParserService(),
-        permissionsServiceMock,
-        toasterMock,
-        TestBed.inject(ConfigsService)
-      );
-
-      clientMock.get.calls.reset();
-      clientMock.post.calls.reset();
-      mockObject = {
-        guid: '758019279000969217',
-        type: 'object',
-        subtype: 'video',
-        time_created: '1506101878',
-        time_updated: '1506101878',
-        container_guid: '758019184876593168',
-        owner_guid: '758019184876593168',
-        access_id: '2',
-        featured: false,
-        featured_id: false,
-        ownerObj: {
-          guid: '758019184876593168',
-          type: 'user',
-          name: 'nicoronchiprod',
-          username: 'nicoronchiprod',
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      //declarations: [ AttachmentService ],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: Upload, useValue: uploadMock },
+        { provide: Client, useValue: clientMock },
+        { provide: TextParserService, useValue: TextParserService },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
         },
-        category: false,
-        flags: { mature: true },
-        wire_threshold: '0',
-        thumbnail: false,
-        cinemr_guid: '758019279000969217',
-        license: false,
-        monetized: false,
-        mature: false,
-        boost_rejection_reason: -1,
-        thumbnail_src:
-          'https://d3ae0shxev0cb7.cloudfront.net/api/v1/media/thumbnails/758019279000969217',
-        src: {
-          '360.mp4':
-            'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/758019279000969217/360.mp4',
-          '720.mp4':
-            'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/758019279000969217/720.mp4',
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
         },
-        'play:count': 6,
-        description: '',
-      };
-    })
-  );
+      ],
+    });
+    clientMock.response = {};
+
+    clientMock.response[`/api/v1/newsfeed/preview`] = { status: 'success' };
+
+    httpMock = TestBed.inject(HttpTestingController);
+    service = new AttachmentService(
+      sessionMock,
+      clientMock,
+      uploadMock,
+      httpMock,
+      new TextParserService(),
+      permissionsServiceMock,
+      toasterMock,
+      TestBed.inject(ConfigsService)
+    );
+
+    clientMock.get.calls.reset();
+    clientMock.post.calls.reset();
+    mockObject = {
+      guid: '758019279000969217',
+      type: 'object',
+      subtype: 'video',
+      time_created: '1506101878',
+      time_updated: '1506101878',
+      container_guid: '758019184876593168',
+      owner_guid: '758019184876593168',
+      access_id: '2',
+      featured: false,
+      featured_id: false,
+      ownerObj: {
+        guid: '758019184876593168',
+        type: 'user',
+        name: 'nicoronchiprod',
+        username: 'nicoronchiprod',
+      },
+      category: false,
+      flags: { mature: true },
+      wire_threshold: '0',
+      thumbnail: false,
+      cinemr_guid: '758019279000969217',
+      license: false,
+      monetized: false,
+      mature: false,
+      boost_rejection_reason: -1,
+      thumbnail_src:
+        'https://d3ae0shxev0cb7.cloudfront.net/api/v1/media/thumbnails/758019279000969217',
+      src: {
+        '360.mp4':
+          'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/758019279000969217/360.mp4',
+        '720.mp4':
+          'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/758019279000969217/720.mp4',
+      },
+      'play:count': 6,
+      description: '',
+    };
+  }));
 
   it('parseMature should return false when undefined', () => {
     expect(service.parseMaturity(undefined)).toEqual(false);

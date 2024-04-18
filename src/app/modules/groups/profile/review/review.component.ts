@@ -58,7 +58,7 @@ export class GroupsProfileReviewComponent implements OnInit {
   ngOnInit() {
     this.initialized = true;
 
-    this.group$ = this.service.$group.subscribe(group => {
+    this.group$ = this.service.$group.subscribe((group) => {
       this.group = group;
       this.load(true);
     });

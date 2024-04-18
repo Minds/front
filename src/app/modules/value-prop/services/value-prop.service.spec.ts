@@ -115,7 +115,7 @@ describe('ValuePropService', () => {
   describe('getRawValuePropCards$', () => {
     it('should get raw value prop cards', (done: DoneFn) => {
       const expectedResult: ValuePropCard[] = valuePropCardMockResponse.map(
-        valuePropCard => {
+        (valuePropCard) => {
           let attributes = valuePropCard.attributes;
           delete attributes.__typename;
           delete attributes.createdAt;
@@ -150,19 +150,20 @@ describe('ValuePropService', () => {
 
   describe('valuePropCards$', () => {
     it('should get value prop cards', (done: DoneFn) => {
-      const expectedResult: PresentableValuePropCard[] = valuePropCardMockResponse.map(
-        (valuePropCard): PresentableValuePropCard => {
-          return {
-            title: valuePropCard.attributes.title,
-            imageUrl:
-              'http://example.minds.com' +
-              valuePropCard.attributes.media.data.attributes.url,
-            altText:
-              valuePropCard.attributes.media.data.attributes.alternativeText,
-            order: valuePropCard.attributes.order,
-          };
-        }
-      ) as PresentableValuePropCard[];
+      const expectedResult: PresentableValuePropCard[] =
+        valuePropCardMockResponse.map(
+          (valuePropCard): PresentableValuePropCard => {
+            return {
+              title: valuePropCard.attributes.title,
+              imageUrl:
+                'http://example.minds.com' +
+                valuePropCard.attributes.media.data.attributes.url,
+              altText:
+                valuePropCard.attributes.media.data.attributes.alternativeText,
+              order: valuePropCard.attributes.order,
+            };
+          }
+        ) as PresentableValuePropCard[];
 
       (service as any).valuePropCards$
         .pipe(take(1))
@@ -189,19 +190,20 @@ describe('ValuePropService', () => {
     it('should get next unshown value prop card', (done: DoneFn) => {
       (service as any).shownCards = [0, 1];
 
-      const expectedResult: PresentableValuePropCard[] = valuePropCardMockResponse.map(
-        (valuePropCard): PresentableValuePropCard => {
-          return {
-            title: valuePropCard.attributes.title,
-            imageUrl:
-              'http://example.minds.com' +
-              valuePropCard.attributes.media.data.attributes.url,
-            altText:
-              valuePropCard.attributes.media.data.attributes.alternativeText,
-            order: valuePropCard.attributes.order,
-          };
-        }
-      ) as PresentableValuePropCard[];
+      const expectedResult: PresentableValuePropCard[] =
+        valuePropCardMockResponse.map(
+          (valuePropCard): PresentableValuePropCard => {
+            return {
+              title: valuePropCard.attributes.title,
+              imageUrl:
+                'http://example.minds.com' +
+                valuePropCard.attributes.media.data.attributes.url,
+              altText:
+                valuePropCard.attributes.media.data.attributes.alternativeText,
+              order: valuePropCard.attributes.order,
+            };
+          }
+        ) as PresentableValuePropCard[];
 
       (service as any).nextUnshownCard$
         .pipe(take(1))

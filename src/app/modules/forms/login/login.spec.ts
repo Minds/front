@@ -98,55 +98,53 @@ describe('LoginForm', () => {
 
   const activePanel$ = new BehaviorSubject<string>('');
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-          LoginForm,
-          ButtonComponent,
-        ], // declare the test component
-        imports: [RouterTestingModule, ReactiveFormsModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Client, useValue: clientMock },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          {
-            provide: AuthModalService,
-            useValue: MockService(AuthModalService),
-          },
-          {
-            provide: MultiFactorAuthService,
-            useValue: MockService(MultiFactorAuthService, {
-              has: ['onSuccess$', 'activePanel$'],
-              props: {
-                onSuccess$: { get: () => onSuccess$ },
-                activePanel$: { get: () => activePanel$ },
-              },
-              setMFAReqest: feature => {
-                return true;
-              },
-            }),
-          },
-          { provide: Router, useClass: RouterStub },
-          RegexService,
-          { provide: Router, useClass: RouterStub },
-          {
-            provide: ResetPasswordExperimentService,
-            useValue: MockService(ResetPasswordExperimentService),
-          },
-          {
-            provide: PermissionsService,
-            useValue: MockService(PermissionsService),
-          },
-          {
-            provide: SiteService,
-            useValue: MockService(SiteService),
-          },
-        ],
-      }).compileComponents(); // compile template and css
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        LoginForm,
+        ButtonComponent,
+      ], // declare the test component
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: Client, useValue: clientMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: AuthModalService,
+          useValue: MockService(AuthModalService),
+        },
+        {
+          provide: MultiFactorAuthService,
+          useValue: MockService(MultiFactorAuthService, {
+            has: ['onSuccess$', 'activePanel$'],
+            props: {
+              onSuccess$: { get: () => onSuccess$ },
+              activePanel$: { get: () => activePanel$ },
+            },
+            setMFAReqest: (feature) => {
+              return true;
+            },
+          }),
+        },
+        { provide: Router, useClass: RouterStub },
+        RegexService,
+        { provide: Router, useClass: RouterStub },
+        {
+          provide: ResetPasswordExperimentService,
+          useValue: MockService(ResetPasswordExperimentService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+        {
+          provide: SiteService,
+          useValue: MockService(SiteService),
+        },
+      ],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
   beforeEach(() => {

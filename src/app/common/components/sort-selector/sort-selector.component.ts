@@ -157,7 +157,8 @@ export class SortSelectorComponent implements OnInit {
     }
 
     return this.algorithms.filter(
-      algorithm => (<string[]>this.allowedAlgorithms).indexOf(algorithm.id) > -1
+      (algorithm) =>
+        (<string[]>this.allowedAlgorithms).indexOf(algorithm.id) > -1
     );
   }
 
@@ -166,7 +167,7 @@ export class SortSelectorComponent implements OnInit {
   }
 
   setAlgorithm(id: string): boolean {
-    const algorithm = this.algorithms.find(algorithm => id === algorithm.id);
+    const algorithm = this.algorithms.find((algorithm) => id === algorithm.id);
 
     if (!algorithm) {
       console.error('Unknown algorithm');
@@ -189,7 +190,7 @@ export class SortSelectorComponent implements OnInit {
   }
 
   getCurrentAlgorithm(): Option {
-    return this.algorithms.find(algorithm => this.algorithm === algorithm.id);
+    return this.algorithms.find((algorithm) => this.algorithm === algorithm.id);
   }
 
   getCurrentAlgorithmProp(prop: string) {
@@ -210,7 +211,7 @@ export class SortSelectorComponent implements OnInit {
     }
 
     return this.periods.filter(
-      period => (<string[]>this.allowedPeriods).indexOf(period.id) > -1
+      (period) => (<string[]>this.allowedPeriods).indexOf(period.id) > -1
     );
   }
 
@@ -219,7 +220,7 @@ export class SortSelectorComponent implements OnInit {
   }
 
   setPeriod(id: string): boolean {
-    if (!this.periods.find(period => id === period.id)) {
+    if (!this.periods.find((period) => id === period.id)) {
       console.error('Unknown period');
       return false;
     }
@@ -232,7 +233,7 @@ export class SortSelectorComponent implements OnInit {
   }
 
   getCurrentPeriod(): Option {
-    return this.periods.find(period => this.period === period.id);
+    return this.periods.find((period) => this.period === period.id);
   }
 
   getCurrentPeriodLabel() {
@@ -263,7 +264,7 @@ export class SortSelectorComponent implements OnInit {
     }
 
     return this.customTypes.filter(
-      customType =>
+      (customType) =>
         (<string[]>this.allowedCustomTypes).indexOf(customType.id) > -1
     );
   }
@@ -273,7 +274,7 @@ export class SortSelectorComponent implements OnInit {
   }
 
   setCustomType(id: string) {
-    if (!this.customTypes.find(customType => id === customType.id)) {
+    if (!this.customTypes.find((customType) => id === customType.id)) {
       console.error('Unknown custom type');
       return false;
     }
@@ -286,7 +287,7 @@ export class SortSelectorComponent implements OnInit {
 
   getCurrentCustomType() {
     return this.customTypes.find(
-      customType => this.customType === customType.id
+      (customType) => this.customType === customType.id
     );
   }
 

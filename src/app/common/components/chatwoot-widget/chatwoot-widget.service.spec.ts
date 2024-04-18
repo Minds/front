@@ -22,7 +22,9 @@ describe('ChatwootWidgetService', () => {
   });
 
   afterAll(() => {
-    (service as any).document.defaultView.$chatwoot.popoutChatWindow.calls.reset();
+    (
+      service as any
+    ).document.defaultView.$chatwoot.popoutChatWindow.calls.reset();
     (service as any).document.defaultView.$chatwoot.toggle.calls.reset();
     (service as any).document.defaultView.$chatwoot = null;
   });

@@ -54,7 +54,7 @@ export class ResetPasswordModalResetFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.service.inProgress$.subscribe(inProgress => {
+      this.service.inProgress$.subscribe((inProgress) => {
         this.inProgress = inProgress;
       })
     );
@@ -84,7 +84,7 @@ export class ResetPasswordModalResetFormComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.form.get('password').valueChanges.subscribe(str => {
+      this.form.get('password').valueChanges.subscribe((str) => {
         this.popover.show();
       }),
 

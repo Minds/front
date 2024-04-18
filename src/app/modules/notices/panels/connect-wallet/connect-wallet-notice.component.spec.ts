@@ -10,45 +10,43 @@ describe('ConnectWalletNoticeComponent', () => {
   let comp: ConnectWalletNoticeComponent;
   let fixture: ComponentFixture<ConnectWalletNoticeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [
-          ConnectWalletNoticeComponent,
-          MockComponent({
-            selector: 'm-feedNotice',
-            inputs: ['icon', 'dismissible'],
-            outputs: ['dismissClick'],
-          }),
-          MockComponent({
-            selector: 'm-button',
-            inputs: ['color', 'solid', 'size'],
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: FeedNoticeService,
-            useValue: MockService(FeedNoticeService),
-          },
-          {
-            provide: ConnectWalletModalService,
-            useValue: MockService(ConnectWalletModalService, {
-              has: ['isConnected$'],
-              props: {
-                isConnected$: {
-                  get: () => new BehaviorSubject<boolean>(false),
-                },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        ConnectWalletNoticeComponent,
+        MockComponent({
+          selector: 'm-feedNotice',
+          inputs: ['icon', 'dismissible'],
+          outputs: ['dismissClick'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
+        {
+          provide: ConnectWalletModalService,
+          useValue: MockService(ConnectWalletModalService, {
+            has: ['isConnected$'],
+            props: {
+              isConnected$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
-            }),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+            },
+          }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ConnectWalletNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

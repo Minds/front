@@ -36,11 +36,10 @@ export class ChannelActionsPostSubscriptionsComponent {
   ) {}
 
   ngOnInit() {
-    this.channelService.guid$.subscribe(async channelGuid => {
+    this.channelService.guid$.subscribe(async (channelGuid) => {
       this.channelGuid = channelGuid;
-      const postSubscription = await this.service.getPostSubscription(
-        channelGuid
-      );
+      const postSubscription =
+        await this.service.getPostSubscription(channelGuid);
       this.frequency = postSubscription.frequency;
 
       this.cd.markForCheck();

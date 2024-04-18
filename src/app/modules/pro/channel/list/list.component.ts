@@ -43,7 +43,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.params$ = this.route.params.subscribe(params => {
+    this.params$ = this.route.params.subscribe((params) => {
       if (params['type']) {
         this.type = this.paramsType = params['type'];
 
@@ -88,13 +88,12 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
   }
 
   setMenuNavItems() {
-    const tags = this.channelService.currentChannel.pro_settings.tag_list.concat(
-      []
-    );
+    const tags =
+      this.channelService.currentChannel.pro_settings.tag_list.concat([]);
 
     tags.unshift({ label: 'All', tag: 'all', selected: false });
 
-    const navItems: Array<NavItems> = tags.map(tag => ({
+    const navItems: Array<NavItems> = tags.map((tag) => ({
       label: tag.label,
       onClick: () => {
         this.selectHashtag(tag.tag);

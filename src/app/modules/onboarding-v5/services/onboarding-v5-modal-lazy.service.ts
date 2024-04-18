@@ -42,7 +42,7 @@ export class OnboardingV5ModalLazyService {
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         // Check for membershipCheckoutRedirect queryParam
         const url = this.router.url;
@@ -64,7 +64,8 @@ export class OnboardingV5ModalLazyService {
    */
   public async open(): Promise<ModalRef<OnboardingV5ModalComponent>> {
     this.urlOnOpen = this.router.url;
-    const componentRef: typeof OnboardingV5ModalComponent = await this.getComponentRef();
+    const componentRef: typeof OnboardingV5ModalComponent =
+      await this.getComponentRef();
     const modal = this.modalService.present(componentRef, {
       data: {
         onComplete: () => {

@@ -28,16 +28,14 @@ export class ChannelShopMembershipsEditService {
   /**
    * Can receive tokens subject
    */
-  readonly canReceiveTokens$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  readonly canReceiveTokens$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Can receive USD subject
    */
-  readonly canReceiveUsd$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  readonly canReceiveUsd$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Description subject
@@ -49,15 +47,14 @@ export class ChannelShopMembershipsEditService {
   /**
    * Original entity (when loaded)
    */
-  readonly original$: BehaviorSubject<SupportTier | null> = new BehaviorSubject<SupportTier | null>(
-    null
-  );
+  readonly original$: BehaviorSubject<SupportTier | null> =
+    new BehaviorSubject<SupportTier | null>(null);
 
   /**
    * Are we editing a Support Tier?
    */
   readonly isEditing$: Observable<boolean> = this.original$.pipe(
-    map(supportTier => Boolean(supportTier && supportTier.urn))
+    map((supportTier) => Boolean(supportTier && supportTier.urn))
   );
 
   /**
@@ -134,22 +131,20 @@ export class ChannelShopMembershipsEditService {
       this.description$,
       this.original$,
     ]).pipe(
-      map(
-        ([name, usd, hasTokens, description, original]): SupportTier => {
-          const payload: Partial<SupportTier> = {
-            ...(original || {}),
-            name: name,
-            has_usd: true,
-            usd: usd,
-            has_tokens: hasTokens,
-            description: description,
-          };
+      map(([name, usd, hasTokens, description, original]): SupportTier => {
+        const payload: Partial<SupportTier> = {
+          ...(original || {}),
+          name: name,
+          has_usd: true,
+          usd: usd,
+          has_tokens: hasTokens,
+          description: description,
+        };
 
-          return payload as SupportTier;
-        }
-      ),
+        return payload as SupportTier;
+      }),
       tap(() => this.inProgress$.next(true)),
-      map(supportTier =>
+      map((supportTier) =>
         this.api.post(
           supportTier.urn
             ? `api/v3/wire/supporttiers/${encodeURIComponent(supportTier.urn)}`
@@ -158,7 +153,7 @@ export class ChannelShopMembershipsEditService {
         )
       ),
       switchAll(),
-      map(response => response && response['support_tier']),
+      map((response) => response && response['support_tier']),
       tap(() => this.inProgress$.next(false)),
       take(1)
     );

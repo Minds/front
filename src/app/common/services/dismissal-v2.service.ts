@@ -50,12 +50,10 @@ export class DismissalV2Service {
       tap((dismissals: Dismissal[]): void => {
         this.setCachedDismissals(dismissals);
       }),
-      catchError(
-        (e: unknown): Observable<Dismissal[]> => {
-          console.error(e);
-          return of([]);
-        }
-      )
+      catchError((e: unknown): Observable<Dismissal[]> => {
+        console.error(e);
+        return of([]);
+      })
     );
   }
 
@@ -85,18 +83,14 @@ export class DismissalV2Service {
     }
 
     return this.dismissGQL.mutate({ key }).pipe(
-      map(
-        (result: ApolloQueryResult<DismissMutation>): Dismissal => {
-          return result?.data?.dismiss;
-        }
-      ),
+      map((result: ApolloQueryResult<DismissMutation>): Dismissal => {
+        return result?.data?.dismiss;
+      }),
       tap((dismissal: Dismissal): void => this.addCachedDismissal(dismissal)),
-      catchError(
-        (e: unknown): Observable<Dismissal> => {
-          console.error(e);
-          return of(null);
-        }
-      )
+      catchError((e: unknown): Observable<Dismissal> => {
+        console.error(e);
+        return of(null);
+      })
     );
   }
 
@@ -136,15 +130,13 @@ export class DismissalV2Service {
    */
   private async setCachedDismissals(dismissals: Dismissal[]): Promise<void> {
     try {
-      dismissals = dismissals.map(
-        (dismissal: Dismissal): Dismissal => {
-          return {
-            userGuid: dismissal.userGuid,
-            key: dismissal.key,
-            dismissalTimestamp: dismissal.dismissalTimestamp,
-          };
-        }
-      );
+      dismissals = dismissals.map((dismissal: Dismissal): Dismissal => {
+        return {
+          userGuid: dismissal.userGuid,
+          key: dismissal.key,
+          dismissalTimestamp: dismissal.dismissalTimestamp,
+        };
+      });
       return localStorage.setItem(CACHE_KEY, JSON.stringify(dismissals));
     } catch (e) {
       console.error(e);

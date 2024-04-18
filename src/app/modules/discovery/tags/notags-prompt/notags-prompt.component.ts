@@ -23,7 +23,7 @@ export class DiscoveryNoTagsPromptComponent {
   async openTagSettings(e: MouseEvent): Promise<void> {
     const modal = this.modalService.present(DiscoveryTagSettingsComponent, {
       data: {
-        onSave: tags => {
+        onSave: (tags) => {
           modal.close(tags);
         },
       },

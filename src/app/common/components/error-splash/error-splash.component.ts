@@ -26,23 +26,20 @@ export class ErrorSplashComponent {
   /**
    * Header text for error splash.
    */
-  private readonly _headerType$: BehaviorSubject<
-    ErrorHeaderType
-  > = new BehaviorSubject<ErrorHeaderType>(DEFAULT_HEADER_TYPE);
+  private readonly _headerType$: BehaviorSubject<ErrorHeaderType> =
+    new BehaviorSubject<ErrorHeaderType>(DEFAULT_HEADER_TYPE);
 
   /**
    * Subheader text for error splash.
    */
-  private readonly _subheaderType$: BehaviorSubject<
-    ErrorSubheaderType
-  > = new BehaviorSubject<ErrorSubheaderType>(DEFAULT_SUBHEADER_TYPE);
+  private readonly _subheaderType$: BehaviorSubject<ErrorSubheaderType> =
+    new BehaviorSubject<ErrorSubheaderType>(DEFAULT_SUBHEADER_TYPE);
 
   /**
    * Set to true on image load - helps prevent jumping flex content whilst loading.
    */
-  public readonly imageLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly imageLoaded$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Assets URL.

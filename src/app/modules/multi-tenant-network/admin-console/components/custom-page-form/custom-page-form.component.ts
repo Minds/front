@@ -47,14 +47,14 @@ export class CustomPageFormComponent implements OnInit, OnDestroy {
   );
 
   /** Whether saving is in progress. */
-  public readonly savingInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly savingInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Allows us to use enum in the template
    */
-  public CustomPageImplementation: typeof CustomPageImplementation = CustomPageImplementation;
+  public CustomPageImplementation: typeof CustomPageImplementation =
+    CustomPageImplementation;
 
   subscriptions: Subscription[] = [];
 
@@ -72,7 +72,7 @@ export class CustomPageFormComponent implements OnInit, OnDestroy {
     }
     // Get custom page from server to populate form
     this.subscriptions.push(
-      this.service.customPage$.subscribe(customPage => {
+      this.service.customPage$.subscribe((customPage) => {
         if (customPage) {
           this.customPage = customPage;
           this.displayName = customPage.displayName;
@@ -98,7 +98,7 @@ export class CustomPageFormComponent implements OnInit, OnDestroy {
     });
 
     // Update validators when implementation changes
-    this.form.get('implementation').valueChanges.subscribe(value => {
+    this.form.get('implementation').valueChanges.subscribe((value) => {
       if (value === CustomPageImplementation.CUSTOM) {
         this.form
           .get('content')

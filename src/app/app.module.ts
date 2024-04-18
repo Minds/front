@@ -125,7 +125,7 @@ import { ValuePropModule } from './modules/value-prop/value-prop.module';
     MINDS_PROVIDERS,
     {
       provide: APP_INITIALIZER,
-      useFactory: configs => () => configs.loadFromRemote(),
+      useFactory: (configs) => () => configs.loadFromRemote(),
       deps: [ConfigsService],
       multi: true,
     },

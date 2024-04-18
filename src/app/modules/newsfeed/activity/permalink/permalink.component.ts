@@ -44,7 +44,10 @@ export class ActivityPermalinkComponent implements OnInit, OnDestroy {
     return this.service.displayOptions.minimalMode;
   }
 
-  constructor(public service: ActivityService, public session: Session) {}
+  constructor(
+    public service: ActivityService,
+    public session: Session
+  ) {}
 
   /**
    * Show absolute dates for single pages and modal

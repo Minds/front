@@ -18,90 +18,88 @@ describe('NewsfeedBoostRotatorComponent', () => {
   let comp: NewsfeedBoostRotatorComponent;
   let fixture: ComponentFixture<NewsfeedBoostRotatorComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          NewsfeedBoostRotatorComponent,
-          MockComponent({
-            selector: 'm-tooltipHint',
-            inputs: [
-              'icon',
-              'storageKeyPrefix',
-              'iconStyle',
-              'tooltipBubbleStyle',
-              'showArrow',
-              'arrowOffset',
-              'experimentId',
-            ],
-            outputs: ['click'],
-          }),
-        ],
-        providers: [
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
-          {
-            provide: Router,
-            useValue: MockService(Router),
-          },
-          {
-            provide: Client,
-            useValue: MockService(Client),
-          },
-          {
-            provide: ScrollService,
-            useValue: MockService(ScrollService),
-          },
-          {
-            provide: NewsfeedService,
-            useValue: MockService(NewsfeedService),
-          },
-          {
-            provide: SettingsV2Service,
-            useValue: MockService(SettingsV2Service),
-          },
-          {
-            provide: ElementRef,
-            useValue: MockService(ElementRef),
-          },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: BoostFeedService,
-            useValue: MockService(BoostFeedService, {
-              has: ['feed$'],
-              props: {
-                feed$: {
-                  get: (): Observable<BehaviorSubject<Object>[]> =>
-                    new Observable<BehaviorSubject<Object>[]>(),
-                },
-                init: async (): Promise<void> => {},
-              },
-            }),
-          },
-          {
-            provide: ConfigsService,
-            useValue: MockService(ConfigsService),
-          },
-        ],
-      })
-        .overrideProvider(FeedsService, {
-          useValue: MockService(FeedsService, {
-            has: ['feed'],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        NewsfeedBoostRotatorComponent,
+        MockComponent({
+          selector: 'm-tooltipHint',
+          inputs: [
+            'icon',
+            'storageKeyPrefix',
+            'iconStyle',
+            'tooltipBubbleStyle',
+            'showArrow',
+            'arrowOffset',
+            'experimentId',
+          ],
+          outputs: ['click'],
+        }),
+      ],
+      providers: [
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
+        {
+          provide: Client,
+          useValue: MockService(Client),
+        },
+        {
+          provide: ScrollService,
+          useValue: MockService(ScrollService),
+        },
+        {
+          provide: NewsfeedService,
+          useValue: MockService(NewsfeedService),
+        },
+        {
+          provide: SettingsV2Service,
+          useValue: MockService(SettingsV2Service),
+        },
+        {
+          provide: ElementRef,
+          useValue: MockService(ElementRef),
+        },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: BoostFeedService,
+          useValue: MockService(BoostFeedService, {
+            has: ['feed$'],
             props: {
-              feed: { get: () => new BehaviorSubject<any>([]) },
+              feed$: {
+                get: (): Observable<BehaviorSubject<Object>[]> =>
+                  new Observable<BehaviorSubject<Object>[]>(),
+              },
+              init: async (): Promise<void> => {},
             },
           }),
-        })
-        .compileComponents();
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+      ],
     })
-  );
+      .overrideProvider(FeedsService, {
+        useValue: MockService(FeedsService, {
+          has: ['feed'],
+          props: {
+            feed: { get: () => new BehaviorSubject<any>([]) },
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(NewsfeedBoostRotatorComponent);
     comp = fixture.componentInstance;
 

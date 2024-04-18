@@ -26,7 +26,8 @@ describe('MultiTenantConfigImageRefreshService', () => {
 
   it('should increment square logo count', () => {
     service.squareLogoLastCacheTimestamp$.next(0);
-    let timestampValue: number = service.squareLogoLastCacheTimestamp$.getValue();
+    let timestampValue: number =
+      service.squareLogoLastCacheTimestamp$.getValue();
 
     service.updateSquareLogoLastCacheTimestamp();
     expect(service.squareLogoLastCacheTimestamp$.getValue()).toBeGreaterThan(
@@ -46,7 +47,8 @@ describe('MultiTenantConfigImageRefreshService', () => {
 
   it('should increment horizontal logo count', () => {
     service.horizontalLogoLastCacheTimestamp$.next(0);
-    let timestampValue: number = service.horizontalLogoLastCacheTimestamp$.getValue();
+    let timestampValue: number =
+      service.horizontalLogoLastCacheTimestamp$.getValue();
 
     service.updateHorizontalLogoLastCacheTimestamp();
     expect(

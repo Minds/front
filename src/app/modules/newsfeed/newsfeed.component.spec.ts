@@ -34,78 +34,76 @@ describe('NewsfeedComponent', () => {
   let comp: NewsfeedComponent;
   let fixture: ComponentFixture<NewsfeedComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-          MockComponent({
-            selector: 'm-tooltip',
-            inputs: ['icon'],
-            template: '<ng-content></ng-content>',
-          }),
-          MockComponent({
-            selector: 'm-newsfeed--dropdown',
-            inputs: ['options'],
-            template: '',
-          }),
-          MockComponent({
-            selector: 'm-tagcloud',
-            inputs: ['options'],
-            template: '',
-          }),
-          MockComponent({
-            selector: 'm-ads-boost',
-            inputs: ['handler', 'limit'],
-            template: '',
-          }),
-          MockComponent({
-            selector: 'm-topbar--hashtags',
-            inputs: ['enabled'],
-            outputs: ['selectionChange'],
-            template: '',
-          }),
-          MockComponent({ selector: 'm-suggestions__sidebar' }),
-          MockComponent({
-            selector: 'm-hashtags--sidebar-selector',
-            inputs: ['disabled', 'currentHashtag', 'preferred', 'compact'],
-            outputs: ['filterChange', 'switchAttempt'],
-          }),
-          MockComponent({ selector: 'm-liquiditySpot' }),
-          NewsfeedComponent,
-        ],
-        imports: [RouterTestingModule, ReactiveFormsModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Client, useValue: clientMock },
-          { provide: Upload, useValue: uploadMock },
-          { provide: ContextService, useValue: contextServiceMock },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              params: of({}),
-              url: of({ segments: [] }),
-              snapshot: { firstChild: { routeConfig: { path: '' } } },
-            },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        MockComponent({
+          selector: 'm-tooltip',
+          inputs: ['icon'],
+          template: '<ng-content></ng-content>',
+        }),
+        MockComponent({
+          selector: 'm-newsfeed--dropdown',
+          inputs: ['options'],
+          template: '',
+        }),
+        MockComponent({
+          selector: 'm-tagcloud',
+          inputs: ['options'],
+          template: '',
+        }),
+        MockComponent({
+          selector: 'm-ads-boost',
+          inputs: ['handler', 'limit'],
+          template: '',
+        }),
+        MockComponent({
+          selector: 'm-topbar--hashtags',
+          inputs: ['enabled'],
+          outputs: ['selectionChange'],
+          template: '',
+        }),
+        MockComponent({ selector: 'm-suggestions__sidebar' }),
+        MockComponent({
+          selector: 'm-hashtags--sidebar-selector',
+          inputs: ['disabled', 'currentHashtag', 'preferred', 'compact'],
+          outputs: ['filterChange', 'switchAttempt'],
+        }),
+        MockComponent({ selector: 'm-liquiditySpot' }),
+        NewsfeedComponent,
+      ],
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: Client, useValue: clientMock },
+        { provide: Upload, useValue: uploadMock },
+        { provide: ContextService, useValue: contextServiceMock },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({}),
+            url: of({ segments: [] }),
+            snapshot: { firstChild: { routeConfig: { path: '' } } },
           },
-          { provide: Storage, useValue: storageMock },
-          { provide: Navigation, useValue: navigationMock },
-          { provide: ModalService, useValue: modalServiceMock },
-          { provide: NewsfeedService, useValue: newsfeedServiceMock },
-          { provide: PagesService, useValue: pagesServiceMock },
-          { provide: ApiService, useValue: MockService(ApiService) },
-          {
-            provide: ExperimentsService,
-            useValue: MockService(ExperimentsService),
-          },
-        ],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents(); // compile template and css
-    })
-  );
+        },
+        { provide: Storage, useValue: storageMock },
+        { provide: Navigation, useValue: navigationMock },
+        { provide: ModalService, useValue: modalServiceMock },
+        { provide: NewsfeedService, useValue: newsfeedServiceMock },
+        { provide: PagesService, useValue: pagesServiceMock },
+        { provide: ApiService, useValue: MockService(ApiService) },
+        {
+          provide: ExperimentsService,
+          useValue: MockService(ExperimentsService),
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents(); // compile template and css
+  }));
 
   // synchronous beforeEach
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

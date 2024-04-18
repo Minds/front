@@ -14,7 +14,10 @@ import {
  */
 @Injectable({ providedIn: 'root' })
 export class NotificationsSettingsV2Service {
-  constructor(private api: ApiService, private toast: ToasterService) {}
+  constructor(
+    private api: ApiService,
+    private toast: ToasterService
+  ) {}
 
   /**
    * Gets push settings from server.
@@ -34,7 +37,7 @@ export class NotificationsSettingsV2Service {
     return this.pushSettings$.pipe(
       map((response: ApiResponse) => {
         if (response.status === 'success' && response.settings) {
-          const allGroup = response.settings.filter(setting => {
+          const allGroup = response.settings.filter((setting) => {
             return setting['notification_group'] === 'all';
           })[0];
           return allGroup.enabled;
@@ -54,7 +57,7 @@ export class NotificationsSettingsV2Service {
   get emailSettings$(): Observable<EmailNotificationGetResponse> {
     return this.api.get('api/v2/settings/emails').pipe(
       take(1),
-      catchError(e => this.handleError(e)),
+      catchError((e) => this.handleError(e)),
       throttleTime(1000)
     );
   }
@@ -75,7 +78,7 @@ export class NotificationsSettingsV2Service {
       })
       .pipe(
         take(1),
-        catchError(e => this.handleError(e)),
+        catchError((e) => this.handleError(e)),
         throttleTime(1000)
       );
   }
@@ -88,7 +91,7 @@ export class NotificationsSettingsV2Service {
   public toggleEmail(payload: any): Observable<ApiResponse> {
     return this.api.post('api/v2/settings/emails', payload).pipe(
       take(1),
-      catchError(e => this.handleError(e)),
+      catchError((e) => this.handleError(e)),
       throttleTime(1000)
     );
   }

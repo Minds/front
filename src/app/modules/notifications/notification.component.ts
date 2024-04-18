@@ -24,7 +24,7 @@ export class NotificationComponent {
 
     if (this.showElapsedTime) {
       this.notificationAge$ = this.timeDiffService.source.pipe(
-        map(secondsElapsed => {
+        map((secondsElapsed) => {
           return (this.notification.time_created - secondsElapsed) * 1000;
         })
       );

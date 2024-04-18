@@ -78,13 +78,14 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.pageLayoutRightPaneSubscription = this.pageLayoutService.hasRightPane$.subscribe(
-      (hasRightPane: boolean) => {
-        setTimeout(() => {
-          this.hasRightPane = hasRightPane;
-        });
-      }
-    );
+    this.pageLayoutRightPaneSubscription =
+      this.pageLayoutService.hasRightPane$.subscribe(
+        (hasRightPane: boolean) => {
+          setTimeout(() => {
+            this.hasRightPane = hasRightPane;
+          });
+        }
+      );
     this.listen();
     this.updatePlaceholder();
   }
@@ -97,7 +98,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   listen() {
     this.routerSubscription = this.router.events
       .pipe(
-        filter(event => event instanceof ActivationEnd),
+        filter((event) => event instanceof ActivationEnd),
         startWith(this.route)
       )
       .subscribe((event: ActivationEnd) => {
@@ -153,7 +154,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.recentService.storeSuggestion(
       'text',
       { value: this.q },
-      entry => entry.value === this.q
+      (entry) => entry.value === this.q
     );
   }
 

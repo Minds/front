@@ -6,13 +6,11 @@ describe('AnalyticsChartComponent', () => {
   let component: AnalyticsChartComponent;
   let fixture: ComponentFixture<AnalyticsChartComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [AnalyticsChartComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [AnalyticsChartComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AnalyticsChartComponent);

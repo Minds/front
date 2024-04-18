@@ -24,66 +24,64 @@ describe('DiscoverySuggestionsComponent', () => {
   let comp: DiscoverySuggestionsComponent;
   let fixture: ComponentFixture<DiscoverySuggestionsComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          DiscoverySuggestionsComponent,
-          MockComponent({
-            selector: 'infinite-scroll',
-            inputs: ['moreData', 'inProgress'],
-          }),
-        ],
-        imports: [RouterTestingModule],
-        providers: [
-          {
-            provide: DiscoveryService,
-            useValue: MockService(DiscoveryService),
-          },
-          {
-            provide: Location,
-            useValue: MockService(Location),
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session, {
-              has: ['loggedinEmitter'],
-              props: {
-                loggedinEmitter: { get: () => new EventEmitter<boolean>() },
-              },
-            }),
-          },
-          {
-            provide: AuthModalService,
-            useValue: MockService(AuthModalService),
-          },
-          { provide: IS_TENANT_NETWORK, useValue: false },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-          {
-            provide: PermissionsService,
-            useValue: MockService(PermissionsService),
-          },
-          { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        ],
-      })
-        .overrideProvider(SuggestionsService, {
-          useValue: MockService(SuggestionsService, {
-            has: ['suggestions$', 'inProgress$', 'hasMoreData$'],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        DiscoverySuggestionsComponent,
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: ['moreData', 'inProgress'],
+        }),
+      ],
+      imports: [RouterTestingModule],
+      providers: [
+        {
+          provide: DiscoveryService,
+          useValue: MockService(DiscoveryService),
+        },
+        {
+          provide: Location,
+          useValue: MockService(Location),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session, {
+            has: ['loggedinEmitter'],
             props: {
-              suggestions$: { get: () => new BehaviorSubject<any[]>([]) },
-              inProgress$: { get: () => new BehaviorSubject<boolean>(false) },
-              hasMoreData$: { get: () => new BehaviorSubject<boolean>(true) },
+              loggedinEmitter: { get: () => new EventEmitter<boolean>() },
             },
           }),
-        })
-        .compileComponents();
+        },
+        {
+          provide: AuthModalService,
+          useValue: MockService(AuthModalService),
+        },
+        { provide: IS_TENANT_NETWORK, useValue: false },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+      ],
     })
-  );
+      .overrideProvider(SuggestionsService, {
+        useValue: MockService(SuggestionsService, {
+          has: ['suggestions$', 'inProgress$', 'hasMoreData$'],
+          props: {
+            suggestions$: { get: () => new BehaviorSubject<any[]>([]) },
+            inProgress$: { get: () => new BehaviorSubject<boolean>(false) },
+            hasMoreData$: { get: () => new BehaviorSubject<boolean>(true) },
+          },
+        }),
+      })
+      .compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(DiscoverySuggestionsComponent);
     comp = fixture.componentInstance;
 

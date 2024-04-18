@@ -27,7 +27,8 @@ import { VideoJsExperimentService } from '../../../experiments/sub-services/vide
   templateUrl: './scrollaware-player.component.html',
 })
 export class ScrollAwareVideoPlayerComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+  implements OnInit, OnDestroy, AfterViewInit
+{
   @Input() guid: string;
   @Input() shouldPlayInModal: boolean;
   @Input() autoplay = true;

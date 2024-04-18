@@ -38,7 +38,7 @@ export class DateDropdownsComponent implements OnInit {
       return;
     }
     try {
-      const parts = date.split('-').map(part => parseInt(part, 10));
+      const parts = date.split('-').map((part) => parseInt(part, 10));
 
       if (!parts[0] || !parts[1] || !parts[2]) {
         return;
@@ -148,7 +148,7 @@ export class DateDropdownsComponent implements OnInit {
       }
 
       const monthIndex = this.monthNames.findIndex(
-        item => item === this.selectedMonth
+        (item) => item === this.selectedMonth
       );
 
       date += `${this.pad(monthIndex + 1, 2)}`;
@@ -195,7 +195,7 @@ export class DateDropdownsComponent implements OnInit {
   }
 
   private range(size, startAt = 0, grow = true): Array<number> {
-    return Array.from(Array(size).keys()).map(i => {
+    return Array.from(Array(size).keys()).map((i) => {
       if (grow) {
         return i + startAt;
       } else {

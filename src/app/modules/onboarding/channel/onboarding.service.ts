@@ -25,8 +25,11 @@ export class ChannelOnboardingService {
     return new ChannelOnboardingService(client, session);
   }
 
-  constructor(private client: Client, private session: Session) {
-    this.session.userEmitter.subscribe(v => {
+  constructor(
+    private client: Client,
+    private session: Session
+  ) {
+    this.session.userEmitter.subscribe((v) => {
       if (!v) {
         this.reset();
       }

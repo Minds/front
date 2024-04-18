@@ -51,7 +51,7 @@ export class AnalyticsService implements OnDestroy {
 
     this.onRouterInit();
 
-    this.router.events.subscribe(navigationState => {
+    this.router.events.subscribe((navigationState) => {
       if (navigationState instanceof NavigationEnd) {
         try {
           this.onRouteChanged(navigationState.urlAfterRedirects);
@@ -61,7 +61,7 @@ export class AnalyticsService implements OnDestroy {
       }
     });
 
-    this.sessionService.loggedinEmitter?.subscribe(isLoggedIn => {
+    this.sessionService.loggedinEmitter?.subscribe((isLoggedIn) => {
       if (isLoggedIn) {
         this.initPseudoId();
       }

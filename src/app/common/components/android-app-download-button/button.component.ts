@@ -10,9 +10,7 @@ import { Router } from '@angular/router';
   template: `
     <a routerLink="/mobile" class="m-androidAppDownloadButton">
       <i class="material-icons">android</i>
-      <h2>
-        Android App
-      </h2>
+      <h2>Android App</h2>
     </a>
   `,
 })

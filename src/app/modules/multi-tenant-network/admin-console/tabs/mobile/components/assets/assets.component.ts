@@ -31,32 +31,30 @@ import { ToasterService } from '../../../../../../../common/services/toaster.ser
 })
 export class NetworkAdminConsoleMobileAssetsComponent implements OnDestroy {
   // Enums for use in template.
-  public readonly ImageInputOrientationEnum: typeof ImageInputOrientationEnum = ImageInputOrientationEnum;
-  public readonly MobileConfigImageTypeEnum: typeof MobileConfigImageTypeEnum = MobileConfigImageTypeEnum;
+  public readonly ImageInputOrientationEnum: typeof ImageInputOrientationEnum =
+    ImageInputOrientationEnum;
+  public readonly MobileConfigImageTypeEnum: typeof MobileConfigImageTypeEnum =
+    MobileConfigImageTypeEnum;
 
   // File paths / blobs for different images.
-  public readonly iconFilePath$: Observable<string> = this
-    .MobileAppBuildImageService.iconPath$;
-  public readonly splashFilePath$: Observable<string> = this
-    .MobileAppBuildImageService.splashPath$;
-  public readonly squareLogoFilePath$: Observable<string> = this
-    .MobileAppBuildImageService.squareLogoPath$;
-  public readonly horizontalLogoFilePath$: Observable<string> = this
-    .MobileAppBuildImageService.horizontalLogoPath$;
+  public readonly iconFilePath$: Observable<string> =
+    this.MobileAppBuildImageService.iconPath$;
+  public readonly splashFilePath$: Observable<string> =
+    this.MobileAppBuildImageService.splashPath$;
+  public readonly squareLogoFilePath$: Observable<string> =
+    this.MobileAppBuildImageService.squareLogoPath$;
+  public readonly horizontalLogoFilePath$: Observable<string> =
+    this.MobileAppBuildImageService.horizontalLogoPath$;
 
   // in progress variables for different files.
-  public readonly splashUploadInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
-  public readonly iconUploadInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
-  public readonly squareLogoUploadInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
-  public readonly horizontalLogoUploadInProgress$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  public readonly splashUploadInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  public readonly iconUploadInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  public readonly squareLogoUploadInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  public readonly horizontalLogoUploadInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   private subscriptions: Subscription[] = [];
 
@@ -81,12 +79,10 @@ export class NetworkAdminConsoleMobileAssetsComponent implements OnDestroy {
     newFile: File,
     imageType: MobileConfigImageTypeEnum
   ): void {
-    const file$: BehaviorSubject<File> = this.getFileSubjectByImageType(
-      imageType
-    );
-    const inProgress$: BehaviorSubject<boolean> = this.getInProgressSubjectByImageType(
-      imageType
-    );
+    const file$: BehaviorSubject<File> =
+      this.getFileSubjectByImageType(imageType);
+    const inProgress$: BehaviorSubject<boolean> =
+      this.getInProgressSubjectByImageType(imageType);
 
     if (inProgress$.getValue()) {
       this.toaster.warn('Upload already in progress');
@@ -103,17 +99,15 @@ export class NetworkAdminConsoleMobileAssetsComponent implements OnDestroy {
             (response: HttpEvent<ApiResponse>): boolean => response.type === 4
           ),
           take(1),
-          catchError(
-            (e: any): Observable<never> => {
-              console.error(e);
-              file$.next(null);
-              inProgress$.next(false);
-              this.toaster.error(
-                e?.error?.message ?? 'An unknown error has occurred'
-              );
-              return NEVER;
-            }
-          )
+          catchError((e: any): Observable<never> => {
+            console.error(e);
+            file$.next(null);
+            inProgress$.next(false);
+            this.toaster.error(
+              e?.error?.message ?? 'An unknown error has occurred'
+            );
+            return NEVER;
+          })
         )
         .subscribe((response: HttpEvent<ApiResponse>): void => {
           if (!response) return;

@@ -31,14 +31,16 @@ export class EnablePushNotificationsNoticeComponent extends AbstractSubscriberCo
    */
   public onPrimaryOptionClick($event: MouseEvent): void {
     this.subscriptions.push(
-      this.notificationSettings.togglePush('all', true).subscribe(response => {
-        if (response.enabled) {
-          this.toast.success('Enabled push notifications');
-          this.dismiss();
-          return;
-        }
-        this.toast.error('Unable to save push notification settings');
-      })
+      this.notificationSettings
+        .togglePush('all', true)
+        .subscribe((response) => {
+          if (response.enabled) {
+            this.toast.success('Enabled push notifications');
+            this.dismiss();
+            return;
+          }
+          this.toast.error('Unable to save push notification settings');
+        })
     );
   }
 

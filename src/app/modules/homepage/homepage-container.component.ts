@@ -33,7 +33,7 @@ export class HomepageContainerComponent implements OnInit {
       return;
     }
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       // open reset password modal
       if (params['resetPassword']) {
         this.queryParams = params;
@@ -41,7 +41,7 @@ export class HomepageContainerComponent implements OnInit {
       }
     });
 
-    this.router.events.subscribe(navEvent => {
+    this.router.events.subscribe((navEvent) => {
       if (navEvent instanceof NavigationEnd) {
         // Keep track of router events here
         // in case we click 'forgot password' from the auth modal

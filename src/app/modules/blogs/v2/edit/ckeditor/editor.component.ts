@@ -58,7 +58,7 @@ export class BlogEditorComponent {
       const MindsEditor = require('@bhayward93/ckeditor5-build-minds');
       this.Editor = MindsEditor;
       this.Editor.config = {
-        uploadHandler: async file => {
+        uploadHandler: async (file) => {
           const response = this.attachment.upload(await file);
           return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
         },

@@ -16,42 +16,40 @@ describe('ThumbsUpButton', () => {
   let fixture: ComponentFixture<ThumbsUpButton>;
   let mockLocalStorage = {};
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ThumbsUpButton],
-        providers: [
-          { provide: Session, useValue: MockService(Session) },
-          { provide: Client, useValue: MockService(Client) },
-          {
-            provide: AuthModalService,
-            useValue: MockService(AuthModalService),
-          },
-          {
-            provide: ChangeDetectorRef,
-            useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: ExperimentsService,
-            useValue: MockService(ExperimentsService),
-          },
-          { provide: ToasterService, useValue: MockService(ToasterService) },
-          {
-            provide: ExplicitVotesExperimentService,
-            useValue: MockService(ExplicitVotesExperimentService),
-          },
-          {
-            provide: IsTenantService,
-            useValue: MockService(IsTenantService),
-          },
-          {
-            provide: PermissionsService,
-            useValue: MockService(PermissionsService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ThumbsUpButton],
+      providers: [
+        { provide: Session, useValue: MockService(Session) },
+        { provide: Client, useValue: MockService(Client) },
+        {
+          provide: AuthModalService,
+          useValue: MockService(AuthModalService),
+        },
+        {
+          provide: ChangeDetectorRef,
+          useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: ExperimentsService,
+          useValue: MockService(ExperimentsService),
+        },
+        { provide: ToasterService, useValue: MockService(ToasterService) },
+        {
+          provide: ExplicitVotesExperimentService,
+          useValue: MockService(ExplicitVotesExperimentService),
+        },
+        {
+          provide: IsTenantService,
+          useValue: MockService(IsTenantService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ThumbsUpButton);
