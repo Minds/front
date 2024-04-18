@@ -26,6 +26,13 @@ query GetChatMessages(
                         guid
                     }
                 }
+                richEmbed {
+                    id
+                    url
+                    canonicalUrl
+                    title
+                    thumbnailSrc
+                }
             }
         }
         pageInfo {
