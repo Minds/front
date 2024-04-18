@@ -165,10 +165,6 @@ describe('SettingsV2Component', () => {
 
     component = fixture.componentInstance;
 
-    (component as any).twitterSyncSettingsExperiment.isActive.and.returnValue(
-      false
-    );
-
     router.navigateByUrl('/settings/account');
     fixture.detectChanges();
     fixture.detectChanges();
@@ -226,11 +222,7 @@ describe('SettingsV2Component', () => {
   });
 
   describe('Twitter Sync', () => {
-    it("should have a 'Twitter' visible if feat flag is ON", () => {
-      (component as any).twitterSyncSettingsExperiment.isActive.and.returnValue(
-        true
-      );
-
+    it("should have a 'Twitter' visible", () => {
       (component as any).injectExperimentItems();
 
       const menuItem: any = component.secondaryMenus.other
@@ -238,20 +230,6 @@ describe('SettingsV2Component', () => {
         .items.find((x) => x.id === 'twitter-sync');
 
       expect(menuItem.label).toEqual('Twitter');
-    });
-
-    it("should have a 'Twitter' NOT visible if feat flag is OFF", () => {
-      (component as any).twitterSyncSettingsExperiment.isActive.and.returnValue(
-        false
-      );
-
-      (component as any).injectExperimentItems();
-
-      const menuItem: any = component.secondaryMenus.other
-        .find((x) => x.header.id === 'content-migration')
-        .items.find((x) => x.id === 'twitter-sync');
-
-      expect(menuItem).toBeUndefined();
     });
   });
 

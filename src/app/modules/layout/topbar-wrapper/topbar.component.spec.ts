@@ -64,7 +64,6 @@ describe('TopbarWrapperComponent', () => {
     fixture = TestBed.createComponent(TopbarWrapperComponent);
     comp = fixture.componentInstance;
 
-    (comp as any).giftCardPurchaseExperiment.isActive.and.returnValue(true);
     (comp as any).topbarService.isMinimalLightMode$.next(false);
 
     fixture.detectChanges();

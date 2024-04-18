@@ -21,8 +21,6 @@ describe('WalletV2CreditsSendComponent', () => {
 
     fixture = TestBed.createComponent(WalletV2CreditsSendComponent);
     comp = fixture.componentInstance;
-
-    (comp as any).router.navigate.calls.reset();
   });
 
   it('should init', () => {

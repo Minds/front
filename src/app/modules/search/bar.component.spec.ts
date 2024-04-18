@@ -122,7 +122,7 @@ describe('SearchBarComponent', () => {
     comp.search();
     tick();
 
-    expect(comp.router.navigate).toHaveBeenCalledWith(['/discovery/search'], {
+    expect(comp.router.navigate).toHaveBeenCalledWith(['/search'], {
       queryParams: {
         q: 'test',
         f: 'top',
@@ -139,7 +139,7 @@ describe('SearchBarComponent', () => {
     comp.search();
     tick();
 
-    expect(comp.router.navigate).toHaveBeenCalledWith(['/discovery/search'], {
+    expect(comp.router.navigate).toHaveBeenCalledWith(['/search'], {
       queryParams: {
         q: 'test',
         f: 'top',
