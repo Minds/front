@@ -246,7 +246,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.paramsSubscription.unsubscribe();
     }
     this.topbarService.toggleVisibility(true);
-
+    this.pageLayoutService.cancelFullWidth();
     this.navigationService.setVisible(true);
   }
 

@@ -1,0 +1,32 @@
+<section *ngIf="chatRoom$ | async as chatRoom; else loadingSpinnerTemplate">
+  <!-- Overlay drawer -->
+  <m-chatRoom__details
+    *ngIf="detailsDrawerOpen"
+    [roomGuid]="roomGuid"
+    (backClick)="hideDetailsDrawer()"
+    [@slideInFromRight]
+  ></m-chatRoom__details>
+  <m-chatRoom__top
+    [roomMembers]="chatRoom.members?.edges"
+    [requestMode]="requestMode"
+    (detailsIconClick)="showDetailsDrawer()"
+  ></m-chatRoom__top>
+  <m-chatRoom__messages
+    *ngIf="chatMessagesInitialised$ | async; else loadingSpinnerTemplate"
+    [messages]="chatMessages$ | async"
+  ></m-chatRoom__messages>
+  <ng-container *ngIf="!requestMode; else requestModeBottomBarTemplate">
+    <m-chatRoom__bottom [roomGuid]="chatRoom.node.guid"></m-chatRoom__bottom>
+  </ng-container>
+</section>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
+
+<ng-template #requestModeBottomBarTemplate>
+  <m-chatRoom__bottom--request
+    [roomGuid]="roomGuid"
+    [roomType]="(chatRoom$ | async).node.roomType"
+  ></m-chatRoom__bottom--request>
+</ng-template>

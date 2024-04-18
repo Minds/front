@@ -1,0 +1,25 @@
+mutation CreateChatMessage($plainText: String!, $roomGuid: String!) {
+    createChatMessage(plainText: $plainText, roomGuid: $roomGuid) {
+        id
+        cursor
+        node {
+            id
+            guid
+            roomGuid
+            plainText
+            timeCreatedISO8601
+            timeCreatedUnix
+            sender {
+                id
+                type
+                cursor
+                node {
+                    name
+                    username
+                    guid
+                    id
+                }
+            }
+        }
+    }
+}

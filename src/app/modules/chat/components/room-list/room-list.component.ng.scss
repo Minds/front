@@ -1,0 +1,59 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  max-height: 100%;
+  width: 100%;
+  margin: $spacing4 0;
+  overflow-y: auto;
+  @include hide-scrollbar;
+
+  .m-chatRoomList__headerLeft {
+    display: flex;
+    flex-flow: row wrap;
+    gap: $spacing2;
+
+    .m-chatRoomList__alphaBadge {
+      display: block;
+      padding: $spacing1 $spacing2;
+      align-items: center;
+      border-radius: 999px;
+      margin: auto;
+
+      @include unselectable;
+      @include body3Bold;
+      @include m-theme() {
+        background: themed($m-action);
+        color: themed($m-textColor--primaryInverted);
+      }
+    }
+  }
+
+  .m-chatRoomList__header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing4;
+    padding: 0 $spacing6;
+    box-sizing: border-box;
+
+    .m-chatRoomList__title {
+      @include heading3Bold;
+      margin: unset;
+    }
+
+    i {
+      font-size: 24px;
+      cursor: pointer;
+      @include unselectable;
+    }
+  }
+
+  m-chat__actionCard {
+    display: block;
+    margin-top: $spacing8;
+    padding: 0 $spacing6;
+    box-sizing: border-box;
+  }
+}

@@ -38,7 +38,7 @@ describe('SupermindConsoleExpirationService', () => {
   });
 
   it('should get time till expiration based on created_timestamp and expiry_threshold when hours', () => {
-    mockSupermind.created_timestamp = moment().subtract(6, 'days').unix();
+    mockSupermind.created_timestamp = moment().utc().subtract(6, 'days').unix();
     mockSupermind.expiry_threshold = 604800;
 
     expect(service.getTimeTillExpiration(mockSupermind)).toBe('23h');
@@ -46,6 +46,7 @@ describe('SupermindConsoleExpirationService', () => {
 
   it('should get time till expiration based on created_timestamp and expiry_threshold when minutes', () => {
     mockSupermind.created_timestamp = moment()
+      .utc()
       .subtract(6, 'days')
       .subtract(23, 'hours')
       .unix();
@@ -56,6 +57,7 @@ describe('SupermindConsoleExpirationService', () => {
 
   it('should get time till expiration based on created_timestamp and expiry_threshold when seconds', () => {
     mockSupermind.created_timestamp = moment()
+      .utc()
       .subtract(6, 'days')
       .subtract(23, 'hours')
       .subtract(59, 'minutes')
@@ -67,6 +69,7 @@ describe('SupermindConsoleExpirationService', () => {
 
   it('should get NO time till expiration based on created_timestamp and expiry_threshold when expired', () => {
     mockSupermind.created_timestamp = moment()
+      .utc()
       .subtract(7, 'days')
       .subtract(1, 'second')
       .unix();

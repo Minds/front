@@ -103,6 +103,16 @@
     }
   }
 
+  .m-reportV2__chatMessage {
+    padding: $spacing4 $spacing6 0 $spacing6;
+    margin-top: $spacing6;
+    border-radius: 2px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
   .m-reportV2__group,
   .m-reportV2__user {
     display: block;

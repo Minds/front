@@ -193,6 +193,8 @@ import { PlanCardComponent } from './components/plan-card/plan-card.component';
 import { AutocompleteEntityInputComponent } from './components/forms/autocomplete-entity-input/autocomplete-entity-input.component';
 import { PublisherListComponent } from './components/publisher-list/publisher-list.component';
 import { TopbarNetworkTrialBannerComponent } from './components/topbar-network-trial-banner/topbar-network-trial-banner.component';
+import { ThrottledClickDirective } from './directives/throttled-click.directive';
+import { ShowOnHoverDirective } from './directives/show-on-hover-directive';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -339,6 +341,8 @@ const MINDS_DIRECTIVES = [
   Tooltip,
   ViewedDirective,
   FeedHeaderComponent,
+  ThrottledClickDirective,
+  ShowOnHoverDirective,
 ];
 // ------------------------------------
 // ------------------------------------

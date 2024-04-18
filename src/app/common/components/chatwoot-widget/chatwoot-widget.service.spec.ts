@@ -18,6 +18,7 @@ describe('ChatwootWidgetService', () => {
     (service as any).document.defaultView.$chatwoot = {
       popoutChatWindow: jasmine.createSpy('popoutChatWindow'),
       toggle: jasmine.createSpy('toggle'),
+      toggleBubbleVisibility: jasmine.createSpy('toggleBubbleVisibility'),
     };
   });
 
@@ -45,5 +46,19 @@ describe('ChatwootWidgetService', () => {
     expect(
       (service as any).document.defaultView.$chatwoot.toggle
     ).toHaveBeenCalled();
+  });
+
+  it('should hide the chatwoot bubble', () => {
+    service.hideBubble();
+    expect(
+      (service as any).document.defaultView.$chatwoot.toggleBubbleVisibility
+    ).toHaveBeenCalledWith('hide');
+  });
+
+  it('should show the chatwoot bubble', () => {
+    service.showBubble();
+    expect(
+      (service as any).document.defaultView.$chatwoot.toggleBubbleVisibility
+    ).toHaveBeenCalledWith('show');
   });
 });

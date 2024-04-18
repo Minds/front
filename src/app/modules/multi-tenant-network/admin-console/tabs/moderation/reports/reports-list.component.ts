@@ -151,9 +151,12 @@ export class NetworkAdminConsoleReportsListComponent
       (result?.data?.reports?.edges as ReportEdge[]) ?? [];
     const reportEdges: ReportEdge[] = [
       ...this.reportEdges$.getValue(),
-      ...newReportEdges.filter((edge: ReportEdge) =>
-        Boolean(edge?.node?.entityEdge?.node?.legacy)
-      ),
+      ...newReportEdges.filter((edge: ReportEdge) => {
+        return (
+          edge?.node?.entityEdge.__typename === 'ChatMessageEdge' ||
+          Boolean(edge?.node?.entityEdge?.node?.legacy)
+        );
+      }),
     ];
 
     this.reportEdges$.next(reportEdges);

@@ -1,0 +1,44 @@
+@import 'defaults.scss';
+@import '../../../layout/layout.component.ng.scss';
+
+// adjusted for border visibility.
+$detailsPanelWidth: calc($leftPanelFullScreenWidth + 2px);
+
+:host {
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+
+  section {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    min-width: 100%;
+
+    m-chatRoom__messages {
+      flex: 1;
+      overflow-y: auto;
+    }
+  }
+
+  m-loadingSpinner {
+    display: block;
+    text-align: center;
+    margin-top: $spacing16;
+  }
+
+  m-chatRoom__details {
+    position: absolute;
+    bottom: 1; // adjusted for border visibility.
+    right: 1; // adjusted for border visibility.
+    height: 100%;
+    width: calc(100% - $detailsPanelWidth);
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      width: 100%;
+    }
+
+    @include z-index(body);
+  }
+}

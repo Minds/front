@@ -1,0 +1,3 @@
+mutation DeleteChatRoom($roomGuid: String!) {
+    deleteChatRoom(roomGuid: $roomGuid)
+}

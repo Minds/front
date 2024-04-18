@@ -142,7 +142,7 @@
     class="mdl-card__supporting-text"
     style="padding: 64px; font-size: 20px; text-align: center"
   >
-    @{{ service.username$ | async }}'s email:
+    &#64;{{ service.username$ | async }}'s email:
     <a *ngIf="email" [href]="'mailto:' + email" style="text-decoration: none">
       {{ email }}
     </a>

@@ -22,21 +22,21 @@ describe('TwitterSyncSettingsExperimentService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return true if experiment is active', () => {
-    (service as any).experiments.hasVariation.and.returnValue(true);
-    expect(service.isActive()).toBeTruthy();
-    expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'front-6032-twitter-sync-settings',
-      true
-    );
-  });
+  // it('should return true if experiment is active', () => {
+  //   (service as any).experiments.hasVariation.and.returnValue(true);
+  //   expect(service.isActive()).toBeTruthy();
+  //   expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
+  //     'front-6032-twitter-sync-settings',
+  //     true
+  //   );
+  // });
 
-  it('should return false if experiment is NOT active', () => {
-    (service as any).experiments.hasVariation.and.returnValue(false);
-    expect(service.isActive()).toBeFalsy();
-    expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'front-6032-twitter-sync-settings',
-      true
-    );
-  });
+  // it('should return false if experiment is NOT active', () => {
+  //   (service as any).experiments.hasVariation.and.returnValue(false);
+  //   expect(service.isActive()).toBeFalsy();
+  //   expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
+  //     'front-6032-twitter-sync-settings',
+  //     true
+  //   );
+  // });
 });

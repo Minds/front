@@ -32,22 +32,9 @@ describe('PermissionsService', () => {
     ) as jasmine.SpyObj<ConfigsService>;
   });
 
-  it('should disallow posting if permission is not in whitelist and experiment is enabled', () => {
+  it('should disallow posting if permission is not in whitelist', () => {
     configsServiceSpy.get.and.returnValue(['CAN_COMMENT']);
-    experimentsServiceSpy.hasVariation.and.returnValue(true);
     expect(service.canCreatePost()).toBe(false);
-  });
-
-  it('should allow posting if experiment is not enabled regardless of whitelist', () => {
-    configsServiceSpy.get.and.returnValue([]);
-    experimentsServiceSpy.hasVariation.and.returnValue(false);
-    expect(service.canCreatePost()).toBe(true);
-  });
-
-  it('should allow posting if permission is not in whitelist and experiment is not enabled', () => {
-    configsServiceSpy.get.and.returnValue(['CAN_COMMENT']);
-    experimentsServiceSpy.hasVariation.and.returnValue(false);
-    expect(service.canCreatePost()).toBe(true);
   });
 
   it('should determine if the user can use RSS sync', () => {

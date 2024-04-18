@@ -30,6 +30,8 @@ import { IS_TENANT_NETWORK } from '../../../injection-tokens/tenant-injection-to
 import { PermissionsService } from '../../../services/permissions.service';
 import { MultiTenantConfigImageService } from '../../../../modules/multi-tenant-network/services/config-image.service';
 import { SiteMembershipsCountService } from '../../../../modules/site-memberships/services/site-membership-count.service';
+import { ChatExperimentService } from '../../../../modules/experiments/sub-services/chat-experiment.service';
+import { ChatReceiptService } from '../../../../modules/chat/services/chat-receipt.service';
 
 /**
  * V2 version of sidebar component.
@@ -70,11 +72,19 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  /** Whether chat experiment is active. */
+  private unreadChatCountSubscription: Subscription;
+
   isDarkTheme: boolean = false;
 
   // Becomes true when the discovery link is clicked.
   // Used to determine whether to show 'new content dot'
   discoveryLinkClicked: boolean = false;
+
+  protected chatExperimentIsActive: boolean = false;
+
+  /** Unread message count */
+  public chatUnreadCount = 0;
 
   /** Whether experiment controlling reorganization of menu items variation is active */
   public showReorgVariation: boolean = false;
@@ -128,6 +138,8 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private tenantConfigImageService: MultiTenantConfigImageService,
     private siteMembershipsCountService: SiteMembershipsCountService,
     protected permissions: PermissionsService,
+    private chatExperimentService: ChatExperimentService,
+    private chatReceiptService: ChatReceiptService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
@@ -143,6 +155,8 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     }
 
     this.settingsLink = '/settings';
+
+    this.chatExperimentIsActive = this.chatExperimentService.isActive();
 
     this.subscriptions.push(
       this.themeService.isDark$.subscribe((isDark) => {
@@ -172,11 +186,33 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
           }
         })
     );
+
+    if (this.chatExperimentIsActive) {
+      this.subscriptions.push(
+        this.session.loggedinEmitter.subscribe((isLoggedIn: boolean) => {
+          if (isLoggedIn) {
+            this.initUnreadChatCountSubscription();
+          } else {
+            this.unreadChatCountSubscription?.unsubscribe();
+            this.unreadChatCountSubscription = null;
+          }
+        })
+      );
+
+      if (isPlatformBrowser(this.platformId) && this.isLoggedIn()) {
+        this.initUnreadChatCountSubscription();
+      }
+    }
   }
 
   ngOnDestroy(): void {
     if (this.groupSelectedSubscription) {
       this.groupSelectedSubscription.unsubscribe();
+    }
+
+    if (this.chatExperimentIsActive && this.unreadChatCountSubscription) {
+      this.unreadChatCountSubscription?.unsubscribe();
+      this.unreadChatCountSubscription = null;
     }
 
     for (let subscription of this.subscriptions) {
@@ -298,7 +334,8 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    * Only show the networks link when flag is on
    */
   get showNetworksLink(): boolean {
-    return this.experiments.hasVariation('minds-4384-sidenav-networks-link');
+    // return this.experiments.hasVariation('minds-4384-sidenav-networks-link');
+    return true;
   }
 
   /**
@@ -323,5 +360,21 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   public isLoggedIn(): boolean {
     return this.session.isLoggedIn();
+  }
+
+  /**
+   * Initializes the unread chat count subscription.
+   * @returns { void }
+   */
+  private initUnreadChatCountSubscription(): void {
+    if (this.unreadChatCountSubscription) {
+      console.warn('Unread chat count subscription already initialized');
+      return;
+    }
+
+    this.unreadChatCountSubscription =
+      this.chatReceiptService.unreadCount$.subscribe((count: number) => {
+        this.chatUnreadCount = count;
+      });
   }
 }

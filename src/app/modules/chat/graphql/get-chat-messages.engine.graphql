@@ -1,0 +1,38 @@
+query GetChatMessages(
+    $roomGuid: String!
+    $first: Int!
+    $after: String
+    $before: String
+) {
+    chatMessages(after: $after, first: $first, before: $before, roomGuid: $roomGuid) {
+        edges {
+            cursor
+            id
+            node {
+                id
+                guid
+                roomGuid
+                plainText
+                timeCreatedISO8601
+                timeCreatedUnix
+                sender {
+                    id
+                    type
+                    cursor
+                    node {
+                        name
+                        username
+                        id
+                        guid
+                    }
+                }
+            }
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+        }
+    }
+}

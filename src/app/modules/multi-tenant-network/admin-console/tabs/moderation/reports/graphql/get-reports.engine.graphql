@@ -47,6 +47,27 @@ query GetReports(
                 legacy
               }
             }
+            ... on ChatMessageEdge {
+              node {
+                id
+                guid
+                roomGuid
+                plainText
+                timeCreatedISO8601
+                timeCreatedUnix
+                sender {
+                    id
+                    type
+                    cursor
+                    node {
+                        name
+                        username
+                        id
+                        guid
+                    }
+                }
+              }
+            }
           }
         }
       }
