@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   Inject,
+  Input,
   OnInit,
 } from '@angular/core';
 import { ActivityEntity, ActivityService } from '../activity.service';
@@ -16,6 +17,12 @@ import { WINDOW } from '../../../../common/injection-tokens/common-injection-tok
 export class ActivitySiteMembershipCtaComponent
   implements OnInit, AfterViewInit
 {
+  /** Whether the button should be shown,
+   * e.g. false on the left side of a media modal,
+   * b/c button is already shown on right side
+   */
+  @Input() showButton: boolean = true;
+
   isMinimalMode = this.service.displayOptions.minimalMode;
   entity: ActivityEntity;
   thumbnailHeightPx: number;

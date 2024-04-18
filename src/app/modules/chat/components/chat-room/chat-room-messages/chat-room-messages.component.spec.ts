@@ -31,7 +31,8 @@ describe('ChatRoomMessagesComponent', () => {
               'pageInfo$',
               'inProgress$',
               'initialized$',
-              'chatMessageAppended$',
+              'scrollToBottom$',
+              'hasNewMessage$',
             ],
             props: {
               pageInfo$: {
@@ -49,7 +50,10 @@ describe('ChatRoomMessagesComponent', () => {
               initialized$: {
                 get: () => new BehaviorSubject<boolean>(true),
               },
-              chatMessageAppended$: {
+              scrollToBottom$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              hasNewMessage$: {
                 get: () => new BehaviorSubject<boolean>(false),
               },
             },
@@ -111,18 +115,19 @@ describe('ChatRoomMessagesComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should update read receipt on scroll to bottom', () => {
+  it('should update read receipt on scroll to bottom', fakeAsync(() => {
     spyOn((comp as any).elementRef.nativeElement, 'scrollTo');
 
     (comp as any).scrollToBottom();
+    tick();
 
     expect((comp as any).elementRef.nativeElement.scrollTo).toHaveBeenCalled();
-  });
+  }));
 
-  it('should scroll to bottom when a chat message is appended', fakeAsync(() => {
+  it('should scroll to bottom when service requests a scroll to bottom', fakeAsync(() => {
     spyOn((comp as any).elementRef.nativeElement, 'scrollTo');
 
-    (comp as any).chatMessagesService.chatMessageAppended$.next(true);
+    (comp as any).chatMessagesService.scrollToBottom$.next(true);
     tick();
 
     expect((comp as any).elementRef.nativeElement.scrollTo).toHaveBeenCalled();
@@ -266,6 +271,14 @@ describe('ChatRoomMessagesComponent', () => {
       expect(
         (comp as any).elementRef.nativeElement.scrollTo
       ).not.toHaveBeenCalled();
+    }));
+  });
+
+  describe('fetchNew', () => {
+    it('should fetch new', fakeAsync(() => {
+      (comp as any).fetchNew();
+      tick();
+      expect((comp as any).chatMessagesService.fetchNew).toHaveBeenCalled();
     }));
   });
 });
