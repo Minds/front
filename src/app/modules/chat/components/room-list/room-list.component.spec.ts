@@ -169,6 +169,18 @@ describe('ChatRoomListComponent', () => {
 
   it('should init', () => {
     expect(comp).toBeTruthy();
+    expect((comp as any).chatRoomsListService.init).toHaveBeenCalled();
+    expect((comp as any).totalChatRequestsService.init).toHaveBeenCalled();
+    expect(
+      (comp as any).chatRoomsListService.setIsViewingChatRoomList
+    ).toHaveBeenCalledWith(true);
+  });
+
+  it('should set is viewing chat room to false on destroy', () => {
+    comp.ngOnDestroy();
+    expect(
+      (comp as any).chatRoomsListService.setIsViewingChatRoomList
+    ).toHaveBeenCalledWith(false);
   });
 
   it('should set current room ID on navigation end', fakeAsync(() => {

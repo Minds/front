@@ -106,6 +106,7 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
     this.chatRoomsListService.init();
     this.totalChatRequestsService.init();
 
+    this.chatRoomsListService.setIsViewingChatRoomList(true);
     this.currentRoomId$.next(this.route.snapshot.firstChild.params['roomId']);
 
     this.routerEventsSubscription = this.router.events
@@ -118,6 +119,7 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.chatRoomsListService.setIsViewingChatRoomList(false);
     this.routerEventsSubscription?.unsubscribe();
   }
 
