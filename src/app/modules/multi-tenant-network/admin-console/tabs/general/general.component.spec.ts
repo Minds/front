@@ -31,6 +31,9 @@ describe('NetworkAdminConsoleGeneralComponent', () => {
           selector: 'm-networkAdminConsole__enableLandingPageToggle',
         }),
         MockComponent({
+          selector: 'm-networkAdminConsole__enableWalledGardenToggle',
+        }),
+        MockComponent({
           selector: 'm-networkAdminConsole__replyEmailSettings',
         }),
         MockComponent({

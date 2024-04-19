@@ -870,6 +870,7 @@ export type MultiTenantConfig = {
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
+  walledGardenEnabled?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type MultiTenantConfigInput = {
@@ -882,6 +883,7 @@ export type MultiTenantConfigInput = {
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
+  walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MultiTenantDomain = {
@@ -3671,6 +3673,7 @@ export type GetMultiTenantConfigQuery = {
     replyEmail?: string | null;
     customHomePageEnabled?: boolean | null;
     customHomePageDescription?: string | null;
+    walledGardenEnabled?: boolean | null;
   } | null;
 };
 
@@ -3765,6 +3768,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
+  walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -9034,6 +9038,7 @@ export const GetMultiTenantConfigDocument = gql`
       replyEmail
       customHomePageEnabled
       customHomePageDescription
+      walledGardenEnabled
     }
   }
 `;
@@ -9179,6 +9184,7 @@ export const SetMultiTenantConfigDocument = gql`
     $nsfwEnabled: Boolean
     $customHomePageEnabled: Boolean
     $customHomePageDescription: String
+    $walledGardenEnabled: Boolean
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
@@ -9190,6 +9196,7 @@ export const SetMultiTenantConfigDocument = gql`
         nsfwEnabled: $nsfwEnabled
         customHomePageEnabled: $customHomePageEnabled
         customHomePageDescription: $customHomePageDescription
+        walledGardenEnabled: $walledGardenEnabled
       }
     )
   }
