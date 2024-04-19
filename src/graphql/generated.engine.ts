@@ -986,7 +986,8 @@ export type Mutation = {
   siteMembership: SiteMembership;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
-  tenantTrial: Tenant;
+  /** Create a trial tenant network. */
+  tenantTrial: TenantLoginRedirectDetails;
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
@@ -1907,6 +1908,13 @@ export type TenantInput = {
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type TenantLoginRedirectDetails = {
+  __typename?: 'TenantLoginRedirectDetails';
+  jwtToken?: Maybe<Scalars['String']['output']>;
+  loginUrl?: Maybe<Scalars['String']['output']>;
+  tenant: Tenant;
+};
+
 export enum TenantPlanEnum {
   Community = 'COMMUNITY',
   Enterprise = 'ENTERPRISE',
@@ -2363,7 +2371,11 @@ export type GetChatRoomQuery = {
   __typename?: 'Query';
   chatRoom: {
     __typename?: 'ChatRoomEdge';
+    id: string;
     cursor: string;
+    unreadMessagesCount: number;
+    lastMessagePlainText?: string | null;
+    lastMessageCreatedTimestamp?: number | null;
     node: {
       __typename?: 'ChatRoomNode';
       guid: string;
@@ -3904,7 +3916,12 @@ export type StartTenantTrialMutationVariables = Exact<{ [key: string]: never }>;
 
 export type StartTenantTrialMutation = {
   __typename?: 'Mutation';
-  tenantTrial: { __typename?: 'Tenant'; id: number };
+  tenantTrial: {
+    __typename?: 'TenantLoginRedirectDetails';
+    loginUrl?: string | null;
+    jwtToken?: string | null;
+    tenant: { __typename?: 'Tenant'; id: number };
+  };
 };
 
 export type UnassignUserFromRoleMutationVariables = Exact<{
@@ -7770,6 +7787,7 @@ export const GetChatRoomDocument = gql`
     $afterMembers: Int!
   ) {
     chatRoom(roomGuid: $roomGuid) {
+      id
       cursor
       node {
         guid
@@ -7797,6 +7815,9 @@ export const GetChatRoomDocument = gql`
           endCursor
         }
       }
+      unreadMessagesCount
+      lastMessagePlainText
+      lastMessageCreatedTimestamp
     }
   }
 `;
@@ -9429,7 +9450,11 @@ export class SetRolePermissionGQL extends Apollo.Mutation<
 export const StartTenantTrialDocument = gql`
   mutation StartTenantTrial {
     tenantTrial {
-      id
+      tenant {
+        id
+      }
+      loginUrl
+      jwtToken
     }
   }
 `;

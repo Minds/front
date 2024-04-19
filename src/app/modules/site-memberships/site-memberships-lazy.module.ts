@@ -47,4 +47,12 @@ const routes: Routes = [
   ],
   exports: [SiteMembershipCardComponent],
 })
-export class SiteMembershipsLazyModule {}
+export class SiteMembershipsLazyModule {
+  /**
+   * Resolve component to SiteMembershipsPageComponent instance.
+   * @returns { typeof SiteMembershipsPageComponent }
+   */
+  public resolveSiteMembershipsPageComponent(): typeof SiteMembershipsPageComponent {
+    return SiteMembershipsPageComponent;
+  }
+}
