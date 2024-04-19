@@ -2310,7 +2310,11 @@ export type GetChatRoomQuery = {
   __typename?: 'Query';
   chatRoom: {
     __typename?: 'ChatRoomEdge';
+    id: string;
     cursor: string;
+    unreadMessagesCount: number;
+    lastMessagePlainText?: string | null;
+    lastMessageCreatedTimestamp?: number | null;
     node: {
       __typename?: 'ChatRoomNode';
       guid: string;
@@ -7626,6 +7630,7 @@ export const GetChatRoomDocument = gql`
     $afterMembers: Int!
   ) {
     chatRoom(roomGuid: $roomGuid) {
+      id
       cursor
       node {
         guid
@@ -7653,6 +7658,9 @@ export const GetChatRoomDocument = gql`
           endCursor
         }
       }
+      unreadMessagesCount
+      lastMessagePlainText
+      lastMessageCreatedTimestamp
     }
   }
 `;
