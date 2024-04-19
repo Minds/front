@@ -1,0 +1,9 @@
+mutation UpdateChatRoomNotificationSettings(
+    $roomGuid: String!,
+    $notificationStatus: ChatRoomNotificationStatusEnum!
+) {
+    updateNotificationSettings(
+        roomGuid: $roomGuid,
+        notificationStatus: $notificationStatus
+    )
+}
