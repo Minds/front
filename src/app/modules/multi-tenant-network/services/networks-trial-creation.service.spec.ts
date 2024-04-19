@@ -8,6 +8,7 @@ import {
   ToasterService,
 } from '../../../common/services/toaster.service';
 import { of } from 'rxjs';
+import { AutoLoginService } from '../../networks/auto-login.service';
 
 describe('NetworksTrialCreationService', () => {
   let service: NetworksTrialCreationService;
@@ -20,6 +21,10 @@ describe('NetworksTrialCreationService', () => {
         {
           provide: StartTenantTrialGQL,
           useValue: jasmine.createSpyObj<StartTenantTrialGQL>(['mutate']),
+        },
+        {
+          provide: AutoLoginService,
+          useValue: MockService(AutoLoginService),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
       ],
@@ -34,8 +39,41 @@ describe('NetworksTrialCreationService', () => {
   });
 
   it('should handle start trial request success', fakeAsync(() => {
+    const loginUrl: string = 'loginUrl';
+    const jwtToken: string = 'jwtToken';
+
     (service as any).startTenantTrialGql.mutate.and.returnValue(
-      of({ data: { tenantTrial: { id: '1' } } })
+      of({
+        data: {
+          tenantTrial: {
+            loginUrl: loginUrl,
+            jwtToken: jwtToken,
+            tenant: { id: '1' },
+          },
+        },
+      })
+    );
+
+    service.startTrial();
+    tick();
+
+    expect((service as any).startTenantTrialGql.mutate).toHaveBeenCalled();
+    expect(
+      (service as any).autoLoginService.openNetworkUrl
+    ).toHaveBeenCalledOnceWith(loginUrl, jwtToken, false);
+    expect((service as any).router.navigateByUrl).not.toHaveBeenCalled();
+    expect((service as any).toaster.error).not.toHaveBeenCalled();
+  }));
+
+  it('should handle start trial request success with no returned login url', fakeAsync(() => {
+    (service as any).startTenantTrialGql.mutate.and.returnValue(
+      of({
+        data: {
+          tenantTrial: {
+            tenant: { id: '1' },
+          },
+        },
+      })
     );
 
     service.startTrial();
