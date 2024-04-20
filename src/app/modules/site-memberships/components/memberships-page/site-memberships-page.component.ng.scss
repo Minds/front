@@ -18,7 +18,7 @@
     margin: $spacing12 0;
   }
 
-  .m-membershipPage__membershipCardsContainer {
+  .m-membershipsPage__membershipCardsContainer {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
@@ -26,6 +26,30 @@
 
     m-siteMembershipCard {
       flex: 1 0 26%;
+    }
+  }
+
+  .m-membershipsPage__modalButtonContainer {
+    margin-top: $spacing10;
+    width: 100%;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-bottom: $spacing8;
+    }
+  }
+
+  &.m-membershipsPage__modal {
+    .m-membershipsPage__membershipCardsContainer {
+      gap: $spacing4;
+      overflow-y: auto;
+
+      @media screen and (min-width: $max-mobile + 1) {
+        max-height: 240px;
+      }
+
+      m-siteMembershipCard {
+        min-width: 180px;
+      }
     }
   }
 }

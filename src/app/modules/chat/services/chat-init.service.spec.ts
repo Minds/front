@@ -52,33 +52,27 @@ describe('ChatInitService', () => {
 
       expect((service as any).session.isLoggedIn).toHaveBeenCalled();
       expect(
-        (service as any).globalChatSocketService.listenToRoomGuids
+        (service as any).globalChatSocketService.listen
       ).not.toHaveBeenCalled();
     }));
 
     it('should initialize if user is logged in', fakeAsync(() => {
       const guids: string[] = ['123', '234'];
       (service as any).session.isLoggedIn.and.returnValue(true);
-      (service as any)._queryRef.valueChanges.next({
-        data: { chatRoomGuids: guids },
-      });
 
       service.init();
       tick();
 
       expect((service as any).session.isLoggedIn).toHaveBeenCalled();
       expect(
-        (service as any).globalChatSocketService.listenToRoomGuids
-      ).toHaveBeenCalledWith(guids);
+        (service as any).globalChatSocketService.listen
+      ).toHaveBeenCalled();
     }));
   });
 
   it('should destroy', () => {
     service.destroy();
     expect((service as any)._queryRef.resetLastResults).toHaveBeenCalled();
-    expect(
-      (service as any).globalChatSocketService.leaveAllRooms
-    ).toHaveBeenCalled();
   });
 
   it('should refetch', () => {
@@ -89,21 +83,13 @@ describe('ChatInitService', () => {
   it('should reinit', fakeAsync(() => {
     const guids: string[] = ['123', '234'];
     (service as any).session.isLoggedIn.and.returnValue(true);
-    (service as any)._queryRef.valueChanges.next({
-      data: { chatRoomGuids: guids },
-    });
 
     service.reinit();
 
     expect((service as any)._queryRef.resetLastResults).toHaveBeenCalled();
-    expect(
-      (service as any).globalChatSocketService.leaveAllRooms
-    ).toHaveBeenCalled();
     expect((service as any)._queryRef.refetch).toHaveBeenCalled();
     expect((service as any).session.isLoggedIn).toHaveBeenCalled();
-    expect(
-      (service as any).globalChatSocketService.listenToRoomGuids
-    ).toHaveBeenCalledWith(guids);
+    expect((service as any).globalChatSocketService.listen).toHaveBeenCalled();
   }));
 
   it('should get unread count', (done: DoneFn) => {
@@ -116,21 +102,6 @@ describe('ChatInitService', () => {
 
     service.getUnreadCount$().subscribe((count: number) => {
       expect(count).toBe(unreadCount);
-      done();
-    });
-  });
-
-  it('should get chat room guids', (done: DoneFn) => {
-    const guids: string[] = ['123', '234'];
-    (service as any).session.isLoggedIn.and.returnValue(true);
-
-    const unreadCount: number = 5;
-    (service as any)._queryRef.valueChanges.next({
-      data: { chatRoomGuids: guids },
-    });
-
-    service.getChatRoomGuids$().subscribe((chatRoomGuids: string[]) => {
-      expect(chatRoomGuids).toBe(guids);
       done();
     });
   });

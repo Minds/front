@@ -30,7 +30,7 @@ describe('SiteMembershipManagementService', () => {
     it('should navigate to checkout', async () => {
       expect(await service.navigateToCheckout('123')).toBe(true);
       expect(window.open).toHaveBeenCalledWith(
-        '/api/v3/payments/site-memberships/123/checkout?redirectPath=/memberships',
+        '/api/v3/payments/site-memberships/123/checkout?redirectPath=/memberships?membershipCheckoutRedirect=true',
         '_self'
       );
     });
@@ -66,5 +66,23 @@ describe('SiteMembershipManagementService', () => {
         'There was an error navigating to the manage your plan page. Please try again later.'
       );
     });
+  });
+
+  it('should append membershipCheckoutRedirect=true to the redirectPath when navigating to checkout', async () => {
+    const siteMembershipGuid = 'test-guid';
+    const redirectPath = '/memberships';
+    await service.navigateToCheckout(siteMembershipGuid, redirectPath);
+    const expectedUrl = `/api/v3/payments/site-memberships/${siteMembershipGuid}/checkout?redirectPath=${redirectPath}?membershipCheckoutRedirect=true`;
+
+    expect(mockWindow.open).toHaveBeenCalledWith(expectedUrl, '_self');
+  });
+
+  it('should correctly handle URLs with existing query parameters when appending membershipCheckoutRedirect', async () => {
+    const siteMembershipGuid = 'test-guid';
+    const redirectPathWithQuery = '/memberships?existingParam=value';
+    await service.navigateToCheckout(siteMembershipGuid, redirectPathWithQuery);
+    const expectedUrlWithQuery = `/api/v3/payments/site-memberships/${siteMembershipGuid}/checkout?redirectPath=${redirectPathWithQuery}&membershipCheckoutRedirect=true`;
+
+    expect(mockWindow.open).toHaveBeenCalledWith(expectedUrlWithQuery, '_self');
   });
 });
