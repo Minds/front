@@ -25,16 +25,8 @@ post content to trigger upgrade modal -->
   }"
 ></ng-container>
 <!-- ----------------------------------- -->
-<!-- FIXED HEIGHT SPACER (BOOST ROTATOR ONLY)-->
-<!-- ----------------------------------- -->
-<div
-  *ngIf="isFixedHeight && !wasQuoted"
-  class="m-activityContent__fixedHeightSpacer"
-></div>
-<!-- ----------------------------------- -->
 <!-- TEXT (WHEN TEXT ON TOP)-->
 <!-- ----------------------------------- -->
-
 <ng-container *ngIf="!isTextBelowMedia">
   <ng-container *ngTemplateOutlet="textTemplate"></ng-container>
 </ng-container>
@@ -185,8 +177,6 @@ post content to trigger upgrade modal -->
     <m-activity__quote
       [parentService]="service"
       [entity]="service.entity$ | async"
-      [style.height]="isFixedHeight ? 'auto' : quoteHeight"
-      [style.max-height]="isFixedHeight ? 'auto' : quoteHeight"
     >
     </m-activity__quote>
   </div>
@@ -201,22 +191,6 @@ post content to trigger upgrade modal -->
 <!-- SECONDARY HASHTAGS -->
 <!-- ----------------------------------- -->
 <ng-container *ngTemplateOutlet="secondaryTagsTemplate"></ng-container>
-<!-- ----------------------------------- -->
-<!-- FIXED HEIGHT SPACER (BOOST ROTATOR ONLY)-->
-<!-- ----------------------------------- -->
-<div
-  *ngIf="isFixedHeight && !wasQuoted"
-  class="m-activityContent__fixedHeightSpacer"
-></div>
-<!-- ----------------------------------- -->
-<!-- FADEOUT (BOOST ROTATOR ONLY)-->
-<!-- ----------------------------------- -->
-<div
-  (click)="onFixedHeightFadeoutClick($event)"
-  *ngIf="isFixedHeight && !wasQuoted && !isStatus"
-  class="m-activityContent__boostRotatorFadeout"
-></div>
-
 <!-- ----------------------------------- -->
 <!-- REMIND DELETED NOTICE -->
 <!-- ----------------------------------- -->

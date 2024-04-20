@@ -95,9 +95,8 @@ export class ActivityToolbarComponent {
     }
 
     if (
-      this.service.displayOptions.fixedHeight ||
-      (this.service.displayOptions.isFeed &&
-        this.persistentFeedExperiment.isActive())
+      this.service.displayOptions.isFeed &&
+      this.persistentFeedExperiment.isActive()
     ) {
       this.router.navigate([`/newsfeed/${this.entity.guid}`]);
       return;

@@ -119,7 +119,6 @@
                     *ngIf="activityService.displayOptions.showComments"
                     [entity]="activityService.entity$ | async"
                     [canDelete]="activityService.canDelete$ | async"
-                    [fixedHeight]="false"
                     [showOnlyPoster]="false"
                     [isModal]="true"
                     (onHeightChange)="onCommentsHeightChange($event)"

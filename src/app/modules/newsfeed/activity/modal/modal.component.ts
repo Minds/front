@@ -351,7 +351,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       showOnlyCommentsInput: false,
       showInteractions: true,
       isModal: true,
-      fixedHeight: false,
       autoplayVideo: true,
       permalinkBelowContent: true,
     });

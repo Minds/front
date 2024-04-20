@@ -12,17 +12,10 @@ import {
   ChangeDetectorRef,
   Inject,
 } from '@angular/core';
-import { Observable, Subscription, timer } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 
-import { NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import {
-  ACTIVITY_COMMENTS_MORE_HEIGHT,
-  ACTIVITY_COMMENTS_POSTER_HEIGHT,
-  ACTIVITY_CONTENT_PADDING,
-  ACTIVITY_V2_FIXED_HEIGHT_HEIGHT,
-  ACTIVITY_FIXED_HEIGHT_RATIO,
-  ACTIVITY_OWNERBLOCK_HEIGHT,
-  ACTIVITY_TOOLBAR_HEIGHT,
   ACTIVITY_GRID_LAYOUT_MAX_HEIGHT,
   ACTIVITY_V2_SHORT_STATUS_MAX_LENGTH,
   ACTIVITY_V2_MEDIUM_STATUS_MAX_LENGTH,
@@ -107,12 +100,8 @@ export class ActivityContentComponent
 
   @ViewChild(ScrollAwareVideoPlayerComponent) videoPlayer;
 
-  maxFixedHeightContent: number = 300 * ACTIVITY_FIXED_HEIGHT_RATIO;
-
   isRemind: boolean; // Is it a remind? (and NOT a quote)
 
-  activityHeight: number;
-  quoteHeight: number;
   videoHeight: number;
   videoWidth: number;
 
@@ -136,11 +125,6 @@ export class ActivityContentComponent
 
   @HostBinding('class.m-activityContent--hasPaywallBadge')
   showPaywallBadge: boolean = false;
-
-  @HostBinding('class.m-activityContent--fixedHeight')
-  get isFixedHeight(): boolean {
-    return this.service.displayOptions.fixedHeight;
-  }
 
   @HostBinding('class.m-activityContent--minimalMode')
   get isMinimalMode(): boolean {
@@ -259,7 +243,6 @@ export class ActivityContentComponent
     this.subscriptions = [
       this.service.entity$.subscribe((entity: ActivityEntity) => {
         this.entity = entity;
-        this.calculateFixedContentHeight();
         setTimeout(() => {
           this.calculateVideoDimensions();
           this.calculateImageDimensions();
@@ -273,12 +256,6 @@ export class ActivityContentComponent
         }
       }),
     ];
-    this.subscriptions.push(
-      this.service.height$.subscribe((height: number) => {
-        this.activityHeight = height;
-        this.calculateQuoteHeight();
-      })
-    );
     this.subscriptions.push(
       this.service.paywallUnlockedEmitter.subscribe((unlocked: boolean) => {
         if (!unlocked) {
@@ -343,7 +320,6 @@ export class ActivityContentComponent
     timer(1)
       .toPromise()
       .then(() => {
-        this.calculateQuoteHeight();
         this.calculateVideoDimensions();
         this.calculateImageDimensions();
       });
@@ -469,17 +445,13 @@ export class ActivityContentComponent
     if (this.isMinimalMode) {
       return ACTIVITY_GRID_LAYOUT_MAX_HEIGHT;
     } else {
-      const maxTextHeight = this.isFixedHeight ? 130 : 320;
-
-      return this.isStatus ? this.maxFixedHeightContent : maxTextHeight;
+      return 320;
     }
   }
 
   get maxDescHeight(): number {
     if (this.isMinimalMode) {
       return ACTIVITY_GRID_LAYOUT_MAX_HEIGHT;
-    } else if (this.isFixedHeight) {
-      return 80;
     } else if (this.isModal) {
       return 115;
     }
@@ -536,53 +508,9 @@ export class ActivityContentComponent
   get initialVisibleTextLength(): number {
     if (this.usePaywallContextStyles) {
       return 120;
-    } else if (this.isFixedHeight && !this.isStatus) {
-      // Show less text for boost rotator media posts
-      // (the ones that that contain more than just text)
-      return 180;
     } else {
       return 280;
     }
-  }
-
-  ////////////////////////////////////////////////////////////////////////////
-
-  calculateFixedContentHeight(): void {
-    if (!this.isFixedHeight) {
-      return;
-    }
-
-    let contentHeight = this.activityHeight || ACTIVITY_V2_FIXED_HEIGHT_HEIGHT;
-    contentHeight = contentHeight - ACTIVITY_CONTENT_PADDING;
-    if (this.service.displayOptions.showOwnerBlock) {
-      contentHeight = contentHeight - ACTIVITY_OWNERBLOCK_HEIGHT;
-    }
-    if (this.service.displayOptions.showToolbar) {
-      contentHeight = contentHeight - ACTIVITY_TOOLBAR_HEIGHT;
-    }
-    if (this.service.displayOptions.showComments) {
-      contentHeight = contentHeight - ACTIVITY_COMMENTS_POSTER_HEIGHT;
-    }
-    if (
-      this.service.displayOptions.showComments &&
-      this.entity['comments:count'] > 0
-    ) {
-      contentHeight = contentHeight - ACTIVITY_COMMENTS_MORE_HEIGHT;
-    }
-
-    this.maxFixedHeightContent = contentHeight;
-  }
-
-  @HostListener('window:resize')
-  calculateQuoteHeight(): void {
-    if (!this.isFixedHeight) return;
-    const textHeight = this.textEl ? this.textEl.nativeElement.clientHeight : 0;
-
-    this.calculateFixedContentHeight();
-
-    const maxFixedHeightContent = this.maxFixedHeightContent;
-
-    this.quoteHeight = maxFixedHeightContent - textHeight;
   }
 
   /**
@@ -636,7 +564,7 @@ export class ActivityContentComponent
     if (!this.imageEl) {
       return;
     }
-    if (this.isFixedHeight || this.entity.custom_type !== 'batch') {
+    if (this.entity.custom_type !== 'batch') {
       this.imageHeight = null;
     } else if (
       this.entity.custom_data &&
@@ -655,12 +583,6 @@ export class ActivityContentComponent
       if (this.isModal) {
         this.imageHeight =
           originalHeight > 0 ? originalHeight : ACTIVITY_MODAL_MIN_STAGE_HEIGHT;
-      } else if (this.isFixedHeight) {
-        // For fixed height, calculate height based on
-        // client height
-
-        this.imageHeight = this.imageContainerEl.nativeElement.clientHeight;
-        this.imageWidth = this.imageHeight / this.imageAspectRatio;
       } else {
         // For everything else, calculate height from
         // aspect ratio and clientWidth
@@ -745,27 +667,6 @@ export class ActivityContentComponent
 
   onTranslate(e: Event): void {
     this.service.displayOptions.showTranslation === false;
-  }
-
-  /**
-   * When boost rotator fadeout is clicked,
-   * open modal (if image/video)
-   * OR
-   * redirect to single activity page
-   *
-   * Note: fadeout not used for status posts
-   */
-  onFixedHeightFadeoutClick($event): void {
-    if (!this.isFixedHeight) {
-      return;
-    }
-    $event.stopPropagation();
-
-    if (this.isImage || this.isVideo || this.isMultiImage) {
-      this.onModalRequested($event);
-    } else {
-      this.redirectToSinglePage();
-    }
   }
 
   redirectToSinglePage(): void {

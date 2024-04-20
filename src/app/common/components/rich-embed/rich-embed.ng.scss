@@ -8,20 +8,6 @@
       border: none !important;
     }
   }
-  // ******************************************
-  // ** FIXED HEIGHT **
-  // ******************************************
-  .m-activityContent--fixedHeight & {
-    &[class*='m-richEmbed__display'] {
-      .m-rich-embed-src {
-        a.thumbnail {
-          img {
-            max-height: 280px;
-          }
-        }
-      }
-    }
-  }
 
   // ******************************************
   // ** MINIMAL MODE **
