@@ -10,17 +10,9 @@
   >
     <ng-container *ngIf="!isOwner">
       <m-supermind__banner
-        *ngIf="supermindButtonExperiment"
         [entity]="entity"
         data-ref="activity-large-supermind-action--alt"
       ></m-supermind__banner>
-      <m-supermind__button
-        *ngIf="!supermindButtonExperiment"
-        [entity]="entity"
-        [iconOnly]="false"
-        size="large"
-        data-ref="activity-large-supermind-action"
-      ></m-supermind__button>
     </ng-container>
     <!-- Show boost if own post -->
     <ng-container *ngIf="isOwner">

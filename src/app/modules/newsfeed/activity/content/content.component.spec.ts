@@ -12,7 +12,6 @@ import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
-import { PaywallContextExperimentService } from '../../../experiments/sub-services/paywall-context-experiment.service';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 import { ActivityContentComponent } from './content.component';
 import { BehaviorSubject } from 'rxjs';
@@ -149,10 +148,6 @@ describe('ActivityContentComponent', () => {
         {
           provide: PersistentFeedExperimentService,
           useValue: MockService(PersistentFeedExperimentService),
-        },
-        {
-          provide: PaywallContextExperimentService,
-          useValue: MockService(PaywallContextExperimentService),
         },
         { provide: ElementRef, useValue: MockService(ElementRef) },
         {

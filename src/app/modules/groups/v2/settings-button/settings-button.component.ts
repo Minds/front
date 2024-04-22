@@ -3,7 +3,6 @@ import { ReportCreatorComponent } from '../../../report/creator/creator.componen
 import { Session } from '../../../../services/session';
 import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm.component';
 import { ModalService } from '../../../../services/ux/modal.service';
-import { BoostGroupExperimentService } from '../../../experiments/sub-services/boost-groups-experiment.service';
 import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { GroupService } from '../group.service';
 import { Subscription } from 'rxjs';
@@ -21,8 +20,6 @@ import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-
 export class GroupSettingsButton implements OnInit, OnDestroy {
   group;
 
-  public boostGroupsExperimentIsActive: boolean = false;
-
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -31,13 +28,10 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
     private injector: Injector,
     public modalService: ModalService,
     private boostModal: BoostModalV2LazyService,
-    private boostGroupsExperiment: BoostGroupExperimentService,
     protected nsfwEnabledService: NsfwEnabledService
   ) {}
 
   ngOnInit(): void {
-    this.boostGroupsExperimentIsActive = this.boostGroupsExperiment.isActive();
-
     this.subscriptions.push(
       this.service.group$.subscribe((group) => {
         this.group = group;
