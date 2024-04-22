@@ -9,7 +9,6 @@ import {
   EstimatedReach,
 } from '../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
-import { BoostGoalsExperimentService } from '../../../../experiments/sub-services/boost-goals-experiment.service';
 import { BoostGoal } from '../../../boost.types';
 
 /**
@@ -79,10 +78,7 @@ export class BoostModalV2ReviewComponent {
   public readonly showGoalSection$: Observable<boolean> =
     this.service.canSetBoostGoal$;
 
-  constructor(
-    protected service: BoostModalV2Service,
-    protected boostGoalsExperiment: BoostGoalsExperimentService
-  ) {}
+  constructor(protected service: BoostModalV2Service) {}
 
   /**
    * Change the active panel - allows back click behavior.

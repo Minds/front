@@ -7,7 +7,6 @@ import { Session } from '../../../services/session';
 import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
 import { PublisherRecommendationsLocation } from '../../suggestions/publisher-recommendations/publisher-recommendations.component';
 import { ActivityEntity } from '../../newsfeed/activity/activity.service';
-import { ExplicitVotesExperimentService } from '../../experiments/sub-services/explicit-votes-experiment.service';
 import { AppDownloadModalLazyService } from '../../modals/app-download/app-download.service';
 
 /**
@@ -52,7 +51,6 @@ export class DefaultFeedComponent implements OnInit {
     private feedNoticeService: FeedNoticeService,
     private dismissal: DismissalService,
     private session: Session,
-    private explicitVotesExperiment: ExplicitVotesExperimentService,
     private appDownloadModal: AppDownloadModalLazyService
   ) {}
 
@@ -159,7 +157,6 @@ export class DefaultFeedComponent implements OnInit {
   ): boolean {
     return (
       this.location === 'discovery-feed' &&
-      this.explicitVotesExperiment.isActive() &&
       this.isLoggedIn() &&
       activity['thumbs:down:user_guids'].includes(
         this.session.getLoggedInUser().guid

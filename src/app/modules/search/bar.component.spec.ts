@@ -22,7 +22,6 @@ import { RecentService } from '../../services/ux/recent';
 import { recentServiceMock } from '../../mocks/services/ux/recent-mock.spec';
 import { MockDirective, MockService } from '../../utils/mock';
 import { SharedModule } from '../../common/shared.module';
-import { SearchGqlExperimentService } from './search-gql-experiment.service';
 import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 // Mocks
@@ -71,10 +70,6 @@ describe('SearchBarComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: ContextService, useValue: contextServiceMock },
         { provide: RecentService, useValue: recentServiceMock },
-        {
-          provide: SearchGqlExperimentService,
-          useValue: MockService(SearchGqlExperimentService),
-        },
         { provide: IS_TENANT_NETWORK, useValue: false },
       ],
     }).compileComponents();
@@ -127,7 +122,7 @@ describe('SearchBarComponent', () => {
     comp.search();
     tick();
 
-    expect(comp.router.navigate).toHaveBeenCalledWith(['/discovery/search'], {
+    expect(comp.router.navigate).toHaveBeenCalledWith(['/search'], {
       queryParams: {
         q: 'test',
         f: 'top',
@@ -144,7 +139,7 @@ describe('SearchBarComponent', () => {
     comp.search();
     tick();
 
-    expect(comp.router.navigate).toHaveBeenCalledWith(['/discovery/search'], {
+    expect(comp.router.navigate).toHaveBeenCalledWith(['/search'], {
       queryParams: {
         q: 'test',
         f: 'top',

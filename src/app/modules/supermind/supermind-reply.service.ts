@@ -4,7 +4,6 @@ import { ApiService } from '../../common/api/api.service';
 import { ToasterService } from '../../common/services/toaster.service';
 import { ComposerModalService } from '../composer/components/modal/modal.service';
 import { ComposerService } from '../composer/services/composer.service';
-import { ConnectTwitterModalExperimentService } from '../experiments/sub-services/connect-twitter-modal-experiment.service';
 import { ConnectTwitterModalService } from '../twitter/modal/connect-twitter-modal.service';
 import { TwitterConnectionService } from '../twitter/services/twitter-connection.service';
 import {
@@ -45,7 +44,6 @@ export class SupermindReplyService implements OnDestroy {
     private composerModal: ComposerModalService,
     private twitterConnection: TwitterConnectionService,
     private connectTwitterModal: ConnectTwitterModalService,
-    private connectTwitterExperiment: ConnectTwitterModalExperimentService,
     private modalService: ModalService,
     private parentInjector: Injector,
     private apiService: ApiService,
@@ -223,10 +221,7 @@ export class SupermindReplyService implements OnDestroy {
     supermind: Supermind
   ): Promise<boolean> {
     // if Twitter is not required, no need to call for the config.
-    if (
-      !supermind.twitter_required ||
-      !this.connectTwitterExperiment.isActive()
-    ) {
+    if (!supermind.twitter_required) {
       return false;
     }
 

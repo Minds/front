@@ -40,7 +40,6 @@ export class ActivityToolbarComponent {
   entity: ActivityEntity;
   allowReminds: boolean = true;
   protected isOwner: boolean = false;
-  protected supermindButtonExperiment: boolean = false;
 
   // Used to remove a downvoted item from the feed.
   @Output() onDownvote: EventEmitter<void> = new EventEmitter<void>();
@@ -73,12 +72,6 @@ export class ActivityToolbarComponent {
       this.service.shouldShowPaywallBadge$.subscribe((showBadge: boolean) => {
         // this.allowReminds = !showBadge;
       });
-
-    // this.supermindButtonExperiment = this.experimentsService.hasVariation(
-    //   'front-5812-supermind-button',
-    //   true
-    // );
-    this.supermindButtonExperiment = true;
   }
 
   ngOnDestroy() {
