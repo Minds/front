@@ -13,7 +13,6 @@ import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { RecentService } from '../../../services/ux/recent';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { SearchGqlExperimentService } from '../search-gql-experiment.service';
 
 /**
  * Dropdown that appears under the topbar search bar on focus
@@ -46,8 +45,6 @@ export class SearchBarSuggestionsComponent implements OnInit {
 
   inProgress: boolean = true;
 
-  isSearchExpOn: boolean;
-
   constructor(
     public session: Session,
     public client: Client,
@@ -55,8 +52,7 @@ export class SearchBarSuggestionsComponent implements OnInit {
     public recentService: RecentService,
     private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private configs: ConfigsService,
-    private searchExp: SearchGqlExperimentService
+    private configs: ConfigsService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
   }
@@ -106,7 +102,6 @@ export class SearchBarSuggestionsComponent implements OnInit {
 
   ngOnInit() {
     this.loadRecent();
-    this.isSearchExpOn = this.searchExp.isActive();
   }
 
   clearHistory() {

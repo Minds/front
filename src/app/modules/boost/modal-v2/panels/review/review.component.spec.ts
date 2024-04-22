@@ -9,7 +9,6 @@ import {
   BoostModalPanel,
   EstimatedReach,
 } from '../../boost-modal-v2.types';
-import { BoostGoalsExperimentService } from '../../../../experiments/sub-services/boost-goals-experiment.service';
 import { BoostGoal } from '../../../boost.types';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -90,10 +89,6 @@ describe('BoostModalV2ReviewComponent', () => {
             },
           }),
         },
-        {
-          provide: BoostGoalsExperimentService,
-          useValue: MockService(BoostGoalsExperimentService),
-        },
       ],
     }).compileComponents();
   }));
@@ -120,7 +115,6 @@ describe('BoostModalV2ReviewComponent', () => {
     (comp as any).service.activePanel$.next(BoostModalPanel.REVIEW);
     (comp as any).service.goal$.next(BoostGoal.VIEWS);
     (comp as any).service.canSetBoostGoal$.next(true);
-    (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
     fixture.detectChanges();
 
