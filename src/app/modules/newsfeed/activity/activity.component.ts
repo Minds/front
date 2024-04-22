@@ -33,7 +33,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { IntersectionObserverService } from '../../../common/services/intersection-observer.service';
 import { debounceTime } from 'rxjs/operators';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
-import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 import { MutualSubscriptionsService } from '../../channels/v2/mutual-subscriptions/mutual-subscriptions.service';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
@@ -166,7 +165,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     public session: Session,
     private configs: ConfigsService,
     private intersectionObserver: IntersectionObserverService,
-    private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
     private isTenant: IsTenantService,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -213,10 +211,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
-    if (
-      this.entityMetricSocketsExperiment.isActive() &&
-      this.intersectionObserverSubscription
-    ) {
+    if (this.intersectionObserverSubscription) {
       this.intersectionObserverSubscription.unsubscribe();
     }
   }
@@ -260,10 +255,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    if (
-      !this.entityMetricSocketsExperiment.isActive() ||
-      isPlatformServer(this.platformId)
-    ) {
+    if (isPlatformServer(this.platformId)) {
       return;
     }
 

@@ -51,7 +51,6 @@ import {
   EstimatedReach,
   PrepareResponse,
 } from '../boost-modal-v2.types';
-import { BoostGoalsExperimentService } from '../../../experiments/sub-services/boost-goals-experiment.service';
 import { BoostGoal, BoostGoalButtonText } from '../../boost.types';
 import { Session } from '../../../../services/session';
 import { BoostTargetExperimentService } from '../../../experiments/sub-services/boost-target-experiment.service';
@@ -203,7 +202,6 @@ export class BoostModalV2Service implements OnDestroy {
   ]).pipe(
     map(([entity, entityType]: [BoostableEntity, BoostSubject]) => {
       return (
-        this.boostGoalsExperiment.isActive() &&
         entityType === BoostSubject.POST &&
         entity?.owner_guid === this.session.getLoggedInUser().guid
       );
@@ -469,7 +467,6 @@ export class BoostModalV2Service implements OnDestroy {
     private config: ConfigsService,
     private web3Wallet: Web3WalletService,
     private boostContract: BoostContractService,
-    private boostGoalsExperiment: BoostGoalsExperimentService,
     private boostTargetExperiment: BoostTargetExperimentService
   ) {
     // set default duration and budgets on payment category change.

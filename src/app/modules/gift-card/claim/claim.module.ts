@@ -8,7 +8,6 @@ import { GiftCardClaimRedeemPanelComponent } from './panels/redeem/redeem-panel.
 import { GiftCardClaimSuccessPanelComponent } from './panels/success-panel/success-panel.component';
 import { GiftCardClaimLoggedOutPanelComponent } from './panels/logged-out/logged-out-panel.component';
 import { GiftCardSharedModule } from '../gift-card.shared.module';
-import { GiftCardClaimExperimentGuard } from '../../experiments/guards/gift-card-claim-experiment.guard';
 
 const routes: Routes = [
   {
@@ -17,8 +16,7 @@ const routes: Routes = [
     pathMatch: 'full' as PathMatch,
   },
   {
-    path: ':claimCode', // // '/gift-cards/claim/:claimCode'
-    canActivate: [GiftCardClaimExperimentGuard],
+    path: ':claimCode',
     component: GiftCardClaimComponent,
   },
 ];
