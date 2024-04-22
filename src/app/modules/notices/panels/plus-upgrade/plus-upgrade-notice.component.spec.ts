@@ -11,7 +11,6 @@ import { PlusUpgradeNoticeComponent } from './plus-upgrade-notice.component';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { WirePaymentHandlersService } from '../../../wire/wire-payment-handlers.service';
-import { PlusUpgradeNoticeExperimentService } from '../../../experiments/sub-services/plus-upgrade-notice-experiment.service';
 import { WireCreatorComponent } from '../../../wire/v2/creator/wire-creator.component';
 
 describe('PlusUpgradeNoticeComponent', () => {
@@ -49,10 +48,6 @@ describe('PlusUpgradeNoticeComponent', () => {
           provide: WirePaymentHandlersService,
           useValue: MockService(WirePaymentHandlersService),
         },
-        {
-          provide: PlusUpgradeNoticeExperimentService,
-          useValue: MockService(PlusUpgradeNoticeExperimentService),
-        },
       ],
     }).compileComponents();
   }));
@@ -62,14 +57,9 @@ describe('PlusUpgradeNoticeComponent', () => {
     comp = fixture.componentInstance;
     fixture.detectChanges();
 
-    (comp as any).plusUpgradeNoticeExperiment.getActiveVariation.calls.reset();
     (comp as any).feedNotice.dismiss.calls.reset();
     (comp as any).modalService.present.calls.reset();
     (comp as any).wirePaymentHandlers.get.calls.reset();
-
-    (
-      comp as any
-    ).plusUpgradeNoticeExperiment.getActiveVariation.and.returnValue(true);
     (comp as any).wirePaymentHandlers.get.and.returnValue(
       Promise.resolve(mockHandler)
     );

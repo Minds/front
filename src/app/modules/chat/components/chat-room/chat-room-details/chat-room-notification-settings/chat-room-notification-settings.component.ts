@@ -1,9 +1,25 @@
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '../../../../../../common/common.module';
-import { BehaviorSubject, Subscription, filter } from 'rxjs';
+import {
+  BehaviorSubject,
+  Subscription,
+  filter,
+  firstValueFrom,
+  lastValueFrom,
+} from 'rxjs';
 import { SingleChatRoomService } from '../../../../services/single-chat-room.service';
-import { ChatRoomEdge } from '../../../../../../../graphql/generated.engine';
+import {
+  ChatRoomEdge,
+  ChatRoomNotificationStatusEnum,
+  UpdateChatRoomNotificationSettingsGQL,
+  UpdateChatRoomNotificationSettingsMutation,
+} from '../../../../../../../graphql/generated.engine';
+import {
+  DEFAULT_ERROR_MESSAGE,
+  ToasterService,
+} from '../../../../../../common/services/toaster.service';
+import { MutationResult } from 'apollo-angular';
 
 /**
  * Notification settings for a chat room.
@@ -17,6 +33,10 @@ import { ChatRoomEdge } from '../../../../../../../graphql/generated.engine';
   standalone: true,
 })
 export class ChatRoomNotificationSettingsComponent implements OnInit {
+  /** Enum for use in template. */
+  protected readonly ChatRoomNotificationStatusEnum: typeof ChatRoomNotificationStatusEnum =
+    ChatRoomNotificationStatusEnum;
+
   /** Whether notifications are muted. */
   protected readonly notificationsMuted$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
@@ -24,14 +44,19 @@ export class ChatRoomNotificationSettingsComponent implements OnInit {
   /** Subscription to chat room. */
   private chatRoomSubscription: Subscription;
 
-  constructor(private singleChatRoomService: SingleChatRoomService) {}
+  constructor(
+    private singleChatRoomService: SingleChatRoomService,
+    private updateChatRoomNotificationSettingsGql: UpdateChatRoomNotificationSettingsGQL,
+    private toaster: ToasterService
+  ) {}
 
   ngOnInit(): void {
     this.chatRoomSubscription = this.singleChatRoomService.chatRoom$
       .pipe(filter(Boolean))
       .subscribe((chatRoom: ChatRoomEdge) => {
         this.notificationsMuted$.next(
-          chatRoom.node.areChatRoomNotificationsMuted
+          chatRoom.node.chatRoomNotificationStatus ===
+            ChatRoomNotificationStatusEnum.Muted
         );
       });
   }
@@ -41,12 +66,41 @@ export class ChatRoomNotificationSettingsComponent implements OnInit {
   }
 
   /**
-   * Handle mute notifications toggle.
-   * @param { boolean } value - Whether notifications are muted.
-   * @returns { void }
+   * Handle mute notifications toggle. This is a binary toggle initially but in future
+   * we will need to deprecate this, and the toggle system to account for other enum values.
+   * @param { value } value - whether notifications are muted.
+   * @returns { Promise<void> }
    */
-  protected onMuteNotificationToggle(value: boolean): void {
+  protected async onMuteNotificationToggle(value: boolean): Promise<void> {
+    const previousValue: boolean = this.notificationsMuted$.getValue();
+    const chatRoom: ChatRoomEdge = await firstValueFrom(
+      this.singleChatRoomService.chatRoom$
+    );
+
     this.notificationsMuted$.next(value);
-    // TODO: Save to server
+
+    try {
+      const result: MutationResult<UpdateChatRoomNotificationSettingsMutation> =
+        await lastValueFrom(
+          this.updateChatRoomNotificationSettingsGql.mutate({
+            roomGuid: chatRoom?.node?.guid,
+            notificationStatus: value
+              ? ChatRoomNotificationStatusEnum.Muted
+              : ChatRoomNotificationStatusEnum.All,
+          })
+        );
+
+      if (result?.errors?.length) {
+        throw new Error(result.errors[0].message);
+      }
+
+      if (!result.data.updateNotificationSettings) {
+        throw new Error(DEFAULT_ERROR_MESSAGE);
+      }
+    } catch (e) {
+      console.error(e);
+      this.toaster.error(e);
+      this.notificationsMuted$.next(previousValue);
+    }
   }
 }

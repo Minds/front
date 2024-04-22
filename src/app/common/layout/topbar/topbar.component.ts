@@ -23,7 +23,6 @@ import { PageLayoutService } from '../page-layout.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable, map, of, BehaviorSubject } from 'rxjs';
 import { AuthRedirectService } from '../../services/auth-redirect.service';
-import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { TopbarAlertService } from '../../components/topbar-alert/topbar-alert.service';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { MultiTenantConfigImageService } from '../../../modules/multi-tenant-network/services/config-image.service';
@@ -79,7 +78,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
     public pageLayoutService: PageLayoutService,
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
-    private guestModeExperiment: GuestModeExperimentService,
     private topbarAlertService: TopbarAlertService,
     private tenantConfigImageService: MultiTenantConfigImageService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean

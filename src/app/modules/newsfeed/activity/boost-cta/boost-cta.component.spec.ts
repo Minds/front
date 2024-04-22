@@ -10,7 +10,6 @@ import { MockService } from '../../../../utils/mock';
 import { Session } from '../../../../services/session';
 import { ClientMetaService } from '../../../../common/services/client-meta.service';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
-import { BoostGoalsExperimentService } from '../../../experiments/sub-services/boost-goals-experiment.service';
 
 describe('ActivityBoostCtaComponent', () => {
   let comp: ActivityBoostCtaComponent;
@@ -20,10 +19,6 @@ describe('ActivityBoostCtaComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ActivityBoostCtaComponent],
       providers: [
-        {
-          provide: BoostGoalsExperimentService,
-          useValue: MockService(BoostGoalsExperimentService),
-        },
         {
           provide: Session,
           useValue: MockService(Session),

@@ -39,7 +39,6 @@ import { ACTIVITY_MODAL_MIN_STAGE_HEIGHT } from '../modal/modal.component';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
-import { PaywallContextExperimentService } from '../../../experiments/sub-services/paywall-context-experiment.service';
 import getMetaAutoCaption from '../../../../helpers/meta-auto-caption';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
@@ -87,8 +86,8 @@ export class ActivityContentComponent
   /**
    * Used in activity modal
    */
-  @Input() hideText: boolean = false;
-  @Input() hideMedia: boolean = false;
+  @Input() hideText: boolean = false; // left side of modal
+  @Input() hideMedia: boolean = false; // right side of modal
 
   @Input() maxHeightAllowed: number;
 
@@ -178,13 +177,18 @@ export class ActivityContentComponent
     return this.entity.custom_type == 'video';
   }
 
+  /**
+   * It's an image as long as it's a non-multi image batch
+   * OR it has a thumbnail but isn't a video or rich-embed
+   */
   @HostBinding('class.m-activityContent--image')
   get isImage(): boolean {
     return (
       (this.entity.custom_type == 'batch' ||
         (this.entity.thumbnail_src &&
           !this.entity.perma_url &&
-          this.entity.custom_type !== 'video')) &&
+          this.entity.custom_type !== 'video' &&
+          !this.entity?.link_title)) &&
       !this.isMultiImage
     );
   }
@@ -238,6 +242,22 @@ export class ActivityContentComponent
     );
   }
 
+  /**
+   * Hide cta after membership post is unlocked
+   */
+  get shouldShowSiteMembershipCta(): boolean {
+    return this.entity.site_membership && !this.entity.site_membership_unlocked;
+  }
+
+  get shouldShowSingleImage(): boolean {
+    return (
+      (this.isImage && !this.hasSiteMembershipPayallThumbnail) ||
+      (this.isMultiImage &&
+        this.isModal &&
+        !this.hasSiteMembershipPayallThumbnail)
+    );
+  }
+
   constructor(
     public service: ActivityService,
     private modalService: ModalService,
@@ -249,7 +269,6 @@ export class ActivityContentComponent
     private injector: Injector,
     private activityModalCreator: ActivityModalCreatorService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
-    private paywallContextExperiment: PaywallContextExperimentService,
     private cd: ChangeDetectorRef,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
@@ -457,9 +476,13 @@ export class ActivityContentComponent
     return this.service.displayOptions.hasLoadingPriority;
   }
 
-  // Text usually goes above media, except for
-  // minimal mode and rich-embed modals
-  // Note: no rich-embed modals anymore
+  /**
+   * Text usually goes above media,
+   * EXCEPT for rich-embed modals (which are no longer used) and
+   * minimal mode, with the exception of:
+   * - minimal mode posts locked behind site membership paywalls
+   * - locked minimal mode status posts with site membership thumbnails
+   */
   get isTextBelowMedia(): boolean {
     return (
       (this.isMinimalMode && !this.isQuote) ||
@@ -524,11 +547,11 @@ export class ActivityContentComponent
   }
 
   /**
-   * For paywalled posts in the experiment, show less text and
+   * For paywalled posts, show less text and
    * display the readMore toggle in a more distinctive color
    */
   get usePaywallContextStyles(): boolean {
-    return this.paywallContextExperiment.isActive() && !!this.entity?.paywall;
+    return !!this.entity?.paywall;
   }
 
   /**

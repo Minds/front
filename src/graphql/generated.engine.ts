@@ -317,7 +317,7 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
-  areChatRoomNotificationsMuted?: Maybe<Scalars['Boolean']['output']>;
+  chatRoomNotificationStatus?: Maybe<ChatRoomNotificationStatusEnum>;
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -330,6 +330,12 @@ export type ChatRoomNode = NodeInterface & {
   /** The timestamp the roomt was created at */
   timeCreatedUnix: Scalars['String']['output'];
 };
+
+export enum ChatRoomNotificationStatusEnum {
+  All = 'ALL',
+  Mentions = 'MENTIONS',
+  Muted = 'MUTED',
+}
 
 export enum ChatRoomRoleEnum {
   Member = 'MEMBER',
@@ -955,10 +961,12 @@ export type Mutation = {
   siteMembership: SiteMembership;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
-  tenantTrial: Tenant;
+  /** Create a trial tenant network. */
+  tenantTrial: TenantLoginRedirectDetails;
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+  updateNotificationSettings: Scalars['Boolean']['output'];
   updatePostSubscription: PostSubscription;
   updateSiteMembership: SiteMembership;
 };
@@ -1162,6 +1170,11 @@ export type MutationUpdateAccountArgs = {
   newEmail?: InputMaybe<Scalars['String']['input']>;
   newUsername?: InputMaybe<Scalars['String']['input']>;
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type MutationUpdateNotificationSettingsArgs = {
+  notificationStatus: ChatRoomNotificationStatusEnum;
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationUpdatePostSubscriptionArgs = {
@@ -1870,6 +1883,13 @@ export type TenantInput = {
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type TenantLoginRedirectDetails = {
+  __typename?: 'TenantLoginRedirectDetails';
+  jwtToken?: Maybe<Scalars['String']['output']>;
+  loginUrl?: Maybe<Scalars['String']['output']>;
+  tenant: Tenant;
+};
+
 export enum TenantPlanEnum {
   Community = 'COMMUNITY',
   Enterprise = 'ENTERPRISE',
@@ -2310,7 +2330,11 @@ export type GetChatRoomQuery = {
   __typename?: 'Query';
   chatRoom: {
     __typename?: 'ChatRoomEdge';
+    id: string;
     cursor: string;
+    unreadMessagesCount: number;
+    lastMessagePlainText?: string | null;
+    lastMessageCreatedTimestamp?: number | null;
     node: {
       __typename?: 'ChatRoomNode';
       guid: string;
@@ -2318,7 +2342,7 @@ export type GetChatRoomQuery = {
       id: string;
       isChatRequest: boolean;
       isUserRoomOwner?: boolean | null;
-      areChatRoomNotificationsMuted?: boolean | null;
+      chatRoomNotificationStatus?: ChatRoomNotificationStatusEnum | null;
     };
     members: {
       __typename?: 'ChatRoomMembersConnection';
@@ -2460,6 +2484,16 @@ export type SetReadReceiptMutation = {
     id: string;
     unreadMessagesCount: number;
   };
+};
+
+export type UpdateChatRoomNotificationSettingsMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  notificationStatus: ChatRoomNotificationStatusEnum;
+}>;
+
+export type UpdateChatRoomNotificationSettingsMutation = {
+  __typename?: 'Mutation';
+  updateNotificationSettings: boolean;
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -3804,7 +3838,12 @@ export type StartTenantTrialMutationVariables = Exact<{ [key: string]: never }>;
 
 export type StartTenantTrialMutation = {
   __typename?: 'Mutation';
-  tenantTrial: { __typename?: 'Tenant'; id: number };
+  tenantTrial: {
+    __typename?: 'TenantLoginRedirectDetails';
+    loginUrl?: string | null;
+    jwtToken?: string | null;
+    tenant: { __typename?: 'Tenant'; id: number };
+  };
 };
 
 export type UnassignUserFromRoleMutationVariables = Exact<{
@@ -7626,6 +7665,7 @@ export const GetChatRoomDocument = gql`
     $afterMembers: Int!
   ) {
     chatRoom(roomGuid: $roomGuid) {
+      id
       cursor
       node {
         guid
@@ -7633,7 +7673,7 @@ export const GetChatRoomDocument = gql`
         id
         isChatRequest
         isUserRoomOwner
-        areChatRoomNotificationsMuted
+        chatRoomNotificationStatus
       }
       members(first: $firstMembers, after: $afterMembers) {
         edges {
@@ -7653,6 +7693,9 @@ export const GetChatRoomDocument = gql`
           endCursor
         }
       }
+      unreadMessagesCount
+      lastMessagePlainText
+      lastMessageCreatedTimestamp
     }
   }
 `;
@@ -7860,6 +7903,31 @@ export class SetReadReceiptGQL extends Apollo.Mutation<
   SetReadReceiptMutationVariables
 > {
   document = SetReadReceiptDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdateChatRoomNotificationSettingsDocument = gql`
+  mutation UpdateChatRoomNotificationSettings(
+    $roomGuid: String!
+    $notificationStatus: ChatRoomNotificationStatusEnum!
+  ) {
+    updateNotificationSettings(
+      roomGuid: $roomGuid
+      notificationStatus: $notificationStatus
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdateChatRoomNotificationSettingsGQL extends Apollo.Mutation<
+  UpdateChatRoomNotificationSettingsMutation,
+  UpdateChatRoomNotificationSettingsMutationVariables
+> {
+  document = UpdateChatRoomNotificationSettingsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -9253,7 +9321,11 @@ export class SetRolePermissionGQL extends Apollo.Mutation<
 export const StartTenantTrialDocument = gql`
   mutation StartTenantTrial {
     tenantTrial {
-      id
+      tenant {
+        id
+      }
+      loginUrl
+      jwtToken
     }
   }
 `;

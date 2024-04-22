@@ -5,6 +5,9 @@ import { Location } from '@angular/common';
 /**
  * Service for determining whether a shorter minimal mode
  * version of onboarding should be shown.
+ *
+ * Minimal means "only show the email verification step"
+ * Used for tenants and also when onboarding from specific routes.
  */
 @Injectable({ providedIn: 'root' })
 export class OnboardingV5MinimalModeService {
