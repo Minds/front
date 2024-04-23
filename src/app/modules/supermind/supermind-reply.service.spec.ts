@@ -4,7 +4,6 @@ import { MockService } from '../../utils/mock';
 import { ComposerModalService } from '../composer/components/modal/modal.service';
 import { TwitterConnectionService } from '../twitter/services/twitter-connection.service';
 import { ConnectTwitterModalService } from '../twitter/modal/connect-twitter-modal.service';
-import { ConnectTwitterModalExperimentService } from '../experiments/sub-services/connect-twitter-modal-experiment.service';
 import { ModalService } from '../../services/ux/modal.service';
 import { ApiService } from '../../common/api/api.service';
 import { ToasterService } from '../../common/services/toaster.service';
@@ -31,10 +30,6 @@ describe('SupermindReplyService', () => {
         {
           provide: ConnectTwitterModalService,
           useValue: MockService(ConnectTwitterModalService),
-        },
-        {
-          provide: ConnectTwitterModalExperimentService,
-          useValue: MockService(ConnectTwitterModalExperimentService),
         },
         { provide: ModalService, useValue: MockService(ModalService) },
         { provide: Injector, useValue: MockService(Injector) },

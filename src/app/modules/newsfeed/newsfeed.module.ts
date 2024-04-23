@@ -15,7 +15,6 @@ import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { NoticesModule } from '../notices/notices.module';
 import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
-import { NewsfeedBoostRotatorComponent } from './boost-rotator/boost-rotator.component';
 import { NewsfeedService } from './services/newsfeed.service';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
@@ -112,7 +111,6 @@ const routes: Routes = [
   declarations: [
     NewsfeedComponent,
     NewsfeedSingleComponent,
-    NewsfeedBoostRotatorComponent,
     NewsfeedEntityComponent,
     FeedGridComponent,
     NewsfeedActivitySuggestionsComponent,
@@ -128,11 +126,6 @@ const routes: Routes = [
     FeedAlgorithmHistoryService,
     FeedAlgorithmRedirectGuard,
   ],
-  exports: [
-    NewsfeedBoostRotatorComponent,
-    NewsfeedEntityComponent,
-    NewsfeedComponent,
-    FeedGridComponent,
-  ],
+  exports: [NewsfeedEntityComponent, NewsfeedComponent, FeedGridComponent],
 })
 export class NewsfeedModule {}

@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalService } from '../../../../services/ux/modal.service';
-import { PlusUpgradeNoticeExperimentService } from '../../../experiments/sub-services/plus-upgrade-notice-experiment.service';
 import { WireCreatorComponent } from '../../../wire/v2/creator/wire-creator.component';
 import { WirePaymentHandlersService } from '../../../wire/wire-payment-handlers.service';
 import { FeedNoticeService } from '../../services/feed-notice.service';
@@ -12,23 +11,14 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   selector: 'm-feedNotice--plusUpgrade',
   templateUrl: 'plus-upgrade-notice.component.html',
 })
-export class PlusUpgradeNoticeComponent implements OnInit {
+export class PlusUpgradeNoticeComponent {
   @Input() public dismissible: boolean = true;
-
-  // experiment that controls which text is shown in the body of the notice.
-  public experimentVariation: number = 0;
 
   constructor(
     private feedNotice: FeedNoticeService,
     private modalService: ModalService,
-    private wirePaymentHandlers: WirePaymentHandlersService,
-    private plusUpgradeNoticeExperiment: PlusUpgradeNoticeExperimentService
+    private wirePaymentHandlers: WirePaymentHandlersService
   ) {}
-
-  ngOnInit(): void {
-    this.experimentVariation =
-      this.plusUpgradeNoticeExperiment.getActiveVariation();
-  }
 
   /**
    * Called on primary option click. Opens modal for Minds+ payment.

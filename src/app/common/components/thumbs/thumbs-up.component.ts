@@ -18,7 +18,6 @@ import { FriendlyCaptchaComponent } from '../../../modules/captcha/friendly-catp
 import { ToasterService } from '../../services/toaster.service';
 import { CounterChangeFadeIn } from '../../../animations';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
-import { ExplicitVotesExperimentService } from '../../../modules/experiments/sub-services/explicit-votes-experiment.service';
 import { IsTenantService } from '../../services/is-tenant.service';
 import {
   INTERACTION_PERMISSIONS_ERROR_MESSAGE,
@@ -76,7 +75,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     private cd: ChangeDetectorRef,
     private experiments: ExperimentsService,
     private toast: ToasterService,
-    private explicitVotesExperiment: ExplicitVotesExperimentService,
     private isTenant: IsTenantService,
     protected permissions: PermissionsService
   ) {}
@@ -219,8 +217,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       !this.isTenant.is() &&
       // don't show for comments.
       this.object['type'] !== 'comment' &&
-      // only show if experiment is active.
-      this.explicitVotesExperiment.isActive() &&
       // only show if has not already been shown this session.
       !Boolean(localStorage.getItem('improve_recs_toast_shown'))
     ) {

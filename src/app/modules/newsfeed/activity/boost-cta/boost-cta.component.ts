@@ -7,7 +7,6 @@ import {
 } from '../../../../common/services/client-meta.service';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { ActivityEntity } from '../activity.service';
-import { BoostGoalsExperimentService } from '../../../experiments/sub-services/boost-goals-experiment.service';
 
 /**
  * The button that displays for boosts when users have
@@ -63,7 +62,6 @@ export class ActivityBoostCtaComponent {
   }
 
   constructor(
-    protected boostGoalsExperiment: BoostGoalsExperimentService,
     private session: Session,
     private clientMetaService: ClientMetaService,
     @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective

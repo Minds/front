@@ -137,7 +137,6 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { JsonLdService } from './services/jsonld.service';
 import { FormInputSliderComponent } from './components/slider/slider.component';
 import { FormInputSliderV2Component } from './components/slider/v2/slider.component';
-import { JoinBannerComponent } from './components/join-banner/join-banner.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
 import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
@@ -242,7 +241,6 @@ const MINDS_COMMON_COMPONENTS = [
   IconComponent,
   InfiniteScroll,
   InlineEditorComponent,
-  JoinBannerComponent,
   LaunchButtonComponent,
   LoadingEllipsisComponent,
   LoadingSpinnerComponent,

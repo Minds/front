@@ -7,7 +7,6 @@ import { SettingsV2Service } from './settings-v2.service';
 import { ToasterService } from '../../common/services/toaster.service';
 import { ProService } from '../pro/pro.service';
 import { Subscription } from 'rxjs';
-import { TwitterSyncSettingsExperimentService } from '../experiments/sub-services/twitter-sync-settings-experiment.service';
 import { IsTenantService } from '../../common/services/is-tenant.service';
 import { PermissionsService } from '../../common/services/permissions.service';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
@@ -400,7 +399,6 @@ export class SettingsV2Component implements OnInit {
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
     protected toasterService: ToasterService,
-    private twitterSyncSettingsExperiment: TwitterSyncSettingsExperimentService,
     private IsTenantService: IsTenantService,
     private permissionsService: PermissionsService,
     @Inject(PLATFORM_ID) protected platformId: Object
@@ -589,7 +587,7 @@ export class SettingsV2Component implements OnInit {
    * @returns { void }
    */
   private injectExperimentItems(): void {
-    if (this.twitterSyncSettingsExperiment.isActive() && !this.isTenant) {
+    if (!this.isTenant) {
       this.secondaryMenus.other
         .find((x) => x.header.id === 'content-migration')
         .items.push({
