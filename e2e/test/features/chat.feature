@@ -35,6 +35,7 @@ Feature: Chat
     And I click the chat room settings button
     And I click the delete chat room button
     And I click to accept the confirmation modal
+    And I should see an "success" toaster saying "Chat room deleted"
     Then I should not see the chat room with "playwright_tests_user_2" in the chat room list
     And I refresh the page
     And I should not see the chat room with "playwright_tests_user_2" in the chat room list
@@ -55,3 +56,5 @@ Feature: Chat
     And I open the chat room with the name containing "supermind_sender"
     And I click the chat room settings button
     And I click the delete chat room button
+    And I click to accept the confirmation modal
+    And I should see an "success" toaster saying "Chat room deleted"

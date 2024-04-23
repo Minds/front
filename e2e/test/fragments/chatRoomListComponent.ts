@@ -4,8 +4,9 @@ const { I } = inject();
  * Chat room list component
  */
 class ChatRoomListComponent {
-  private roomListItemSelector: string =
-    '[data-ref=data-minds-chat-room-list-item]';
+  private roomListItemSelector: string = 'm-chat__roomListItem';
+  private roomListNameSelector: string =
+    'm-chat__roomListItem .m-chatRoomListItem__roomName';
   private pendingChatRequestsWidget: string =
     '[data-ref=data-minds-chat-pending-requests-button]';
   private pendingChatRequestsCount: string =
@@ -28,7 +29,7 @@ class ChatRoomListComponent {
    * @return { void }
    */
   public hasRoomWithNameContaining(text: string): void {
-    I.seeElement(locate(this.roomListItemSelector).withText(text));
+    I.seeElement(locate(this.roomListNameSelector).withText(text));
   }
 
   /**
@@ -37,7 +38,7 @@ class ChatRoomListComponent {
    * @return { void }
    */
   public hasNoRoomWithNameContaining(text: string): void {
-    I.dontSeeElement(locate(this.roomListItemSelector).withText(text));
+    I.dontSeeElement(locate(this.roomListNameSelector).withText(text));
   }
 
   /**
@@ -46,7 +47,7 @@ class ChatRoomListComponent {
    * @return { void }
    */
   public openRoomWithNameContaining(text: string): void {
-    I.click(locate(this.roomListItemSelector).withText(text).at(1));
+    I.click(locate(this.roomListNameSelector).withText(text).at(1));
   }
 
   /**

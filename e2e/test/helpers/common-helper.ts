@@ -21,14 +21,14 @@ class CommonHelper extends Helper {
    * @returns { any } response.
    */
   public async clickAndWait(
-    locator: CodeceptJS.Locator,
+    locator: CodeceptJS.LocatorOrString,
     urlSnippet: string,
     status: number = 200
   ): Promise<any> {
     const { Playwright } = this.helpers;
     const [response] = await Promise.all([
       Playwright.waitForResponse(
-        resp => resp.url().includes(urlSnippet) && resp.status() === status
+        (resp) => resp.url().includes(urlSnippet) && resp.status() === status
       ),
       Playwright.click(locator),
     ]);

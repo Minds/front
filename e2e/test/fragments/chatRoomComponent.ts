@@ -62,7 +62,7 @@ class ChatRoomComponent {
    * @return { void }
    */
   public clickDeleteChatButton(): void {
-    I.click(locate(this.chatRoomInfoDeleteChatButton));
+    I.click(this.chatRoomInfoDeleteChatButton);
   }
 
   /**

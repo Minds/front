@@ -4,7 +4,7 @@ const { I } = inject();
  * Create New Chat Modal Component
  */
 class CreateNewChatModalComponent {
-  private readonly searchInputSelector: string = `[data-ref=data-minds-start-chat-modal-search-typeahead]`;
+  private readonly searchInputSelector: string = `[data-ref=data-minds-start-chat-modal-search-typeahead] #searchTerm`;
   private readonly searchResultSelector: string = `[data-ref=data-minds-start-chat-modal-user-row]`;
   private readonly startChatButtonSelector: string = `[data-ref=data-minds-start-chat-button]`;
 
