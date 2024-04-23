@@ -20,6 +20,13 @@ mutation CreateChatMessage($plainText: String!, $roomGuid: String!) {
                     id
                 }
             }
+            richEmbed {
+                id
+                url
+                canonicalUrl,
+                title
+                thumbnailSrc
+            }
         }
     }
 }
