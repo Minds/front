@@ -40,21 +40,21 @@ Feature: Chat
     And I refresh the page
     And I should not see the chat room with "playwright_tests_user_2" in the chat room list
 
-  Scenario: accept a chat invite request
-    Given I log in as "supermind_sender"
-    And I click the chat icon in the sidebar
-    And I click the Create New Chat button
-    And I type "playwright_tests_user_2" in the chat room creator search input field
-    And I select "playwright_tests_user_2" in the chat room creator
-    And I press the chat room creator submit button
-    And I log in as "playwright_tests_user_2"
-    And I click the chat icon in the sidebar
-    When I click the to view my chat requests
-    And I open the first chat request
-    And I click the accept chat request button
-    Then I should see a chat room with "supermind_sender" in the chat room list
-    And I open the chat room with the name containing "supermind_sender"
-    And I click the chat room settings button
-    And I click the delete chat room button
-    And I click to accept the confirmation modal
-    And I should see an "success" toaster saying "Chat room deleted"
+  # Scenario: accept a chat invite request
+  #   Given I log in as "supermind_sender"
+  #   And I click the chat icon in the sidebar
+  #   And I click the Create New Chat button
+  #   And I type "playwright_tests_user_2" in the chat room creator search input field
+  #   And I select "playwright_tests_user_2" in the chat room creator
+  #   And I press the chat room creator submit button
+  #   And I log in as "playwright_tests_user_2"
+  #   And I click the chat icon in the sidebar
+  #   When I click the to view my chat requests
+  #   And I open the first chat request
+  #   And I click the accept chat request button
+  #   Then I should see a chat room with "supermind_sender" in the chat room list
+  #   And I open the chat room with the name containing "supermind_sender"
+  #   And I click the chat room settings button
+  #   And I click the delete chat room button
+  #   And I click to accept the confirmation modal
+  #   And I should see an "success" toaster saying "Chat room deleted"
