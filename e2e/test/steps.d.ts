@@ -19,29 +19,48 @@ type supermindSettingsPage = typeof import('./pages/supermindSettingsPage');
 type walletPage = typeof import('./pages/walletPage');
 type walletCreditsPage = typeof import('./pages/walletCreditsPage');
 type tokenMarketingPage = typeof import('./pages/tokenMarketingPage');
-type composerModalComponent = typeof import('./fragments/composerModalComponent');
+type chatPage = typeof import('./pages/chatPage');
+type composerModalComponent =
+  typeof import('./fragments/composerModalComponent');
 type activityComponent = typeof import('./fragments/activityComponent');
-type activityModalComponent = typeof import('./fragments/activityModalComponent');
+type activityModalComponent =
+  typeof import('./fragments/activityModalComponent');
 type boostRotatorComponent = typeof import('./fragments/boostRotatorComponent');
-type confirmationModalComponent = typeof import('./fragments/confirmationModalComponent');
+type confirmationModalComponent =
+  typeof import('./fragments/confirmationModalComponent');
 type modalComponent = typeof import('./fragments/modalComponent');
-type notificationsComponent = typeof import('./fragments/notificationsComponent');
+type notificationsComponent =
+  typeof import('./fragments/notificationsComponent');
 type sidebarComponent = typeof import('./fragments/sidebarComponent');
-type explainerScreenModalComponent = typeof import('./fragments/explainerScreenModalComponent');
+type explainerScreenModalComponent =
+  typeof import('./fragments/explainerScreenModalComponent');
 type topbarComponent = typeof import('./fragments/topbarComponent');
 type feedNoticeComponent = typeof import('./fragments/feedNoticeComponent');
 type boostModalComponent = typeof import('./fragments/boostModalComponent');
-type contentSettingsComponent = typeof import('./fragments/contentSettingsComponent');
-type multiFactorModalComponent = typeof import('./fragments/multiFactorModalComponent');
-type publisherRecommendationsModalComponent = typeof import('./fragments/publisherRecommendationsModalComponent');
+type contentSettingsComponent =
+  typeof import('./fragments/contentSettingsComponent');
+type multiFactorModalComponent =
+  typeof import('./fragments/multiFactorModalComponent');
+type publisherRecommendationsModalComponent =
+  typeof import('./fragments/publisherRecommendationsModalComponent');
 type reportModalComponent = typeof import('./fragments/reportModalComponent');
-type upradeModalComponent = typeof import('./fragments/upgradeModalComponent');
-type onboardingV5ModalComponent = typeof import('./fragments/onboardingV5/onboardingV5ModalComponent');
-type onboardingV5VerifyEmailComponent = typeof import('./fragments/onboardingV5/onboardingV5VerifyEmailComponent');
-type onboardingV5TagSelectorComponent = typeof import('./fragments/onboardingV5/onboardingV5TagSelectorComponent');
-type onboardingV5SurveyComponent = typeof import('./fragments/onboardingV5/onboardingV5SurveyComponent');
-type onboardingV5PublisherRecsComponent = typeof import('./fragments/onboardingV5/onboardingV5PublisherRecsComponent');
-type onboardingV5CompletionPanelComponent = typeof import('./fragments/onboardingV5/onboardingV5CompletionPanelComponent');
+type upgradeModalComponent = typeof import('./fragments/upgradeModalComponent');
+type onboardingV5ModalComponent =
+  typeof import('./fragments/onboardingV5/onboardingV5ModalComponent');
+type onboardingV5VerifyEmailComponent =
+  typeof import('./fragments/onboardingV5/onboardingV5VerifyEmailComponent');
+type onboardingV5TagSelectorComponent =
+  typeof import('./fragments/onboardingV5/onboardingV5TagSelectorComponent');
+type onboardingV5SurveyComponent =
+  typeof import('./fragments/onboardingV5/onboardingV5SurveyComponent');
+type onboardingV5PublisherRecsComponent =
+  typeof import('./fragments/onboardingV5/onboardingV5PublisherRecsComponent');
+type onboardingV5CompletionPanelComponent =
+  typeof import('./fragments/onboardingV5/onboardingV5CompletionPanelComponent');
+type chatRoomListComponent = typeof import('./fragments/chatRoomListComponent');
+type chatRoomComponent = typeof import('./fragments/chatRoomComponent');
+type createNewChatModalComponent =
+  typeof import('./fragments/createNewChatModalComponent');
 type CookieHelper = import('./helpers/cookie-helper');
 type CommonHelper = import('./helpers/common-helper');
 
@@ -69,6 +88,7 @@ declare namespace CodeceptJS {
     walletPage: walletPage;
     walletCreditsPage: walletCreditsPage;
     tokenMarketingPage: tokenMarketingPage;
+    chatPage: chatPage;
     composerModalComponent: composerModalComponent;
     activityComponent: activityComponent;
     activityModalComponent: activityModalComponent;
@@ -92,6 +112,9 @@ declare namespace CodeceptJS {
     onboardingV5SurveyComponent: onboardingV5SurveyComponent;
     onboardingV5PublisherRecsComponent: onboardingV5PublisherRecsComponent;
     onboardingV5CompletionPanelComponent: onboardingV5CompletionPanelComponent;
+    chatRoomListComponent: chatRoomListComponent;
+    chatRoomComponent: chatRoomComponent;
+    createNewChatModalComponent: createNewChatModalComponent;
   }
   interface Methods extends Playwright, CookieHelper, CommonHelper {}
   interface I extends WithTranslation<Methods> {}

@@ -1,5 +1,10 @@
 <header class="m-chatRequestsList__header">
-  <i class="material-icons" (click)="onBackIconClick()">arrow_back</i>
+  <i
+    class="material-icons"
+    (click)="onBackIconClick()"
+    data-ref="data-minds-chat-request-list-back-button"
+    >arrow_back</i
+  >
   <h3 class="m-chatRequestsList__title">Chat requests</h3>
 </header>
 
@@ -13,6 +18,7 @@
         [edge]="edge"
         [active]="roomListItemParams.currentRoomId === edge.node.guid"
         [navigationLink]="'/chat/requests/' + edge.node.guid"
+        data-ref="data-minds-chat-room-list-item"
       ></m-chat__roomListItem>
     </ng-container>
   </ng-container>

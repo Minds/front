@@ -16,12 +16,14 @@
     (click)="onStartChatClick()"
     (keydown.enter)="onStartChatClick()"
     tabindex="0"
+    data-ref="data-minds-chat-room-list-new-chat-button"
     >add_comment</i
   >
 </header>
 
 <m-chatPendingRequests__widget
   *ngIf="hasPendingRequests$ | async"
+  data-ref="data-minds-chat-pending-requests-button"
 ></m-chatPendingRequests__widget>
 
 <ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
