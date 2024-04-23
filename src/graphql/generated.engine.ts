@@ -184,9 +184,14 @@ export type AppReadyMobileConfig = {
   ACCENT_COLOR_DARK: Scalars['String']['output'];
   ACCENT_COLOR_LIGHT: Scalars['String']['output'];
   API_URL: Scalars['String']['output'];
+  APP_ANDROID_PACKAGE?: Maybe<Scalars['String']['output']>;
   APP_HOST: Scalars['String']['output'];
+  APP_IOS_BUNDLE?: Maybe<Scalars['String']['output']>;
   APP_NAME: Scalars['String']['output'];
+  APP_SCHEME?: Maybe<Scalars['String']['output']>;
+  APP_SLUG?: Maybe<Scalars['String']['output']>;
   APP_SPLASH_RESIZE: Scalars['String']['output'];
+  EAS_PROJECT_ID?: Maybe<Scalars['String']['output']>;
   TENANT_ID: Scalars['Int']['output'];
   THEME: Scalars['String']['output'];
   WELCOME_LOGO: Scalars['String']['output'];
@@ -249,8 +254,12 @@ export type ChatMessageNode = NodeInterface & {
   /** The unique guid of the message */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  /** The type of message. */
+  messageType: ChatMessageTypeEnum;
   /** The plaintext (non-encrypted) message */
   plainText: Scalars['String']['output'];
+  /** Rich embed node belonging to the message. */
+  richEmbed?: Maybe<ChatRichEmbedNode>;
   /** The guid of the room the message belongs to */
   roomGuid: Scalars['String']['output'];
   sender: UserEdge;
@@ -260,10 +269,44 @@ export type ChatMessageNode = NodeInterface & {
   timeCreatedUnix: Scalars['String']['output'];
 };
 
+export enum ChatMessageTypeEnum {
+  Audio = 'AUDIO',
+  Image = 'IMAGE',
+  RichEmbed = 'RICH_EMBED',
+  Text = 'TEXT',
+  Video = 'VIDEO',
+}
+
 export type ChatMessagesConnection = ConnectionInterface & {
   __typename?: 'ChatMessagesConnection';
   edges: Array<ChatMessageEdge>;
   pageInfo: PageInfo;
+};
+
+export type ChatRichEmbedNode = NodeInterface & {
+  __typename?: 'ChatRichEmbedNode';
+  /** The author of the rich embed. */
+  author?: Maybe<Scalars['String']['output']>;
+  /** The canonical URL of the rich embed. */
+  canonicalUrl: Scalars['String']['output'];
+  /** The created timestamp of the rich embed in ISO 8601 format. */
+  createdTimestampISO8601?: Maybe<Scalars['String']['output']>;
+  /** The created timestamp of the rich embed in Unix format. */
+  createdTimestampUnix?: Maybe<Scalars['String']['output']>;
+  /** The description of the rich embed. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The unique ID of the rich embed for GraphQL. */
+  id: Scalars['ID']['output'];
+  /** The thumbnail src of the rich embed. */
+  thumbnailSrc?: Maybe<Scalars['String']['output']>;
+  /** The title of the rich embed. */
+  title?: Maybe<Scalars['String']['output']>;
+  /** The updated timestamp of the rich embed in ISO 8601 format. */
+  updatedTimestampISO8601?: Maybe<Scalars['String']['output']>;
+  /** The updated timestamp of the rich embed in Unix format. */
+  updatedTimestampUnix?: Maybe<Scalars['String']['output']>;
+  /** The URL of the rich embed. */
+  url: Scalars['String']['output'];
 };
 
 export type ChatRoomEdge = EdgeInterface & {
@@ -2129,6 +2172,14 @@ export type CreateChatMessageMutation = {
           id: string;
         };
       };
+      richEmbed?: {
+        __typename?: 'ChatRichEmbedNode';
+        id: string;
+        url: string;
+        canonicalUrl: string;
+        title?: string | null;
+        thumbnailSrc?: string | null;
+      } | null;
     };
   };
 };
@@ -2220,6 +2271,14 @@ export type GetChatMessagesQuery = {
             guid: string;
           };
         };
+        richEmbed?: {
+          __typename?: 'ChatRichEmbedNode';
+          id: string;
+          url: string;
+          canonicalUrl: string;
+          title?: string | null;
+          thumbnailSrc?: string | null;
+        } | null;
       };
     }>;
     pageInfo: {
@@ -2732,6 +2791,7 @@ export type GetTenantAnalyticsTableQuery = {
           }
         | { __typename?: 'BoostNode'; id: string }
         | { __typename?: 'ChatMessageNode'; id: string }
+        | { __typename?: 'ChatRichEmbedNode'; id: string }
         | { __typename?: 'ChatRoomNode'; id: string }
         | { __typename?: 'CommentNode'; id: string }
         | { __typename?: 'CustomPage'; id: string }
@@ -2784,6 +2844,7 @@ export type GetFeaturedEntitiesQuery = {
         | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
         | { __typename?: 'BoostNode'; id: string }
         | { __typename?: 'ChatMessageNode'; id: string }
+        | { __typename?: 'ChatRichEmbedNode'; id: string }
         | { __typename?: 'ChatRoomNode'; id: string }
         | { __typename?: 'CommentNode'; id: string }
         | { __typename?: 'CustomPage'; id: string }
@@ -2962,6 +3023,7 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -3030,6 +3092,14 @@ export type GetReportsQuery = {
                             guid: string;
                           };
                         };
+                        richEmbed?: {
+                          __typename?: 'ChatRichEmbedNode';
+                          id: string;
+                          url: string;
+                          canonicalUrl: string;
+                          title?: string | null;
+                          thumbnailSrc?: string | null;
+                        } | null;
                       };
                     }
                   | {
@@ -3083,6 +3153,7 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -3151,6 +3222,14 @@ export type GetReportsQuery = {
                             guid: string;
                           };
                         };
+                        richEmbed?: {
+                          __typename?: 'ChatRichEmbedNode';
+                          id: string;
+                          url: string;
+                          canonicalUrl: string;
+                          title?: string | null;
+                          thumbnailSrc?: string | null;
+                        } | null;
                       };
                     }
                   | {
@@ -3180,6 +3259,7 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -3248,6 +3328,14 @@ export type GetReportsQuery = {
                             guid: string;
                           };
                         };
+                        richEmbed?: {
+                          __typename?: 'ChatRichEmbedNode';
+                          id: string;
+                          url: string;
+                          canonicalUrl: string;
+                          title?: string | null;
+                          thumbnailSrc?: string | null;
+                        } | null;
                       };
                     }
                   | {
@@ -3360,6 +3448,14 @@ export type GetReportsQuery = {
                         guid: string;
                       };
                     };
+                    richEmbed?: {
+                      __typename?: 'ChatRichEmbedNode';
+                      id: string;
+                      url: string;
+                      canonicalUrl: string;
+                      title?: string | null;
+                      thumbnailSrc?: string | null;
+                    } | null;
                   };
                 }
               | {
@@ -4011,6 +4107,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -4086,6 +4183,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4177,6 +4275,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4235,6 +4334,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4416,6 +4516,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -4491,6 +4592,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4582,6 +4684,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4640,6 +4743,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4791,6 +4895,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -4866,6 +4971,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4957,6 +5063,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -5015,6 +5122,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -5233,6 +5341,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -5294,6 +5403,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -5328,6 +5438,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -5601,6 +5712,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -5656,6 +5768,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -5747,6 +5860,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -5805,6 +5919,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -5986,6 +6101,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -6041,6 +6157,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6132,6 +6249,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6190,6 +6308,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6341,6 +6460,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -6396,6 +6516,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6487,6 +6608,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6545,6 +6667,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6747,6 +6870,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -6808,6 +6932,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -6842,6 +6967,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -7378,6 +7504,13 @@ export const CreateChatMessageDocument = gql`
             id
           }
         }
+        richEmbed {
+          id
+          url
+          canonicalUrl
+          title
+          thumbnailSrc
+        }
       }
     }
   }
@@ -7517,6 +7650,13 @@ export const GetChatMessagesDocument = gql`
               id
               guid
             }
+          }
+          richEmbed {
+            id
+            url
+            canonicalUrl
+            title
+            thumbnailSrc
           }
         }
       }
@@ -8590,6 +8730,13 @@ export const GetReportsDocument = gql`
                       id
                       guid
                     }
+                  }
+                  richEmbed {
+                    id
+                    url
+                    canonicalUrl
+                    title
+                    thumbnailSrc
                   }
                 }
               }

@@ -42,6 +42,12 @@ describe('ChatRoomMessageComponent', () => {
             inputs: ['isMessageOwner', 'messageEdge', 'hoverSourceElement'],
             standalone: true,
           }),
+          MockComponent({
+            selector: 'm-chatRoomMessage__richEmbed',
+            inputs: ['thumbnailSrc', 'title', 'url'],
+            standalone: true,
+            template: `<ng-content></ng-content>`,
+          }),
         ],
       },
     });
@@ -219,6 +225,34 @@ describe('ChatRoomMessageComponent', () => {
         fixture.debugElement.query(By.css('.m-chatRoomMessage__text'))
           .nativeElement.textContent
       ).toBe(mockChatMessageEdge.node.plainText);
+    });
+
+    describe('Rich embed render', () => {
+      it('should have rich embed when rich embed data is set', () => {
+        (comp as any).richEmbed = {
+          thumbnailSrc: 'https://example.minds.com/image.png',
+          title: 'Title',
+          url: 'https://example.minds.com',
+        };
+
+        fixture.detectChanges();
+        comp.cd.detectChanges();
+
+        expect(
+          fixture.debugElement.query(By.css('m-chatRoomMessage__richEmbed'))
+        ).toBeTruthy();
+      });
+
+      it('should NOT have rich embed when NO rich embed data is set', () => {
+        (comp as any).richEmbed = null;
+
+        fixture.detectChanges();
+        comp.cd.detectChanges();
+
+        expect(
+          fixture.debugElement.query(By.css('m-chatRoomMessage__richEmbed'))
+        ).toBeFalsy();
+      });
     });
   });
 

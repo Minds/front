@@ -66,6 +66,13 @@ query GetReports(
                         guid
                     }
                 }
+                richEmbed {
+                    id
+                    url
+                    canonicalUrl
+                    title
+                    thumbnailSrc
+                }
               }
             }
           }
