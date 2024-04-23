@@ -7,21 +7,21 @@ const { I } = inject();
  */
 class ChatRoomComponent {
   private readonly textInputSelector: string =
-    '[data-ref=data-minds-chat-message-input]';
+    '[data-test=data-minds-chat-message-input]';
   private readonly sendButtonSelector: string =
-    '[data-ref=data-minds-chat-send-message-button]';
+    '[data-test=data-minds-chat-send-message-button]';
   private readonly chatMessageSelector: string =
-    '[data-ref=data-minds-chat-message]';
+    '[data-test=data-minds-chat-message]';
   private readonly chatRoomSettingsButtonSelector: string =
-    '[data-ref=data-minds-chat-room-settings-button]';
+    '[data-test=data-minds-chat-room-settings-button]';
   private readonly chatRoomInfoDeleteChatButton: string =
-    '[data-ref=data-minds-chat-info-delete-button]';
+    '[data-test=data-minds-chat-info-delete-button]';
   private readonly richEmbedUrlSelector: string =
-    '[data-ref=data-minds-chat-room-embed-url-text]';
+    '[data-test=data-minds-chat-room-embed-url-text]';
   private readonly richEmbedSelector: string =
-    '[data-ref=data-minds-chat-room-message-rich-embed]';
+    '[data-test=data-minds-chat-room-message-rich-embed]';
   private readonly acceptChatRequestButton: string =
-    '[data-ref=data-minds-chat-request-accept-button]';
+    '[data-test=data-minds-chat-request-accept-button]';
 
   /**
    * Type a message in the chat room.
