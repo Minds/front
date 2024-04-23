@@ -17,7 +17,7 @@ Feature: Chat
     And I open the first chat room
     And I type "Hello" in the chat input field
     And I press the chat message Send button
-    Then I should see the last message contains "Hello" in the chat room
+    Then I should see the last message in the chat room contains "Hello"
 
   Scenario: send rich embed messages to other users
     Given I am logged in
@@ -25,7 +25,7 @@ Feature: Chat
     And I open the first chat room
     And I type "testing https://www.minds.com/" in the chat input field
     And I press the chat message Send button
-    Then I should see the last message contains "testing https://www.minds.com/" in the chat room
+    Then I should see the last message in the chat room contains "testing https://www.minds.com/"
     And I should see the last message has a rich embed in the chat room for "https://www.minds.com/"
 
   Scenario: delete one on one chats
@@ -37,7 +37,7 @@ Feature: Chat
     And I click to accept the confirmation modal
     Then I should not see the chat room with "playwright_tests_user_2" in the chat room list
     And I refresh the page
-    Then I should not see the chat room with "playwright_tests_user_2" in the chat room list
+    And I should not see the chat room with "playwright_tests_user_2" in the chat room list
 
   Scenario: accept a chat invite request
     Given I log in as "supermind_sender"

@@ -74,7 +74,7 @@ namespace ChatSteps {
   });
 
   Then(
-    'I should see the last message contains {string} in the chat room',
+    'I should see the last message in the chat room contains {string}',
     (text: string) => {
       chatRoomComponent.hasLastMessageWithText(text);
     }
