@@ -238,7 +238,7 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
           // Skip our own messages.
           if (
             this.session.getLoggedInUser()?.guid ===
-            parseInt(event.data['metadata']['senderGuid'])
+            event.data['metadata']['senderGuid']
           ) {
             return;
           }
