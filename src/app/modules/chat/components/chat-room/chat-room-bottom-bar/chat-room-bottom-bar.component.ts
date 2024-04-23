@@ -36,6 +36,11 @@ import {
 } from '../../../services/chat-messages.service';
 import { InMemoryCache } from '@apollo/client';
 import { cloneDeep } from '@apollo/client/utilities';
+import { Session } from '../../../../../services/session';
+import { MindsUser } from '../../../../../interfaces/entities';
+
+/** Placeholder for message fields that cannot be optimistically predicted. */
+export const OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER: string = 'optimistic';
 
 /**
  * Bottom bar for chat room.
@@ -72,7 +77,8 @@ export class ChatRoomBottomBarComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toaster: ToasterService,
     private createMessageGQL: CreateChatMessageGQL,
-    private chatMessageService: ChatMessagesService
+    private chatMessageService: ChatMessagesService,
+    private session: Session
   ) {}
 
   ngOnInit(): void {
@@ -111,6 +117,12 @@ export class ChatRoomBottomBarComponent implements OnInit {
    * @returns { Promise<void> }
    */
   protected async onSubmit(): Promise<void> {
+    if (this.sendInProgress$.getValue()) {
+      return;
+    }
+
+    this.sendInProgress$.next(true);
+
     // This prevents mobile keyboards from closing on submit.
     this.textArea.nativeElement.focus();
 
@@ -118,16 +130,16 @@ export class ChatRoomBottomBarComponent implements OnInit {
     const message = formControl.value.trim();
 
     if (!message?.length) {
+      this.sendInProgress$.next(false);
       return;
     }
 
+    // optimistically reset the field.
+    formControl.setValue('');
+    formControl.markAsPristine();
+    formControl.markAsUntouched();
+
     try {
-      if (this.sendInProgress$.getValue() || formControl.disabled) {
-        return;
-      }
-
-      this.sendInProgress$.next(true);
-
       const result: MutationResult<CreateChatMessageMutation> =
         await lastValueFrom(
           this.createMessageGQL.mutate(
@@ -136,6 +148,8 @@ export class ChatRoomBottomBarComponent implements OnInit {
               roomGuid: this.roomGuid,
             },
             {
+              optimisticResponse:
+                this.buildOptimisticCreateMessageResponse(message),
               update: this.handleCreateMessageUpdate.bind(this),
             }
           )
@@ -148,14 +162,8 @@ export class ChatRoomBottomBarComponent implements OnInit {
       if (result.errors?.length) {
         throw new Error(result.errors[0].message);
       }
-
-      if (result.data.createChatMessage) {
-        this.chatMessageService.requestScrollToBottom();
-        formControl.setValue('');
-        formControl.markAsPristine();
-        formControl.markAsUntouched();
-      }
     } catch (e) {
+      formControl.setValue(message); // revert field to original value.
       this.toaster.error(e);
       console.error(e);
     } finally {
@@ -197,5 +205,50 @@ export class ChatRoomBottomBarComponent implements OnInit {
       },
       data: newValue,
     });
+
+    this.chatMessageService.requestScrollToBottom();
+  }
+
+  /**
+   * Build optimistic response for message submission.
+   * @param { string } plainText - The plain text of the message.
+   * @returns { CreateChatMessageMutation } - The optimistic response.
+   */
+  private buildOptimisticCreateMessageResponse(
+    plainText: string
+  ): CreateChatMessageMutation {
+    const sender: MindsUser = this.session.getLoggedInUser();
+    const optimisticSendDate: Date = new Date();
+
+    const optimisticMessage: CreateChatMessageMutation = {
+      __typename: 'Mutation',
+      createChatMessage: {
+        __typename: 'ChatMessageEdge',
+        id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+        cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+        node: {
+          id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+          guid: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+          plainText: plainText,
+          roomGuid: this.roomGuid,
+          sender: {
+            cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+            id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+            type: 'user',
+            node: {
+              id: sender.guid,
+              guid: sender.guid,
+              username: sender.username,
+              name: sender.name,
+            },
+          },
+          timeCreatedUnix: (optimisticSendDate.valueOf() / 1000).toString(),
+          timeCreatedISO8601: optimisticSendDate.toISOString(),
+          richEmbed: null, // we could stub a rich embed response here in future to ease jump-in.
+        },
+      },
+    };
+
+    return optimisticMessage;
   }
 }
