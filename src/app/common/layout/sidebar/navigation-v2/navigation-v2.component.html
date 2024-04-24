@@ -197,32 +197,6 @@
           </a>
         </li>
 
-        <!-- Chat -->
-        <ng-container *ngIf="chatExperimentIsActive && !!user">
-          <li
-            class="m-sidebarNavigation__item m-sidebarNavigation__item--chat"
-            [routerLinkActive]="'m-sidebarNavigation__item--active'"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              [routerLink]="['/chat']"
-              (click)="toggle()"
-              data-ref="sidenav-chat"
-            >
-              <div class="m-sidebarNavigationItem__hoverArea">
-                <i class="material-icons" [class.showDot]="chatUnreadCount > 0"
-                  >chat_bubble</i
-                >
-                <span
-                  class="m-sidebarNavigationItem__text m-legible"
-                  i18n="@@COMMON__CHATS"
-                  >Chats</span
-                >
-              </div>
-            </a>
-          </li>
-        </ng-container>
-
         <!-- Groups -->
         <ng-container>
           <li
@@ -247,9 +221,34 @@
           </li>
         </ng-container>
 
-        <!-- Networks list (on minds.com)-->
+        <!-- Chat -->
+        <ng-container *ngIf="chatExperimentIsActive && !!user">
+          <li
+            class="m-sidebarNavigation__item m-sidebarNavigation__item--chat"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              [routerLink]="['/chat']"
+              (click)="toggle()"
+              data-ref="sidenav-chat"
+            >
+              <div class="m-sidebarNavigationItem__hoverArea">
+                <i class="material-icons" [class.showDot]="chatUnreadCount > 0"
+                  >chat_bubble</i
+                >
+                <span
+                  class="m-sidebarNavigationItem__text m-legible"
+                  i18n="@@COMMON__CHAT"
+                  >Chat</span
+                >
+              </div>
+            </a>
+          </li>
+        </ng-container>
+
+        <!-- Networks -->
         <li
-          *ngIf="showNetworksLink"
           class="m-sidebarNavigation__item m-sidebarNavigation__item--networks"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           [routerLinkActiveOptions]="{ exact: true }"
@@ -269,6 +268,7 @@
             </div>
           </a>
         </li>
+
         <!-- Upgrade -->
         <li
           *ngIf="user"

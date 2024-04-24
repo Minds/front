@@ -24,6 +24,7 @@ query GetFeaturedEntities(
           autoSubscribe
           autoPostSubscription
           name
+          briefDescription
           membersCount
         }
       }

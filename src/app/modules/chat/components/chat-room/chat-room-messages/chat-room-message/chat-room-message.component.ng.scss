@@ -117,8 +117,9 @@
 
     .m-chatRoomMessage__bubble {
       display: flex;
+      flex-flow: column nowrap;
       max-width: 80%;
-      padding: $spacing2 $spacing3;
+      padding: $spacing2 0;
       align-items: flex-start;
       gap: $spacing2;
       border-radius: 16px;
@@ -127,10 +128,25 @@
         cursor: pointer;
       }
 
+      &--hasRichEmbed {
+        width: 344px;
+        padding-bottom: unset;
+      }
+
       .m-chatRoomMessage__text {
+        padding: 0 $spacing3;
         word-break: break-word;
         white-space: pre-line;
         @include body2Regular;
+
+        ::ng-deep a {
+          color: inherit;
+          @include body2Regular;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
       }
     }
   }

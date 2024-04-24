@@ -62,6 +62,13 @@ query GetReports($first: Int!, $after: Int!, $status: ReportStatusEnum) {
                     guid
                   }
                 }
+                richEmbed {
+                    id
+                    url
+                    canonicalUrl
+                    title
+                    thumbnailSrc
+                }
               }
             }
           }

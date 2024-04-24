@@ -22,14 +22,25 @@
   <div
     class="m-chatRoomMessage__bubble"
     [ngClass]="{
-      'm-chatRoomMessage__bubble--clickable': isNextMessageFromSameSender
+      'm-chatRoomMessage__bubble--clickable': isNextMessageFromSameSender,
+      'm-chatRoomMessage__bubble--hasRichEmbed': richEmbed?.thumbnailSrc
     }"
     throttledClick
     (throttledClick)="handleMessageClick()"
   >
-    <span class="m-chatRoomMessage__text" *ngIf="plainText" tabindex="0">{{
-      plainText
-    }}</span>
+    <span
+      *ngIf="plainText"
+      class="m-chatRoomMessage__text"
+      tabindex="0"
+      (click)="handleMessageTextClick($event)"
+      [innerHtml]="plainText | tags"
+    ></span>
+    <m-chatRoomMessage__richEmbed
+      *ngIf="richEmbed"
+      [thumbnailSrc]="richEmbed.thumbnailSrc"
+      [title]="richEmbed.title"
+      [url]="richEmbed.canonicalUrl ?? richEmbed.url"
+    ></m-chatRoomMessage__richEmbed>
   </div>
   <ng-container *ngIf="!isFromLoggedInUser && messageEdge">
     <ng-container *ngTemplateOutlet="dropdownEllipsisTemplate"></ng-container>

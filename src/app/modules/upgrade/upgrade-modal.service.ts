@@ -17,7 +17,7 @@ export class UpgradeModalService {
 
   /**
    * Presents the modal.
-   * @returns { Promise<ModalRef<UpgradePageComponentt>> }
+   * @returns { Promise<ModalRef<UpgradePageComponent>> }
    */
   public async open(): Promise<ModalRef<UpgradePageComponent>> {
     // Don't show on tenant sites

@@ -1,33 +1,33 @@
 query GetChatRoomInviteRequests($first: Int, $after: String) {
-  chatRoomInviteRequests(first: $first, after: $after) {
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    edges {
-      cursor
-      node {
-        id
-        guid
-        roomType
-        timeCreatedISO8601
-        timeCreatedUnix
-      }
-      members(first: 3) {
-        edges {
-          cursor
-          node {
-            id
-            guid
-            username
-            name
-          }
+    chatRoomInviteRequests(first: $first, after: $after) {
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
         }
-      }
-      lastMessagePlainText
-      lastMessageCreatedTimestamp
+        edges {
+            cursor
+            node {
+                id
+                guid
+                roomType
+                timeCreatedISO8601
+                timeCreatedUnix
+            }
+            members(first: 3) {
+                 edges {
+                    cursor
+                    node {
+                        id
+                        guid
+                        username
+                        name
+                    }
+                }
+            }
+            lastMessagePlainText,
+            lastMessageCreatedTimestamp
+        }
     }
-  }
 }

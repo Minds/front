@@ -1,0 +1,28 @@
+<h4
+  class="m-networkAdminEnableLandingPage__title"
+  i18n="@@NETWORK_ENABLE_LANDING_PAGE__TITLE"
+>
+  Landing page
+</h4>
+<p
+  class="m-networkAdminEnableLandingPage__body"
+  i18n="@@NETWORK_ENABLE_LANDING_PAGE__DESCRIPTION"
+>
+  Enable this setting if you want logged out users to see a branded landing page
+  instead of posts made on the network.
+</p>
+<div class="m-networkAdminEnableLandingPage__toggleContainer">
+  <m-toggle
+    class="m-networkAdminEnableLandingPage__toggle"
+    [mModel]="enabledToggleState"
+    (mModelChange)="onEnabledToggle($event)"
+    leftValue="off"
+    rightValue="on"
+    offState="off"
+  ></m-toggle>
+  <span
+    class="m-networkAdminEnableLandingPage__toggleText"
+    i18n="NETWORK_ENABLE_LANDING_PAGE__TOGGLE_LABEL"
+    >Landing page</span
+  >
+</div>

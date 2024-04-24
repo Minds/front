@@ -1,14 +1,20 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
+  GetChatRoomGQL,
   GetChatRoomsListGQL,
   GetChatRoomsListQuery,
 } from '../../../../graphql/generated.engine';
 import { MockService } from '../../../utils/mock';
 import { ToasterService } from '../../../common/services/toaster.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, Subject, of } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client';
 import { mockChatRoomEdge } from '../../../mocks/chat.mock';
 import { ChatRoomsListService } from './chat-rooms-list.service';
+import {
+  ChatRoomEvent,
+  GlobalChatSocketService,
+} from './global-chat-socket.service';
+import { Session } from '../../../services/session';
 
 const mockResponse: ApolloQueryResult<GetChatRoomsListQuery> = {
   loading: false,
@@ -38,6 +44,22 @@ describe('ChatRoomsListService', () => {
           useValue: jasmine.createSpyObj<GetChatRoomsListGQL>(['watch']),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
+        {
+          provide: GlobalChatSocketService,
+          useValue: MockService(GlobalChatSocketService, {
+            has: ['globalEvents$'],
+            props: {
+              globalEvents$: {
+                get: () => new Subject<ChatRoomEvent>(),
+              },
+            },
+          }),
+        },
+        { provide: Session, useValue: MockService(Session) },
+        {
+          provide: GetChatRoomGQL,
+          useValue: jasmine.createSpyObj<GetChatRoomGQL>(['fetch']),
+        },
       ],
     });
 
@@ -132,5 +154,102 @@ describe('ChatRoomsListService', () => {
 
     expect((service as any)._initialized$.getValue()).toBe(false);
     expect((service as any).queryRef.refetch).toHaveBeenCalled();
+  });
+
+  describe('setIsViewingChatRoomList', () => {
+    it('should set isViewingChatRoomList to true', () => {
+      (service as any).setIsViewingChatRoomList(true);
+      expect((service as any).isViewingChatRoomsList).toBe(true);
+    });
+
+    it('should set isViewingChatRoomList to false', () => {
+      (service as any).setIsViewingChatRoomList(false);
+      expect((service as any).isViewingChatRoomsList).toBe(false);
+    });
+  });
+
+  describe('socket event handling', () => {
+    it('should handle new message events by reloading chat room', fakeAsync(() => {
+      service.setIsViewingChatRoomList(true);
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      const roomGuid: string = '1234567890';
+
+      (service as any).getChatRoomGql.fetch.and.returnValue(
+        of({
+          data: { chatRoom: mockChatRoomEdge },
+        })
+      );
+
+      (service as any).globalChatSocketService.globalEvents$.next({
+        data: { type: 'NEW_MESSAGE' },
+        roomGuid: roomGuid,
+      });
+      tick();
+
+      expect((service as any).getChatRoomGql.fetch).toHaveBeenCalledWith(
+        {
+          roomGuid: roomGuid,
+          firstMembers: 12,
+          afterMembers: 0,
+        },
+        { fetchPolicy: 'network-only' }
+      );
+    }));
+
+    it('should NOT handle new message events with no data', fakeAsync(() => {
+      service.setIsViewingChatRoomList(true);
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      const roomGuid: string = '1234567890';
+
+      (service as any).globalChatSocketService.globalEvents$.next({
+        data: {},
+        roomGuid: roomGuid,
+      });
+      tick();
+
+      expect((service as any).getChatRoomGql.fetch).not.toHaveBeenCalled();
+    }));
+
+    it('should NOT handle new message events that do not have the type NEW_MESSAGE', fakeAsync(() => {
+      service.setIsViewingChatRoomList(true);
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      const roomGuid: string = '1234567890';
+
+      (service as any).globalChatSocketService.globalEvents$.next({
+        data: { type: 'OTHER_TYPE' },
+        roomGuid: roomGuid,
+      });
+      tick();
+
+      expect((service as any).getChatRoomGql.fetch).not.toHaveBeenCalled();
+    }));
+
+    it('should NOT handle new message events when not logged in', fakeAsync(() => {
+      service.setIsViewingChatRoomList(true);
+      (service as any).session.isLoggedIn.and.returnValue(false);
+      const roomGuid: string = '1234567890';
+
+      (service as any).globalChatSocketService.globalEvents$.next({
+        data: { type: 'NEW_MESSAGE' },
+        roomGuid: roomGuid,
+      });
+      tick();
+
+      expect((service as any).getChatRoomGql.fetch).not.toHaveBeenCalled();
+    }));
+
+    it('should NOT handle new message events when not viewing chat room list', fakeAsync(() => {
+      service.setIsViewingChatRoomList(false);
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      const roomGuid: string = '1234567890';
+
+      (service as any).globalChatSocketService.globalEvents$.next({
+        data: { type: 'NEW_MESSAGE' },
+        roomGuid: roomGuid,
+      });
+      tick();
+
+      expect((service as any).getChatRoomGql.fetch).not.toHaveBeenCalled();
+    }));
   });
 });

@@ -184,9 +184,14 @@ export type AppReadyMobileConfig = {
   ACCENT_COLOR_DARK: Scalars['String']['output'];
   ACCENT_COLOR_LIGHT: Scalars['String']['output'];
   API_URL: Scalars['String']['output'];
+  APP_ANDROID_PACKAGE?: Maybe<Scalars['String']['output']>;
   APP_HOST: Scalars['String']['output'];
+  APP_IOS_BUNDLE?: Maybe<Scalars['String']['output']>;
   APP_NAME: Scalars['String']['output'];
+  APP_SCHEME?: Maybe<Scalars['String']['output']>;
+  APP_SLUG?: Maybe<Scalars['String']['output']>;
   APP_SPLASH_RESIZE: Scalars['String']['output'];
+  EAS_PROJECT_ID?: Maybe<Scalars['String']['output']>;
   TENANT_ID: Scalars['Int']['output'];
   THEME: Scalars['String']['output'];
   WELCOME_LOGO: Scalars['String']['output'];
@@ -240,6 +245,7 @@ export type BoostsConnection = ConnectionInterface & {
 export type ChatMessageEdge = EdgeInterface & {
   __typename?: 'ChatMessageEdge';
   cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   node: ChatMessageNode;
 };
 
@@ -248,8 +254,12 @@ export type ChatMessageNode = NodeInterface & {
   /** The unique guid of the message */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  /** The type of message. */
+  messageType: ChatMessageTypeEnum;
   /** The plaintext (non-encrypted) message */
   plainText: Scalars['String']['output'];
+  /** Rich embed node belonging to the message. */
+  richEmbed?: Maybe<ChatRichEmbedNode>;
   /** The guid of the room the message belongs to */
   roomGuid: Scalars['String']['output'];
   sender: UserEdge;
@@ -259,10 +269,44 @@ export type ChatMessageNode = NodeInterface & {
   timeCreatedUnix: Scalars['String']['output'];
 };
 
+export enum ChatMessageTypeEnum {
+  Audio = 'AUDIO',
+  Image = 'IMAGE',
+  RichEmbed = 'RICH_EMBED',
+  Text = 'TEXT',
+  Video = 'VIDEO',
+}
+
 export type ChatMessagesConnection = ConnectionInterface & {
   __typename?: 'ChatMessagesConnection';
   edges: Array<ChatMessageEdge>;
   pageInfo: PageInfo;
+};
+
+export type ChatRichEmbedNode = NodeInterface & {
+  __typename?: 'ChatRichEmbedNode';
+  /** The author of the rich embed. */
+  author?: Maybe<Scalars['String']['output']>;
+  /** The canonical URL of the rich embed. */
+  canonicalUrl: Scalars['String']['output'];
+  /** The created timestamp of the rich embed in ISO 8601 format. */
+  createdTimestampISO8601?: Maybe<Scalars['String']['output']>;
+  /** The created timestamp of the rich embed in Unix format. */
+  createdTimestampUnix?: Maybe<Scalars['String']['output']>;
+  /** The description of the rich embed. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The unique ID of the rich embed for GraphQL. */
+  id: Scalars['ID']['output'];
+  /** The thumbnail src of the rich embed. */
+  thumbnailSrc?: Maybe<Scalars['String']['output']>;
+  /** The title of the rich embed. */
+  title?: Maybe<Scalars['String']['output']>;
+  /** The updated timestamp of the rich embed in ISO 8601 format. */
+  updatedTimestampISO8601?: Maybe<Scalars['String']['output']>;
+  /** The updated timestamp of the rich embed in Unix format. */
+  updatedTimestampUnix?: Maybe<Scalars['String']['output']>;
+  /** The URL of the rich embed. */
+  url: Scalars['String']['output'];
 };
 
 export type ChatRoomEdge = EdgeInterface & {
@@ -316,7 +360,7 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
-  areChatRoomNotificationsMuted?: Maybe<Scalars['Boolean']['output']>;
+  chatRoomNotificationStatus?: Maybe<ChatRoomNotificationStatusEnum>;
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -329,6 +373,12 @@ export type ChatRoomNode = NodeInterface & {
   /** The timestamp the roomt was created at */
   timeCreatedUnix: Scalars['String']['output'];
 };
+
+export enum ChatRoomNotificationStatusEnum {
+  All = 'ALL',
+  Mentions = 'MENTIONS',
+  Muted = 'MUTED',
+}
 
 export enum ChatRoomRoleEnum {
   Member = 'MEMBER',
@@ -555,6 +605,7 @@ export type FeaturedGroup = FeaturedEntityInterface &
     __typename?: 'FeaturedGroup';
     autoPostSubscription: Scalars['Boolean']['output'];
     autoSubscribe: Scalars['Boolean']['output'];
+    briefDescription?: Maybe<Scalars['String']['output']>;
     entityGuid: Scalars['String']['output'];
     id: Scalars['ID']['output'];
     /** Gets count of members. */
@@ -858,6 +909,8 @@ export type MultiTenantConfig = {
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
+  customHomePageDescription?: Maybe<Scalars['String']['output']>;
+  customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
@@ -866,16 +919,20 @@ export type MultiTenantConfig = {
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
+  walledGardenEnabled?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
+  customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
+  walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MultiTenantDomain = {
@@ -916,11 +973,11 @@ export type Mutation = {
   createNewReport: Scalars['Boolean']['output'];
   createRssFeed: RssFeed;
   createTenant: Tenant;
-  /** Deletes a navigation item */
-  deleteCustomNavigationItem: Scalars['Boolean']['output'];
   deleteChatMessage: Scalars['Boolean']['output'];
   deleteChatRoom: Scalars['Boolean']['output'];
   deleteChatRoomAndBlockUser: Scalars['Boolean']['output'];
+  /** Deletes a navigation item */
+  deleteCustomNavigationItem: Scalars['Boolean']['output'];
   /** Delete an entity. */
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
@@ -956,12 +1013,14 @@ export type Mutation = {
   siteMembership: SiteMembership;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
-  tenantTrial: Tenant;
+  /** Create a trial tenant network. */
+  tenantTrial: TenantLoginRedirectDetails;
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
   /** Updates the order of the navigation items */
   updateCustomNavigationItemsOrder: Array<NavigationItem>;
+  updateNotificationSettings: Scalars['Boolean']['output'];
   updatePostSubscription: PostSubscription;
   updateSiteMembership: SiteMembership;
   /** Add or update a navigation item */
@@ -1036,9 +1095,6 @@ export type MutationCreateTenantArgs = {
   tenant?: InputMaybe<TenantInput>;
 };
 
-export type MutationDeleteCustomNavigationItemArgs = {
-  id: Scalars['String']['input'];
-};
 export type MutationDeleteChatMessageArgs = {
   messageGuid: Scalars['String']['input'];
   roomGuid: Scalars['String']['input'];
@@ -1050,6 +1106,10 @@ export type MutationDeleteChatRoomArgs = {
 
 export type MutationDeleteChatRoomAndBlockUserArgs = {
   roomGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteCustomNavigationItemArgs = {
+  id: Scalars['String']['input'];
 };
 
 export type MutationDeleteEntityArgs = {
@@ -1174,6 +1234,11 @@ export type MutationUpdateAccountArgs = {
 
 export type MutationUpdateCustomNavigationItemsOrderArgs = {
   orderedIds: Array<Scalars['String']['input']>;
+};
+
+export type MutationUpdateNotificationSettingsArgs = {
+  notificationStatus: ChatRoomNotificationStatusEnum;
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationUpdatePostSubscriptionArgs = {
@@ -1370,6 +1435,7 @@ export type Query = {
   chatMessages: ChatMessagesConnection;
   /** Returns a chat room */
   chatRoom: ChatRoomEdge;
+  chatRoomGuids: Array<Scalars['String']['output']>;
   chatRoomInviteRequests: ChatRoomsConnection;
   /** Returns a list of chat rooms available to a user */
   chatRoomList: ChatRoomsConnection;
@@ -1917,6 +1983,13 @@ export type TenantInput = {
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type TenantLoginRedirectDetails = {
+  __typename?: 'TenantLoginRedirectDetails';
+  jwtToken?: Maybe<Scalars['String']['output']>;
+  loginUrl?: Maybe<Scalars['String']['output']>;
+  tenant: Tenant;
+};
+
 export enum TenantPlanEnum {
   Community = 'COMMUNITY',
   Enterprise = 'ENTERPRISE',
@@ -2133,6 +2206,7 @@ export type CreateChatMessageMutation = {
   __typename?: 'Mutation';
   createChatMessage: {
     __typename?: 'ChatMessageEdge';
+    id: string;
     cursor: string;
     node: {
       __typename?: 'ChatMessageNode';
@@ -2155,6 +2229,14 @@ export type CreateChatMessageMutation = {
           id: string;
         };
       };
+      richEmbed?: {
+        __typename?: 'ChatRichEmbedNode';
+        id: string;
+        url: string;
+        canonicalUrl: string;
+        title?: string | null;
+        thumbnailSrc?: string | null;
+      } | null;
     };
   };
 };
@@ -2224,6 +2306,7 @@ export type GetChatMessagesQuery = {
     edges: Array<{
       __typename?: 'ChatMessageEdge';
       cursor: string;
+      id: string;
       node: {
         __typename?: 'ChatMessageNode';
         id: string;
@@ -2245,6 +2328,14 @@ export type GetChatMessagesQuery = {
             guid: string;
           };
         };
+        richEmbed?: {
+          __typename?: 'ChatRichEmbedNode';
+          id: string;
+          url: string;
+          canonicalUrl: string;
+          title?: string | null;
+          thumbnailSrc?: string | null;
+        } | null;
       };
     }>;
     pageInfo: {
@@ -2255,6 +2346,13 @@ export type GetChatMessagesQuery = {
       endCursor?: string | null;
     };
   };
+};
+
+export type GetChatRoomGuidsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetChatRoomGuidsQuery = {
+  __typename?: 'Query';
+  chatRoomGuids: Array<string>;
 };
 
 export type GetChatRoomInviteRequestsQueryVariables = Exact<{
@@ -2348,7 +2446,11 @@ export type GetChatRoomQuery = {
   __typename?: 'Query';
   chatRoom: {
     __typename?: 'ChatRoomEdge';
+    id: string;
     cursor: string;
+    unreadMessagesCount: number;
+    lastMessagePlainText?: string | null;
+    lastMessageCreatedTimestamp?: number | null;
     node: {
       __typename?: 'ChatRoomNode';
       guid: string;
@@ -2356,7 +2458,7 @@ export type GetChatRoomQuery = {
       id: string;
       isChatRequest: boolean;
       isUserRoomOwner?: boolean | null;
-      areChatRoomNotificationsMuted?: boolean | null;
+      chatRoomNotificationStatus?: ChatRoomNotificationStatusEnum | null;
     };
     members: {
       __typename?: 'ChatRoomMembersConnection';
@@ -2432,13 +2534,6 @@ export type GetChatRoomsListQuery = {
   };
 };
 
-export type GetChatUnreadCountQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetChatUnreadCountQuery = {
-  __typename?: 'Query';
-  chatUnreadMessagesCount: number;
-};
-
 export type GetTotalChatRoomMembersQueryVariables = Exact<{
   roomGuid: Scalars['String']['input'];
 }>;
@@ -2455,6 +2550,13 @@ export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
 export type GetTotalRoomInviteRequestsQuery = {
   __typename?: 'Query';
   totalRoomInviteRequests: number;
+};
+
+export type InitChatQueryVariables = Exact<{ [key: string]: never }>;
+
+export type InitChatQuery = {
+  __typename?: 'Query';
+  chatUnreadMessagesCount: number;
 };
 
 export type LeaveChatRoomMutationVariables = Exact<{
@@ -2498,6 +2600,16 @@ export type SetReadReceiptMutation = {
     id: string;
     unreadMessagesCount: number;
   };
+};
+
+export type UpdateChatRoomNotificationSettingsMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  notificationStatus: ChatRoomNotificationStatusEnum;
+}>;
+
+export type UpdateChatRoomNotificationSettingsMutation = {
+  __typename?: 'Mutation';
+  updateNotificationSettings: boolean;
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -2736,6 +2848,7 @@ export type GetTenantAnalyticsTableQuery = {
           }
         | { __typename?: 'BoostNode'; id: string }
         | { __typename?: 'ChatMessageNode'; id: string }
+        | { __typename?: 'ChatRichEmbedNode'; id: string }
         | { __typename?: 'ChatRoomNode'; id: string }
         | { __typename?: 'CommentNode'; id: string }
         | { __typename?: 'CustomPage'; id: string }
@@ -2788,6 +2901,7 @@ export type GetFeaturedEntitiesQuery = {
         | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
         | { __typename?: 'BoostNode'; id: string }
         | { __typename?: 'ChatMessageNode'; id: string }
+        | { __typename?: 'ChatRichEmbedNode'; id: string }
         | { __typename?: 'ChatRoomNode'; id: string }
         | { __typename?: 'CommentNode'; id: string }
         | { __typename?: 'CustomPage'; id: string }
@@ -2800,6 +2914,7 @@ export type GetFeaturedEntitiesQuery = {
             autoSubscribe: boolean;
             autoPostSubscription: boolean;
             name: string;
+            briefDescription?: string | null;
             membersCount: number;
           }
         | {
@@ -2966,6 +3081,7 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -3034,6 +3150,14 @@ export type GetReportsQuery = {
                             guid: string;
                           };
                         };
+                        richEmbed?: {
+                          __typename?: 'ChatRichEmbedNode';
+                          id: string;
+                          url: string;
+                          canonicalUrl: string;
+                          title?: string | null;
+                          thumbnailSrc?: string | null;
+                        } | null;
                       };
                     }
                   | {
@@ -3087,6 +3211,7 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -3155,6 +3280,14 @@ export type GetReportsQuery = {
                             guid: string;
                           };
                         };
+                        richEmbed?: {
+                          __typename?: 'ChatRichEmbedNode';
+                          id: string;
+                          url: string;
+                          canonicalUrl: string;
+                          title?: string | null;
+                          thumbnailSrc?: string | null;
+                        } | null;
                       };
                     }
                   | {
@@ -3184,6 +3317,7 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -3252,6 +3386,14 @@ export type GetReportsQuery = {
                             guid: string;
                           };
                         };
+                        richEmbed?: {
+                          __typename?: 'ChatRichEmbedNode';
+                          id: string;
+                          url: string;
+                          canonicalUrl: string;
+                          title?: string | null;
+                          thumbnailSrc?: string | null;
+                        } | null;
                       };
                     }
                   | {
@@ -3364,6 +3506,14 @@ export type GetReportsQuery = {
                         guid: string;
                       };
                     };
+                    richEmbed?: {
+                      __typename?: 'ChatRichEmbedNode';
+                      id: string;
+                      url: string;
+                      canonicalUrl: string;
+                      title?: string | null;
+                      thumbnailSrc?: string | null;
+                    } | null;
                   };
                 }
               | {
@@ -3727,6 +3877,9 @@ export type GetMultiTenantConfigQuery = {
     canEnableFederation?: boolean | null;
     federationDisabled?: boolean | null;
     replyEmail?: string | null;
+    customHomePageEnabled?: boolean | null;
+    customHomePageDescription?: string | null;
+    walledGardenEnabled?: boolean | null;
   } | null;
 };
 
@@ -3831,6 +3984,9 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
+  walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -3881,7 +4037,12 @@ export type StartTenantTrialMutationVariables = Exact<{ [key: string]: never }>;
 
 export type StartTenantTrialMutation = {
   __typename?: 'Mutation';
-  tenantTrial: { __typename?: 'Tenant'; id: number };
+  tenantTrial: {
+    __typename?: 'TenantLoginRedirectDetails';
+    loginUrl?: string | null;
+    jwtToken?: string | null;
+    tenant: { __typename?: 'Tenant'; id: number };
+  };
 };
 
 export type UnassignUserFromRoleMutationVariables = Exact<{
@@ -4066,6 +4227,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -4141,6 +4303,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4232,6 +4395,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4290,6 +4454,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4471,6 +4636,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -4546,6 +4712,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4637,6 +4804,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4695,6 +4863,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -4846,6 +5015,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -4921,6 +5091,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -5012,6 +5183,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -5070,6 +5242,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -5288,6 +5461,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -5349,6 +5523,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -5383,6 +5558,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -5656,6 +5832,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -5711,6 +5888,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -5802,6 +5980,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -5860,6 +6039,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6041,6 +6221,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -6096,6 +6277,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6187,6 +6369,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6245,6 +6428,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6396,6 +6580,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename?: 'ChatMessageNode'; id: string }
+            | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
             | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'CustomPage'; id: string }
@@ -6451,6 +6636,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6542,6 +6728,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6600,6 +6787,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename?: 'ChatMessageNode'; id: string }
+                        | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
                         | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'CustomPage'; id: string }
@@ -6802,6 +6990,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -6863,6 +7052,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -6897,6 +7087,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
+                    | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
                     | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'CustomPage'; id: string }
@@ -7413,6 +7604,7 @@ export class GetBoostFeedGQL extends Apollo.Query<
 export const CreateChatMessageDocument = gql`
   mutation CreateChatMessage($plainText: String!, $roomGuid: String!) {
     createChatMessage(plainText: $plainText, roomGuid: $roomGuid) {
+      id
       cursor
       node {
         id
@@ -7431,6 +7623,13 @@ export const CreateChatMessageDocument = gql`
             guid
             id
           }
+        }
+        richEmbed {
+          id
+          url
+          canonicalUrl
+          title
+          thumbnailSrc
         }
       }
     }
@@ -7553,6 +7752,7 @@ export const GetChatMessagesDocument = gql`
     ) {
       edges {
         cursor
+        id
         node {
           id
           guid
@@ -7570,6 +7770,13 @@ export const GetChatMessagesDocument = gql`
               id
               guid
             }
+          }
+          richEmbed {
+            id
+            url
+            canonicalUrl
+            title
+            thumbnailSrc
           }
         }
       }
@@ -7591,6 +7798,25 @@ export class GetChatMessagesGQL extends Apollo.Query<
   GetChatMessagesQueryVariables
 > {
   document = GetChatMessagesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatRoomGuidsDocument = gql`
+  query GetChatRoomGuids {
+    chatRoomGuids
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomGuidsGQL extends Apollo.Query<
+  GetChatRoomGuidsQuery,
+  GetChatRoomGuidsQueryVariables
+> {
+  document = GetChatRoomGuidsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -7699,6 +7925,7 @@ export const GetChatRoomDocument = gql`
     $afterMembers: Int!
   ) {
     chatRoom(roomGuid: $roomGuid) {
+      id
       cursor
       node {
         guid
@@ -7706,7 +7933,7 @@ export const GetChatRoomDocument = gql`
         id
         isChatRequest
         isUserRoomOwner
-        areChatRoomNotificationsMuted
+        chatRoomNotificationStatus
       }
       members(first: $firstMembers, after: $afterMembers) {
         edges {
@@ -7726,6 +7953,9 @@ export const GetChatRoomDocument = gql`
           endCursor
         }
       }
+      unreadMessagesCount
+      lastMessagePlainText
+      lastMessageCreatedTimestamp
     }
   }
 `;
@@ -7794,25 +8024,6 @@ export class GetChatRoomsListGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const GetChatUnreadCountDocument = gql`
-  query GetChatUnreadCount {
-    chatUnreadMessagesCount
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetChatUnreadCountGQL extends Apollo.Query<
-  GetChatUnreadCountQuery,
-  GetChatUnreadCountQueryVariables
-> {
-  document = GetChatUnreadCountDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
 export const GetTotalChatRoomMembersDocument = gql`
   query GetTotalChatRoomMembers($roomGuid: String!) {
     chatRoom(roomGuid: $roomGuid) {
@@ -7848,6 +8059,25 @@ export class GetTotalRoomInviteRequestsGQL extends Apollo.Query<
   GetTotalRoomInviteRequestsQueryVariables
 > {
   document = GetTotalRoomInviteRequestsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const InitChatDocument = gql`
+  query InitChat {
+    chatUnreadMessagesCount
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class InitChatGQL extends Apollo.Query<
+  InitChatQuery,
+  InitChatQueryVariables
+> {
+  document = InitChatDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -7933,6 +8163,31 @@ export class SetReadReceiptGQL extends Apollo.Mutation<
   SetReadReceiptMutationVariables
 > {
   document = SetReadReceiptDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdateChatRoomNotificationSettingsDocument = gql`
+  mutation UpdateChatRoomNotificationSettings(
+    $roomGuid: String!
+    $notificationStatus: ChatRoomNotificationStatusEnum!
+  ) {
+    updateNotificationSettings(
+      roomGuid: $roomGuid
+      notificationStatus: $notificationStatus
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdateChatRoomNotificationSettingsGQL extends Apollo.Mutation<
+  UpdateChatRoomNotificationSettingsMutation,
+  UpdateChatRoomNotificationSettingsMutationVariables
+> {
+  document = UpdateChatRoomNotificationSettingsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -8334,6 +8589,7 @@ export const GetFeaturedEntitiesDocument = gql`
             autoSubscribe
             autoPostSubscription
             name
+            briefDescription
             membersCount
           }
         }
@@ -8595,6 +8851,13 @@ export const GetReportsDocument = gql`
                       id
                       guid
                     }
+                  }
+                  richEmbed {
+                    id
+                    url
+                    canonicalUrl
+                    title
+                    thumbnailSrc
                   }
                 }
               }
@@ -9140,6 +9403,9 @@ export const GetMultiTenantConfigDocument = gql`
       canEnableFederation
       federationDisabled
       replyEmail
+      customHomePageEnabled
+      customHomePageDescription
+      walledGardenEnabled
     }
   }
 `;
@@ -9304,6 +9570,9 @@ export const SetMultiTenantConfigDocument = gql`
     $federationDisabled: Boolean
     $replyEmail: String
     $nsfwEnabled: Boolean
+    $customHomePageEnabled: Boolean
+    $customHomePageDescription: String
+    $walledGardenEnabled: Boolean
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
@@ -9313,6 +9582,9 @@ export const SetMultiTenantConfigDocument = gql`
         federationDisabled: $federationDisabled
         replyEmail: $replyEmail
         nsfwEnabled: $nsfwEnabled
+        customHomePageEnabled: $customHomePageEnabled
+        customHomePageDescription: $customHomePageDescription
+        walledGardenEnabled: $walledGardenEnabled
       }
     )
   }
@@ -9395,7 +9667,11 @@ export class SetRolePermissionGQL extends Apollo.Mutation<
 export const StartTenantTrialDocument = gql`
   mutation StartTenantTrial {
     tenantTrial {
-      id
+      tenant {
+        id
+      }
+      loginUrl
+      jwtToken
     }
   }
 `;

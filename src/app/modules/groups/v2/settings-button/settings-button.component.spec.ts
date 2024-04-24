@@ -11,7 +11,6 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { GroupService } from '../group.service';
 import { By } from '@angular/platform-browser';
 import { GroupEditModalService } from '../edit/edit.modal.service';
-import { BoostGroupExperimentService } from '../../../experiments/sub-services/boost-groups-experiment.service';
 import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../services/session-mock';
@@ -87,10 +86,6 @@ describe('GroupSettingsButton', () => {
         {
           provide: BoostModalV2LazyService,
           useValue: MockService(BoostModalV2LazyService),
-        },
-        {
-          provide: BoostGroupExperimentService,
-          useValue: MockService(BoostGroupExperimentService),
         },
         {
           provide: GroupEditModalService,

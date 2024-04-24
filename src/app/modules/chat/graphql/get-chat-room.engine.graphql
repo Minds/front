@@ -1,35 +1,39 @@
 query GetChatRoom(
-  $roomGuid: String!
-  $firstMembers: Int!
-  $afterMembers: Int!
+    $roomGuid: String!
+    $firstMembers: Int!
+    $afterMembers: Int!
 ) {
-  chatRoom(roomGuid: $roomGuid) {
-    cursor
-    node {
-      guid
-      roomType
-      id
-      isChatRequest
-      isUserRoomOwner
-      areChatRoomNotificationsMuted
-    }
-    members(first: $firstMembers, after: $afterMembers) {
-      edges {
+    chatRoom(roomGuid: $roomGuid) {
+        id
         cursor
-        role
         node {
-          name
-          username
-          id
-          guid
+            guid
+            roomType
+            id
+            isChatRequest
+            isUserRoomOwner
+            chatRoomNotificationStatus
         }
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
+        members(first: $firstMembers, after: $afterMembers) {
+            edges {
+                cursor
+                role
+                node {
+                    name
+                    username
+                    id
+                    guid
+                }
+            }
+            pageInfo {
+                hasNextPage
+                hasPreviousPage
+                startCursor
+                endCursor
+            }
+        }
+        unreadMessagesCount
+        lastMessagePlainText,
+        lastMessageCreatedTimestamp
     }
-  }
 }

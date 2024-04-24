@@ -1,5 +1,5 @@
 query GetTotalChatRoomMembers($roomGuid: String!) {
-  chatRoom(roomGuid: $roomGuid) {
-    totalMembers
-  }
+    chatRoom(roomGuid: $roomGuid) {
+        totalMembers
+    }
 }

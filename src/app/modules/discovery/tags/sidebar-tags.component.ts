@@ -7,7 +7,6 @@ import {
   map,
 } from 'rxjs';
 import { DiscoveryTagsService } from './tags.service';
-import { SearchGqlExperimentService } from '../../search/search-gql-experiment.service';
 import { Session } from '../../../services/session';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ToasterService } from '../../../common/services/toaster.service';
@@ -63,8 +62,7 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   trending$: Observable<any> = this.tagsService.trending$;
   activityRelated$: Observable<any> = this.tagsService.activityRelated$;
 
-  parentPathSubscription: Subscription;
-  parentPath: string = '/discovery';
+  parentPath: string = '/';
 
   isLoggedInSubscription: Subscription;
 
@@ -72,7 +70,6 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
   constructor(
     public tagsService: DiscoveryTagsService,
-    private searchExp: SearchGqlExperimentService,
     private session: Session,
     private composerModal: ComposerModalService,
     private injector: Injector,
@@ -81,10 +78,6 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (this.searchExp.isActive()) {
-      this.parentPath = '/';
-    }
-
     if (!this._context) {
       this._context = 'user';
     }

@@ -1,6 +1,6 @@
-mutation SetReadReceipt($roomGuid: String!, $messageGuid: String!) {
-  readReceipt(roomGuid: $roomGuid, messageGuid: $messageGuid) {
-    id
-    unreadMessagesCount
-  }
+mutation SetReadReceipt ($roomGuid: String!, $messageGuid: String!) {
+    readReceipt(roomGuid: $roomGuid, messageGuid: $messageGuid) {
+        id
+        unreadMessagesCount
+    }
 }

@@ -47,6 +47,9 @@ import { NetworkAdminConsoleNavigationMenuComponent } from './tabs/navigation/ta
 import { NetworkAdminConsoleNavigationListComponent } from './tabs/navigation/components/list/list.component';
 import { SelectableIconComponent } from '../../../common/standalone/selectable-icon/selectable-icon.component';
 import { CanDeactivateGuardService } from '../../../services/can-deactivate-guard';
+import { NetworkAdminConsoleLandingPageDescriptionComponent } from './tabs/general/landing-page-description/landing-page-description.component';
+import { NetworkAdminConsoleEnableLandingPageToggleComponent } from './tabs/general/enable-landing-page-toggle/enable-landing-page-toggle.component';
+import { NetworkAdminConsoleEnableWalledGardenToggleComponent } from './tabs/general/enable-walled-garden-toggle/enable-walled-garden-toggle.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -203,6 +206,9 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
     NetworkAdminConsoleFederationSettingsComponent,
+    NetworkAdminConsoleLandingPageDescriptionComponent,
+    NetworkAdminConsoleEnableLandingPageToggleComponent,
+    NetworkAdminConsoleEnableWalledGardenToggleComponent,
     NetworkAdminConsoleReplyEmailSettingsComponent,
     NetworkAdminConsoleNsfwToggleComponent,
     NetworkAdminConsoleInviteComponent,

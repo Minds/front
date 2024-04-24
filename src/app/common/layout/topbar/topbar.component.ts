@@ -23,7 +23,6 @@ import { PageLayoutService } from '../page-layout.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable, map, of, BehaviorSubject } from 'rxjs';
 import { AuthRedirectService } from '../../services/auth-redirect.service';
-import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { TopbarAlertService } from '../../components/topbar-alert/topbar-alert.service';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { MultiTenantConfigImageService } from '../../../modules/multi-tenant-network/services/config-image.service';
@@ -62,9 +61,13 @@ export class TopbarComponent implements OnInit, OnDestroy {
   protected readonly shouldShowTopbarAlert$: Observable<boolean> =
     this.topbarAlertService.shouldShow$;
 
-  /** Whether topbar is to be displayed in minimal light mode. */
+  /** Whether topbar is to be displayed in FORCED minimal light mode. */
   public readonly isMinimalLightMode$: BehaviorSubject<boolean> =
     this.topbarService.isMinimalLightMode$;
+
+  /** Whether topbar is to be displayed in minimal mode (dynamic based on light or dark theme). */
+  public readonly isMinimalMode$: BehaviorSubject<boolean> =
+    this.topbarService.isMinimalMode$;
 
   constructor(
     protected sidebarService: SidebarNavigationService,
@@ -79,7 +82,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
     public pageLayoutService: PageLayoutService,
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
-    private guestModeExperiment: GuestModeExperimentService,
     private topbarAlertService: TopbarAlertService,
     private tenantConfigImageService: MultiTenantConfigImageService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
@@ -224,6 +226,30 @@ export class TopbarComponent implements OnInit, OnDestroy {
   public getSmallLogoSrc$(): Observable<string> {
     if (!this.isTenantNetwork) {
       return of('assets/logos/bulb.svg');
+    }
+    return this.tenantConfigImageService.squareLogoPath$;
+  }
+
+  /**
+   * Gets full width minimal mode logo src depending on whether we're on a multi-tenant network.
+   * @returns { Observable<string> } - observable of logo src.
+   */
+  public getFullMinimalModeLogoSrc$(
+    mode: 'light' | 'dark'
+  ): Observable<string> {
+    if (!this.isTenantNetwork) {
+      return of('assets/logos/logo-monotone-light.png');
+    }
+    return this.tenantConfigImageService.horizontalLogoPath$;
+  }
+
+  /**
+   * Gets small minimal mode logo src depending on whether we're on a multi-tenant network.
+   * @returns { Observable<string> } - observable of logo src.
+   */
+  public getSmallMinimalModeLogoSrc$(): Observable<string> {
+    if (!this.isTenantNetwork) {
+      return of('assets/logos/logo-monotone-light-small.png');
     }
     return this.tenantConfigImageService.squareLogoPath$;
   }

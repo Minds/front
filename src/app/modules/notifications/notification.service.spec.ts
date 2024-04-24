@@ -11,7 +11,6 @@ import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
 import { MetaService } from '../../common/services/meta.service';
 import { NotificationCountSocketsService } from './notification-count-sockets.service';
-import { NotificationCountSocketsExperimentService } from '../experiments/sub-services/notification-count-sockets-experiment.service';
 import { SiteService } from '../../common/services/site.service';
 import { PLATFORM_ID } from '@angular/core';
 import userMock from '../../mocks/responses/user.mock';
@@ -40,10 +39,6 @@ describe('NotificationService', () => {
             },
           }),
         },
-        {
-          provide: NotificationCountSocketsExperimentService,
-          useValue: MockService(NotificationCountSocketsExperimentService),
-        },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: SiteService, useValue: MockService(SiteService) },
       ],
@@ -52,7 +47,6 @@ describe('NotificationService', () => {
     service = TestBed.inject(NotificationService);
 
     (service as any).session.getLoggedInUser.and.returnValue(userMock);
-    (service as any).notificationCountExperiment.isActive.and.returnValue(true);
   });
 
   afterEach(() => {
@@ -65,9 +59,6 @@ describe('NotificationService', () => {
 
   describe('listen', () => {
     it('should listen and subscribe to count changes', () => {
-      (service as any).notificationCountExperiment.isActive.and.returnValue(
-        true
-      );
       (service as any).session.getLoggedInUser.and.returnValue(userMock);
 
       service.listen();
@@ -77,23 +68,7 @@ describe('NotificationService', () => {
       ).toHaveBeenCalledWith(userMock.guid);
     });
 
-    it('should NOT listen and subscribe to count changes when experiment is off', () => {
-      (service as any).notificationCountExperiment.isActive.and.returnValue(
-        false
-      );
-      (service as any).session.getLoggedInUser.and.returnValue(userMock);
-
-      service.listen();
-
-      expect(
-        (service as any).notificationCountSockets.listen
-      ).not.toHaveBeenCalled();
-    });
-
     it('should NOT listen and subscribe to count changes when user is not logged in', () => {
-      (service as any).notificationCountExperiment.isActive.and.returnValue(
-        true
-      );
       (service as any).session.getLoggedInUser.and.returnValue(null);
 
       service.listen();
@@ -104,9 +79,6 @@ describe('NotificationService', () => {
     });
 
     it('should listen and sync count on new count$ emission', () => {
-      (service as any).notificationCountExperiment.isActive.and.returnValue(
-        true
-      );
       (service as any).session.getLoggedInUser.and.returnValue(userMock);
       const count: number = 4;
 
@@ -123,9 +95,6 @@ describe('NotificationService', () => {
   describe('unlisten', () => {
     it('should unlisten', () => {
       (service as any).notificationCountSocketSubscription = new Subscription();
-      (service as any).notificationCountExperiment.isActive.and.returnValue(
-        true
-      );
       expect(
         (service as any).notificationCountSocketSubscription.closed
       ).toBeFalse();
@@ -139,26 +108,11 @@ describe('NotificationService', () => {
         (service as any).notificationCountSocketSubscription.closed
       ).toBeTrue();
     });
-
-    it('should NOT unlisten when experiment is off', () => {
-      (service as any).notificationCountExperiment.isActive.and.returnValue(
-        false
-      );
-
-      service.unlisten();
-
-      expect(
-        (service as any).notificationCountSockets.leaveAll
-      ).not.toHaveBeenCalled();
-    });
   });
 
   describe('updateNotificationCount', () => {
     it('should update notification count', fakeAsync(() => {
       const responseCount: number = 5;
-      (service as any).notificationCountExperiment.isActive.and.returnValue(
-        true
-      );
       (service as any).session.isLoggedIn.and.returnValue(true);
       (service as any).client.get
         .withArgs('api/v3/notifications/unread-count', {})
@@ -178,9 +132,6 @@ describe('NotificationService', () => {
     }));
 
     it('should NOT update notification count if a user is not logged in', fakeAsync(() => {
-      (service as any).notificationCountExperiment.isActive.and.returnValue(
-        true
-      );
       (service as any).session.isLoggedIn.and.returnValue(false);
 
       service.updateNotificationCount();
@@ -189,36 +140,7 @@ describe('NotificationService', () => {
       expect((service as any).client.get).not.toHaveBeenCalled();
     }));
 
-    it('should update notification count when socket experiment is off', fakeAsync(() => {
-      const responseCount: number = 5;
-      (service as any).notificationCountExperiment.isActive.and.returnValue(
-        false
-      );
-      (service as any).session.isLoggedIn.and.returnValue(true);
-      (service as any).client.get
-        .withArgs('api/v3/notifications/unread-count', {})
-        .and.returnValue(Promise.resolve({ count: responseCount }));
-
-      service.updateNotificationCount();
-      tick();
-
-      expect((service as any).client.get).toHaveBeenCalledWith(
-        'api/v3/notifications/unread-count',
-        {}
-      );
-      expect((service as any).count).toBe(responseCount);
-      expect((service as any).metaService.setCounter).toHaveBeenCalledWith(
-        responseCount
-      );
-
-      discardPeriodicTasks();
-      flush();
-    }));
-
-    it('should NOT update notification count when experiment is off BUT a user is not logged in', fakeAsync(() => {
-      (service as any).notificationCountExperiment.isActive.and.returnValue(
-        true
-      );
+    it('should NOT update notification count when a user is not logged in', fakeAsync(() => {
       (service as any).session.isLoggedIn.and.returnValue(false);
 
       service.updateNotificationCount();

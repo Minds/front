@@ -153,7 +153,7 @@ export class NetworkAdminConsoleReportsListComponent
       ...this.reportEdges$.getValue(),
       ...newReportEdges.filter((edge: ReportEdge) => {
         return (
-          edge?.node?.entityEdge.__typename === 'ChatMessageEdge' ||
+          edge?.node?.entityEdge?.__typename === 'ChatMessageEdge' ||
           Boolean(edge?.node?.entityEdge?.node?.legacy)
         );
       }),

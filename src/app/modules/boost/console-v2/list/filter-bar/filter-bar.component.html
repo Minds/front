@@ -27,11 +27,7 @@
           data-ref="boost-console-tab-location-sidebar"
           i18n="@@BOOST_CONSOLE__TAB_CHANNEL_AND_GROUPS"
         >
-          <ng-container
-            *ngIf="boostGroupExperimentIsActive; else onlyChannelTextTemplate"
-            >Channel + groups</ng-container
-          >
-          <ng-template #onlyChannelTextTemplate>Channel</ng-template>
+          <ng-container>Channel + groups</ng-container>
         </a>
       </div>
       <div class="m-tabs__tab" (click)="onClickExploreTab($event)">
