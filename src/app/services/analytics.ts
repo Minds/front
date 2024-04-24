@@ -310,7 +310,7 @@ export class AnalyticsService implements OnDestroy {
    * @param eventName
    * @param properties
    */
-  private capture(eventName: string, properties?: Properties): void {
+  public capture(eventName: string, properties?: Properties): void {
     properties = properties || {};
     const $setOnce = properties.$set_once || {};
     const $set = properties.$set || {};

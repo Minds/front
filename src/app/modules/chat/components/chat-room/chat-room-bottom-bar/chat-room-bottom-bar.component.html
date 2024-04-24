@@ -3,6 +3,7 @@
     popperPlacement="top"
     iconName="mood"
     (emojiSelect)="onEmojiAdd($event)"
+    data-ref="data-minds-chat-emoji-picker"
   ></m-emojiPicker>
   <textarea
     #textArea
@@ -14,13 +15,13 @@
     rows="1"
     [autoGrow]
     (keydown.enter)="onEnterPress($event)"
-    data-test="data-minds-chat-message-input"
+    data-ref="data-minds-chat-message-input"
   ></textarea>
   <i
     *ngIf="!(sendInProgress$ | async); else messageInProgressSpinnerTemplate"
     class="material-icons m-chatRoomBottom__sendButton"
     (click)="onSubmit()"
-    data-test="data-minds-chat-send-message-button"
+    data-ref="data-minds-chat-send-message-button"
     >send</i
   >
 </form>
