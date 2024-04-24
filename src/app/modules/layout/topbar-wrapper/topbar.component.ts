@@ -14,6 +14,10 @@ export class TopbarWrapperComponent {
   public readonly isMinimalLightMode$: BehaviorSubject<boolean> =
     this.topbarService.isMinimalLightMode$;
 
+  /** Whether topbar is being displayed in minimal mode. */
+  public readonly isMinimalMode$: BehaviorSubject<boolean> =
+    this.topbarService.isMinimalMode$;
+
   constructor(
     public session: Session,
     private router: Router,

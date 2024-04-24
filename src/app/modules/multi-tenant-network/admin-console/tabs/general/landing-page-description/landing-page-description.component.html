@@ -1,0 +1,38 @@
+<p
+  class="m-landingPageDescription__description"
+  i18n="@@NETWORK_ADMIN_LANDING_PAGE_DESCRIPTION__DESCRIPTION"
+>
+  Edit the contents of your landing page description. This description will also
+  be used for SEO. Make sure that your description is under 160 characters.
+</p>
+<form
+  [formGroup]="formGroup"
+  *ngIf="getDescriptionFormControl() as descriptionFormControl"
+>
+  <textarea
+    formControlName="description"
+    autocomplete="off"
+    rows="4"
+  ></textarea>
+  <m-formError
+    *ngIf="descriptionFormControl.dirty"
+    [errors]="descriptionFormControl?.errors"
+  ></m-formError>
+
+  <m-button
+    *ngIf="{
+      inProgress: savingInProgress$ | async
+    } as buttonTemplateVariables"
+    color="blue"
+    size="large"
+    [disabled]="
+      !formGroup.valid || !formGroup.dirty || buttonTemplateVariables.inProgress
+    "
+    [saving]="buttonTemplateVariables.inProgress"
+    [solid]="false"
+    (onAction)="onSubmit()"
+    ><ng-container i18n="@@NETWORK_ADMIN_LANDING_PAGE_DESCRIPTION__SAVE_BUTTON"
+      >Save description</ng-container
+    ></m-button
+  >
+</form>

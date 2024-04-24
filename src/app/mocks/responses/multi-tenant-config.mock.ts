@@ -11,4 +11,7 @@ export const multiTenantConfigMock: MultiTenantConfig = {
   federationDisabled: true,
   replyEmail: 'some@email.com',
   canEnableFederation: true,
+  customHomePageEnabled: true,
+  customHomePageDescription: 'Hello world',
+  walledGardenEnabled: true,
 };

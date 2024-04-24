@@ -31,7 +31,9 @@ export type ButtonColor =
   | 'red'
   | 'primary'
   | 'secondary'
-  | 'black-always';
+  | 'black'
+  | 'black-always'
+  | 'white-always';
 
 @Component({
   selector: 'm-button',

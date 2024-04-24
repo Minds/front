@@ -1,4 +1,11 @@
-<m-defaultFeed__container *mIfTenant="true"></m-defaultFeed__container>
+<ng-container *mIfTenant="true">
+  <ng-container *ngIf="isTenantCustomHomepage; else defaultFeedTemplate">
+    <m-homepage--customTenant></m-homepage--customTenant>
+  </ng-container>
+  <ng-template #defaultFeedTemplate>
+    <m-defaultFeed__container></m-defaultFeed__container>
+  </ng-template>
+</ng-container>
 <m-productPage__base
   *mIfTenant="false"
   slugOverride="minds"

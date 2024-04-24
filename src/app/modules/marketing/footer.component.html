@@ -65,6 +65,12 @@
   <div
     *ngIf="data?.bottomLinks?.length"
     class="m-marketingFooter__section--legal"
+    [ngClass]="{
+      'm-marketingFooter__section--legal--leftAligned':
+        alignLegalSection === 'left',
+      'm-marketingFooter__section--legal--centerAligned':
+        alignLegalSection === 'center'
+    }"
   >
     <ul>
       <li *ngFor="let link of data?.bottomLinks">

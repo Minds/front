@@ -1,0 +1,25 @@
+<div class="m-tenantCustomHomepage__hero--left">
+  <img
+    class="m-tenantCustomHomepage__mainLogo"
+    [src]="logoPath$ | async"
+    [alt]="siteName + ' main logo'"
+    priority="high"
+  />
+</div>
+<div class="m-tenantCustomHomepage__hero--right">
+  <h1 class="m-tenantCustomHomepage__title">{{ siteName }}</h1>
+  <h2 class="m-tenantCustomHomepage__description">
+    {{ customHomepageDescription }}
+  </h2>
+  <a href="/register">
+    <m-button
+      color="black"
+      size="small"
+      solid="true"
+      softSquare="true"
+      data-ref="tenant-homepage-join-network-button"
+      i18n="@@TENANT_HOMEPAGE__HERO__JOIN_THE_NETWORK"
+      >Join the network</m-button
+    >
+  </a>
+</div>
