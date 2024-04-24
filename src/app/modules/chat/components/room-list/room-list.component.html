@@ -23,7 +23,6 @@
 
 <m-chatPendingRequests__widget
   *ngIf="hasPendingRequests$ | async"
-  data-ref="data-minds-chat-pending-requests-button"
 ></m-chatPendingRequests__widget>
 
 <ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
@@ -67,5 +66,6 @@
     [headerSize]="3"
     [descriptionSize]="2"
     (actionButtonClick)="onStartChatClick()"
+    data-ref="data-minds-chat-no-chats-empty-list-button"
   ></m-chat__actionCard>
 </ng-template>

@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
       *ngIf="totalRequests$ | async as totalRequests"
       class="m-chatPendingRequestsWidget__container"
       (click)="onPendingRequestsWidgetClick()"
+      data-ref="data-minds-chat-pending-requests-button"
     >
       <div class="m-chatPendingRequestsWidget__containerLeft">
         <i class="material-icons">sms</i>
