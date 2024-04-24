@@ -13,4 +13,5 @@ export const multiTenantConfigMock: MultiTenantConfig = {
   canEnableFederation: true,
   customHomePageEnabled: true,
   customHomePageDescription: 'Hello world',
+  walledGardenEnabled: true,
 };

@@ -43,7 +43,6 @@ import { WalletV2CreditsComponent } from './components/credits/credits.component
 import { WalletV2CreditsSummaryComponent } from './components/credits/summary/summary.component';
 import { WalletV2CreditsHistoryComponent } from './components/credits/history/history.component';
 import { WalletV2CreditsTransactionHistoryComponent } from './components/credits/history/transaction-history/transaction-history.component';
-import { GiftCardClaimExperimentGuard } from '../experiments/guards/gift-card-claim-experiment.guard';
 import { WalletV2CreditsSendComponent } from './components/credits/send/send.component';
 import { WalletV2CreditsProductUpgradeCardComponent } from './components/credits/send/product-upgrade-card/product-upgrade-card.component';
 import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
@@ -131,7 +130,6 @@ export const WALLET_ROUTES: Routes = [
       {
         path: 'credits',
         component: WalletV2CreditsComponent,
-        canActivate: [GiftCardClaimExperimentGuard],
         children: [
           {
             path: '',

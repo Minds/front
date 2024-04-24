@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { BoostGoal } from '../../../boost.types';
-import { BoostGoalsExperimentService } from '../../../../experiments/sub-services/boost-goals-experiment.service';
 import { BoostModalPanel } from '../../boost-modal-v2.types';
 
 /**
@@ -30,16 +29,10 @@ export class BoostModalV2GoalSelectorComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: BoostModalV2Service,
-    private formBuilder: FormBuilder,
-    private boostGoalsExperiment: BoostGoalsExperimentService
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    // Don't show this panel if the experiment is off
-    if (!this.boostGoalsExperiment.isActive()) {
-      this.service.activePanel$.next(BoostModalPanel.AUDIENCE);
-    }
-
     this.goalInitSubscription = this.service.goal$
       .pipe(take(1))
       .subscribe((initialGoal: BoostGoal): void => {

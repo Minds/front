@@ -10,7 +10,6 @@ import {
   OnDestroy,
   ViewRef,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 
 import { Subscription } from 'rxjs';
 import { WalletV2Service, Wallet } from './wallet-v2.service';
@@ -19,7 +18,6 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import sidebarMenu from './sidebar-menu.default';
 import { DataTab } from '../../../interfaces/dashboard';
 import { Menu } from '../../../interfaces/menu';
-import { GiftCardClaimExperimentService } from '../../experiments/sub-services/gift-card-claim-experiment.service';
 
 /**
  * Top-level container for all things wallet
@@ -57,16 +55,12 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
 
   tabs: DataTab[] = [];
 
-  /** Whether gift card experiment is active. */
-  public isGiftCardClaimExperimentActive: boolean = false;
-
   constructor(
     protected walletService: WalletV2Service,
     protected session: Session,
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
-    private giftCardClaimExperiment: GiftCardClaimExperimentService,
     @Inject(PLATFORM_ID) private platformId
   ) {}
 
@@ -75,9 +69,6 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/login']);
       return;
     }
-
-    this.isGiftCardClaimExperimentActive =
-      this.giftCardClaimExperiment.isActive();
 
     this.walletService.loadWallet();
 

@@ -9,40 +9,13 @@
     i18n="@@FEED_NOTICE__PLUS_UPGRADE__UPGRADE_TO_PLUS"
     >Upgrade to Minds+</span
   >
-  <p class="m-feedNotice__body" [ngSwitch]="experimentVariation">
-    <ng-container
-      *ngSwitchCase="1"
-      i18n="@@FEED_NOTICE__PLUS_UPGRADE__FREE_THINKING_CONTENT_CREATORS"
-    >
-      Free-thinking content creators like you earn more and grow their reach
-      with Minds+.
-    </ng-container>
-    <ng-container
-      *ngSwitchCase="2"
-      i18n="@@FEED_NOTICE__PLUS_UPGRADE__ACCESS_EXCLUSIVE_CONTENT"
-    >
-      Access exclusive content produced by the Minds+ community.
-    </ng-container>
-    <ng-container
-      *ngSwitchCase="3"
-      i18n="@@FEED_NOTICE__PLUS_UPGRADE__GET_VERIFIED_HIDE_ADS"
-    >
-      Get verified, hide ads, and get the most of your Minds experience.
-    </ng-container>
-    <ng-container
-      *ngSwitchCase="4"
-      i18n="@@FEED_NOTICE__PLUS_UPGRADE__SUPPORT_MINDS_AND_CREATORS"
-    >
-      Support Minds and creators like you.
-    </ng-container>
-    <ng-container
-      *ngSwitchDefault
-      i18n="@@FEED_NOTICE__PLUS_UPGRADE__SUPPORT_MINDS_UNLOCK_FEATURES"
-    >
-      Support Minds and unlock features such as earning revenue for your
-      content, hiding ads, accessing exclusive content, receiving a badge and
-      verifying your channel.
-    </ng-container>
+  <p
+    class="m-feedNotice__body"
+    i18n="@@FEED_NOTICE__PLUS_UPGRADE__SUPPORT_MINDS_UNLOCK_FEATURES"
+  >
+    Support Minds and unlock features such as earning revenue for your content,
+    hiding ads, accessing exclusive content, receiving a badge and verifying
+    your channel.
   </p>
   <m-button
     class="m-feedNotice__buttonPrimary"

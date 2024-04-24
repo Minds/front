@@ -1,0 +1,34 @@
+@import 'defaults.scss';
+@import '../../../stylesheets/console.component.ng.scss';
+
+:host {
+  padding-bottom: 0;
+
+  .m-networkAdminPublicVisibilityToggle__title {
+    @include heading4Regular;
+    margin: 0 0 $spacing1 0;
+  }
+
+  .m-networkAdminPublicVisibilityToggle__body {
+    margin-bottom: $spacing8;
+    margin-right: $spacing2;
+
+    @include body1Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-networkAdminPublicVisibilityToggle__toggleContainer {
+    display: flex;
+    align-items: center;
+
+    .m-networkAdminPublicVisibilityToggle__toggle {
+      margin-right: $spacing4;
+    }
+
+    .m-networkAdminPublicVisibilityToggle__toggleText {
+      @include body1Regular;
+    }
+  }
+}

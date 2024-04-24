@@ -1,0 +1,48 @@
+@import 'defaults.scss';
+
+:host {
+  width: 100%;
+  border-radius: 0 0 12px 12px;
+  cursor: pointer;
+  margin-top: $spacing1;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+  }
+
+  .m-chatRoomMessage__richEmbedImage {
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 1.91/1;
+
+    @include m-theme() {
+      background-color: themed($m-white-always);
+    }
+  }
+
+  .m-chatRoomMessage__richEmbedDetailsContainer {
+    margin: $spacing2 $spacing3 $spacing3 $spacing3;
+
+    .m-chatRoomMessage__richEmbedTitle {
+      margin-top: unset;
+      margin-bottom: $spacing2;
+
+      @include body2Medium;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-chatRoomMessage__richEmbedUrl {
+      margin: unset;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}

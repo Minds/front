@@ -234,8 +234,8 @@
               >
               <span
                 class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__CHATS"
-                >Chats</span
+                i18n="@@COMMON__CHAT"
+                >Chat</span
               >
             </div>
           </a>
@@ -269,7 +269,6 @@
       <!-- Networks list (on minds.com)-->
       <ng-container *mIfTenant="false">
         <li
-          *ngIf="showNetworksLink"
           class="m-sidebarNavigation__item m-sidebarNavigation__item--networks"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           [routerLinkActiveOptions]="{ exact: true }"
