@@ -38,6 +38,9 @@ export class AnalyticsService implements OnDestroy {
   private defaultPrevented: boolean = false;
   private hasBeenLoggedIn = false;
 
+  /** Global properties */
+  globalProperties: { [key: string]: string | number } = {};
+
   contexts: SnowplowContext[] = [];
 
   unlistenDocumentClickEventListener: () => void;
@@ -153,9 +156,12 @@ export class AnalyticsService implements OnDestroy {
     key: string,
     value: string | number | undefined
   ): void {
-    const properties = {};
-    properties[key] = value;
-    return this.posthog.register(properties);
+    if (value === undefined) {
+      delete this.globalProperties[key];
+      return;
+    }
+
+    this.globalProperties[key] = value;
   }
 
   async send(type: string, fields: any = {}, entityGuid: string = null) {
@@ -331,6 +337,9 @@ export class AnalyticsService implements OnDestroy {
     if (this.sessionService.getLoggedInUser()) {
       $set.guid = this.sessionService.getLoggedInUser().guid;
     }
+
+    // Merge in the global properties
+    properties = Object.assign(properties, this.globalProperties);
 
     if (Object.keys($set).length) {
       properties.$set = $set;
