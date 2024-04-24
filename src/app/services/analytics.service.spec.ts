@@ -228,4 +228,24 @@ describe('AnalyticsService', () => {
     expect(posthog.reset).toHaveBeenCalled();
     expect(posthog.opt_out_capturing).toHaveBeenCalled();
   }));
+
+  describe('setGlobalProperty', () => {
+    beforeEach(() => {
+      service.globalProperties = {};
+    });
+
+    afterEach(() => {
+      service.globalProperties = {};
+    });
+
+    it('should set a global property', () => {
+      service.setGlobalProperty('test', 'value');
+      expect(service.globalProperties).toEqual({ test: 'value' });
+    });
+
+    it('should delete a global property when undefined', () => {
+      service.setGlobalProperty('test', undefined);
+      expect(service.globalProperties).toEqual({});
+    });
+  });
 });
