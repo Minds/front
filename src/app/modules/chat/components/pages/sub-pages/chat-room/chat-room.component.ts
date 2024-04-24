@@ -32,6 +32,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { AnalyticsService } from '../../../../../../services/analytics';
 
 /** Bespoke animation to component to handle details drawer slide in. */
 const SlideInFromRightAnimation: AnimationTriggerMetadata = trigger(
@@ -107,6 +108,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     private chatMessagesService: ChatMessagesService,
     private totalChatRoomMembersService: TotalChatRoomMembersService,
     private toaster: ToasterService,
+    private analyticsService: AnalyticsService,
     @Inject(WINDOW) private window
   ) {}
 
@@ -128,6 +130,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
     this.handleChatRoomInit(this.requestMode);
     this.hideChatwootWhenReady();
+
+    this.analyticsService.setGlobalProperty('chat_room_guid', roomId);
+    this.analyticsService.setGlobalProperty('chat_room_type', 'tbd');
   }
 
   ngOnDestroy(): void {
@@ -138,6 +143,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     );
     this.chatwootWidgetService.showBubble();
     this.chatRoomInitSubscription?.unsubscribe();
+
+    this.analyticsService.setGlobalProperty('chat_room_guid', undefined);
+    this.analyticsService.setGlobalProperty('chat_room_type', undefined);
   }
 
   /**

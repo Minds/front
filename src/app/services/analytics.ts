@@ -146,6 +146,18 @@ export class AnalyticsService implements OnDestroy {
     this.posthog.identify(user.guid);
   }
 
+  /**
+   * Sets a property that will be provided on all capture events
+   */
+  public setGlobalProperty(
+    key: string,
+    value: string | number | undefined
+  ): void {
+    const properties = {};
+    properties[key] = value;
+    return this.posthog.register(properties);
+  }
+
   async send(type: string, fields: any = {}, entityGuid: string = null) {
     if (isPlatformServer(this.platformId)) return; // Client side does these. Don't call twice
     if (type === 'pageview') {
