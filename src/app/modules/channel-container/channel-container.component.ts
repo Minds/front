@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest, map } from 'rxjs';
 import { Client } from '../../services/api/client';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
@@ -39,6 +39,8 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   protected showPro: boolean;
 
   protected param$: Subscription;
+
+  private authSubscription: Subscription;
 
   @ViewChild('v2ChannelComponent')
   v2ChannelComponent: ChannelV2Component;
@@ -71,6 +73,15 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
         }
       }
     });
+
+    this.authSubscription = combineLatest([
+      this.authModal.onLoggedIn$,
+      this.authModal.onRegistered$,
+    ]).subscribe(([loggedIn, registered]: [boolean, boolean]): void => {
+      if (loggedIn || registered) {
+        this.load();
+      }
+    });
   }
 
   canDeactivate(): boolean | Observable<boolean> {
@@ -82,7 +93,8 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.param$.unsubscribe();
+    this.param$?.unsubscribe();
+    this.authSubscription?.unsubscribe();
   }
 
   async load() {

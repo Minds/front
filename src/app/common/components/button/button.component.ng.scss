@@ -141,6 +141,23 @@
       }
     }
 
+    &.m-button--black {
+      @include m-theme() {
+        border-color: themed($m-black);
+        background-color: themed($m-black);
+        color: themed($m-white) !important;
+
+        &:hover {
+          background-color: themed($m-white);
+          color: themed($m-black) !important;
+        }
+
+        &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+          border-color: themed($m-borderColor--primary);
+        }
+      }
+    }
+
     &.m-button--blackAlways {
       @include m-theme() {
         border-color: color-by-theme($m-black-always, 'dark');
@@ -150,6 +167,23 @@
         &:hover {
           background-color: color-by-theme($m-white-always, 'dark');
           color: color-by-theme($m-black-always, 'dark') !important;
+        }
+
+        &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+          border-color: color-by-theme($m-borderColor--primary, 'dark');
+        }
+      }
+    }
+
+    &.m-button--whiteAlways {
+      @include m-theme() {
+        border-color: color-by-theme($m-white-always, 'dark');
+        background-color: color-by-theme($m-white-always, 'dark');
+        color: color-by-theme($m-black-always, 'dark') !important;
+
+        &:hover {
+          background-color: color-by-theme($m-black-always, 'dark');
+          color: color-by-theme($m-white-always, 'dark') !important;
         }
 
         &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {

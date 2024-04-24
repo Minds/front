@@ -605,6 +605,7 @@ export type FeaturedGroup = FeaturedEntityInterface &
     __typename?: 'FeaturedGroup';
     autoPostSubscription: Scalars['Boolean']['output'];
     autoSubscribe: Scalars['Boolean']['output'];
+    briefDescription?: Maybe<Scalars['String']['output']>;
     entityGuid: Scalars['String']['output'];
     id: Scalars['ID']['output'];
     /** Gets count of members. */
@@ -908,6 +909,8 @@ export type MultiTenantConfig = {
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
+  customHomePageDescription?: Maybe<Scalars['String']['output']>;
+  customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
@@ -916,16 +919,20 @@ export type MultiTenantConfig = {
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
+  walledGardenEnabled?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
+  customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
+  walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MultiTenantDomain = {
@@ -2857,6 +2864,7 @@ export type GetFeaturedEntitiesQuery = {
             autoSubscribe: boolean;
             autoPostSubscription: boolean;
             name: string;
+            briefDescription?: string | null;
             membersCount: number;
           }
         | {
@@ -3792,6 +3800,9 @@ export type GetMultiTenantConfigQuery = {
     canEnableFederation?: boolean | null;
     federationDisabled?: boolean | null;
     replyEmail?: string | null;
+    customHomePageEnabled?: boolean | null;
+    customHomePageDescription?: string | null;
+    walledGardenEnabled?: boolean | null;
   } | null;
 };
 
@@ -3884,6 +3895,9 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
+  walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -8469,6 +8483,7 @@ export const GetFeaturedEntitiesDocument = gql`
             autoSubscribe
             autoPostSubscription
             name
+            briefDescription
             membersCount
           }
         }
@@ -9234,6 +9249,9 @@ export const GetMultiTenantConfigDocument = gql`
       canEnableFederation
       federationDisabled
       replyEmail
+      customHomePageEnabled
+      customHomePageDescription
+      walledGardenEnabled
     }
   }
 `;
@@ -9377,6 +9395,9 @@ export const SetMultiTenantConfigDocument = gql`
     $federationDisabled: Boolean
     $replyEmail: String
     $nsfwEnabled: Boolean
+    $customHomePageEnabled: Boolean
+    $customHomePageDescription: String
+    $walledGardenEnabled: Boolean
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
@@ -9386,6 +9407,9 @@ export const SetMultiTenantConfigDocument = gql`
         federationDisabled: $federationDisabled
         replyEmail: $replyEmail
         nsfwEnabled: $nsfwEnabled
+        customHomePageEnabled: $customHomePageEnabled
+        customHomePageDescription: $customHomePageDescription
+        walledGardenEnabled: $walledGardenEnabled
       }
     )
   }
