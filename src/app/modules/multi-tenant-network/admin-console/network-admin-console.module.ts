@@ -41,6 +41,9 @@ import { NetworkAdminAnalyticsLazyRoutes } from './tabs/analytics/analytics-lazy
 import { NetworkAdminConsoleInviteLinkComponent } from './tabs/invite/tabs/link/link.component';
 import { SiteMembershipCardComponent } from '../../site-memberships/components/membership-card/site-membership-card.component';
 import { CopyToClipboardButtonComponent } from '../../../common/standalone/copy-to-clipboard-button/copy-to-clipboard-button.component';
+import { NetworkAdminConsoleLandingPageDescriptionComponent } from './tabs/general/landing-page-description/landing-page-description.component';
+import { NetworkAdminConsoleEnableLandingPageToggleComponent } from './tabs/general/enable-landing-page-toggle/enable-landing-page-toggle.component';
+import { NetworkAdminConsoleEnableWalledGardenToggleComponent } from './tabs/general/enable-walled-garden-toggle/enable-walled-garden-toggle.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -147,6 +150,9 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleRolesPermissionsComponent,
     NetworkAdminConsoleRolesUsersComponent,
     NetworkAdminConsoleFederationSettingsComponent,
+    NetworkAdminConsoleLandingPageDescriptionComponent,
+    NetworkAdminConsoleEnableLandingPageToggleComponent,
+    NetworkAdminConsoleEnableWalledGardenToggleComponent,
     NetworkAdminConsoleReplyEmailSettingsComponent,
     NetworkAdminConsoleNsfwToggleComponent,
     NetworkAdminConsoleInviteComponent,
