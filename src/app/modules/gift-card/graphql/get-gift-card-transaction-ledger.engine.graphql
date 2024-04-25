@@ -1,11 +1,11 @@
 query GetGiftCardTransactionsLedger(
-  $giftCardGuid: String!,
-  $first: Int,
-  $after: String,
+  $giftCardGuid: String!
+  $first: Int
+  $after: String
 ) {
   giftCardTransactionLedger(
     giftCardGuid: $giftCardGuid
-    first: $first,
+    first: $first
     after: $after
   ) {
     edges {

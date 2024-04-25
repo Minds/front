@@ -1,0 +1,25 @@
+mutation upsertNavigationItem(
+  $id: String!
+  $name: String!
+  $type: NavigationItemTypeEnum!
+  $visible: Boolean!
+  $iconId: String!
+  $order: Int!
+  $path: String
+  $url: String
+  $action: NavigationItemActionEnum
+) {
+  upsertCustomNavigationItem(
+    id: $id
+    name: $name
+    type: $type
+    visible: $visible
+    iconId: $iconId
+    order: $order
+    path: $path
+    url: $url
+    action: $action
+  ) {
+    id
+  }
+}

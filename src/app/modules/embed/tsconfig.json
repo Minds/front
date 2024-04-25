@@ -4,14 +4,8 @@
     "outDir": "../out-tsc/embed",
     "baseUrl": "./",
     "module": "es2020",
-    "types": ["node"]
+    "types": ["node"],
   },
-  "include": [
-    "main.ts",
-    "../../../polyfills.ts"
-  ],
-  "exclude": [
-    "**/*.spec.ts",
-    "**/testing/*"
-  ]
+  "include": ["main.ts", "../../../polyfills.ts"],
+  "exclude": ["**/*.spec.ts", "**/testing/*"],
 }

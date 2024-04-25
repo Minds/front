@@ -9,47 +9,22 @@
     "skipLibCheck": true,
     "target": "ES2022",
     "emitDecoratorMetadata": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2020", "dom"],
     "module": "commonjs",
     "baseUrl": "./",
     "paths": {
-      "fs": [
-        "./shims/noop"
-      ],
-      "bn.js": [
-        "../node_modules/bn.js/lib/bn.js"
-      ],
-      "ngx-plyr": [
-        "../node_modules/ngx-plyr/dist/ngx-plyr"
-      ],
-      "stream": [
-        "../node_modules/stream-browserify"
-      ],
-      "os": [
-        "../node_modules/os-browserify"
-      ],
-      "http": [
-        "../node_modules/stream-http"
-      ],
-      "https": [
-        "../node_modules/https-browserify"
-      ],
-      "crypto": [
-        "../node_modules/crypto-browserify"
-      ],
-      "util": [
-        "../node_modules/util"
-      ],
-      "assert": [
-        "../node_modules/assert"
-      ]
+      "fs": ["./shims/noop"],
+      "bn.js": ["../node_modules/bn.js/lib/bn.js"],
+      "ngx-plyr": ["../node_modules/ngx-plyr/dist/ngx-plyr"],
+      "stream": ["../node_modules/stream-browserify"],
+      "os": ["../node_modules/os-browserify"],
+      "http": ["../node_modules/stream-http"],
+      "https": ["../node_modules/https-browserify"],
+      "crypto": ["../node_modules/crypto-browserify"],
+      "util": ["../node_modules/util"],
+      "assert": ["../node_modules/assert"],
     },
-    "useDefineForClassFields": false
-  }
+    "useDefineForClassFields": false,
+  },
 }

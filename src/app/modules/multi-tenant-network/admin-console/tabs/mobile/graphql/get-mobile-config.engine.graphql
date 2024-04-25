@@ -1,9 +1,9 @@
 query GetMobileConfig {
-    mobileConfig {
-        id
-        splashScreenType
-        welcomeScreenLogoType
-        previewStatus
-        previewQRCode
-    }
+  mobileConfig {
+    id
+    splashScreenType
+    welcomeScreenLogoType
+    previewStatus
+    previewQRCode
+  }
 }

@@ -1,9 +1,5 @@
-query GetGiftCard(
-  $guid: String!
-) {
-  giftCard(
-    guid: $guid
-  ) {
+query GetGiftCard($guid: String!) {
+  giftCard(guid: $guid) {
     guid
     productId
     amount

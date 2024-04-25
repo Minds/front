@@ -16,15 +16,12 @@ class SupermindConsolePage {
   private targetField: CodeceptJS.Locator = locate(
     '.m-supermindListItem__offerInformation'
   ).withText('Target:');
-  private cancelOfferButton: CodeceptJS.Locator = locate('m-button').withText(
-    'Cancel Offer'
-  );
-  private declineButton: CodeceptJS.Locator = locate('m-button').withText(
-    'Decline'
-  );
-  private acceptButton: CodeceptJS.Locator = locate('m-button').withText(
-    'Accept Offer'
-  );
+  private cancelOfferButton: CodeceptJS.Locator =
+    locate('m-button').withText('Cancel Offer');
+  private declineButton: CodeceptJS.Locator =
+    locate('m-button').withText('Decline');
+  private acceptButton: CodeceptJS.Locator =
+    locate('m-button').withText('Accept Offer');
   private listItem: CodeceptJS.Locator = locate('m-supermind__listItem');
   private activity: CodeceptJS.Locator = locate('m-activity');
   private chipBadge: CodeceptJS.Locator = locate('m-chipBadge');
@@ -78,7 +75,7 @@ class SupermindConsolePage {
     await Promise.all([
       sidebarComponent.openSupermindConsole(),
       I.waitForResponse(
-        resp =>
+        (resp) =>
           resp.url().includes('/api/v3/supermind') && resp.status() === 200,
         30
       ),
@@ -173,7 +170,7 @@ class SupermindConsolePage {
     await Promise.all([
       I.click(locate(this.tab).withText(tab)),
       I.waitForResponse(
-        resp =>
+        (resp) =>
           resp.url().includes('/api/v3/supermind') && resp.status() === 200,
         30
       ),
@@ -217,7 +214,7 @@ class SupermindConsolePage {
     await Promise.all([
       I.click(this.declineButton.at(feedPosition)),
       I.waitForResponse(
-        resp =>
+        (resp) =>
           new RegExp(/api\/v3\/supermind\/\d+\/reject/).test(resp.url()) &&
           resp.status() === 200,
         30

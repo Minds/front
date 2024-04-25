@@ -1,0 +1,3 @@
+mutation deleteCustomNavigationItem($id: String!) {
+  deleteCustomNavigationItem(id: $id)
+}

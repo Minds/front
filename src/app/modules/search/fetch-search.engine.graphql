@@ -1,8 +1,8 @@
 query FetchSearch(
-  $query: String!,
-  $filter: SearchFilterEnum!,
-  $mediaType: SearchMediaTypeEnum!,
-  $nsfw: [SearchNsfwEnum!],
+  $query: String!
+  $filter: SearchFilterEnum!
+  $mediaType: SearchMediaTypeEnum!
+  $nsfw: [SearchNsfwEnum!]
   $limit: Int!
   $cursor: String
 ) {
@@ -22,7 +22,7 @@ query FetchSearch(
           legacy
         }
         ... on UserNode {
-                legacy
+          legacy
         }
         ... on GroupNode {
           legacy
@@ -65,10 +65,10 @@ query FetchSearch(
 }
 
 query CountSearch(
-  $query: String!,
-  $filter: SearchFilterEnum!,
-  $mediaType: SearchMediaTypeEnum!,
-  $nsfw: [SearchNsfwEnum!],
+  $query: String!
+  $filter: SearchFilterEnum!
+  $mediaType: SearchMediaTypeEnum!
+  $nsfw: [SearchNsfwEnum!]
   $cursor: String
 ) {
   search(
@@ -79,7 +79,7 @@ query CountSearch(
     before: $cursor
   ) {
     count
- 
+
     pageInfo {
       ...PageInfo
     }

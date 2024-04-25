@@ -5,7 +5,7 @@ namespace SupermindSteps {
     composerModalComponent.clickSupermindIcon();
   });
 
-  When('I enter a target username with value {string}', targetUsername => {
+  When('I enter a target username with value {string}', (targetUsername) => {
     composerModalComponent.addSupermindTarget(targetUsername);
   });
 
@@ -38,7 +38,7 @@ namespace SupermindSteps {
 
   //
 
-  Then('I should see the supermind popout screen', num => {
+  Then('I should see the supermind popout screen', (num) => {
     I.seeElement(composerModalComponent.getSupermindPopup());
   });
 
