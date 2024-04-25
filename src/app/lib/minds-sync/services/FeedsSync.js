@@ -1,7 +1,7 @@
-import asyncSleep from "../../../helpers/async-sleep";
+import asyncSleep from '../../../helpers/async-sleep';
 
 const E_NO_RESOLVER = function () {
-  throw new Error('Resolver not set')
+  throw new Error('Resolver not set');
 };
 
 export default class FeedsSync {
@@ -21,7 +21,7 @@ export default class FeedsSync {
       currentUser: E_NO_RESOLVER,
       blockedUserGuids: E_NO_RESOLVER,
       fetchEntities: E_NO_RESOLVER,
-    }
+    };
   }
 
   /**
@@ -88,7 +88,9 @@ export default class FeedsSync {
         }
 
         // Hydrate entities
-        entities = await this.resolvers.fetchEntities(rows.map(row => row.guid));
+        entities = await this.resolvers.fetchEntities(
+          rows.map((row) => row.guid)
+        );
 
         // Calculate offset
         opts.offset = (opts.offset || 0) + opts.limit;
@@ -110,7 +112,7 @@ export default class FeedsSync {
       return {
         entities,
         next,
-      }
+      };
     } catch (e) {
       console.error('FeedsSync.get', e);
       throw e;
@@ -130,21 +132,31 @@ export default class FeedsSync {
 
     const _syncAtRow = await this.db.get('syncAt', key);
 
-    const syncAt = opts.offset && _syncAtRow ? _syncAtRow : {
-      rows: 0,
-      moreData: true,
-      next: '',
-    };
+    const syncAt =
+      opts.offset && _syncAtRow
+        ? _syncAtRow
+        : {
+            rows: 0,
+            moreData: true,
+            next: '',
+          };
 
-    if (!opts.offset) { // Check if first-page sync is needed
-      const stale = !syncAt.sync || (syncAt.sync + this.stale_after_ms) < Date.now();
+    if (!opts.offset) {
+      // Check if first-page sync is needed
+      const stale =
+        !syncAt.sync || syncAt.sync + this.stale_after_ms < Date.now();
 
       if (!stale && !opts.forceSync) {
         return false;
       }
-    } else if (opts.timebased && (!syncAt.moreData || syncAt.rows >= (opts.offset + opts.limit))) { // Check if non-first-page sync is needed
+    } else if (
+      opts.timebased &&
+      (!syncAt.moreData || syncAt.rows >= opts.offset + opts.limit)
+    ) {
+      // Check if non-first-page sync is needed
       return false;
-    } else if (!opts.timebased && opts.offset) { // If non-first-page and not timebased, sync is not needed
+    } else if (!opts.timebased && opts.offset) {
+      // If non-first-page and not timebased, sync is not needed
       return false;
     }
 
@@ -170,7 +182,10 @@ export default class FeedsSync {
 
       // Check if valid response
 
-      if (!response.entities || typeof response.entities.length === 'undefined') {
+      if (
+        !response.entities ||
+        typeof response.entities.length === 'undefined'
+      ) {
         throw new Error('Invalid server response');
       }
 
@@ -191,12 +206,17 @@ export default class FeedsSync {
       // Setup rows
 
       const entities = response.entities
-        .filter(feedSyncEntity => Boolean(feedSyncEntity))
-        .filter(feedSyncEntity => blockedList.indexOf(feedSyncEntity.owner_guid) === -1)
-        .map((feedSyncEntity, index) => Object.assign(feedSyncEntity, {
-          key,
-          id: `${key}:${`${syncAt.rows + index}`.padStart(24, '0')}`,
-        }));
+        .filter((feedSyncEntity) => Boolean(feedSyncEntity))
+        .filter(
+          (feedSyncEntity) =>
+            blockedList.indexOf(feedSyncEntity.owner_guid) === -1
+        )
+        .map((feedSyncEntity, index) =>
+          Object.assign(feedSyncEntity, {
+            key,
+            id: `${key}:${`${syncAt.rows + index}`.padStart(24, '0')}`,
+          })
+        );
 
       // Insert entity refs
 
@@ -225,11 +245,9 @@ export default class FeedsSync {
    */
   async prune(key) {
     try {
-      await this.db
-        .deleteEquals('feeds', 'key', key);
+      await this.db.deleteEquals('feeds', 'key', key);
 
-      await this.db
-        .delete('syncAt', key);
+      await this.db.delete('syncAt', key);
 
       return true;
     } catch (e) {
@@ -262,21 +280,21 @@ export default class FeedsSync {
   async buildKey(opts) {
     const userGuid = await this.resolvers.currentUser();
 
-    return await this.resolvers.stringHash(JSON.stringify([
-      userGuid,
-      opts.endpoint,
-    ]));
+    return await this.resolvers.stringHash(
+      JSON.stringify([userGuid, opts.endpoint])
+    );
   }
 
   /**
    * @returns {Promise<boolean>}
    */
   async gc() {
-    const maxTimestamp = Date.now() - (this.stale_after_ms * 10);
+    const maxTimestamp = Date.now() - this.stale_after_ms * 10;
 
     await Promise.all(
-      (await this.db.getAllLessThan('syncAt', 'sync', maxTimestamp))
-        .map(row => this.prune(row.key))
+      (await this.db.getAllLessThan('syncAt', 'sync', maxTimestamp)).map(
+        (row) => this.prune(row.key)
+      )
     );
 
     return true;

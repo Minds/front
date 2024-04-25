@@ -1,39 +1,41 @@
-mutation SetSiteMembership (
-    $membershipName: String!,
-    $membershipPriceInCents: Int!,
-    $membershipBillingPeriod: SiteMembershipBillingPeriodEnum!,
-    $membershipPricingModel: SiteMembershipPricingModelEnum!,
-    $membershipDescription: String,
-    $roles: [Int!],
-    $groups: [String!] 
+mutation SetSiteMembership(
+  $membershipName: String!
+  $membershipPriceInCents: Int!
+  $membershipBillingPeriod: SiteMembershipBillingPeriodEnum!
+  $membershipPricingModel: SiteMembershipPricingModelEnum!
+  $membershipDescription: String
+  $roles: [Int!]
+  $groups: [String!]
 ) {
-    siteMembership(siteMembershipInput: {
-        membershipName: $membershipName,
-        membershipPriceInCents: $membershipPriceInCents,
-        membershipBillingPeriod: $membershipBillingPeriod
-        membershipPricingModel: $membershipPricingModel
-        membershipDescription: $membershipDescription
-        roles: $roles
-        groups: $groups
-    }) {
-        id
-        membershipGuid
-        membershipName
-        membershipPriceInCents
-        membershipBillingPeriod
-        membershipPricingModel
-        membershipDescription
-        priceCurrency
-        roles {
-            id
-            name
-        }
-        groups {
-            id
-            name
-            guid
-            membersCount
-            legacy
-        }
+  siteMembership(
+    siteMembershipInput: {
+      membershipName: $membershipName
+      membershipPriceInCents: $membershipPriceInCents
+      membershipBillingPeriod: $membershipBillingPeriod
+      membershipPricingModel: $membershipPricingModel
+      membershipDescription: $membershipDescription
+      roles: $roles
+      groups: $groups
     }
+  ) {
+    id
+    membershipGuid
+    membershipName
+    membershipPriceInCents
+    membershipBillingPeriod
+    membershipPricingModel
+    membershipDescription
+    priceCurrency
+    roles {
+      id
+      name
+    }
+    groups {
+      id
+      name
+      guid
+      membersCount
+      legacy
+    }
+  }
 }

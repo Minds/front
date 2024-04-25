@@ -1,0 +1,31 @@
+<header>
+  <h4 class="m-networkAdminConsole__title" i18n="@@COMMON__NAVIGATION">
+    Navigation
+  </h4>
+  <p
+    class="m-networkAdminConsole__subtitle"
+    i18n="@@NETWORK_ADMIN_CONSOLE__NAVIGATION__SUBTITLE"
+  >
+    Customize the side navigation menu to prioritize the pages and links that
+    you want to surface on your network. Add external links that you can place
+    on the side navigation menu.
+  </p>
+</header>
+<nav class="m-tabs__container m-hideScrollbar">
+  <div class="m-tabs__tab">
+    <a
+      [routerLink]="['/network/admin/navigation/menu']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      [routerLinkActiveOptions]="{
+        exact: false
+      }"
+      data-ref="m-networkAdminConsoleNavigationTab--navigationMenu"
+      i18n="@@NETWORK_ADMIN_CONSOLE__NAVIGATION__TAB__NAVIGATION_MENU"
+      >Navigation menu</a
+    >
+  </div>
+</nav>
+
+<div class="m-networkAdminConsoleNavigation__subtabWrapper">
+  <router-outlet></router-outlet>
+</div>

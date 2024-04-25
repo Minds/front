@@ -46,7 +46,7 @@ function transform(source, outputTemplate) {
   }
 
   doc.xliff.file.body['trans-unit'] = doc.xliff.file.body['trans-unit'].map(
-    transUnit => {
+    (transUnit) => {
       const output = JSON.parse(JSON.stringify(transUnit));
 
       if (typeof output.source === 'string') {
@@ -76,7 +76,7 @@ function transform(source, outputTemplate) {
 
 // MAIN
 
-export = () => cb => {
+export = () => (cb) => {
   if (!argv['input']) {
     return cb(`Missing --input argument`);
   }

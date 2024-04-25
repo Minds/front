@@ -19,7 +19,7 @@ class TopbarComponent {
     await Promise.all([
       I.click(this.notificationButtonSelector),
       I.waitForResponse(
-        resp =>
+        (resp) =>
           resp.url().includes('/api/v3/notifications/list') &&
           resp.status() === 200,
         30

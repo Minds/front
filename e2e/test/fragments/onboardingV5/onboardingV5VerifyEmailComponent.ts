@@ -45,7 +45,7 @@ class OnboardingV5VerifyEmailComponent {
    * @returns { void }
    */
   public waitForEmailSendResponse(): void {
-    I.waitForResponse(resp => {
+    I.waitForResponse((resp) => {
       return resp.url().includes('/api/v3/email/send') && resp.status() === 200;
     });
   }

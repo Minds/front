@@ -1,0 +1,147 @@
+@import 'defaults.scss';
+@import '../../../../../../../common/layout/layout.scss';
+
+:host {
+  padding: 0 !important;
+
+  header {
+    padding-left: $spacing8;
+    padding-right: $spacing8;
+  }
+  .m-networkAdminConsoleNavigationList__headerButtonsContainer {
+    margin: $spacing8 0;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing4;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-flow: column nowrap;
+      ::ng-deep m-button {
+        .m-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .m-networkAdminConsoleNavigationList__headerRow.m-networkAdminConsoleNavigationList__row {
+    // Subtract the width of the drag-drop icon from the header row so columns are aligned :/
+    width: calc(100% - 62px);
+
+    @media screen and (max-width: $layoutMax2ColWidth) {
+      display: none;
+    }
+
+    h4 {
+      font-size: $spacing4;
+      font-weight: 700;
+      margin: 0;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-networkAdminConsoleNavigationListItem__cell--name {
+      flex-basis: 100%;
+    }
+  }
+
+  .m-networkAdminConsoleNavigationList__row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: $spacing2 0;
+  }
+
+  [class*='m-networkAdminConsoleNavigationListItem__cell'] {
+    min-width: 15%;
+    padding: $spacing1;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing3;
+
+    &:not(:first-child) {
+      max-width: 15%;
+    }
+
+    &.m-networkAdminConsoleNavigationListItem__cell--name {
+      flex: 1 1 calc(60% - $spacing9);
+      padding-left: $spacing6;
+      align-items: center;
+
+      @media screen and (max-width: $layoutMax2ColWidth) {
+        padding-left: $spacing4;
+      }
+
+      i,
+      span {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      i.material-icons {
+        font-size: $spacing6;
+        text-align: center;
+        margin-right: $spacing3;
+
+        @media screen and (max-width: $layoutMax2ColWidth) {
+          margin-right: $spacing2;
+        }
+      }
+
+      // Avatar for channel nav item
+      img {
+        width: $spacing6;
+        height: $spacing6;
+        border-radius: 50%;
+      }
+
+      span {
+        // Subtract the width of the icon/avatar so we know when overflow starts
+        max-width: calc(100% - $spacing9);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        @include heading4Bold;
+
+        @media screen and (max-width: $layoutMax2ColWidth) {
+          @include body1Bold;
+        }
+      }
+    }
+
+    &.m-networkAdminConsoleNavigationListItem__cell--type {
+      flex-shrink: 0;
+
+      @media screen and (max-width: $layoutMax2ColWidth) {
+        display: none;
+      }
+
+      > span {
+        @include body3Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    &.m-networkAdminConsoleNavigationListItem__cell--toggle {
+      display: flex;
+      align-items: center;
+    }
+    &.m-networkAdminConsoleNavigationListItem__cell--actions {
+      justify-content: flex-end;
+      padding-right: $spacing4;
+      min-width: $spacing20;
+
+      @media screen and (max-width: $layoutMax2ColWidth) {
+        padding-right: 0;
+      }
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}

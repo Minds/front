@@ -23,9 +23,7 @@ export default class DexieStorageAdapter {
       }
     }
 
-    this.db
-      .version(versionNumber)
-      .stores(dexieSchema);
+    this.db.version(versionNumber).stores(dexieSchema);
   }
 
   /**
@@ -46,8 +44,7 @@ export default class DexieStorageAdapter {
    * @returns {Promise<*>}
    */
   async insert(table, data) {
-    return await this.db.table(table)
-      .put(data);
+    return await this.db.table(table).put(data);
   }
 
   /**
@@ -57,8 +54,7 @@ export default class DexieStorageAdapter {
    * @returns {Promise<number>}
    */
   async update(table, id, changes) {
-    return await this.db.table(table)
-      .update(id, changes);
+    return await this.db.table(table).update(id, changes);
   }
 
   /**
@@ -69,12 +65,10 @@ export default class DexieStorageAdapter {
    * @returns {Promise<boolean>}
    */
   async upsert(table, id, data, initialData = {}) {
-    const updatedRows = await this.db.table(table)
-      .update(id, data);
+    const updatedRows = await this.db.table(table).update(id, data);
 
     if (!updatedRows) {
-      await this.db.table(table)
-        .put(Object.assign(initialData, data));
+      await this.db.table(table).put(Object.assign(initialData, data));
     }
 
     return true;
@@ -86,8 +80,7 @@ export default class DexieStorageAdapter {
    * @returns {Promise<void>}
    */
   async delete(table, key) {
-    return await this.db.table(table)
-      .delete(key);
+    return await this.db.table(table).delete(key);
   }
 
   /**
@@ -95,8 +88,7 @@ export default class DexieStorageAdapter {
    * @returns {Promise<void>}
    */
   async truncate(table) {
-    return await this.db.table(table)
-      .clear();
+    return await this.db.table(table).clear();
   }
 
   /**
@@ -105,8 +97,7 @@ export default class DexieStorageAdapter {
    * @returns {Promise<*>}
    */
   async bulkInsert(table, rows) {
-    return await this.db.table(table)
-      .bulkPut(rows);
+    return await this.db.table(table).bulkPut(rows);
   }
 
   /**
@@ -116,9 +107,7 @@ export default class DexieStorageAdapter {
    * @returns {Dexie.Promise<number>}
    */
   async deleteLessThan(table, field, value) {
-    return await this.db.table(table)
-      .where(field).below(value)
-      .delete();
+    return await this.db.table(table).where(field).below(value).delete();
   }
 
   /**
@@ -128,9 +117,7 @@ export default class DexieStorageAdapter {
    * @returns {Dexie.Promise<number>}
    */
   async deleteEquals(table, field, value) {
-    return await this.db.table(table)
-      .where(field).equals(value)
-      .delete();
+    return await this.db.table(table).where(field).equals(value).delete();
   }
 
   /**
@@ -140,9 +127,7 @@ export default class DexieStorageAdapter {
    * @returns {Promise<number>}
    */
   async deleteAnyOf(table, index, values) {
-    return await this.db.table(table)
-      .where(index).anyOf(values)
-      .delete();
+    return await this.db.table(table).where(index).anyOf(values).delete();
   }
 
   /**
@@ -151,8 +136,7 @@ export default class DexieStorageAdapter {
    * @returns {Promise<Object>}
    */
   async get(table, key) {
-    return await this.db.table(table)
-      .get(key);
+    return await this.db.table(table).get(key);
   }
 
   /**
@@ -163,17 +147,14 @@ export default class DexieStorageAdapter {
    * @returns {Promise<Array<*>>}
    */
   async getAllSliced(table, field, value, opts) {
-    let collection = this.db.table(table)
-      .where(field).equals(value);
+    let collection = this.db.table(table).where(field).equals(value);
 
     if (opts.offset) {
-      collection = collection
-        .offset(opts.offset || 0);
+      collection = collection.offset(opts.offset || 0);
     }
 
     if (opts.limit) {
-      collection = collection
-        .limit(opts.limit);
+      collection = collection.limit(opts.limit);
     }
 
     return await collection.toArray();
@@ -187,8 +168,7 @@ export default class DexieStorageAdapter {
    * @returns {Promise<Array<*>>}
    */
   async getAllLessThan(table, field, value, opts = {}) {
-    const collection = this.db.table(table)
-      .where(field).below(value);
+    const collection = this.db.table(table).where(field).below(value);
 
     if (opts.sortBy) {
       return await collection.sortBy(opts.sortBy);
@@ -203,8 +183,7 @@ export default class DexieStorageAdapter {
    * @returns {Promise<*[]>}
    */
   async all(table, opts = {}) {
-    const collection = this.db.table(table)
-      .toCollection();
+    const collection = this.db.table(table).toCollection();
 
     if (opts.sortBy) {
       return await collection.sortBy(opts.sortBy);
@@ -220,8 +199,6 @@ export default class DexieStorageAdapter {
    * @returns {Promise<*[]>}
    */
   async anyOf(table, index, values) {
-    return await this.db.table(table)
-      .where(index).anyOf(values)
-      .toArray();
+    return await this.db.table(table).where(index).anyOf(values).toArray();
   }
 }

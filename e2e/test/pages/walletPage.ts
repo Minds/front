@@ -6,9 +6,8 @@ class WalletPage {
   private readonly baseUrl: string = '/wallet';
   private creditsTabSelector: string = '[data-ref=wallet-tab-credits]';
 
-  private readonly joinRewardsButton: Locator = locate('m-button').withText(
-    'Join Rewards'
-  );
+  private readonly joinRewardsButton: Locator =
+    locate('m-button').withText('Join Rewards');
 
   public navigateTo(subPageUrl: WalletSubPage = 'tokens/rewards'): void {
     I.amOnPage(`${this.baseUrl}/${subPageUrl}`);
@@ -21,7 +20,7 @@ class WalletPage {
     await Promise.all([
       sidebarComponent.openWallet(),
       I.waitForResponse(
-        resp => resp.url().includes('') && resp.status() === 200,
+        (resp) => resp.url().includes('') && resp.status() === 200,
         30
       ),
     ]);

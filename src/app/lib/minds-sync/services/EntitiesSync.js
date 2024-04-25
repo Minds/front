@@ -1,4 +1,4 @@
-import normalizeUrn from "../../../helpers/normalize-urn";
+import normalizeUrn from '../../../helpers/normalize-urn';
 
 export default class EntitiesSync {
   /**
@@ -19,7 +19,7 @@ export default class EntitiesSync {
     this.db.schema(1, {
       entities: {
         primaryKey: 'urn',
-        indexes: ['_syncAt']
+        indexes: ['_syncAt'],
       },
     });
 
@@ -43,14 +43,13 @@ export default class EntitiesSync {
 
     // Fetch entity as-is on DB
 
-    const entities = await this.db
-      .anyOf('entities', 'urn', urns);
+    const entities = await this.db.anyOf('entities', 'urn', urns);
 
     // Sort, filter and return
 
     return urns
-      .map(urn => entities.find(entity => entity.urn === urn))
-      .filter(entity => Boolean(entity));
+      .map((urn) => entities.find((entity) => entity.urn === urn))
+      .filter((entity) => Boolean(entity));
   }
 
   /**
@@ -66,12 +65,15 @@ export default class EntitiesSync {
 
     // Only sync stale entities
 
-    const cachedEntities = await this.db
-      .anyOf('entities', 'urn', urns);
+    const cachedEntities = await this.db.anyOf('entities', 'urn', urns);
 
-    urns = urns.filter(urn => {
-      const cached = cachedEntities.find(entity => entity.urn === urn);
-      return !cached || !cached._syncAt || (cached._syncAt + this.stale_after_ms) < Date.now();
+    urns = urns.filter((urn) => {
+      const cached = cachedEntities.find((entity) => entity.urn === urn);
+      return (
+        !cached ||
+        !cached._syncAt ||
+        cached._syncAt + this.stale_after_ms < Date.now()
+      );
     });
 
     if (!urns || !urns.length) {
@@ -81,21 +83,24 @@ export default class EntitiesSync {
     //
 
     try {
-      const response = await this.http.get('api/v2/entities', {
-        urns,
-        as_activities: 1,
-      }, true);
+      const response = await this.http.get(
+        'api/v2/entities',
+        {
+          urns,
+          as_activities: 1,
+        },
+        true
+      );
 
       if (!response || !response.entities) {
         throw new Error('Invalid server response');
       }
 
-      const entities = response.entities.map(entity => {
-        let obj =
-          {
-            urn: normalizeUrn(entity.urn || entity.guid),
-            _syncAt: Date.now(),
-          };
+      const entities = response.entities.map((entity) => {
+        let obj = {
+          urn: normalizeUrn(entity.urn || entity.guid),
+          _syncAt: Date.now(),
+        };
         obj = Object.assign(obj, entity);
         return obj;
       });
@@ -113,6 +118,10 @@ export default class EntitiesSync {
    */
   async gc() {
     await this.db.ready();
-    return await this.db.deleteLessThan('entities', '_syncAt', Date.now() - this.stale_after_ms);
+    return await this.db.deleteLessThan(
+      'entities',
+      '_syncAt',
+      Date.now() - this.stale_after_ms
+    );
   }
 }

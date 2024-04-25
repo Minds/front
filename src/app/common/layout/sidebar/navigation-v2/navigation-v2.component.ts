@@ -8,8 +8,6 @@ import {
   ViewChild,
   OnDestroy,
   Injector,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Navigation as NavigationService } from '../../../../services/navigation';
@@ -30,6 +28,12 @@ import { IS_TENANT_NETWORK } from '../../../injection-tokens/tenant-injection-to
 import { PermissionsService } from '../../../services/permissions.service';
 import { MultiTenantConfigImageService } from '../../../../modules/multi-tenant-network/services/config-image.service';
 import { SiteMembershipsCountService } from '../../../../modules/site-memberships/services/site-membership-count.service';
+import { NavigationItem } from '../../../../../graphql/generated.engine';
+
+export type NavigationItemExtended = NavigationItem & {
+  mustBeLoggedIn?: boolean;
+  routerLinkActiveExact?: boolean;
+};
 import { ChatExperimentService } from '../../../../modules/experiments/sub-services/chat-experiment.service';
 import { ChatReceiptService } from '../../../../modules/chat/services/chat-receipt.service';
 
@@ -89,17 +93,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   /** Whether experiment controlling reorganization of menu items variation is active */
   public showReorgVariation: boolean = false;
 
-  /** Whether memberships link should be shown. */
-  public readonly shouldShowMembershipsLink$: Observable<boolean> = !this
-    .isTenantNetwork
-    ? of(false)
-    : this.siteMembershipsCountService.count$.pipe(
-        distinctUntilChanged(),
-        map((count: number) => {
-          return this.isTenantNetwork && count > 0;
-        })
-      );
-
   /**
    * Sets display mode on resize.
    */
@@ -136,7 +129,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private authModal: AuthModalService,
     private experiments: ExperimentsService,
     private tenantConfigImageService: MultiTenantConfigImageService,
-    private siteMembershipsCountService: SiteMembershipsCountService,
     protected permissions: PermissionsService,
     private chatExperimentService: ChatExperimentService,
     private chatReceiptService: ChatReceiptService,
@@ -239,13 +231,11 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * @returns {boolean} true if tenant user is admin or has moderation permission
+   * Whether the user is logged in
+   * @returns { boolean } true if logged in
    */
-  public showTenantAdminLink(): boolean {
-    return (
-      this.isTenantNetwork &&
-      (this.user?.is_admin || this.permissions.canModerateContent())
-    );
+  public isLoggedIn(): boolean {
+    return this.session.isLoggedIn();
   }
 
   /**
@@ -270,7 +260,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    * @returns { Promise<void> }
    */
   public async openComposeModal(): Promise<void> {
-    if (!this.session.isLoggedIn()) {
+    if (!this.isLoggedIn()) {
       this.authModal.open();
       return;
     }
@@ -291,7 +281,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   public setVisible(value: boolean): void {
     this.hidden = !value;
-
     if (!value) {
       if (this.host && this.host.viewContainerRef) {
         this.host.viewContainerRef.clear();
@@ -344,14 +333,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
       );
     }
     return this.tenantConfigImageService.horizontalLogoPath$;
-  }
-
-  /**
-   * Whether the user is logged in.
-   * @returns { boolean } true if user is logged in.
-   */
-  public isLoggedIn(): boolean {
-    return this.session.isLoggedIn();
   }
 
   /**
