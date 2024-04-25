@@ -1,0 +1,28 @@
+<h4
+  class="m-networkAdminPublicVisibilityToggle__title"
+  i18n="@@NETWORK_PUBLIC_VISIBILITY_TOGGLE__TITLE"
+>
+  Public visibility
+</h4>
+<p
+  class="m-networkAdminPublicVisibilityToggle__body"
+  i18n="@@NETWORK_PUBLIC_VISIBILITY_TOGGLE__DESCRIPTION"
+>
+  Enable posts on your network to be viewed by people who are not logged in.
+  Disable this setting if you want people to login before viewing posts.
+</p>
+<div class="m-networkAdminPublicVisibilityToggle__toggleContainer">
+  <m-toggle
+    class="m-networkAdminPublicVisibilityToggle__toggle"
+    [mModel]="enabledToggleState"
+    (mModelChange)="onEnabledToggle($event)"
+    leftValue="off"
+    rightValue="on"
+    offState="off"
+  ></m-toggle>
+  <span
+    class="m-networkAdminPublicVisibilityToggle__toggleText"
+    i18n="NETWORK_PUBLIC_VISIBILITY_TOGGLE__LABEL"
+    >Public visibility</span
+  >
+</div>

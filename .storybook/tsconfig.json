@@ -3,10 +3,7 @@
   "exclude": [
     "../src/test.ts",
     "../src/**/*.spec.ts",
-    "../projects/**/*.spec.ts"
+    "../projects/**/*.spec.ts",
   ],
-  "include": [
-    "../src/**/*.stories.*",
-    "../src/**/*.d.ts"
-  ]
+  "include": ["../src/**/*.stories.*", "../src/**/*.d.ts"],
 }

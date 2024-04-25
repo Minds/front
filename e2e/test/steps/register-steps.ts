@@ -3,12 +3,8 @@ import mockOnboardingResponse from '../scripts/generated/strapi-onboarding-versi
 import { Request } from 'playwright';
 
 namespace CommonSteps {
-  const {
-    I,
-    topbarComponent,
-    registerPage,
-    onboardingV5VerifyEmailComponent,
-  } = inject();
+  const { I, topbarComponent, registerPage, onboardingV5VerifyEmailComponent } =
+    inject();
 
   Given('I set up registration bypass cookies', () => {
     registerPage.setupRegistrationBypassCookies();

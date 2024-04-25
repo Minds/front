@@ -11,6 +11,9 @@ import {
 /** Prefix for chat room names. */
 export const CHAT_ROOM_NAME_PREFIX: string = 'chat:';
 
+/** Prefix for chat room names. */
+export const CHAT_ROOM_LIST_EVENT: string = 'chat_rooms';
+
 /** Chat room event. */
 export type ChatRoomEvent = {
   roomGuid: string;
@@ -21,44 +24,40 @@ export type ChatRoomEvent = {
  * Service to handle global chat socket events.
  */
 @Injectable({ providedIn: 'root' })
-export class GlobalChatSocketService implements OnDestroy {
+export class GlobalChatSocketService {
   /** Subject for global chat events. */
   public readonly globalEvents$: Subject<ChatRoomEvent> =
     new Subject<ChatRoomEvent>();
 
-  /** Map of room names to subscriptions. */
-  private readonly roomMap: Map<string, Subscription> = new Map<
-    string,
-    Subscription
-  >();
+  /** A list of rooms that the socket server is listening to */
+  public roomGuids: string[] = [];
+
+  /** A listener thhat maps socket events to chat globalEvents$ */
+  private readonly catchAllSocketEvents = (eventName, ...args) => {
+    if (eventName === CHAT_ROOM_LIST_EVENT) {
+      // Keep a refresh so we can refresh at a later date
+      this.roomGuids = args[0];
+    }
+
+    if (eventName.indexOf(CHAT_ROOM_NAME_PREFIX) > -1) {
+      this.globalEvents$.next({
+        roomGuid: eventName.replace(CHAT_ROOM_NAME_PREFIX, ''),
+        data: JSON.parse(args[0]),
+      });
+    }
+  };
 
   constructor(private sockets: SocketsService) {}
 
-  ngOnDestroy(): void {
-    this.leaveAllRooms();
-  }
-
   /**
-   * Listen to room GUIDs.
-   * @param { string[] } roomGuids - the room GUIDs to listen to.
+   * Proxies all socket events and filters out chat room events
    * @returns { Promise<void> }
    */
-  public async listenToRoomGuids(roomGuids: string[]): Promise<void> {
+  public async listen(): Promise<void> {
     await firstValueFrom(this.sockets.onReady$);
 
-    for (let roomGuid of roomGuids) {
-      this.joinRoom(CHAT_ROOM_NAME_PREFIX + roomGuid);
-    }
-  }
-
-  /**
-   * Leave all rooms.
-   * @returns { void }
-   */
-  public leaveAllRooms(): void {
-    for (let roomName of this.roomMap.keys()) {
-      this.leaveRoom(roomName);
-    }
+    this.sockets.socket.offAny(this.catchAllSocketEvents);
+    this.sockets.socket.onAny(this.catchAllSocketEvents);
   }
 
   /**
@@ -67,41 +66,13 @@ export class GlobalChatSocketService implements OnDestroy {
    * @returns { Observable<ChatRoomEvent> } - the chat room event.
    */
   public getEventsByChatRoomGuid(guid: string): Observable<ChatRoomEvent> {
+    if (this.sockets.socket && this.roomGuids.indexOf(guid) < 0) {
+      // Refresh the socket server room subscrioptions
+      this.sockets.emit('chat_refresh_rooms');
+    }
+
     return this.globalEvents$.pipe(
       filter((event: ChatRoomEvent) => event.roomGuid === guid)
     );
-  }
-
-  /**
-   * Join a room.
-   * @param { string } roomName - the room name to join.
-   * @returns { void }
-   */
-  private joinRoom(roomName: string): void {
-    if (Boolean(this.roomMap.get(roomName))) {
-      return;
-    }
-
-    this.sockets.join(roomName);
-    this.roomMap.set(
-      roomName,
-      this.sockets.subscribe(roomName, (event: string) => {
-        this.globalEvents$.next({
-          roomGuid: roomName.replace(CHAT_ROOM_NAME_PREFIX, ''),
-          data: JSON.parse(event),
-        });
-      })
-    );
-  }
-
-  /**
-   * Leave a room.
-   * @param { string } roomName - the room name to leave.
-   * @returns { void }
-   */
-  private leaveRoom(roomName: string): void {
-    this.roomMap.get(roomName)?.unsubscribe();
-    this.roomMap.delete(roomName);
-    this.sockets.leave(roomName);
   }
 }

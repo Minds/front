@@ -1,0 +1,42 @@
+<div class="m-formWrapper">
+  <div class="m-formLayout--buttonRight">
+    <div class="m-iconSelectorWrapper m-form__fieldsContainer">
+      <h1 i18n="@@M_ICON_SELECTOR__SELECT_ICON">Select icon</h1>
+      <div class="m-form__field--search">
+        <i class="material-icons">search</i>
+        <input type="text" [formControl]="searchControl" />
+      </div>
+      <div class="m-iconSelector__iconsContainer m-scroll__thin">
+        <div
+          *ngFor="let icon of filteredIconList"
+          class="m-iconSelector__icon"
+          (click)="selectIcon(icon.id)"
+        >
+          <m-selectableIcon [iconId]="icon.id">
+            <label for="icon_id" class="m-form__customInputWrapper__radio">
+              <input
+                class="m-iconSelectorInput--radio"
+                type="radio"
+                [id]="icon.id"
+                [value]="icon.id"
+                [(ngModel)]="selectedIconId"
+                name="iconSelector"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label>
+          </m-selectableIcon>
+        </div>
+      </div>
+    </div>
+    <div class="m-form__buttonsContainer">
+      <m-button
+        [solid]="true"
+        color="blue"
+        (onAction)="onClickConfirm()"
+        [disabled]="!selectedIconId"
+        >Confirm</m-button
+      >
+    </div>
+  </div>
+</div>
+<m-modalCloseButton *ngIf="isModal"></m-modalCloseButton>

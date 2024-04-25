@@ -1,7 +1,7 @@
 mutation CreateGiftCard(
-  $productIdEnum: Int!,
-  $amount: Float!,
-  $stripePaymentMethodId: String!,
+  $productIdEnum: Int!
+  $amount: Float!
+  $stripePaymentMethodId: String!
   $targetInput: GiftCardTargetInput!
 ) {
   createGiftCard(

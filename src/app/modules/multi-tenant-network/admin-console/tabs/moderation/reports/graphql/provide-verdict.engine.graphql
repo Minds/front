@@ -1,11 +1,3 @@
-mutation ProvideVerdict(
-  $reportGuid: String!,
-  $action: ReportActionEnum!
-) {
-  provideVerdict(
-    verdictInput: {
-      reportGuid: $reportGuid,
-      action: $action
-    }
-  )
+mutation ProvideVerdict($reportGuid: String!, $action: ReportActionEnum!) {
+  provideVerdict(verdictInput: { reportGuid: $reportGuid, action: $action })
 }

@@ -1,0 +1,97 @@
+@import 'defaults.scss';
+@import '../../../../../common/layout/layout.scss';
+
+$mobileCollapseWidth: $min-tablet;
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: $spacing4;
+  min-height: calc(100vh - $topbarHeight);
+  max-width: 1440px !important;
+  width: 100%;
+  padding: 0 $spacing9;
+  box-sizing: border-box;
+
+  @media screen and (max-width: $mobileCollapseWidth) {
+    flex-flow: column-reverse nowrap;
+    justify-content: space-evenly;
+  }
+
+  &.m-customTenantHomepage__hero--topbarAlertShown {
+    min-height: calc(100vh - calc($topbarHeight + $topbarAlertHeight--desktop));
+
+    @media screen and (max-width: $max-mobile) {
+      min-height: calc(
+        100vh - calc($topbarHeight + $topbarAlertHeight--mobile)
+      );
+    }
+  }
+
+  .m-tenantCustomHomepage__hero--left,
+  .m-tenantCustomHomepage__hero--right {
+    height: auto;
+    min-width: 50%;
+    width: 50%;
+
+    @media screen and (max-width: $mobileCollapseWidth) {
+      min-width: 100%;
+      width: 100%;
+      align-items: center;
+    }
+  }
+
+  .m-tenantCustomHomepage__hero--left {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    .m-tenantCustomHomepage__mainLogo {
+      width: 320px;
+      height: auto;
+      max-width: 100%;
+      aspect-ratio: 1/1;
+    }
+  }
+
+  .m-tenantCustomHomepage__hero--right {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+  }
+
+  .m-tenantCustomHomepage__hero--right {
+    .m-tenantCustomHomepage__title {
+      word-break: break-word;
+      max-width: 480px;
+      font-family: Inter;
+      font-size: 54px;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 58.8px; /* 108.889% */
+      letter-spacing: -1.08px;
+
+      @media screen and (max-width: $mobileCollapseWidth) {
+        text-align: center;
+      }
+
+      @include m-theme() {
+        color: themed($m-bgColor--primaryInverted);
+      }
+    }
+
+    .m-tenantCustomHomepage__description {
+      max-width: 480px;
+
+      @media screen and (max-width: $mobileCollapseWidth) {
+        text-align: center;
+      }
+
+      @include heading4Regular;
+      @include m-theme() {
+        color: themed($m-bgColor--primaryInverted);
+      }
+    }
+  }
+}

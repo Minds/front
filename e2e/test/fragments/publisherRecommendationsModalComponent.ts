@@ -11,11 +11,7 @@ class PublisherRecommendationsModalComponent {
    * @returns { void }
    */
   public skip(): void {
-    I.click(
-      locate('button')
-        .inside(this.modalSelector)
-        .withText('Skip')
-    );
+    I.click(locate('button').inside(this.modalSelector).withText('Skip'));
   }
 }
 

@@ -3,11 +3,12 @@ import { ChatRoomMessageComponent } from './chat-room-message.component';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { ChatDatePipe } from '../../../../pipes/chat-date-pipe';
 import { WINDOW } from '../../../../../../common/injection-tokens/common-injection-tokens';
-import { MockComponent } from '../../../../../../utils/mock';
+import { MockComponent, MockPipe } from '../../../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { ChangeDetectorRef } from '@angular/core';
 import { mockChatMessageEdge } from '../../../../../../mocks/chat.mock';
+import { TagsPipe } from '../../../../../../common/pipes/tags';
 
 describe('ChatRoomMessageComponent', () => {
   let comp: ChatRoomMessageComponent;
@@ -16,6 +17,7 @@ describe('ChatRoomMessageComponent', () => {
   beforeEach((done: DoneFn) => {
     TestBed.configureTestingModule({
       imports: [ChatRoomMessageComponent],
+      declarations: [TagsPipe],
       providers: [
         ChangeDetectorRef,
         { provide: WINDOW, useValue: jasmine.createSpyObj<Window>(['open']) },
@@ -26,6 +28,10 @@ describe('ChatRoomMessageComponent', () => {
           NgCommonModule,
           RouterTestingModule,
           ChatDatePipe,
+          MockPipe({
+            name: 'tags',
+            standalone: true,
+          }),
           MockComponent({
             selector: 'minds-avatar',
             inputs: ['object'],
@@ -35,6 +41,12 @@ describe('ChatRoomMessageComponent', () => {
             selector: 'm-chatRoomMessage__dropdown',
             inputs: ['isMessageOwner', 'messageEdge', 'hoverSourceElement'],
             standalone: true,
+          }),
+          MockComponent({
+            selector: 'm-chatRoomMessage__richEmbed',
+            inputs: ['thumbnailSrc', 'title', 'url'],
+            standalone: true,
+            template: `<ng-content></ng-content>`,
           }),
         ],
       },
@@ -213,6 +225,62 @@ describe('ChatRoomMessageComponent', () => {
         fixture.debugElement.query(By.css('.m-chatRoomMessage__text'))
           .nativeElement.textContent
       ).toBe(mockChatMessageEdge.node.plainText);
+    });
+
+    describe('Rich embed render', () => {
+      it('should have rich embed when rich embed data is set', () => {
+        (comp as any).richEmbed = {
+          thumbnailSrc: 'https://example.minds.com/image.png',
+          title: 'Title',
+          url: 'https://example.minds.com',
+        };
+
+        fixture.detectChanges();
+        comp.cd.detectChanges();
+
+        expect(
+          fixture.debugElement.query(By.css('m-chatRoomMessage__richEmbed'))
+        ).toBeTruthy();
+      });
+
+      it('should NOT have rich embed when NO rich embed data is set', () => {
+        (comp as any).richEmbed = null;
+
+        fixture.detectChanges();
+        comp.cd.detectChanges();
+
+        expect(
+          fixture.debugElement.query(By.css('m-chatRoomMessage__richEmbed'))
+        ).toBeFalsy();
+      });
+    });
+  });
+
+  describe('message text', () => {
+    it('should stop propagation when handling text clicks on anchor tag targets', () => {
+      let event = {
+        stopPropagation: jasmine.createSpy('stopPropagation'),
+        target: {
+          tagName: 'A',
+        },
+      };
+
+      (comp as any).handleMessageTextClick(event);
+
+      expect(event.stopPropagation).toHaveBeenCalled();
+    });
+
+    it('should stop propagation when handling text clicks on NON anchor tag targets', () => {
+      let event = {
+        stopPropagation: jasmine.createSpy('stopPropagation'),
+        target: {
+          tagName: 'SPAN',
+        },
+      };
+
+      (comp as any).handleMessageTextClick(event);
+
+      expect(event.stopPropagation).not.toHaveBeenCalled();
     });
   });
 });

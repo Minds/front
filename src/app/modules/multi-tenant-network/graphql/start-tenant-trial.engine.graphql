@@ -1,5 +1,9 @@
 mutation StartTenantTrial {
     tenantTrial {
-        id
+        tenant {
+            id
+        }
+        loginUrl
+        jwtToken
     }
 }

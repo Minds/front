@@ -1,4 +1,7 @@
-mutation UpdatePostSubscriptions ($entityGuid: String!, $frequency: PostSubscriptionFrequencyEnum!) {
+mutation UpdatePostSubscriptions(
+  $entityGuid: String!
+  $frequency: PostSubscriptionFrequencyEnum!
+) {
   updatePostSubscription(entityGuid: $entityGuid, frequency: $frequency) {
     userGuid
     entityGuid

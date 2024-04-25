@@ -1,0 +1,13 @@
+query getNavigationItems {
+  customNavigationItems {
+    id
+    name
+    type
+    action
+    iconId
+    order
+    url
+    visible
+    path
+  }
+}

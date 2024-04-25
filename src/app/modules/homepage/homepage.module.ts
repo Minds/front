@@ -17,6 +17,8 @@ import { HomepageContainerComponent } from './homepage-container.component';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 import { DefaultFeedModule } from '../default-feed/default-feed.module';
 import { AboutModule } from '../about/about.module';
+import { TenantCustomHomepageModule } from './tenant-custom-homepage/tenant-custom-homepage.module';
+import { TenantCustomHomepageHeroComponent } from './tenant-custom-homepage/components/hero/hero.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,7 @@ const routes: Routes = [
     HomepageV3Module,
     DefaultFeedModule,
     AboutModule,
+    TenantCustomHomepageModule,
   ],
   declarations: [HomepageContainerComponent],
 })

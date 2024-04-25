@@ -11,7 +11,9 @@
 <!-- ----------------------------------- -->
 <!-- Site membership BADGE -->
 <!-- ----------------------------------- -->
-<m-siteMembershipBadge *ngIf="entity.site_membership"></m-siteMembershipBadge>
+<m-siteMembershipBadge
+  *ngIf="entity.site_membership && !hideText"
+></m-siteMembershipBadge>
 <!-- ----------------------------------- -->
 <!-- PAYWALL -->
 <!-- ----------------------------------- -->
@@ -90,9 +92,7 @@ post content to trigger upgrade modal -->
   <!-- ----------------------------------- -->
   <div
     class="m-activityContent__media--image m-activityContent__media"
-    *ngIf="
-      isImage || (isMultiImage && isModal && !hasSiteMembershipPayallThumbnail)
-    "
+    *ngIf="shouldShowSingleImage"
     [ngClass]="{
       'm-activityContent__media--extraTallImage':
         extraTallImage && (service.displayOptions.isFeed || isMinimalMode),
@@ -208,10 +208,10 @@ post content to trigger upgrade modal -->
 <!-- Site membership BANNER/BUTTON -->
 <!-- ---------------------------------------------------  -->
 <ng-container *mIfTenant="true">
-  <ng-container
-    *ngIf="entity.site_membership && !entity.site_membership_unlocked"
-  >
-    <m-activity__siteMembershipCta></m-activity__siteMembershipCta>
+  <ng-container *ngIf="shouldShowSiteMembershipCta">
+    <m-activity__siteMembershipCta
+      [showButton]="!(isModal && hideText) && !entity?.site_membership_unlocked"
+    ></m-activity__siteMembershipCta>
   </ng-container>
 </ng-container>
 <!-- ----------------------------------- -->

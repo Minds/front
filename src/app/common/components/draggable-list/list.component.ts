@@ -20,11 +20,14 @@ import {
  */
 @Component({
   selector: 'm-draggableList',
+  styleUrls: ['list.component.ng.scss'],
   templateUrl: 'list.component.html',
 })
 export class DraggableListComponent {
   @Input() data: Array<any>;
   @Input() dndEffectAllowed: EffectAllowed = 'copyMove';
+
+  // The name of the KEY whose value is the unique identifier of the item that was moved
   @Input() id: string;
   @Input() headers: string[];
   @Input() disabled: boolean;

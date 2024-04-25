@@ -4,6 +4,7 @@ query GetChatRoom(
     $afterMembers: Int!
 ) {
     chatRoom(roomGuid: $roomGuid) {
+        id
         cursor
         node {
             guid
@@ -11,7 +12,7 @@ query GetChatRoom(
             id
             isChatRequest
             isUserRoomOwner
-            areChatRoomNotificationsMuted
+            chatRoomNotificationStatus
         }
         members(first: $firstMembers, after: $afterMembers) {
             edges {
@@ -31,5 +32,8 @@ query GetChatRoom(
                 endCursor
             }
         }
+        unreadMessagesCount
+        lastMessagePlainText,
+        lastMessageCreatedTimestamp
     }
 }

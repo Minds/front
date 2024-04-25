@@ -326,6 +326,7 @@ export class OnboardingV5Service implements OnDestroy {
       console.error(e);
     }
 
+    // Minimal mode onboarding has no completionStep$
     if (!this.completionStep$.getValue()) {
       this.completionInProgress$.next(false);
       this.dismiss$.next(true);

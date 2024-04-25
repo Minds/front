@@ -1,0 +1,15 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  *:not(m-marketing__footer) {
+    max-width: 1920px;
+  }
+
+  m-marketing__footer {
+    min-width: 100%;
+  }
+}

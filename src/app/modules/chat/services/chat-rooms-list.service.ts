@@ -5,11 +5,14 @@ import {
   Observable,
   Subject,
   catchError,
+  lastValueFrom,
   of,
   take,
 } from 'rxjs';
 import {
   ChatRoomEdge,
+  GetChatRoomGQL,
+  GetChatRoomQuery,
   GetChatRoomsListGQL,
   GetChatRoomsListQuery,
   GetChatRoomsListQueryVariables,
@@ -18,6 +21,11 @@ import {
 import { QueryRef } from 'apollo-angular';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ApolloQueryResult } from '@apollo/client';
+import {
+  ChatRoomEvent,
+  GlobalChatSocketService,
+} from './global-chat-socket.service';
+import { Session } from '../../../services/session';
 
 /** Size of an individual page. */
 export const PAGE_SIZE: number = 24;
@@ -62,8 +70,14 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
     GetChatRoomsListQueryVariables
   >;
 
+  /** Whether the chat room list is being viewed. */
+  private isViewingChatRoomsList: boolean = false;
+
   constructor(
     private getChatRoomsListGql: GetChatRoomsListGQL,
+    private globalChatSocketService: GlobalChatSocketService,
+    private getChatRoomGql: GetChatRoomGQL,
+    private session: Session,
     private toaster: ToasterService
   ) {
     super();
@@ -103,6 +117,15 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
   public refetch(): void {
     this._initialized$.next(false);
     this.queryRef.refetch();
+  }
+
+  /**
+   * Sets whether the chat room list is being viewed.
+   * @param { boolean } value - whether the chat room list is being viewed.
+   * @returns { void }
+   */
+  public setIsViewingChatRoomList(value: boolean): void {
+    this.isViewingChatRoomsList = value;
   }
 
   /**
@@ -171,8 +194,56 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
           } catch (e) {
             this.handleError(e);
           }
-        })
+        }),
+      this.globalChatSocketService.globalEvents$.subscribe(
+        (event: ChatRoomEvent): void => {
+          if (
+            !event.data ||
+            event.data['type'] !== 'NEW_MESSAGE' ||
+            !event.roomGuid ||
+            !this.session.isLoggedIn() ||
+            !this.isViewingChatRoomsList
+          ) {
+            return;
+          }
+
+          // reload the room asynchronously and update cached value.
+          this.reloadSingleRoom(event.roomGuid);
+        }
+      )
     );
+  }
+
+  /**
+   * Reloads a single room and updates value in cache.
+   * @param { string } roomGuid - the room guid to reload.
+   * @returns { Promise<ChatRoomEdge> } - the chat room edge.
+   */
+  private async reloadSingleRoom(roomGuid: string): Promise<ChatRoomEdge> {
+    try {
+      const result: ApolloQueryResult<GetChatRoomQuery> = await lastValueFrom(
+        this.getChatRoomGql.fetch(
+          {
+            roomGuid: roomGuid,
+            firstMembers: 12,
+            afterMembers: 0,
+          },
+          { fetchPolicy: 'network-only' }
+        )
+      );
+
+      if (result?.errors?.length) {
+        throw new Error(result.errors[0].message);
+      }
+
+      if (!result?.data?.chatRoom) {
+        throw new Error('Chat room not found');
+      }
+
+      return result?.data?.chatRoom as ChatRoomEdge;
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   /**
