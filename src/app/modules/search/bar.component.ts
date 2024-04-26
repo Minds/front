@@ -27,7 +27,6 @@ import {
   DiscoveryFeedsContentFilter,
 } from '../discovery/feeds/feeds.service';
 import { SearchBarSuggestionsComponent } from './suggestions/suggestions.component';
-import { SearchGqlExperimentService } from './search-gql-experiment.service';
 import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 /**
@@ -73,7 +72,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     public session: Session,
     private recentService: RecentService,
     private pageLayoutService: PageLayoutService,
-    private searchExp: SearchGqlExperimentService,
     @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
@@ -141,15 +139,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    if (this.searchExp.isActive()) {
-      this.router.navigate(['/search'], {
-        queryParams: { q: this.q, f: this.filter, t: this.type },
-      });
-    } else {
-      this.router.navigate(['/discovery/search'], {
-        queryParams: { q: this.q, f: this.filter, t: this.type },
-      });
-    }
+    this.router.navigate(['/search'], {
+      queryParams: { q: this.q, f: this.filter, t: this.type },
+    });
 
     this.recentService.storeSuggestion(
       'text',

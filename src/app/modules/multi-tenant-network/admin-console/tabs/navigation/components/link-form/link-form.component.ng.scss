@@ -1,0 +1,90 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0 $spacing8;
+  box-sizing: border-box;
+  margin-bottom: $spacing20;
+
+  .m-networkAdminNavigationEditForm__header {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-bottom: $spacing2;
+
+    .m-networkAdminNavigationEditForm__headerTitleRow {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: $spacing3;
+
+      .m-networkAdminNavigationEditForm__headerIcon {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .m-networkAdminNavigationEditForm__headerTitle {
+        margin: 0;
+        @include heading3Regular;
+      }
+    }
+
+    .m-networkAdminNavigationEditForm__headerDescription {
+      margin: 0;
+
+      @include body2Medium;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+  .m-form {
+    max-width: 520px;
+    margin: $spacing10 0;
+  }
+
+  .m-form__fieldsContainer {
+    display: flex;
+    gap: $spacing6;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+  }
+
+  .m-networkAdminNavigationEditFormLabel--bold {
+    @include heading4Bold;
+  }
+
+  .m-networkAdminNavigationEditForm__iconSelectorInputRow {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: $spacing8;
+    margin-top: $spacing6;
+
+    > * {
+      cursor: pointer;
+    }
+  }
+
+  .m-networkAdminNavigationEditFor__field--disabled {
+    cursor: not-allowed;
+    .m-form__row--label:not(.m-networkAdminNavigationEditFormLabel--bold) label,
+    .m-form__row--input input {
+      @include m-theme() {
+        color: themed($m-textColor--secondary) !important;
+      }
+    }
+    .m-form__row--input input {
+      cursor: not-allowed !important;
+    }
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    ::ng-deep .m-networkAdminNavigationEditForm__saveButton {
+      .m-button {
+        width: 100%;
+      }
+    }
+  }
+}

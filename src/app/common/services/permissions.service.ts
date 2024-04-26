@@ -47,23 +47,10 @@ export class PermissionsService {
   }
 
   /**
-   * True if the `front-6121-rbac-permissions` experiment is enabled in PostHog feature flags
-   */
-  private isActive(): boolean {
-    // return this.experimentsService.hasVariation('front-6121-rbac-permissions');
-    return true;
-  }
-
-  /**
    * @param permission
    * @returns whether the user has permission
    */
   public has(permission: PermissionsEnum): boolean {
-    // Don't implement restrictions if the experiment isn't enabled
-    if (!this.isActive()) {
-      return true;
-    }
-
     return this.whitelist.includes(permission);
   }
 

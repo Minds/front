@@ -6,12 +6,13 @@
 <m-chatRoom__message
   *ngFor="let messageEdge of messages; index as i"
   [senderName]="messageEdge.node?.sender?.node?.name"
-  [plainText]="messageEdge.node.plainText"
+  [plainText]="messageEdge.node?.plainText"
   [timeCreatedUnix]="messageEdge?.node?.timeCreatedUnix"
   [senderGuid]="messageEdge.node?.sender?.node?.guid"
   [senderUsername]="messageEdge.node?.sender?.node?.username"
-  [isMessageOwner]="messageEdge.node.sender.node.guid === loggedInUserGuid"
+  [isMessageOwner]="messageEdge.node?.sender.node.guid === loggedInUserGuid"
   [messageEdge]="messageEdge"
+  [richEmbed]="messageEdge.node?.richEmbed"
   [isNextMessageFromSameSender]="
     messages[i + 1]?.node.sender.node.guid === messageEdge.node.sender.node.guid
   "
@@ -19,8 +20,3 @@
     messages[i - 1]?.node.sender.node.guid === messageEdge.node.sender.node.guid
   "
 ></m-chatRoom__message>
-
-<m-loadingSpinner
-  *ngIf="hasNextPage$ | async"
-  [inProgress]="true"
-></m-loadingSpinner>

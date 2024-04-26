@@ -14,7 +14,7 @@ export default class BlockListSync {
   setUp() {
     this.db.schema(1, {
       users: {
-        primaryKey: 'guid'
+        primaryKey: 'guid',
       },
     });
 
@@ -39,7 +39,7 @@ export default class BlockListSync {
 
       await this.prune();
 
-      const users = response.guids.map(guid => ({ guid }));
+      const users = response.guids.map((guid) => ({ guid }));
 
       await this.db.bulkInsert('users', users);
     } catch (e) {
@@ -55,7 +55,7 @@ export default class BlockListSync {
    */
   async getList() {
     await this.db.ready();
-    return (await this.db.all('users')).map(row => row.guid);
+    return (await this.db.all('users')).map((row) => row.guid);
   }
 
   /**

@@ -1,0 +1,116 @@
+@import 'themes';
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  width: 100%;
+  @include m-theme() {
+    box-shadow: 0 1px $spacing1 0 rgba(themed($m-black), 0.1);
+  }
+
+  ul.m-draggableList__list {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    padding-inline-start: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    transition: all ease 300ms;
+
+    &.dndDragover {
+      @include m-theme() {
+        background-color: rgba(themed($m-black), 0.05);
+        box-shadow: 0 1px $spacing1 0 rgba(themed($m-black), 0.1);
+      }
+    }
+    &.dragging {
+      li.m-draggableList__listItem {
+        &:first-child {
+          @include borderTop;
+        }
+      }
+    }
+  }
+
+  .m-draggableList__listItem {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+      border-left: none;
+      color: themed($m-textColor--primary);
+    }
+
+    &:not(.m-draggableList__listHeader) {
+      @include m-theme() {
+        border-top: none;
+      }
+    }
+    &:first-child {
+      @include borderTop;
+    }
+    &.m-draggableList__listHeader {
+      @include m-theme() {
+        border-bottom: none;
+        color: themed($m-textColor--tertiary);
+      }
+    }
+  }
+  input.m-draggableList__cell {
+    width: 0;
+    min-width: 0;
+  }
+  .m-draggableList__cell {
+    padding: $spacing2 $spacing5;
+    flex: 1 1 0px;
+    box-sizing: border-box;
+
+    @include m-theme() {
+      border: none;
+    }
+    &input {
+      width: 0;
+      min-width: 0;
+    }
+  }
+  .m-draggableList__cell--actions {
+    padding: $spacing2 $spacing4;
+    height: $spacing10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include m-theme() {
+      border-right: none;
+    }
+    i {
+      cursor: pointer;
+      width: auto;
+      height: auto;
+      transition: all 0.3s ease;
+
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+      &.handle {
+        font-size: $spacing5;
+        padding-right: $spacing2;
+        @include m-theme() {
+        }
+      }
+      &:hover {
+        transform: scale(1.15);
+      }
+    }
+  }
+  .dndPlaceholder {
+    min-height: $spacing25;
+    @include m-theme() {
+      border: 1px dashed rgba(themed($m-borderColor--primary), 0.8);
+    }
+  }
+}

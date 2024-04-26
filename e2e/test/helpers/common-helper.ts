@@ -28,7 +28,7 @@ class CommonHelper extends Helper {
     const { Playwright } = this.helpers;
     const [response] = await Promise.all([
       Playwright.waitForResponse(
-        resp => resp.url().includes(urlSnippet) && resp.status() === status
+        (resp) => resp.url().includes(urlSnippet) && resp.status() === status
       ),
       Playwright.click(locator),
     ]);

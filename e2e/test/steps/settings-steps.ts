@@ -61,8 +61,6 @@ namespace SettingsSteps {
     I.seeElement(locate('a').withText('General'));
     I.seeElement(locate('a').withText('Theme'));
     I.seeElement(locate('a').withText('Assets'));
-    I.seeElement(locate('a').withText('Hashtags'));
-    I.seeElement(locate('a').withText('Footer'));
     I.seeElement(locate('a').withText('Domain'));
     I.seeElement(locate('a').withText('Payouts'));
     I.seeElement(locate('a').withText('Cancel Pro Subscription'));

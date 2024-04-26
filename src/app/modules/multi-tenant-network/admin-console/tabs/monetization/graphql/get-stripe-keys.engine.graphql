@@ -1,6 +1,6 @@
 query GetStripeKeys {
-    stripeKeys {
-        pubKey
-        secKey
-    }
+  stripeKeys {
+    pubKey
+    secKey
+  }
 }

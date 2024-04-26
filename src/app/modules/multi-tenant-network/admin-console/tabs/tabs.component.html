@@ -37,6 +37,15 @@
   </div>
   <div class="m-tabs__tab" *ngIf="isAdmin">
     <a
+      [routerLink]="['/network/admin/navigation']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-tab-navigation"
+      i18n="@@NETWORK_ADMIN_CONSOLE__TAB_NAVIGATION"
+      >Navigation</a
+    >
+  </div>
+  <div class="m-tabs__tab" *ngIf="isAdmin">
+    <a
       [routerLink]="['/network/admin/roles']"
       [routerLinkActive]="'m-tabs__tab--selected'"
       data-ref="network-admin-console-tab-roles"
@@ -71,7 +80,7 @@
       >Mobile</a
     >
   </div>
-  <div class="m-tabs__tab" *ngIf="session.isAdmin()">
+  <div class="m-tabs__tab" *ngIf="isAdmin">
     <a
       [routerLink]="['/network/admin/analytics']"
       [routerLinkActive]="'m-tabs__tab--selected'"

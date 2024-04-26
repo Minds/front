@@ -3,7 +3,6 @@ import { BoostModalV2GoalButtonSelectorComponent } from './goal-button.component
 import { MockService } from '../../../../../utils/mock';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { BoostGoalsExperimentService } from '../../../../experiments/sub-services/boost-goals-experiment.service';
 import { BehaviorSubject } from 'rxjs';
 import { BoostModalPanel } from '../../boost-modal-v2.types';
 import { BoostGoal } from '../../../boost.types';
@@ -20,22 +19,6 @@ describe('BoostModalV2GoalButtonSelectorComponent', () => {
         {
           provide: BoostModalV2Service,
           useValue: MockService(BoostModalV2Service),
-        },
-        {
-          provide: BoostGoalsExperimentService,
-          useValue: MockService(BoostGoalsExperimentService, {
-            has: ['activePanel$', 'goal$', 'goalButtonText$', 'goalButtonUrl$'],
-            props: {
-              activePanel$: {
-                get: () => new BehaviorSubject<any>(BoostModalPanel.AUDIENCE),
-              },
-              goal$: {
-                get: () => new BehaviorSubject<any>(BoostGoal.SUBSCRIBERS),
-              },
-              goalButtonText$: { get: () => new BehaviorSubject<any>(null) },
-              goalButtonUrl$: { get: () => new BehaviorSubject<any>(null) },
-            },
-          }),
         },
       ],
     }).compileComponents();

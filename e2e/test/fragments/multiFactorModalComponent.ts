@@ -25,11 +25,7 @@ class MultiFactorModalComponent {
    * @returns { void }
    */
   public submit(): void {
-    I.click(
-      locate('button')
-        .inside(this.modalSelector)
-        .withText('Verify')
-    );
+    I.click(locate('button').inside(this.modalSelector).withText('Verify'));
   }
 }
 

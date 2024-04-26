@@ -4,7 +4,10 @@ import {
   fakeAsync,
   tick,
 } from '@angular/core/testing';
-import { ChatRoomBottomBarComponent } from './chat-room-bottom-bar.component';
+import {
+  ChatRoomBottomBarComponent,
+  OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+} from './chat-room-bottom-bar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmojiPickerModule } from '../../../../../common/components/emoji-picker/emoji-picker.module';
 import { ToasterService } from '../../../../../common/services/toaster.service';
@@ -21,6 +24,8 @@ import {
 import { ThemeService } from '../../../../../common/services/theme.service';
 import { of } from 'rxjs';
 import { mockChatMessageEdge } from '../../../../../mocks/chat.mock';
+import { Session } from '../../../../../services/session';
+import userMock from '../../../../../mocks/responses/user.mock';
 
 describe('ChatRoomBottomBarComponent', () => {
   let comp: ChatRoomBottomBarComponent;
@@ -55,6 +60,10 @@ describe('ChatRoomBottomBarComponent', () => {
           useValue: MockService(ChatMessagesService),
         },
         { provide: ThemeService, useValue: MockService(ThemeService) },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
       ],
     });
 
@@ -94,6 +103,7 @@ describe('ChatRoomBottomBarComponent', () => {
         },
       } as ChatMessageEdge;
 
+      (comp as any).session.getLoggedInUser.and.returnValue(userMock);
       (comp as any).roomGuid = roomGuid;
       (comp as any).formGroup.get('message').setValue(testMessage);
       (comp as any).createMessageGQL.mutate.and.returnValue(
@@ -112,11 +122,38 @@ describe('ChatRoomBottomBarComponent', () => {
           plainText: testMessage,
           roomGuid: roomGuid,
         },
-        { update: jasmine.any(Function) }
+        {
+          update: jasmine.any(Function),
+          optimisticResponse: {
+            __typename: 'Mutation',
+            createChatMessage: {
+              __typename: 'ChatMessageEdge',
+              id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+              cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+              node: {
+                id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                guid: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                plainText: testMessage,
+                roomGuid: (comp as any).roomGuid,
+                sender: {
+                  cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                  id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                  type: 'user',
+                  node: {
+                    id: userMock.guid,
+                    guid: userMock.guid,
+                    username: userMock.username,
+                    name: userMock.name,
+                  },
+                },
+                timeCreatedUnix: jasmine.any(String),
+                timeCreatedISO8601: jasmine.any(String),
+                richEmbed: null,
+              },
+            },
+          },
+        }
       );
-      expect(
-        (comp as any).chatMessageService.requestScrollToBottom
-      ).toHaveBeenCalled();
 
       expect((comp as any).formGroup.get('message').value).toBe('');
       expect((comp as any).formGroup.get('message').pristine).toBeTrue();
@@ -140,6 +177,7 @@ describe('ChatRoomBottomBarComponent', () => {
       const testMessage: string = 'test';
       const roomGuid: string = '1234567890123456';
 
+      (comp as any).session.getLoggedInUser.and.returnValue(userMock);
       (comp as any).roomGuid = roomGuid;
       (comp as any).formGroup.get('message').setValue(testMessage);
       (comp as any).createMessageGQL.mutate.and.returnValue(
@@ -156,11 +194,39 @@ describe('ChatRoomBottomBarComponent', () => {
           plainText: testMessage,
           roomGuid: roomGuid,
         },
-        { update: jasmine.any(Function) }
+        {
+          update: jasmine.any(Function),
+          optimisticResponse: {
+            __typename: 'Mutation',
+            createChatMessage: {
+              __typename: 'ChatMessageEdge',
+              id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+              cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+              node: {
+                id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                guid: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                plainText: testMessage,
+                roomGuid: (comp as any).roomGuid,
+                sender: {
+                  cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                  id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                  type: 'user',
+                  node: {
+                    id: userMock.guid,
+                    guid: userMock.guid,
+                    username: userMock.username,
+                    name: userMock.name,
+                  },
+                },
+                timeCreatedUnix: jasmine.any(String),
+                timeCreatedISO8601: jasmine.any(String),
+                richEmbed: null,
+              },
+            },
+          },
+        }
       );
-      expect(
-        (comp as any).chatMessageService.requestScrollToBottom
-      ).not.toHaveBeenCalled();
+
       expect((comp as any).toaster.error).toHaveBeenCalled();
       expect((comp as any).formGroup.get('message').value).toBe(testMessage);
     }));
@@ -174,6 +240,7 @@ describe('ChatRoomBottomBarComponent', () => {
         },
       } as ChatMessageEdge;
 
+      (comp as any).session.getLoggedInUser.and.returnValue(userMock);
       (comp as any).roomGuid = roomGuid;
       (comp as any).formGroup.get('message').setValue(testMessage);
       (comp as any).createMessageGQL.mutate.and.returnValue(
@@ -194,11 +261,39 @@ describe('ChatRoomBottomBarComponent', () => {
           plainText: testMessage,
           roomGuid: roomGuid,
         },
-        { update: jasmine.any(Function) }
+        {
+          update: jasmine.any(Function),
+          optimisticResponse: {
+            __typename: 'Mutation',
+            createChatMessage: {
+              __typename: 'ChatMessageEdge',
+              id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+              cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+              node: {
+                id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                guid: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                plainText: testMessage,
+                roomGuid: (comp as any).roomGuid,
+                sender: {
+                  cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                  id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+                  type: 'user',
+                  node: {
+                    id: userMock.guid,
+                    guid: userMock.guid,
+                    username: userMock.username,
+                    name: userMock.name,
+                  },
+                },
+                timeCreatedUnix: jasmine.any(String),
+                timeCreatedISO8601: jasmine.any(String),
+                richEmbed: null,
+              },
+            },
+          },
+        }
       );
-      expect(
-        (comp as any).chatMessageService.requestScrollToBottom
-      ).toHaveBeenCalled();
+
       expect((comp as any).formGroup.get('message').value).toBe('');
       expect((comp as any).formGroup.get('message').pristine).toBeTrue();
       expect((comp as any).formGroup.get('message').untouched).toBeTrue();
@@ -259,6 +354,9 @@ describe('ChatRoomBottomBarComponent', () => {
           },
         })
       );
+      expect(
+        (comp as any).chatMessageService.requestScrollToBottom
+      ).toHaveBeenCalled();
     });
   });
 });

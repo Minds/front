@@ -1,13 +1,9 @@
-query GetReports(
-  $first: Int!,
-  $after: Int!,
-  $status: ReportStatusEnum
-) {
+query GetReports($first: Int!, $after: Int!, $status: ReportStatusEnum) {
   reports(first: $first, after: $after, status: $status) {
     edges {
       node {
         id
-      	... on Report {
+        ... on Report {
           tenantId
           reportGuid
           entityUrn
@@ -38,7 +34,7 @@ query GetReports(
               }
             }
             ... on GroupEdge {
-							node {
+              node {
                 legacy
               }
             }
@@ -56,15 +52,22 @@ query GetReports(
                 timeCreatedISO8601
                 timeCreatedUnix
                 sender {
+                  id
+                  type
+                  cursor
+                  node {
+                    name
+                    username
                     id
-                    type
-                    cursor
-                    node {
-                        name
-                        username
-                        id
-                        guid
-                    }
+                    guid
+                  }
+                }
+                richEmbed {
+                    id
+                    url
+                    canonicalUrl
+                    title
+                    thumbnailSrc
                 }
               }
             }
@@ -72,7 +75,7 @@ query GetReports(
         }
       }
       cursor
-    } 
+    }
     pageInfo {
       hasNextPage
       startCursor

@@ -39,7 +39,7 @@ export default class InMemoryStorageAdapter {
    * @private
    */
   _getIndexBy(table, field, value) {
-    return this.db.data[table].findIndex(row => row[field] === value);
+    return this.db.data[table].findIndex((row) => row[field] === value);
   }
 
   /**
@@ -109,7 +109,10 @@ export default class InMemoryStorageAdapter {
     const index = this._getIndexByPrimaryKey(table, id);
 
     if (index > -1) {
-      this.db.data[table][index] = Object.assign(this.db.data[table][index], changes);
+      this.db.data[table][index] = Object.assign(
+        this.db.data[table][index],
+        changes
+      );
       return 1;
     }
 
@@ -176,8 +179,9 @@ export default class InMemoryStorageAdapter {
   async deleteLessThan(table, field, value) {
     const currentSize = this.db.data[table].length;
 
-    this.db.data[table] = this.db.data[table]
-      .filter(row => row[field] >= value);
+    this.db.data[table] = this.db.data[table].filter(
+      (row) => row[field] >= value
+    );
 
     return currentSize - this.db.data[table].length;
   }
@@ -191,8 +195,9 @@ export default class InMemoryStorageAdapter {
   async deleteEquals(table, field, value) {
     const currentSize = this.db.data[table].length;
 
-    this.db.data[table] = this.db.data[table]
-      .filter(row => row[field] !== value);
+    this.db.data[table] = this.db.data[table].filter(
+      (row) => row[field] !== value
+    );
 
     return currentSize - this.db.data[table].length;
   }
@@ -206,8 +211,9 @@ export default class InMemoryStorageAdapter {
   async deleteAnyOf(table, index, values) {
     const currentSize = this.db.data[table].length;
 
-    this.db.data[table] = this.db.data[table]
-      .filter(row => values.indexOf(row[index]) === -1);
+    this.db.data[table] = this.db.data[table].filter(
+      (row) => values.indexOf(row[index]) === -1
+    );
 
     return currentSize - this.db.data[table].length;
   }
@@ -235,18 +241,17 @@ export default class InMemoryStorageAdapter {
    * @returns {Promise<Array<*>>}
    */
   async getAllSliced(table, field, value, opts) {
-    let collection = this.db.data[table]
-      .filter(row => row[field] === value);
+    let collection = this.db.data[table].filter((row) => row[field] === value);
 
     if (opts.offset && opts.limit) {
-      collection = collection.slice(opts.offset, opts.offset + opts.limit)
+      collection = collection.slice(opts.offset, opts.offset + opts.limit);
     } else if (opts.limit) {
       collection = collection.slice(0, opts.limit);
     } else if (opts.offset) {
       collection = collection.slice(opts.offset);
     }
 
-    return collection.map(row => Object.assign({}, row));
+    return collection.map((row) => Object.assign({}, row));
   }
 
   /**
@@ -258,8 +263,8 @@ export default class InMemoryStorageAdapter {
    */
   async getAllLessThan(table, field, value, opts = {}) {
     const collection = this.db.data[table]
-      .filter(row => row[field] < value)
-      .map(row => Object.assign({}, row));
+      .filter((row) => row[field] < value)
+      .map((row) => Object.assign({}, row));
 
     if (opts.sortBy) {
       return collection.sort((a, b) => {
@@ -282,8 +287,7 @@ export default class InMemoryStorageAdapter {
    * @returns {Promise<*[]>}
    */
   async all(table, opts = {}) {
-    const collection = this.db.data[table]
-      .map(row => Object.assign({}, row));
+    const collection = this.db.data[table].map((row) => Object.assign({}, row));
 
     if (opts.sortBy) {
       return collection.sort((a, b) => {
@@ -308,7 +312,7 @@ export default class InMemoryStorageAdapter {
    */
   async anyOf(table, index, values) {
     return this.db.data[table]
-      .filter(row => values.indexOf(row[index]) > -1)
-      .map(row => Object.assign({}, row));
+      .filter((row) => values.indexOf(row[index]) > -1)
+      .map((row) => Object.assign({}, row));
   }
 }

@@ -12,7 +12,6 @@ import { combineLatest, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { BoostGoal, BoostGoalButtonText } from '../../../boost.types';
-import { BoostGoalsExperimentService } from '../../../../experiments/sub-services/boost-goals-experiment.service';
 import { BoostModalPanel } from '../../boost-modal-v2.types';
 
 /**
@@ -39,16 +38,10 @@ export class BoostModalV2GoalButtonSelectorComponent
 
   constructor(
     protected service: BoostModalV2Service,
-    private formBuilder: FormBuilder,
-    private boostGoalsExperiment: BoostGoalsExperimentService
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    // Don't show this panel if the experiment is off
-    if (!this.boostGoalsExperiment.isActive()) {
-      this.service.activePanel$.next(BoostModalPanel.AUDIENCE);
-    }
-
     this.subscriptions.push(
       // initialize form with existing values,
       // or with defaults if values don't already exist

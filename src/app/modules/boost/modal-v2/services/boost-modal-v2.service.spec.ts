@@ -46,10 +46,6 @@ describe('BoostModalV2Service', () => {
     this.create = jasmine.createSpy('create');
   })();
 
-  let boostGoalsExperimentMock = new (function () {
-    this.isActive = jasmine.createSpy('isActive');
-  })();
-
   let boostTargetExperimentMock = new (function () {
     this.isActive = jasmine.createSpy('isActive');
   })();
@@ -68,7 +64,6 @@ describe('BoostModalV2Service', () => {
       configMock,
       web3WalletMock,
       boostContractMock,
-      boostGoalsExperimentMock,
       boostTargetExperimentMock
     );
 
@@ -359,7 +354,6 @@ describe('BoostModalV2Service', () => {
     loggedInUser.guid = '123';
 
     (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
-    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
     service.paymentMethod$.next(BoostPaymentMethod.OFFCHAIN_TOKENS);
     service.paymentMethodId$.next('');
@@ -401,9 +395,7 @@ describe('BoostModalV2Service', () => {
     loggedInUser.guid = '123';
 
     (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
-    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
-    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
     service.paymentMethod$.next(BoostPaymentMethod.OFFCHAIN_TOKENS);
     service.paymentMethodId$.next('');
     service.duration$.next(30);
@@ -427,44 +419,6 @@ describe('BoostModalV2Service', () => {
       entity_guid: '123',
       target_suitability: 2,
       target_location: 2,
-      payment_method: 2,
-      payment_method_id: '',
-      daily_bid: 15,
-      duration_days: 30,
-    });
-    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
-  });
-
-  it('should submit a boost without a boost goal payload when experiment is off', () => {
-    let loggedInUser: MindsUser = sessionMock;
-    loggedInUser.guid = '123';
-
-    (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
-    (service as any).boostGoalsExperiment.isActive.and.returnValue(false);
-
-    service.paymentMethod$.next(BoostPaymentMethod.OFFCHAIN_TOKENS);
-    service.paymentMethodId$.next('');
-    service.duration$.next(30);
-    service.dailyBudget$.next(15);
-    service.audience$.next(BoostAudience.CONTROVERSIAL);
-    service.goal$.next(BoostGoal.CLICKS);
-    service.goalButtonText$.next(BoostGoalButtonText.GET_STARTED);
-    service.goalButtonUrl$.next('~url~');
-    service.entity$.next({
-      guid: '123',
-      type: 'activity',
-      subtype: '',
-      owner_guid: '234',
-      time_created: '99999999999',
-    });
-
-    service.activePanel$.next(BoostModalPanel.REVIEW);
-    service.changePanelFrom(BoostModalPanel.REVIEW);
-
-    expect((service as any).api.post).toHaveBeenCalledWith('api/v3/boosts', {
-      entity_guid: '123',
-      target_suitability: 2,
-      target_location: 1,
       payment_method: 2,
       payment_method_id: '',
       daily_bid: 15,
@@ -815,7 +769,6 @@ describe('BoostModalV2Service', () => {
   });
 
   it('should NOT navigate to previous panel from audience', (done: DoneFn) => {
-    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
     service.entity$.next({
       guid: '123',
       type: 'user',
@@ -837,7 +790,6 @@ describe('BoostModalV2Service', () => {
     loggedInUser.guid = '234';
 
     (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
-    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
     service.entity$.next({
       guid: '123',
@@ -853,33 +805,11 @@ describe('BoostModalV2Service', () => {
     });
   });
 
-  it('should emit AUDIENCE panel when experiment is not active', (done: DoneFn) => {
-    let loggedInUser: MindsUser = sessionMock;
-    loggedInUser.guid = '234';
-
-    (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
-    (service as any).boostGoalsExperiment.isActive.and.returnValue(false);
-
-    service.entity$.next({
-      guid: '123',
-      type: 'activity',
-      subtype: '',
-      owner_guid: '234',
-      time_created: '99999999999',
-    });
-
-    service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
-      expect(panel).toBe(BoostModalPanel.AUDIENCE);
-      done();
-    });
-  });
-
   it('should emit AUDIENCE panel when entity owner is not user', (done: DoneFn) => {
     let loggedInUser: MindsUser = sessionMock;
     loggedInUser.guid = '234';
 
     (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
-    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
     service.entity$.next({
       guid: '123',
@@ -900,7 +830,6 @@ describe('BoostModalV2Service', () => {
     loggedInUser.guid = '234';
 
     (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
-    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
     service.entity$.next({
       guid: '123',

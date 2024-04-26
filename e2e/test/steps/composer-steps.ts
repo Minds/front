@@ -1,12 +1,8 @@
 import { generateARandomString } from '../utils/utils';
 
 namespace ComposerSteps {
-  const {
-    I,
-    sidebarComponent,
-    composerModalComponent,
-    newsfeedPage,
-  } = inject();
+  const { I, sidebarComponent, composerModalComponent, newsfeedPage } =
+    inject();
 
   Given('I have clicked on the sidebar composer button', () => {
     sidebarComponent.openSidebarComposer();
@@ -77,7 +73,7 @@ namespace ComposerSteps {
     composerModalComponent.clickNsfwOption();
   });
 
-  When('I select the {string} nsfw option', nsfwLabel => {
+  When('I select the {string} nsfw option', (nsfwLabel) => {
     I.click(nsfwLabel, '.m-composerNsfw__item');
   });
 
@@ -85,7 +81,7 @@ namespace ComposerSteps {
     composerModalComponent.clickNsfwSaveOption();
   });
 
-  When('I add files via the upload button', table => {
+  When('I add files via the upload button', (table) => {
     const tableByHeader = table.parse().hashes();
     for (const row of tableByHeader) {
       // TODO how do we make sure we're using the correct context (ie. modal or inline?)
@@ -96,7 +92,7 @@ namespace ComposerSteps {
     }
   });
 
-  When('I enter {string} in the composer text area', message => {
+  When('I enter {string} in the composer text area', (message) => {
     composerModalComponent.typeInTextArea(message);
   });
 
@@ -112,7 +108,7 @@ namespace ComposerSteps {
     composerModalComponent.clickToPostSupermindAndAwait();
   });
 
-  When('I create a post with text storage key {string}', textStorageKey => {
+  When('I create a post with text storage key {string}', (textStorageKey) => {
     composerModalComponent.createNewsfeedPost(textStorageKey);
   });
 
@@ -123,14 +119,14 @@ namespace ComposerSteps {
 
   When(
     'I create a post with response storage key {string}',
-    async responseStorageKey => {
+    async (responseStorageKey) => {
       await composerModalComponent.createNewsfeedPostAndStoreResponse(
         responseStorageKey
       );
     }
   );
 
-  Then('I should see {int} previews of my selected imaged', num => {
+  Then('I should see {int} previews of my selected imaged', (num) => {
     for (let i = 1; i <= num; i++) {
       I.seeElement(
         locate('m-composer__modal m-composerpreview--attachment').at(i)

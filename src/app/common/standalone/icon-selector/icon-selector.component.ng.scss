@@ -1,0 +1,99 @@
+@import 'defaults.scss';
+
+:host {
+  padding: $spacing10;
+
+  @media screen and (max-width: $max-mobile) {
+    padding: $spacing7;
+  }
+
+  .m-iconSelectorWrapper {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+
+    h1 {
+      @include heading3Bold;
+      margin-bottom: $spacing3;
+    }
+  }
+  .m-iconSelector__iconsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing3;
+    max-height: 200px;
+    min-height: 200px;
+    overflow-y: auto;
+    padding: $spacing3 $spacing6;
+    border-radius: 4px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-iconSelector__icon {
+    flex: 1 1 22%;
+    max-width: 22%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    .m-iconSelector__icon {
+      flex: 1 1 45%;
+      max-width: 45%;
+    }
+  }
+  .m-form__field--search {
+    padding: 0 $spacing2;
+    @include border;
+    border-radius: 4px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    i {
+      font-size: $spacing5;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    input {
+      flex: 2 1 calc(100% - 28px);
+      border: none !important;
+      outline: 0 !important;
+    }
+  }
+
+  .m-form__customInputWrapper__radio {
+    height: $spacing5;
+    margin: $spacing1 0 0 0;
+    padding: 0 $spacing5 0 0;
+
+    input {
+      margin: 0;
+      border: none;
+      outline: 0;
+      padding: 0;
+    }
+
+    input:checked + span {
+      @include m-theme() {
+        border: 1px solid themed($m-action);
+      }
+    }
+
+    span {
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+      }
+    }
+  }
+
+  .m-form__buttonsContainer {
+    margin: 0 !important;
+  }
+}
