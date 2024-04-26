@@ -8,13 +8,14 @@ import {
 } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { Session } from '../../../services/session';
-import { map } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MindsGroup } from './group.model';
 import { GroupsService } from '../groups.service';
 import { DEFAULT_GROUP_VIEW, GroupAccessType, GroupView } from './group.types';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 /**
  * Service that holds group information using Observables
@@ -181,7 +182,8 @@ export class GroupService implements OnDestroy {
     protected v1Service: GroupsService,
     protected toaster: ToasterService,
     protected router: Router,
-    protected isTenant: IsTenantService
+    protected isTenant: IsTenantService,
+    private authModal: AuthModalService
   ) {
     this.listenForLogin();
     // Set canReview observable
@@ -211,7 +213,7 @@ export class GroupService implements OnDestroy {
    */
   listenForLogin() {
     this.subscriptions.push(
-      this.session.loggedinEmitter.subscribe(() => {
+      this.session.loggedinEmitter.pipe(filter(Boolean)).subscribe(() => {
         this.sync();
       })
     );
@@ -245,10 +247,19 @@ export class GroupService implements OnDestroy {
     const guid = this.guid$.getValue();
     this.inProgress$.next(true);
 
-    this.api.get(`${this.baseEndpoint}group/${guid}`).subscribe((response) => {
-      this.setGroup(response.group);
-      this.syncLegacyService(response.group);
-    });
+    this.subscriptions.push(
+      this.api
+        .get(`${this.baseEndpoint}group/${guid}`)
+        .pipe(take(1))
+        .subscribe((response) => {
+          if (!this.session.isLoggedIn() && response['require_login']) {
+            this.authModal.open({ formDisplay: 'register' });
+            return;
+          }
+          this.setGroup(response.group);
+          this.syncLegacyService(response.group);
+        })
+    );
   }
 
   /**

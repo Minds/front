@@ -1,6 +1,6 @@
 {
   "ts-node": {
-    "files": true
+    "files": true,
   },
   "compilerOptions": {
     "target": "es2018",
@@ -11,7 +11,7 @@
     "types": ["codeceptjs", "node"],
     "declaration": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

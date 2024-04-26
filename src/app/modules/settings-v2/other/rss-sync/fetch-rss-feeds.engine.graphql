@@ -1,10 +1,10 @@
 query FetchRSSFeeds {
-    rssFeeds {
-        feedId
-        title
-        url
-        createdAtTimestamp
-        lastFetchAtTimestamp
-        lastFetchStatus
-    }
+  rssFeeds {
+    feedId
+    title
+    url
+    createdAtTimestamp
+    lastFetchAtTimestamp
+    lastFetchStatus
+  }
 }

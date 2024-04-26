@@ -35,8 +35,6 @@ import { ProModule } from '../pro/pro.module';
 import { SettingsV2ProGeneralComponent } from './pro/general/general.component';
 import { SettingsV2ProThemeComponent } from './pro/theme/theme.component';
 import { SettingsV2ProAssetsComponent } from './pro/assets/assets.component';
-import { SettingsV2ProHashtagsComponent } from './pro/hashtags/hashtags.component';
-import { SettingsV2ProFooterComponent } from './pro/footer/footer.component';
 import { SettingsV2ProDomainComponent } from './pro/domain/domain.component';
 import { SettingsV2ProPayoutsComponent } from './pro/payouts/payouts.component';
 import { SettingsV2ProCancelComponent } from './pro/cancel/cancel.component';
@@ -299,22 +297,6 @@ const SETTINGS_V2_ROUTES: Routes = [
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Assets',
-            },
-          },
-          {
-            path: 'hashtags',
-            component: SettingsV2ProHashtagsComponent,
-            canDeactivate: [CanDeactivateGuardService],
-            data: {
-              title: 'Hashtags',
-            },
-          },
-          {
-            path: 'footer',
-            component: SettingsV2ProFooterComponent,
-            canDeactivate: [CanDeactivateGuardService],
-            data: {
-              title: 'Footer',
             },
           },
           {
@@ -653,8 +635,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2ProGeneralComponent,
     SettingsV2ProThemeComponent,
     SettingsV2ProAssetsComponent,
-    SettingsV2ProHashtagsComponent,
-    SettingsV2ProFooterComponent,
     SettingsV2ProDomainComponent,
     SettingsV2ProPayoutsComponent,
     SettingsV2ProCancelComponent,

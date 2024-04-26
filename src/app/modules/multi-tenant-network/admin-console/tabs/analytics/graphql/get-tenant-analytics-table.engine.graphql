@@ -1,57 +1,57 @@
 query GetTenantAnalyticsTable(
-    $table: AnalyticsTableEnum!
-    $fromUnixTs: Int
-    $toUnixTs: Int
-    $after: String
-    $limit: Int
+  $table: AnalyticsTableEnum!
+  $fromUnixTs: Int
+  $toUnixTs: Int
+  $after: String
+  $limit: Int
 ) {
-    tenantAdminAnalyticsTable(
-        table: $table,
-        fromUnixTs: $fromUnixTs,
-        toUnixTs: $toUnixTs,
-        after: $after
-        limit: $limit
-    ) {
-        edges {
-            node {
-                id
-                ... on AnalyticsTableRowActivityNode {
-                    views
-                    engagements
-                    activity {
-                        id
-                        guid
-                        ownerGuid
-                        title
-                        message
-                        owner {
-                            username
-                        }
-                    }
-                }
-                ... on AnalyticsTableRowGroupNode {
-                    newMembers
-                    group {
-                        name
-                        guid
-                    }
-                }
-                ... on AnalyticsTableRowUserNode {
-                    newSubscribers
-                    totalSubscribers
-                    user {
-                        guid
-                        username
-                    }
-                }
+  tenantAdminAnalyticsTable(
+    table: $table
+    fromUnixTs: $fromUnixTs
+    toUnixTs: $toUnixTs
+    after: $after
+    limit: $limit
+  ) {
+    edges {
+      node {
+        id
+        ... on AnalyticsTableRowActivityNode {
+          views
+          engagements
+          activity {
+            id
+            guid
+            ownerGuid
+            title
+            message
+            owner {
+              username
             }
-            cursor
+          }
         }
-        pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
+        ... on AnalyticsTableRowGroupNode {
+          newMembers
+          group {
+            name
+            guid
+          }
         }
+        ... on AnalyticsTableRowUserNode {
+          newSubscribers
+          totalSubscribers
+          user {
+            guid
+            username
+          }
+        }
+      }
+      cursor
     }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+  }
 }

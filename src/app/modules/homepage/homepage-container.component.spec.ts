@@ -22,6 +22,8 @@ import { Session } from '../../services/session';
 import { MockService } from '../../utils/mock';
 import { MetaService } from '../../common/services/meta.service';
 import { IfTenantDirective } from '../../common/directives/if-tenant.directive';
+import { ConfigsService } from '../../common/services/configs.service';
+import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 describe('HomepageContainerComponent', () => {
   let component: HomepageContainerComponent;
@@ -93,6 +95,14 @@ describe('HomepageContainerComponent', () => {
         {
           provide: ResetPasswordModalService,
           useValue: MockService(ResetPasswordModalService),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: false,
         },
       ],
     }).compileComponents();

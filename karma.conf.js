@@ -15,22 +15,23 @@ module.exports = function (config) {
       require('karma-jasmine-order-reporter'),
     ],
     // webpack: { node: { fs: 'empty', } },
-    client:{
+    client: {
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
       jasmine: {
         random: true, // run tests in the same order every time
-        seed: process.env['SEED'] // set seed from env
-      }
+        seed: process.env['SEED'], // set seed from env
+      },
     },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly' ],
-      fixWebpackSourcePaths: true
+      dir: require('path').join(__dirname, 'coverage'),
+      reports: ['html', 'lcovonly'],
+      fixWebpackSourcePaths: true,
     },
 
     reporters: ['mocha', 'jasmine-order'],
     mochaReporter: {
       ignoreSkipped: true,
-    },    
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -47,12 +48,12 @@ module.exports = function (config) {
           // Without a remote debugging port, Google Chrome exits immediately.
           '--remote-debugging-port=9222',
         ],
-      }
+      },
     },
     singleRun: true,
-		captureTimeout: 210000,
+    captureTimeout: 210000,
     browserNoActivityTimeout: 210000,
-		browserDisconnectTimeout: 210000,
-    browserDisconnectTolerance: 3
+    browserDisconnectTimeout: 210000,
+    browserDisconnectTolerance: 3,
   });
 };

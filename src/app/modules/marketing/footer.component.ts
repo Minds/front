@@ -41,6 +41,9 @@ export class MarketingFooterComponent implements OnInit, OnDestroy {
    */
   @Input() public data: Footer;
 
+  /** Alignment of legal section. */
+  @Input() public alignLegalSection: 'left' | 'center' | 'right' = 'right';
+
   // subscriptions.
   private getFooterSubscription: Subscription;
 

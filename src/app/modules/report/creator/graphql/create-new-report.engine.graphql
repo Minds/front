@@ -1,16 +1,16 @@
 mutation CreateNewReport(
   $entityUrn: String!
   $reason: ReportReasonEnum!
-  $illegalSubReason: IllegalSubReasonEnum,
-  $nsfwSubReason: NsfwSubReasonEnum,
+  $illegalSubReason: IllegalSubReasonEnum
+  $nsfwSubReason: NsfwSubReasonEnum
   $securitySubReason: SecuritySubReasonEnum
 ) {
   createNewReport(
     reportInput: {
-      entityUrn: $entityUrn,
+      entityUrn: $entityUrn
       reason: $reason
       securitySubReason: $securitySubReason
-    	illegalSubReason: $illegalSubReason
+      illegalSubReason: $illegalSubReason
       nsfwSubReason: $nsfwSubReason
     }
   )

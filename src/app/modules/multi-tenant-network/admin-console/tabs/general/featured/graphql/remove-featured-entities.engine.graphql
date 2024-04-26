@@ -1,5 +1,3 @@
-mutation deleteFeaturedEntity (
-  $entityGuid: String!,
-) {
+mutation deleteFeaturedEntity($entityGuid: String!) {
   deleteFeaturedEntity(entityGuid: $entityGuid)
 }

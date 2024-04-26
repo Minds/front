@@ -15,10 +15,10 @@ module.exports = {
     // Removing the global alias as it conflicts with the `global` npm package.
     // can be removed with resolution of https://github.com/storybookjs/storybook/issues/21242
     // and a subsequent update.
-    const { global, ...alias } = config.resolve.alias
-    config.resolve.alias = alias
+    const { global, ...alias } = config.resolve.alias;
+    config.resolve.alias = alias;
 
     // Other config
     return config;
-  }
+  },
 };

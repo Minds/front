@@ -33,7 +33,7 @@ class BoostRotatorComponent {
    */
   public waitForBoostFeedEndpoint(): void {
     I.waitForResponse(
-      resp =>
+      (resp) =>
         resp.url().includes('/api/v2/boost/feed') && resp.status() === 200,
       30
     );

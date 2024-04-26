@@ -1,35 +1,37 @@
-mutation UpdateSiteMembership (
-    $membershipGuid: String!
-    $membershipName: String!,
-    $membershipDescription: String,
-    $roles: [Int!],
-    $groups: [String!] 
+mutation UpdateSiteMembership(
+  $membershipGuid: String!
+  $membershipName: String!
+  $membershipDescription: String
+  $roles: [Int!]
+  $groups: [String!]
 ) {
-    updateSiteMembership(siteMembershipInput: {
-        membershipGuid: $membershipGuid
-        membershipName: $membershipName
-        membershipDescription: $membershipDescription
-        roles: $roles
-        groups: $groups
-    }) {
-        id
-        membershipGuid
-        membershipName
-        membershipPriceInCents
-        membershipBillingPeriod
-        membershipPricingModel
-        membershipDescription
-        priceCurrency
-        roles {
-            id
-            name
-        }
-        groups {
-            id
-            name
-            guid
-            membersCount
-            legacy
-        }
+  updateSiteMembership(
+    siteMembershipInput: {
+      membershipGuid: $membershipGuid
+      membershipName: $membershipName
+      membershipDescription: $membershipDescription
+      roles: $roles
+      groups: $groups
     }
+  ) {
+    id
+    membershipGuid
+    membershipName
+    membershipPriceInCents
+    membershipBillingPeriod
+    membershipPricingModel
+    membershipDescription
+    priceCurrency
+    roles {
+      id
+      name
+    }
+    groups {
+      id
+      name
+      guid
+      membersCount
+      legacy
+    }
+  }
 }

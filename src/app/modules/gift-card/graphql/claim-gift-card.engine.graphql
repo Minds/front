@@ -6,6 +6,6 @@ mutation ClaimGiftCard($claimCode: String!) {
     balance
     expiresAt
     claimedAt
-    claimedByGuid    
+    claimedByGuid
   }
 }
