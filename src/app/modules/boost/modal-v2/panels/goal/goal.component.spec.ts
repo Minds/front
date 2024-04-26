@@ -7,7 +7,6 @@ import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { MockService } from '../../../../../utils/mock';
 import { BoostModalV2GoalSelectorComponent } from './goal.component';
 import { BoostGoal, BoostGoalButtonText } from '../../../boost.types';
-import { BoostGoalsExperimentService } from '../../../../experiments/sub-services/boost-goals-experiment.service';
 import {
   DEFAULT_BUTTON_TEXT_FOR_CLICKS_GOAL,
   DEFAULT_BUTTON_TEXT_FOR_SUBSCRIBER_GOAL,
@@ -38,10 +37,6 @@ describe('BoostModalV2GoalSelectorComponent', () => {
             },
           }),
         },
-        {
-          provide: BoostGoalsExperimentService,
-          useValue: MockService(BoostGoalsExperimentService),
-        },
       ],
     }).compileComponents();
   }));
@@ -51,7 +46,6 @@ describe('BoostModalV2GoalSelectorComponent', () => {
     comp = fixture.componentInstance;
 
     (comp as any).service.goal$.next(BoostGoal.VIEWS);
-    (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
     fixture.detectChanges();
 

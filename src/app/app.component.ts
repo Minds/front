@@ -41,8 +41,9 @@ import { CompassHookService } from './common/services/compass-hook.service';
 import { OnboardingV4Service } from './modules/onboarding-v4/onboarding-v4.service';
 import { OnboardingV5ModalLazyService } from './modules/onboarding-v5/services/onboarding-v5-modal-lazy.service';
 import { OnboardingV5Service } from './modules/onboarding-v5/services/onboarding-v5.service';
-import { OnboardingV5ExperimentService } from './modules/experiments/sub-services/onboarding-v5-experiment.service';
 import { ExplainerScreensService } from './modules/explainer-screens/services/explainer-screen.service';
+import { ChatExperimentService } from './modules/experiments/sub-services/chat-experiment.service';
+import { ChatInitService } from './modules/chat/services/chat-init.service';
 
 @Component({
   selector: 'm-app',
@@ -64,6 +65,9 @@ export class Minds implements OnInit, OnDestroy {
 
   private multiFactorSuccessSubscription: Subscription;
   private emailConfirmationLoginSubscription: Subscription;
+
+  /* Whether chat experiment is active */
+  private isChatExperimentActive: boolean = false;
 
   constructor(
     public session: Session,
@@ -98,8 +102,9 @@ export class Minds implements OnInit, OnDestroy {
     private onboardingV4Service: OnboardingV4Service, // force init.
     private onboardingV5Service: OnboardingV5Service,
     private onboardingV5ModalService: OnboardingV5ModalLazyService,
-    private onboardingV5ExperimentService: OnboardingV5ExperimentService,
-    private explainerScreenService: ExplainerScreensService
+    private explainerScreenService: ExplainerScreensService,
+    private chatInitService: ChatInitService,
+    private chatExperimentService: ChatExperimentService
   ) {
     this.name = 'Minds';
 
@@ -198,6 +203,8 @@ export class Minds implements OnInit, OnDestroy {
       this.notificationService.updateNotificationCount();
     }
 
+    this.isChatExperimentActive = this.chatExperimentService.isActive();
+
     this.session.isLoggedIn(async (is) => {
       if (is && !this.site.isProDomain) {
         const user = this.session.getLoggedInUser();
@@ -218,8 +225,16 @@ export class Minds implements OnInit, OnDestroy {
 
         this.notificationService.listen();
         this.notificationService.updateNotificationCount();
+
+        if (this.isChatExperimentActive) {
+          this.chatInitService.reinit();
+        }
       } else {
         this.notificationService.unlisten();
+
+        if (this.isChatExperimentActive) {
+          this.chatInitService.destroy();
+        }
       }
     });
 
@@ -246,6 +261,9 @@ export class Minds implements OnInit, OnDestroy {
 
     this.socketsService.setUp();
 
+    if (this.isChatExperimentActive && this.session.isLoggedIn()) {
+      this.chatInitService.init();
+    }
     // TODO uncomment this when we want logged out users
     // to complete the social compass questionnaire
     // this.compassHook.listen();
@@ -266,10 +284,7 @@ export class Minds implements OnInit, OnDestroy {
    * @returns { Promise<boolean> } true if onboarding v5 should be shown.
    */
   private async shouldShowOnboardingV5(): Promise<boolean> {
-    return (
-      this.onboardingV5ExperimentService.isGlobalOnSwitchActive() &&
-      !(await this.onboardingV5Service.hasCompletedOnboarding())
-    );
+    return !(await this.onboardingV5Service.hasCompletedOnboarding());
   }
 
   ngOnDestroy() {

@@ -8,7 +8,7 @@
     [hideBorder]="true"
   ></m-starCard>
 
-  <div class="m-membershipPage__membershipCardsContainer">
+  <div class="m-membershipsPage__membershipCardsContainer m-scroll__thin">
     <m-siteMembershipCard
       *ngFor="let membership of memberships$ | async"
       [name]="membership.membershipName"
@@ -25,6 +25,16 @@
   </div>
 </ng-container>
 
+<div class="m-membershipsPage__modalButtonContainer" *ngIf="isModal">
+  <m-button [stretch]="true" (onAction)="onDismissIntent()">Get later</m-button>
+</div>
+
 <ng-template #loadingSpinnerTemplate>
   <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
 </ng-template>
+
+<m-modalCloseButton
+  *ngIf="isModal"
+  class="noAbsolutePosition"
+  data-ref="m-siteMemnbershipsPage__button--modalClose"
+></m-modalCloseButton>

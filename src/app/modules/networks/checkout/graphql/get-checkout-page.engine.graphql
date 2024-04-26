@@ -1,13 +1,13 @@
 query GetCheckoutPage(
-  $planId: String!,
-  $page: CheckoutPageKeyEnum!,
+  $planId: String!
+  $page: CheckoutPageKeyEnum!
   $timePeriod: CheckoutTimePeriodEnum!
   $addOnIds: [String!]
 ) {
   checkoutPage(
-    planId: $planId,
-    page: $page,
-    timePeriod: $timePeriod,
+    planId: $planId
+    page: $page
+    timePeriod: $timePeriod
     addOnIds: $addOnIds
   ) {
     id

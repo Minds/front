@@ -66,7 +66,10 @@ export class SettingsV2EmailNotificationsV3Component
           map((response) => {
             // Email topics are limited for tenants
             if (this.isTenant.is()) {
-              const allowedTenantEmailTopics = ['unread_notifications'];
+              const allowedTenantEmailTopics = [
+                'unread_notifications',
+                'posts_missed_since_login',
+              ];
 
               const filteredNotifications = response.notifications.filter(
                 (notification) => {

@@ -1,0 +1,41 @@
+@import 'defaults.scss';
+@import '../../../stylesheets/console.component.ng.scss';
+
+:host {
+  max-width: 780px;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column nowrap;
+  padding-bottom: $spacing6;
+
+  form {
+    display: flex;
+    flex-flow: column nowrap;
+
+    textarea {
+      padding: $spacing4;
+      box-sizing: border-box;
+      border-radius: 3px;
+      resize: vertical;
+      outline: none;
+
+      @include body1Regular;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    m-button {
+      margin: $spacing6 0;
+    }
+  }
+  .m-landingPageDescription__description {
+    margin-bottom: $spacing8;
+    margin-right: $spacing2;
+
+    @include body1Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

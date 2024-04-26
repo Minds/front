@@ -57,9 +57,11 @@ h1 {
   }
 
   &:not(.m-topbar__top--minimalLightMode) {
-    @include m-theme() {
-      background-color: themed($m-bgColor--primary);
-      border-bottom: 1px solid themed($m-borderColor--primary);
+    &:not(.m-topbar__top--minimalMode) {
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
     }
   }
 
@@ -85,6 +87,50 @@ h1 {
         i {
           margin-right: 0px;
           color: color-by-theme($m-bgColor--primaryInverted, 'light');
+        }
+      }
+    }
+
+    .m-topbar__searchBox {
+      height: unset;
+
+      .m-search__bar--active {
+        border-right: unset !important;
+      }
+    }
+  }
+
+  &.m-topbar__top--minimalMode {
+    border-bottom: none;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary) !important;
+    }
+
+    .m-topbar__leftColumn {
+      border-right: unset;
+
+      .m-topbar__logo--full {
+        margin-bottom: $spacing1;
+      }
+
+      .m-topbar__logo--bulb {
+        margin-bottom: $spacing2;
+      }
+
+      .m-topbarNav__item--hamburger {
+        border-radius: 4px;
+
+        @include m-theme() {
+          background-color: themed($m-grey-100);
+        }
+
+        i {
+          margin-right: 0px;
+
+          @include m-theme() {
+            color: themed($m-bgColor--primaryInverted);
+          }
         }
       }
     }

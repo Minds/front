@@ -45,8 +45,13 @@ export class NetworkSettingsAuthGuard implements CanActivate {
       }
 
       // Allow access to moderation reports if the user can moderate
-      if (isModerationRoute && this.permissions.canModerateContent()) {
-        return true;
+      if (this.permissions.canModerateContent()) {
+        if (isModerationRoute) {
+          return true;
+        } else {
+          this.router.navigate(['/network/admin/moderation/reports']);
+          return false;
+        }
       }
     }
 

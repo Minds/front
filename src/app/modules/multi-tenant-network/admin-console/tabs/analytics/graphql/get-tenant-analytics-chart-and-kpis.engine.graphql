@@ -1,31 +1,31 @@
-query GetAdminAnalyticsChartAndKpis (
-    $chartMetric: AnalyticsMetricEnum!
-    $kpiMetrics: [AnalyticsMetricEnum!]!
-    $fromUnixTs: Int!
-    $toUnixTs: Int!
+query GetAdminAnalyticsChartAndKpis(
+  $chartMetric: AnalyticsMetricEnum!
+  $kpiMetrics: [AnalyticsMetricEnum!]!
+  $fromUnixTs: Int!
+  $toUnixTs: Int!
 ) {
-    tenantAdminAnalyticsChart(
-        metric: $chartMetric
-        fromUnixTs: $fromUnixTs
-        toUnixTs: $toUnixTs
-    ) {
-        metric,
-        segments {
-            buckets {
-                date
-                key,
-                value
-            }
-        }
+  tenantAdminAnalyticsChart(
+    metric: $chartMetric
+    fromUnixTs: $fromUnixTs
+    toUnixTs: $toUnixTs
+  ) {
+    metric
+    segments {
+      buckets {
+        date
+        key
+        value
+      }
     }
+  }
 
-    tenantAdminAnalyticsKpis(
-        metrics: $kpiMetrics
-        fromUnixTs: $fromUnixTs
-        toUnixTs: $toUnixTs
-    ) {
-        metric,
-        value,
-        previousPeriodValue
-    }
+  tenantAdminAnalyticsKpis(
+    metrics: $kpiMetrics
+    fromUnixTs: $fromUnixTs
+    toUnixTs: $toUnixTs
+  ) {
+    metric
+    value
+    previousPeriodValue
+  }
 }

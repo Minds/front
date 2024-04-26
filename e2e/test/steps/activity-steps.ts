@@ -3,12 +3,8 @@ import { Storage } from '../utils/storage';
 import activityComponent from '../fragments/activityComponent';
 
 namespace ActivitySteps {
-  const {
-    I,
-    newsfeedPage,
-    singleEntityPage,
-    composerModalComponent,
-  } = inject();
+  const { I, newsfeedPage, singleEntityPage, composerModalComponent } =
+    inject();
 
   const storage = Storage.getInstance();
 
@@ -19,7 +15,7 @@ namespace ActivitySteps {
       await newsfeedPage.clickToQuoteActivityByText(storedText);
       composerModalComponent.typeInTextArea('Quote post');
       const tableByHeader = table.parse().hashes();
-      const fileNames = tableByHeader.map(fileName => fileName.filename);
+      const fileNames = tableByHeader.map((fileName) => fileName.filename);
 
       if (fileNames.length) {
         await composerModalComponent.attachFiles(fileNames);

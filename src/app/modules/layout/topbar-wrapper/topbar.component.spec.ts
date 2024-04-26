@@ -3,7 +3,6 @@ import { TopbarWrapperComponent } from './topbar.component';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
-import { GiftCardPurchaseExperimentService } from '../../experiments/sub-services/gift-card-purchase-experiment.service';
 import { TopbarService } from '../../../common/layout/topbar.service';
 import { BehaviorSubject } from 'rxjs';
 
@@ -47,10 +46,6 @@ describe('TopbarWrapperComponent', () => {
           useValue: MockService(Router),
         },
         {
-          provide: GiftCardPurchaseExperimentService,
-          useValue: MockService(GiftCardPurchaseExperimentService),
-        },
-        {
           provide: TopbarService,
           useValue: MockService(TopbarService, {
             has: ['isMinimalLightMode$'],
@@ -69,7 +64,6 @@ describe('TopbarWrapperComponent', () => {
     fixture = TestBed.createComponent(TopbarWrapperComponent);
     comp = fixture.componentInstance;
 
-    (comp as any).giftCardPurchaseExperiment.isActive.and.returnValue(true);
     (comp as any).topbarService.isMinimalLightMode$.next(false);
 
     fixture.detectChanges();
@@ -85,22 +79,6 @@ describe('TopbarWrapperComponent', () => {
 
   it('should initialize', () => {
     expect(comp).toBeTruthy();
-  });
-
-  describe('ngOnInit', () => {
-    it('should set giftCardPurchaseExperimentIsActive to true', () => {
-      comp.giftCardPurchaseExperimentIsActive = false;
-      (comp as any).giftCardPurchaseExperiment.isActive.and.returnValue(true);
-      comp.ngOnInit();
-      expect(comp.giftCardPurchaseExperimentIsActive).toBeTrue();
-    });
-
-    it('should set giftCardPurchaseExperimentIsActive to false', () => {
-      comp.giftCardPurchaseExperimentIsActive = true;
-      (comp as any).giftCardPurchaseExperiment.isActive.and.returnValue(false);
-      comp.ngOnInit();
-      expect(comp.giftCardPurchaseExperimentIsActive).toBeFalse();
-    });
   });
 
   describe('onGiftIconClick', () => {

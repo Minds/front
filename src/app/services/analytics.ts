@@ -17,6 +17,7 @@ import { MindsUser } from './../interfaces/entities';
 import { ActivityEntity } from '../modules/newsfeed/activity/activity.service';
 import { ConfigsService } from '../common/services/configs.service';
 import { POSTHOG_JS } from '../common/services/posthog/posthog-injection-tokens';
+import { ClientMetaData } from '../common/services/client-meta.service';
 
 type PostHogI = PostHog;
 
@@ -214,9 +215,19 @@ export class AnalyticsService implements OnDestroy {
    */
   public trackEntityView(
     entity: ActivityEntity | MindsUser,
-    clientMeta = {}
+    clientMeta: Partial<ClientMetaData> = {}
   ): void {
-    // We are not sending to posthog at the minute
+    this.capture(`${entity.type}_view`, {
+      entity_guid: entity.guid,
+      entity_owner_guid: entity.type === 'activity' ? entity.owner_guid : 0,
+      entity_type: entity.type,
+      cm_position: clientMeta.position,
+      cm_campaign: clientMeta.campaign,
+      cm_served_by_guid: clientMeta.served_by_guid,
+      cm_delta: clientMeta.delta,
+      cm_medium: clientMeta.medium,
+      cm_source: clientMeta.source,
+    });
   }
 
   onRouteChanged(path) {
@@ -303,6 +314,11 @@ export class AnalyticsService implements OnDestroy {
     // Set the current environment
     $set.environment = this.configService.get('environment');
     properties.environment = this.configService.get('environment');
+
+    // Set the current user guid to the person
+    if (this.sessionService.getLoggedInUser()) {
+      $set.guid = this.sessionService.getLoggedInUser().guid;
+    }
 
     if (Object.keys($set).length) {
       properties.$set = $set;

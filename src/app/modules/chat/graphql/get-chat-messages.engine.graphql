@@ -7,6 +7,7 @@ query GetChatMessages(
     chatMessages(after: $after, first: $first, before: $before, roomGuid: $roomGuid) {
         edges {
             cursor
+            id
             node {
                 id
                 guid
@@ -24,6 +25,13 @@ query GetChatMessages(
                         id
                         guid
                     }
+                }
+                richEmbed {
+                    id
+                    url
+                    canonicalUrl
+                    title
+                    thumbnailSrc
                 }
             }
         }

@@ -24,7 +24,6 @@ import { RegisterForm } from './register';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { FormInputCheckboxComponent } from '../../../common/components/forms/checkbox/checkbox.component';
 import { Component, forwardRef, Input } from '@angular/core';
-import { OnboardingV5ExperimentService } from '../../experiments/sub-services/onboarding-v5-experiment.service';
 import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
@@ -122,10 +121,6 @@ describe('RegisterForm', () => {
           useValue: MockService(OnboardingV5Service),
         },
         {
-          provide: OnboardingV5ExperimentService,
-          useValue: MockService(OnboardingV5ExperimentService),
-        },
-        {
           provide: PermissionsService,
           useValue: MockService(PermissionsService),
         },
@@ -155,14 +150,6 @@ describe('RegisterForm', () => {
     (comp as any).passwordRiskValidator.riskValidator.and.returnValue(() =>
       Promise.resolve(true)
     );
-    (
-      comp as any
-    ).onboardingV5ExperimentService.isGlobalOnSwitchActive.and.returnValue(
-      false
-    );
-    (
-      comp as any
-    ).onboardingV5ExperimentService.isEnrollmentActive.and.returnValue(false);
 
     fixture.detectChanges();
 
@@ -223,16 +210,8 @@ describe('RegisterForm', () => {
     discardPeriodicTasks();
   }));
 
-  it('should register successfully a new user and set onboarding state to true if experiments are on', fakeAsync(() => {
+  it('should register successfully a new user and set onboarding state to true', fakeAsync(() => {
     const user = { guid: '1234' };
-    (
-      comp as any
-    ).onboardingV5ExperimentService.isGlobalOnSwitchActive.and.returnValue(
-      true
-    );
-    (
-      comp as any
-    ).onboardingV5ExperimentService.isEnrollmentActive.and.returnValue(true);
 
     (comp as any).client.post.and.returnValue(Promise.resolve({ user: user }));
 

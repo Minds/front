@@ -13,7 +13,7 @@ type LoginUrlResponse = {
 /**
  * Auto login service to log a tenant admin into their network.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AutoLoginService {
   constructor(
     private api: ApiService,
@@ -51,13 +51,18 @@ export class AutoLoginService {
    * Opens a url in a new tab with a jwt token.
    * @param { string } url - the url to open in a new tab.
    * @param { string } jwtToken - the jwt token to send to the url.
+   * @param { boolean } openInNewWindow - whether to open in a new window.
    * @returns { Promise<void> }
    */
-  private async openNetworkUrl(url: string, jwtToken: string): Promise<void> {
+  public async openNetworkUrl(
+    url: string,
+    jwtToken: string,
+    openInNewWindow: boolean = true
+  ): Promise<void> {
     // create form to submit jwt token to URL as a POST request.
     const form = this.document.createElement('form');
     form.method = 'POST';
-    form.target = '_blank';
+    form.target = openInNewWindow ? '_blank' : '_self';
     form.action = url;
 
     const input = this.document.createElement('input');

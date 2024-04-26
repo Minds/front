@@ -11,7 +11,6 @@ import { isPlatformBrowser } from '@angular/common';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { TopbarAlertService } from '../../../common/components/topbar-alert/topbar-alert.service';
 import { Observable } from 'rxjs';
-import { ChatwootExperimentService } from '../../experiments/sub-services/chatwoot-experiment.service';
 
 @Component({
   selector: 'm-page',
@@ -40,7 +39,6 @@ export class PageComponent implements OnInit {
     private storage: Storage,
     private messengerService: MessengerService,
     private topbarAlertService: TopbarAlertService,
-    private chatwootExperiment: ChatwootExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -78,13 +76,5 @@ export class PageComponent implements OnInit {
       return false;
     }
     return isMobileOrTablet();
-  }
-
-  /**
-   * Whether chatwoot experiment is active.
-   * @returns { boolean }
-   */
-  public isChatwootExperimentActive(): boolean {
-    return this.chatwootExperiment.isActive();
   }
 }

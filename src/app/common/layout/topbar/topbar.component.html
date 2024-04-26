@@ -6,7 +6,8 @@
 
 <div
   *ngIf="{
-    isMinimalLightMode: isMinimalLightMode$ | async
+    isMinimalLightMode: isMinimalLightMode$ | async,
+    isMinimalMode: isMinimalMode$ | async
   } as templateVars"
   class="m-topbar__top"
   [class.m-topbar__top--hasAlert]="shouldShowTopbarAlert$ | async"
@@ -18,6 +19,7 @@
   "
   [class.m-topbar__top--loggedOut]="!getCurrentUser()"
   [class.m-topbar__top--minimalLightMode]="templateVars.isMinimalLightMode"
+  [class.m-topbar__top--minimalMode]="templateVars.isMinimalMode"
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"
 >
   <!-- Topbar alerts -->
@@ -44,7 +46,7 @@
           >
             <ng-container
               *ngIf="
-                !templateVars.isMinimalLightMode;
+                !templateVars.isMinimalLightMode && !templateVars.isMinimalMode;
                 else minimalLightModeLogoTemplate
               "
             >
@@ -85,14 +87,12 @@
             </ng-container>
             <ng-template #minimalLightModeLogoTemplate>
               <img
-                [src]="cdnAssetsUrl + 'assets/logos/logo-monotone-light.png'"
+                [src]="cdnAssetsUrl + (getFullMinimalModeLogoSrc$() | async)"
                 class="m-topbar__logo--full"
                 alt="minds"
               />
               <img
-                [src]="
-                  cdnAssetsUrl + 'assets/logos/logo-monotone-light-small.png'
-                "
+                [src]="cdnAssetsUrl + (getSmallMinimalModeLogoSrc$() | async)"
                 class="m-topbar__logo--bulb"
                 alt="minds"
               />
@@ -140,8 +140,18 @@
               i18n-title="@@COMMON__LOGIN"
               data-ref="topnav-login"
               size="small"
-              [color]="'blue'"
-              [borderless]="onHomepage || templateVars.isMinimalLightMode"
+              [color]="
+                templateVars.isMinimalLightMode
+                  ? 'white-always'
+                  : templateVars.isMinimalMode
+                    ? 'white'
+                    : 'blue'
+              "
+              [borderless]="
+                onHomepage ||
+                templateVars.isMinimalLightMode ||
+                templateVars.isMinimalMode
+              "
             >
               Login
             </m-button>
@@ -157,9 +167,16 @@
                 !(pageLayoutService.hasTopbarBackground$ | async) && onHomepage
               "
               [color]="
-                !templateVars.isMinimalLightMode ? 'blue' : 'black-always'
+                templateVars.isMinimalLightMode
+                  ? 'black-always'
+                  : templateVars.isMinimalMode
+                    ? 'black'
+                    : 'blue'
               "
               [solid]="pageLayoutService.hasTopbarBackground$ | async"
+              [borderless]="
+                templateVars.isMinimalLightMode || templateVars.isMinimalMode
+              "
             >
               Join Now
             </m-button>

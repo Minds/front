@@ -116,6 +116,7 @@ describe('AnalyticsService', () => {
       environment: null,
       $set: {
         environment: null,
+        guid: '1000',
       },
     });
     expect(posthog.capture).toHaveBeenCalledTimes(1);
@@ -152,6 +153,7 @@ describe('AnalyticsService', () => {
       environment: null,
       $set: {
         environment: null,
+        guid: '1000',
       },
     });
   }));
@@ -179,6 +181,7 @@ describe('AnalyticsService', () => {
       environment: null,
       $set: {
         environment: null,
+        guid: '1000',
       },
     });
   }));

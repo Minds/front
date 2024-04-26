@@ -9,7 +9,6 @@ import { ActivityService } from '../activity/activity.service';
 import { ActivityComponent } from './activity.component';
 import { MockService } from '../../../utils/mock';
 import { BehaviorSubject, of } from 'rxjs';
-import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
 
@@ -32,10 +31,6 @@ describe('ActivityComponent', () => {
         {
           provide: IntersectionObserverService,
           useValue: MockService(IntersectionObserverService),
-        },
-        {
-          provide: EntityMetricsSocketsExperimentService,
-          useValue: MockService(EntityMetricsSocketsExperimentService),
         },
         {
           provide: PersistentFeedExperimentService,
@@ -118,7 +113,6 @@ describe('ActivityComponent', () => {
   });
 
   it('should setup interception observer subscription', () => {
-    (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(true);
     (comp as any).intersectionObserver.createAndObserve.and.returnValue(
       of(true)
     );
@@ -128,7 +122,6 @@ describe('ActivityComponent', () => {
   });
 
   it('should teardown interception observer subscription', () => {
-    (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(true);
     (comp as any).intersectionObserver.createAndObserve.and.returnValue(
       of(false)
     );
@@ -137,26 +130,6 @@ describe('ActivityComponent', () => {
     expect(
       (comp as any).service.teardownMetricsSocketListener
     ).toHaveBeenCalled();
-  });
-
-  it('should NOT setup interception observer subscription if experiment is off', () => {
-    (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(false);
-
-    comp.setupIntersectionObserver();
-
-    expect(
-      (comp as any).service.setupMetricsSocketListener
-    ).not.toHaveBeenCalled();
-  });
-
-  it('should NOT teardown interception observer subscription if experiment is off', () => {
-    (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(false);
-
-    comp.setupIntersectionObserver();
-
-    expect(
-      (comp as any).service.teardownMetricsSocketListener
-    ).not.toHaveBeenCalled();
   });
 
   describe('onDownvote', () => {

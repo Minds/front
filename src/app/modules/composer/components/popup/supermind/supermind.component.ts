@@ -35,7 +35,6 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 import { SupermindSettings } from '../../../../settings-v2/payments/supermind/supermind.types';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { SupermindNonStripeOffersExperimentService } from '../../../../experiments/sub-services/supermind-non-stripe-offers-experiment.service';
-import { TwitterSupermindExperimentService } from '../../../../experiments/sub-services/twitter-supermind-experiment.service';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { ConfirmV2Component } from '../../../../modals/confirm-v2/confirm.component';
 import { ModalService } from '../../../../../services/ux/modal.service';
@@ -128,8 +127,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
 
   private targetUser?: MindsUser;
 
-  public twitterSupermindExperimentIsActive: boolean = false;
-
   /**
    * Constructor
    * @param service
@@ -143,7 +140,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     private entityResolverService: EntityResolverService,
     private changeDetector: ChangeDetectorRef,
     private supermindNonStripeOfferExperimentService: SupermindNonStripeOffersExperimentService,
-    private twitterSupermindExperimentService: TwitterSupermindExperimentService,
     private toast: ToasterService,
     private modalService: ModalService,
     private injector: Injector
@@ -173,10 +169,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       paymentMethod: [SUPERMIND_DEFAULT_PAYMENT_METHOD],
       cardId: [''], // Card
     });
-
-    if (this.twitterSupermindExperimentService.isActive()) {
-      this.twitterSupermindExperimentIsActive = true;
-    }
 
     this.targetUsernameSubscription =
       this.formGroup.controls.username.valueChanges
@@ -256,12 +248,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
           supermindRequest.refund_policy_agreed
         );
 
-        if (this.twitterSupermindExperimentIsActive) {
-          this.formGroup.controls.twitterRequired.setValue(
-            supermindRequest.twitter_required
-          );
-        }
-
         if (supermindRequest.reply_type === SUPERMIND_RESPONSE_TYPES.LIVE) {
           this.formGroup.get('twitterRequired').disable();
         }
@@ -271,29 +257,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
         // Will ensure clear button is displayed
         this.formGroup.markAsDirty();
       });
-
-    if (this.twitterSupermindExperimentIsActive) {
-      this.responseTypeSubscription = this.formGroup
-        .get('responseType')
-        .valueChanges.subscribe(
-          (responseType: SUPERMIND_RESPONSE_TYPES): void => {
-            const twitterRequiredFormControl: AbstractControl<boolean> =
-              this.formGroup.get('twitterRequired');
-
-            if (Number(responseType) === SUPERMIND_RESPONSE_TYPES.LIVE) {
-              if (twitterRequiredFormControl.value) {
-                this.toast.warn(
-                  'Live responses cannot require Twitter replies.'
-                );
-                twitterRequiredFormControl.setValue(false);
-              }
-              twitterRequiredFormControl.disable();
-            } else if (twitterRequiredFormControl.disabled) {
-              twitterRequiredFormControl.enable();
-            }
-          }
-        );
-    }
 
     this.explainerScreenService.handleManualTriggerByKey('supermind_request');
   }

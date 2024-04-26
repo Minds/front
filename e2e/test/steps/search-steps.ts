@@ -5,7 +5,7 @@ namespace SearchSteps {
     I.amOnPage(searchPage.searchURI);
   });
 
-  When('I type the search term', async table => {
+  When('I type the search term', async (table) => {
     I.seeElement(searchPage.searchField);
     const tableByHeader = table.parse().hashes();
     for (const row of tableByHeader) {
@@ -14,7 +14,7 @@ namespace SearchSteps {
     await Promise.all([
       I.pressKey('Enter'),
       I.waitForResponse(
-        resp => resp.url().includes('/api/graphql') && resp.status() === 200,
+        (resp) => resp.url().includes('/api/graphql') && resp.status() === 200,
         30
       ),
     ]);
