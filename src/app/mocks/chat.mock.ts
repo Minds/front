@@ -97,6 +97,7 @@ export const mockChatRoomEdge: ChatRoomEdge = {
     guid: '1234567890123456',
     id: 'id1',
     roomType: ChatRoomTypeEnum.OneToOne,
+    name: 'Chat room name',
     isChatRequest: false,
     timeCreatedISO8601: Date.now().toLocaleString(),
     timeCreatedUnix: Date.now().toString(),

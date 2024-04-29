@@ -366,6 +366,7 @@ export type ChatRoomNode = NodeInterface & {
   id: Scalars['ID']['output'];
   isChatRequest: Scalars['Boolean']['output'];
   isUserRoomOwner?: Maybe<Scalars['Boolean']['output']>;
+  name: Scalars['String']['output'];
   /** The type of room. i.e. one-to-one, multi-user, or group-owned */
   roomType: ChatRoomTypeEnum;
   /** The timestamp the room was created at */
@@ -2457,6 +2458,7 @@ export type GetChatRoomQuery = {
       __typename?: 'ChatRoomNode';
       guid: string;
       roomType: ChatRoomTypeEnum;
+      name: string;
       id: string;
       isChatRequest: boolean;
       isUserRoomOwner?: boolean | null;
@@ -2514,6 +2516,7 @@ export type GetChatRoomsListQuery = {
         __typename?: 'ChatRoomNode';
         id: string;
         guid: string;
+        name: string;
         roomType: ChatRoomTypeEnum;
         timeCreatedISO8601: string;
         timeCreatedUnix: string;
@@ -7937,6 +7940,7 @@ export const GetChatRoomDocument = gql`
       node {
         guid
         roomType
+        name
         id
         isChatRequest
         isUserRoomOwner
@@ -7995,6 +7999,7 @@ export const GetChatRoomsListDocument = gql`
         node {
           id
           guid
+          name
           roomType
           timeCreatedISO8601
           timeCreatedUnix
