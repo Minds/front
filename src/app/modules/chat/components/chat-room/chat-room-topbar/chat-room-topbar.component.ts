@@ -27,7 +27,7 @@ import { WINDOW } from '../../../../../common/injection-tokens/common-injection-
   imports: [NgCommonModule, CommonModule, RouterModule],
   standalone: true,
 })
-export class ChatRoomTopComponent implements OnChanges {
+export class ChatRoomTopComponent {
   /** Name of the room. (optional: will be derived from room members if not provided) */
   @Input() protected roomName: string;
 
@@ -48,31 +48,11 @@ export class ChatRoomTopComponent implements OnChanges {
     @Inject(WINDOW) private window: Window
   ) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes.roomMembers.currentValue !== changes.roomMembers.previousValue
-    ) {
-      this.deriveRoomNameFromMembers();
-    }
-  }
-
   /**
    * Handles middle mouse click on an avatar by opening the users channel
    * in a new tab.
    */
   protected openChannelInNewTab(username: string): void {
     this.window.open(`/${username}`, '_blank');
-  }
-
-  /**
-   * Derives room name from members.
-   * @returns { void }
-   */
-  private deriveRoomNameFromMembers(): void {
-    if (this.roomMembers.length) {
-      this.roomName = this.chatRoomUtilsService.deriveRoomNameFromMembers(
-        this.roomMembers
-      );
-    }
   }
 }

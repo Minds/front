@@ -65,9 +65,7 @@ export class ChatRoomListItemComponent {
    * Set class variables based upon the edge passed via input.
    */
   @Input() set edge(edge: ChatRoomEdge) {
-    this.roomName = this.chatRoomUtilsService.deriveRoomNameFromMembers(
-      edge.members?.edges
-    );
+    this.roomName = edge.node.name;
     this.avatars = this.getAvatarObjects(edge.members?.edges);
 
     this.timestamp = Number(

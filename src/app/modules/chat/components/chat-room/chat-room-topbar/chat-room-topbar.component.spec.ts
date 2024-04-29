@@ -60,28 +60,6 @@ describe('ChatRoomTopComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  describe('ngOnChanges', () => {
-    it('should derive room name from members', () => {
-      (comp as any).roomMembers = [mockChatMemberEdge];
-      (
-        comp as any
-      ).chatRoomUtilsService.deriveRoomNameFromMembers.and.returnValue(
-        'roomName'
-      );
-      comp.ngOnChanges({
-        roomMembers: {
-          currentValue: [mockChatMemberEdge],
-          previousValue: [],
-          firstChange: false,
-          isFirstChange: () => false,
-        },
-      });
-      expect(
-        (comp as any).chatRoomUtilsService.deriveRoomNameFromMembers
-      ).toHaveBeenCalledWith([mockChatMemberEdge]);
-    });
-  });
-
   it('should open a channel in a new tab', () => {
     (comp as any).openChannelInNewTab('username');
     expect((comp as any).window.open).toHaveBeenCalledWith(
