@@ -59,7 +59,7 @@
         ></m-activity>
       </div>
       <!-- SIDEBAR SUGGESTIONS (MOBILE) ---------- -->
-      <div class="m-newsfeedSingle__mobileSuggestions">
+      <div class="m-newsfeedSingle__mobileSuggestions" *mIfBrowser>
         <ng-container *ngTemplateOutlet="suggestions"></ng-container>
       </div>
     </div>
@@ -67,6 +67,7 @@
     <div
       class="m-newsfeedSingle__sidebar m-discovery__sidebar"
       m-pageLayout__pane="right"
+      *mIfBrowser
     >
       <div class="m-pageLayoutPane__inner">
         <div class="m-pageLayoutPane__sticky" m-stickySidebar>
