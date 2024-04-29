@@ -26,6 +26,7 @@ import { JsonLdService } from '../../../common/services/jsonld.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { IfBrowserDirective } from '../../../common/directives/if-browser.directive';
 
 @Component({
   selector: 'minds-activity',
@@ -78,6 +79,7 @@ describe('NewsfeedSingleComponent', () => {
           selector: 'm-ads-boost',
           inputs: ['limit'],
         }),
+        IfBrowserDirective,
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
