@@ -1056,6 +1056,7 @@ export type MutationCreateChatMessageArgs = {
 };
 
 export type MutationCreateChatRoomArgs = {
+  groupGuid?: InputMaybe<Scalars['String']['input']>;
   otherMemberGuids?: Array<Scalars['String']['input']>;
   roomType?: InputMaybe<ChatRoomTypeEnum>;
 };
@@ -2246,6 +2247,7 @@ export type CreateChatRoomMutationVariables = Exact<{
     | Array<Scalars['String']['input']>
     | Scalars['String']['input'];
   roomType?: InputMaybe<ChatRoomTypeEnum>;
+  groupGuid?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type CreateChatRoomMutation = {
@@ -7653,8 +7655,13 @@ export const CreateChatRoomDocument = gql`
   mutation CreateChatRoom(
     $otherMemberGuids: [String!]!
     $roomType: ChatRoomTypeEnum
+    $groupGuid: String
   ) {
-    createChatRoom(otherMemberGuids: $otherMemberGuids, roomType: $roomType) {
+    createChatRoom(
+      otherMemberGuids: $otherMemberGuids
+      roomType: $roomType
+      groupGuid: $groupGuid
+    ) {
       cursor
       node {
         id

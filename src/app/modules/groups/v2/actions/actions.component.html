@@ -3,6 +3,10 @@
     class="m-groupActions__button--settings"
   ></m-group__settingsButton>
 
+  <m-group__chatButton
+    [groupGuid]="(service.group$ | async)?.guid"
+  ></m-group__chatButton>
+
   <m-group__editButton
     *ngIf="service.isOwner$ | async"
     class="m-groupActions__button--edit"
