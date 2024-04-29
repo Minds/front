@@ -47,6 +47,7 @@ describe('CreateChatRoomService', () => {
     expect((service as any).createChatRoomGql.mutate).toHaveBeenCalledWith({
       otherMemberGuids: otherMembers,
       roomType: roomType,
+      groupGuid: null,
     });
   });
 
@@ -68,6 +69,34 @@ describe('CreateChatRoomService', () => {
     expect((service as any).createChatRoomGql.mutate).toHaveBeenCalledWith({
       otherMemberGuids: [userMock.guid],
       roomType: roomType,
+      groupGuid: null,
+    });
+  });
+
+  it('should create chat room when passed a group guid', async () => {
+    const otherMembers = [];
+    const roomType: ChatRoomTypeEnum = ChatRoomTypeEnum.GroupOwned;
+    const groupGuid: string = '123456790123456';
+
+    (service as any).createChatRoomGql.mutate.and.returnValue(
+      of({
+        data: {
+          createChatRoom: mockChatRoomEdge,
+        },
+      })
+    );
+
+    const result = await service.createChatRoom(
+      otherMembers,
+      roomType,
+      groupGuid
+    );
+
+    expect(result).toEqual(mockChatRoomEdge.node.guid);
+    expect((service as any).createChatRoomGql.mutate).toHaveBeenCalledWith({
+      otherMemberGuids: [],
+      roomType: roomType,
+      groupGuid: groupGuid,
     });
   });
 });

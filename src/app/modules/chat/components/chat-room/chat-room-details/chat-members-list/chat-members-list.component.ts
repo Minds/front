@@ -1,10 +1,5 @@
 import { CommonModule as NgCommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core';
 import { CommonModule } from '../../../../../../common/common.module';
 import { ChatRoomMembersService } from '../../../../services/chat-room-members.service';
 import { Observable, map } from 'rxjs';
