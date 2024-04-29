@@ -26,9 +26,6 @@ import { ChatMembersListItemComponent } from './chat-members-list-item/chat-memb
   standalone: true,
 })
 export class ChatMembersListComponent {
-  /** GUID of the room. */
-  @Input() protected roomGuid: string;
-
   /** Chat room members. - should be initialized by calling service init in the parent component. */
   protected readonly members$: Observable<ChatRoomMemberEdge[]> =
     this.chatRoomMembersService.edges$;

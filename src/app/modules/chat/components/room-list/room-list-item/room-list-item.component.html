@@ -8,10 +8,8 @@
     <minds-avatar
       *ngFor="let avatar of avatars"
       [object]="avatar"
-      [routerLink]="['/' + avatar.username]"
-      (mouseup)="
-        $event.which == 2 ? openChannelInNewTab(avatar.username) : null
-      "
+      [routerLink]="avatar.navigationPath"
+      (mouseup)="$event.which == 2 ? openInNewTab(avatar.navigationPath) : null"
     ></minds-avatar>
   </div>
 </div>

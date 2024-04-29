@@ -1,11 +1,11 @@
 <div class="m-chatRoomTop__leftContainer">
   <div class="m-chatRoomTop__avatarsList">
     <minds-avatar
-      *ngFor="let roomMember of roomMembers.slice(0, 3)"
-      [object]="{ guid: roomMember.node.guid, type: 'user' }"
-      [routerLink]="['/' + roomMember.node.username]"
+      *ngFor="let avatar of avatars"
+      [object]="avatar"
+      [routerLink]="avatar.navigationPath"
       (mouseup)="
-        $event.which == 2 ? openChannelInNewTab(roomMember.node.username) : null
+        $event.which == 2 ? openChannelInNewTab(avatar.navigationPath) : null
       "
     ></minds-avatar>
   </div>

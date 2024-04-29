@@ -361,6 +361,7 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
   chatRoomNotificationStatus?: Maybe<ChatRoomNotificationStatusEnum>;
+  groupGuid: Scalars['String']['output'];
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -2261,6 +2262,7 @@ export type CreateChatRoomMutation = {
       id: string;
       guid: string;
       roomType: ChatRoomTypeEnum;
+      groupGuid: string;
       timeCreatedISO8601: string;
       timeCreatedUnix: string;
     };
@@ -2459,6 +2461,7 @@ export type GetChatRoomQuery = {
       guid: string;
       roomType: ChatRoomTypeEnum;
       name: string;
+      groupGuid: string;
       id: string;
       isChatRequest: boolean;
       isUserRoomOwner?: boolean | null;
@@ -2518,6 +2521,7 @@ export type GetChatRoomsListQuery = {
         guid: string;
         name: string;
         roomType: ChatRoomTypeEnum;
+        groupGuid: string;
         timeCreatedISO8601: string;
         timeCreatedUnix: string;
       };
@@ -7670,6 +7674,7 @@ export const CreateChatRoomDocument = gql`
         id
         guid
         roomType
+        groupGuid
         timeCreatedISO8601
         timeCreatedUnix
       }
@@ -7941,6 +7946,7 @@ export const GetChatRoomDocument = gql`
         guid
         roomType
         name
+        groupGuid
         id
         isChatRequest
         isUserRoomOwner
@@ -8001,6 +8007,7 @@ export const GetChatRoomsListDocument = gql`
           guid
           name
           roomType
+          groupGuid
           timeCreatedISO8601
           timeCreatedUnix
         }

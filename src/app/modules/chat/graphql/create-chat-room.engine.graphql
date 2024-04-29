@@ -5,6 +5,7 @@ mutation CreateChatRoom ($otherMemberGuids: [String!]!, $roomType: ChatRoomTypeE
             id
             guid
             roomType
+            groupGuid
             timeCreatedISO8601
             timeCreatedUnix
         }
