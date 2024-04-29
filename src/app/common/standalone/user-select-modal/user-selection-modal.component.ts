@@ -169,9 +169,9 @@ export class UserSelectionModalComponent
   }): void {
     this.onCompleted = onCompleted;
     this.saveFunction = saveFunction;
-    (this.title = title ?? 'Search for users'),
-      (this.emptyText = emptyText ?? 'Search for users'),
-      (this.ctaText = ctaText ?? 'Confirm');
+    this.title = title ?? 'Search for users';
+    this.emptyText = emptyText ?? 'Search for users';
+    this.ctaText = ctaText ?? 'Confirm';
   }
 
   /**
