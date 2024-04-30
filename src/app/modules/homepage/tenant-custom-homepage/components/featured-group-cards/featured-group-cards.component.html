@@ -23,9 +23,8 @@
       <p
         *ngIf="group.briefDescription"
         class="m-tenantFeaturedGroupCard__description"
-      >
-        {{ group.briefDescription | truncate: 250 }}
-      </p>
+        [innerHtml]="group.briefDescription | truncate: 250"
+      ></p>
     </div>
   </div>
 </ng-container>
