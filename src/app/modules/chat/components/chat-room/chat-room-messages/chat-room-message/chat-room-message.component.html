@@ -23,7 +23,7 @@
     class="m-chatRoomMessage__bubble"
     [ngClass]="{
       'm-chatRoomMessage__bubble--clickable': isNextMessageFromSameSender,
-      'm-chatRoomMessage__bubble--hasRichEmbed': richEmbed?.thumbnailSrc
+      'm-chatRoomMessage__bubble--hasRichEmbed': richEmbed
     }"
     throttledClick
     (throttledClick)="handleMessageClick()"
