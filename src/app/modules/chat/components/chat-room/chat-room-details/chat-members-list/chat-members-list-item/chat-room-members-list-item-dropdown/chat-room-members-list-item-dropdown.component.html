@@ -25,6 +25,7 @@
     <li
       class="m-chatRoomMemberDropdown__dropdownListItem"
       (click)="onViewProfileClick()"
+      data-ref="data-minds-chat-member-list-view-profile-button"
     >
       <span i18n="@@CHAT_ROOM__MESSAGE_DROPDOWN__VIEW_PROFILE"
         >View profile</span
@@ -34,6 +35,7 @@
       *ngIf="showRemoveFromChatOption$ | async"
       class="m-chatRoomMemberDropdown__dropdownListItem"
       (click)="onRemoveMemberClick()"
+      data-ref="data-minds-chat-member-list-remove-from-chat-button"
     >
       <span i18n="@@CHAT_ROOM__MESSAGE_DROPDOWN__REMOVE_FROM_CHAT"
         >Remove from chat</span

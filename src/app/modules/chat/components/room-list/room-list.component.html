@@ -16,6 +16,7 @@
     (click)="onStartChatClick()"
     (keydown.enter)="onStartChatClick()"
     tabindex="0"
+    data-ref="data-minds-chat-room-list-new-chat-button"
     >add_comment</i
   >
 </header>
@@ -65,5 +66,6 @@
     [headerSize]="3"
     [descriptionSize]="2"
     (actionButtonClick)="onStartChatClick()"
+    data-ref="data-minds-chat-no-chats-empty-list-button"
   ></m-chat__actionCard>
 </ng-template>

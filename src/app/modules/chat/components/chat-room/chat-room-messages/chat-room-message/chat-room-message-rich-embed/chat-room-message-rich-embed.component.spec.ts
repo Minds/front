@@ -61,7 +61,7 @@ describe('ChatRoomMessageRichEmbedComponent', () => {
       '.m-chatRoomMessage__richEmbedUrl'
     );
     expect(url).toBeTruthy();
-    expect(url.textContent).toBe((comp as any).url);
+    expect(url.textContent.trim()).toBe((comp as any).url);
   });
 
   describe('handleRichEmbedClick', () => {

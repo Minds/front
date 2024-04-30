@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { ChatRoomComponent } from './chat-room.component';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { MockComponent, MockService } from '../../../../../../utils/mock';
@@ -19,6 +24,7 @@ import {
   mockChatMessageEdge,
   mockChatRoomEdge,
 } from '../../../../../../mocks/chat.mock';
+import { AnalyticsService } from '../../../../../../services/analytics';
 
 const ROOM_ID: string = '123';
 
@@ -52,6 +58,7 @@ describe('ChatRoomComponent', () => {
           useValue: MockService(ChatwootWidgetService),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
+        { provide: AnalyticsService, useValue: MockService(AnalyticsService) },
         {
           provide: WINDOW,
           useValue: jasmine.createSpyObj<Window>([
@@ -145,7 +152,7 @@ describe('ChatRoomComponent', () => {
     }
   });
 
-  it('should init', () => {
+  it('should init', fakeAsync(() => {
     expect(comp).toBeTruthy();
     expect(
       (comp as any).singleChatRoomService.setRoomGuid
@@ -161,5 +168,40 @@ describe('ChatRoomComponent', () => {
       jasmine.any(Function),
       false
     );
+    tick();
+
+    expect(
+      (comp as any).analyticsService.setGlobalProperty
+    ).toHaveBeenCalledWith('chat_room_guid', mockChatRoomEdge.node.guid);
+    expect(
+      (comp as any).analyticsService.setGlobalProperty
+    ).toHaveBeenCalledWith('chat_room_type', mockChatRoomEdge.node.roomType);
+    expect(
+      (comp as any).analyticsService.setGlobalProperty
+    ).toHaveBeenCalledWith(
+      'chat_last_message_created_timestamp',
+      new Date(
+        mockChatRoomEdge?.lastMessageCreatedTimestamp * 1000
+      ).toISOString()
+    );
+    expect((comp as any).analyticsService.trackView).toHaveBeenCalledOnceWith(
+      'chat_room_view'
+    );
+  }));
+
+  describe('ngOnDestroy', () => {
+    it('should unset global analytic properties', () => {
+      comp.ngOnDestroy();
+
+      expect(
+        (comp as any).analyticsService.setGlobalProperty
+      ).toHaveBeenCalledWith('chat_room_guid', undefined);
+      expect(
+        (comp as any).analyticsService.setGlobalProperty
+      ).toHaveBeenCalledWith('chat_room_type', undefined);
+      expect(
+        (comp as any).analyticsService.setGlobalProperty
+      ).toHaveBeenCalledWith('chat_last_message_created_timestamp', undefined);
+    });
   });
 });
