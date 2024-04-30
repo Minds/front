@@ -4,6 +4,7 @@
   ></m-group__settingsButton>
 
   <m-group__chatButton
+    *ngIf="service.isMember$ | async"
     [groupGuid]="(service.group$ | async)?.guid"
   ></m-group__chatButton>
 
