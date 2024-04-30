@@ -14,6 +14,7 @@
       id="searchMatchedUsers"
       placeholder="Search for people"
       (loading)="onTypeaheadLoadingStateChange($event)"
+      data-ref="data-minds-start-chat-modal-search-typeahead"
     ></m-formInput__entityTypeahead>
   </form>
 
@@ -49,6 +50,7 @@
             tabindex="1"
             aria-role="button"
             [attr.aria-label]="'Remove ' + selectedUser.username"
+            data-ref="data-minds-start-chat-modal-remove-user-button"
             >close</i
           >
         </span>
@@ -69,6 +71,7 @@
           [attr.aria-label]="'Toggle ' + searchMatch.user.username"
           (click)="toggleUserSelect(searchMatch.user)"
           (keyup.enter)="toggleUserSelect(searchMatch.user)"
+          data-ref="data-minds-start-chat-modal-user-row"
         >
           <div class="m-startChatModal__userRow--left">
             <div
@@ -112,6 +115,7 @@
     (keydown.enter)="onConfirmClick()"
     tabindex="1"
     aria-label="Start chat"
+    data-ref="data-minds-start-chat-button"
     >Chat</m-button
   >
 </footer>

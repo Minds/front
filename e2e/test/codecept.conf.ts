@@ -65,6 +65,7 @@ export const config: CustomMainConfig = {
     walletPage: './pages/walletPage.ts',
     walletCreditsPage: './pages/walletCreditsPage.ts',
     tokenMarketingPage: './pages/tokenMarketingPage.ts',
+    chatPage: './pages/chatPage.ts',
     // fragments
     composerModalComponent: './fragments/composerModalComponent.ts',
     activityComponent: './fragments/activityComponent.ts',
@@ -97,6 +98,9 @@ export const config: CustomMainConfig = {
       './fragments/onboardingV5/onboardingV5PublisherRecsComponent.ts',
     onboardingV5CompletionPanelComponent:
       './fragments/onboardingV5/onboardingV5CompletionPanelComponent.ts',
+    chatRoomListComponent: './fragments/chatRoomListComponent.ts',
+    chatRoomComponent: './fragments/chatRoomComponent.ts',
+    createNewChatModalComponent: './fragments/createNewChatModalComponent.ts',
   },
   name: 'Minds Codecept E2E tests',
   gherkin: {

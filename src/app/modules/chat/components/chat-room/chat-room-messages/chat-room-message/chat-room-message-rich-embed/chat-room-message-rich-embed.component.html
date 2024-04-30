@@ -5,5 +5,11 @@
 />
 <div class="m-chatRoomMessage__richEmbedDetailsContainer" *ngIf="title || url">
   <h5 *ngIf="title" class="m-chatRoomMessage__richEmbedTitle">{{ title }}</h5>
-  <p *ngIf="url" class="m-chatRoomMessage__richEmbedUrl">{{ url }}</p>
+  <p
+    *ngIf="url"
+    class="m-chatRoomMessage__richEmbedUrl"
+    data-ref="data-minds-chat-room-embed-url-text"
+  >
+    {{ url }}
+  </p>
 </div>
