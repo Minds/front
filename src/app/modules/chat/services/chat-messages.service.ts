@@ -21,13 +21,14 @@ import {
 } from '../../../../graphql/generated.engine';
 import { MutationResult, QueryRef } from 'apollo-angular';
 import { ToasterService } from '../../../common/services/toaster.service';
-import { ApolloQueryResult } from '@apollo/client';
+import { ApolloQueryResult, InMemoryCache } from '@apollo/client';
 import { Router } from '@angular/router';
 import {
   ChatRoomEvent,
   GlobalChatSocketService,
 } from './global-chat-socket.service';
 import { Session } from '../../../services/session';
+import { cloneDeep } from '@apollo/client/utilities';
 
 /** Size of an individual page. */
 export const PAGE_SIZE: number = 24;
@@ -285,10 +286,15 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
     try {
       const response: MutationResult<DeleteChatMessageMutation> =
         await lastValueFrom(
-          this.deleteChatMessage.mutate({
-            messageGuid: chatMessageEdge.node.guid,
-            roomGuid: chatMessageEdge.node.roomGuid,
-          })
+          this.deleteChatMessage.mutate(
+            {
+              messageGuid: chatMessageEdge.node.guid,
+              roomGuid: chatMessageEdge.node.roomGuid,
+            },
+            {
+              update: this.handleMessageDeletion.bind(this),
+            }
+          )
         );
 
       if (response?.errors?.length) {
@@ -363,5 +369,42 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
         },
       },
     };
+  }
+
+  /**
+   * Handle message deletion, updating the local cache to remove the entry.
+   * @param { InMemoryCache } cache - The cache.
+   * @param { MutationResult<DeleteChatMessageMutation> } result - The result of the mutation.
+   * @param { any } options - The options.
+   * @returns { void }
+   */
+  private handleMessageDeletion(
+    cache: InMemoryCache,
+    result: MutationResult<DeleteChatMessageMutation>,
+    options: any
+  ): void {
+    let newValue: GetChatMessagesQuery = cloneDeep(
+      cache.readQuery<GetChatMessagesQuery>({
+        query: GetChatMessagesDocument,
+        variables: {
+          first: PAGE_SIZE,
+          roomGuid: this.queryRef.variables.roomGuid,
+        },
+      })
+    );
+
+    newValue.chatMessages.edges = newValue.chatMessages.edges.filter(
+      (edge: ChatMessageEdge): boolean =>
+        edge.node.guid !== options?.variables?.messageGuid?.toString()
+    );
+
+    cache.writeQuery({
+      query: GetChatMessagesDocument,
+      variables: {
+        first: PAGE_SIZE,
+        roomGuid: this.queryRef.variables.roomGuid,
+      },
+      data: newValue,
+    });
   }
 }
