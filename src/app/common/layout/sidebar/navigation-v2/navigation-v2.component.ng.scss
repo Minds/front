@@ -97,7 +97,11 @@
         box-shadow: 0 0 10px rgba(themed($m-black-always), 0.1);
       }
 
-      .m-sidebarNavigationItem__text {
+      ::ng-deep .m-sidebarNavigationItem__text {
+        display: block;
+      }
+
+      ::ng-deep m-sidebar__customNavigationItems {
         display: block;
       }
 
