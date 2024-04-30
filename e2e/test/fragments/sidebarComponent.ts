@@ -12,6 +12,7 @@ class SidebarComponent {
   private readonly supermindConsoleButtonSelector: string =
     '[data-ref=sidenav-supermind]';
   private readonly walletButtonSelector: string = '[data-ref=sidenav-wallet]';
+  private chatButtonSelector: string = '[data-ref=sidenav-chat]';
 
   /**
    * Opens the users channel from the sidebar.
@@ -53,6 +54,14 @@ class SidebarComponent {
   public openSupermindConsole(): void {
     I.waitForElement(this.supermindConsoleButtonSelector);
     I.click(this.supermindConsoleButtonSelector);
+  }
+
+  /**
+   * Open chat from sidebar.
+   * @return { void }
+   */
+  public openChat(): void {
+    I.click(this.chatButtonSelector);
   }
 }
 

@@ -21,7 +21,7 @@ class CommonHelper extends Helper {
    * @returns { any } response.
    */
   public async clickAndWait(
-    locator: CodeceptJS.Locator,
+    locator: CodeceptJS.LocatorOrString,
     urlSnippet: string,
     status: number = 200
   ): Promise<any> {

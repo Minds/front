@@ -15,6 +15,8 @@ import { BehaviorSubject, Subscription, take } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client';
 import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 import { isPlatformBrowser } from '@angular/common';
+import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
+import { STRAPI_FOOTER_STUB_DATA } from './consts/tenant-footer-stub';
 
 /**
  * Marketing footer component. Will conditionally load data from CMS if data is
@@ -50,11 +52,15 @@ export class MarketingFooterComponent implements OnInit, OnDestroy {
   constructor(
     private getFooterGql: GetFooterGQL,
     @Inject(STRAPI_URL) public readonly strapiUrl,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
   ngOnInit(): void {
-    if (!this.data && isPlatformBrowser(this.platformId)) {
+    if (this.isTenantNetwork) {
+      this.data = STRAPI_FOOTER_STUB_DATA;
+      this.loaded$.next(true);
+    } else if (!this.data && isPlatformBrowser(this.platformId)) {
       this.getFooterSubscription = this.getFooterGql
         .fetch()
         .pipe(take(1))

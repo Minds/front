@@ -40,6 +40,7 @@
       [thumbnailSrc]="richEmbed.thumbnailSrc"
       [title]="richEmbed.title"
       [url]="richEmbed.canonicalUrl ?? richEmbed.url"
+      data-ref="data-minds-chat-room-message-rich-embed"
     ></m-chatRoomMessage__richEmbed>
   </div>
   <ng-container *ngIf="!isFromLoggedInUser && messageEdge">
