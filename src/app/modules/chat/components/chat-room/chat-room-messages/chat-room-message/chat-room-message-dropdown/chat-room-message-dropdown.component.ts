@@ -8,11 +8,16 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgxPopperjsContentComponent } from 'ngx-popperjs';
-import { ChatMessageEdge } from '../../../../../../../../graphql/generated.engine';
+import {
+  ChatMessageEdge,
+  ChatRoomEdge,
+  ChatRoomTypeEnum,
+} from '../../../../../../../../graphql/generated.engine';
 import { ModalService } from '../../../../../../../services/ux/modal.service';
 import { ReportCreatorComponent } from '../../../../../../report/creator/creator.component';
 import { ChatMessagesService } from '../../../../../services/chat-messages.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { SingleChatRoomService } from '../../../../../services/single-chat-room.service';
 
 /**
  * Message component dropdown for the chat room. Allows a user to perform actions
@@ -44,6 +49,17 @@ export class ChatRoomMessageDropdownComponent {
   protected deleteInProgress$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
+  /** Whether the acting user can moderate this chat. */
+  protected readonly canModerate$: Observable<boolean> =
+    this.singleChatRoomService.chatRoom$.pipe(
+      map((chatRoom: ChatRoomEdge): boolean => {
+        return (
+          chatRoom.node.roomType === ChatRoomTypeEnum.GroupOwned &&
+          chatRoom.node.isUserRoomOwner
+        );
+      })
+    );
+
   /**
    * Whether to force the showing of the dropdown. This is helpful so that
    * we can still show the ellipsis when the menu is open, but the
@@ -53,7 +69,8 @@ export class ChatRoomMessageDropdownComponent {
 
   constructor(
     private modalService: ModalService,
-    private chatMessageService: ChatMessagesService
+    private chatMessageService: ChatMessagesService,
+    private singleChatRoomService: SingleChatRoomService
   ) {}
 
   /**
