@@ -1,5 +1,5 @@
 const E_NO_RESOLVER = function () {
-  throw new Error('Resolver not set')
+  throw new Error('Resolver not set');
 };
 
 export default class BoostedContentSync {
@@ -39,14 +39,14 @@ export default class BoostedContentSync {
     this.db.schema(2, {
       boosts: {
         primaryKey: 'urn',
-        indexes: ['sync', 'lastImpression']
+        indexes: ['sync', 'lastImpression'],
       },
     });
 
     this.db.schema(2.1, {
       boosts: {
         primaryKey: 'urn',
-        indexes: ['sync', 'lastImpression', 'owner_guid']
+        indexes: ['sync', 'lastImpression', 'owner_guid'],
       },
     });
 
@@ -83,9 +83,11 @@ export default class BoostedContentSync {
   }
 
   async fetch(opts = {}) {
-    const boosts = await this.get(Object.assign(opts, {
-      limit: 1
-    }));
+    const boosts = await this.get(
+      Object.assign(opts, {
+        limit: 1,
+      })
+    );
 
     return boosts[0] || null;
   }
@@ -99,12 +101,15 @@ export default class BoostedContentSync {
 
     // Default options
 
-    opts = Object.assign({
-      limit: 1,
-      offset: 0,
-      passive: false,
-      forceSync: false,
-    }, opts);
+    opts = Object.assign(
+      {
+        limit: 1,
+        offset: 0,
+        passive: false,
+        forceSync: false,
+      },
+      opts
+    );
 
     // Prune list
 
@@ -113,7 +118,11 @@ export default class BoostedContentSync {
     if (!this.inSync) {
       // Check if a sync is needed
 
-      if (opts.forceSync || !this.synchronized || (this.synchronized <= Date.now() - this.stale_after_ms)) {
+      if (
+        opts.forceSync ||
+        !this.synchronized ||
+        this.synchronized <= Date.now() - this.stale_after_ms
+      ) {
         const wasSynced = await this.sync(opts);
 
         if (!wasSynced) {
@@ -135,7 +144,7 @@ export default class BoostedContentSync {
           break;
         }
 
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 100));
       }
     }
 
@@ -147,17 +156,22 @@ export default class BoostedContentSync {
       let rows;
 
       if (!opts.passive) {
-        rows = await this.db
-          .getAllLessThan('boosts', 'lastImpression', Date.now() - this.cooldown_ms, { sortBy: 'impressions' });
+        rows = await this.db.getAllLessThan(
+          'boosts',
+          'lastImpression',
+          Date.now() - this.cooldown_ms,
+          { sortBy: 'impressions' }
+        );
       } else {
-        rows = await this.db
-          .all('boosts', { sortBy: 'impressions' });
+        rows = await this.db.all('boosts', { sortBy: 'impressions' });
       }
 
-      rows = rows.filter(row => row && row.urn && (this.locks.indexOf(row.urn) === -1));
+      rows = rows.filter(
+        (row) => row && row.urn && this.locks.indexOf(row.urn) === -1
+      );
 
       if (opts.exclude) {
-        rows = rows.filter(row => opts.exclude.indexOf(row.urn) === -1);
+        rows = rows.filter((row) => opts.exclude.indexOf(row.urn) === -1);
       }
 
       if (!rows || !rows.length) {
@@ -172,9 +186,9 @@ export default class BoostedContentSync {
         return [];
       }
 
-     // Lock data set URNs
+      // Lock data set URNs
 
-      lockedUrns = [...dataSet.map(row => row.urn)];
+      lockedUrns = [...dataSet.map((row) => row.urn)];
       this.locks.push(...lockedUrns);
 
       // Process rows
@@ -199,19 +213,23 @@ export default class BoostedContentSync {
       // Release locks
 
       if (lockedUrns) {
-        this.locks = this.locks.filter(lock => lockedUrns.indexOf(lock) === -1);
+        this.locks = this.locks.filter(
+          (lock) => lockedUrns.indexOf(lock) === -1
+        );
       }
 
       // Hydrate entities
 
-      return await this.resolvers.fetchEntities(dataSet.map(row => row.urn));
+      return await this.resolvers.fetchEntities(dataSet.map((row) => row.urn));
     } catch (e) {
       console.error('BoostedContentSync.fetch', e);
 
       // Release locks
 
       if (lockedUrns) {
-        this.locks = this.locks.filter(lock => lockedUrns.indexOf(lock) === -1);
+        this.locks = this.locks.filter(
+          (lock) => lockedUrns.indexOf(lock) === -1
+        );
       }
 
       // Return empty
@@ -256,18 +274,30 @@ export default class BoostedContentSync {
       // Setup rows
 
       const entities = response.boosts
-        .filter(feedSyncEntity => blockedList.indexOf(feedSyncEntity.owner_guid) === -1)
-        .map(feedSyncEntity => Object.assign({
-          sync: Date.now(),
-        }, feedSyncEntity));
+        .filter(
+          (feedSyncEntity) =>
+            blockedList.indexOf(feedSyncEntity.owner_guid) === -1
+        )
+        .map((feedSyncEntity) =>
+          Object.assign(
+            {
+              sync: Date.now(),
+            },
+            feedSyncEntity
+          )
+        );
 
       // Insert onto DB
 
-      await Promise.all(entities.map(entity => this.db.upsert('boosts', entity.urn, entity, {
-        impressions: 0,
-        lastImpression: 0,
-        passiveImpressions: 0,
-      })));
+      await Promise.all(
+        entities.map((entity) =>
+          this.db.upsert('boosts', entity.urn, entity, {
+            impressions: 0,
+            lastImpression: 0,
+            passiveImpressions: 0,
+          })
+        )
+      );
 
       // Remove stale entries
 
@@ -299,8 +329,11 @@ export default class BoostedContentSync {
    */
   async pruneStaleBoosts() {
     try {
-      this.db
-        .deleteLessThan('boosts', 'sync', Date.now() - this.stale_after_ms);
+      this.db.deleteLessThan(
+        'boosts',
+        'sync',
+        Date.now() - this.stale_after_ms
+      );
     } catch (e) {
       console.error('BoostedContentSync.pruneStaleBoosts', e);
       throw e;
@@ -314,8 +347,11 @@ export default class BoostedContentSync {
     try {
       await this.pruneStaleBoosts();
 
-      await this.db
-        .deleteAnyOf('boosts', 'owner_guid', (await this.resolvers.blockedUserGuids()) || []);
+      await this.db.deleteAnyOf(
+        'boosts',
+        'owner_guid',
+        (await this.resolvers.blockedUserGuids()) || []
+      );
 
       return true;
     } catch (e) {
@@ -329,9 +365,7 @@ export default class BoostedContentSync {
    */
   async destroy() {
     try {
-      await Promise.all([
-        this.db.truncate('boosts'),
-      ]);
+      await Promise.all([this.db.truncate('boosts')]);
 
       this.synchronized = null;
 

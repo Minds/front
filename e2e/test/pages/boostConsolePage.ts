@@ -36,9 +36,8 @@ class BoostConsolePage {
   private boostActionButtons: CodeceptJS.Locator = locate(
     'm-boostConsole__actionButtons'
   );
-  private cancelButton: CodeceptJS.Locator = locate('m-button').withText(
-    'Cancel boost'
-  );
+  private cancelButton: CodeceptJS.Locator =
+    locate('m-button').withText('Cancel boost');
   //
   private stateFilterTrigger: CodeceptJS.Locator = locate(
     '[data-ref=m-boostConsole__filterTrigger--state]'
@@ -71,7 +70,8 @@ class BoostConsolePage {
     await Promise.all([
       userMenuComponent.openBoostConsole(),
       I.waitForResponse(
-        resp => resp.url().includes(this.baseEndpoint) && resp.status() === 200,
+        (resp) =>
+          resp.url().includes(this.baseEndpoint) && resp.status() === 200,
         30
       ),
     ]);

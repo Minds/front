@@ -41,6 +41,12 @@ import { NetworkAdminAnalyticsLazyRoutes } from './tabs/analytics/analytics-lazy
 import { NetworkAdminConsoleInviteLinkComponent } from './tabs/invite/tabs/link/link.component';
 import { SiteMembershipCardComponent } from '../../site-memberships/components/membership-card/site-membership-card.component';
 import { CopyToClipboardButtonComponent } from '../../../common/standalone/copy-to-clipboard-button/copy-to-clipboard-button.component';
+import { NetworkAdminConsoleNavigationComponent } from './tabs/navigation/navigation.component';
+import { NetworkAdminConsoleNavigationLinkFormComponent } from './tabs/navigation/components/link-form/link-form.component';
+import { NetworkAdminConsoleNavigationMenuComponent } from './tabs/navigation/tabs/menu/menu.component';
+import { NetworkAdminConsoleNavigationListComponent } from './tabs/navigation/components/list/list.component';
+import { SelectableIconComponent } from '../../../common/standalone/selectable-icon/selectable-icon.component';
+import { CanDeactivateGuardService } from '../../../services/can-deactivate-guard';
 import { NetworkAdminConsoleLandingPageDescriptionComponent } from './tabs/general/landing-page-description/landing-page-description.component';
 import { NetworkAdminConsoleEnableLandingPageToggleComponent } from './tabs/general/enable-landing-page-toggle/enable-landing-page-toggle.component';
 import { NetworkAdminConsoleEnableWalledGardenToggleComponent } from './tabs/general/enable-walled-garden-toggle/enable-walled-garden-toggle.component';
@@ -98,6 +104,55 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
             .NetworkAdminMobileLazyModule,
       },
       {
+        path: 'navigation',
+        component: NetworkAdminConsoleNavigationComponent,
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'menu/list',
+          },
+          {
+            path: 'menu',
+            children: [
+              {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'list',
+              },
+              {
+                path: 'list',
+                component: NetworkAdminConsoleNavigationMenuComponent,
+                children: [
+                  {
+                    path: '',
+                    pathMatch: 'full',
+                    component: NetworkAdminConsoleNavigationListComponent,
+                  },
+                ],
+              },
+              {
+                path: 'edit',
+                component: NetworkAdminConsoleNavigationMenuComponent,
+                children: [
+                  {
+                    path: '',
+                    pathMatch: 'full',
+                    canDeactivate: [CanDeactivateGuardService],
+                    component: NetworkAdminConsoleNavigationLinkFormComponent,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: ':view', //  wildcards
+            redirectTo: 'menu/list',
+          },
+        ],
+      },
+
+      {
         path: 'roles',
         redirectTo: 'roles/permissions',
         pathMatch: 'full' as PathMatch,
@@ -132,6 +187,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     MarkdownModule.forChild(),
     SiteMembershipCardComponent,
     CopyToClipboardButtonComponent,
+    SelectableIconComponent,
   ],
   declarations: [
     NetworkAdminConsoleComponent,
@@ -165,6 +221,10 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     AssignRolesModalComponent,
     CustomPageFormComponent,
     CustomPageFormContentPreviewModalComponent,
+    NetworkAdminConsoleNavigationComponent,
+    NetworkAdminConsoleNavigationMenuComponent,
+    NetworkAdminConsoleNavigationListComponent,
+    NetworkAdminConsoleNavigationLinkFormComponent,
   ],
   providers: [MultiTenantDomainService],
 })

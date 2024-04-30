@@ -1,11 +1,11 @@
 query GetCheckoutLink(
-  $planId: String!,
-  $addOnIds: [String!], 
+  $planId: String!
+  $addOnIds: [String!]
   $timePeriod: CheckoutTimePeriodEnum!
-  $isTrialUpgrade: Boolean 
-){
+  $isTrialUpgrade: Boolean
+) {
   checkoutLink(
-    planId: $planId,
+    planId: $planId
     addOnIds: $addOnIds
     timePeriod: $timePeriod
     isTrialUpgrade: $isTrialUpgrade

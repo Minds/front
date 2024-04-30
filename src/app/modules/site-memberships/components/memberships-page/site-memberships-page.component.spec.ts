@@ -156,7 +156,8 @@ describe('SiteMembershipsPageComponent', () => {
     }
   });
 
-  it('should init', fakeAsync(async () => {
+  it('should init and fetch when skipInitialFetch is false', fakeAsync(async () => {
+    (comp as any).skipInitialFetch = false;
     expect(comp).toBeTruthy();
     tick();
 
@@ -164,6 +165,18 @@ describe('SiteMembershipsPageComponent', () => {
     expect(await firstValueFrom(comp.memberships$)).toEqual(
       mockSiteMemberships
     );
+    flush();
+  }));
+
+  it('should init and not fetch when skipInitialFetch is true', fakeAsync(async () => {
+    (comp as any).skipInitialFetch = true;
+    (comp as any).siteMembershipsService.fetch.calls.reset();
+    comp.ngOnInit();
+
+    expect(comp).toBeTruthy();
+    tick();
+
+    expect((comp as any).siteMembershipsService.fetch).not.toHaveBeenCalled();
     flush();
   }));
 

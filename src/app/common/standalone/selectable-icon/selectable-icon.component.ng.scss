@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+:host {
+  > div {
+    display: flex;
+    flex-flow: column nowrap;
+    border-radius: $spacing1;
+    padding: $spacing3;
+    width: $spacing18;
+    max-width: $spacing18;
+    min-width: $spacing18;
+    gap: $spacing2;
+    align-items: center;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  span {
+    @include body2Medium;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .material-icons {
+    size: $spacing6;
+  }
+}

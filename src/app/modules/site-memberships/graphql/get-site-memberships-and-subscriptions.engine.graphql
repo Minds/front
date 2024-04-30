@@ -9,16 +9,16 @@ query GetSiteMembershipsAndSubscriptions {
     membershipBillingPeriod
     membershipPricingModel
     roles {
-        id
-        name
+      id
+      name
     }
     groups {
-        guid
-        name
-        membersCount
-        legacy
+      guid
+      name
+      membersCount
+      legacy
     }
-  },
+  }
   siteMembershipSubscriptions {
     membershipGuid
     membershipSubscriptionId

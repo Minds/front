@@ -1,9 +1,3 @@
-mutation SetStripeKeys(
-    $pubKey: String!,
-    $secKey: String!
-) {
-    setStripeKeys(
-        pubKey: $pubKey,
-        secKey: $secKey
-    )
+mutation SetStripeKeys($pubKey: String!, $secKey: String!) {
+  setStripeKeys(pubKey: $pubKey, secKey: $secKey)
 }
