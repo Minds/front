@@ -15,7 +15,10 @@ import { ChatRoomMembersService } from '../../../../../../services/chat-room-mem
 import { TotalChatRoomMembersService } from '../../../../../../services/total-chat-room-members.service';
 import userMock from '../../../../../../../../mocks/responses/user.mock';
 import { BehaviorSubject, take } from 'rxjs';
-import { mockChatRoomEdge } from '../../../../../../../../mocks/chat.mock';
+import {
+  mockChatMemberEdge,
+  mockChatRoomEdge,
+} from '../../../../../../../../mocks/chat.mock';
 import {
   ChatRoomEdge,
   ChatRoomMemberEdge,
@@ -24,7 +27,7 @@ import {
 } from '../../../../../../../../../graphql/generated.engine';
 
 describe('ChatRoomMembersListItemDropdownComponent', () => {
-  let comp: ChatRoomMembersListItemDropdownComponent; //2345567
+  let comp: ChatRoomMembersListItemDropdownComponent;
   let fixture: ComponentFixture<ChatRoomMembersListItemDropdownComponent>;
 
   beforeEach(waitForAsync(() => {
@@ -73,7 +76,8 @@ describe('ChatRoomMembersListItemDropdownComponent', () => {
 
     (comp as any).session.getLoggedInUser.and.returnValue(userMock);
     (comp as any).loggedInUserGuid = userMock.guid;
-    (comp as any).memberEdge = mockChatRoomEdge.members.edges[0];
+    (comp as any).memberEdge = mockChatMemberEdge;
+    (comp as any).singleChatRoomService.chatRoom$.next(mockChatRoomEdge);
 
     fixture.detectChanges();
     if (fixture.isStable()) {
