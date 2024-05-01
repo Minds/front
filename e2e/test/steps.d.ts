@@ -19,6 +19,7 @@ type supermindSettingsPage = typeof import('./pages/supermindSettingsPage');
 type walletPage = typeof import('./pages/walletPage');
 type walletCreditsPage = typeof import('./pages/walletCreditsPage');
 type tokenMarketingPage = typeof import('./pages/tokenMarketingPage');
+type chatPage = typeof import('./pages/chatPage');
 type composerModalComponent =
   typeof import('./fragments/composerModalComponent');
 type activityComponent = typeof import('./fragments/activityComponent');
@@ -43,7 +44,7 @@ type multiFactorModalComponent =
 type publisherRecommendationsModalComponent =
   typeof import('./fragments/publisherRecommendationsModalComponent');
 type reportModalComponent = typeof import('./fragments/reportModalComponent');
-type upradeModalComponent = typeof import('./fragments/upgradeModalComponent');
+type upgradeModalComponent = typeof import('./fragments/upgradeModalComponent');
 type onboardingV5ModalComponent =
   typeof import('./fragments/onboardingV5/onboardingV5ModalComponent');
 type onboardingV5VerifyEmailComponent =
@@ -56,6 +57,10 @@ type onboardingV5PublisherRecsComponent =
   typeof import('./fragments/onboardingV5/onboardingV5PublisherRecsComponent');
 type onboardingV5CompletionPanelComponent =
   typeof import('./fragments/onboardingV5/onboardingV5CompletionPanelComponent');
+type chatRoomListComponent = typeof import('./fragments/chatRoomListComponent');
+type chatRoomComponent = typeof import('./fragments/chatRoomComponent');
+type createNewChatModalComponent =
+  typeof import('./fragments/createNewChatModalComponent');
 type CookieHelper = import('./helpers/cookie-helper');
 type CommonHelper = import('./helpers/common-helper');
 
@@ -83,6 +88,7 @@ declare namespace CodeceptJS {
     walletPage: walletPage;
     walletCreditsPage: walletCreditsPage;
     tokenMarketingPage: tokenMarketingPage;
+    chatPage: chatPage;
     composerModalComponent: composerModalComponent;
     activityComponent: activityComponent;
     activityModalComponent: activityModalComponent;
@@ -106,6 +112,9 @@ declare namespace CodeceptJS {
     onboardingV5SurveyComponent: onboardingV5SurveyComponent;
     onboardingV5PublisherRecsComponent: onboardingV5PublisherRecsComponent;
     onboardingV5CompletionPanelComponent: onboardingV5CompletionPanelComponent;
+    chatRoomListComponent: chatRoomListComponent;
+    chatRoomComponent: chatRoomComponent;
+    createNewChatModalComponent: createNewChatModalComponent;
   }
   interface Methods extends Playwright, CookieHelper, CommonHelper {}
   interface I extends WithTranslation<Methods> {}

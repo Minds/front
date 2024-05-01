@@ -2,6 +2,9 @@ import { Injectable, Injector, createNgModuleRef } from '@angular/core';
 import { ModalRef, ModalService } from '../../../services/ux/modal.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
 import { SiteMembershipsPageComponent } from '../components/memberships-page/site-memberships-page.component';
+import { SiteMembershipService } from './site-memberships.service';
+import { filter, firstValueFrom } from 'rxjs';
+import { SiteMembership } from '../../../../graphql/generated.engine';
 
 /**
  * Service that loads and presents
@@ -14,7 +17,8 @@ export class SiteMembershipsPageModal {
   constructor(
     protected modalService: ModalService,
     private injector: Injector,
-    private isTenant: IsTenantService
+    private isTenant: IsTenantService,
+    private siteMembershipsService: SiteMembershipService
   ) {}
 
   /**
@@ -38,12 +42,28 @@ export class SiteMembershipsPageModal {
     const siteMembershipsPageComponent =
       moduleRef.instance.resolveSiteMembershipsPageComponent();
 
+    this.siteMembershipsService.fetch(true);
+
+    // Prefetch memberships to check whether we should show the modal.
+    await firstValueFrom(
+      this.siteMembershipsService.initialized$.pipe(filter(Boolean))
+    );
+    const siteMemberships: SiteMembership[] = await firstValueFrom(
+      this.siteMembershipsService.siteMemberships$
+    );
+
+    // Skip initializing in the modal component if there are no memberships.
+    if (!siteMemberships.length) {
+      return;
+    }
+
     const modal = this.modalService.present(siteMembershipsPageComponent, {
       data: {
         isModal: true,
         onJoinClick: () => {
           this.dismiss();
         },
+        skipInitialFetch: true,
       },
       injector: this.injector,
       size: 'lg',

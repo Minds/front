@@ -23,6 +23,7 @@
       }"
       (click)="onBlockClick()"
       aria-role="button"
+      data-ref="data-minds-chat-request-block-user-button"
     >
       <span *ngIf="!(blockInProgress$ | async); else loadingSpinnerTemplate"
         >Block</span
@@ -36,6 +37,7 @@
       }"
       (click)="onRejectClick()"
       aria-role="button"
+      data-ref="data-minds-chat-request-reject-button"
     >
       <span *ngIf="!(rejectInProgress$ | async); else loadingSpinnerTemplate"
         >Reject</span
@@ -49,6 +51,7 @@
       }"
       (click)="onAcceptClick()"
       aria-role="button"
+      data-ref="data-minds-chat-request-accept-button"
     >
       <span *ngIf="!(acceptInProgress$ | async); else loadingSpinnerTemplate"
         >Accept</span

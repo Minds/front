@@ -11,7 +11,6 @@ import { ChatRequestsPageComponent } from './components/pages/request-page/reque
 import { NoChatsSubPageComponent } from './components/pages/sub-pages/no-chats/no-chats.component';
 import { ChatRequestsInfoSubPageComponent } from './components/pages/sub-pages/chat-requests-info/chat-requests-info.component';
 import { ChatRoomComponent } from './components/pages/sub-pages/chat-room/chat-room.component';
-import { NoRouteReuseStrategy } from '../../common/routerReuseStrategies/no-route-reuse.strategy';
 import { loggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
 import { ChatReceiptService } from './services/chat-receipt.service';
 
@@ -37,7 +36,7 @@ const CHAT_ROUTES: Routes = [
       {
         path: ':roomId',
         component: ChatRoomComponent,
-        data: { reloadOnRouteChange: true },
+        data: { reloadOnParamChange: true },
       },
     ],
   },
@@ -57,7 +56,7 @@ const CHAT_ROUTES: Routes = [
       {
         path: ':roomId',
         component: ChatRoomComponent,
-        data: { requestMode: true, reloadOnRouteChange: true },
+        data: { requestMode: true, reloadOnParamChange: true },
       },
     ],
   },
@@ -73,12 +72,6 @@ const CHAT_ROUTES: Routes = [
     MarkdownModule.forChild(),
   ],
   declarations: [],
-  providers: [
-    {
-      provide: RouteReuseStrategy,
-      useClass: NoRouteReuseStrategy,
-    },
-    ChatReceiptService,
-  ],
+  providers: [ChatReceiptService],
 })
 export class ChatModule {}

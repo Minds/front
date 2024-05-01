@@ -31,6 +31,7 @@
       *ngIf="!isMessageOwner"
       class="m-chatRoomMessageDropdown__dropdownListItem"
       (click)="onReportClick()"
+      data-ref="data-minds-chat-report-message-button"
     >
       <span i18n="@@CHAT_ROOM__MESSAGE_DROPDOWN__REPORT_MESSAGE"
         >Report message</span
@@ -42,6 +43,7 @@
       *ngIf="isMessageOwner"
       class="m-chatRoomMessageDropdown__dropdownListItem"
       (click)="onDeleteClick()"
+      data-ref="data-minds-chat-delete-message-button"
     >
       <span i18n="@@CHAT_ROOM__MESSAGE_DROPDOWN__REPORT_MESSAGE"
         >Delete message</span

@@ -20,6 +20,7 @@ import { ChatRoomsListService } from '../../../../services/chat-rooms-list.servi
       descriptionText="Select from existing conversations, send a friend a message, or start a group chat."
       ctaText="New chat"
       (actionButtonClick)="onStartNewChatClick()"
+      data-ref="data-minds-no-chats-new-chat-button"
     ></m-chat__actionCard>
   `,
 })

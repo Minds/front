@@ -73,6 +73,10 @@ export class SettingsV2NsfwContentComponent implements OnInit, OnDestroy {
         formValue
       );
       if (response.status === 'success') {
+        this.session.inject({
+          ...this.session.getLoggedInUser(),
+          mature: this.mature.value ? 1 : 0,
+        });
         this.formSubmitted.emit({ formSubmitted: true });
         this.form.markAsPristine();
       }

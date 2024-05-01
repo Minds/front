@@ -9,6 +9,9 @@ import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 import { MockComponent } from '../../utils/mock';
 import { of } from 'rxjs';
 import { ApolloQueryResult, NetworkStatus } from '@apollo/client';
+import { PLATFORM_ID } from '@angular/core';
+import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
+import { STRAPI_FOOTER_STUB_DATA } from './consts/tenant-footer-stub';
 
 describe('MarketingFooterComponent', () => {
   let comp: MarketingFooterComponent;
@@ -51,6 +54,8 @@ describe('MarketingFooterComponent', () => {
           useValue: jasmine.createSpyObj<GetFooterGQL>(['fetch']),
         },
         { provide: STRAPI_URL, useValue: strapiUrl },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: IS_TENANT_NETWORK, useValue: false },
       ],
     }).compileComponents();
   }));
@@ -87,5 +92,16 @@ describe('MarketingFooterComponent', () => {
 
     expect((comp as any).getFooterGql.fetch).not.toHaveBeenCalled();
     expect(comp.data).toEqual(mockFooter.footer.data.attributes as Footer);
+  });
+
+  it('should render static footer for tenants', () => {
+    (comp as any).getFooterGql.fetch.calls.reset();
+    comp.loaded$.next(false);
+    (comp as any).isTenantNetwork = true;
+    comp.ngOnInit();
+
+    expect((comp as any).getFooterGql.fetch).not.toHaveBeenCalled();
+    expect(comp.data).toEqual(STRAPI_FOOTER_STUB_DATA);
+    expect(comp.loaded$.getValue()).toBe(true);
   });
 });

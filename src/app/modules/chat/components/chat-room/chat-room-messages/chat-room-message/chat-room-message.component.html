@@ -23,7 +23,7 @@
     class="m-chatRoomMessage__bubble"
     [ngClass]="{
       'm-chatRoomMessage__bubble--clickable': isNextMessageFromSameSender,
-      'm-chatRoomMessage__bubble--hasRichEmbed': richEmbed?.thumbnailSrc
+      'm-chatRoomMessage__bubble--hasRichEmbed': richEmbed
     }"
     throttledClick
     (throttledClick)="handleMessageClick()"
@@ -40,6 +40,7 @@
       [thumbnailSrc]="richEmbed.thumbnailSrc"
       [title]="richEmbed.title"
       [url]="richEmbed.canonicalUrl ?? richEmbed.url"
+      data-ref="data-minds-chat-room-message-rich-embed"
     ></m-chatRoomMessage__richEmbed>
   </div>
   <ng-container *ngIf="!isFromLoggedInUser && messageEdge">

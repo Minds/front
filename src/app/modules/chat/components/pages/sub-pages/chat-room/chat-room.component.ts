@@ -32,6 +32,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { AnalyticsService } from '../../../../../../services/analytics';
 
 /** Bespoke animation to component to handle details drawer slide in. */
 const SlideInFromRightAnimation: AnimationTriggerMetadata = trigger(
@@ -107,6 +108,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     private chatMessagesService: ChatMessagesService,
     private totalChatRoomMembersService: TotalChatRoomMembersService,
     private toaster: ToasterService,
+    private analyticsService: AnalyticsService,
     @Inject(WINDOW) private window
   ) {}
 
@@ -131,6 +133,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.unsetGlobalAnalyticProperties();
+
     // reset chatwoot on destroy.
     this.window.removeEventListener(
       'chatwoot:ready',
@@ -183,6 +187,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
         relativeTo: this.route,
       });
     }
+
+    this.setGlobalAnalyticProperties(chatRoom);
+    this.analyticsService.trackView('chat_room_view');
   }
 
   /**
@@ -199,5 +206,41 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
    */
   protected hideDetailsDrawer(): void {
     this.detailsDrawerOpen = false;
+  }
+
+  /**
+   * Set global analytic properties.
+   * @param { ChatRoomEdge } chatRoom - the chat room.
+   * @returns { void }
+   */
+  private setGlobalAnalyticProperties(chatRoom: ChatRoomEdge): void {
+    this.analyticsService.setGlobalProperty(
+      'chat_room_guid',
+      chatRoom.node.guid
+    );
+    this.analyticsService.setGlobalProperty(
+      'chat_room_type',
+      chatRoom.node.roomType
+    );
+
+    if (chatRoom?.lastMessageCreatedTimestamp) {
+      this.analyticsService.setGlobalProperty(
+        'chat_last_message_created_timestamp',
+        new Date(chatRoom?.lastMessageCreatedTimestamp * 1000).toISOString()
+      );
+    }
+  }
+
+  /**
+   * Unset global analytic properties.
+   * @returns { void }
+   */
+  private unsetGlobalAnalyticProperties(): void {
+    this.analyticsService.setGlobalProperty('chat_room_guid', undefined);
+    this.analyticsService.setGlobalProperty('chat_room_type', undefined);
+    this.analyticsService.setGlobalProperty(
+      'chat_last_message_created_timestamp',
+      undefined
+    );
   }
 }

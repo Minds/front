@@ -30,6 +30,7 @@ export enum SiteMembershipPageErrorMessage {
 
 export type SiteMembershipsPageModalData = {
   isModal: boolean;
+  skipInitialFetch: boolean;
   onDismissIntent: () => any;
   onJoinClick: () => any;
 };
@@ -68,6 +69,9 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
   public showPageTitle$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(true);
 
+  /** Whether initial fetch should be skipped. */
+  private skipInitialFetch: boolean = false;
+
   /** True if this is being displayed as a modal */
   @HostBinding('class.m-membershipsPage__modal')
   isModal: boolean = false;
@@ -91,7 +95,10 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.fetchAllData();
+    if (!this.skipInitialFetch) {
+      this.fetchAllData();
+    }
+
     this.checkForErrorParams();
 
     this.subscriptions.push(
@@ -186,6 +193,7 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
     isModal,
     onDismissIntent,
     onJoinClick,
+    skipInitialFetch,
   }: SiteMembershipsPageModalData) {
     this.isModal = isModal;
     if (this.isModal) {
@@ -193,5 +201,6 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
     }
     this.onDismissIntent = onDismissIntent ?? (() => {});
     this.onJoinClick = onJoinClick ?? (() => {});
+    this.skipInitialFetch = skipInitialFetch ?? false;
   }
 }
