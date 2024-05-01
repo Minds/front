@@ -3,6 +3,7 @@ import {
   TestBed,
   fakeAsync,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { ChatRoomMembersListItemDropdownComponent } from './chat-room-members-list-item-dropdown.component';
 import { MockService } from '../../../../../../../../utils/mock';
@@ -23,10 +24,10 @@ import {
 } from '../../../../../../../../../graphql/generated.engine';
 
 describe('ChatRoomMembersListItemDropdownComponent', () => {
-  let comp: ChatRoomMembersListItemDropdownComponent;
+  let comp: ChatRoomMembersListItemDropdownComponent; //2345567
   let fixture: ComponentFixture<ChatRoomMembersListItemDropdownComponent>;
 
-  beforeEach((done: DoneFn) => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ChatRoomMembersListItemDropdownComponent],
       providers: [
@@ -64,7 +65,9 @@ describe('ChatRoomMembersListItemDropdownComponent', () => {
         },
       ],
     });
+  }));
 
+  beforeEach((done: DoneFn) => {
     fixture = TestBed.createComponent(ChatRoomMembersListItemDropdownComponent);
     comp = fixture.componentInstance;
 
