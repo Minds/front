@@ -85,6 +85,7 @@ export class SearchBarSuggestionsComponent implements OnInit {
         const response: any = await this.client.get('api/v2/search/suggest', {
           q: value,
           limit: 10,
+          include_nsfw: this.session.getLoggedInUser()?.mature ?? 0,
         });
         if (response && response.entities.length) {
           this.suggestions = response.entities;
