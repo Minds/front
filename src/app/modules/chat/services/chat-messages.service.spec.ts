@@ -285,6 +285,7 @@ describe('ChatMessagesService', () => {
         },
       };
 
+      // test
       expect(
         (service as any).updateCacheWithNewMessage(prev, {
           subscriptionData: {
