@@ -373,7 +373,7 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
 
   /**
    * Handle message deletion, updating the local cache to remove the entry.
-   * @param { InMemoryCache } cache - The in memory cache.
+   * @param { InMemoryCache } cache - The cache.
    * @param { MutationResult<DeleteChatMessageMutation> } result - The result of the mutation.
    * @param { any } options - The options.
    * @returns { void }
