@@ -3,7 +3,13 @@
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
@@ -18,6 +24,7 @@ import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MockComponent, MockService } from '../../../utils/mock';
+import userMock from '../../../mocks/responses/user.mock';
 
 /* tslint:disable */
 
@@ -63,7 +70,7 @@ describe('SearchBarSuggestionsComponent', () => {
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
+        { provide: Client, useValue: MockService(Client) },
         { provide: RecentService, useValue: recentServiceMock },
         { provide: ContextService, useValue: contextServiceMock },
         { provide: ConfigsService, useValue: { get: (key) => null } },
@@ -124,5 +131,79 @@ describe('SearchBarSuggestionsComponent', () => {
 
     fixture.detectChanges();
     expect(el.nativeElement.hidden).toBeFalsy();
+  });
+
+  describe('q input', () => {
+    it('should call to load suggestions when q changes with allow_nsfw 1 when user is mature', fakeAsync(() => {
+      const queryText: string = 'hello world';
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        ...userMock,
+        mature: 1,
+      });
+      (comp as any).client.get.and.returnValue(
+        Promise.resolve({ entities: [userMock] })
+      );
+      comp._q = queryText;
+
+      tick(300);
+      fixture.detectChanges();
+
+      expect((comp as any).client.get).toHaveBeenCalledWith(
+        'api/v2/search/suggest',
+        {
+          q: queryText,
+          limit: 10,
+          include_nsfw: 1,
+        }
+      );
+      expect((comp as any).suggestions).toEqual([userMock]);
+    }));
+
+    it('should call to load suggestions when q changes with allow_nsfw 0 when user is NOT mature', fakeAsync(() => {
+      const queryText: string = 'hello world';
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        ...userMock,
+        mature: 0,
+      });
+      (comp as any).client.get.and.returnValue(
+        Promise.resolve({ entities: [userMock] })
+      );
+      comp._q = queryText;
+
+      tick(300);
+      fixture.detectChanges();
+
+      expect((comp as any).client.get).toHaveBeenCalledWith(
+        'api/v2/search/suggest',
+        {
+          q: queryText,
+          limit: 10,
+          include_nsfw: 0,
+        }
+      );
+      expect((comp as any).suggestions).toEqual([userMock]);
+    }));
+
+    it('should call to load suggestions when q changes with allow_nsfw 0 when user is logged out', fakeAsync(() => {
+      const queryText: string = 'hello world';
+      (comp as any).session.getLoggedInUser.and.returnValue(null);
+      (comp as any).client.get.and.returnValue(
+        Promise.resolve({ entities: [userMock] })
+      );
+      comp._q = queryText;
+
+      tick(300);
+      fixture.detectChanges();
+
+      expect((comp as any).client.get).toHaveBeenCalledWith(
+        'api/v2/search/suggest',
+        {
+          q: queryText,
+          limit: 10,
+          include_nsfw: 0,
+        }
+      );
+      expect((comp as any).suggestions).toEqual([userMock]);
+    }));
   });
 });

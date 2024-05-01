@@ -48,12 +48,15 @@ describe('EntityTypeaheadComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should get results from server', fakeAsync(() => {
+  it('should get results from server with nsfw included when a user opts into nsfw', fakeAsync(() => {
     const seachTerm: string = 'username_test';
     (comp as any).formGroup.get('searchTerm').setValue(seachTerm);
 
     (comp as any).api.get.and.returnValue(of({ entities: mockEntities }));
-
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      ...userMock,
+      mature: 1,
+    });
     tick(100);
 
     expect((comp as any).api.get).toHaveBeenCalledWith(
@@ -62,6 +65,52 @@ describe('EntityTypeaheadComponent', () => {
         q: seachTerm,
         limit: (comp as any).limit,
         hydrate: 1,
+        include_nsfw: 1,
+      }
+    );
+    expect(comp.propagateChange).toHaveBeenCalledWith(mockEntities);
+    discardPeriodicTasks();
+  }));
+
+  it('should get results from server WITHOUT nsfw included when a user opts OUT OF nsfw', fakeAsync(() => {
+    const seachTerm: string = 'username_test';
+    (comp as any).formGroup.get('searchTerm').setValue(seachTerm);
+
+    (comp as any).api.get.and.returnValue(of({ entities: mockEntities }));
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      ...userMock,
+      mature: 0,
+    });
+    tick(100);
+
+    expect((comp as any).api.get).toHaveBeenCalledWith(
+      'api/v2/search/suggest/user',
+      {
+        q: seachTerm,
+        limit: (comp as any).limit,
+        hydrate: 1,
+        include_nsfw: 0,
+      }
+    );
+    expect(comp.propagateChange).toHaveBeenCalledWith(mockEntities);
+    discardPeriodicTasks();
+  }));
+
+  it('should get results from server WITHOUT nsfw included when a user is not logged in', fakeAsync(() => {
+    const seachTerm: string = 'username_test';
+    (comp as any).formGroup.get('searchTerm').setValue(seachTerm);
+
+    (comp as any).api.get.and.returnValue(of({ entities: mockEntities }));
+    (comp as any).session.getLoggedInUser.and.returnValue(null);
+    tick(100);
+
+    expect((comp as any).api.get).toHaveBeenCalledWith(
+      'api/v2/search/suggest/user',
+      {
+        q: seachTerm,
+        limit: (comp as any).limit,
+        hydrate: 1,
+        include_nsfw: 0,
       }
     );
     expect(comp.propagateChange).toHaveBeenCalledWith(mockEntities);
@@ -85,6 +134,7 @@ describe('EntityTypeaheadComponent', () => {
         q: seachTerm,
         limit: (comp as any).limit,
         hydrate: 1,
+        include_nsfw: 0,
       }
     );
     expect(comp.propagateChange).toHaveBeenCalledWith(
