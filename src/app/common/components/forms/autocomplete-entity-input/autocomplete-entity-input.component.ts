@@ -27,6 +27,7 @@ import {
 import { ApiService } from '../../../api/api.service';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { FastFadeAnimation } from '../../../../animations';
+import { Session } from '../../../../services/session';
 
 /** Type-ahead search response from server. */
 export type EntitySearchResponse = { status: string; entities: any[] };
@@ -101,6 +102,7 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
               q: entityRef,
               limit: this.limit,
               hydrate: 1,
+              include_nsfw: this.session.getLoggedInUser()?.mature ?? 0,
             }
           )
           .pipe(
@@ -176,6 +178,7 @@ export class AutocompleteEntityInputComponent implements ControlValueAccessor {
   constructor(
     @Self() private control: NgControl,
     private api: ApiService,
+    private session: Session,
     private cd: ChangeDetectorRef
   ) {
     this.control.valueAccessor = this;
