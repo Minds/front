@@ -113,6 +113,7 @@ export class EntityTypeaheadComponent
               q: searchTerm.trim(),
               limit: this.limit,
               hydrate: 1,
+              include_nsfw: this.session.getLoggedInUser()?.mature ?? 0,
             }
           )
         ),

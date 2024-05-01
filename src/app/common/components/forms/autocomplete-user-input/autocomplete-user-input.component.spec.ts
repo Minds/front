@@ -3,35 +3,45 @@ import {
   TestBed,
   discardPeriodicTasks,
   fakeAsync,
-  flush,
   tick,
 } from '@angular/core/testing';
 import { FormControl, FormsModule, NgControl } from '@angular/forms';
 import { ApiService } from '../../../api/api.service';
-import {
-  AutoCompleteEntityTypeEnum,
-  AutocompleteEntityInputComponent,
-} from './autocomplete-entity-input.component';
 import { MockService } from '../../../../utils/mock';
 import userMock from '../../../../mocks/responses/user.mock';
 import { of, take, throttleTime } from 'rxjs';
-import { groupMock } from '../../../../mocks/responses/group.mock';
 import { Session } from '../../../../services/session';
+import { AutocompleteUserInputComponent } from './autocomplete-user-input.component';
+import { ConfigsService } from '../../../services/configs.service';
 
-describe('AutocompleteEntityInputComponent', () => {
-  let comp: AutocompleteEntityInputComponent;
-  let fixture: ComponentFixture<AutocompleteEntityInputComponent>;
+describe('AutocompleteUserInputComponent', () => {
+  let comp: AutocompleteUserInputComponent;
+  let fixture: ComponentFixture<AutocompleteUserInputComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
-      declarations: [AutocompleteEntityInputComponent],
+      declarations: [AutocompleteUserInputComponent],
       providers: [
-        { provide: NgControl, useValue: NgControl },
-        { provide: ApiService, useValue: MockService(ApiService) },
+        {
+          provide: NgControl,
+          useValue: MockService(NgControl),
+        },
+        {
+          provide: ApiService,
+          useValue: MockService(ApiService),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
       ],
     })
-      .overrideComponent(AutocompleteEntityInputComponent, {
+      .overrideComponent(AutocompleteUserInputComponent, {
         add: {
           providers: [
             {
@@ -41,10 +51,6 @@ describe('AutocompleteEntityInputComponent', () => {
                 viewToModelUpdate() {}
               },
             },
-            {
-              provide: Session,
-              useValue: MockService(Session),
-            },
           ],
         },
       })
@@ -52,10 +58,10 @@ describe('AutocompleteEntityInputComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AutocompleteEntityInputComponent);
+    fixture = TestBed.createComponent(AutocompleteUserInputComponent);
     comp = fixture.componentInstance;
 
-    comp.entityRef$.next(null);
+    comp.username$$.next(null);
 
     fixture.detectChanges();
   });
@@ -70,7 +76,7 @@ describe('AutocompleteEntityInputComponent', () => {
     });
 
     it('should propagate change out when entityRef$ is updated with an entity', fakeAsync(() => {
-      comp.entityRef$.next(userMock);
+      comp.username$$.next(userMock);
 
       tick();
       expect(comp.propagateChange).toHaveBeenCalledWith(userMock);
@@ -80,7 +86,7 @@ describe('AutocompleteEntityInputComponent', () => {
 
   describe('showPopout$', () => {
     it('should show popout because focused and has entities', fakeAsync(() => {
-      comp.entityRef$.next('abc');
+      comp.username$$.next('abc');
 
       (comp as any).api.get.and.returnValue(
         of({
@@ -88,8 +94,8 @@ describe('AutocompleteEntityInputComponent', () => {
         })
       );
 
-      comp.inProgress$.next(false);
-      comp.isFocused$.next(true);
+      comp.inProgress$$.next(false);
+      comp.isFocused$$.next(true);
 
       tick(100);
 
@@ -110,37 +116,22 @@ describe('AutocompleteEntityInputComponent', () => {
     });
 
     it('should propagate change when a group is selected', fakeAsync(() => {
-      comp.entityType = AutoCompleteEntityTypeEnum.Group;
-      (comp as any).api.get.and.returnValue(of({ entities: [groupMock] }));
+      (comp as any).api.get.and.returnValue(of({ entities: [userMock] }));
 
-      comp.onEntitySelect(groupMock);
+      comp.onUserSelect(userMock);
 
       tick();
-      expect(comp.propagateChange).toHaveBeenCalledWith(groupMock);
+      expect(comp.propagateChange).toHaveBeenCalledWith('minds');
       discardPeriodicTasks();
     }));
 
     it('should propagate change when a user is selected', fakeAsync(() => {
-      comp.entityType = AutoCompleteEntityTypeEnum.User;
       (comp as any).api.get.and.returnValue(of({ entities: [userMock] }));
 
-      comp.onEntitySelect(userMock);
+      comp.onUserSelect(userMock);
 
       tick();
-      expect(comp.propagateChange).toHaveBeenCalledWith(userMock);
-      discardPeriodicTasks();
-    }));
-  });
-
-  describe('clearAfterSelection', () => {
-    it('should clear the input field after a selection is made', fakeAsync(() => {
-      comp.clearAfterSelection = true;
-      comp.entityRef$.next(userMock);
-
-      tick();
-      fixture.detectChanges();
-
-      expect(comp.inputElRef.nativeElement.value).toBe('');
+      expect(comp.propagateChange).toHaveBeenCalledWith('minds');
       discardPeriodicTasks();
     }));
   });
@@ -153,10 +144,9 @@ describe('AutocompleteEntityInputComponent', () => {
         ...userMock,
         mature: 1,
       });
-      comp.entityRef$.next(seachTerm);
-      comp.entityType = AutoCompleteEntityTypeEnum.User;
+      comp.username$$.next(seachTerm);
 
-      comp.matchedEntitiesList$
+      comp.matchedUsersList$
         .pipe(take(1), throttleTime(100))
         .subscribe((entities) => {
           expect((comp as any).api.get).toHaveBeenCalledWith(
@@ -180,10 +170,9 @@ describe('AutocompleteEntityInputComponent', () => {
         ...userMock,
         mature: 0,
       });
-      comp.entityRef$.next(seachTerm);
-      comp.entityType = AutoCompleteEntityTypeEnum.User;
+      comp.username$$.next(seachTerm);
 
-      comp.matchedEntitiesList$
+      comp.matchedUsersList$
         .pipe(take(1), throttleTime(100))
         .subscribe((entities) => {
           expect((comp as any).api.get).toHaveBeenCalledWith(
@@ -205,10 +194,9 @@ describe('AutocompleteEntityInputComponent', () => {
       (comp as any).api.get.and.returnValue(of({ entities: [userMock] }));
       (comp as any).session.getLoggedInUser.and.returnValue(null);
 
-      comp.entityRef$.next(seachTerm);
-      comp.entityType = AutoCompleteEntityTypeEnum.User;
+      comp.username$$.next(seachTerm);
 
-      comp.matchedEntitiesList$
+      comp.matchedUsersList$
         .pipe(take(1), throttleTime(100))
         .subscribe((entities) => {
           expect((comp as any).api.get).toHaveBeenCalledWith(

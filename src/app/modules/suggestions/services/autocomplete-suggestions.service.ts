@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import autobind from '../../../helpers/autobind';
+import { Session } from '../../../services/session';
 
 @Injectable()
 export class AutocompleteSuggestionsService {
-  constructor(private client: Client) {}
+  constructor(
+    private client: Client,
+    private session: Session
+  ) {}
 
   @autobind()
   async findSuggestions(searchText: string, triggerCharacter: string) {
@@ -15,7 +19,10 @@ export class AutocompleteSuggestionsService {
     if (triggerCharacter === '#') {
       url += '/tags';
     }
-    const response: any = await this.client.get(url, { q: searchText });
+    const response: any = await this.client.get(url, {
+      q: searchText,
+      include_nsfw: this.session.getLoggedInUser()?.mature ?? 0,
+    });
 
     let result;
     switch (triggerCharacter) {

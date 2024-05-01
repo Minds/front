@@ -28,6 +28,7 @@ import { ConfigsService } from '../../../services/configs.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { FastFadeAnimation } from '../../../../animations';
+import { Session } from '../../../../services/session';
 
 /**
  * Type-ahead search response from server.
@@ -83,6 +84,7 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
         q: searchTerm,
         limit: this.limit,
         hydrate: 1,
+        include_nsfw: this.session.getLoggedInUser()?.mature ?? 0,
       });
     }),
     // on error.
@@ -148,6 +150,7 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
   constructor(
     @Self() private control: NgControl,
     private api: ApiService,
+    private session: Session,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
