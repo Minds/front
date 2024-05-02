@@ -12,7 +12,9 @@ query GetChatRoomsList($first: Int, $after: String) {
             node {
                 id
                 guid
+                name
                 roomType
+                groupGuid
                 timeCreatedISO8601
                 timeCreatedUnix
             }

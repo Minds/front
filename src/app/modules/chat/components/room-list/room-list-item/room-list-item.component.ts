@@ -10,14 +10,17 @@ import { CommonModule } from '../../../../../common/common.module';
 import {
   ChatRoomEdge,
   ChatRoomMemberEdge,
+  ChatRoomTypeEnum,
 } from '../../../../../../graphql/generated.engine';
-import { ChatRoomUtilsService } from '../../../services/utils.service';
 import { MindsAvatarObject } from '../../../../../common/components/avatar/avatar';
 import { ChatDatePipe } from '../../../pipes/chat-date-pipe';
 import { Router, RouterModule } from '@angular/router';
 import { WINDOW } from '../../../../../common/injection-tokens/common-injection-tokens';
+import {
+  ChatRoomAvatarsService,
+  ChatRoomListAvatarObject,
+} from '../../../services/chat-room-avatars.service';
 
-/** Amount of avatars to show for a multi-user chat-room. */
 const MULTI_USER_AVATARS_TO_SHOW: number = 2;
 
 /**
@@ -38,6 +41,9 @@ export class ChatRoomListItemComponent {
   /** Name of the room. */
   protected roomName: string;
 
+  /** Type of chat room. */
+  protected roomType: ChatRoomTypeEnum;
+
   /** Avatar object of the chat participants. */
   protected avatars: MindsAvatarObject[] = [];
 
@@ -49,6 +55,9 @@ export class ChatRoomListItemComponent {
 
   /** GUID of the room. */
   protected roomGuid: string;
+
+  /** GUID of the chat room group, if it is a group chat. */
+  protected groupGuid: string;
 
   /** True/False if unread messages exist in this room */
   protected unreadMessages: boolean;
@@ -65,9 +74,10 @@ export class ChatRoomListItemComponent {
    * Set class variables based upon the edge passed via input.
    */
   @Input() set edge(edge: ChatRoomEdge) {
-    this.roomName = this.chatRoomUtilsService.deriveRoomNameFromMembers(
-      edge.members?.edges
-    );
+    this.roomName = edge.node.name;
+    this.roomType = edge.node.roomType;
+    this.groupGuid = edge.node.groupGuid;
+
     this.avatars = this.getAvatarObjects(edge.members?.edges);
 
     this.timestamp = Number(
@@ -82,28 +92,25 @@ export class ChatRoomListItemComponent {
   }
 
   constructor(
-    private chatRoomUtilsService: ChatRoomUtilsService,
     private router: Router,
+    private chatRoomAvatarsService: ChatRoomAvatarsService,
     @Inject(WINDOW) private window: Window
   ) {}
 
   /**
    * Get the avatar objects for the chat room.
    * @param { ChatRoomMemberEdge[] } members - The members of the chat room.
-   * @returns { MindsAvatarObject[] } - The avatar objects for the chat room.
+   * @returns { ChatRoomListAvatarObject[] } - The avatar objects for the chat room.
    */
-  private getAvatarObjects(members: ChatRoomMemberEdge[]): MindsAvatarObject[] {
-    return (
-      members
-        ?.slice(0, MULTI_USER_AVATARS_TO_SHOW)
-        .map((member: ChatRoomMemberEdge) => {
-          return {
-            guid: member.node.guid,
-            type: 'user', // TODO: in future add group support.
-            username: member.node.username,
-          };
-        }) ?? []
-    );
+  private getAvatarObjects(
+    members: ChatRoomMemberEdge[]
+  ): ChatRoomListAvatarObject[] {
+    return this.roomType === ChatRoomTypeEnum.GroupOwned && this.groupGuid
+      ? this.chatRoomAvatarsService.getGroupAvatarObjects(this.groupGuid)
+      : this.chatRoomAvatarsService.getUserAvatarObjects(
+          members,
+          MULTI_USER_AVATARS_TO_SHOW
+        );
   }
 
   /**
@@ -117,11 +124,11 @@ export class ChatRoomListItemComponent {
   }
 
   /**
-   * Handles middle mouse click on an avatar by opening the users channel
-   * in a new tab.
+   * Opening a path in a new tab.
+   * @param { string } navigationPath - The path to open.
    * @returns { void }
    */
-  protected openChannelInNewTab(username: string): void {
-    this.window.open(`/${username}`, '_blank');
+  protected openInNewTab(navigationPath: string): void {
+    this.window.open(navigationPath, '_blank');
   }
 }

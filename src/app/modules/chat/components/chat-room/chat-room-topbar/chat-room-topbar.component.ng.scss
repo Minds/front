@@ -54,9 +54,16 @@ $topbarHeight: 64px;
   }
 
   .m-chatRoomTop__rightContainer {
-    i {
+    ::ng-deep .m-chatRoomTop__icon {
+      margin-left: $spacing4;
       font-size: 20px;
       cursor: pointer;
+
+      &.m-chatRoomTop__addIcon {
+        @include m-theme() {
+          color: themed($m-action);
+        }
+      }
     }
   }
 }

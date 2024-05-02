@@ -35,6 +35,7 @@ import { GroupInviteButtonComponent } from './invite/invite-button.component';
 import { GroupMembersListService } from './members/list/list.service';
 import { GroupEditButton } from './edit-button/edit-button.component';
 import { GroupFeedService } from './feed/feed.service';
+import { GroupChatButton } from './chat-button/chat-button.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,7 @@ const INTERNAL_COMPONENTS = [
   GroupReviewComponent,
   GroupInviteComponent,
   GroupInviteButtonComponent,
+  GroupChatButton,
 ];
 
 /**

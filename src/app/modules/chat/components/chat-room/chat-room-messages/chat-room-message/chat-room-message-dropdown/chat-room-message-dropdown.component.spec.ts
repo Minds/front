@@ -6,6 +6,13 @@ import { ModalService } from '../../../../../../../services/ux/modal.service';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { ReportCreatorComponent } from '../../../../../../report/creator/creator.component';
+import { SingleChatRoomService } from '../../../../../services/single-chat-room.service';
+import { BehaviorSubject } from 'rxjs';
+import {
+  ChatRoomEdge,
+  ChatRoomTypeEnum,
+} from '../../../../../../../../graphql/generated.engine';
+import { mockChatRoomEdge } from '../../../../../../../mocks/chat.mock';
 
 describe('ChatRoomMessageDropdownComponent', () => {
   let comp: ChatRoomMessageDropdownComponent;
@@ -19,6 +26,17 @@ describe('ChatRoomMessageDropdownComponent', () => {
         {
           provide: ChatMessagesService,
           useValue: MockService(ChatMessagesService),
+        },
+        {
+          provide: SingleChatRoomService,
+          useValue: MockService(SingleChatRoomService, {
+            has: ['chatRoom$'],
+            props: {
+              chatRoom$: {
+                get: () => new BehaviorSubject<ChatRoomEdge>(mockChatRoomEdge),
+              },
+            },
+          }),
         },
       ],
     }).overrideComponent(ChatRoomMessageDropdownComponent, {
@@ -94,5 +112,46 @@ describe('ChatRoomMessageDropdownComponent', () => {
     expect(
       (comp as any).chatMessageService.removeChatMessage
     ).toHaveBeenCalledWith((comp as any).messageEdge);
+  });
+
+  describe('canModerate', () => {
+    it('should return true if the user can moderate', (done: DoneFn) => {
+      let chatRoomEdge: ChatRoomEdge = mockChatRoomEdge;
+      chatRoomEdge.node.roomType = ChatRoomTypeEnum.GroupOwned;
+      chatRoomEdge.node.isUserRoomOwner = true;
+
+      (comp as any).singleChatRoomService.chatRoom$.next(chatRoomEdge);
+
+      (comp as any).canModerate$.subscribe((canModerate: boolean) => {
+        expect(canModerate).toBe(true);
+        done();
+      });
+    });
+
+    it('should return false if the user cannot moderate because the room is not group owned', (done: DoneFn) => {
+      let chatRoomEdge: ChatRoomEdge = mockChatRoomEdge;
+      chatRoomEdge.node.roomType = ChatRoomTypeEnum.OneToOne;
+      chatRoomEdge.node.isUserRoomOwner = true;
+
+      (comp as any).singleChatRoomService.chatRoom$.next(chatRoomEdge);
+
+      (comp as any).canModerate$.subscribe((canModerate: boolean) => {
+        expect(canModerate).toBe(false);
+        done();
+      });
+    });
+
+    it('should return false if the user cannot moderate because the user is not the owner of the group room', (done: DoneFn) => {
+      let chatRoomEdge: ChatRoomEdge = mockChatRoomEdge;
+      chatRoomEdge.node.roomType = ChatRoomTypeEnum.GroupOwned;
+      chatRoomEdge.node.isUserRoomOwner = false;
+
+      (comp as any).singleChatRoomService.chatRoom$.next(chatRoomEdge);
+
+      (comp as any).canModerate$.subscribe((canModerate: boolean) => {
+        expect(canModerate).toBe(false);
+        done();
+      });
+    });
   });
 });

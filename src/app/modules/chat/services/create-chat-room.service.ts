@@ -22,8 +22,9 @@ export class CreateChatRoomService {
    * @returns { Promise<string> } - The guid of the chat room.
    */
   public async createChatRoom(
-    otherMembers: MindsUser[] | string[],
-    roomType: ChatRoomTypeEnum = null
+    otherMembers: MindsUser[] | string[] = [],
+    roomType: ChatRoomTypeEnum = null,
+    groupGuid: string = null
   ): Promise<string> {
     otherMembers = otherMembers.map(
       (participant: MindsUser | string): string => {
@@ -36,6 +37,7 @@ export class CreateChatRoomService {
         this.createChatRoomGql.mutate({
           otherMemberGuids: otherMembers,
           roomType: roomType,
+          groupGuid: groupGuid,
         })
       );
 

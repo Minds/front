@@ -1,0 +1,17 @@
+@import 'defaults.scss';
+
+:host {
+  > button {
+    background: transparent;
+    font-size: 12px;
+    padding: $spacing1 $spacing2 !important;
+    min-width: 128px;
+
+    > i,
+    &.material-icons {
+      padding-bottom: 1px;
+      vertical-align: middle;
+      margin-top: 2px;
+    }
+  }
+}

@@ -3,6 +3,7 @@ import {
   TestBed,
   fakeAsync,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { ChatRoomMembersListItemDropdownComponent } from './chat-room-members-list-item-dropdown.component';
 import { MockService } from '../../../../../../../../utils/mock';
@@ -14,7 +15,10 @@ import { ChatRoomMembersService } from '../../../../../../services/chat-room-mem
 import { TotalChatRoomMembersService } from '../../../../../../services/total-chat-room-members.service';
 import userMock from '../../../../../../../../mocks/responses/user.mock';
 import { BehaviorSubject, take } from 'rxjs';
-import { mockChatRoomEdge } from '../../../../../../../../mocks/chat.mock';
+import {
+  mockChatMemberEdge,
+  mockChatRoomEdge,
+} from '../../../../../../../../mocks/chat.mock';
 import {
   ChatRoomEdge,
   ChatRoomMemberEdge,
@@ -26,7 +30,7 @@ describe('ChatRoomMembersListItemDropdownComponent', () => {
   let comp: ChatRoomMembersListItemDropdownComponent;
   let fixture: ComponentFixture<ChatRoomMembersListItemDropdownComponent>;
 
-  beforeEach((done: DoneFn) => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ChatRoomMembersListItemDropdownComponent],
       providers: [
@@ -64,13 +68,16 @@ describe('ChatRoomMembersListItemDropdownComponent', () => {
         },
       ],
     });
+  }));
 
+  beforeEach((done: DoneFn) => {
     fixture = TestBed.createComponent(ChatRoomMembersListItemDropdownComponent);
     comp = fixture.componentInstance;
 
     (comp as any).session.getLoggedInUser.and.returnValue(userMock);
     (comp as any).loggedInUserGuid = userMock.guid;
-    (comp as any).memberEdge = mockChatRoomEdge.members.edges[0];
+    (comp as any).memberEdge = mockChatMemberEdge;
+    (comp as any).singleChatRoomService.chatRoom$.next(mockChatRoomEdge);
 
     fixture.detectChanges();
     if (fixture.isStable()) {

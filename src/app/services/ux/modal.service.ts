@@ -129,7 +129,9 @@ export class ModalService implements OnDestroy {
       close: (i) => ref.close(i),
       dismissed: ref.dismissed,
       result: ref.result.catch((error) => {
-        console.log('ERROR', error);
+        if (error !== 0) {
+          console.error('ERROR', error);
+        }
       }),
     };
   }

@@ -1,0 +1,125 @@
+<div class="m-userSelectModal__bodyContainer">
+  <header>
+    <h3 class="m-userSelectModal__title">{{ title }}</h3>
+    <m-modalCloseButton></m-modalCloseButton>
+  </header>
+  <form
+    *ngIf="formGroup"
+    [formGroup]="formGroup"
+    class="m-userSelectModal__form"
+  >
+    <m-formInput__entityTypeahead
+      formControlName="searchMatchedUsers"
+      name="searchMatchedUsers"
+      id="searchMatchedUsers"
+      placeholder="Search for people"
+      (loading)="onTypeaheadLoadingStateChange($event)"
+    ></m-formInput__entityTypeahead>
+  </form>
+
+  <ng-container
+    *ngIf="{
+      selectedUsers: selectedUsers$ | async,
+      loadingResults: loadingResults$ | async,
+      searchMatches: searchMatches$ | async
+    } as templateVars"
+  >
+    <ng-container
+      *ngIf="
+        templateVars.selectedUsers.length ||
+          templateVars.searchMatches.length ||
+          templateVars.loadingResults;
+        else trySearchingTemplate
+      "
+    >
+      <div
+        class="m-userSelectModal__selectedUsersContainer"
+        *ngIf="templateVars.selectedUsers.length"
+      >
+        <span
+          *ngFor="let selectedUser of templateVars.selectedUsers"
+          class="m-userSelectModal__selectedUser"
+        >
+          <span class="m-userSelectModal__selectedUserName" tabindex="1">{{
+            selectedUser.name | truncate: 24
+          }}</span>
+          <i
+            class="material-icons"
+            (click)="toggleUserSelect(selectedUser)"
+            tabindex="1"
+            aria-role="button"
+            [attr.aria-label]="'Remove ' + selectedUser.username"
+            >close</i
+          >
+        </span>
+      </div>
+
+      <div
+        class="m-userSelectModal__resultsContainer"
+        *ngIf="!templateVars.loadingResults; else loadingSpinnerTemplate"
+      >
+        <div
+          *ngFor="
+            let searchMatch of templateVars.searchMatches;
+            trackBy: trackResultsBy
+          "
+          class="m-userSelectModal__userRow"
+          tabindex="1"
+          aria-role="button"
+          [attr.aria-label]="'Toggle ' + searchMatch.user.username"
+          (click)="toggleUserSelect(searchMatch.user)"
+          (keyup.enter)="toggleUserSelect(searchMatch.user)"
+        >
+          <div class="m-userSelectModal__userRow--left">
+            <div
+              class="m-userSelectModal__avatar"
+              [style.background-image]="'url(' + searchMatch.avatarUrl + ')'"
+              [ngClass]="{
+                'm-userSelectModal__avatar--selected': searchMatch.selected
+              }"
+            >
+              <span *ngIf="searchMatch.selected" class="material-icons"
+                >done</span
+              >
+            </div>
+          </div>
+          <div class="m-userSelectModal__userRow--right">
+            <p class="m-userSelectModal__userName">
+              {{ searchMatch?.user.name }}
+            </p>
+            <p class="m-userSelectModal__userUsername">
+              &#64;{{ searchMatch?.user.username }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+<footer
+  class="m-userSelectModal__footer"
+  *ngIf="{ saveInProgress: saveInProgress$ | async } as buttonVars"
+>
+  <m-button
+    color="blue"
+    size="small"
+    solid="true"
+    [saving]="buttonVars.saveInProgress"
+    [disabled]="buttonVars.saveInProgress || !(selectedUsers$ | async)?.length"
+    (onAction)="onConfirmClick()"
+    (keydown.enter)="onConfirmClick()"
+    tabindex="1"
+    aria-label="Confirm button"
+    >{{ ctaText }}</m-button
+  >
+</footer>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
+
+<ng-template #trySearchingTemplate>
+  <p class="m-userSelectModal__trySearchingText">
+    {{ emptyText }}
+  </p>
+</ng-template>
