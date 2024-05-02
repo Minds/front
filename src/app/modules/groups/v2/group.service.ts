@@ -14,8 +14,8 @@ import { MindsGroup } from './group.model';
 import { GroupsService } from '../groups.service';
 import { DEFAULT_GROUP_VIEW, GroupAccessType, GroupView } from './group.types';
 import { ToasterService } from '../../../common/services/toaster.service';
-import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 /**
  * Service that holds group information using Observables
