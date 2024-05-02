@@ -1,10 +1,5 @@
 import { CommonModule as NgCommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core';
 import { CommonModule } from '../../../../../../common/common.module';
 import { ChatRoomMembersService } from '../../../../services/chat-room-members.service';
 import { Observable, map } from 'rxjs';
@@ -26,9 +21,6 @@ import { ChatMembersListItemComponent } from './chat-members-list-item/chat-memb
   standalone: true,
 })
 export class ChatMembersListComponent {
-  /** GUID of the room. */
-  @Input() protected roomGuid: string;
-
   /** Chat room members. - should be initialized by calling service init in the parent component. */
   protected readonly members$: Observable<ChatRoomMemberEdge[]> =
     this.chatRoomMembersService.edges$;

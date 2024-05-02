@@ -6,18 +6,22 @@ import {
   EventEmitter,
   Inject,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '../../../../../common/common.module';
-import { ChatRoomUtilsService } from '../../../services/utils.service';
-import { ChatRoomMemberEdge } from '../../../../../../graphql/generated.engine';
+import {
+  ChatRoomEdge,
+  ChatRoomTypeEnum,
+} from '../../../../../../graphql/generated.engine';
 import { RouterModule } from '@angular/router';
 import { WINDOW } from '../../../../../common/injection-tokens/common-injection-tokens';
+import {
+  ChatRoomAvatarsService,
+  ChatRoomListAvatarObject,
+} from '../../../services/chat-room-avatars.service';
 
 /**
- * Top section of a chat room, containing the room name members, and submenu icon.
+ * Top section of a chat room, containing the room name, and submenu icon.
  */
 @Component({
   selector: 'm-chatRoom__top',
@@ -27,15 +31,30 @@ import { WINDOW } from '../../../../../common/injection-tokens/common-injection-
   imports: [NgCommonModule, CommonModule, RouterModule],
   standalone: true,
 })
-export class ChatRoomTopComponent implements OnChanges {
-  /** Name of the room. (optional: will be derived from room members if not provided) */
-  @Input() protected roomName: string;
+export class ChatRoomTopComponent {
+  /** Chat room edge. */
+  @Input() protected set chatRoomEdge(chatRoomEdge: ChatRoomEdge) {
+    this.roomName = chatRoomEdge?.node?.name;
 
-  /** Members of the room. */
-  @Input() protected roomMembers: ChatRoomMemberEdge[] = [];
+    this.avatars =
+      chatRoomEdge?.node?.roomType === ChatRoomTypeEnum.GroupOwned &&
+      chatRoomEdge.node?.groupGuid
+        ? this.chatRoomAvatarsService.getGroupAvatarObjects(
+            chatRoomEdge.node?.groupGuid
+          )
+        : this.chatRoomAvatarsService.getUserAvatarObjects(
+            chatRoomEdge.members?.edges
+          );
+  }
 
   /** Whether topbar for a chat room in request mode. */
   @Input() protected requestMode: boolean = false;
+
+  /** Name of the chat room. */
+  protected roomName: string;
+
+  /** Avatars to be shown for the chat room. */
+  protected avatars: ChatRoomListAvatarObject[] = [];
 
   /** Fires on details icon click. */
   @Output('detailsIconClick')
@@ -44,35 +63,16 @@ export class ChatRoomTopComponent implements OnChanges {
 
   constructor(
     public cd: ChangeDetectorRef,
-    private chatRoomUtilsService: ChatRoomUtilsService,
+    private chatRoomAvatarsService: ChatRoomAvatarsService,
     @Inject(WINDOW) private window: Window
   ) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes.roomMembers.currentValue !== changes.roomMembers.previousValue
-    ) {
-      this.deriveRoomNameFromMembers();
-    }
-  }
-
   /**
-   * Handles middle mouse click on an avatar by opening the users channel
-   * in a new tab.
-   */
-  protected openChannelInNewTab(username: string): void {
-    this.window.open(`/${username}`, '_blank');
-  }
-
-  /**
-   * Derives room name from members.
+   * Opening a path in a new tab.
+   * @param { string } navigationPath - The path to open.
    * @returns { void }
    */
-  private deriveRoomNameFromMembers(): void {
-    if (this.roomMembers.length) {
-      this.roomName = this.chatRoomUtilsService.deriveRoomNameFromMembers(
-        this.roomMembers
-      );
-    }
+  protected openInNewTab(navigationPath: string): void {
+    this.window.open(navigationPath, '_blank');
   }
 }

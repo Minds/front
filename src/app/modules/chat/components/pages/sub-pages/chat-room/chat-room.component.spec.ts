@@ -110,7 +110,7 @@ describe('ChatRoomComponent', () => {
             }),
             MockComponent({
               selector: 'm-chatRoom__top',
-              inputs: ['roomMembers', 'requestMode'],
+              inputs: ['chatRoomEdge'],
               outputs: ['detailsIconClick'],
               standalone: true,
             }),

@@ -361,11 +361,13 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
   chatRoomNotificationStatus?: Maybe<ChatRoomNotificationStatusEnum>;
+  groupGuid: Scalars['String']['output'];
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   isChatRequest: Scalars['Boolean']['output'];
   isUserRoomOwner?: Maybe<Scalars['Boolean']['output']>;
+  name: Scalars['String']['output'];
   /** The type of room. i.e. one-to-one, multi-user, or group-owned */
   roomType: ChatRoomTypeEnum;
   /** The timestamp the room was created at */
@@ -1056,6 +1058,7 @@ export type MutationCreateChatMessageArgs = {
 };
 
 export type MutationCreateChatRoomArgs = {
+  groupGuid?: InputMaybe<Scalars['String']['input']>;
   otherMemberGuids?: Array<Scalars['String']['input']>;
   roomType?: InputMaybe<ChatRoomTypeEnum>;
 };
@@ -2246,6 +2249,7 @@ export type CreateChatRoomMutationVariables = Exact<{
     | Array<Scalars['String']['input']>
     | Scalars['String']['input'];
   roomType?: InputMaybe<ChatRoomTypeEnum>;
+  groupGuid?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type CreateChatRoomMutation = {
@@ -2258,6 +2262,7 @@ export type CreateChatRoomMutation = {
       id: string;
       guid: string;
       roomType: ChatRoomTypeEnum;
+      groupGuid: string;
       timeCreatedISO8601: string;
       timeCreatedUnix: string;
     };
@@ -2455,6 +2460,8 @@ export type GetChatRoomQuery = {
       __typename?: 'ChatRoomNode';
       guid: string;
       roomType: ChatRoomTypeEnum;
+      name: string;
+      groupGuid: string;
       id: string;
       isChatRequest: boolean;
       isUserRoomOwner?: boolean | null;
@@ -2512,7 +2519,9 @@ export type GetChatRoomsListQuery = {
         __typename?: 'ChatRoomNode';
         id: string;
         guid: string;
+        name: string;
         roomType: ChatRoomTypeEnum;
+        groupGuid: string;
         timeCreatedISO8601: string;
         timeCreatedUnix: string;
       };
@@ -7653,13 +7662,19 @@ export const CreateChatRoomDocument = gql`
   mutation CreateChatRoom(
     $otherMemberGuids: [String!]!
     $roomType: ChatRoomTypeEnum
+    $groupGuid: String
   ) {
-    createChatRoom(otherMemberGuids: $otherMemberGuids, roomType: $roomType) {
+    createChatRoom(
+      otherMemberGuids: $otherMemberGuids
+      roomType: $roomType
+      groupGuid: $groupGuid
+    ) {
       cursor
       node {
         id
         guid
         roomType
+        groupGuid
         timeCreatedISO8601
         timeCreatedUnix
       }
@@ -7930,6 +7945,8 @@ export const GetChatRoomDocument = gql`
       node {
         guid
         roomType
+        name
+        groupGuid
         id
         isChatRequest
         isUserRoomOwner
@@ -7988,7 +8005,9 @@ export const GetChatRoomsListDocument = gql`
         node {
           id
           guid
+          name
           roomType
+          groupGuid
           timeCreatedISO8601
           timeCreatedUnix
         }

@@ -6,24 +6,23 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { CommonModule } from '../../../../common/common.module';
-import { AutoCompleteEntityTypeEnum } from '../../../../common/components/forms/autocomplete-entity-input/autocomplete-entity-input.component';
+import { CommonModule } from '../../common.module';
+import { AutoCompleteEntityTypeEnum } from '../../components/forms/autocomplete-entity-input/autocomplete-entity-input.component';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { EntityTypeaheadComponent } from '../../../../common/components/forms/entity-typeahead/entity-typeahead.component';
+import { EntityTypeaheadComponent } from '../../components/forms/entity-typeahead/entity-typeahead.component';
 import { BehaviorSubject, combineLatest, take } from 'rxjs';
-import { MindsUser } from '../../../../interfaces/entities';
-import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { CDN_URL } from '../../../../common/injection-tokens/url-injection-tokens';
-import { CreateChatRoomService } from '../../services/create-chat-room.service';
+import { MindsUser } from '../../../interfaces/entities';
+import { AbstractSubscriberComponent } from '../../components/abstract-subscriber/abstract-subscriber.component';
+import { CDN_URL } from '../../injection-tokens/url-injection-tokens';
 import {
   DEFAULT_ERROR_MESSAGE,
   ToasterService,
-} from '../../../../common/services/toaster.service';
+} from '../../services/toaster.service';
 
 /** User row object. */
 type UserRow = {
@@ -33,9 +32,9 @@ type UserRow = {
 };
 
 @Component({
-  selector: 'm-startChatModal',
-  templateUrl: './start-chat-modal.component.html',
-  styleUrls: ['./start-chat-modal.component.ng.scss'],
+  selector: 'm-userSelectionModal',
+  templateUrl: './user-selection-modal.component.html',
+  styleUrls: ['./user-selection-modal.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgCommonModule,
@@ -45,7 +44,7 @@ type UserRow = {
   ],
   standalone: true,
 })
-export class StartChatModalServiceComponent
+export class UserSelectionModalComponent
   extends AbstractSubscriberComponent
   implements OnInit, OnDestroy
 {
@@ -68,18 +67,30 @@ export class StartChatModalServiceComponent
   protected readonly selectedUsers$: BehaviorSubject<MindsUser[]> =
     new BehaviorSubject<MindsUser[]>([]);
 
-  /** Whether chat creation is in progress. */
-  protected readonly creationInProgress$: BehaviorSubject<boolean> =
+  /** Whether save is in progress. */
+  protected readonly saveInProgress$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
   /** Instantiation time of the class. */
   private readonly instantiationTime: number = Date.now();
 
-  onCompleted: (chatRoomId: string) => void;
+  /** Provided function to be called on complete. */
+  onCompleted: () => void;
+
+  /** Callback function to handle save action on CTA click. */
+  saveFunction: (users: MindsUser[]) => Promise<void>;
+
+  /** Title to be shown in modal. */
+  protected title = 'Search for users';
+
+  /** Empty state text to be shown in modal. */
+  protected emptyText = 'Search for users';
+
+  /** CTA text to be shown in modal. */
+  protected ctaText = 'Confirm';
 
   constructor(
     private formBuilder: FormBuilder,
-    private createChatRoomService: CreateChatRoomService,
     private toaster: ToasterService,
     @Inject(CDN_URL) private readonly cdnUrl: string
   ) {
@@ -145,10 +156,22 @@ export class StartChatModalServiceComponent
    */
   public setModalData({
     onCompleted,
+    saveFunction,
+    title,
+    emptyText,
+    ctaText,
   }: {
-    onCompleted: (chatRoomId: string) => void;
+    onCompleted: () => void;
+    saveFunction: (users: MindsUser[]) => Promise<void>;
+    title: string;
+    emptyText: string;
+    ctaText: string;
   }): void {
     this.onCompleted = onCompleted;
+    this.saveFunction = saveFunction;
+    this.title = title ?? 'Search for users';
+    this.emptyText = emptyText ?? 'Search for users';
+    this.ctaText = ctaText ?? 'Confirm';
   }
 
   /**
@@ -157,17 +180,17 @@ export class StartChatModalServiceComponent
    */
   protected async onConfirmClick(): Promise<void> {
     try {
-      this.creationInProgress$.next(true);
-      const selectedUsers: MindsUser[] = this.selectedUsers$.getValue();
+      this.saveInProgress$.next(true);
 
-      const chatRoomId: string =
-        await this.createChatRoomService.createChatRoom(selectedUsers);
-      this.onCompleted(chatRoomId);
+      const selectedUsers: MindsUser[] = this.selectedUsers$.getValue();
+      await this.saveFunction(selectedUsers);
+
+      this.onCompleted();
     } catch (e) {
       console.error(e);
       this.toaster.error(DEFAULT_ERROR_MESSAGE);
     } finally {
-      this.creationInProgress$.next(false);
+      this.saveInProgress$.next(false);
     }
   }
 

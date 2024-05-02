@@ -64,7 +64,8 @@
   <span
     *ngIf="
       actionVars.chatRoomType === ChatRoomTypeEnum.OneToOne ||
-      actionVars.isUserRoomOwner
+      (actionVars.isUserRoomOwner &&
+        actionVars.chatRoomType !== ChatRoomTypeEnum.GroupOwned)
     "
     class="m-chatRoomDetails__actionText m-chatRoomDetails__actionText--red"
     aria-role="button"
@@ -77,6 +78,7 @@
   <span
     *ngIf="
       actionVars.chatRoomType !== ChatRoomTypeEnum.OneToOne &&
+      actionVars.chatRoomType !== ChatRoomTypeEnum.GroupOwned &&
       !actionVars.isUserRoomOwner
     "
     class="m-chatRoomDetails__actionText m-chatRoomDetails__actionText--red"

@@ -7,7 +7,7 @@
     [@slideInFromRight]
   ></m-chatRoom__details>
   <m-chatRoom__top
-    [roomMembers]="chatRoom.members?.edges"
+    [chatRoomEdge]="chatRoom"
     [requestMode]="requestMode"
     (detailsIconClick)="showDetailsDrawer()"
   ></m-chatRoom__top>

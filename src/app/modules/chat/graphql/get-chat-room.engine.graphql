@@ -9,6 +9,8 @@ query GetChatRoom(
         node {
             guid
             roomType
+            name
+            groupGuid
             id
             isChatRequest
             isUserRoomOwner

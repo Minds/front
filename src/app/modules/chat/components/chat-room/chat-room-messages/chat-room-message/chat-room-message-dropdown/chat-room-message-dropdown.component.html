@@ -40,7 +40,7 @@
   </ul>
   <ul class="m-chatRoomMessageDropdown__dropdownList">
     <li
-      *ngIf="isMessageOwner"
+      *ngIf="isMessageOwner || (canModerate$ | async)"
       class="m-chatRoomMessageDropdown__dropdownListItem"
       (click)="onDeleteClick()"
       data-ref="data-minds-chat-delete-message-button"
