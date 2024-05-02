@@ -1,4 +1,4 @@
-mutation CreateGroupChatRoom ($groupGuid: String!) {
+mutation CreateGroupChatRoom($groupGuid: String!) {
     createGroupChatRoom(groupGuid: $groupGuid) {
         cursor
         node {
