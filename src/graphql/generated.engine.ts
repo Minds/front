@@ -361,7 +361,8 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
   chatRoomNotificationStatus?: Maybe<ChatRoomNotificationStatusEnum>;
-  groupGuid: Scalars['String']['output'];
+  /** Gets group GUID for a chat room node. */
+  groupGuid?: Maybe<Scalars['String']['output']>;
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -984,6 +985,7 @@ export type Mutation = {
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
+  deleteGroupChatRooms: Scalars['Boolean']['output'];
   deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
@@ -1121,6 +1123,10 @@ export type MutationDeleteEntityArgs = {
 
 export type MutationDeleteFeaturedEntityArgs = {
   entityGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteGroupChatRoomsArgs = {
+  groupGuid: Scalars['String']['input'];
 };
 
 export type MutationDismissArgs = {
@@ -2262,7 +2268,7 @@ export type CreateChatRoomMutation = {
       id: string;
       guid: string;
       roomType: ChatRoomTypeEnum;
-      groupGuid: string;
+      groupGuid?: string | null;
       timeCreatedISO8601: string;
       timeCreatedUnix: string;
     };
@@ -2295,6 +2301,15 @@ export type DeleteChatRoomMutationVariables = Exact<{
 export type DeleteChatRoomMutation = {
   __typename?: 'Mutation';
   deleteChatRoom: boolean;
+};
+
+export type DeleteGroupChatRoomsMutationVariables = Exact<{
+  groupGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteGroupChatRoomsMutation = {
+  __typename?: 'Mutation';
+  deleteGroupChatRooms: boolean;
 };
 
 export type GetChatMessagesQueryVariables = Exact<{
@@ -2461,7 +2476,7 @@ export type GetChatRoomQuery = {
       guid: string;
       roomType: ChatRoomTypeEnum;
       name: string;
-      groupGuid: string;
+      groupGuid?: string | null;
       id: string;
       isChatRequest: boolean;
       isUserRoomOwner?: boolean | null;
@@ -2521,7 +2536,7 @@ export type GetChatRoomsListQuery = {
         guid: string;
         name: string;
         roomType: ChatRoomTypeEnum;
-        groupGuid: string;
+        groupGuid?: string | null;
         timeCreatedISO8601: string;
         timeCreatedUnix: string;
       };
@@ -7747,6 +7762,25 @@ export class DeleteChatRoomGQL extends Apollo.Mutation<
   DeleteChatRoomMutationVariables
 > {
   document = DeleteChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const DeleteGroupChatRoomsDocument = gql`
+  mutation DeleteGroupChatRooms($groupGuid: String!) {
+    deleteGroupChatRooms(groupGuid: $groupGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteGroupChatRoomsGQL extends Apollo.Mutation<
+  DeleteGroupChatRoomsMutation,
+  DeleteGroupChatRoomsMutationVariables
+> {
+  document = DeleteGroupChatRoomsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

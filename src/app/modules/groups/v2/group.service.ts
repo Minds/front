@@ -16,6 +16,9 @@ import { DEFAULT_GROUP_VIEW, GroupAccessType, GroupView } from './group.types';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { CreateChatRoomService } from '../../chat/services/create-chat-room.service';
+import { ChatRoomUserActionsService } from '../../chat/services/chat-room-user-actions.service';
+import { ChatRoomTypeEnum } from '../../../../graphql/generated.engine';
 
 /**
  * Service that holds group information using Observables
@@ -140,6 +143,10 @@ export class GroupService implements OnDestroy {
     false
   );
 
+  /** Whether conversation is disabled. */
+  readonly isCoversationDisabled$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
+
   /**
    * Whether boosts should be shown in the feed
    */
@@ -183,7 +190,9 @@ export class GroupService implements OnDestroy {
     protected toaster: ToasterService,
     protected router: Router,
     protected isTenant: IsTenantService,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private chatRoomUserActions: ChatRoomUserActionsService,
+    private createChatRoomService: CreateChatRoomService
   ) {
     this.listenForLogin();
     // Set canReview observable
@@ -286,6 +295,9 @@ export class GroupService implements OnDestroy {
     this.isAwaiting$.next(group ? group['is:awaiting'] : false);
     this.isBanned$.next(group ? group['is:banned'] : false);
     this.isMuted$.next(group ? group['is:muted'] : false);
+    this.isCoversationDisabled$.next(
+      group ? group['conversationDisabled'] : true
+    );
   }
 
   /**
@@ -539,6 +551,39 @@ export class GroupService implements OnDestroy {
       await lastValueFrom(this.api.delete(endpoint));
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  /**
+   * Set a groups chat rooms as disabled or enabled, by calling to create or delete group chat rooms.
+   * @param { boolean } disable - whether to disable group chat rooms.
+   * @returns { Promise<void> }
+   */
+  public async setGroupChatRoomsDisabled(
+    disable: boolean = true
+  ): Promise<void> {
+    let success: boolean = false;
+
+    if (disable) {
+      success = await this.chatRoomUserActions.deleteGroupChatRooms(
+        this.guid$.getValue()
+      );
+    } else {
+      success = Boolean(
+        await this.createChatRoomService.createChatRoom(
+          [],
+          ChatRoomTypeEnum.GroupOwned,
+          this.guid$.getValue()
+        )
+      );
+
+      if (success) {
+        this.toaster.success('Group chat room created');
+      }
+    }
+
+    if (success) {
+      this.isCoversationDisabled$.next(disable);
     }
   }
 }

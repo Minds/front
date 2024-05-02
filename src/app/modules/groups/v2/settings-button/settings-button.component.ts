@@ -81,6 +81,33 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
   }
 
   /**
+   * Set group chat room to disabled.
+   * @param { boolean } disable - Whether to disable the chat room.
+   * @returns { Promise<void> }
+   */
+  public async setGroupChatRoomsDisabled(disable: boolean): Promise<void> {
+    if (disable) {
+      const modal = this.modalService.present(ConfirmV2Component, {
+        data: {
+          title: 'Disable chat room?',
+          body: "Your current group's chat history will be deleted if you disable the chat room. You can always enable the group's chat room after disabling to get a new chat room with all your group members.",
+          confirmButtonColor: 'red',
+          confirmButtonSolid: false,
+          confirmButtonText: 'Disable',
+          showCancelButton: false,
+          onConfirm: () => {
+            modal.dismiss();
+            this.service.setGroupChatRoomsDisabled(true);
+          },
+        },
+        injector: this.injector,
+      });
+    } else {
+      await this.service.setGroupChatRoomsDisabled(false);
+    }
+  }
+
+  /**
    * Opens the report modal to report a group
    */
   openReportModal() {

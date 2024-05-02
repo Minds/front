@@ -18,6 +18,7 @@ import { ModalService } from '../../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../../tests/modal-service-mock.spec';
 import { BehaviorSubject } from 'rxjs';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
+import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm.component';
 
 let groupServiceMock: any = MockService(GroupService, {
   has: ['group$'],
@@ -76,7 +77,15 @@ describe('GroupSettingsButton', () => {
           selector: 'm-dropdownMenu__item',
           outputs: ['click'],
         }),
-
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['overlay', 'iconOnly'],
+          template: `<ng-content></ng-content>`,
+        }),
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['iconId', 'sizeFactor'],
+        }),
         GroupSettingsButton,
       ],
       providers: [
@@ -147,5 +156,65 @@ describe('GroupSettingsButton', () => {
 
       expect((comp as any).boostModal.open).toHaveBeenCalledWith(comp.group);
     });
+  });
+
+  describe('setGroupChatRoomsDisabled', () => {
+    beforeAll(() => {
+      (comp as any).service.setGroupChatRoomsDisabled.calls.reset();
+      modalServiceMock.present.calls.reset();
+    });
+
+    afterEach(() => {
+      (comp as any).service.setGroupChatRoomsDisabled.calls.reset();
+      modalServiceMock.present.calls.reset();
+    });
+
+    it('should show confirmation modal when setting a chat room to disabled', fakeAsync(() => {
+      const modalDismissSpy = jasmine.createSpy('dismiss');
+      modalServiceMock.present.and.returnValue({
+        dismiss: modalDismissSpy,
+      });
+      comp.setGroupChatRoomsDisabled(true);
+      tick();
+
+      expect(modalServiceMock.present).toHaveBeenCalledOnceWith(
+        ConfirmV2Component,
+        {
+          data: {
+            title: 'Disable chat room?',
+            body: "Your current group's chat history will be deleted if you disable the chat room. You can always enable the group's chat room after disabling to get a new chat room with all your group members.",
+            confirmButtonColor: 'red',
+            confirmButtonSolid: false,
+            confirmButtonText: 'Disable',
+            showCancelButton: false,
+            onConfirm: jasmine.any(Function),
+          },
+          injector: (comp as any).injector,
+        }
+      );
+
+      // test callback.
+      const onConfirm = (comp as any).modalService.present.calls.mostRecent()
+        .args[1].data.onConfirm;
+      onConfirm();
+      tick();
+
+      expect(modalDismissSpy).toHaveBeenCalledTimes(1);
+      expect(
+        (comp as any).service.setGroupChatRoomsDisabled
+      ).toHaveBeenCalledOnceWith(true);
+    }));
+
+    it('should set group chat rooms to enabled', fakeAsync(() => {
+      (comp as any).service.setGroupChatRoomsDisabled.and.returnValue(
+        Promise.resolve(true)
+      );
+      comp.setGroupChatRoomsDisabled(false);
+      tick();
+
+      expect(
+        (comp as any).service.setGroupChatRoomsDisabled
+      ).toHaveBeenCalledOnceWith(false);
+    }));
   });
 });

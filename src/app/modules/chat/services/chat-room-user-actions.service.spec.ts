@@ -4,6 +4,7 @@ import { MockService } from '../../../utils/mock';
 import {
   DeleteChatRoomAndBlockUserGQL,
   DeleteChatRoomGQL,
+  DeleteGroupChatRoomsGQL,
   LeaveChatRoomGQL,
   RemoveMemberFromChatRoomGQL,
 } from '../../../../graphql/generated.engine';
@@ -38,6 +39,10 @@ describe('ChatRoomUserActionsService', () => {
           useValue: jasmine.createSpyObj<DeleteChatRoomAndBlockUserGQL>([
             'mutate',
           ]),
+        },
+        {
+          provide: DeleteGroupChatRoomsGQL,
+          useValue: jasmine.createSpyObj<DeleteGroupChatRoomsGQL>(['mutate']),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
       ],
@@ -127,6 +132,54 @@ describe('ChatRoomUserActionsService', () => {
 
       expect((service as any).deleteChatRoomGQL.mutate).toHaveBeenCalledWith({
         roomGuid: mockChatRoomEdge.node.guid,
+      });
+      expect((service as any).toaster.error).toHaveBeenCalledWith(
+        new Error('Error')
+      );
+    }));
+  });
+
+  describe('deleteGroupChatRooms', () => {
+    it('should delete group chat rooms', fakeAsync(() => {
+      const groupGuid: string = '1234567890123456';
+
+      (service as any).deleteGroupChatRoomsGQL.mutate.and.returnValue(
+        of({
+          data: {
+            deleteGroupChatRooms: true,
+          },
+        })
+      );
+
+      service.deleteGroupChatRooms(groupGuid);
+      tick();
+
+      expect(
+        (service as any).deleteGroupChatRoomsGQL.mutate
+      ).toHaveBeenCalledWith({
+        groupGuid: groupGuid,
+      });
+      expect((service as any).toaster.success).toHaveBeenCalledWith(
+        'Chat rooms deleted'
+      );
+    }));
+
+    it('should handle error when deleting chat room', fakeAsync(() => {
+      const groupGuid: string = '1234567890123456';
+
+      (service as any).deleteGroupChatRoomsGQL.mutate.and.returnValue(
+        of({
+          errors: [{ message: 'Error' }],
+        })
+      );
+
+      service.deleteGroupChatRooms(groupGuid);
+      tick();
+
+      expect(
+        (service as any).deleteGroupChatRoomsGQL.mutate
+      ).toHaveBeenCalledWith({
+        groupGuid: groupGuid,
       });
       expect((service as any).toaster.error).toHaveBeenCalledWith(
         new Error('Error')

@@ -50,6 +50,27 @@
       </ng-template>
 
       <!---------------------------->
+      <ng-container
+        *ngIf="
+          !(service.isCoversationDisabled$ | async);
+          else enableChatOptionTemplate
+        "
+      >
+        <m-dropdownMenu__item (click)="setGroupChatRoomsDisabled(true)">
+          <ng-container i18n="@@GROUP_SETTINGS__DISABLE_GROUP_CHAT_ROOM"
+            >Disable group chat room</ng-container
+          >
+        </m-dropdownMenu__item>
+      </ng-container>
+      <ng-template #enableChatOptionTemplate>
+        <m-dropdownMenu__item (click)="setGroupChatRoomsDisabled(false)">
+          <ng-container i18n="@@GROUP_SETTINGS__ENABLE_GROUP_CHAT_ROOM"
+            >Enable group chat room</ng-container
+          >
+        </m-dropdownMenu__item>
+      </ng-template>
+
+      <!---------------------------->
       <m-dropdownMenu__item
         *ngIf="service.moderated$ | async; else enableModeration"
         (click)="toggleModeration(false)"

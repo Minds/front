@@ -5,6 +5,8 @@ import {
   DeleteChatRoomAndBlockUserMutation,
   DeleteChatRoomGQL,
   DeleteChatRoomMutation,
+  DeleteGroupChatRoomsGQL,
+  DeleteGroupChatRoomsMutation,
   LeaveChatRoomGQL,
   LeaveChatRoomMutation,
   RemoveMemberFromChatRoomGQL,
@@ -29,6 +31,7 @@ export class ChatRoomUserActionsService {
     private leaveChatRoomGQL: LeaveChatRoomGQL,
     private removeMemberFromChatRoomGql: RemoveMemberFromChatRoomGQL,
     private deleteChatRoomAndBlockUserGQL: DeleteChatRoomAndBlockUserGQL,
+    private deleteGroupChatRoomsGQL: DeleteGroupChatRoomsGQL,
     private toaster: ToasterService
   ) {}
 
@@ -97,6 +100,42 @@ export class ChatRoomUserActionsService {
       }
 
       this.toaster.success('Chat room deleted');
+      return true;
+    } catch (e) {
+      this.toaster.error(e);
+      return false;
+    } finally {
+      this.actionInProgress$.next(false);
+    }
+  }
+
+  /**
+   * Delete group chat rooms by group GUID.
+   * @param { string } groupGuid - GUID of the group.
+   * @returns { Promise<boolean> } - Whether group chat rooms were deleted.
+   */
+  public async deleteGroupChatRooms(groupGuid: string): Promise<boolean> {
+    if (this.actionInProgress$.getValue()) {
+      return;
+    }
+
+    this.actionInProgress$.next(true);
+
+    try {
+      const response: MutationResult<DeleteGroupChatRoomsMutation> =
+        await lastValueFrom(
+          this.deleteGroupChatRoomsGQL.mutate({ groupGuid: groupGuid })
+        );
+
+      if (response.errors?.length) {
+        throw new Error(response.errors[0].message);
+      }
+
+      if (!response.data.deleteGroupChatRooms) {
+        throw new Error("Could not delete this group's chat rooms");
+      }
+
+      this.toaster.success('Chat rooms deleted');
       return true;
     } catch (e) {
       this.toaster.error(e);
