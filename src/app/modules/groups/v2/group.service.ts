@@ -14,11 +14,8 @@ import { MindsGroup } from './group.model';
 import { GroupsService } from '../groups.service';
 import { DEFAULT_GROUP_VIEW, GroupAccessType, GroupView } from './group.types';
 import { ToasterService } from '../../../common/services/toaster.service';
-import { IsTenantService } from '../../../common/services/is-tenant.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
-import { CreateChatRoomService } from '../../chat/services/create-chat-room.service';
-import { ChatRoomUserActionsService } from '../../chat/services/chat-room-user-actions.service';
-import { ChatRoomTypeEnum } from '../../../../graphql/generated.engine';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 /**
  * Service that holds group information using Observables
@@ -190,9 +187,7 @@ export class GroupService implements OnDestroy {
     protected toaster: ToasterService,
     protected router: Router,
     protected isTenant: IsTenantService,
-    private authModal: AuthModalService,
-    private chatRoomUserActions: ChatRoomUserActionsService,
-    private createChatRoomService: CreateChatRoomService
+    private authModal: AuthModalService
   ) {
     this.listenForLogin();
     // Set canReview observable
@@ -555,35 +550,11 @@ export class GroupService implements OnDestroy {
   }
 
   /**
-   * Set a groups chat rooms as disabled or enabled, by calling to create or delete group chat rooms.
-   * @param { boolean } disable - whether to disable group chat rooms.
-   * @returns { Promise<void> }
+   * Set conversation disabled state.
+   * @param { boolean } value - Whether conversation is disabled.
+   * @returns { void }
    */
-  public async setGroupChatRoomsDisabled(
-    disable: boolean = true
-  ): Promise<void> {
-    let success: boolean = false;
-
-    if (disable) {
-      success = await this.chatRoomUserActions.deleteGroupChatRooms(
-        this.guid$.getValue()
-      );
-    } else {
-      success = Boolean(
-        await this.createChatRoomService.createChatRoom(
-          [],
-          ChatRoomTypeEnum.GroupOwned,
-          this.guid$.getValue()
-        )
-      );
-
-      if (success) {
-        this.toaster.success('Group chat room created');
-      }
-    }
-
-    if (success) {
-      this.isCoversationDisabled$.next(disable);
-    }
+  public setConversationDisabled(value: boolean = true): void {
+    this.isCoversationDisabled$.next(value);
   }
 }

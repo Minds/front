@@ -970,6 +970,8 @@ export type Mutation = {
   /** Creates a comment on a remote url */
   createEmbeddedComment: CommentEdge;
   createGiftCard: GiftCardNode;
+  /** Creates a new group chat room. */
+  createGroupChatRoom: ChatRoomEdge;
   createMultiTenantDomain: MultiTenantDomain;
   createNetworkRootUser: TenantUser;
   /** Create a new report. */
@@ -985,6 +987,7 @@ export type Mutation = {
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
+  /** Deletes group chat rooms. */
   deleteGroupChatRooms: Scalars['Boolean']['output'];
   deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
@@ -1078,6 +1081,10 @@ export type MutationCreateGiftCardArgs = {
   productIdEnum: Scalars['Int']['input'];
   stripePaymentMethodId: Scalars['String']['input'];
   targetInput: GiftCardTargetInput;
+};
+
+export type MutationCreateGroupChatRoomArgs = {
+  groupGuid: Scalars['String']['input'];
 };
 
 export type MutationCreateMultiTenantDomainArgs = {
@@ -2261,6 +2268,27 @@ export type CreateChatRoomMutationVariables = Exact<{
 export type CreateChatRoomMutation = {
   __typename?: 'Mutation';
   createChatRoom: {
+    __typename?: 'ChatRoomEdge';
+    cursor: string;
+    node: {
+      __typename?: 'ChatRoomNode';
+      id: string;
+      guid: string;
+      roomType: ChatRoomTypeEnum;
+      groupGuid?: string | null;
+      timeCreatedISO8601: string;
+      timeCreatedUnix: string;
+    };
+  };
+};
+
+export type CreateGroupChatRoomMutationVariables = Exact<{
+  groupGuid: Scalars['String']['input'];
+}>;
+
+export type CreateGroupChatRoomMutation = {
+  __typename?: 'Mutation';
+  createGroupChatRoom: {
     __typename?: 'ChatRoomEdge';
     cursor: string;
     node: {
@@ -7705,6 +7733,35 @@ export class CreateChatRoomGQL extends Apollo.Mutation<
   CreateChatRoomMutationVariables
 > {
   document = CreateChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateGroupChatRoomDocument = gql`
+  mutation CreateGroupChatRoom($groupGuid: String!) {
+    createGroupChatRoom(groupGuid: $groupGuid) {
+      cursor
+      node {
+        id
+        guid
+        roomType
+        groupGuid
+        timeCreatedISO8601
+        timeCreatedUnix
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateGroupChatRoomGQL extends Apollo.Mutation<
+  CreateGroupChatRoomMutation,
+  CreateGroupChatRoomMutationVariables
+> {
+  document = CreateGroupChatRoomDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

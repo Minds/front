@@ -56,14 +56,14 @@
           else enableChatOptionTemplate
         "
       >
-        <m-dropdownMenu__item (click)="setGroupChatRoomsDisabled(true)">
+        <m-dropdownMenu__item (click)="deleteChatRooms()">
           <ng-container i18n="@@GROUP_SETTINGS__DISABLE_GROUP_CHAT_ROOM"
             >Disable group chat room</ng-container
           >
         </m-dropdownMenu__item>
       </ng-container>
       <ng-template #enableChatOptionTemplate>
-        <m-dropdownMenu__item (click)="setGroupChatRoomsDisabled(false)">
+        <m-dropdownMenu__item (click)="createChatRoom(false)">
           <ng-container i18n="@@GROUP_SETTINGS__ENABLE_GROUP_CHAT_ROOM"
             >Enable group chat room</ng-container
           >
