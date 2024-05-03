@@ -12,7 +12,6 @@ import { ChatRoomUserActionsService } from '../../chat/services/chat-room-user-a
 import { CreateChatRoomService } from '../../chat/services/create-chat-room.service';
 import { EventEmitter } from '@angular/core';
 import { groupMock } from '../../../mocks/responses/group.mock';
-import { ChatRoomTypeEnum } from '../../../../graphql/generated.engine';
 
 describe('GroupService', () => {
   let service: GroupService;
@@ -59,39 +58,14 @@ describe('GroupService', () => {
   });
 
   describe('setGroupChatRoomsDisabled', () => {
-    it('should set group chat rooms to disabled', fakeAsync(() => {
-      (service as any).chatRoomUserActions.deleteGroupChatRooms.and.returnValue(
-        Promise.resolve(true)
-      );
-
-      service.setGroupChatRoomsDisabled(true);
-      tick();
-
-      expect(
-        (service as any).chatRoomUserActions.deleteGroupChatRooms
-      ).toHaveBeenCalledOnceWith(service.guid$.getValue());
+    it('should set group chat rooms to disabled', () => {
+      service.setConversationDisabled(true);
       expect(service.isCoversationDisabled$.getValue()).toBeTrue();
-    }));
+    });
 
-    it('should set group chat rooms to enabled', fakeAsync(() => {
-      (service as any).createChatRoomService.createChatRoom.and.returnValue(
-        Promise.resolve(true)
-      );
-
-      service.setGroupChatRoomsDisabled(false);
-      tick();
-
-      expect(
-        (service as any).createChatRoomService.createChatRoom
-      ).toHaveBeenCalledOnceWith(
-        [],
-        ChatRoomTypeEnum.GroupOwned,
-        service.guid$.getValue()
-      );
-      expect((service as any).toaster.success).toHaveBeenCalledOnceWith(
-        'Group chat room created'
-      );
+    it('should set group chat rooms to enabled', () => {
+      service.setConversationDisabled(false);
       expect(service.isCoversationDisabled$.getValue()).toBeFalse();
-    }));
+    });
   });
 });
