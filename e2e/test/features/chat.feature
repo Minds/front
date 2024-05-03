@@ -31,6 +31,8 @@ Feature: Chat
     And I refresh the page
     And I should not see the chat room with "playwright_tests_user_2" in the chat room list
 
+  # There is an edge-case failure where this test CAN get into a state where there is already an.
+  # existing chat room. If this is the case, delete it.
   Scenario: decline a chat invite request
     Given I log in as "supermind_sender"
     And I click the chat icon in the sidebar
@@ -45,6 +47,8 @@ Feature: Chat
     And I click the reject chat request button
     Then I should see an "success" toaster saying "Request rejected"
 
+  # There is an edge-case failure where this test CAN get into a state where there is already an.
+  # existing chat room. If this is the case, delete it.
   Scenario: accept a chat invite request
     Given I log in as "supermind_sender"
     And I click the chat icon in the sidebar
