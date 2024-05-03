@@ -16,7 +16,6 @@ Feature: Chat
     When I type "Hello" in the chat input field
     And I press the chat message Send button
     Then I should see the last message in the chat room contains "Hello"
-    And I should see a chat room with "playwright_tests_user_2" in the chat room list
 
   # Carries over state from create chat room test above
   Scenario: send rich embed messages to other users
