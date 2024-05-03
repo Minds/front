@@ -2,14 +2,18 @@ Feature: Chat
   As a user
   I want to interact with other users through Chat
 
-  Scenario: create a one on one chat room and send text messages
+  Scenario: create a one on one chat room
     Given I create a new user
     When I click the chat icon in the sidebar
     And I click the Create New Chat button
     And I type "playwright_tests_user_2" in the chat room creator search input field
     And I select "playwright_tests_user_2" in the chat room creator
     And I press the chat room creator submit button 
-    And I type "Hello" in the chat input field
+    Then I should see a chat room with "playwright_tests_user_2" in the chat room list
+  
+  # Carries over state from create chat room test above
+  Scenario: send text messages to other users
+    When I type "Hello" in the chat input field
     And I press the chat message Send button
     Then I should see the last message in the chat room contains "Hello"
     And I should see a chat room with "playwright_tests_user_2" in the chat room list
