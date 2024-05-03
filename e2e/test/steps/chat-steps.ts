@@ -69,6 +69,10 @@ namespace ChatSteps {
     chatRoomComponent.clickAcceptChatRequestButton();
   });
 
+  When('I click the reject chat request button', () => {
+    chatRoomComponent.clickRejectChatRequestButton();
+  });
+
   When('I navigate back to the chat room list', () => {
     chatRoomListComponent.clickChatRequestModeBackButton();
   });
