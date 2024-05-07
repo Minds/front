@@ -8,7 +8,7 @@ const { I } = inject();
 class ChatRoomComponent {
   private readonly textInputSelector: string =
     '[data-ref=data-minds-chat-message-input]';
-  private readonly sendButtonSelector: string =
+  public readonly sendButtonSelector: string =
     '[data-ref=data-minds-chat-send-message-button]';
   private readonly chatMessageSelector: string =
     '[data-ref=data-minds-chat-message]';

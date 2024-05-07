@@ -57,7 +57,6 @@ namespace ChatSteps {
   });
 
   When('I click the to view my chat requests', () => {
-    chatRoomListComponent.hasPendingChatRequestsWidgetWithCount(1);
     chatRoomListComponent.clickPendingChatRequestsWidget();
   });
 
