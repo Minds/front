@@ -1,0 +1,3 @@
+mutation DeletePersonalApiKey ($id: String!) {
+  deletePersonalApiKey(id: $id)
+}

@@ -1,0 +1,14 @@
+mutation CreatePersonalApiKey (
+    $name: String!,
+    $scopes: [ApiScopeEnum!]!,
+    $expireInDays: Int
+) {
+  createPersonalApiKey(name: $name, scopes: $scopes, expireInDays: $expireInDays) {
+    secret
+    id
+    name
+    scopes
+    timeCreated
+    timeExpires
+  }
+}

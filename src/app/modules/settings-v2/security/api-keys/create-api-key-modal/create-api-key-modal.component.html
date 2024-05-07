@@ -1,0 +1,123 @@
+<div class="m-createApiKeyModal__bodyContainer">
+  <header>
+    <h3 class="m-createApiKeyModal__title">Create API Key</h3>
+    <m-modalCloseButton></m-modalCloseButton>
+  </header>
+  <form [formGroup]="formGroup" class="m-createApiKeyModal__form m-formWrapper">
+    <!-- Name input -->
+    <div class="m-form__field--text stretchedField">
+      <label class="m-form__row--label" for="name">Key name</label>
+      <div class="m-form__row--input">
+        <input type="text" formControlName="name" placeholder="Name" />
+      </div>
+    </div>
+
+    <!-- Expire time input -->
+    <div class="m-form__field--text stretchedField">
+      <label class="m-form__row--label" for="expireInDays"
+        >Days till expiry</label
+      >
+      <div class="m-form__row--input">
+        <ng-container
+          [ngTemplateOutlet]="expireTimeDropdownSelector"
+        ></ng-container>
+      </div>
+    </div>
+
+    <div class="m-form__field--custom">
+      <label class="m-form__row--label" for="allScope">Scope</label>
+
+      <!-- Checkbox for all scope -->
+      <m-formInput__checkbox formControlName="allScope" name="allScope">
+        <label for="allScope">All</label>
+      </m-formInput__checkbox>
+
+      <!-- Checkbox for site membership write scope -->
+      <m-formInput__checkbox
+        formControlName="siteMembershipWriteScope"
+        name="siteMembershipWriteScope"
+        *ngIf="!formGroup.get('allScope').value"
+      >
+        <label for="siteMembershipWriteScope">Site membership write</label>
+      </m-formInput__checkbox>
+    </div>
+  </form>
+</div>
+<footer class="m-createApiKeyModal__footer">
+  <m-button
+    color="blue"
+    size="small"
+    solid="true"
+    (onAction)="onConfirmClick()"
+    (keydown.enter)="onConfirmClick()"
+    tabindex="1"
+    aria-label="Create API Key"
+    data-ref="data-minds-create-api-key-button"
+    >Create</m-button
+  >
+</footer>
+
+<ng-template #expireTimeDropdownSelector>
+  <m-dropdownMenu [menu]="expireTimeMenu">
+    <div class="m-createApiKeyModal__expireTimeInsideContainer">
+      <span
+        class="m-createApiKeyModal__expireTimePeriod"
+        [ngSwitch]="formGroup.get('expireInDays')?.value"
+      >
+        <ng-container *ngSwitchCase="ExpireTimePeriodEnum.OneDay"
+          >1 day</ng-container
+        >
+        <ng-container *ngSwitchCase="ExpireTimePeriodEnum.OneWeek"
+          >1 week</ng-container
+        >
+        <ng-container *ngSwitchCase="ExpireTimePeriodEnum.OneMonth"
+          >1 month</ng-container
+        >
+        <ng-container *ngSwitchCase="ExpireTimePeriodEnum.ThreeMonth"
+          >3 months</ng-container
+        >
+        <ng-container *ngSwitchCase="ExpireTimePeriodEnum.SixMonth"
+          >6 months</ng-container
+        >
+        <ng-container *ngSwitchCase="ExpireTimePeriodEnum.OneYear"
+          >1 year</ng-container
+        >
+        <ng-container *ngSwitchDefault>Never</ng-container>
+      </span>
+      <span class="m-createApiKeyModal__expireTimeArrow">▾</span>
+    </div>
+  </m-dropdownMenu>
+</ng-template>
+
+<ng-template #expireTimeMenu>
+  <ul>
+    <m-dropdownMenu__item
+      (click)="onExpireTimeSelect(ExpireTimePeriodEnum.OneDay)"
+      >1 day</m-dropdownMenu__item
+    >
+    <m-dropdownMenu__item
+      (click)="onExpireTimeSelect(ExpireTimePeriodEnum.OneWeek)"
+      >1 week</m-dropdownMenu__item
+    >
+    <m-dropdownMenu__item
+      (click)="onExpireTimeSelect(ExpireTimePeriodEnum.OneMonth)"
+      >1 month</m-dropdownMenu__item
+    >
+    <m-dropdownMenu__item
+      (click)="onExpireTimeSelect(ExpireTimePeriodEnum.ThreeMonth)"
+      >3 months</m-dropdownMenu__item
+    >
+    <m-dropdownMenu__item
+      (click)="onExpireTimeSelect(ExpireTimePeriodEnum.SixMonth)"
+      >6 months</m-dropdownMenu__item
+    >
+    <m-dropdownMenu__item
+      (click)="onExpireTimeSelect(ExpireTimePeriodEnum.OneYear)"
+      >1 year</m-dropdownMenu__item
+    >
+    <m-dropdownMenu__item
+      (click)="onExpireTimeSelect(ExpireTimePeriodEnum.Never)"
+      >Never</m-dropdownMenu__item
+    >
+  </ul>
+</ng-template>
