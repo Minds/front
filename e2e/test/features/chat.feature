@@ -38,13 +38,13 @@ Feature: Chat
   # There is an edge-case failure where this test CAN get into a state where there is already an.
   # existing chat room. If this is the case, delete it.
   Scenario: decline a chat invite request
-    Given I log in as "supermind_sender"
+    Given I log in as "playwright_tests_user"
     And I click the chat icon in the sidebar
     And I click the Create New Chat button
-    And I type "playwright_tests_user_2" in the chat room creator search input field
-    And I select "playwright_tests_user_2" in the chat room creator
+    And I type "supermind_sender" in the chat room creator search input field
+    And I select "supermind_sender" in the chat room creator
     And I press the chat room creator submit button
-    And I log in as "playwright_tests_user_2"
+    And I log in as "supermind_sender"
     And I click the chat icon in the sidebar
     When I click the to view my chat requests
     And I open the first chat request
@@ -55,19 +55,19 @@ Feature: Chat
   # There is an edge-case failure where this test CAN get into a state where there is already an.
   # existing chat room. If this is the case, delete it.
   Scenario: accept a chat invite request
-    Given I log in as "supermind_sender"
+    Given I log in as "playwright_tests_user"
     And I click the chat icon in the sidebar
     And I click the Create New Chat button
-    And I type "playwright_tests_user_2" in the chat room creator search input field
-    And I select "playwright_tests_user_2" in the chat room creator
+    And I type "supermind_sender" in the chat room creator search input field
+    And I select "supermind_sender" in the chat room creator
     And I press the chat room creator submit button
-    And I log in as "playwright_tests_user_2"
+    And I log in as "supermind_sender"
     And I click the chat icon in the sidebar
     When I click the to view my chat requests
     And I open the first chat request
     And I click the accept chat request button
-    Then I should see a chat room with "supermind_sender" in the chat room list
-    And I open the chat room with the name containing "supermind_sender"
+    Then I should see a chat room with "playwright_tests_user" in the chat room list
+    And I open the chat room with the name containing "playwright_tests_user"
     And I click the chat room settings button
     And I click the delete chat room button
     And I click to accept the confirmation modal

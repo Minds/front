@@ -56,8 +56,6 @@ class ChatRoomListComponent {
    * @return { void }
    */
   public hasPendingChatRequestsWidgetWithCount(count: number): void {
-    I.wait(5);
-    I.refreshPage();
     I.seeElement(this.pendingChatRequestsWidget);
     I.seeElement(
       locate(this.pendingChatRequestsCount).withText(count.toString())
@@ -69,8 +67,6 @@ class ChatRoomListComponent {
    * @return { void }
    */
   public clickPendingChatRequestsWidget(): void {
-    I.wait(5);
-    I.refreshPage();
     I.click(this.pendingChatRequestsWidget);
   }
 
