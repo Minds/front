@@ -1,10 +1,9 @@
-import { Component, Inject, Injector } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ModalService } from '../../../../../../../services/ux/modal.service';
 import { ConfirmV2Component } from '../../../../../../modals/confirm-v2/confirm.component';
 import { BoostPaymentCategory } from '../../../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../../../services/boost-modal-v2.service';
-import { IS_TENANT_NETWORK } from '../../../../../../../common/injection-tokens/tenant-injection-tokens';
 
 @Component({
   selector: 'm-boostModalV2__budgetTabBar',
@@ -23,8 +22,7 @@ export class BoostModalV2BudgetTabBarComponent {
   constructor(
     private service: BoostModalV2Service,
     private modal: ModalService,
-    private injector: Injector,
-    @Inject(IS_TENANT_NETWORK) protected readonly isTenantNetwork: boolean
+    private injector: Injector
   ) {}
 
   /**
@@ -34,10 +32,6 @@ export class BoostModalV2BudgetTabBarComponent {
    */
   public onTabClick(paymentCategory: BoostPaymentCategory): void {
     if (paymentCategory === this.paymentCategory$.getValue()) {
-      return;
-    }
-
-    if (paymentCategory !== BoostPaymentCategory.CASH && this.isTenantNetwork) {
       return;
     }
 

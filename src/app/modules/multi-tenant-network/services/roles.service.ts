@@ -303,7 +303,7 @@ export class MultiTenantRolesService implements OnDestroy {
       case PermissionsEnum.CanUploadChatMedia:
         return 'Upload media to chats';
       case PermissionsEnum.CanBoost:
-        return 'Boost content';
+        return 'Can Boost';
       // The remaining PermissionsEnum values aren't displayed anywhere
     }
 

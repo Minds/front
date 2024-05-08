@@ -1,9 +1,10 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BoostModalPanel, BoostSubject } from '../boost-modal-v2.types';
 import { BoostModalV2Service } from '../services/boost-modal-v2.service';
 import { BoostGoal } from '../../boost.types';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Footer for boost modal v2. Text content and button behavior vary
@@ -39,7 +40,19 @@ export class BoostModalV2FooterComponent implements OnDestroy {
   // subscription fired once on button click.
   private buttonClickSubscription: Subscription;
 
-  public constructor(protected service: BoostModalV2Service) {}
+  /** URL path to content policy. */
+  protected readonly contentPolicyUrlPath: string;
+
+  /** URL path to terms. */
+  protected readonly termsUrlPath: string;
+
+  public constructor(
+    protected service: BoostModalV2Service,
+    @Inject(IS_TENANT_NETWORK) protected readonly isTenantNetwork: boolean
+  ) {
+    this.contentPolicyUrlPath = this.getContentPolicyUrlPath();
+    this.termsUrlPath = this.getTermsUrlPath();
+  }
 
   ngOnDestroy(): void {
     this.buttonClickSubscription?.unsubscribe();
@@ -55,5 +68,23 @@ export class BoostModalV2FooterComponent implements OnDestroy {
       .subscribe((activePanel: BoostModalPanel) => {
         this.service.changePanelFrom(activePanel);
       });
+  }
+
+  /**
+   * Get URL path to content policy.
+   * @returns { string } - URL path to content policy.
+   */
+  private getContentPolicyUrlPath(): string {
+    return this.isTenantNetwork
+      ? '/pages/community-guidelines'
+      : '/content-policy';
+  }
+
+  /**
+   * Get URL path to terms.
+   * @returns { string } - URL path to terms.
+   */
+  private getTermsUrlPath(): string {
+    return this.isTenantNetwork ? '/pages/terms-of-service' : '/p/terms';
   }
 }
