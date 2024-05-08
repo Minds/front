@@ -106,4 +106,20 @@ export class PermissionsService {
   public canCreatePaywall(): boolean {
     return this.has(PermissionsEnum.CanCreatePaywall);
   }
+
+  /**
+   * Can the user create chat rooms?
+   * @returns { boolean } whether the user can create chat rooms.
+   */
+  public canCreateChatRoom(): boolean {
+    return this.has(PermissionsEnum.CanCreateChatRoom);
+  }
+
+  /**
+   * Can the user upload media to chats?
+   * @returns { boolean } whether the user can upload media to chats.
+   */
+  public canUploadChatMedia(): boolean {
+    return this.has(PermissionsEnum.CanUploadChatMedia);
+  }
 }
