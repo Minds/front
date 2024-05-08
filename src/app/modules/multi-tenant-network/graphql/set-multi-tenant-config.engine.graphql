@@ -5,6 +5,7 @@ mutation SetMultiTenantConfig(
   $federationDisabled: Boolean
   $replyEmail: String
   $nsfwEnabled: Boolean
+  $boostEnabled: Boolean
   $customHomePageEnabled: Boolean
   $customHomePageDescription: String
   $walledGardenEnabled: Boolean
@@ -17,6 +18,7 @@ mutation SetMultiTenantConfig(
       federationDisabled: $federationDisabled
       replyEmail: $replyEmail
       nsfwEnabled: $nsfwEnabled
+      boostEnabled: $boostEnabled
       customHomePageEnabled: $customHomePageEnabled
       customHomePageDescription: $customHomePageDescription
       walledGardenEnabled: $walledGardenEnabled

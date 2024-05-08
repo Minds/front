@@ -361,7 +361,8 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
   chatRoomNotificationStatus?: Maybe<ChatRoomNotificationStatusEnum>;
-  groupGuid: Scalars['String']['output'];
+  /** Gets group GUID for a chat room node. */
+  groupGuid?: Maybe<Scalars['String']['output']>;
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -908,6 +909,7 @@ export enum MultiTenantColorScheme {
 
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
+  boostEnabled?: Maybe<Scalars['Boolean']['output']>;
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
@@ -925,6 +927,7 @@ export type MultiTenantConfig = {
 };
 
 export type MultiTenantConfigInput = {
+  boostEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2264,7 +2267,7 @@ export type CreateChatRoomMutation = {
       id: string;
       guid: string;
       roomType: ChatRoomTypeEnum;
-      groupGuid: string;
+      groupGuid?: string | null;
       timeCreatedISO8601: string;
       timeCreatedUnix: string;
     };
@@ -2463,7 +2466,7 @@ export type GetChatRoomQuery = {
       guid: string;
       roomType: ChatRoomTypeEnum;
       name: string;
-      groupGuid: string;
+      groupGuid?: string | null;
       id: string;
       isChatRequest: boolean;
       isUserRoomOwner?: boolean | null;
@@ -2523,7 +2526,7 @@ export type GetChatRoomsListQuery = {
         guid: string;
         name: string;
         roomType: ChatRoomTypeEnum;
-        groupGuid: string;
+        groupGuid?: string | null;
         timeCreatedISO8601: string;
         timeCreatedUnix: string;
       };
@@ -3888,6 +3891,7 @@ export type GetMultiTenantConfigQuery = {
     canEnableFederation?: boolean | null;
     federationDisabled?: boolean | null;
     replyEmail?: string | null;
+    boostEnabled?: boolean | null;
     customHomePageEnabled?: boolean | null;
     customHomePageDescription?: string | null;
     walledGardenEnabled?: boolean | null;
@@ -3995,6 +3999,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  boostEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9424,6 +9429,7 @@ export const GetMultiTenantConfigDocument = gql`
       canEnableFederation
       federationDisabled
       replyEmail
+      boostEnabled
       customHomePageEnabled
       customHomePageDescription
       walledGardenEnabled
@@ -9591,6 +9597,7 @@ export const SetMultiTenantConfigDocument = gql`
     $federationDisabled: Boolean
     $replyEmail: String
     $nsfwEnabled: Boolean
+    $boostEnabled: Boolean
     $customHomePageEnabled: Boolean
     $customHomePageDescription: String
     $walledGardenEnabled: Boolean
@@ -9603,6 +9610,7 @@ export const SetMultiTenantConfigDocument = gql`
         federationDisabled: $federationDisabled
         replyEmail: $replyEmail
         nsfwEnabled: $nsfwEnabled
+        boostEnabled: $boostEnabled
         customHomePageEnabled: $customHomePageEnabled
         customHomePageDescription: $customHomePageDescription
         walledGardenEnabled: $walledGardenEnabled
