@@ -58,6 +58,7 @@
     </div>
   </div>
   <div
+    *ngIf="!isTenantNetwork"
     class="m-boostModalReview__section"
     (click)="changePanel(BoostModalPanel.AUDIENCE)"
     data-ref="boost-modal-v2-audience-section"

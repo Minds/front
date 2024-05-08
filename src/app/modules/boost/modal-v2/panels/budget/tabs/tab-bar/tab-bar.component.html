@@ -11,6 +11,7 @@
   </span>
 </div>
 <div
+  *ngIf="!isTenantNetwork"
   class="m-boostModalTabs__tabContainer"
   (click)="onTabClick(BoostPaymentCategory.TOKENS)"
   [class.m-boostModalTabs__tabContainer--active]="
