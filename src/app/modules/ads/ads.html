@@ -11,7 +11,7 @@
         ></m-publisherCard>
       </ng-container>
       <m-button
-        *ngIf="session.getLoggedInUser()"
+        *ngIf="session.getLoggedInUser() && hasBoostPermission"
         class="m-adsBoost__boostChannelButton"
         color="blue"
         size="small"

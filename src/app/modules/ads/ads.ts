@@ -14,6 +14,7 @@ import { BoostLocation } from '../boost/modal-v2/boost-modal-v2.types';
 import { ClientMetaData } from '../../common/services/client-meta.service';
 import { ClientMetaDirective } from '../../common/directives/client-meta.directive';
 import { BoostModalV2LazyService } from '../boost/modal-v2/boost-modal-v2-lazy.service';
+import { PermissionsService } from '../../common/services/permissions.service';
 
 /**
  * @describe params for getting boost ads from the feed endpoint.
@@ -38,16 +39,21 @@ export class BoostAds implements OnInit {
   boosts: Array<any> = [];
   rating: number = 2;
 
+  /** Whether the user has permission to boost. */
+  protected hasBoostPermission: boolean = false;
+
   constructor(
     public client: Client,
     public session: Session,
     private boostModal: BoostModalV2LazyService,
+    private permissionsService: PermissionsService,
     @Inject(PLATFORM_ID) private platformId: Object,
     @Optional() @SkipSelf() private parentClientMeta: ClientMetaDirective
   ) {}
 
   ngOnInit() {
     this.rating = this.session.getLoggedInUser().boost_rating;
+    this.hasBoostPermission = this.permissionsService.canBoost();
     this.fetchAsync();
   }
 

@@ -11,6 +11,7 @@ import { ResetPasswordModalService } from '../modules/auth/reset-password-modal/
 import { PermissionsService } from './services/permissions.service';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { TopbarService } from './layout/topbar.service';
+import { IS_TENANT_NETWORK } from './injection-tokens/tenant-injection-tokens';
 
 @NgModule({
   imports: [Web3ModalModule],
@@ -40,9 +41,9 @@ import { TopbarService } from './layout/topbar.service';
     },
     {
       provide: PermissionsService,
-      useFactory: (experimentsService, configsService): PermissionsService =>
-        new PermissionsService(experimentsService, configsService),
-      deps: [ExperimentsService, ConfigsService],
+      useFactory: (configsService, isTenantNetwork): PermissionsService =>
+        new PermissionsService(configsService, isTenantNetwork),
+      deps: [ConfigsService, IS_TENANT_NETWORK],
     },
     {
       provide: TopbarService,

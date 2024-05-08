@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { ExperimentsService } from '../../modules/experiments/experiments.service';
+import { Inject, Injectable } from '@angular/core';
 import { ConfigsService } from './configs.service';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
+import { IS_TENANT_NETWORK } from '../injection-tokens/tenant-injection-tokens';
 
 export const VIDEO_PERMISSIONS_ERROR_MESSAGE =
   'Your user role does not allow uploading video.';
@@ -23,8 +23,8 @@ export class PermissionsService {
   private whitelist: string[] = [];
 
   constructor(
-    private experimentsService: ExperimentsService,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {
     this.initFromConfigs();
   }
@@ -121,5 +121,13 @@ export class PermissionsService {
    */
   public canUploadChatMedia(): boolean {
     return this.has(PermissionsEnum.CanUploadChatMedia);
+  }
+
+  /**
+   * Can the user boost.
+   * @returns { boolean } whether the user can boost.
+   */
+  public canBoost(): boolean {
+    return this.has(PermissionsEnum.CanBoost);
   }
 }

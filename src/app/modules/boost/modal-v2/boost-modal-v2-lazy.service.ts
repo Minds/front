@@ -13,6 +13,8 @@ import { BoostableEntity, BoostModalExtraOpts } from './boost-modal-v2.types';
 import { UpsellModalService } from '../../modals/upsell/upsell-modal.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Session } from '../../../services/session';
+import { PermissionsService } from '../../../common/services/permissions.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 type PresentableBoostModalComponent = typeof BoostModalV2Component;
 
@@ -29,6 +31,8 @@ export class BoostModalV2LazyService {
     private injector: Injector,
     private upsellModal: UpsellModalService,
     private session: Session,
+    private permissionsService: PermissionsService,
+    private toasterService: ToasterService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -41,6 +45,11 @@ export class BoostModalV2LazyService {
     entity: BoostableEntity,
     extraOpts: BoostModalExtraOpts = {}
   ): Promise<ModalRef<PresentableBoostModalComponent>> {
+    if (!this.permissionsService.canBoost()) {
+      this.toasterService.warn('You do not have permission to boost.');
+      return;
+    }
+
     const componentRef: PresentableBoostModalComponent =
       await this.getComponentRef();
     const modal = this.modalService.present(componentRef, {

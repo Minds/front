@@ -16,6 +16,7 @@ import { SubscriptionService } from '../../services/subscription.service';
 import { BoostModalV2LazyService } from '../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { ModerationActionGqlService } from '../../../modules/admin/moderation/services/moderation-action-gql.service';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
+import { PermissionsService } from '../../services/permissions.service';
 
 @Injectable()
 export class PostMenuService {
@@ -47,6 +48,7 @@ export class PostMenuService {
     public subscriptionService: SubscriptionService,
     private boostModal: BoostModalV2LazyService,
     private moderationActionGql: ModerationActionGqlService,
+    private permissionsService: PermissionsService,
     @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
@@ -396,6 +398,10 @@ export class PostMenuService {
 
   async openBoostModal(): Promise<void> {
     try {
+      if (!this.permissionsService.canBoost()) {
+        this.toasterService.error('You have no permission to Boost');
+        return;
+      }
       await this.boostModal.open(this.entity);
       return;
     } catch (e) {

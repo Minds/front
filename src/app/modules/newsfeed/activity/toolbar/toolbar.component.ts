@@ -20,6 +20,7 @@ import { CounterChangeFadeIn } from '../../../../animations';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 /**
  * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
@@ -41,6 +42,9 @@ export class ActivityToolbarComponent {
   allowReminds: boolean = true;
   protected isOwner: boolean = false;
 
+  /** Whether the user has permission to boost. */
+  protected hasBoostPermission: boolean = false;
+
   // Used to remove a downvoted item from the feed.
   @Output() onDownvote: EventEmitter<void> = new EventEmitter<void>();
 
@@ -52,6 +56,7 @@ export class ActivityToolbarComponent {
     private boostModal: BoostModalV2LazyService,
     private interactionsModalService: InteractionsModalService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
+    private permissionsService: PermissionsService,
     public experimentsService: ExperimentsService,
     private cd: ChangeDetectorRef,
     private toast: ToasterService
@@ -72,6 +77,8 @@ export class ActivityToolbarComponent {
       this.service.shouldShowPaywallBadge$.subscribe((showBadge: boolean) => {
         // this.allowReminds = !showBadge;
       });
+
+    this.hasBoostPermission = this.permissionsService.canBoost();
   }
 
   ngOnDestroy() {

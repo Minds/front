@@ -47,14 +47,12 @@
         </m-dropdownMenu__item>
       </ng-template>
     </ng-container>
-    <ng-container *mIfTenant="false">
-      <m-dropdownMenu__item
-        (click)="onSelectedOption('boost')"
-        *ngIf="shouldShowBoost()"
-      >
-        <span i18n="@@M__ACTION__BOOST_POST"> Boost post </span>
-      </m-dropdownMenu__item>
-    </ng-container>
+    <m-dropdownMenu__item
+      (click)="onSelectedOption('boost')"
+      *ngIf="shouldShowBoost()"
+    >
+      <span i18n="@@M__ACTION__BOOST_POST"> Boost post </span>
+    </m-dropdownMenu__item>
     <m-dropdownMenu__item
       *ngIf="options.includes('view-federated') && entity?.canonical_url"
       [externalLink]="entity.canonical_url"
