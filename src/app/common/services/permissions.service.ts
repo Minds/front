@@ -128,6 +128,9 @@ export class PermissionsService {
    * @returns { boolean } whether the user can boost.
    */
   public canBoost(): boolean {
-    return this.has(PermissionsEnum.CanBoost);
+    return (
+      this.configs.get('tenant')?.['boost_enabled'] &&
+      this.has(PermissionsEnum.CanBoost)
+    );
   }
 }
