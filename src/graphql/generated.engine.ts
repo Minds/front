@@ -1353,11 +1353,13 @@ export enum PermissionsEnum {
   CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
   CanBoost = 'CAN_BOOST',
   CanComment = 'CAN_COMMENT',
+  CanCreateChatRoom = 'CAN_CREATE_CHAT_ROOM',
   CanCreateGroup = 'CAN_CREATE_GROUP',
   CanCreatePaywall = 'CAN_CREATE_PAYWALL',
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
   CanModerateContent = 'CAN_MODERATE_CONTENT',
+  CanUploadChatMedia = 'CAN_UPLOAD_CHAT_MEDIA',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
   CanUseRssSync = 'CAN_USE_RSS_SYNC',
 }
