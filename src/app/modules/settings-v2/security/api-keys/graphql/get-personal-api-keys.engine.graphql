@@ -1,0 +1,10 @@
+query GetPersonalApiKeys {
+  listPersonalApiKeys {
+    secret
+    id
+    name
+    scopes
+    timeCreated
+    timeExpires
+  }
+}
