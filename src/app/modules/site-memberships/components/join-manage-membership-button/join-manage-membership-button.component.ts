@@ -60,6 +60,9 @@ export class JoinManageSiteMembershipButtonComponent implements OnInit {
 
   public isMember$: Observable<boolean>;
 
+  /** If manual, the user can not manage a subscription */
+  public isManual$: Observable<boolean>;
+
   /** Enum for use in template. */
   public readonly SiteMembershipPricingModelEnum: typeof SiteMembershipPricingModelEnum =
     SiteMembershipPricingModelEnum;
@@ -98,6 +101,19 @@ export class JoinManageSiteMembershipButtonComponent implements OnInit {
       this.siteMembershipService.siteMembershipSubscriptionGuids$.pipe(
         map((guids) => guids.includes(this.membershipGuid))
       );
+
+    this.isManual$ = this.membershipSubscriptions$.pipe(
+      map(
+        (siteMemberships) =>
+          siteMemberships
+            .filter(
+              (siteMembership) =>
+                siteMembership.membershipGuid === this.membershipGuid
+            )
+            .map((siteMembership) => siteMembership.isManual)
+            .filter((isManual) => isManual).length > 0
+      )
+    );
 
     this.subscriptions.push(
       this.membershipSubscriptions$.subscribe(

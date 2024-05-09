@@ -1,0 +1,93 @@
+@import 'defaults.scss';
+
+$footerHeight: 85px;
+
+:host {
+  .m-createApiKeyModal__bodyContainer {
+    padding: $spacing11 $spacing17 0 $spacing11;
+    box-sizing: border-box;
+    max-height: calc(100% - $footerHeight);
+    display: flex;
+    flex-flow: column nowrap;
+    margin-bottom: $footerHeight;
+
+    @media screen and (max-width: $min-tablet) {
+      padding-left: $spacing10;
+      padding-right: $spacing10;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $spacing6;
+      padding-right: $spacing6;
+    }
+
+    .m-createApiKeyModal__title {
+      @include heading3Bold;
+      margin: 0 0 $spacing6 0;
+    }
+
+    .m-createApiKeyModal__form {
+      margin: 0 0 $spacing6 0;
+
+      .m-form__field--custom {
+        .m-form__row--label {
+          margin-bottom: $spacing4;
+        }
+
+        m-formInput__checkbox {
+          margin-bottom: $spacing4;
+
+          ::ng-deep label {
+            @include body1Regular;
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .m-createApiKeyModal__footer {
+    height: $footerHeight;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: $spacing8;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  ::ng-deep m-dropdownMenu {
+    border-radius: 10px;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-createApiKeyModal__expireTimeInsideContainer {
+      padding: $spacing2 $spacing4;
+
+      .m-createApiKeyModal__expireTimePeriod {
+        margin-right: $spacing4;
+        @include body1Regular;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      .m-createApiKeyModal__expireTimeArrow {
+        @include body1Medium;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+}
