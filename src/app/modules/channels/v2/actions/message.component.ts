@@ -104,7 +104,7 @@ export class ChannelActionsMessageComponent {
       this.router.navigateByUrl(`/chat/rooms/${chatRoomId}`);
     } catch (e) {
       console.error(e);
-      this.toaster.error(DEFAULT_ERROR_MESSAGE);
+      this.toaster.error(e);
     } finally {
       this.inProgress = false;
       this.detectChanges();

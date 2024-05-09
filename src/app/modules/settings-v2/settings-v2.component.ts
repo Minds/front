@@ -191,6 +191,11 @@ export class SettingsV2Component implements OnInit {
             label: $localize`:@@SETTINGS__SECURITY__SESSIONS__LABEL:Sessions`,
             id: 'sessions',
           },
+          {
+            label: $localize`:@@SETTINGS__SECURITY__PERSONAL_API_KEYS__LABEL:Personal API Keys`,
+            id: 'api-keys',
+            shouldShow: () => this.session.isAdmin(),
+          },
         ],
       },
     ],

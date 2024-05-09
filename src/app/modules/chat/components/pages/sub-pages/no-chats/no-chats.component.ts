@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChatActionCardComponent } from '../../../action-cards/action-card.component';
 import { StartChatModalService } from '../../../start-chat-modal/start-chat-modal.service';
+import { PermissionsService } from '../../../../../../common/services/permissions.service';
+import { ToasterService } from '../../../../../../common/services/toaster.service';
+import { ChatRoomsListService } from '../../../../services/chat-rooms-list.service';
 
 /**
  * Subpage to be shown when no chats are opened.
@@ -22,13 +25,26 @@ import { StartChatModalService } from '../../../start-chat-modal/start-chat-moda
   `,
 })
 export class NoChatsSubPageComponent {
-  constructor(private startChatModal: StartChatModalService) {}
+  constructor(
+    private startChatModal: StartChatModalService,
+    private permissionsService: PermissionsService,
+    private chatRoomsListService: ChatRoomsListService,
+    private toaster: ToasterService
+  ) {}
 
   /**
    * Handles the click on the new chat button.
-   * @returns { void }
+   * @returns { Promise<void> }
    */
-  protected onStartNewChatClick(): void {
-    this.startChatModal.open(true);
+  protected async onStartNewChatClick(): Promise<void> {
+    if (!this.permissionsService.canCreateChatRoom()) {
+      this.toaster.warn("You don't have permission to create a chat room");
+      return;
+    }
+
+    const result: string = await this.startChatModal.open(true);
+    if (result) {
+      this.chatRoomsListService.refetch();
+    }
   }
 }

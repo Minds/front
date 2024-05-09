@@ -23,6 +23,7 @@ query GetSiteMembershipsAndSubscriptions {
     membershipGuid
     membershipSubscriptionId
     autoRenew
+    isManual
     validFromTimestamp
     validToTimestamp
   }
