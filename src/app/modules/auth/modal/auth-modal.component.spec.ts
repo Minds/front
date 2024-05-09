@@ -7,6 +7,8 @@ import { SITE_NAME } from '../../../common/injection-tokens/common-injection-tok
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 import { AuthModalImageService } from './auth-modal-image.service';
 import { MultiTenantConfigImageService } from '../../multi-tenant-network/services/config-image.service';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
 describe('AuthModalComponent', () => {
   let component: AuthModalComponent;
@@ -27,7 +29,7 @@ describe('AuthModalComponent', () => {
         MockComponent({
           selector: 'm-registerForm',
           inputs: ['source'],
-          outputs: ['done', 'showLoginForm'],
+          outputs: ['done', 'doneLogin', 'showLoginForm'],
         }),
         MockComponent({
           selector: 'm-modalCloseButton',
@@ -75,5 +77,18 @@ describe('AuthModalComponent', () => {
         '/api/v3/multi-tenant/configs/image/square_logo'
       );
     });
+  });
+
+  it('should call onLoginDone function when doneLogin is emitted from the register form', () => {
+    component.onLoggedIn = jasmine.createSpy('onLoggedIn');
+    component.onComplete = jasmine.createSpy('onComplete');
+
+    const registerFormComponent: DebugElement = fixture.debugElement.query(
+      By.css('m-registerForm')
+    );
+    registerFormComponent.componentInstance.doneLogin.emit();
+
+    expect(component.onLoggedIn).toHaveBeenCalled();
+    expect(component.onComplete).toHaveBeenCalled();
   });
 });

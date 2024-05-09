@@ -17,6 +17,7 @@
       <m-registerForm
         [source]="'auth-modal'"
         (done)="onRegisterDone($event)"
+        (doneLogin)="onLoginDone($event)"
         (showLoginForm)="showLoginForm($event)"
         [inviteToken]="inviteToken"
       >

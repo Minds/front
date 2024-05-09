@@ -1,7 +1,7 @@
 <div class="m-twoColumnLayout__contentContainer">
   <m-oidcLoginButtons
     (hasOidcProviders)="setHasOidcProviders($event)"
-    (done)="done.next($event)"
+    (done)="doneLogin.emit($event)"
   ></m-oidcLoginButtons>
 
   <!-- START: Register -->

@@ -59,7 +59,12 @@ export class RegisterForm implements OnInit, OnDestroy {
    */
   @Input() inviteToken?: string;
 
+  /** Emits on registration done. */
   @Output() done: EventEmitter<any> = new EventEmitter();
+
+  /** Emits when a login is completed rather than registration. */
+  @Output() doneLogin: EventEmitter<any> = new EventEmitter();
+
   @Output() showLoginForm: EventEmitter<any> = new EventEmitter();
 
   errorMessage: string = '';
