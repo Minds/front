@@ -18,6 +18,7 @@ import { ModalService } from '../../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../../tests/modal-service-mock.spec';
 import { BehaviorSubject } from 'rxjs';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 let groupServiceMock: any = MockService(GroupService, {
   has: ['group$'],
@@ -95,6 +96,10 @@ describe('GroupSettingsButton', () => {
           provide: NsfwEnabledService,
           useValue: MockService(NsfwEnabledService),
         },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
       ],
     }).compileComponents();
   }));
@@ -119,6 +124,20 @@ describe('GroupSettingsButton', () => {
 
   afterEach(() => {
     jasmine.clock().uninstall();
+  });
+
+  describe('hasBoostPermission', () => {
+    it('should return true if the user has the boost permission', () => {
+      (comp as any).permissionsService.canBoost.and.returnValue(true);
+      comp.ngOnInit();
+      expect((comp as any).hasBoostPermission).toBe(true);
+    });
+
+    it('should return false if the user does not have the boost permission', () => {
+      (comp as any).permissionsService.canBoost.and.returnValue(false);
+      comp.ngOnInit();
+      expect((comp as any).hasBoostPermission).toBe(false);
+    });
   });
 
   it('should have a dropdown component', () => {

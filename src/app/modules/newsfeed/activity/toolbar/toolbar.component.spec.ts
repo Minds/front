@@ -17,6 +17,7 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 describe('ActivityToolbarComponent', () => {
   let comp: ActivityToolbarComponent;
@@ -102,6 +103,10 @@ describe('ActivityToolbarComponent', () => {
         {
           provide: PersistentFeedExperimentService,
           useValue: MockService(PersistentFeedExperimentService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
         },
         {
           provide: ExperimentsService,
@@ -259,6 +264,20 @@ describe('ActivityToolbarComponent', () => {
         quotes: 1,
       };
       expect(comp.showMetrics).toBeTrue();
+    });
+  });
+
+  describe('hasBoostPermission', () => {
+    it('should return true if the user has the boost permission', () => {
+      (comp as any).permissionsService.canBoost.and.returnValue(true);
+      comp.ngOnInit();
+      expect((comp as any).hasBoostPermission).toBe(true);
+    });
+
+    it('should return false if the user does not have the boost permission', () => {
+      (comp as any).permissionsService.canBoost.and.returnValue(false);
+      comp.ngOnInit();
+      expect((comp as any).hasBoostPermission).toBe(false);
     });
   });
 });

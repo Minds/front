@@ -4,6 +4,7 @@ import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { BoostPaymentCategory } from '../../boost-modal-v2.types';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BoostModalV2BudgetSelectorComponent } from './budget.component';
+import { IS_TENANT_NETWORK } from '../../../../../common/injection-tokens/tenant-injection-tokens';
 
 describe('BoostModalV2BudgetSelectorComponent', () => {
   let comp: BoostModalV2BudgetSelectorComponent;
@@ -45,6 +46,10 @@ describe('BoostModalV2BudgetSelectorComponent', () => {
               duration$: { get: () => new BehaviorSubject<number>(3) },
             },
           }),
+        },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: false,
         },
       ],
     }).compileComponents();
@@ -92,5 +97,33 @@ describe('BoostModalV2BudgetSelectorComponent', () => {
 
   it('should instantiate', () => {
     expect(comp).toBeTruthy();
+  });
+
+  describe('m-boostModalV2__budgetTabBar render', () => {
+    it('should render m-boostModalV2__budgetTabBar', () => {
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        writable: true,
+        value: false,
+      });
+
+      fixture.detectChanges();
+
+      expect(
+        fixture.nativeElement.querySelector('m-boostModalV2__budgetTabBar')
+      ).toBeTruthy();
+    });
+
+    it('should NOT render m-boostModalV2__budgetTabBar on a tenant network', () => {
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+
+      fixture.detectChanges();
+
+      expect(
+        fixture.nativeElement.querySelector('m-boostModalV2__budgetTabBar')
+      ).toBeFalsy();
+    });
   });
 });

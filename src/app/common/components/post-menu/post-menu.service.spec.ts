@@ -14,6 +14,7 @@ import { ActivityService } from '../../services/activity.service';
 import { BoostModalV2LazyService } from '../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { ModerationActionGqlService } from '../../../modules/admin/moderation/services/moderation-action-gql.service';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
+import { PermissionsService } from '../../services/permissions.service';
 
 describe('PostMenuService', () => {
   let service: PostMenuService;
@@ -42,6 +43,10 @@ describe('PostMenuService', () => {
         {
           provide: ModerationActionGqlService,
           useValue: MockService(ModerationActionGqlService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
         },
         {
           provide: IS_TENANT_NETWORK,
@@ -247,6 +252,30 @@ describe('PostMenuService', () => {
         (service as any).moderationActionGql.setUserBanState
       ).not.toHaveBeenCalled();
       expect((service as any).isBanned$.getValue()).toBe(true);
+    }));
+  });
+
+  describe('openBoostModal', () => {
+    it('should open the boost modal when user can boost', fakeAsync(() => {
+      (service as any).permissionsService.canBoost.and.returnValue(true);
+
+      service.openBoostModal();
+      tick();
+
+      expect((service as any).toasterService.error).not.toHaveBeenCalled();
+      expect((service as any).boostModal.open).toHaveBeenCalled();
+    }));
+
+    it('should NOT open the boost modal when user CANNOT boost', fakeAsync(() => {
+      (service as any).permissionsService.canBoost.and.returnValue(false);
+
+      service.openBoostModal();
+      tick();
+
+      expect((service as any).toasterService.error).toHaveBeenCalledOnceWith(
+        'You have no permission to Boost'
+      );
+      expect((service as any).boostModal.open).not.toHaveBeenCalled();
     }));
   });
 });
