@@ -1978,9 +1978,10 @@ export enum SiteMembershipPricingModelEnum {
 export type SiteMembershipSubscription = {
   __typename?: 'SiteMembershipSubscription';
   autoRenew: Scalars['Boolean']['output'];
+  isManual: Scalars['Boolean']['output'];
   membershipGuid: Scalars['String']['output'];
   membershipSubscriptionId: Scalars['Int']['output'];
-  validFromTimestamp: Scalars['Int']['output'];
+  validFromTimestamp?: Maybe<Scalars['Int']['output']>;
   validToTimestamp?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -7456,7 +7457,8 @@ export type GetSiteMembershipsAndSubscriptionsQuery = {
     membershipGuid: string;
     membershipSubscriptionId: number;
     autoRenew: boolean;
-    validFromTimestamp: number;
+    isManual: boolean;
+    validFromTimestamp?: number | null;
     validToTimestamp?: number | null;
   }>;
 };
@@ -7472,7 +7474,7 @@ export type GetSiteMembershipSubscriptionsQuery = {
     membershipGuid: string;
     membershipSubscriptionId: number;
     autoRenew: boolean;
-    validFromTimestamp: number;
+    validFromTimestamp?: number | null;
     validToTimestamp?: number | null;
   }>;
 };
@@ -10681,6 +10683,7 @@ export const GetSiteMembershipsAndSubscriptionsDocument = gql`
       membershipGuid
       membershipSubscriptionId
       autoRenew
+      isManual
       validFromTimestamp
       validToTimestamp
     }
