@@ -1,0 +1,76 @@
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__SECURITY__PERSONAL_API_KEYS__LABEL"
+      >Personal API Keys</span
+    >
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__SECURITY__PERSONAL_API_KEYS__DESCRIPTION"
+  >
+    Manage your Personal API Keys
+  </div>
+</m-settingsV2__header>
+
+<m-button
+  class="m-apiKeySettings__createApiKeyButton"
+  (onAction)="onCreateClick()"
+  i18n="@@SETTINGS__SECURITY__PERSONAL_API_KEYS__CREATE_ACTION"
+  >Create</m-button
+>
+
+<div
+  *ngIf="lastCreatedSecret$ | async as lastCreatedSecret"
+  class="m-apiKeySettings__secretContainer"
+>
+  <p class="m-apiKeySettings__secretDescription">
+    Your new API key has been created and will <strong>NOT</strong> be shown
+    again.
+  </p>
+  <p class="m-apiKeySettings__secretDescription">
+    <strong>Do not share</strong> it and ensure that you
+    <strong>keep it safe</strong>.
+  </p>
+  <div
+    class="m-apiKeySettings__secretSelectableContainer"
+    (click)="onCopySecretToClipboardClick()"
+  >
+    <label class="m-apiKeySettings__secretLabel">API key:&nbsp;</label>
+    <span class="m-apiKeySettings__secretText">{{ lastCreatedSecret }}</span>
+    <m-icon iconId="content_copy" size="xsmall" sizeFactor="0"
+      >content_copy</m-icon
+    >
+  </div>
+</div>
+
+<div class="m-apiKeySettingsTable__tableWrapper" *ngIf="keys$ | async as keys">
+  <table class="m-apiKeysSettings__table" *ngIf="keys?.length">
+    <tr>
+      <th class="m-apiKeySettingsTable__nameCol">Name</th>
+      <th class="m-apiKeySettingsTable__scopesCol">Scopes</th>
+      <th>Expires</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let key of keys">
+      <td class="m-apiKeySettingsTable__nameCol">{{ key.name }}</td>
+      <td class="m-apiKeySettingsTable__scopesCol">
+        {{ key.scopes?.join(', ') }}
+      </td>
+      <td>
+        {{ key?.timeExpires ? (key.timeExpires | date: 'shortDate') : 'Never' }}
+      </td>
+      <td>
+        <m-button
+          (onAction)="onDeleteClick(key.id)"
+          [overlay]="false"
+          [iconOnly]="true"
+          [size]="'small'"
+          [color]="'red'"
+          [disabled]="deleteInProgress$ | async"
+        >
+          <i class="material-icons" title="Decline">close</i>
+        </m-button>
+      </td>
+    </tr>
+  </table>
+</div>

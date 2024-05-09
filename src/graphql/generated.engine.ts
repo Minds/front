@@ -28,6 +28,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  /** The `DateTime` scalar type represents time data, represented as an ISO-8601 encoded UTC date string. */
+  DateTime: { input: any; output: any };
   /** The `Void` scalar type represents no value being returned. */
   Void: { input: any; output: any };
 };
@@ -178,6 +180,11 @@ export type AnalyticsTableRowUserNode = AnalyticsTableRowNodeInterface &
     totalSubscribers: Scalars['Int']['output'];
     user: UserNode;
   };
+
+export enum ApiScopeEnum {
+  All = 'ALL',
+  SiteMembershipWrite = 'SITE_MEMBERSHIP_WRITE',
+}
 
 export type AppReadyMobileConfig = {
   __typename?: 'AppReadyMobileConfig';
@@ -361,7 +368,8 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
   chatRoomNotificationStatus?: Maybe<ChatRoomNotificationStatusEnum>;
-  groupGuid: Scalars['String']['output'];
+  /** Gets group GUID for a chat room node. */
+  groupGuid?: Maybe<Scalars['String']['output']>;
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -973,6 +981,7 @@ export type Mutation = {
   createNetworkRootUser: TenantUser;
   /** Create a new report. */
   createNewReport: Scalars['Boolean']['output'];
+  createPersonalApiKey: PersonalApiKey;
   createRssFeed: RssFeed;
   createTenant: Tenant;
   deleteChatMessage: Scalars['Boolean']['output'];
@@ -984,6 +993,7 @@ export type Mutation = {
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
+  deletePersonalApiKey: Scalars['Boolean']['output'];
   deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
@@ -1090,6 +1100,12 @@ export type MutationCreateNewReportArgs = {
   reportInput: ReportInput;
 };
 
+export type MutationCreatePersonalApiKeyArgs = {
+  expireInDays?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  scopes: Array<ApiScopeEnum>;
+};
+
 export type MutationCreateRssFeedArgs = {
   rssFeed: RssFeedInput;
 };
@@ -1121,6 +1137,10 @@ export type MutationDeleteEntityArgs = {
 
 export type MutationDeleteFeaturedEntityArgs = {
   entityGuid: Scalars['String']['input'];
+};
+
+export type MutationDeletePersonalApiKeyArgs = {
+  id: Scalars['String']['input'];
 };
 
 export type MutationDismissArgs = {
@@ -1364,6 +1384,17 @@ export enum PermissionsEnum {
   CanUseRssSync = 'CAN_USE_RSS_SYNC',
 }
 
+export type PersonalApiKey = {
+  __typename?: 'PersonalApiKey';
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  scopes: Array<ApiScopeEnum>;
+  /** The 'secret' key that a user will use to authenticate with. Only returned once. */
+  secret: Scalars['String']['output'];
+  timeCreated: Scalars['DateTime']['output'];
+  timeExpires?: Maybe<Scalars['DateTime']['output']>;
+};
+
 export type Plan = {
   __typename?: 'Plan';
   description: Scalars['String']['output'];
@@ -1488,6 +1519,7 @@ export type Query = {
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   invite: Invite;
   invites: InviteConnection;
+  listPersonalApiKeys: Array<PersonalApiKey>;
   mobileConfig: MobileConfig;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
@@ -1500,6 +1532,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  personalApiKey?: Maybe<PersonalApiKey>;
   postHogPerson: PostHogPerson;
   postSubscription: PostSubscription;
   /** Gets reports. */
@@ -1674,6 +1707,10 @@ export type QueryNewsfeedArgs = {
 
 export type QueryPaymentMethodsArgs = {
   productId?: InputMaybe<GiftCardProductIdEnum>;
+};
+
+export type QueryPersonalApiKeyArgs = {
+  id: Scalars['String']['input'];
 };
 
 export type QueryPostSubscriptionArgs = {
@@ -1943,9 +1980,10 @@ export enum SiteMembershipPricingModelEnum {
 export type SiteMembershipSubscription = {
   __typename?: 'SiteMembershipSubscription';
   autoRenew: Scalars['Boolean']['output'];
+  isManual: Scalars['Boolean']['output'];
   membershipGuid: Scalars['String']['output'];
   membershipSubscriptionId: Scalars['Int']['output'];
-  validFromTimestamp: Scalars['Int']['output'];
+  validFromTimestamp?: Maybe<Scalars['Int']['output']>;
   validToTimestamp?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -2264,7 +2302,7 @@ export type CreateChatRoomMutation = {
       id: string;
       guid: string;
       roomType: ChatRoomTypeEnum;
-      groupGuid: string;
+      groupGuid?: string | null;
       timeCreatedISO8601: string;
       timeCreatedUnix: string;
     };
@@ -2463,7 +2501,7 @@ export type GetChatRoomQuery = {
       guid: string;
       roomType: ChatRoomTypeEnum;
       name: string;
-      groupGuid: string;
+      groupGuid?: string | null;
       id: string;
       isChatRequest: boolean;
       isUserRoomOwner?: boolean | null;
@@ -2523,7 +2561,7 @@ export type GetChatRoomsListQuery = {
         guid: string;
         name: string;
         roomType: ChatRoomTypeEnum;
-        groupGuid: string;
+        groupGuid?: string | null;
         timeCreatedISO8601: string;
         timeCreatedUnix: string;
       };
@@ -7348,6 +7386,49 @@ export type RemoveRssFeedMutation = {
   removeRssFeed?: any | null;
 };
 
+export type CreatePersonalApiKeyMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  scopes: Array<ApiScopeEnum> | ApiScopeEnum;
+  expireInDays?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type CreatePersonalApiKeyMutation = {
+  __typename?: 'Mutation';
+  createPersonalApiKey: {
+    __typename?: 'PersonalApiKey';
+    secret: string;
+    id: string;
+    name: string;
+    scopes: Array<ApiScopeEnum>;
+    timeCreated: any;
+    timeExpires?: any | null;
+  };
+};
+
+export type DeletePersonalApiKeyMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+export type DeletePersonalApiKeyMutation = {
+  __typename?: 'Mutation';
+  deletePersonalApiKey: boolean;
+};
+
+export type GetPersonalApiKeysQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPersonalApiKeysQuery = {
+  __typename?: 'Query';
+  listPersonalApiKeys: Array<{
+    __typename?: 'PersonalApiKey';
+    secret: string;
+    id: string;
+    name: string;
+    scopes: Array<ApiScopeEnum>;
+    timeCreated: any;
+    timeExpires?: any | null;
+  }>;
+};
+
 export type GetSiteMembershipsAndSubscriptionsQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -7378,7 +7459,8 @@ export type GetSiteMembershipsAndSubscriptionsQuery = {
     membershipGuid: string;
     membershipSubscriptionId: number;
     autoRenew: boolean;
-    validFromTimestamp: number;
+    isManual: boolean;
+    validFromTimestamp?: number | null;
     validToTimestamp?: number | null;
   }>;
 };
@@ -7394,7 +7476,7 @@ export type GetSiteMembershipSubscriptionsQuery = {
     membershipGuid: string;
     membershipSubscriptionId: number;
     autoRenew: boolean;
-    validFromTimestamp: number;
+    validFromTimestamp?: number | null;
     validToTimestamp?: number | null;
   }>;
 };
@@ -10498,6 +10580,85 @@ export class RemoveRssFeedGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const CreatePersonalApiKeyDocument = gql`
+  mutation CreatePersonalApiKey(
+    $name: String!
+    $scopes: [ApiScopeEnum!]!
+    $expireInDays: Int
+  ) {
+    createPersonalApiKey(
+      name: $name
+      scopes: $scopes
+      expireInDays: $expireInDays
+    ) {
+      secret
+      id
+      name
+      scopes
+      timeCreated
+      timeExpires
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreatePersonalApiKeyGQL extends Apollo.Mutation<
+  CreatePersonalApiKeyMutation,
+  CreatePersonalApiKeyMutationVariables
+> {
+  document = CreatePersonalApiKeyDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const DeletePersonalApiKeyDocument = gql`
+  mutation DeletePersonalApiKey($id: String!) {
+    deletePersonalApiKey(id: $id)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeletePersonalApiKeyGQL extends Apollo.Mutation<
+  DeletePersonalApiKeyMutation,
+  DeletePersonalApiKeyMutationVariables
+> {
+  document = DeletePersonalApiKeyDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetPersonalApiKeysDocument = gql`
+  query GetPersonalApiKeys {
+    listPersonalApiKeys {
+      secret
+      id
+      name
+      scopes
+      timeCreated
+      timeExpires
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetPersonalApiKeysGQL extends Apollo.Query<
+  GetPersonalApiKeysQuery,
+  GetPersonalApiKeysQueryVariables
+> {
+  document = GetPersonalApiKeysDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetSiteMembershipsAndSubscriptionsDocument = gql`
   query GetSiteMembershipsAndSubscriptions {
     siteMemberships {
@@ -10524,6 +10685,7 @@ export const GetSiteMembershipsAndSubscriptionsDocument = gql`
       membershipGuid
       membershipSubscriptionId
       autoRenew
+      isManual
       validFromTimestamp
       validToTimestamp
     }

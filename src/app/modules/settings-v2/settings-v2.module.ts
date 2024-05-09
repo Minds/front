@@ -81,6 +81,8 @@ import { SettingsV2PlusVerifyComponent } from './plus/verify/verify.component';
 import { permissionGuard } from '../../common/guards/permission.guard';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
 import { SettingsV2UserDataComponent } from './account/user-data/user-data.component';
+import { SettingsV2ApiKeysComponent } from './security/api-keys/api-keys.component';
+import { adminOnlyGuard } from '../../common/guards/admin-only.guard';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -353,6 +355,16 @@ const SETTINGS_V2_ROUTES: Routes = [
               description:
                 'Manage the devices that have been granted access to your account',
               id: 'sessions',
+            },
+          },
+          {
+            path: 'api-keys',
+            component: SettingsV2ApiKeysComponent,
+            canActivate: [adminOnlyGuard('/settings')],
+            data: {
+              title: 'Personal API Keys',
+              description: 'Manage your personal API keys',
+              id: 'api-keys',
             },
           },
         ],
@@ -664,6 +676,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2AffiliatesComponent,
     SettingsV2PlusCancelComponent,
     SettingsV2PlusVerifyComponent,
+    SettingsV2ApiKeysComponent,
   ],
   providers: [SettingsV2Service, WalletV2Service],
   exports: [SettingsV2Component],

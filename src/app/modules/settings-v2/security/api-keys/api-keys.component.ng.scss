@@ -1,0 +1,104 @@
+@import 'defaults.scss';
+
+:host {
+  .m-apiKeySettings__createApiKeyButton {
+    display: block;
+    margin: 0 0 $spacing8 0;
+  }
+
+  .m-apiKeySettings__secretContainer {
+    margin: 0 0 $spacing8 0;
+
+    .m-apiKeySettings__secretDescription {
+      @include body2Regular;
+    }
+
+    .m-apiKeySettings__secretSelectableContainer {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      padding: $spacing2 $spacing4;
+      border-radius: 10px;
+      width: fit-content;
+      max-width: 100%;
+      box-sizing: border-box;
+      cursor: pointer;
+
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+        }
+      }
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+
+      .m-apiKeySettings__secretLabel {
+        @include body1Bold;
+        @include unselectable;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      .m-apiKeySettings__secretText {
+        @include body1Medium;
+        flex: 1;
+        margin-right: $spacing4;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      m-icon {
+        @include unselectable;
+      }
+    }
+  }
+  .m-apiKeySettingsTable__tableWrapper {
+    overflow-x: auto;
+
+    .m-apiKeysSettings__table {
+      width: 100%;
+      border-collapse: collapse;
+
+      tr {
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
+
+        th,
+        td {
+          text-align: left;
+          padding: $spacing4 $spacing2;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          &.m-apiKeySettingsTable__nameCol {
+            max-width: 150px;
+            word-break: break-word;
+          }
+
+          &.m-apiKeySettingsTable__scopesCol {
+            max-width: 150px;
+            word-break: break-word;
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .m-settingsV2__viewWrapper:has(.m-apiKeySettingsTable__tableWrapper) {
+  @media screen and (min-width: $min-desktop) {
+    margin-right: unset !important;
+  }
+}
