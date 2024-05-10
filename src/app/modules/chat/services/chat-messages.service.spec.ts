@@ -1,6 +1,7 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ChatMessagesService, PAGE_SIZE } from './chat-messages.service';
 import {
+  ChatMessageEdge,
   DeleteChatMessageGQL,
   GetChatMessagesDocument,
   GetChatMessagesGQL,
@@ -165,10 +166,13 @@ describe('ChatMessagesService', () => {
       service.removeChatMessage(mockChatMessageEdge);
       tick();
 
-      expect((service as any).deleteChatMessage.mutate).toHaveBeenCalledWith({
-        messageGuid: mockChatMessageEdge.node.guid,
-        roomGuid: mockChatMessageEdge.node.roomGuid,
-      });
+      expect((service as any).deleteChatMessage.mutate).toHaveBeenCalledWith(
+        {
+          messageGuid: mockChatMessageEdge.node.guid,
+          roomGuid: mockChatMessageEdge.node.roomGuid,
+        },
+        { update: jasmine.any(Function) }
+      );
       expect((service as any)._edges$.getValue()).toEqual([]);
       expect((service as any).toaster.success).toHaveBeenCalledWith(
         'Message deleted'
@@ -184,10 +188,13 @@ describe('ChatMessagesService', () => {
       service.removeChatMessage(mockChatMessageEdge);
       tick();
 
-      expect((service as any).deleteChatMessage.mutate).toHaveBeenCalledWith({
-        messageGuid: mockChatMessageEdge.node.guid,
-        roomGuid: mockChatMessageEdge.node.roomGuid,
-      });
+      expect((service as any).deleteChatMessage.mutate).toHaveBeenCalledWith(
+        {
+          messageGuid: mockChatMessageEdge.node.guid,
+          roomGuid: mockChatMessageEdge.node.roomGuid,
+        },
+        { update: jasmine.any(Function) }
+      );
       expect((service as any)._edges$.getValue()).toEqual([
         mockChatMessageEdge,
       ]);
@@ -309,6 +316,119 @@ describe('ChatMessagesService', () => {
             hasPreviousPage: prev.chatMessages.pageInfo.hasPreviousPage,
             startCursor: prev.chatMessages.pageInfo.startCursor,
             endCursor: null,
+          },
+        },
+      });
+    });
+  });
+
+  describe('handleMessageDeletion', () => {
+    it('should return updated cache value with message deleted when there is a single message', () => {
+      (service as any).queryRef = {
+        variables: {
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+      };
+
+      const cache = {
+        readQuery: jasmine.createSpy('readQuery').and.returnValue({
+          chatMessages: {
+            edges: [mockChatMessageEdge],
+          },
+        }),
+        writeQuery: jasmine.createSpy('writeQuery'),
+      };
+
+      (service as any).handleMessageDeletion(cache, null, {
+        variables: {
+          messageGuid: mockChatMessageEdge.node.guid,
+        },
+      });
+
+      expect(cache.readQuery).toHaveBeenCalledWith({
+        query: GetChatMessagesDocument,
+        variables: {
+          first: PAGE_SIZE,
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+      });
+
+      expect(cache.writeQuery).toHaveBeenCalledWith({
+        query: GetChatMessagesDocument,
+        variables: {
+          first: PAGE_SIZE,
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+        data: {
+          chatMessages: {
+            edges: [],
+          },
+        },
+      });
+    });
+
+    it('should return updated cache value with message deleted when there are multiple messages', () => {
+      (service as any).queryRef = {
+        variables: {
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+      };
+
+      const guidToDelete: string = '987654321098765';
+      const message1: ChatMessageEdge = {
+        ...mockChatMessageEdge,
+        node: {
+          ...mockChatMessageEdge.node,
+          guid: guidToDelete + '1',
+        },
+      };
+      const message2: ChatMessageEdge = {
+        ...mockChatMessageEdge,
+        node: {
+          ...mockChatMessageEdge.node,
+          guid: guidToDelete,
+        },
+      };
+      const message3: ChatMessageEdge = {
+        ...mockChatMessageEdge,
+        node: {
+          ...mockChatMessageEdge.node,
+          guid: guidToDelete + '3',
+        },
+      };
+
+      const cache = {
+        readQuery: jasmine.createSpy('readQuery').and.returnValue({
+          chatMessages: {
+            edges: [message1, message2, message3],
+          },
+        }),
+        writeQuery: jasmine.createSpy('writeQuery'),
+      };
+
+      (service as any).handleMessageDeletion(cache, null, {
+        variables: {
+          messageGuid: guidToDelete,
+        },
+      });
+
+      expect(cache.readQuery).toHaveBeenCalledWith({
+        query: GetChatMessagesDocument,
+        variables: {
+          first: PAGE_SIZE,
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+      });
+
+      expect(cache.writeQuery).toHaveBeenCalledWith({
+        query: GetChatMessagesDocument,
+        variables: {
+          first: PAGE_SIZE,
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+        data: {
+          chatMessages: {
+            edges: [message1, message3],
           },
         },
       });
