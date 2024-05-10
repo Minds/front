@@ -1,4 +1,4 @@
-const { I } = inject();
+const { I, chatRoomComponent } = inject();
 
 /**
  * Create New Chat Modal Component
@@ -32,6 +32,7 @@ class CreateNewChatModalComponent {
    */
   public clickStartChatButton(): void {
     I.click(this.startChatButtonSelector);
+    I.waitForElement(chatRoomComponent.sendButtonSelector);
   }
 }
 

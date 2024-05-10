@@ -8,7 +8,7 @@ const { I } = inject();
 class ChatRoomComponent {
   private readonly textInputSelector: string =
     '[data-ref=data-minds-chat-message-input]';
-  private readonly sendButtonSelector: string =
+  public readonly sendButtonSelector: string =
     '[data-ref=data-minds-chat-send-message-button]';
   private readonly chatMessageSelector: string =
     '[data-ref=data-minds-chat-message]';
@@ -22,6 +22,8 @@ class ChatRoomComponent {
     '[data-ref=data-minds-chat-room-message-rich-embed]';
   private readonly acceptChatRequestButton: string =
     '[data-ref=data-minds-chat-request-accept-button]';
+  private readonly rejectChatRequestButton: string =
+    '[data-ref=data-minds-chat-request-reject-button]';
 
   /**
    * Type a message in the chat room.
@@ -88,11 +90,17 @@ class ChatRoomComponent {
    * @return { void }
    */
   public clickAcceptChatRequestButton(): void {
-    I.clickAndWait(
-      locate(this.acceptChatRequestButton).withText('Accept'),
-      '/api/graphql',
-      200
-    );
+    I.click(locate(this.acceptChatRequestButton));
+    I.waitForNavigation('domcontentloaded');
+  }
+
+  /**
+   * Click the reject chat request button.
+   * @return { void }
+   */
+  public clickRejectChatRequestButton(): void {
+    I.click(locate(this.rejectChatRequestButton));
+    I.waitForNavigation('domcontentloaded');
   }
 }
 
