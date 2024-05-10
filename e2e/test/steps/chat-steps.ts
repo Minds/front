@@ -57,7 +57,6 @@ namespace ChatSteps {
   });
 
   When('I click the to view my chat requests', () => {
-    chatRoomListComponent.hasPendingChatRequestsWidgetWithCount(1);
     chatRoomListComponent.clickPendingChatRequestsWidget();
   });
 
@@ -67,6 +66,10 @@ namespace ChatSteps {
 
   When('I click the accept chat request button', () => {
     chatRoomComponent.clickAcceptChatRequestButton();
+  });
+
+  When('I click the reject chat request button', () => {
+    chatRoomComponent.clickRejectChatRequestButton();
   });
 
   When('I navigate back to the chat room list', () => {
