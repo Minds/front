@@ -4,6 +4,7 @@ import { Subscription, filter, lastValueFrom, take } from 'rxjs';
 import { ToasterService } from '../../../../../../../common/services/toaster.service';
 import { GenericToggleValue } from '../../../../../../../common/components/toggle/toggle.component';
 import { MultiTenantNetworkConfigService } from '../../../../../services/config.service';
+import { ConfigsService } from '../../../../../../../common/services/configs.service';
 
 /**
  * Enable boost toggle component. Allows for network wide toggling of boost functionality.
@@ -24,7 +25,8 @@ export class NetworkAdminEnableBoostToggleComponent
 
   constructor(
     private multiTenantConfigService: MultiTenantNetworkConfigService,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private configs: ConfigsService
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +67,12 @@ export class NetworkAdminEnableBoostToggleComponent
       this.toaster.error('Unable to submit changes, please try again later.');
       return;
     }
+
+    // patch configs to change boost_enabled state.
+    this.configs.set('tenant', {
+      ...this.configs.get('tenant'),
+      boost_enabled: newToggleState === 'on',
+    });
 
     this.toaster.success('Successfully updated settings.');
   }

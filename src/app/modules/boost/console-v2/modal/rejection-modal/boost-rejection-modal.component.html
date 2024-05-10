@@ -7,7 +7,9 @@
     <ul class="m-boost_rejection_modal__reasons mdl-list">
       <li
         class="m-boost_rejection_modal__reasons_list__item mdl-list__item"
-        [class.selected]="reason.code === boost.rejection_reason"
+        [class.m-boost_rejection_modal__reasons_list__item--selected]="
+          reason.code === boost.rejection_reason
+        "
         *ngFor="let reason of rejectionReasons; let i = index"
         (click)="selectReason(reason)"
       >

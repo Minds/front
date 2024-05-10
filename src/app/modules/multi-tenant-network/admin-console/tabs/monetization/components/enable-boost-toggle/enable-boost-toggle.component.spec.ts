@@ -6,6 +6,7 @@ import { MultiTenantNetworkConfigService } from '../../../../../services/config.
 import { MultiTenantConfig } from '../../../../../../../../graphql/generated.engine';
 import { multiTenantConfigMock } from '../../../../../../../mocks/responses/multi-tenant-config.mock';
 import { ToasterService } from '../../../../../../../common/services/toaster.service';
+import { ConfigsService } from '../../../../../../../common/services/configs.service';
 
 describe('NetworkAdminEnableBoostToggleComponent', () => {
   let comp: NetworkAdminEnableBoostToggleComponent;
@@ -35,6 +36,7 @@ describe('NetworkAdminEnableBoostToggleComponent', () => {
           }),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     });
 
@@ -89,10 +91,21 @@ describe('NetworkAdminEnableBoostToggleComponent', () => {
       (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
         of(true)
       );
+      (comp as any).configs.get.withArgs('tenant').and.returnValue({
+        id: 123,
+        boost_enabled: false,
+        plan: 'ENTERPRISE',
+      });
 
       await comp.onEnabledToggle('on');
 
       expect(comp.enabledToggleState).toBe('on');
+      expect((comp as any).configs.get).toHaveBeenCalledOnceWith('tenant');
+      expect((comp as any).configs.set).toHaveBeenCalledOnceWith('tenant', {
+        id: 123,
+        plan: 'ENTERPRISE',
+        boost_enabled: true,
+      });
     });
 
     it('should set toggle state to disabled when successful', async () => {
@@ -100,10 +113,21 @@ describe('NetworkAdminEnableBoostToggleComponent', () => {
       (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
         of(true)
       );
+      (comp as any).configs.get.withArgs('tenant').and.returnValue({
+        id: 123,
+        boost_enabled: true,
+        plan: 'ENTERPRISE',
+      });
 
       await comp.onEnabledToggle('off');
 
       expect(comp.enabledToggleState).toBe('off');
+      expect((comp as any).configs.get).toHaveBeenCalledOnceWith('tenant');
+      expect((comp as any).configs.set).toHaveBeenCalledOnceWith('tenant', {
+        id: 123,
+        plan: 'ENTERPRISE',
+        boost_enabled: false,
+      });
     });
 
     it('should set toggle state back to enabled when unsuccessful', async () => {
@@ -115,6 +139,8 @@ describe('NetworkAdminEnableBoostToggleComponent', () => {
       await comp.onEnabledToggle('off');
 
       expect(comp.enabledToggleState).toBe('on');
+      expect((comp as any).configs.get).not.toHaveBeenCalled();
+      expect((comp as any).configs.set).not.toHaveBeenCalled();
     });
   });
 });

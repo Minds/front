@@ -1,4 +1,5 @@
 <m-boostConsole__filterBar
+  *ngIf="showFilterBar"
   [boostLatestNoticeType]="service.locationFilterValue$ | async"
 ></m-boostConsole__filterBar>
 <span

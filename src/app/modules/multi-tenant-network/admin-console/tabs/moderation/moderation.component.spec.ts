@@ -4,6 +4,8 @@ import { NetworkAdminConsoleModerationComponent } from './moderation.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Session } from '../../../../../services/session';
 import { PermissionsService } from '../../../../../common/services/permissions.service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
+import { MockComponent, MockService } from '../../../../../utils/mock';
 
 describe('NetworkAdminConsoleModerationComponent', () => {
   let comp: NetworkAdminConsoleModerationComponent;
@@ -19,10 +21,16 @@ describe('NetworkAdminConsoleModerationComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [NetworkAdminConsoleModerationComponent],
+      declarations: [
+        NetworkAdminConsoleModerationComponent,
+        MockComponent({
+          selector: 'm-networkAdminConsole__nsfwToggle',
+        }),
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: PermissionsService, useValue: permissionsServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     });
 
@@ -76,6 +84,40 @@ describe('NetworkAdminConsoleModerationComponent', () => {
     beforeEach(() => {
       sessionMock.isAdmin.and.returnValue(false); // User is not an admin
       permissionsServiceMock.canModerateContent.and.returnValue(true); // User can moderate content
+    });
+
+    it('should display only the report and boost tabs', () => {
+      Object.defineProperty(comp, 'isBoostEnabled', {
+        writable: true,
+        value: true,
+      });
+      fixture.detectChanges();
+
+      testTabVisibility('network-admin-console-tab-reports', true); // Reports tab should be visible
+      testTabVisibility('network-admin-console-tab-boosts', true); // Boosts tab should be visible
+      testTabVisibility(
+        'network-admin-console-tab-community-guidelines',
+        false
+      ); // Other tabs should not be visible
+      testTabVisibility('network-admin-console-tab-privacy-policy', false);
+      testTabVisibility('network-admin-console-tab-terms-of-service', false);
+    });
+
+    it('should display the report tab but not the boost tab when boost is not enabled', () => {
+      Object.defineProperty(comp, 'isBoostEnabled', {
+        writable: true,
+        value: false,
+      });
+      fixture.detectChanges();
+
+      testTabVisibility('network-admin-console-tab-reports', true); // Reports tab should be visible
+      testTabVisibility('network-admin-console-tab-boosts', false); // Boosts tab should NOT be visible
+      testTabVisibility(
+        'network-admin-console-tab-community-guidelines',
+        false
+      ); // Other tabs should not be visible
+      testTabVisibility('network-admin-console-tab-privacy-policy', false);
+      testTabVisibility('network-admin-console-tab-terms-of-service', false);
     });
 
     it('should display only the reports tab', () => {

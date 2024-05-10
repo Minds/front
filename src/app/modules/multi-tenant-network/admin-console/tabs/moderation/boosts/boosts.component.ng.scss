@@ -1,0 +1,9 @@
+@import 'defaults.scss';
+
+:host {
+  padding: 0 calc($spacing1 / 2);
+
+  ::ng-deep .m-boostConsole__listItem__bottomBar {
+    max-width: 600px;
+  }
+}
