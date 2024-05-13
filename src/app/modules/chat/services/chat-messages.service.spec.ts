@@ -10,7 +10,7 @@ import {
 import { MockService } from '../../../utils/mock';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject, of, take } from 'rxjs';
+import { BehaviorSubject, Subject, of } from 'rxjs';
 import { ApolloQueryResult, InMemoryCache } from '@apollo/client';
 import { mockChatMessageEdge } from '../../../mocks/chat.mock';
 import { Session } from '../../../services/session';

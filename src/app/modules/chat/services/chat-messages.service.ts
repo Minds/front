@@ -30,7 +30,6 @@ import {
 } from './global-chat-socket.service';
 import { Session } from '../../../services/session';
 import { cloneDeep } from '@apollo/client/utilities';
-import * as _ from 'lodash';
 import { isEqual } from 'lodash';
 
 /** Size of an individual page. */
