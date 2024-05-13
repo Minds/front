@@ -1,11 +1,11 @@
-<div class="m-group__actions">
+<div class="m-group__actions" *ngIf="service.group$ | async as group">
   <m-group__settingsButton
     class="m-groupActions__button--settings"
   ></m-group__settingsButton>
 
   <m-group__chatButton
-    *ngIf="service.isMember$ | async"
-    [groupGuid]="(service.group$ | async)?.guid"
+    *ngIf="shouldShowChatButton$ | async"
+    [groupGuid]="group?.guid"
   ></m-group__chatButton>
 
   <m-group__editButton
@@ -15,7 +15,7 @@
 
   <m-group__membershipButton
     class="m-groupActions__button--membership"
-    [group]="service.group$ | async"
+    [group]="group"
     customColor="grey"
     size="xsmall"
     overlay="true"
