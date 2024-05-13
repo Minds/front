@@ -11,6 +11,7 @@
     flex-flow: row wrap;
     justify-content: flex-start;
     gap: $spacing8 $spacing40;
+    margin-bottom: $spacing4;
 
     @media screen and (max-width: $layoutMin3ColWidth) {
       gap: $spacing8;

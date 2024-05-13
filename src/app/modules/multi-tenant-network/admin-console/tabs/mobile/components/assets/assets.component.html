@@ -134,4 +134,34 @@
       "
     ></m-networkAdminConsole__imageInput>
   </div>
+
+  <div class="m-networkAdminMobile__imageUploadInputContainer">
+    <label
+      class="m-networkAdminMobile__imageUploadLabelTitle"
+      for="monographicIconUpload"
+      i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__MONO_ICON_IMAGE_TITLE"
+      >Monographic icon (Notifications)</label
+    >
+    <label
+      class="m-networkAdminMobile__imageUploadLabelSubtitle"
+      for="monographicIconUpload"
+    >
+      <span i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__MUST_BE_ATLEAST_100_X_100_PX"
+        >Upload must be at least 100x100</span
+      >
+      <br />
+      <strong i18n="@@NETWORK_ADMIN_CONSOLE_MOBILE__FOR_BEST_RESULTS_UPLOAD_PNG"
+        >For best results, upload a png file.</strong
+      >
+    </label>
+    <m-networkAdminConsole__imageInput
+      id="monographicIconUpload"
+      [image]="'url(' + (monographicIconFilePath$ | async) + ')'"
+      [type]="ImageInputOrientationEnum.Square"
+      [inProgress]="monographicIconUploadInProgress$ | async"
+      (onFileChange)="
+        onImageChange($event, MobileConfigImageTypeEnum.MonographicIcon)
+      "
+    ></m-networkAdminConsole__imageInput>
+  </div>
 </div>
