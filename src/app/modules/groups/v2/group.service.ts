@@ -140,6 +140,10 @@ export class GroupService implements OnDestroy {
     false
   );
 
+  /** Whether conversation is disabled. */
+  readonly isCoversationDisabled$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
+
   /**
    * Whether boosts should be shown in the feed
    */
@@ -286,6 +290,9 @@ export class GroupService implements OnDestroy {
     this.isAwaiting$.next(group ? group['is:awaiting'] : false);
     this.isBanned$.next(group ? group['is:banned'] : false);
     this.isMuted$.next(group ? group['is:muted'] : false);
+    this.isCoversationDisabled$.next(
+      group ? group['conversationDisabled'] : true
+    );
   }
 
   /**
@@ -540,5 +547,14 @@ export class GroupService implements OnDestroy {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  /**
+   * Set conversation disabled state.
+   * @param { boolean } value - Whether conversation is disabled.
+   * @returns { void }
+   */
+  public setConversationDisabled(value: boolean = true): void {
+    this.isCoversationDisabled$.next(value);
   }
 }

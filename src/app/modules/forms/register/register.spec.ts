@@ -29,6 +29,8 @@ import { SiteService } from '../../../common/services/site.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
 import { IfTenantDirective } from '../../../common/directives/if-tenant.directive';
 import { By } from '@angular/platform-browser';
+import { UserAvatarService } from '../../../common/services/user-avatar.service';
+import userMock from '../../../mocks/responses/user.mock';
 
 @Component({
   selector: 'm-friendlyCaptcha',
@@ -159,6 +161,10 @@ describe('RegisterForm', () => {
           provide: IsTenantService,
           useValue: MockService(IsTenantService),
         },
+        {
+          provide: UserAvatarService,
+          useValue: MockService(UserAvatarService),
+        },
       ],
     }).compileComponents();
 
@@ -194,6 +200,44 @@ describe('RegisterForm', () => {
     expect(comp.form.contains('previousUrl')).toBeTruthy();
     expect(comp.form.contains('policies')).toBeTruthy();
   });
+
+  it('should register successfully a new user', fakeAsync(() => {
+    (comp as any).client.post.and.returnValue(
+      Promise.resolve({ user: userMock })
+    );
+
+    comp.form.get('username').setValue('testuser');
+    comp.form.get('email').setValue('testuser@example.com');
+    comp.form.get('password').setValue('TestPass123!');
+    comp.form.get('password2').setValue('TestPass123!');
+    comp.form.get('tos').setValue(true);
+    comp.form.get('captcha').setValue('test_captcha');
+
+    spyOn(comp.done, 'emit');
+
+    comp.register(new MouseEvent('click'));
+    tick();
+
+    expect((comp as any).client.post).toHaveBeenCalledWith('api/v1/register', {
+      username: 'testuser',
+      email: 'testuser@example.com',
+      password: 'TestPass123!',
+      password2: 'TestPass123!',
+      tos: true,
+      exclusive_promotions: true,
+      captcha: 'test_captcha',
+      previousUrl: null,
+      referrer: undefined,
+      parentId: '',
+      policies: false,
+      invite_token: undefined,
+    });
+
+    expect((comp as any).session.login).toHaveBeenCalledWith(userMock);
+    expect((comp as any).userAvatarService.init).toHaveBeenCalled();
+    flush();
+    discardPeriodicTasks();
+  }));
 
   it('should register successfully a new user and set onboarding state to true', fakeAsync(() => {
     const user = { guid: '1234' };
