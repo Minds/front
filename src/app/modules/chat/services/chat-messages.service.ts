@@ -19,7 +19,7 @@ import {
   GetChatMessagesQueryVariables,
   PageInfo,
 } from '../../../../graphql/generated.engine';
-import { MutationResult, QueryRef } from 'apollo-angular';
+import { Apollo, MutationResult, QueryRef } from 'apollo-angular';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ApolloQueryResult, InMemoryCache } from '@apollo/client';
 import { Router } from '@angular/router';
@@ -29,6 +29,8 @@ import {
 } from './global-chat-socket.service';
 import { Session } from '../../../services/session';
 import { cloneDeep } from '@apollo/client/utilities';
+import * as _ from 'lodash';
+import { isEqual } from 'lodash';
 
 /** Size of an individual page. */
 export const PAGE_SIZE: number = 24;
@@ -98,6 +100,7 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
     private getChatMessagesGql: GetChatMessagesGQL,
     private deleteChatMessage: DeleteChatMessageGQL,
     private globalChatSocketService: GlobalChatSocketService,
+    private apollo: Apollo,
     private toaster: ToasterService,
     private router: Router,
     private session: Session
@@ -236,20 +239,17 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
       this.globalChatSocketService
         .getEventsByChatRoomGuid(roomGuid)
         .subscribe((event: ChatRoomEvent): void => {
-          // Skip our own messages.
-          if (
-            this.session.getLoggedInUser()?.guid ===
-            event.data['metadata']['senderGuid']
-          ) {
-            return;
+          switch (event?.data?.['type']) {
+            case 'NEW_MESSAGE':
+              this.handleNewMessageSocketEvent(event);
+              break;
+            case 'MESSAGE_DELETED':
+              this.handleMessageDeletionSocketEvent(event);
+              break;
+            default:
+              console.warn('Unhandled chat room event', event);
+              break;
           }
-
-          this._pageInfo$.next({
-            ...this._pageInfo$.getValue(),
-            hasNextPage: true,
-          });
-
-          this.hasNewMessage$.next();
         })
     );
   }
@@ -292,7 +292,7 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
               roomGuid: chatMessageEdge.node.roomGuid,
             },
             {
-              update: this.handleMessageDeletion.bind(this),
+              update: this.handleMessageDeletionUpdate.bind(this),
             }
           )
         );
@@ -372,19 +372,32 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
   }
 
   /**
-   * Handle message deletion, updating the local cache to remove the entry.
+   * Handle message deletion mutation update.
    * @param { InMemoryCache } cache - The cache.
    * @param { MutationResult<DeleteChatMessageMutation> } result - The result of the mutation.
    * @param { any } options - The options.
    * @returns { void }
    */
-  private handleMessageDeletion(
+  private handleMessageDeletionUpdate(
     cache: InMemoryCache,
     result: MutationResult<DeleteChatMessageMutation>,
     options: any
   ): void {
-    let newValue: GetChatMessagesQuery = cloneDeep(
-      cache.readQuery<GetChatMessagesQuery>({
+    if (!options?.variables?.messageGuid) {
+      console.warn('No message guid found in options for deletion update');
+      return;
+    }
+    this.handleMessageDeletion(options.variables.messageGuid.toString());
+  }
+
+  /**
+   * Handle message deletion, updating the local cache to remove the entry.
+   * @param { string } messageGuid - The message guid to remove.
+   * @returns { void }
+   */
+  private handleMessageDeletion(messageGuid: string): void {
+    let oldValue: GetChatMessagesQuery = cloneDeep(
+      this.apollo.client.readQuery<GetChatMessagesQuery>({
         query: GetChatMessagesDocument,
         variables: {
           first: PAGE_SIZE,
@@ -392,13 +405,17 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
         },
       })
     );
+    let newValue = cloneDeep(oldValue);
 
     newValue.chatMessages.edges = newValue.chatMessages.edges.filter(
-      (edge: ChatMessageEdge): boolean =>
-        edge.node.guid !== options?.variables?.messageGuid?.toString()
+      (edge: ChatMessageEdge): boolean => edge.node.guid !== messageGuid
     );
 
-    cache.writeQuery({
+    if (isEqual(newValue, oldValue)) {
+      return; // no change, no need to update cache.
+    }
+
+    this.apollo.client.writeQuery({
       query: GetChatMessagesDocument,
       variables: {
         first: PAGE_SIZE,
@@ -406,5 +423,41 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
       },
       data: newValue,
     });
+  }
+
+  /**
+   * Handles a new message event.
+   * @param { ChatRoomEvent } event - The event to handle.
+   * @returns { void }
+   */
+  private handleNewMessageSocketEvent(event: ChatRoomEvent): void {
+    // Skip our own messages.
+    if (
+      this.session.getLoggedInUser()?.guid ===
+      event.data['metadata']['senderGuid']
+    ) {
+      return;
+    }
+
+    this._pageInfo$.next({
+      ...this._pageInfo$.getValue(),
+      hasNextPage: true,
+    });
+
+    this.hasNewMessage$.next();
+  }
+
+  /**
+   * Handles a message deletion event.
+   * @param { ChatRoomEvent } event - The event to handle.
+   * @returns { void }
+   */
+  private handleMessageDeletionSocketEvent(event: ChatRoomEvent): void {
+    if (!event.data?.['metadata']?.['messageGuid']) {
+      console.warn('No message guid found in event data for deleted event');
+      return;
+    }
+
+    this.handleMessageDeletion(event.data['metadata']['messageGuid']);
   }
 }
