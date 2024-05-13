@@ -6,10 +6,10 @@ import {
 } from '@angular/core/testing';
 import { GroupChatButton } from './chat-button.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
-import { CreateChatRoomService } from '../../../chat/services/create-chat-room.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { Router } from '@angular/router';
-import { ChatRoomTypeEnum } from '../../../../../graphql/generated.engine';
+import { GroupChatRoomService } from '../services/group-chat-rooms.service';
+import { mockChatRoomEdge } from '../../../../mocks/chat.mock';
 
 describe('GroupChatButton', () => {
   let comp: GroupChatButton;
@@ -33,8 +33,8 @@ describe('GroupChatButton', () => {
       ],
       providers: [
         {
-          provide: CreateChatRoomService,
-          useValue: MockService(CreateChatRoomService),
+          provide: GroupChatRoomService,
+          useValue: MockService(GroupChatRoomService),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: Router, useValue: MockService(Router) },
@@ -64,29 +64,24 @@ describe('GroupChatButton', () => {
 
   describe('handleClick', () => {
     it('should handle click', fakeAsync(() => {
-      const roomGuid: string = '2345678901234567';
-      (comp as any).createChatRoomService.createChatRoom.and.returnValue(
-        Promise.resolve(roomGuid)
+      (comp as any).groupChatRoomService.createGroupChatRoom.and.returnValue(
+        Promise.resolve(mockChatRoomEdge)
       );
 
       (comp as any).handleClick();
       tick();
 
       expect(
-        (comp as any).createChatRoomService.createChatRoom
-      ).toHaveBeenCalledOnceWith(
-        [],
-        ChatRoomTypeEnum.GroupOwned,
-        mockGroupGuid
-      );
+        (comp as any).groupChatRoomService.createGroupChatRoom
+      ).toHaveBeenCalledOnceWith(mockGroupGuid);
       expect((comp as any).toasterService.error).not.toHaveBeenCalled();
       expect((comp as any).router.navigateByUrl).toHaveBeenCalledWith(
-        `/chat/rooms/${roomGuid}`
+        `/chat/rooms/${mockChatRoomEdge.node.guid}`
       );
     }));
 
     it('should no room guid when creating on click', fakeAsync(() => {
-      (comp as any).createChatRoomService.createChatRoom.and.returnValue(
+      (comp as any).groupChatRoomService.createGroupChatRoom.and.returnValue(
         Promise.resolve(null)
       );
 
@@ -94,12 +89,8 @@ describe('GroupChatButton', () => {
       tick();
 
       expect(
-        (comp as any).createChatRoomService.createChatRoom
-      ).toHaveBeenCalledOnceWith(
-        [],
-        ChatRoomTypeEnum.GroupOwned,
-        mockGroupGuid
-      );
+        (comp as any).groupChatRoomService.createGroupChatRoom
+      ).toHaveBeenCalledOnceWith(mockGroupGuid);
       expect((comp as any).toasterService.error).toHaveBeenCalledOnceWith(
         new Error('An error occurred, please try again later.')
       );
@@ -109,7 +100,7 @@ describe('GroupChatButton', () => {
 
     it('should handle errors when creating on click', fakeAsync(() => {
       const mockError: Error = new Error('errorMessage');
-      (comp as any).createChatRoomService.createChatRoom.and.throwError(
+      (comp as any).groupChatRoomService.createGroupChatRoom.and.throwError(
         mockError
       );
 
@@ -117,12 +108,8 @@ describe('GroupChatButton', () => {
       tick();
 
       expect(
-        (comp as any).createChatRoomService.createChatRoom
-      ).toHaveBeenCalledOnceWith(
-        [],
-        ChatRoomTypeEnum.GroupOwned,
-        mockGroupGuid
-      );
+        (comp as any).groupChatRoomService.createGroupChatRoom
+      ).toHaveBeenCalledOnceWith(mockGroupGuid);
       expect((comp as any).toasterService.error).toHaveBeenCalledOnceWith(
         mockError
       );
