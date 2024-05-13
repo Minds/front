@@ -200,7 +200,10 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
         (event: ChatRoomEvent): void => {
           if (
             !event.data ||
-            event.data['type'] !== ChatRoomEventType.NewMessage ||
+            ![
+              ChatRoomEventType.NewMessage,
+              ChatRoomEventType.MessageDeleted,
+            ].includes(event.data['type']) ||
             !event.roomGuid ||
             !this.session.isLoggedIn() ||
             !this.isViewingChatRoomsList
