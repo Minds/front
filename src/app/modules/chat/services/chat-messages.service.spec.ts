@@ -16,6 +16,7 @@ import { mockChatMessageEdge } from '../../../mocks/chat.mock';
 import { Session } from '../../../services/session';
 import {
   ChatRoomEvent,
+  ChatRoomEventType,
   GlobalChatSocketService,
 } from './global-chat-socket.service';
 import { Apollo } from 'apollo-angular';
@@ -252,7 +253,7 @@ describe('ChatMessagesService', () => {
       chatRoomEventsSubjectMock$.next({
         roomGuid: DEFAULT_ROOM_GUID,
         data: {
-          type: 'NEW_MESSAGE',
+          type: ChatRoomEventType.NewMessage,
           metadata: {
             senderGuid: mockChatMessageEdge.node.sender.node.guid,
           },
@@ -276,7 +277,7 @@ describe('ChatMessagesService', () => {
       chatRoomEventsSubjectMock$.next({
         roomGuid: DEFAULT_ROOM_GUID,
         data: {
-          type: 'NEW_MESSAGE',
+          type: ChatRoomEventType.NewMessage,
           metadata: {
             senderGuid: mockChatMessageEdge.node.sender.node.guid,
           },
@@ -541,7 +542,7 @@ describe('ChatMessagesService', () => {
       chatRoomEventsSubjectMock$.next({
         roomGuid: DEFAULT_ROOM_GUID,
         data: {
-          type: 'MESSAGE_DELETED',
+          type: ChatRoomEventType.MessageDeleted,
           metadata: {
             messageGuid: mockChatMessageEdge.node.guid,
           },

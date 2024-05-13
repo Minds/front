@@ -25,6 +25,7 @@ import { ApolloQueryResult, InMemoryCache } from '@apollo/client';
 import { Router } from '@angular/router';
 import {
   ChatRoomEvent,
+  ChatRoomEventType,
   GlobalChatSocketService,
 } from './global-chat-socket.service';
 import { Session } from '../../../services/session';
@@ -240,10 +241,10 @@ export class ChatMessagesService extends AbstractSubscriberComponent {
         .getEventsByChatRoomGuid(roomGuid)
         .subscribe((event: ChatRoomEvent): void => {
           switch (event?.data?.['type']) {
-            case 'NEW_MESSAGE':
+            case ChatRoomEventType.NewMessage:
               this.handleNewMessageSocketEvent(event);
               break;
-            case 'MESSAGE_DELETED':
+            case ChatRoomEventType.MessageDeleted:
               this.handleMessageDeletionSocketEvent(event);
               break;
             default:

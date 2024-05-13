@@ -12,6 +12,7 @@ import { mockChatRoomEdge } from '../../../mocks/chat.mock';
 import { ChatRoomsListService } from './chat-rooms-list.service';
 import {
   ChatRoomEvent,
+  ChatRoomEventType,
   GlobalChatSocketService,
 } from './global-chat-socket.service';
 import { Session } from '../../../services/session';
@@ -181,7 +182,7 @@ describe('ChatRoomsListService', () => {
       );
 
       (service as any).globalChatSocketService.globalEvents$.next({
-        data: { type: 'NEW_MESSAGE' },
+        data: { type: ChatRoomEventType.NewMessage },
         roomGuid: roomGuid,
       });
       tick();
@@ -230,7 +231,7 @@ describe('ChatRoomsListService', () => {
       const roomGuid: string = '1234567890';
 
       (service as any).globalChatSocketService.globalEvents$.next({
-        data: { type: 'NEW_MESSAGE' },
+        data: { type: ChatRoomEventType.NewMessage },
         roomGuid: roomGuid,
       });
       tick();
@@ -244,7 +245,7 @@ describe('ChatRoomsListService', () => {
       const roomGuid: string = '1234567890';
 
       (service as any).globalChatSocketService.globalEvents$.next({
-        data: { type: 'NEW_MESSAGE' },
+        data: { type: ChatRoomEventType.NewMessage },
         roomGuid: roomGuid,
       });
       tick();
