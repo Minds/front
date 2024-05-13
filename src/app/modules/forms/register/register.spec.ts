@@ -21,13 +21,14 @@ import { UsernameValidator } from '../username.validator';
 import { PasswordRiskValidator } from '../password-risk.validator';
 import { AnalyticsService } from './../../../services/analytics';
 import { RegisterForm } from './register';
-import { MockComponent, MockService } from '../../../utils/mock';
-import { FormInputCheckboxComponent } from '../../../common/components/forms/checkbox/checkbox.component';
+import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { Component, forwardRef, Input } from '@angular/core';
 import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { IfTenantDirective } from '../../../common/directives/if-tenant.directive';
+import { By } from '@angular/platform-browser';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
 import userMock from '../../../mocks/responses/user.mock';
 
@@ -36,6 +37,7 @@ import userMock from '../../../mocks/responses/user.mock';
   template: `
     <input ([ngModel])="(value)" (ngModelChange)="onChange($event)" />
   `,
+  inputs: ['puzzleOrigin'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -88,12 +90,34 @@ describe('RegisterForm', () => {
       imports: [FormsModule, ReactiveFormsModule, RouterTestingModule],
       declarations: [
         RegisterForm,
-        FormInputCheckboxComponent,
         FriendlyCaptchaComponentMock,
         PopoverComponentMock,
+        IfTenantDirective,
         MockComponent({
           selector: 'm-button',
-          inputs: ['disabled', 'saving'],
+          inputs: ['disabled', 'saving', 'solid'],
+        }),
+        MockComponent({
+          selector: 'm-oidcLoginButtons',
+          outputs: ['done', 'hasOidcProviders'],
+        }),
+        MockComponent({
+          selector: 'm-formInput__checkbox',
+          template: `<ng-content></ng-content>`,
+          providers: [
+            {
+              provide: NG_VALUE_ACCESSOR,
+              useValue: {
+                writeValue: () => {},
+                registerOnChange: () => {},
+                registerOnTouched: () => {},
+              },
+              multi: true,
+            },
+          ],
+        }),
+        MockDirective({
+          selector: '[mIfTenant]',
         }),
       ],
       providers: [
@@ -129,6 +153,11 @@ describe('RegisterForm', () => {
           useValue: MockService(SiteService),
         },
         {
+          provide: IsTenantService,
+          useValue: MockService(IsTenantService),
+        },
+        {
+          // used by mIfTenant directive.
           provide: IsTenantService,
           useValue: MockService(IsTenantService),
         },
@@ -390,5 +419,16 @@ describe('RegisterForm', () => {
 
     expect((comp as any).passwordInputHasFocus).toBeFalse();
     expect(comp.popover.hide).toHaveBeenCalled();
+  });
+
+  it('should emit doneLogin when oidc login is done', () => {
+    comp.doneLogin.emit = jasmine.createSpy();
+    const oidcLoginButtons = fixture.debugElement.query(
+      By.css('m-oidcLoginButtons')
+    );
+
+    oidcLoginButtons.componentInstance.done.emit();
+
+    expect(comp.doneLogin.emit).toHaveBeenCalled();
   });
 });
