@@ -12,6 +12,7 @@ namespace CommonSteps {
     onboardingV5ModalComponent,
     upgradeModalComponent,
     explainerScreenModalComponent,
+    topbarComponent,
   } = inject();
 
   /**
@@ -182,6 +183,10 @@ namespace CommonSteps {
 
   Then('I should see an explainer screen modal', (num) => {
     explainerScreenModalComponent.shouldBeVisible(true);
+  });
+
+  Then('I see my avatar in the topbar', async () => {
+    await topbarComponent.verifyAvatarImageIsValid();
   });
 
   // Debug helper

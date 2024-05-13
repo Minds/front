@@ -32,6 +32,7 @@ import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { SiteService } from '../../../common/services/site.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { UserAvatarService } from '../../../common/services/user-avatar.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -103,7 +104,8 @@ export class RegisterForm implements OnInit, OnDestroy {
     private onboardingV5Service: OnboardingV5Service,
     private permissionsService: PermissionsService,
     protected site: SiteService,
-    private isTenant: IsTenantService
+    private isTenant: IsTenantService,
+    private userAvatarService: UserAvatarService
   ) {}
 
   ngOnInit(): void {
@@ -251,6 +253,7 @@ export class RegisterForm implements OnInit, OnDestroy {
         }
 
         this.session.login(data.user);
+        this.userAvatarService.init();
         this.done.next(data.user);
       })
       .catch((e) => {

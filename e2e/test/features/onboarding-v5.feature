@@ -191,3 +191,8 @@ Scenario: Verify that I can navigate the feature carousel by dots
   And I click feature carousel dot at index "0"
   Then I see feature carousel dot at index "0" is active
   And I clear my cookies
+
+  Scenario: Verify that I see avatar in topbar after registering
+    When I create a new user
+    Then I am taken to Home page
+    And I see my avatar in the topbar

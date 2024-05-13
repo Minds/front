@@ -16,6 +16,7 @@ import { ApiService } from '../../../common/api/api.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { Router } from '@angular/router';
 import { AuthModalService } from '../modal/auth-modal.service';
+import { UserAvatarService } from '../../../common/services/user-avatar.service';
 
 export type ResetPasswordModalPanel =
   | 'enterUsername'
@@ -55,6 +56,7 @@ export class ResetPasswordModalService implements OnDestroy {
     private toaster: ToasterService,
     private api: ApiService,
     private authModal: AuthModalService,
+    private userAvatarService: UserAvatarService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -140,6 +142,7 @@ export class ResetPasswordModalService implements OnDestroy {
         .toPromise();
 
       this.session.login(response.user);
+      this.userAvatarService.init();
       this.router.navigate(['/newsfeed']);
       this.dismiss();
     } catch (e) {
