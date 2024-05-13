@@ -11,6 +11,7 @@ import { firstValueFrom, take } from 'rxjs';
 import { ConfigsService } from '../../../services/configs.service';
 import { UserAvatarService } from '../../../services/user-avatar.service';
 import { Session } from '../../../../services/session';
+import { MindsUser } from '../../../../interfaces/entities';
 
 /**
  * Buttons that allow users to create/discover groups
@@ -28,7 +29,7 @@ import { Session } from '../../../../services/session';
 export class OidcLoginButtons {
   providers: Partial<OidcProviderPublic>[];
   @Output() hasOidcProviders: EventEmitter<boolean> = new EventEmitter();
-  @Output('done') onDone: EventEmitter<boolean> = new EventEmitter();
+  @Output('done') onDone: EventEmitter<MindsUser> = new EventEmitter();
   hasClickedLoginMethod = false;
   windowPoller;
 
@@ -80,11 +81,12 @@ export class OidcLoginButtons {
             // Update permissions
             this.permissions.initFromConfigs();
 
+            const user: MindsUser = this.configs.get('user');
             // Update session
-            this.session.login(this.configs.get('user'));
+            this.session.login(user);
 
             // Tell the parent we are done
-            this.onDone.emit(true);
+            this.onDone.emit(user);
           }
 
           this.hasClickedLoginMethod = false;
