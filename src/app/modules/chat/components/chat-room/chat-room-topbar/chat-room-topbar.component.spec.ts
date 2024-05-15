@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { ChatRoomTopComponent } from './chat-room-topbar.component';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { MockComponent, MockService } from '../../../../../utils/mock';
@@ -18,6 +23,8 @@ import {
   ChatRoomEdge,
   ChatRoomTypeEnum,
 } from '../../../../../../graphql/generated.engine';
+import { EditChatRoomModalService } from '../edit-chat-room-modal/edit-chat-room-modal.service';
+import { SingleChatRoomService } from '../../../services/single-chat-room.service';
 
 describe('ChatRoomTopComponent', () => {
   let comp: ChatRoomTopComponent;
@@ -33,6 +40,14 @@ describe('ChatRoomTopComponent', () => {
           useValue: MockService(ChatRoomAvatarsService),
         },
         { provide: WINDOW, useValue: jasmine.createSpyObj<Window>(['open']) },
+        {
+          provide: EditChatRoomModalService,
+          useValue: MockService(EditChatRoomModalService),
+        },
+        {
+          provide: SingleChatRoomService,
+          useValue: MockService(SingleChatRoomService),
+        },
       ],
     }).overrideComponent(ChatRoomTopComponent, {
       set: {
@@ -184,5 +199,39 @@ describe('ChatRoomTopComponent', () => {
         fixture.nativeElement.querySelector('.m-chatRoomTop__rightContainer i')
       ).toBeFalsy();
     });
+  });
+
+  describe('onEditChatNameClick', () => {
+    it('should handle successful chat room name edit', fakeAsync(() => {
+      (comp as any)._chatRoomEdge = mockChatRoomEdge;
+      (comp as any).editChatRoomModalService.open.and.returnValue(
+        Promise.resolve(true)
+      );
+
+      (comp as any).onEditChatNameClick();
+      tick();
+
+      expect((comp as any).editChatRoomModalService.open).toHaveBeenCalledWith(
+        mockChatRoomEdge
+      );
+      expect((comp as any).singleChatRoomService.refetch).toHaveBeenCalled();
+    }));
+
+    it('should handle unsuccessful chat room name edit', fakeAsync(() => {
+      (comp as any)._chatRoomEdge = mockChatRoomEdge;
+      (comp as any).editChatRoomModalService.open.and.returnValue(
+        Promise.resolve(false)
+      );
+
+      (comp as any).onEditChatNameClick();
+      tick();
+
+      expect((comp as any).editChatRoomModalService.open).toHaveBeenCalledWith(
+        mockChatRoomEdge
+      );
+      expect(
+        (comp as any).singleChatRoomService.refetch
+      ).not.toHaveBeenCalled();
+    }));
   });
 });

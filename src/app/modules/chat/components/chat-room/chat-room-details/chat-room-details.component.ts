@@ -4,12 +4,22 @@ import {
   EventEmitter,
   Injector,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
 import { ChatMembersListComponent } from './chat-members-list/chat-members-list.component';
 import { TotalChatRoomMembersService } from '../../../services/total-chat-room-members.service';
-import { Observable, firstValueFrom, map } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  firstValueFrom,
+  last,
+  map,
+  take,
+  takeLast,
+  throttleTime,
+} from 'rxjs';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { ChatRoomMembersService } from '../../../services/chat-room-members.service';
 import { CommonModule } from '../../../../../common/common.module';
@@ -28,6 +38,7 @@ import {
   ModalService,
 } from '../../../../../services/ux/modal.service';
 import { ConfirmV2Component } from '../../../../modals/confirm-v2/confirm.component';
+import { EditChatRoomModalService } from '../edit-chat-room-modal/edit-chat-room-modal.service';
 
 /**
  * Details panel for a given chat room.
@@ -45,7 +56,7 @@ import { ConfirmV2Component } from '../../../../modals/confirm-v2/confirm.compon
   ],
   standalone: true,
 })
-export class ChatRoomDetailsComponent implements OnInit {
+export class ChatRoomDetailsComponent implements OnInit, OnDestroy {
   // Enums for use in template.
   protected readonly ChatRoomTypeEnum: typeof ChatRoomTypeEnum =
     ChatRoomTypeEnum;
@@ -83,12 +94,16 @@ export class ChatRoomDetailsComponent implements OnInit {
       map((chatRoom: ChatRoomEdge): boolean => chatRoom?.node?.isUserRoomOwner)
     );
 
+  private chatRoomEdge: ChatRoomEdge;
+  private chatRoomSubscription: Subscription;
+
   constructor(
     private totalChatRoomMembersService: TotalChatRoomMembersService,
     private chatRoomMembersService: ChatRoomMembersService,
     private singleChatRoomService: SingleChatRoomService,
     private userActionsService: ChatRoomUserActionsService,
     private chatRoomsListService: ChatRoomsListService,
+    private editChatRoomModalService: EditChatRoomModalService,
     private modalService: ModalService,
     private router: Router,
     private route: ActivatedRoute,
@@ -97,6 +112,16 @@ export class ChatRoomDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.chatRoomMembersService.init(this.roomGuid);
+
+    this.chatRoomSubscription = this.chatRoom$.subscribe(
+      (chatRoomEdge: ChatRoomEdge) => {
+        this.chatRoomEdge = chatRoomEdge;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.chatRoomSubscription?.unsubscribe();
   }
 
   /**
@@ -198,6 +223,16 @@ export class ChatRoomDetailsComponent implements OnInit {
         injector: this.injector,
       }
     );
+  }
+
+  /**
+   * Handle edit chat room click.
+   * @returns { Promise<void> }
+   */
+  protected async onEditChatNameClick(): Promise<void> {
+    if (await this.editChatRoomModalService.open(this.chatRoomEdge)) {
+      this.singleChatRoomService.refetch();
+    }
   }
 
   private navigateBack(): void {
