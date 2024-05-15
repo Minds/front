@@ -25,6 +25,7 @@ import {
 } from '../../../../../../graphql/generated.engine';
 import { EditChatRoomModalService } from '../edit-chat-room-modal/edit-chat-room-modal.service';
 import { SingleChatRoomService } from '../../../services/single-chat-room.service';
+import { BehaviorSubject } from 'rxjs';
 
 describe('ChatRoomTopComponent', () => {
   let comp: ChatRoomTopComponent;
@@ -46,7 +47,14 @@ describe('ChatRoomTopComponent', () => {
         },
         {
           provide: SingleChatRoomService,
-          useValue: MockService(SingleChatRoomService),
+          useValue: MockService(SingleChatRoomService, {
+            has: ['chatRoom$'],
+            props: {
+              chatRoom$: {
+                get: () => new BehaviorSubject<ChatRoomEdge>(mockChatRoomEdge),
+              },
+            },
+          }),
         },
       ],
     }).overrideComponent(ChatRoomTopComponent, {
@@ -203,7 +211,6 @@ describe('ChatRoomTopComponent', () => {
 
   describe('onEditChatNameClick', () => {
     it('should handle successful chat room name edit', fakeAsync(() => {
-      (comp as any)._chatRoomEdge = mockChatRoomEdge;
       (comp as any).editChatRoomModalService.open.and.returnValue(
         Promise.resolve(true)
       );
@@ -214,11 +221,9 @@ describe('ChatRoomTopComponent', () => {
       expect((comp as any).editChatRoomModalService.open).toHaveBeenCalledWith(
         mockChatRoomEdge
       );
-      expect((comp as any).singleChatRoomService.refetch).toHaveBeenCalled();
     }));
 
     it('should handle unsuccessful chat room name edit', fakeAsync(() => {
-      (comp as any)._chatRoomEdge = mockChatRoomEdge;
       (comp as any).editChatRoomModalService.open.and.returnValue(
         Promise.resolve(false)
       );
@@ -229,9 +234,6 @@ describe('ChatRoomTopComponent', () => {
       expect((comp as any).editChatRoomModalService.open).toHaveBeenCalledWith(
         mockChatRoomEdge
       );
-      expect(
-        (comp as any).singleChatRoomService.refetch
-      ).not.toHaveBeenCalled();
     }));
   });
 });

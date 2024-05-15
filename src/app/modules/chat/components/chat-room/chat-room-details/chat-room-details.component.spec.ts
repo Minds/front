@@ -235,7 +235,6 @@ describe('ChatRoomDetailsComponent', () => {
 
   describe('onEditChatNameClick', () => {
     it('should handle successful chat room name edit', fakeAsync(() => {
-      (comp as any).chatRoomEdge = mockChatRoomEdge;
       (comp as any).editChatRoomModalService.open.and.returnValue(
         Promise.resolve(true)
       );
@@ -246,11 +245,9 @@ describe('ChatRoomDetailsComponent', () => {
       expect((comp as any).editChatRoomModalService.open).toHaveBeenCalledWith(
         mockChatRoomEdge
       );
-      expect((comp as any).singleChatRoomService.refetch).toHaveBeenCalled();
     }));
 
     it('should handle unsuccessful chat room name edit', fakeAsync(() => {
-      (comp as any).chatRoomEdge = mockChatRoomEdge;
       (comp as any).editChatRoomModalService.open.and.returnValue(
         Promise.resolve(false)
       );
@@ -261,9 +258,6 @@ describe('ChatRoomDetailsComponent', () => {
       expect((comp as any).editChatRoomModalService.open).toHaveBeenCalledWith(
         mockChatRoomEdge
       );
-      expect(
-        (comp as any).singleChatRoomService.refetch
-      ).not.toHaveBeenCalled();
     }));
   });
 });

@@ -21,6 +21,7 @@ import {
 } from '../../../services/chat-room-avatars.service';
 import { EditChatRoomModalService } from '../edit-chat-room-modal/edit-chat-room-modal.service';
 import { SingleChatRoomService } from '../../../services/single-chat-room.service';
+import { firstValueFrom } from 'rxjs';
 
 /**
  * Top section of a chat room, containing the room name, and submenu icon.
@@ -36,7 +37,6 @@ import { SingleChatRoomService } from '../../../services/single-chat-room.servic
 export class ChatRoomTopComponent {
   /** Chat room edge. */
   @Input() protected set chatRoomEdge(chatRoomEdge: ChatRoomEdge) {
-    this._chatRoomEdge = chatRoomEdge;
     this.roomName = chatRoomEdge?.node?.name;
     this.avatars =
       chatRoomEdge?.node?.roomType === ChatRoomTypeEnum.GroupOwned &&
@@ -69,9 +69,6 @@ export class ChatRoomTopComponent {
   /** Whether edit room button should be shown. */
   protected showEditRoomButton: boolean = false;
 
-  /** Reference to chat message edge. */
-  private _chatRoomEdge: ChatRoomEdge;
-
   constructor(
     public cd: ChangeDetectorRef,
     private chatRoomAvatarsService: ChatRoomAvatarsService,
@@ -94,8 +91,8 @@ export class ChatRoomTopComponent {
    * @returns { Promise<void> }
    */
   protected async onEditChatNameClick(): Promise<void> {
-    if (await this.editChatRoomModalService.open(this._chatRoomEdge)) {
-      this.singleChatRoomService.refetch();
-    }
+    await this.editChatRoomModalService.open(
+      await firstValueFrom(this.singleChatRoomService.chatRoom$)
+    );
   }
 }

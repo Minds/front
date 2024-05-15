@@ -56,7 +56,7 @@ import { EditChatRoomModalService } from '../edit-chat-room-modal/edit-chat-room
   ],
   standalone: true,
 })
-export class ChatRoomDetailsComponent implements OnInit, OnDestroy {
+export class ChatRoomDetailsComponent implements OnInit {
   // Enums for use in template.
   protected readonly ChatRoomTypeEnum: typeof ChatRoomTypeEnum =
     ChatRoomTypeEnum;
@@ -94,9 +94,6 @@ export class ChatRoomDetailsComponent implements OnInit, OnDestroy {
       map((chatRoom: ChatRoomEdge): boolean => chatRoom?.node?.isUserRoomOwner)
     );
 
-  private chatRoomEdge: ChatRoomEdge;
-  private chatRoomSubscription: Subscription;
-
   constructor(
     private totalChatRoomMembersService: TotalChatRoomMembersService,
     private chatRoomMembersService: ChatRoomMembersService,
@@ -112,16 +109,6 @@ export class ChatRoomDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.chatRoomMembersService.init(this.roomGuid);
-
-    this.chatRoomSubscription = this.chatRoom$.subscribe(
-      (chatRoomEdge: ChatRoomEdge) => {
-        this.chatRoomEdge = chatRoomEdge;
-      }
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.chatRoomSubscription?.unsubscribe();
   }
 
   /**
@@ -230,9 +217,9 @@ export class ChatRoomDetailsComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> }
    */
   protected async onEditChatNameClick(): Promise<void> {
-    if (await this.editChatRoomModalService.open(this.chatRoomEdge)) {
-      this.singleChatRoomService.refetch();
-    }
+    await this.editChatRoomModalService.open(
+      await firstValueFrom(this.chatRoom$)
+    );
   }
 
   private navigateBack(): void {
