@@ -8,6 +8,8 @@ import { Session } from '../../../services/session';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { BoostableEntity } from './boost-modal-v2.types';
+import userMock from '../../../mocks/responses/user.mock';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 
 describe('BoostModalV2LazyService', () => {
   let service: BoostModalV2LazyService;
@@ -28,6 +30,7 @@ describe('BoostModalV2LazyService', () => {
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: IS_TENANT_NETWORK, useValue: false },
         BoostModalV2LazyService,
       ],
     });
@@ -51,4 +54,51 @@ describe('BoostModalV2LazyService', () => {
 
     expect((service as any).modalService.present).not.toHaveBeenCalled();
   }));
+
+  describe('openUpsellModal', () => {
+    it('should open upsell modal when user is not plus or pro, and is not on tenant', fakeAsync(() => {
+      (service as any).session.getLoggedInUser.and.returnValue({
+        userMock,
+        plus: false,
+        pro: false,
+      });
+      (service as any).isTenantNetwork = false;
+      (service as any).upsellModal.open.and.returnValue(Promise.resolve());
+
+      (service as any).openUpsellModal();
+      tick(401);
+
+      expect((service as any).upsellModal.open).toHaveBeenCalled();
+    }));
+
+    it('should NOT open upsell modal when user is plus or pro', fakeAsync(() => {
+      (service as any).session.getLoggedInUser.and.returnValue({
+        userMock,
+        plus: true,
+        pro: true,
+      });
+      (service as any).isTenantNetwork = false;
+      (service as any).upsellModal.open.and.returnValue(Promise.resolve());
+
+      (service as any).openUpsellModal();
+      tick(401);
+
+      expect((service as any).upsellModal.open).not.toHaveBeenCalled();
+    }));
+
+    it('should NOT open upsell modal when user is on tenant network', fakeAsync(() => {
+      (service as any).session.getLoggedInUser.and.returnValue({
+        userMock,
+        plus: true, // should not be true on tenant, but for the sake of testing
+        pro: true,
+      });
+      (service as any).isTenantNetwork = true;
+      (service as any).upsellModal.open.and.returnValue(Promise.resolve());
+
+      (service as any).openUpsellModal();
+      tick(401);
+
+      expect((service as any).upsellModal.open).not.toHaveBeenCalled();
+    }));
+  });
 });

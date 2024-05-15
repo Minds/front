@@ -15,6 +15,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Session } from '../../../services/session';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { ToasterService } from '../../../common/services/toaster.service';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 
 type PresentableBoostModalComponent = typeof BoostModalV2Component;
 
@@ -33,7 +34,8 @@ export class BoostModalV2LazyService {
     private session: Session,
     private permissionsService: PermissionsService,
     private toasterService: ToasterService,
-    @Inject(PLATFORM_ID) protected platformId: Object
+    @Inject(PLATFORM_ID) protected platformId: Object,
+    @Inject(IS_TENANT_NETWORK) protected readonly isTenantNetwork: boolean
   ) {}
 
   /**
@@ -85,6 +87,7 @@ export class BoostModalV2LazyService {
    */
   private async openUpsellModal() {
     if (
+      !this.isTenantNetwork &&
       !(
         this.session.getLoggedInUser().plus ||
         this.session.getLoggedInUser().pro
