@@ -23,10 +23,13 @@ describe('NetworkAdminConsoleBoostsComponent', () => {
         {
           provide: BoostConsoleService,
           useValue: MockService(BoostConsoleService, {
-            has: ['adminContext$'],
+            has: ['adminContext$', 'locationFilterValue$'],
             props: {
               adminContext$: {
                 get: () => new BehaviorSubject<boolean>(false),
+              },
+              locationFilterValue$: {
+                get: () => new BehaviorSubject<string>('all'),
               },
             },
           }),
@@ -38,6 +41,7 @@ describe('NetworkAdminConsoleBoostsComponent', () => {
     comp = fixture.componentInstance;
 
     (comp as any).boostConsoleService.adminContext$.next(false);
+    (comp as any).boostConsoleService.locationFilterValue$.next('all');
 
     fixture.detectChanges();
     if (fixture.isStable()) {
@@ -56,12 +60,16 @@ describe('NetworkAdminConsoleBoostsComponent', () => {
 
   it('should set admin context on init', () => {
     (comp as any).boostConsoleService.adminContext$.next(false);
+    (comp as any).boostConsoleService.locationFilterValue$.next(null);
 
     comp.ngOnInit();
 
     expect(
       (comp as any).boostConsoleService.adminContext$.getValue()
     ).toBeTrue();
+    expect(
+      (comp as any).boostConsoleService.locationFilterValue$.getValue()
+    ).toBe('all');
   });
 
   it('should render boost console list', () => {

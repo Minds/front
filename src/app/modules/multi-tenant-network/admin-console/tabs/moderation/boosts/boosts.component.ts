@@ -16,5 +16,6 @@ export class NetworkAdminConsoleBoostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.boostConsoleService.adminContext$.next(true);
+    this.boostConsoleService.locationFilterValue$.next('all');
   }
 }
