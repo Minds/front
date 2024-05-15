@@ -979,6 +979,8 @@ export type Mutation = {
   /** Creates a comment on a remote url */
   createEmbeddedComment: CommentEdge;
   createGiftCard: GiftCardNode;
+  /** Creates a new group chat room. */
+  createGroupChatRoom: ChatRoomEdge;
   createMultiTenantDomain: MultiTenantDomain;
   createNetworkRootUser: TenantUser;
   /** Create a new report. */
@@ -995,6 +997,8 @@ export type Mutation = {
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
+  /** Deletes group chat rooms. */
+  deleteGroupChatRooms: Scalars['Boolean']['output'];
   deletePersonalApiKey: Scalars['Boolean']['output'];
   deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
@@ -1090,6 +1094,10 @@ export type MutationCreateGiftCardArgs = {
   targetInput: GiftCardTargetInput;
 };
 
+export type MutationCreateGroupChatRoomArgs = {
+  groupGuid: Scalars['String']['input'];
+};
+
 export type MutationCreateMultiTenantDomainArgs = {
   hostname: Scalars['String']['input'];
 };
@@ -1139,6 +1147,10 @@ export type MutationDeleteEntityArgs = {
 
 export type MutationDeleteFeaturedEntityArgs = {
   entityGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteGroupChatRoomsArgs = {
+  groupGuid: Scalars['String']['input'];
 };
 
 export type MutationDeletePersonalApiKeyArgs = {
@@ -2311,6 +2323,27 @@ export type CreateChatRoomMutation = {
   };
 };
 
+export type CreateGroupChatRoomMutationVariables = Exact<{
+  groupGuid: Scalars['String']['input'];
+}>;
+
+export type CreateGroupChatRoomMutation = {
+  __typename?: 'Mutation';
+  createGroupChatRoom: {
+    __typename?: 'ChatRoomEdge';
+    cursor: string;
+    node: {
+      __typename?: 'ChatRoomNode';
+      id: string;
+      guid: string;
+      roomType: ChatRoomTypeEnum;
+      groupGuid?: string | null;
+      timeCreatedISO8601: string;
+      timeCreatedUnix: string;
+    };
+  };
+};
+
 export type DeleteChatMessageMutationVariables = Exact<{
   roomGuid: Scalars['String']['input'];
   messageGuid: Scalars['String']['input'];
@@ -2337,6 +2370,15 @@ export type DeleteChatRoomMutationVariables = Exact<{
 export type DeleteChatRoomMutation = {
   __typename?: 'Mutation';
   deleteChatRoom: boolean;
+};
+
+export type DeleteGroupChatRoomsMutationVariables = Exact<{
+  groupGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteGroupChatRoomsMutation = {
+  __typename?: 'Mutation';
+  deleteGroupChatRooms: boolean;
 };
 
 export type GetChatMessagesQueryVariables = Exact<{
@@ -7783,6 +7825,35 @@ export class CreateChatRoomGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const CreateGroupChatRoomDocument = gql`
+  mutation CreateGroupChatRoom($groupGuid: String!) {
+    createGroupChatRoom(groupGuid: $groupGuid) {
+      cursor
+      node {
+        id
+        guid
+        roomType
+        groupGuid
+        timeCreatedISO8601
+        timeCreatedUnix
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateGroupChatRoomGQL extends Apollo.Mutation<
+  CreateGroupChatRoomMutation,
+  CreateGroupChatRoomMutationVariables
+> {
+  document = CreateGroupChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const DeleteChatMessageDocument = gql`
   mutation DeleteChatMessage($roomGuid: String!, $messageGuid: String!) {
     deleteChatMessage(roomGuid: $roomGuid, messageGuid: $messageGuid)
@@ -7835,6 +7906,25 @@ export class DeleteChatRoomGQL extends Apollo.Mutation<
   DeleteChatRoomMutationVariables
 > {
   document = DeleteChatRoomDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const DeleteGroupChatRoomsDocument = gql`
+  mutation DeleteGroupChatRooms($groupGuid: String!) {
+    deleteGroupChatRooms(groupGuid: $groupGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteGroupChatRoomsGQL extends Apollo.Mutation<
+  DeleteGroupChatRoomsMutation,
+  DeleteGroupChatRoomsMutationVariables
+> {
+  document = DeleteGroupChatRoomsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, Injector } from '@angular/core';
 import { GroupService } from '../group.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest, map } from 'rxjs';
 import { GroupMembershipChangeOuput } from '../../../../common/components/group-membership-button/group-membership-button.component';
-import { ComposerService } from '../../../composer/services/composer.service';
-import { ComposerModalService } from '../../../composer/components/modal/modal.service';
-import { ActivityContainer } from '../../../composer/services/audience.service';
 
 /**
  * Toolbar at top of group banner, with options that change
@@ -18,6 +15,25 @@ import { ActivityContainer } from '../../../composer/services/audience.service';
 })
 export class GroupActionsComponent {
   subscriptions: Subscription[];
+
+  /** Whether chat button should be shown. */
+  protected readonly shouldShowChatButton$: Observable<boolean> = combineLatest(
+    [
+      this.service.isCoversationDisabled$,
+      this.service.isMember$,
+      this.service.isOwner$,
+    ]
+  ).pipe(
+    map(
+      ([isCoversationDisabled, isMember, isOwner]: [
+        boolean,
+        boolean,
+        boolean,
+      ]): boolean => {
+        return (isMember && !isCoversationDisabled) || isOwner;
+      }
+    )
+  );
 
   /**
    * Constructor

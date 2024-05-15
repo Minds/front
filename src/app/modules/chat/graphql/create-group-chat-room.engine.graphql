@@ -1,0 +1,13 @@
+mutation CreateGroupChatRoom($groupGuid: String!) {
+    createGroupChatRoom(groupGuid: $groupGuid) {
+        cursor
+        node {
+            id
+            guid
+            roomType
+            groupGuid
+            timeCreatedISO8601
+            timeCreatedUnix
+        }
+    }
+}

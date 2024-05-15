@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { CreateChatRoomService } from '../../../chat/services/create-chat-room.service';
-import { ChatRoomTypeEnum } from '../../../../../graphql/generated.engine';
+import { ChatRoomEdge } from '../../../../../graphql/generated.engine';
 import { BehaviorSubject } from 'rxjs';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { Router } from '@angular/router';
+import { GroupChatRoomService } from '../services/group-chat-rooms.service';
 
 /**
  * Button to create a chat room for a group.
@@ -36,7 +36,7 @@ export class GroupChatButton {
     new BehaviorSubject<boolean>(false);
 
   constructor(
-    private createChatRoomService: CreateChatRoomService,
+    private groupChatRoomService: GroupChatRoomService,
     private toasterService: ToasterService,
     private router: Router
   ) {}
@@ -49,18 +49,14 @@ export class GroupChatButton {
     this.actionInProgress$.next(true);
 
     try {
-      const chatRoomGuid: string =
-        await this.createChatRoomService.createChatRoom(
-          [],
-          ChatRoomTypeEnum.GroupOwned,
-          this.groupGuid
-        );
+      const result: ChatRoomEdge =
+        await this.groupChatRoomService.createGroupChatRoom(this.groupGuid);
 
-      if (!chatRoomGuid) {
+      if (!result?.node?.guid) {
         throw new Error('An error occurred, please try again later.');
       }
 
-      this.router.navigateByUrl(`/chat/rooms/${chatRoomGuid}`);
+      this.router.navigateByUrl(`/chat/rooms/${result?.node?.guid}`);
     } catch (e: unknown) {
       console.error(e);
       this.actionInProgress$.next(false);
