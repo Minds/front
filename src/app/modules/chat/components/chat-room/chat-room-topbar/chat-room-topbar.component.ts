@@ -38,6 +38,7 @@ export class ChatRoomTopComponent {
   /** Chat room edge. */
   @Input() protected set chatRoomEdge(chatRoomEdge: ChatRoomEdge) {
     this.roomName = chatRoomEdge?.node?.name;
+
     this.avatars =
       chatRoomEdge?.node?.roomType === ChatRoomTypeEnum.GroupOwned &&
       chatRoomEdge.node?.groupGuid
@@ -47,6 +48,7 @@ export class ChatRoomTopComponent {
         : this.chatRoomAvatarsService.getUserAvatarObjects(
             chatRoomEdge.members?.edges
           );
+
     this.showEditRoomButton =
       chatRoomEdge.node.isUserRoomOwner &&
       chatRoomEdge?.node?.roomType === ChatRoomTypeEnum.MultiUser;

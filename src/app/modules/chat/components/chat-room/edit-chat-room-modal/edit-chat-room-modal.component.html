@@ -33,7 +33,7 @@
         />
       </div>
       <m-formError
-        *ngIf="formGroup.get('roomName').dirty"
+        *ngIf="formGroup.get('roomName')?.dirty"
         [errors]="formGroup.get('roomName')?.errors"
       >
       </m-formError>

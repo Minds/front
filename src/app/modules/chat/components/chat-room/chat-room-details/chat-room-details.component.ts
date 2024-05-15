@@ -4,22 +4,12 @@ import {
   EventEmitter,
   Injector,
   Input,
-  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
 import { ChatMembersListComponent } from './chat-members-list/chat-members-list.component';
 import { TotalChatRoomMembersService } from '../../../services/total-chat-room-members.service';
-import {
-  Observable,
-  Subscription,
-  firstValueFrom,
-  last,
-  map,
-  take,
-  takeLast,
-  throttleTime,
-} from 'rxjs';
+import { Observable, firstValueFrom, map } from 'rxjs';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { ChatRoomMembersService } from '../../../services/chat-room-members.service';
 import { CommonModule } from '../../../../../common/common.module';
