@@ -8,8 +8,8 @@ import { EditChatRoomModalComponent } from './edit-chat-room-modal.component';
 import { ChatRoomEdge } from '../../../../../../graphql/generated.engine';
 
 /**
- * Start chat modal service - opens modal to allow the user to select participants to start
- * a chat with.
+ * Edit chat room modal service - opens modal to allow the user to
+ * edit their chat room details.
  */
 @Injectable({ providedIn: 'root' })
 export class EditChatRoomModalService {
