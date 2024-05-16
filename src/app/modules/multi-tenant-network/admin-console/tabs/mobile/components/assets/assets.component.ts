@@ -45,6 +45,8 @@ export class NetworkAdminConsoleMobileAssetsComponent implements OnDestroy {
     this.MobileAppBuildImageService.squareLogoPath$;
   public readonly horizontalLogoFilePath$: Observable<string> =
     this.MobileAppBuildImageService.horizontalLogoPath$;
+  public readonly monographicIconFilePath$: Observable<string> =
+    this.MobileAppBuildImageService.monographicIconPath$;
 
   // in progress variables for different files.
   public readonly splashUploadInProgress$: BehaviorSubject<boolean> =
@@ -54,6 +56,8 @@ export class NetworkAdminConsoleMobileAssetsComponent implements OnDestroy {
   public readonly squareLogoUploadInProgress$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
   public readonly horizontalLogoUploadInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  public readonly monographicIconUploadInProgress$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
   private subscriptions: Subscription[] = [];
@@ -134,6 +138,8 @@ export class NetworkAdminConsoleMobileAssetsComponent implements OnDestroy {
         return this.MobileAppBuildImageService.squareLogoFile$;
       case MobileConfigImageTypeEnum.HorizontalLogo:
         return this.MobileAppBuildImageService.horizontalLogoFile$;
+      case MobileConfigImageTypeEnum.MonographicIcon:
+        return this.MobileAppBuildImageService.monographicIconFile$;
       default:
         throw new Error(`Unsupported image type: ${imageType}`);
     }
@@ -156,6 +162,8 @@ export class NetworkAdminConsoleMobileAssetsComponent implements OnDestroy {
         return this.squareLogoUploadInProgress$;
       case MobileConfigImageTypeEnum.HorizontalLogo:
         return this.horizontalLogoUploadInProgress$;
+      case MobileConfigImageTypeEnum.MonographicIcon:
+        return this.monographicIconUploadInProgress$;
       default:
         throw new Error(`Unsupported image type: ${imageType}`);
     }

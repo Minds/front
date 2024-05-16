@@ -58,4 +58,28 @@ describe('MobileAppBuildImageService', () => {
         done();
       });
   });
+
+  describe('monographicIconPath$', () => {
+    it('should grab monographic icon path when no file is set', (done: DoneFn) => {
+      service.monographicIconPath$
+        .pipe(take(1))
+        .subscribe((path: string): void => {
+          expect(
+            path.startsWith(`${IMAGE_URL_BASE_PATH}monographic_icon?`)
+          ).toBeTrue();
+          done();
+        });
+    });
+
+    it('should grab monographic icon path from local file system when a file is set', (done: DoneFn) => {
+      const file: File = new File([''], 'test');
+      service.monographicIconFile$.next(file);
+      service.monographicIconPath$
+        .pipe(take(1))
+        .subscribe((path: string): void => {
+          expect(path.startsWith(`blob:`)).toBeTrue();
+          done();
+        });
+    });
+  });
 });

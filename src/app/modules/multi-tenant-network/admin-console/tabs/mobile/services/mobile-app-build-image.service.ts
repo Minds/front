@@ -12,6 +12,7 @@ export enum MobileConfigImageTypeEnum {
   Splash = 'splash',
   SquareLogo = 'square_logo',
   HorizontalLogo = 'horizontal_logo',
+  MonographicIcon = 'monographic_icon',
 }
 
 /** Base path for mobile app config image urls. */
@@ -29,6 +30,9 @@ export const SQUARE_LOGO_PATH: string = `${IMAGE_URL_BASE_PATH}square_logo?${Dat
 
 /** Default path for mobile app build horizontal logo image. */
 export const HORIZONTAL_LOGO_PATH: string = `${IMAGE_URL_BASE_PATH}horizontal_logo?${Date.now()}`;
+
+/** Default path for monographic icon image. */
+export const MONOGRAPHIC_ICON_PATH: string = `${IMAGE_URL_BASE_PATH}monographic_icon?${Date.now()}`;
 
 /**
  * Service for the management of images used in mobile app build configuration.
@@ -52,6 +56,10 @@ export class MobileAppBuildImageService {
 
   /** Storing a reference to a horizontal logo file pre-upload. */
   public readonly horizontalLogoFile$: BehaviorSubject<File> =
+    new BehaviorSubject<File>(null);
+
+  /** Storing a reference to a monographic icon file pre-upload. */
+  public readonly monographicIconFile$: BehaviorSubject<File> =
     new BehaviorSubject<File>(null);
 
   /** Observable of the icon path. */
@@ -79,6 +87,14 @@ export class MobileAppBuildImageService {
     this.horizontalLogoFile$.pipe(
       map((file: File): string =>
         file ? URL.createObjectURL(file) : HORIZONTAL_LOGO_PATH
+      )
+    );
+
+  /** Observable of the monographic icon path. */
+  public readonly monographicIconPath$: Observable<string> =
+    this.monographicIconFile$.pipe(
+      map((file: File): string =>
+        file ? URL.createObjectURL(file) : MONOGRAPHIC_ICON_PATH
       )
     );
 

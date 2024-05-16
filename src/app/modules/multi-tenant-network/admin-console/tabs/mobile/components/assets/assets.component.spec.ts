@@ -36,10 +36,12 @@ describe('NetworkAdminConsoleMobileAssetsComponent', () => {
               'splashPath$',
               'squareLogoPath$',
               'horizontalLogoPath$',
+              'monographicIconPath$',
               'iconFile$',
               'splashFile$',
               'squareLogoFile$',
               'horizontalLogoFile$',
+              'monographicIconFile$',
             ],
             props: {
               iconPath$: { get: () => new BehaviorSubject<string>(null) },
@@ -48,10 +50,16 @@ describe('NetworkAdminConsoleMobileAssetsComponent', () => {
               horizontalLogoPath$: {
                 get: () => new BehaviorSubject<string>(null),
               },
+              monographicIconPath$: {
+                get: () => new BehaviorSubject<string>(null),
+              },
               iconFile$: { get: () => new BehaviorSubject<File>(null) },
               splashFile$: { get: () => new BehaviorSubject<File>(null) },
               squareLogoFile$: { get: () => new BehaviorSubject<File>(null) },
               horizontalLogoFile$: {
+                get: () => new BehaviorSubject<File>(null),
+              },
+              monographicIconFile$: {
                 get: () => new BehaviorSubject<File>(null),
               },
             },
@@ -72,14 +80,20 @@ describe('NetworkAdminConsoleMobileAssetsComponent', () => {
     (comp as any).MobileAppBuildImageService.horizontalLogoPath$.next(
       '/horizontal.png'
     );
+    (comp as any).MobileAppBuildImageService.monographicIconPath$.next(
+      '/monographic-icon.png'
+    );
     (comp as any).MobileAppBuildImageService.iconFile$.next(null);
     (comp as any).MobileAppBuildImageService.splashFile$.next(null);
     (comp as any).MobileAppBuildImageService.squareLogoFile$.next(null);
     (comp as any).MobileAppBuildImageService.horizontalLogoFile$.next(null);
+    (comp as any).MobileAppBuildImageService.monographicIconFile$.next(null);
+
     comp.splashUploadInProgress$.next(false);
     comp.iconUploadInProgress$.next(false);
     comp.squareLogoUploadInProgress$.next(false);
     comp.horizontalLogoUploadInProgress$.next(false);
+    comp.monographicIconUploadInProgress$.next(false);
   });
 
   it('should init', () => {
@@ -185,6 +199,31 @@ describe('NetworkAdminConsoleMobileAssetsComponent', () => {
         'Upload successful'
       );
       expect(comp.horizontalLogoUploadInProgress$.getValue()).toBe(false);
+    }));
+
+    it('should handle image change for horizontal logo', fakeAsync(() => {
+      const imageType: MobileConfigImageTypeEnum =
+        MobileConfigImageTypeEnum.MonographicIcon;
+      const file: File = new File([], 'monographic-icon.png');
+      (comp as any).MobileAppBuildImageService.upload.and.returnValue(
+        of({
+          type: 4,
+        })
+      );
+
+      comp.onImageChange(file, imageType);
+      tick();
+
+      expect(
+        (comp as any).MobileAppBuildImageService.monographicIconFile$.getValue()
+      ).toBe(file);
+      expect(
+        (comp as any).MobileAppBuildImageService.upload
+      ).toHaveBeenCalledWith(file, imageType);
+      expect((comp as any).toaster.success).toHaveBeenCalledWith(
+        'Upload successful'
+      );
+      expect(comp.monographicIconUploadInProgress$.getValue()).toBe(false);
     }));
 
     it('should ignore response types that are not 4', fakeAsync(() => {
