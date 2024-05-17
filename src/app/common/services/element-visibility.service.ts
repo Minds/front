@@ -44,7 +44,7 @@ export class ElementVisibilityService implements OnDestroy {
     );
 
     this.intersectionSubscription = this.observable
-      .pipe(debounceTime(3000), throttleTime(300))
+      .pipe(debounceTime(1500), throttleTime(300))
       .subscribe((isVisible) => {
         this.isVisible = isVisible;
 
