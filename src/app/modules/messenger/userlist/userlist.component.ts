@@ -16,7 +16,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
  * Messenger was replaced with Minds Chat
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-messenger--userlist',
   templateUrl: 'userlist.component.html',
 })

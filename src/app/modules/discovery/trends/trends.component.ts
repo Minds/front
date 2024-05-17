@@ -11,6 +11,7 @@ import {
   ActivatedRoute,
   RouterEvent,
   NavigationEnd,
+  Event,
 } from '@angular/router';
 import {
   filter,
@@ -65,9 +66,9 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.routerEventsSubscription = this.router.events
       .pipe(
-        filter((event: RouterEvent) => event instanceof NavigationEnd),
+        filter((event: Event | RouterEvent) => event instanceof NavigationEnd),
         pairwise(),
-        filter((events: RouterEvent[]) => events[0].url === events[1].url),
+        filter((events: any[]) => events[0].url === events[1].url),
         startWith('Initial call')
         // takeUntil(this.destroyed)
       )

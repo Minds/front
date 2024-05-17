@@ -23,7 +23,6 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
  */
 export type PaywallType = 'plus' | 'tier' | 'custom';
 @Component({
-  moduleId: module.id,
   selector: 'm-wire--lock-screen',
   templateUrl: 'wire-lock-screen.component.html',
   styleUrls: ['wire-lock-screen.component.ng.scss'],

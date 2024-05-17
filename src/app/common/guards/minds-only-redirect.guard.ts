@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree,
@@ -14,7 +13,7 @@ import { IsTenantService } from '../services/is-tenant.service';
  * routes that are only relevant on minds.com
  */
 @Injectable()
-export class MindsOnlyRedirectGuard implements CanActivate {
+export class MindsOnlyRedirectGuard {
   constructor(
     private isTenant: IsTenantService,
     private router: Router

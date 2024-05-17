@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-admin-withdrawals',
   templateUrl: 'withdrawals.component.html',
   styleUrls: ['./withdrawals.component.ng.scss'],

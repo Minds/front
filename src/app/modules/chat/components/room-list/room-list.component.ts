@@ -28,6 +28,7 @@ import { CommonModule } from '../../../../common/common.module';
 import { ChatActionCardComponent } from '../action-cards/action-card.component';
 import {
   ActivatedRoute,
+  Event,
   NavigationEnd,
   Router,
   RouterEvent,
@@ -111,7 +112,7 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
 
     this.routerEventsSubscription = this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
-      .subscribe((event: RouterEvent) => {
+      .subscribe((event: Event | RouterEvent) => {
         this.currentRoomId$.next(
           this.route.snapshot.firstChild.params['roomId']
         );

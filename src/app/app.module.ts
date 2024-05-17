@@ -1,12 +1,9 @@
 import {
+  APP_ID,
   APP_INITIALIZER,
   CUSTOM_ELEMENTS_SCHEMA,
   NgModule,
 } from '@angular/core';
-import {
-  BrowserModule,
-  BrowserTransferStateModule,
-} from '@angular/platform-browser';
 // import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -46,7 +43,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
 //import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
-import { CookieModule } from '@mindsorg/ngx-universal';
+import { CookieModule } from '@gorniv/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
@@ -69,8 +66,6 @@ import { ValuePropModule } from './modules/value-prop/value-prop.module';
   bootstrap: [Minds],
   declarations: [Minds, Pages],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'm-app' }),
-    BrowserTransferStateModule,
     CookieModule.forRoot(),
     ApolloModule,
     MarkdownModule.forRoot(),
@@ -129,6 +124,7 @@ import { ValuePropModule } from './modules/value-prop/value-prop.module';
       deps: [ConfigsService],
       multi: true,
     },
+    { provide: APP_ID, useValue: 'm-app' },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

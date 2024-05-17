@@ -37,7 +37,6 @@ interface InlineEmbed {
 }
 
 @Component({
-  moduleId: module.id,
   selector: 'm-richEmbed',
   inputs: ['_src: src', '_preview: preview', 'maxheight', 'cropImage'],
   templateUrl: 'rich-embed.html',

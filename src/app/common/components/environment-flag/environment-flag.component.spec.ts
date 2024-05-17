@@ -7,7 +7,7 @@ import {
   CookieOptionsProvider,
   CookieService,
   COOKIE_OPTIONS,
-} from '@mindsorg/ngx-universal';
+} from '@gorniv/ngx-universal';
 
 describe('EnvironmentFlagComponent', () => {
   let comp: EnvironmentFlagComponent;

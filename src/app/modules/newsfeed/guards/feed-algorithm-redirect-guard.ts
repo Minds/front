@@ -1,13 +1,13 @@
 import { FeedAlgorithmHistoryService } from '../services/feed-algorithm-history.service';
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 /**
  * Redirects to route set in FeedAlgorithmHistoryService
  * if one exists
  */
 @Injectable()
-export class FeedAlgorithmRedirectGuard implements CanActivate {
+export class FeedAlgorithmRedirectGuard {
   constructor(
     private router: Router,
     private feedAlgorithmHistory: FeedAlgorithmHistoryService

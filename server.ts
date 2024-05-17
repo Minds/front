@@ -13,7 +13,7 @@ import './server-polyfills';
 
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 import { TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
-import { NgxRequest, NgxResponse } from '@mindsorg/ngx-universal';
+import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
 import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
 import { AppServerModule } from './src/main.server';
 

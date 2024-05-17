@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CookieService } from '@mindsorg/ngx-universal';
+import { CookieService } from '@gorniv/ngx-universal';
 import { Session } from '../../../services/session';
 
 export type EnvironmentFlag = 'Canary' | 'Staging' | '';

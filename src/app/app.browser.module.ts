@@ -4,7 +4,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';
 
-import { CookieModule } from '@mindsorg/ngx-universal';
+import { CookieModule } from '@gorniv/ngx-universal';
 import {
   RedirectService,
   BrowserRedirectService,

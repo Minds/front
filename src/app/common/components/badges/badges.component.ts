@@ -27,7 +27,6 @@ export interface SocialProfileMeta {
  * channel is verified or a founder
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-channel--badges',
   templateUrl: 'badges.component.html',
   styleUrls: ['badges.component.ng.scss'],

@@ -1,7 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-modal-confirm',
   inputs: ['open', 'yesButton', 'noButton', 'closeAfterAction'],
   outputs: ['actioned', 'closed'],

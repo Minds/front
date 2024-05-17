@@ -12,7 +12,6 @@ import { ModalService } from '../../../services/ux/modal.service';
  * NOTE: SMS 2FA is deprecated, this component should only shown to users who already have SMS enabled.
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-settings--two-factor',
   inputs: ['object'],
   templateUrl: 'two-factor.component.html',

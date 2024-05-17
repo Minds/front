@@ -19,7 +19,6 @@ import { Storage } from '../../services/storage';
  * Topbar notification bell toggle.
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-notifications--topbar-toggle',
   templateUrl: 'toggle.component.html',
   styleUrls: ['toggle.component.ng.scss'],

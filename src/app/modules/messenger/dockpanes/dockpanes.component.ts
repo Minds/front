@@ -11,7 +11,6 @@ import { MessengerConversationDockpanesService } from './dockpanes.service';
  * Messenger was replaced with Minds Chat
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-messenger--conversation-dockpanes',
   templateUrl: 'dockpanes.component.html',
 })

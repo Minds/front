@@ -8,7 +8,6 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { SiteService } from '../../../common/services/site.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-admin-reports',
   templateUrl: 'reports.html',
 })

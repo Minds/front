@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { Client } from '../../../services/api';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-admin--verify',
   templateUrl: 'verify.component.html',
 })

@@ -9,7 +9,6 @@ import { ResetPasswordModalService } from './reset-password-modal.service';
  * go through to reset passwords that have been forgotten
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-resetPasswordModal',
   templateUrl: 'reset-password-modal.component.html',
   styleUrls: ['reset-password-modal.component.ng.scss'],

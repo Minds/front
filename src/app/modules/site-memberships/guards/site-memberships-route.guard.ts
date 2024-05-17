@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 import { SiteMembershipsCountService } from '../services/site-membership-count.service';
 
@@ -7,7 +7,7 @@ import { SiteMembershipsCountService } from '../services/site-membership-count.s
  * Guard to check that a user should be able to visit a site memberships page.
  */
 @Injectable({ providedIn: 'root' })
-export class SiteMembershipsRouteGuard implements CanActivate {
+export class SiteMembershipsRouteGuard {
   constructor(
     private membershipsCountService: SiteMembershipsCountService,
     private router: Router,

@@ -7,7 +7,7 @@ import * as xhr2 from 'xhr2';
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';
 import { PlotlyModule } from 'angular-plotly.js';
-import { CookieService, CookieBackendService } from '@mindsorg/ngx-universal';
+import { CookieService, CookieBackendService } from '@gorniv/ngx-universal';
 import {
   ServerRedirectService,
   RedirectService,
@@ -17,7 +17,7 @@ import {
   ServerHeadersService,
 } from './common/services/headers.service';
 import { HlsjsPlyrDriver } from './modules/media/components/video-player/hls-driver';
-import { DefaultPlyrDriver } from '@mindsorg/ngx-plyr';
+import { DefaultPlyrDriver } from 'ngx-plyr-mg';
 import * as Sentry from '@sentry/node';
 import {
   DiagnosticsService,
