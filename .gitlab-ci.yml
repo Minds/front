@@ -28,7 +28,7 @@ cache:
     - node_modules/
 
 test:
-  image: circleci/node:18-browsers
+  image: cypress/browsers:node18.12.0-chrome107
   stage: test and build
   script:
     - sudo npm install -g npm@7
