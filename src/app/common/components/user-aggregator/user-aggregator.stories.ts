@@ -1,5 +1,5 @@
 import { RouterTestingModule } from '@angular/router/testing';
-import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryFn, moduleMetadata } from '@storybook/angular';
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { sampleUsers } from '../../../../tests/samples/sample-users';
 import { Session } from '../../../services/session';
@@ -63,9 +63,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<UserAggregatorComponent> = (
-  args: UserAggregatorComponent
-) => ({
+const Template: StoryFn<any> = (args: UserAggregatorComponent) => ({
   props: args,
 });
 

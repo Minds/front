@@ -1,5 +1,5 @@
 import { RouterTestingModule } from '@angular/router/testing';
-import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { StoryFn, Meta, moduleMetadata } from '@storybook/angular';
 import { sampleUsers } from '../../../../tests/samples/sample-users';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
@@ -59,7 +59,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<ThumbsUpButton> = (args: ThumbsUpButton) => ({
+const Template: StoryFn<any> = (args: ThumbsUpButton) => ({
   props: args,
 });
 

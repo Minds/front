@@ -1,4 +1,4 @@
-import { Story, Meta } from '@storybook/angular';
+import { Meta, StoryFn } from '@storybook/angular';
 import { LoadingSpinnerComponent } from './loading-spinner.component';
 
 export default {
@@ -13,7 +13,7 @@ export default {
   args: {},
 } as Meta;
 
-const Template: Story<LoadingSpinnerComponent> = (
+const Template: StoryFn<LoadingSpinnerComponent> = (
   args: LoadingSpinnerComponent
 ) => ({
   props: args,

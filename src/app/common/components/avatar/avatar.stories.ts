@@ -1,8 +1,8 @@
 import {
-  Story,
   Meta,
   moduleMetadata,
   componentWrapperDecorator,
+  StoryFn,
 } from '@storybook/angular';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
@@ -70,7 +70,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<MindsAvatar> = (args: MindsAvatar) => ({
+const Template: StoryFn<any> = (args: MindsAvatar) => ({
   props: args,
 });
 

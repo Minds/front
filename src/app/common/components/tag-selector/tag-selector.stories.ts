@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
-  Story,
+  StoryFn,
   Meta,
   moduleMetadata,
   componentWrapperDecorator,
@@ -37,7 +37,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<TagSelectorComponent> = (args: TagSelectorComponent) => ({
+const Template: StoryFn<any> = (args: TagSelectorComponent) => ({
   props: args,
 });
 

@@ -1,4 +1,4 @@
-import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryFn, moduleMetadata } from '@storybook/angular';
 import { AnnouncementComponent } from './announcement.component';
 import { CookieService } from '../../../common/services/cookie.service';
 
@@ -31,7 +31,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<AnnouncementComponent> = (
+const Template: StoryFn<AnnouncementComponent> = (
   args: AnnouncementComponent
 ) => ({
   props: args,
