@@ -28,7 +28,7 @@ cache:
     - node_modules/
 
 test:
-  image: circleci/node:16-browsers
+  image: circleci/node:18-browsers
   stage: test and build
   script:
     - sudo npm install -g npm@7
@@ -182,7 +182,6 @@ build:review:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
     - npm i && npm install -g gulp-cli
-    - npm run postinstall
     - sh build/ng-bundles.sh
     - sh build/ng-remove-locale-assets.sh # Remove assets from locales
   artifacts:
@@ -205,7 +204,6 @@ build:production:bundles:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
     - npm i && npm install -g gulp-cli
-    - npm run postinstall
     - sh build/ng-bundles.sh
     - sh build/ng-remove-locale-assets.sh # Remove assets from locales
   artifacts:
