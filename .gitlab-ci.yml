@@ -31,7 +31,7 @@ test:
   image: cypress/browsers:node18.12.0-chrome107
   stage: test and build
   script:
-    - sudo npm install -g npm@7
+    - npm install -g npm@7
     - npm i
     - NODE_OPTIONS=--max_old_space_size=4096
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
