@@ -55,7 +55,7 @@ lint:
 # QA Stage #
 ############
 .cypress_tests: &cypress_tests
-  image: cypress/browsers:node14.17.0-chrome88-ff89
+  image: cypress/browsers:node18.12.0-chrome107
   stage: qa
   variables:
     CYPRESS_INSTALL_BINARY: "7.4.0"
