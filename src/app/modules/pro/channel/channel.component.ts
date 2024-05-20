@@ -21,7 +21,6 @@ import { Client } from '../../../services/api/client';
 import { ProChannelService } from './channel.service';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../common/services/site.service';
-import { captureEvent } from '@sentry/core';
 import { isPlatformServer } from '@angular/common';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
 import { filter, map } from 'rxjs/operators';
@@ -299,7 +298,6 @@ export class ProChannelComponent implements OnInit, OnDestroy {
       this.error = e.message;
       this.toasterService.error(this.error);
       console.error(e);
-      captureEvent(e);
 
       if (e.message === 'E_NOT_PRO') {
         if (this.site.isProDomain) {
@@ -329,7 +327,6 @@ export class ProChannelComponent implements OnInit, OnDestroy {
       this.shouldOpenWireModal();
     } catch (e) {
       console.error(e);
-      captureEvent(e);
       this.error = e.message;
       this.toasterService.error(this.error);
     }

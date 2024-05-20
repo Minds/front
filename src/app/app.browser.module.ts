@@ -22,16 +22,6 @@ import { environment } from './../environments/environment';
 import posthog from 'posthog-js';
 import { POSTHOG_JS } from './common/services/posthog/posthog-injection-tokens';
 
-@Injectable()
-export class SentryErrorHandler implements ErrorHandler {
-  constructor() {}
-  handleError(error) {
-    // const eventId = Sentry.captureException(error.originalError || error);
-    // Sentry.showReportDialog({ eventId });
-    console.error(error);
-  }
-}
-
 @NgModule({
   imports: [
     MindsModule,
@@ -45,7 +35,6 @@ export class SentryErrorHandler implements ErrorHandler {
   ],
   bootstrap: [Minds],
   providers: [
-    { provide: ErrorHandler, useClass: SentryErrorHandler },
     { provide: DiagnosticsService, useClass: BrowserDiagnosticsService },
     { provide: 'ORIGIN_URL', useValue: location.origin },
     { provide: 'QUERY_STRING', useValue: location.search || '' },

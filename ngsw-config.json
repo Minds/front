@@ -20,7 +20,9 @@
       "installMode": "lazy",
       "updateMode": "lazy",
       "resources": {
-        "files": ["/assets/**"]
+        "files": [
+          "/assets/**"
+        ]
       }
     }
   ],

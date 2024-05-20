@@ -1,7 +1,7 @@
 import {
-  APP_ID,
   APP_INITIALIZER,
   CUSTOM_ELEMENTS_SCHEMA,
+  ErrorHandler,
   NgModule,
 } from '@angular/core';
 // import { TransferHttpCacheModule } from '@nguniversal/common';
@@ -61,6 +61,8 @@ import { ApolloModule } from 'apollo-angular';
 import { MarkdownModule } from 'ngx-markdown';
 import { GiftCardModule } from './modules/gift-card/gift-card.module';
 import { ValuePropModule } from './modules/value-prop/value-prop.module';
+import * as Sentry from '@sentry/angular';
+import { Router } from '@angular/router';
 
 @NgModule({
   bootstrap: [Minds],
@@ -119,12 +121,19 @@ import { ValuePropModule } from './modules/value-prop/value-prop.module';
   providers: [
     MINDS_PROVIDERS,
     {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler(),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
       provide: APP_INITIALIZER,
       useFactory: (configs) => () => configs.loadFromRemote(),
-      deps: [ConfigsService],
+      deps: [ConfigsService, Sentry.TraceService],
       multi: true,
     },
-    { provide: APP_ID, useValue: 'm-app' },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -1,6 +1,6 @@
 import { ApiService } from './../common/api/api.service';
 import { ScrollRestorationService } from './scroll-restoration.service';
-import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
+import { APP_ID, Compiler, NgZone, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ImageLoaderConfig,
@@ -9,7 +9,6 @@ import {
   Location,
 } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
-
 import { EmbedServiceV2 } from './embedV2.service';
 
 import { ScrollService } from './ux/scroll';
@@ -78,6 +77,7 @@ import {
 import { DOCUMENT } from '@angular/common';
 
 export const MINDS_PROVIDERS: any[] = [
+  { provide: APP_ID, useValue: 'm-app' },
   SiteService,
   {
     provide: ScrollService,

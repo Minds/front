@@ -18,12 +18,9 @@ import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
 import { AppServerModule } from './src/main.server';
 
 import * as express from 'express';
-import * as Sentry from '@sentry/node';
-import * as Tracing from '@sentry/tracing';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
-import { SENTRY } from './src/app/common/services/diagnostics/diagnostics.service';
 import * as timeout from 'connect-timeout';
 
 const browserDistFolder = join(process.cwd(), 'dist', 'browser');
@@ -41,8 +38,6 @@ export function app() {
   server.use(compression());
   // cookies
   server.use(cookieparser());
-
-  setupSentry(server);
 
   // Server static files from dist folder
   server.use('/embed-static', express.static(embedDistFolder));
@@ -120,7 +115,6 @@ export function app() {
             },
             { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
             // { provide: LOCALE_ID, useValue: locale },
-            { provide: SENTRY, useValue: Sentry },
           ],
         });
       } catch (err) {
@@ -149,8 +143,6 @@ export function app() {
       readFileSync(join(browserDistFolder, `${locale}/index.html`)).toString()
     )
   );
-
-  server.use(Sentry.Handlers.errorHandler());
 
   return server;
 }
@@ -182,32 +174,6 @@ function getLocaleTranslations(locale: string): string {
     fileName = `Minds.${locale}.xliff`;
   }
   return require(`raw-loader!./src/locale/${fileName}`);
-}
-
-// TODO: move this into common diagnositcs
-function setupSentry(server): void {
-  // Sentry
-  Sentry.init({
-    dsn: 'https://bbf22a249e89416884e8d6e82392324f@o293216.ingest.sentry.io/5729114',
-    integrations: [
-      // enable HTTP calls tracing
-      new Sentry.Integrations.Http({ tracing: true }),
-      // enable Express.js middleware tracing
-      // @ts-ignore
-      new Tracing.Integrations.Express({ server }),
-    ],
-
-    // Set tracesSampleRate to 1.0 to capture 100%
-    // of transactions for performance monitoring.
-    // We recommend adjusting this value in production
-    tracesSampleRate: 1.0,
-  });
-
-  // RequestHandler creates a separate execution context using domains, so that every
-  // transaction/span/breadcrumb is attached to its own Hub instance
-  server.use(Sentry.Handlers.requestHandler());
-  // TracingHandler creates a trace for every incoming request
-  server.use(Sentry.Handlers.tracingHandler());
 }
 
 function run() {

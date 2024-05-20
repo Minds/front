@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import * as Sentry from '@sentry/node';
+import * as Sentry from '@sentry/angular';
 import { Session } from '../../../services/session';
 import { environment } from '../../../../environments/environment';
 import { ConfigsService } from '../configs.service';
@@ -12,8 +12,7 @@ export class ServerDiagnosticsService implements DiagnosticsInterface {
   readonly environment: string;
   constructor(
     protected session: Session,
-    configs: ConfigsService,
-    @Inject(SENTRY) protected sentry
+    configs: ConfigsService
   ) {
     this.environment = configs.get('environment');
   }
@@ -31,7 +30,7 @@ export class ServerDiagnosticsService implements DiagnosticsInterface {
       userId = currentUser.guid || null;
     }
 
-    this.sentry.setUser({
+    Sentry.setUser({
       id: userId,
     });
 
