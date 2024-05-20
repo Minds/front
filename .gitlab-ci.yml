@@ -41,7 +41,7 @@ test:
 
 lint:
   stage: test and build
-  image: minds/ci-front:16
+  image: bhayward/ci-front:18
   script:
     - npm i -g prettier@"^3.2.4"
     - prettier --check "src/**/*.ts"
@@ -177,7 +177,7 @@ qa:nightly:
 
 build:review:
   stage: test and build
-  image: minds/ci-front:16
+  image: bhayward/ci-front:18
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
@@ -200,7 +200,7 @@ build:review:
 
 build:production:bundles:
   stage: test and build
-  image: minds/ci-front:16
+  image: bhayward/ci-front:18
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
