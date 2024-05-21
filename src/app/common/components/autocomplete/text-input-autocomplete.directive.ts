@@ -1,5 +1,4 @@
 import {
-  ComponentFactoryResolver,
   ComponentRef,
   Directive,
   ElementRef,
@@ -97,7 +96,6 @@ export class TextInputAutocompleteDirective implements OnDestroy {
   private menuHidden$ = new Subject<any>();
 
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
     private injector: Injector,
     private elm: ElementRef
@@ -188,16 +186,11 @@ export class TextInputAutocompleteDirective implements OnDestroy {
 
   private showMenu() {
     if (!this.menu) {
-      const menuFactory =
-        this.componentFactoryResolver.resolveComponentFactory<TextInputAutocompleteMenuComponent>(
-          this.menuComponent
-        );
       this.menu = {
-        component: this.viewContainerRef.createComponent(
-          menuFactory,
-          0,
-          this.injector
-        ),
+        component: this.viewContainerRef.createComponent(this.menuComponent, {
+          injector: this.injector,
+          index: 0,
+        }),
         triggerCharacterPosition: this.getTriggerCharPosition(
           this.elm.nativeElement
         ),

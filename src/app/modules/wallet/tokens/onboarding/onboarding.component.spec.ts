@@ -2,33 +2,18 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
-  tick,
   waitForAsync,
 } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import {
-  Component,
-  DebugElement,
-  ChangeDetectorRef,
-  Input,
-  Output,
-  ComponentFactoryResolver,
-} from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { TokenOnboardingComponent } from './onboarding.component';
-import { TokenCompletedOnboardingComponent } from './completed/completed.component';
 import { TokenOnboardingService } from './onboarding.service';
 import { clientMock } from '../../../../../tests/client-mock.spec';
 import { Client } from '../../../../services/api/client';
-import {
-  MockComponent,
-  MockDirective,
-  MockService,
-} from '../../../../utils/mock';
 import { Session } from '../../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
-
 import { Router } from '@angular/router';
 import { storageMock } from '../../../../../tests/storage-mock.spec';
 import { Storage } from '../../../../services/storage';
@@ -52,10 +37,6 @@ describe('TokenOnboardingComponent', () => {
         { provide: Router, useValue: RouterTestingModule },
         { provide: Storage, useValue: storageMock },
         { provide: TokenOnboardingService, useValue: tokenOnboardingService },
-        {
-          provide: ComponentFactoryResolver,
-          useValue: ComponentFactoryResolver,
-        },
       ],
     }).compileComponents(); // compile template and css
   }));

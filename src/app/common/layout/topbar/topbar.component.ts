@@ -1,8 +1,6 @@
 import {
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
-  HostBinding,
   HostListener,
   Inject,
   OnDestroy,
@@ -75,7 +73,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
     protected configs: ConfigsService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
-    protected componentFactoryResolver: ComponentFactoryResolver,
     protected topbarService: TopbarService,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,

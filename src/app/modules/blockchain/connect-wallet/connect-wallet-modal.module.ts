@@ -1,8 +1,4 @@
-import {
-  NgModule,
-  ComponentFactoryResolver,
-  ComponentFactory,
-} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ConnectWalletModalComponent } from './connect-wallet-modal.component';
@@ -22,11 +18,7 @@ import { RouterModule } from '@angular/router';
   exports: [ConnectWalletModalComponent],
 })
 export class ConnectWalletModalModule {
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
-
-  public resolveComponent(): ComponentFactory<ConnectWalletModalComponent> {
-    return this.componentFactoryResolver.resolveComponentFactory(
-      ConnectWalletModalComponent
-    );
+  public resolveComponent(): typeof ConnectWalletModalComponent {
+    return ConnectWalletModalComponent;
   }
 }

@@ -1,8 +1,4 @@
-import {
-  ComponentFactory,
-  ComponentFactoryResolver,
-  NgModule,
-} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,11 +32,7 @@ const MODULES = [
   exports: [...COMPONENTS],
 })
 export class MultiFactorAuthLazyModule {
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
-
-  public resolveComponent(): ComponentFactory<MultiFactorAuthBaseComponent> {
-    return this.componentFactoryResolver.resolveComponentFactory(
-      MultiFactorAuthBaseComponent
-    );
+  public resolveComponent(): typeof MultiFactorAuthBaseComponent {
+    return MultiFactorAuthBaseComponent;
   }
 }

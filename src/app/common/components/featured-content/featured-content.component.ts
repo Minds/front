@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   Inject,
   Injector,
@@ -40,7 +39,6 @@ export class FeaturedContentComponent implements OnInit {
 
   constructor(
     protected featuredContentService: FeaturedContentService,
-    protected componentFactoryResolver: ComponentFactoryResolver,
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -89,15 +87,10 @@ export class FeaturedContentComponent implements OnInit {
     }
 
     if (component) {
-      const componentFactory =
-        this.componentFactoryResolver.resolveComponentFactory<any>(component);
-
       const componentRef: ComponentRef<any> =
-        this.dynamicHost.viewContainerRef.createComponent(
-          componentFactory,
-          void 0,
-          this.injector
-        );
+        this.dynamicHost.viewContainerRef.createComponent(component, {
+          injector: this.injector,
+        });
       injector.call(this, componentRef, this.entity);
     }
   }

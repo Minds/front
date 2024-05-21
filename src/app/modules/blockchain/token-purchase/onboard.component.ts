@@ -1,9 +1,4 @@
-import {
-  OnInit,
-  Component,
-  ComponentFactoryResolver,
-  ViewChild,
-} from '@angular/core';
+import { OnInit, Component, ViewChild } from '@angular/core';
 import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
 import { TokenRewardsOnboardingComponent } from '../../wallet/tokens/onboarding/rewards/rewards.component';
 
@@ -17,22 +12,17 @@ export class BlockchainMarketingOnboardComponent implements OnInit {
   componentRef;
   componentInstance: TokenRewardsOnboardingComponent;
 
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver) {}
-
   ngOnInit() {
     this.loadComponent();
   }
 
   loadComponent() {
-    const componentFactory =
-        this._componentFactoryResolver.resolveComponentFactory(
-          TokenRewardsOnboardingComponent
-        ),
-      viewContainerRef = this.host.viewContainerRef;
-
+    const viewContainerRef = this.host.viewContainerRef;
     viewContainerRef.clear();
 
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
+    this.componentRef = viewContainerRef.createComponent(
+      TokenRewardsOnboardingComponent
+    );
     this.componentInstance = this.componentRef.instance;
   }
 }

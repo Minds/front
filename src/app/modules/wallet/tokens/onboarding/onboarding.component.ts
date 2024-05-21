@@ -2,11 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { TokenOnboardingService } from './onboarding.service';
@@ -33,7 +31,6 @@ export class TokenOnboardingComponent {
     protected session: Session,
     protected router: Router,
     public service: TokenOnboardingService,
-    private _componentFactoryResolver: ComponentFactoryResolver,
     protected storage: Storage
   ) {}
 
@@ -56,12 +53,7 @@ export class TokenOnboardingComponent {
       return;
     }
 
-    const componentFactory =
-      this._componentFactoryResolver.resolveComponentFactory(
-        this.service.slide
-      );
-
-    let componentRef = viewContainerRef.createComponent(componentFactory);
+    let componentRef = viewContainerRef.createComponent(this.service.slide);
 
     if (componentRef.instance.next) {
       componentRef.instance.next.subscribe((next) => {
