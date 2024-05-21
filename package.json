@@ -96,7 +96,7 @@
     "ngx-drag-drop": "^16.1.0",
     "ngx-markdown": "^16.0.0",
     "ngx-plyr-mg": "1.0.1",
-    "ngx-popperjs": "^16.0.9",
+    "ngx-popperjs": "^16.0.1",
     "node-cache": "^5.1.2",
     "nostr-tools": "^0.24.1",
     "os-browserify": "^0.3.0",
