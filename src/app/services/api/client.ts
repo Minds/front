@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { TransferState } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';

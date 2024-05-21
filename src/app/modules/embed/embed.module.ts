@@ -1,7 +1,7 @@
 import { APP_BASE_HREF, CommonModule, Location } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_ID, APP_INITIALIZER, NgModule, PLATFORM_ID } from '@angular/core';
-import { BrowserModule, TransferState } from '@angular/platform-browser';
+import { TransferState } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CookieModule, CookieService } from '@gorniv/ngx-universal';
 import { MindsHttpClient } from '../../common/api/client.service';

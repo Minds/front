@@ -8,7 +8,7 @@ import {
   IMAGE_LOADER,
   Location,
 } from '@angular/common';
-import { TransferState } from '@angular/platform-browser';
+import { TransferState } from '@angular/core';
 import { EmbedServiceV2 } from './embedV2.service';
 
 import { ScrollService } from './ux/scroll';
