@@ -31,9 +31,7 @@ export class NotificationsTopbarToggleComponent implements OnInit, OnDestroy {
 
   private soundTimeout: any;
   private soundTimeoutElapsed: boolean = false;
-  private notificationSound = new Audio(
-    '../../../assets/audio/notification.wav'
-  );
+  private readonly notificationSound;
 
   constructor(
     public session: Session,
@@ -41,7 +39,11 @@ export class NotificationsTopbarToggleComponent implements OnInit, OnDestroy {
     private router: Router,
     private storage: Storage,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    this.notificationSound = isPlatformBrowser(this.platformId)
+      ? new Audio('../../../assets/audio/notification.wav')
+      : null;
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
