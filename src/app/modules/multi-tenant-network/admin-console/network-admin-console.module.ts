@@ -50,6 +50,9 @@ import { CanDeactivateGuardService } from '../../../services/can-deactivate-guar
 import { NetworkAdminConsoleLandingPageDescriptionComponent } from './tabs/general/landing-page-description/landing-page-description.component';
 import { NetworkAdminConsoleEnableLandingPageToggleComponent } from './tabs/general/enable-landing-page-toggle/enable-landing-page-toggle.component';
 import { NetworkAdminConsoleEnableWalledGardenToggleComponent } from './tabs/general/enable-walled-garden-toggle/enable-walled-garden-toggle.component';
+import { boostEnabledGuard } from '../../../common/guards/can-boost.guard';
+import { PermissionsEnum } from '../../../../graphql/generated.engine';
+import { permissionGuard } from '../../../common/guards/permission.guard';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -75,6 +78,19 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
             path: '',
             redirectTo: 'reports',
             pathMatch: 'full' as PathMatch,
+          },
+          {
+            path: 'boosts',
+            canActivate: [
+              boostEnabledGuard('/network/admin'),
+              permissionGuard(
+                PermissionsEnum.CanModerateContent,
+                '/network/admin'
+              ),
+            ],
+            loadChildren: async () =>
+              (await import('./tabs/moderation/boosts/boosts-lazy.module'))
+                .NetworkAdminBoostsLazyModule,
           },
           {
             path: 'privacy-policy',

@@ -143,8 +143,8 @@ export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
     const conditions = [
       {
         test: () => !this.isLoggedIn(),
-        add: ['newsfeed', 'channel'],
-        remove: [],
+        add: ['newsfeed', 'channel'], // add to hidden items.
+        remove: [], // remove from hidden items.
       },
       {
         test: () => this.isLoggedIn(),
@@ -160,6 +160,11 @@ export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
         test: () => this.isAdmin() || this.permissions.canModerateContent(),
         add: [],
         remove: ['admin'],
+      },
+      {
+        test: () => !this.isLoggedIn() || !this.permissions.canBoost(),
+        add: ['boost'],
+        remove: [],
       },
     ];
 

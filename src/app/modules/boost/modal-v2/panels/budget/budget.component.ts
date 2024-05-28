@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -9,6 +9,7 @@ import {
 } from '../../boost-modal-v2.constants';
 import { BoostConfig, BoostPaymentCategory } from '../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
+import { IS_TENANT_NETWORK } from '../../../../../common/injection-tokens/tenant-injection-tokens';
 
 @Component({
   selector: 'm-boostModalV2__budgetSelector',
@@ -51,5 +52,8 @@ export class BoostModalV2BudgetSelectorComponent {
       map((duration: number) => duration ?? DEFAULT_CASH_DURATION)
     );
 
-  constructor(private service: BoostModalV2Service) {}
+  constructor(
+    private service: BoostModalV2Service,
+    @Inject(IS_TENANT_NETWORK) protected readonly isTenantNetwork: boolean
+  ) {}
 }

@@ -156,7 +156,7 @@
     </div>
     <m-boostButton
       [object]="blog"
-      *ngIf="session.isLoggedIn() && !isScheduled(blog.time_created)"
+      *ngIf="session.isLoggedIn() && !isScheduled(blog.time_created) && hasBoostPermission"
     ></m-boostButton>
   </div>
 </div>

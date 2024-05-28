@@ -39,8 +39,11 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
         this.onSaveIntent();
       }),
       this.service.firstPanel$.subscribe((firstPanel: BoostModalPanel) => {
-        if (firstPanel === BoostModalPanel.GOAL) {
-          this.activePanel$.next(BoostModalPanel.GOAL);
+        if (
+          firstPanel === BoostModalPanel.GOAL ||
+          firstPanel === BoostModalPanel.BUDGET
+        ) {
+          this.activePanel$.next(firstPanel);
         }
       })
     );

@@ -25,6 +25,18 @@
       >Reports</a
     >
   </div>
+  <div
+    class="m-tabs__tab"
+    *ngIf="isBoostEnabled && permissions.canModerateContent()"
+  >
+    <a
+      [routerLink]="['./boosts']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-tab-boosts"
+      i18n="@@NETWORK_ADMIN_CONSOLE__TAB_BOOSTS"
+      >Boosts</a
+    >
+  </div>
   <div class="m-tabs__tab" *ngIf="session.isAdmin()">
     <a
       [routerLink]="['./community-guidelines']"

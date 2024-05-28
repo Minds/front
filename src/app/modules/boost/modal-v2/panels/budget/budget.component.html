@@ -1,4 +1,6 @@
-<m-boostModalV2__budgetTabBar></m-boostModalV2__budgetTabBar>
+<m-boostModalV2__budgetTabBar
+  *ngIf="!isTenantNetwork"
+></m-boostModalV2__budgetTabBar>
 <div class="m-boostModalBudget__tabs" [ngSwitch]="paymentCategory$ | async">
   <m-boostModalV2__budgetTab
     *ngSwitchCase="BoostPaymentCategory.CASH"

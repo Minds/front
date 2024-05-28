@@ -1,4 +1,4 @@
-import { fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
 import {
   BoostAudience,
@@ -12,6 +12,14 @@ import { BoostModalV2Service } from './boost-modal-v2.service';
 import { BoostGoal, BoostGoalButtonText } from '../../boost.types';
 import { MindsUser } from '../../../../interfaces/entities';
 import userMock from '../../../../mocks/responses/user.mock';
+import { ApiService } from '../../../../common/api/api.service';
+import { Session } from '../../../../services/session';
+import { ToasterService } from '../../../../common/services/toaster.service';
+import { ConfigsService } from '../../../../common/services/configs.service';
+import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
+import { BoostContractService } from '../../../blockchain/contracts/boost-contract.service';
+import { BoostTargetExperimentService } from '../../../experiments/sub-services/boost-target-experiment.service';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 describe('BoostModalV2Service', () => {
   let service: BoostModalV2Service;
@@ -56,16 +64,27 @@ describe('BoostModalV2Service', () => {
       .and.returnValue(userMock);
   })();
 
+  let isTenantNetwork: boolean = false;
+
   beforeEach(() => {
-    service = new BoostModalV2Service(
-      apiMock,
-      sessionMock,
-      toasterMock,
-      configMock,
-      web3WalletMock,
-      boostContractMock,
-      boostTargetExperimentMock
-    );
+    TestBed.configureTestingModule({
+      providers: [
+        BoostModalV2Service,
+        { provide: ApiService, useValue: apiMock },
+        { provide: Session, useValue: sessionMock },
+        { provide: ToasterService, useValue: toasterMock },
+        { provide: ConfigsService, useValue: configMock },
+        { provide: Web3WalletService, useValue: web3WalletMock },
+        { provide: BoostContractService, useValue: boostContractMock },
+        {
+          provide: BoostTargetExperimentService,
+          useValue: boostTargetExperimentMock,
+        },
+        { provide: IS_TENANT_NETWORK, useValue: isTenantNetwork },
+      ],
+    });
+
+    service = TestBed.inject(BoostModalV2Service);
 
     service.entity$.next({
       guid: '123',
@@ -229,6 +248,81 @@ describe('BoostModalV2Service', () => {
     service.changePanelFrom(BoostModalPanel.BUDGET);
     service.activePanel$.subscribe((val) => {
       expect(val).toBe(BoostModalPanel.REVIEW);
+      done();
+    });
+  });
+
+  it('should change panel from the goal panel when goal button is required', (done: DoneFn) => {
+    service.goal$.next(BoostGoal.CLICKS);
+    service.activePanel$.next(BoostModalPanel.GOAL);
+    service.changePanelFrom(BoostModalPanel.GOAL);
+
+    service.activePanel$.subscribe((val) => {
+      expect(val).toBe(BoostModalPanel.GOAL_BUTTON);
+      done();
+    });
+  });
+
+  it('should change panel from the goal panel when goal button is NOT required and NOT on tenant network', (done: DoneFn) => {
+    service.goal$.next(BoostGoal.ENGAGEMENT);
+    service.activePanel$.next(BoostModalPanel.GOAL);
+    Object.defineProperty(service, 'isTenantNetwork', {
+      writable: true,
+      value: false,
+    });
+
+    service.changePanelFrom(BoostModalPanel.GOAL);
+
+    service.activePanel$.subscribe((val) => {
+      expect(val).toBe(BoostModalPanel.AUDIENCE);
+      done();
+    });
+  });
+
+  it('should change panel from the goal panel when goal button is NOT required and on tenant network', (done: DoneFn) => {
+    service.goal$.next(BoostGoal.ENGAGEMENT);
+    service.activePanel$.next(BoostModalPanel.GOAL);
+    Object.defineProperty(service, 'isTenantNetwork', {
+      writable: true,
+      value: true,
+    });
+
+    service.changePanelFrom(BoostModalPanel.GOAL);
+
+    service.activePanel$.subscribe((val) => {
+      expect(val).toBe(BoostModalPanel.BUDGET);
+      done();
+    });
+  });
+
+  it('should change panel from the goal button panel when on tenant network', (done: DoneFn) => {
+    service.goal$.next(BoostGoal.ENGAGEMENT);
+    service.activePanel$.next(BoostModalPanel.GOAL);
+    Object.defineProperty(service, 'isTenantNetwork', {
+      writable: true,
+      value: true,
+    });
+
+    service.changePanelFrom(BoostModalPanel.GOAL_BUTTON);
+
+    service.activePanel$.subscribe((val) => {
+      expect(val).toBe(BoostModalPanel.BUDGET);
+      done();
+    });
+  });
+
+  it('should change panel from the goal button panel when NOT on tenant network', (done: DoneFn) => {
+    service.goal$.next(BoostGoal.ENGAGEMENT);
+    service.activePanel$.next(BoostModalPanel.GOAL);
+    Object.defineProperty(service, 'isTenantNetwork', {
+      writable: true,
+      value: false,
+    });
+
+    service.changePanelFrom(BoostModalPanel.GOAL_BUTTON);
+
+    service.activePanel$.subscribe((val) => {
+      expect(val).toBe(BoostModalPanel.AUDIENCE);
       done();
     });
   });
@@ -750,98 +844,206 @@ describe('BoostModalV2Service', () => {
     expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
   }));
 
-  it('should navigate to previous panel from budget', (done: DoneFn) => {
-    service.activePanel$.next(BoostModalPanel.BUDGET);
-    service.openPreviousPanel();
-    service.activePanel$.subscribe((val) => {
-      expect(val).toBe(BoostModalPanel.AUDIENCE);
-      done();
+  describe('previousPanel$', () => {
+    it('should navigate to previous panel from budget', (done: DoneFn) => {
+      service.activePanel$.next(BoostModalPanel.BUDGET);
+      service.openPreviousPanel();
+      service.activePanel$.subscribe((val) => {
+        expect(val).toBe(BoostModalPanel.AUDIENCE);
+        done();
+      });
+    });
+
+    it('should navigate to previous panel from review', (done: DoneFn) => {
+      service.activePanel$.next(BoostModalPanel.REVIEW);
+      service.openPreviousPanel();
+      service.activePanel$.subscribe((val) => {
+        expect(val).toBe(BoostModalPanel.BUDGET);
+        done();
+      });
+    });
+
+    it('should NOT navigate to previous panel from budget when budget is the first panel', (done: DoneFn) => {
+      let loggedInUser: MindsUser = sessionMock;
+      loggedInUser.guid = '234';
+      (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
+      Object.defineProperty(service, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+
+      service.entity$.next({
+        guid: '123',
+        type: 'activity',
+        subtype: '',
+        owner_guid: '345',
+        time_created: '99999999999',
+      });
+
+      service.activePanel$.next(BoostModalPanel.BUDGET);
+      service.openPreviousPanel();
+      service.activePanel$.subscribe((val) => {
+        expect(val).toEqual(BoostModalPanel.BUDGET);
+        done();
+      });
+    });
+
+    it('should navigate to previous panel to GOAL from budget when first panel is not BUDGET and on tenant network', (done: DoneFn) => {
+      let loggedInUser: MindsUser = sessionMock;
+      loggedInUser.guid = '234';
+      (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
+      Object.defineProperty(service, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+      service.entity$.next({
+        guid: '123',
+        type: 'activity',
+        subtype: '',
+        owner_guid: '234',
+        time_created: '99999999999',
+      });
+      (service as any).goal$.next(BoostGoal.ENGAGEMENT);
+
+      service.activePanel$.next(BoostModalPanel.BUDGET);
+      service.openPreviousPanel();
+      service.activePanel$.subscribe((val) => {
+        expect(val).toEqual(BoostModalPanel.GOAL);
+        done();
+      });
+    });
+
+    it('should navigate to previous panel to GOAL BUTTON from budget when first panel is not BUDGET and on tenant network', (done: DoneFn) => {
+      let loggedInUser: MindsUser = sessionMock;
+      loggedInUser.guid = '234';
+      (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
+      Object.defineProperty(service, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+      service.entity$.next({
+        guid: '123',
+        type: 'activity',
+        subtype: '',
+        owner_guid: '234',
+        time_created: '99999999999',
+      });
+      (service as any).goal$.next(BoostGoal.CLICKS);
+
+      service.activePanel$.next(BoostModalPanel.BUDGET);
+      service.openPreviousPanel();
+      service.activePanel$.subscribe((val) => {
+        expect(val).toEqual(BoostModalPanel.GOAL_BUTTON);
+        done();
+      });
     });
   });
 
-  it('should navigate to previous panel from review', (done: DoneFn) => {
-    service.activePanel$.next(BoostModalPanel.REVIEW);
-    service.openPreviousPanel();
-    service.activePanel$.subscribe((val) => {
-      expect(val).toBe(BoostModalPanel.BUDGET);
-      done();
-    });
-  });
+  describe('firstPanel$', () => {
+    it('should emit when GOAL panel is active', (done: DoneFn) => {
+      let loggedInUser: MindsUser = sessionMock;
+      loggedInUser.guid = '234';
 
-  it('should NOT navigate to previous panel from audience', (done: DoneFn) => {
-    service.entity$.next({
-      guid: '123',
-      type: 'user',
-      subtype: '',
-      owner_guid: '234',
-      time_created: '99999999999',
-    });
+      (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
 
-    service.activePanel$.next(BoostModalPanel.AUDIENCE);
-    service.openPreviousPanel();
-    service.activePanel$.subscribe((val) => {
-      expect(val).toBe(BoostModalPanel.AUDIENCE);
-      done();
-    });
-  });
+      service.entity$.next({
+        guid: '123',
+        type: 'activity',
+        subtype: '',
+        owner_guid: '234',
+        time_created: '99999999999',
+      });
 
-  it('should emit when GOAL panel is active', (done: DoneFn) => {
-    let loggedInUser: MindsUser = sessionMock;
-    loggedInUser.guid = '234';
-
-    (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
-
-    service.entity$.next({
-      guid: '123',
-      type: 'activity',
-      subtype: '',
-      owner_guid: '234',
-      time_created: '99999999999',
+      service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
+        expect(panel).toBe(BoostModalPanel.GOAL);
+        done();
+      });
     });
 
-    service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
-      expect(panel).toBe(BoostModalPanel.GOAL);
-      done();
-    });
-  });
+    it('should emit AUDIENCE panel when entity owner is not user', (done: DoneFn) => {
+      let loggedInUser: MindsUser = sessionMock;
+      loggedInUser.guid = '234';
 
-  it('should emit AUDIENCE panel when entity owner is not user', (done: DoneFn) => {
-    let loggedInUser: MindsUser = sessionMock;
-    loggedInUser.guid = '234';
+      (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
 
-    (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
+      service.entity$.next({
+        guid: '123',
+        type: 'activity',
+        subtype: '',
+        owner_guid: '345',
+        time_created: '99999999999',
+      });
 
-    service.entity$.next({
-      guid: '123',
-      type: 'activity',
-      subtype: '',
-      owner_guid: '345',
-      time_created: '99999999999',
-    });
-
-    service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
-      expect(panel).toBe(BoostModalPanel.AUDIENCE);
-      done();
-    });
-  });
-
-  it('should emit AUDIENCE panel when entity type is NOT post', (done: DoneFn) => {
-    let loggedInUser: MindsUser = sessionMock;
-    loggedInUser.guid = '234';
-
-    (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
-
-    service.entity$.next({
-      guid: '123',
-      type: 'user',
-      subtype: '',
-      owner_guid: '234',
-      time_created: '99999999999',
+      service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
+        expect(panel).toBe(BoostModalPanel.AUDIENCE);
+        done();
+      });
     });
 
-    service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
-      expect(panel).toBe(BoostModalPanel.AUDIENCE);
-      done();
+    it('should emit AUDIENCE panel when entity type is NOT post', (done: DoneFn) => {
+      let loggedInUser: MindsUser = sessionMock;
+      loggedInUser.guid = '234';
+
+      (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
+
+      service.entity$.next({
+        guid: '123',
+        type: 'user',
+        subtype: '',
+        owner_guid: '234',
+        time_created: '99999999999',
+      });
+
+      service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
+        expect(panel).toBe(BoostModalPanel.AUDIENCE);
+        done();
+      });
+    });
+
+    it('should emit when BUDGET PANEL when on tenant network and entity IS a user', (done: DoneFn) => {
+      let loggedInUser: MindsUser = sessionMock;
+      loggedInUser.guid = '234';
+      (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
+      Object.defineProperty(service, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+
+      service.entity$.next({
+        guid: '123',
+        type: 'activity',
+        subtype: '',
+        owner_guid: '345',
+        time_created: '99999999999',
+      });
+
+      service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
+        expect(panel).toBe(BoostModalPanel.BUDGET);
+        done();
+      });
+    });
+
+    it('should emit when BUDGET PANEL when on tenant network and entity is NOT a user', (done: DoneFn) => {
+      let loggedInUser: MindsUser = sessionMock;
+      loggedInUser.guid = '234';
+      (service as any).session.getLoggedInUser.and.returnValue(loggedInUser);
+      Object.defineProperty(service, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+
+      service.entity$.next({
+        guid: '123',
+        type: 'activity',
+        subtype: '',
+        owner_guid: '234',
+        time_created: '99999999999',
+      });
+
+      service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
+        expect(panel).toBe(BoostModalPanel.GOAL);
+        done();
+      });
     });
   });
 });

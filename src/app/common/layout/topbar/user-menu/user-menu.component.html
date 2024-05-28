@@ -39,15 +39,16 @@
       >
         <span i18n="@@COMMON__ADMIN">Admin</span>
       </m-dropdownMenu__item>
-
-      <!-- Boost Channel Option -->
-      <m-dropdownMenu__item
-        (click)="openBoostChannelModal()"
-        data-ref="topnav-usermenu-boost-channel"
-      >
-        <span i18n="@@COMMON__BOOST_CHANNEL">Boost Channel</span>
-      </m-dropdownMenu__item>
     </ng-container>
+
+    <!-- Boost Channel Option -->
+    <m-dropdownMenu__item
+      *ngIf="hasBoostPermission"
+      (click)="openBoostChannelModal()"
+      data-ref="topnav-usermenu-boost-channel"
+    >
+      <span i18n="@@COMMON__BOOST_CHANNEL">Boost Channel</span>
+    </m-dropdownMenu__item>
 
     <!-- Settings Option -->
     <m-dropdownMenu__item link="/settings" data-ref="topnav-usermenu-settings">

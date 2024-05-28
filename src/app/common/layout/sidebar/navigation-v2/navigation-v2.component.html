@@ -94,6 +94,7 @@
         <li
           class="m-sidebarNavigation__item m-sidebarNavigation__item--boost"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          *ngIf="hasBoostPermission"
         >
           <a
             [routerLink]="['/boost/boost-console']"

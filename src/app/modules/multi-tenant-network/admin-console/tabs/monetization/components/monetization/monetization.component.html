@@ -16,6 +16,11 @@
   class="m-networkAdminMonetization__horizontalMargin"
 ></m-networkAdminConsole__stripeCredentials>
 
+<m-networkAdminConsole__enableBoostToggle
+  *ngIf="hasSetStripeKeys$ | async"
+  class="m-networkAdminMonetization__horizontalMargin"
+></m-networkAdminConsole__enableBoostToggle>
+
 <m-networkAdminMonetization__tabs></m-networkAdminMonetization__tabs>
 
 <router-outlet></router-outlet>

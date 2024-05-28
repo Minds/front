@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
 import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
+import { PermissionsService } from '../../../services/permissions.service';
 
 /**
  * Menu that contains important links we want to be extra accessible to users
@@ -30,17 +31,22 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   isDark: boolean = false;
   themeSubscription: Subscription;
 
+  /** Whether the user has permission to boost. */
+  protected hasBoostPermission: boolean = false;
+
   constructor(
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     private helpdeskRedirectService: HelpdeskRedirectService,
-    private boostModalLazyService: BoostModalV2LazyService
+    private boostModalLazyService: BoostModalV2LazyService,
+    private permissionsService: PermissionsService
   ) {}
 
   ngOnInit(): void {
     this.session.isLoggedIn(() => this.detectChanges());
 
+    this.hasBoostPermission = this.permissionsService.canBoost();
     this.themeSubscription = this.themeService.isDark$.subscribe(
       (isDark) => (this.isDark = isDark)
     );

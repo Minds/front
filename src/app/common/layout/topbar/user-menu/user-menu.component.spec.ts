@@ -15,6 +15,7 @@ import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boos
 import { BehaviorSubject } from 'rxjs';
 import userMock from '../../../../mocks/responses/user.mock';
 import { MindsUser } from '../../../../interfaces/entities';
+import { PermissionsService } from '../../../services/permissions.service';
 
 describe('UserMenuComponent', () => {
   let comp: UserMenuComponent;
@@ -60,6 +61,10 @@ describe('UserMenuComponent', () => {
           provide: BoostModalV2LazyService,
           useValue: MockService(BoostModalV2LazyService),
         },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -95,4 +100,22 @@ describe('UserMenuComponent', () => {
       loggedInUser
     );
   }));
+
+  describe('hasBoostPermission', () => {
+    it('should be true if user has permission to boost', () => {
+      (comp as any).permissionsService.canBoost.and.returnValue(true);
+
+      comp.ngOnInit();
+
+      expect((comp as any).hasBoostPermission).toBeTrue();
+    });
+
+    it('should be false if user does NOT have permission to boost', () => {
+      (comp as any).permissionsService.canBoost.and.returnValue(false);
+
+      comp.ngOnInit();
+
+      expect((comp as any).hasBoostPermission).toBeFalse();
+    });
+  });
 });

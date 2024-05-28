@@ -916,6 +916,7 @@ export enum MultiTenantColorScheme {
 
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
+  boostEnabled?: Maybe<Scalars['Boolean']['output']>;
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
@@ -933,6 +934,7 @@ export type MultiTenantConfig = {
 };
 
 export type MultiTenantConfigInput = {
+  boostEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -3968,6 +3970,7 @@ export type GetMultiTenantConfigQuery = {
     canEnableFederation?: boolean | null;
     federationDisabled?: boolean | null;
     replyEmail?: string | null;
+    boostEnabled?: boolean | null;
     customHomePageEnabled?: boolean | null;
     customHomePageDescription?: string | null;
     walledGardenEnabled?: boolean | null;
@@ -4075,6 +4078,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  boostEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9596,6 +9600,7 @@ export const GetMultiTenantConfigDocument = gql`
       canEnableFederation
       federationDisabled
       replyEmail
+      boostEnabled
       customHomePageEnabled
       customHomePageDescription
       walledGardenEnabled
@@ -9763,6 +9768,7 @@ export const SetMultiTenantConfigDocument = gql`
     $federationDisabled: Boolean
     $replyEmail: String
     $nsfwEnabled: Boolean
+    $boostEnabled: Boolean
     $customHomePageEnabled: Boolean
     $customHomePageDescription: String
     $walledGardenEnabled: Boolean
@@ -9775,6 +9781,7 @@ export const SetMultiTenantConfigDocument = gql`
         federationDisabled: $federationDisabled
         replyEmail: $replyEmail
         nsfwEnabled: $nsfwEnabled
+        boostEnabled: $boostEnabled
         customHomePageEnabled: $customHomePageEnabled
         customHomePageDescription: $customHomePageDescription
         walledGardenEnabled: $walledGardenEnabled
