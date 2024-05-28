@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import {
   debounceTime,
@@ -63,6 +63,9 @@ export class BoostConsoleListComponent
   public readonly list$: BehaviorSubject<any[]> = new BehaviorSubject<Boost[]>(
     []
   );
+
+  /** Whether filter bar should be shown. */
+  @Input() protected showFilterBar: boolean = true;
 
   // Number of boosts to request from API.
   private readonly requestLimit: number = 12;

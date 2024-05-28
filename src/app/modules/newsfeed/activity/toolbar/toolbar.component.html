@@ -1,28 +1,29 @@
 <!-- ---------------------------------------------------  -->
 <!-- SUPERMIND BANNER/BUTTON -->
 <!-- ---------------------------------------------------  -->
-<ng-container *mIfTenant="false">
-  <div
-    class="m-activityToolbar__largeActions"
-    *ngIf="
-      service.displayOptions.showInteractions && !service.displayOptions.isFeed
-    "
-  >
-    <ng-container *ngIf="!isOwner">
-      <m-supermind__banner
-        [entity]="entity"
-        data-ref="activity-large-supermind-action--alt"
-      ></m-supermind__banner>
-    </ng-container>
-    <!-- Show boost if own post -->
-    <ng-container *ngIf="isOwner">
-      <m-activity__boostButton
-        (click)="openBoostModal($event)"
-        [iconOnly]="false"
-      ></m-activity__boostButton>
-    </ng-container>
-  </div>
-</ng-container>
+<div
+  class="m-activityToolbar__largeActions"
+  *ngIf="
+    service.displayOptions.showInteractions && !service.displayOptions.isFeed
+  "
+>
+  <ng-container *ngIf="!isOwner">
+    <m-supermind__banner
+      *mIfTenant="false"
+      [entity]="entity"
+      data-ref="activity-large-supermind-action--alt"
+    ></m-supermind__banner>
+  </ng-container>
+  <!-- Show boost if own post -->
+
+  <ng-container *ngIf="isOwner && hasBoostPermission">
+    <m-activity__boostButton
+      (click)="openBoostModal($event)"
+      [iconOnly]="false"
+    ></m-activity__boostButton>
+  </ng-container>
+</div>
+
 <!-- ---------------------------------------------------  -->
 <!-- TOOLBAR BUTTONS ROW -->
 <!-- ---------------------------------------------------  -->
@@ -59,12 +60,10 @@
   ></m-supermind__button>
 
   <!-- Show boost if own post -->
-  <ng-container *mIfTenant="false">
-    <m-activity__boostButton
-      *ngIf="isOwner"
-      (click)="openBoostModal($event)"
-    ></m-activity__boostButton>
-  </ng-container>
+  <m-activity__boostButton
+    *ngIf="isOwner && hasBoostPermission"
+    (click)="openBoostModal($event)"
+  ></m-activity__boostButton>
 </div>
 <!-- ---------------------------------------------------  -->
 <!-- EXPLICIT VOTE BUTTONS  -->

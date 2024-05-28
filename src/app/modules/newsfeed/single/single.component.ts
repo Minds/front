@@ -29,6 +29,7 @@ import getMetaAutoCaption from '../../../helpers/meta-auto-caption';
 import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelist.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
 import { ActivityEntity } from '../activity/activity.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -62,6 +63,9 @@ export class NewsfeedSingleComponent {
 
   boostModalDelayMs: number;
 
+  /** Whether the user has permission to boost. */
+  protected hasBoostPermission: boolean = false;
+
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -78,6 +82,7 @@ export class NewsfeedSingleComponent {
     private routerHistory: RouterHistoryService,
     private boostModal: BoostModalV2LazyService,
     private embedLinkWhitelist: EmbedLinkWhitelistService,
+    private permissionsService: PermissionsService,
     private isTenant: IsTenantService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -90,6 +95,8 @@ export class NewsfeedSingleComponent {
     this.context.set('activity');
 
     this.siteTitle = this.isTenant.is() ? this.siteName : 'Minds';
+
+    this.hasBoostPermission = this.permissionsService.canBoost();
 
     // If the user arrived at this page by clicking a link
     // somewhere within the site, they will see a back button
@@ -165,7 +172,8 @@ export class NewsfeedSingleComponent {
         if (
           this.session.getLoggedInUser() &&
           isPlatformBrowser(this.platformId) &&
-          this.route.snapshot.queryParamMap.has('boostModalDelayMs')
+          this.route.snapshot.queryParamMap.has('boostModalDelayMs') &&
+          this.hasBoostPermission
         ) {
           const ms = Number(
             this.route.snapshot.queryParamMap.get('boostModalDelayMs')

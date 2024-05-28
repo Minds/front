@@ -3,7 +3,7 @@
   <!-- CHANNEL OWNER -->
   <!-- ------------------------------------------ -->
   <ng-container *ngIf="service.isOwner$ | async; else nonOwner">
-    <m-channelActions__boost *mIfTenant="false"></m-channelActions__boost>
+    <m-channelActions__boost></m-channelActions__boost>
     <m-channelActions__edit></m-channelActions__edit>
     <m-channelActions__proChannel></m-channelActions__proChannel>
   </ng-container>

@@ -1,27 +1,25 @@
-<ng-container *mIfTenant="false">
-  <m-sidebarWidget *ngIf="boosts.length > 0" titleText="Boosted">
-    <div class="m-sidebarWidget__body">
-      <ng-container *ngFor="let entity of boosts">
-        <m-publisherCard
-          *ngIf="['user', 'group'].includes(entity?.type)"
-          [publisher]="entity"
-          noPadding="true"
-          noBorder="true"
-          sizeOverride="small"
-        ></m-publisherCard>
-      </ng-container>
-      <m-button
-        *ngIf="session.getLoggedInUser()"
-        class="m-adsBoost__boostChannelButton"
-        color="blue"
-        size="small"
-        (onAction)="openBoostChannelModal()"
-        solid="true"
-        stretch="true"
-        ><ng-container i18n="@@ADS_BOOST__BOOST_CHANNEL"
-          >Boost channel</ng-container
-        ></m-button
-      >
-    </div>
-  </m-sidebarWidget>
-</ng-container>
+<m-sidebarWidget *ngIf="boosts.length > 0" titleText="Boosted">
+  <div class="m-sidebarWidget__body">
+    <ng-container *ngFor="let entity of boosts">
+      <m-publisherCard
+        *ngIf="['user', 'group'].includes(entity?.type)"
+        [publisher]="entity"
+        noPadding="true"
+        noBorder="true"
+        sizeOverride="small"
+      ></m-publisherCard>
+    </ng-container>
+    <m-button
+      *ngIf="session.getLoggedInUser() && isBoostEnabled"
+      class="m-adsBoost__boostChannelButton"
+      color="blue"
+      size="small"
+      (onAction)="openBoostChannelModal()"
+      solid="true"
+      stretch="true"
+      ><ng-container i18n="@@ADS_BOOST__BOOST_CHANNEL"
+        >Boost channel</ng-container
+      ></m-button
+    >
+  </div>
+</m-sidebarWidget>

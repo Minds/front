@@ -7,12 +7,12 @@ import {
 } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockComponent, MockService } from '../../../../utils/mock';
-import { ToasterService } from '../../../../common/services/toaster.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BoostModalV2FooterComponent } from './footer.component';
 import { BoostModalV2Service } from '../services/boost-modal-v2.service';
 import { BoostModalPanel, BoostSubject } from '../boost-modal-v2.types';
 import { By } from '@angular/platform-browser';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 describe('BoostModalV2FooterComponent', () => {
   let comp: BoostModalV2FooterComponent;
@@ -63,8 +63,8 @@ describe('BoostModalV2FooterComponent', () => {
           }),
         },
         {
-          provide: ToasterService,
-          useValue: MockService(ToasterService),
+          provide: IS_TENANT_NETWORK,
+          useValue: false,
         },
       ],
     }).compileComponents();
@@ -151,5 +151,31 @@ describe('BoostModalV2FooterComponent', () => {
     fixture.detectChanges();
 
     expect(getDescriptionTextContent()).toContain('By clicking Boost');
+  });
+
+  describe('getContentPolicyUrlPath', () => {
+    it('should return content policy URL path for tenant network', () => {
+      (comp as any).isTenantNetwork = true;
+      expect((comp as any).getContentPolicyUrlPath()).toBe(
+        '/pages/community-guidelines'
+      );
+    });
+
+    it('should return content policy URL path for non-tenant network', () => {
+      (comp as any).isTenantNetwork = false;
+      expect((comp as any).getContentPolicyUrlPath()).toBe('/content-policy');
+    });
+  });
+
+  describe('getTermsUrlPath', () => {
+    it('should return terms URL path for tenant network', () => {
+      (comp as any).isTenantNetwork = true;
+      expect((comp as any).getTermsUrlPath()).toBe('/pages/terms-of-service');
+    });
+
+    it('should return terms URL path for non-tenant network', () => {
+      (comp as any).isTenantNetwork = false;
+      expect((comp as any).getTermsUrlPath()).toBe('/p/terms');
+    });
   });
 });

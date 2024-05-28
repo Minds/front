@@ -7,10 +7,22 @@
     *ngSwitchCase="BoostModalPanel.BUDGET"
     class="m-boostModalFooter__descriptionTextInnerContainer"
   >
-    <span i18n="@@BOOST_MODAL_V2_FOOTER__ESTIMATED_REACH_DISCLAIMER"
-      >Estimated reach is approximate and can fluctuate based on network
-      demand.</span
-    >
+    <span>
+      <ng-container
+        *ngIf="isTenantNetwork; else mindsEstimatedReachTextTemplate"
+        i18n="@@BOOST_MODAL_V2_FOOTER__ESTIMATED_REACH_NETWORK_DISCLAIMER"
+      >
+        Estimated reach is approximate and can fluctuate based on the amount of
+        people on your network.
+      </ng-container>
+      <ng-template
+        #mindsEstimatedReachTextTemplate
+        i18n="@@BOOST_MODAL_V2_FOOTER__ESTIMATED_REACH_MINDS_DISCLAIMER"
+      >
+        Estimated reach is approximate and can fluctuate based on network
+        demand.
+      </ng-template>
+    </span>
   </div>
   <div
     *ngSwitchCase="BoostModalPanel.REVIEW"
@@ -82,8 +94,8 @@
 <!-- ------------------------ -->
 <ng-template #reviewPanelFooter let-boostSubject="boostSubject"
   ><span i18n="@@BOOST_MODAL_V2_FOOTER__ONCE_APPROVED">
-    By clicking Boost {{ boostSubject }}, you agree to Minds'
-    <a href="/content-policy" target="_blank">Content Policy</a> and
-    <a href="/p/terms" target="_blank">Refund Policy</a>.</span
+    By clicking Boost {{ boostSubject }}, you agree to this network's
+    <a [href]="contentPolicyUrlPath" target="_blank">Content Policy</a> and
+    <a [href]="termsUrlPath" target="_blank">Refund Policy</a>.</span
   ></ng-template
 >

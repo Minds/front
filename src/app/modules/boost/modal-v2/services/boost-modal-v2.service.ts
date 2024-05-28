@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
@@ -54,6 +54,7 @@ import {
 import { BoostGoal, BoostGoalButtonText } from '../../boost.types';
 import { Session } from '../../../../services/session';
 import { BoostTargetExperimentService } from '../../../experiments/sub-services/boost-target-experiment.service';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Service for creation and submission of boosts.
@@ -215,7 +216,9 @@ export class BoostModalV2Service implements OnDestroy {
         if (canSetBoostGoal) {
           return BoostModalPanel.GOAL;
         } else {
-          return BoostModalPanel.AUDIENCE;
+          return this.isTenantNetwork
+            ? BoostModalPanel.BUDGET
+            : BoostModalPanel.AUDIENCE;
         }
       })
     );
@@ -299,7 +302,15 @@ export class BoostModalV2Service implements OnDestroy {
               return BoostModalPanel.GOAL;
             }
           case BoostModalPanel.BUDGET:
-            return BoostModalPanel.AUDIENCE;
+            if (firstPanel === BoostModalPanel.BUDGET) {
+              return null;
+            } else if (this.isTenantNetwork) {
+              return goalRequiresButton
+                ? BoostModalPanel.GOAL_BUTTON
+                : BoostModalPanel.GOAL;
+            } else {
+              return BoostModalPanel.AUDIENCE;
+            }
           case BoostModalPanel.REVIEW:
             return BoostModalPanel.BUDGET;
         }
@@ -467,7 +478,8 @@ export class BoostModalV2Service implements OnDestroy {
     private config: ConfigsService,
     private web3Wallet: Web3WalletService,
     private boostContract: BoostContractService,
-    private boostTargetExperiment: BoostTargetExperimentService
+    private boostTargetExperiment: BoostTargetExperimentService,
+    @Inject(IS_TENANT_NETWORK) protected readonly isTenantNetwork: boolean
   ) {
     // set default duration and budgets on payment category change.
     this.paymentCategoryChangeSubscription = this.paymentCategory$.subscribe(
@@ -584,11 +596,17 @@ export class BoostModalV2Service implements OnDestroy {
     this.goalRequiresButtonSubscription = this.goalRequiresButton$
       .pipe(take(1))
       .subscribe((goalRequiresButton) => {
-        this.activePanel$.next(
-          goalRequiresButton
-            ? BoostModalPanel.GOAL_BUTTON
-            : BoostModalPanel.AUDIENCE
-        );
+        if (goalRequiresButton) {
+          this.activePanel$.next(BoostModalPanel.GOAL_BUTTON);
+          return;
+        }
+
+        if (this.isTenantNetwork) {
+          this.activePanel$.next(BoostModalPanel.BUDGET);
+          return;
+        }
+
+        this.activePanel$.next(BoostModalPanel.AUDIENCE);
       });
   }
 
@@ -597,7 +615,9 @@ export class BoostModalV2Service implements OnDestroy {
    * @returns { void }
    */
   private switchFromGoalButtonPanel(): void {
-    this.activePanel$.next(BoostModalPanel.AUDIENCE);
+    this.activePanel$.next(
+      this.isTenantNetwork ? BoostModalPanel.BUDGET : BoostModalPanel.AUDIENCE
+    );
   }
 
   /**

@@ -1,4 +1,5 @@
 <m-button
+  *ngIf="hasBoostPermission"
   iconOnly="true"
   overlay="true"
   (onAction)="onClick($event)"

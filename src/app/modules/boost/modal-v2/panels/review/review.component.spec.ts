@@ -12,6 +12,7 @@ import {
 import { BoostGoal } from '../../../boost.types';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { IS_TENANT_NETWORK } from '../../../../../common/injection-tokens/tenant-injection-tokens';
 
 describe('BoostModalV2ReviewComponent', () => {
   let comp: BoostModalV2ReviewComponent;
@@ -88,6 +89,10 @@ describe('BoostModalV2ReviewComponent', () => {
               },
             },
           }),
+        },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: false,
         },
       ],
     }).compileComponents();
@@ -225,5 +230,37 @@ describe('BoostModalV2ReviewComponent', () => {
     (comp as any).service.goal$.next(null);
     fixture.detectChanges();
     expect(getGoalSection()).toBeNull();
+  });
+
+  describe('render review section', () => {
+    it('should render review section', () => {
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        writable: true,
+        value: false,
+      });
+
+      fixture.detectChanges();
+
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-ref=boost-modal-v2-audience-section]'
+        )
+      ).toBeTruthy();
+    });
+
+    it('should NOT render review section on tenant networks', () => {
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+
+      fixture.detectChanges();
+
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-ref=boost-modal-v2-audience-section]'
+        )
+      ).toBeFalsy();
+    });
   });
 });

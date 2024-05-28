@@ -390,4 +390,58 @@ describe('PostMenuV2Component', () => {
     const result = comp.shouldShowEdit();
     expect(result).toBeTrue();
   });
+
+  describe('shouldShowBoost', () => {
+    it('should return true when boost option should be shown', () => {
+      comp.options = ['boost'];
+      comp.entity = {
+        owner_guid: '234',
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: '123',
+      });
+      (comp as any).permissions.canBoost.and.returnValue(true);
+
+      expect(comp.shouldShowBoost()).toBeTrue();
+    });
+
+    it('should return false when boost option should not be shown because boost is not an option', () => {
+      comp.options = [];
+      comp.entity = {
+        owner_guid: '234',
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: '123',
+      });
+      (comp as any).permissions.canBoost.and.returnValue(true);
+
+      expect(comp.shouldShowBoost()).toBeFalse();
+    });
+
+    it('should return false when boost option should not be shown because user is  owner', () => {
+      comp.options = ['boost'];
+      comp.entity = {
+        owner_guid: '123',
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: '123',
+      });
+      (comp as any).permissions.canBoost.and.returnValue(true);
+
+      expect(comp.shouldShowBoost()).toBeFalse();
+    });
+
+    it('should return false when boost option should not be shown because user has no permission to boost', () => {
+      comp.options = ['boost'];
+      comp.entity = {
+        owner_guid: '234',
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: '123',
+      });
+      (comp as any).permissions.canBoost.and.returnValue(false);
+
+      expect(comp.shouldShowBoost()).toBeFalse();
+    });
+  });
 });

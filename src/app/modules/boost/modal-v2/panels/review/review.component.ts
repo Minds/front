@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import {
 } from '../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { BoostGoal } from '../../../boost.types';
+import { IS_TENANT_NETWORK } from '../../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Boost modal review section - allows users to see what they have opted into
@@ -78,7 +79,10 @@ export class BoostModalV2ReviewComponent {
   public readonly showGoalSection$: Observable<boolean> =
     this.service.canSetBoostGoal$;
 
-  constructor(protected service: BoostModalV2Service) {}
+  constructor(
+    protected service: BoostModalV2Service,
+    @Inject(IS_TENANT_NETWORK) protected readonly isTenantNetwork: boolean
+  ) {}
 
   /**
    * Change the active panel - allows back click behavior.

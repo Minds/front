@@ -27,6 +27,7 @@ import { RouterHistoryService } from '../../../common/services/router-history.se
 import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
 import { IfBrowserDirective } from '../../../common/directives/if-browser.directive';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 @Component({
   selector: 'minds-activity',
@@ -122,6 +123,10 @@ describe('NewsfeedSingleComponent', () => {
         {
           provide: PLATFORM_ID,
           useValue: 'browser',
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
         },
         {
           provide: IsTenantService,
@@ -554,5 +559,19 @@ describe('NewsfeedSingleComponent', () => {
       By.css('m-ads-boost')
     );
     expect(sidebarBoosts).toBeNull();
+  });
+
+  describe('hasBoostPermission', () => {
+    it('should return true if the user has the boost permission', () => {
+      (comp as any).permissionsService.canBoost.and.returnValue(true);
+      comp.ngOnInit();
+      expect((comp as any).hasBoostPermission).toBe(true);
+    });
+
+    it('should return false if the user does not have the boost permission', () => {
+      (comp as any).permissionsService.canBoost.and.returnValue(false);
+      comp.ngOnInit();
+      expect((comp as any).hasBoostPermission).toBe(false);
+    });
   });
 });

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Session } from '../../../../../services/session';
 import { PermissionsService } from '../../../../../common/services/permissions.service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 /**
  * Network admin console moderation section. Contains sub-tabs
@@ -15,8 +16,15 @@ import { PermissionsService } from '../../../../../common/services/permissions.s
   ],
 })
 export class NetworkAdminConsoleModerationComponent {
+  /** Whether boosting is enabled. */
+  protected readonly isBoostEnabled: boolean;
+
   constructor(
     public session: Session,
-    public permissions: PermissionsService
-  ) {}
+    public permissions: PermissionsService,
+    private configs: ConfigsService
+  ) {
+    this.isBoostEnabled =
+      this.configs.get('tenant')?.['boost_enabled'] ?? false;
+  }
 }

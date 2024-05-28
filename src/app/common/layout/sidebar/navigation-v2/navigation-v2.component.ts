@@ -18,7 +18,6 @@ import { ConfigsService } from '../../../services/configs.service';
 import { Observable, Subscription, of } from 'rxjs';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { ComposerModalService } from '../../../../modules/composer/components/modal/modal.service';
 import { ThemeService } from '../../../services/theme.service';
 import { ComposerService } from '../../../../modules/composer/services/composer.service';
@@ -93,6 +92,9 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   /** Whether experiment controlling reorganization of menu items variation is active */
   public showReorgVariation: boolean = false;
 
+  /** Whether the user has permission to boost. */
+  protected hasBoostPermission: boolean = false;
+
   /**
    * Sets display mode on resize.
    */
@@ -120,7 +122,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     protected configs: ConfigsService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private boostModalService: BoostModalV2LazyService,
     private composerService: ComposerService,
     private composerModalService: ComposerModalService,
     private injector: Injector,
@@ -149,6 +150,8 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     this.settingsLink = '/settings';
 
     this.chatExperimentIsActive = this.chatExperimentService.isActive();
+
+    this.hasBoostPermission = this.permissions.canBoost();
 
     this.subscriptions.push(
       this.themeService.isDark$.subscribe((isDark) => {
@@ -244,15 +247,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   public toggle(): void {
     this.sidebarNavigationService.toggle();
-  }
-
-  /**
-   * Open boost modal.
-   * @returns { Promise<void> }
-   */
-  public async openBoostModal() {
-    this.toggle();
-    await this.boostModalService.open(this.session.getLoggedInUser());
   }
 
   /**
