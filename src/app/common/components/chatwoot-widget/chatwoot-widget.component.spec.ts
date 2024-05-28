@@ -15,6 +15,8 @@ import { CDN_ASSETS_URL } from '../../injection-tokens/url-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
 import { ChatwootWidgetComponent } from './chatwoot-widget.component';
+import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
+import { ChatwootWidgetService } from './chatwoot-widget.service';
 
 let configMock = new (function () {
   this.get = jasmine.createSpy('get').and.returnValue({
@@ -47,8 +49,13 @@ describe('ChatwootWidgetComponent', () => {
           provide: UserAvatarService,
           useValue: MockService(UserAvatarService),
         },
+        {
+          provide: ChatwootWidgetService,
+          useValue: MockService(ChatwootWidgetService),
+        },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: CDN_ASSETS_URL, useValue: 'localhost:4200/static/en/' },
+        { provide: IS_TENANT_NETWORK, useValue: false },
       ],
     }).compileComponents();
   }));
@@ -97,6 +104,32 @@ describe('ChatwootWidgetComponent', () => {
     expect((window as any).$chatwoot.reset).toHaveBeenCalled();
     expect((comp as any).loggedInSubscription).toBeTruthy();
   });
+
+  it('should init chatwoot on init with a user who can use chatwoot', () => {
+    (window as any).chatwootSDK.run.calls.reset();
+    spyOn(comp as any, 'initChatwoot').and.callThrough();
+    (comp as any).service.canUseChatwoot.and.returnValue(true);
+
+    (comp as any).ngOnInit();
+
+    expect((comp as any).initChatwoot).toHaveBeenCalled();
+  });
+
+  it('should not init chatwoot until logging in to a suitable user, if the initial user cannot use chatwoot', fakeAsync(() => {
+    (window as any).chatwootSDK.run.calls.reset();
+    spyOn(comp as any, 'initChatwoot').and.callThrough();
+    (comp as any).service.canUseChatwoot.and.returnValue(false);
+
+    (comp as any).ngOnInit();
+    expect((comp as any).initChatwoot).not.toHaveBeenCalled();
+
+    (comp as any).service.canUseChatwoot.and.returnValue(true);
+
+    (comp as any).session.loggedinEmitter.emit(true);
+    tick();
+
+    expect((comp as any).initChatwoot).toHaveBeenCalled();
+  }));
 
   it('should reset chatwoot on log out', fakeAsync(() => {
     (comp as any).initLoginStateSubscription();
@@ -169,6 +202,78 @@ describe('ChatwootWidgetComponent', () => {
     );
 
     expect((comp as any).loggedInSubscription).toBeTruthy();
+  }));
+
+  it('should show bubble on login to a tenant for a user who can use chatwoot', fakeAsync(() => {
+    const mockHmac: string = 'abcdef123456';
+    const avatarSrc: string = 'localhost/avatar.jpg';
+    const mockUser: Partial<MindsUser> = {
+      guid: '123',
+      username: 'testaccount',
+    };
+    (comp as any).session.getLoggedInUser.and.returnValue(mockUser);
+    (comp as any).api.get.and.returnValue(of({ hmac: mockHmac }));
+    (comp as any).userAvatar.getSrc.and.returnValue(avatarSrc);
+    (comp as any).service.canUseChatwoot.and.returnValue(true);
+    Object.defineProperty(comp, 'isTenantNetwork', {
+      value: true,
+      writable: true,
+    });
+
+    (comp as any).initLoginStateSubscription();
+    (comp as any).session.loggedinEmitter.emit(true);
+    tick();
+
+    expect((comp as any).service.showBubble).toHaveBeenCalled();
+    expect((comp as any).service.hideBubble).not.toHaveBeenCalled();
+  }));
+
+  it('should hide bubble on login to a tenant for a user who cannot use chatwoot', fakeAsync(() => {
+    const mockHmac: string = 'abcdef123456';
+    const avatarSrc: string = 'localhost/avatar.jpg';
+    const mockUser: Partial<MindsUser> = {
+      guid: '123',
+      username: 'testaccount',
+    };
+    (comp as any).session.getLoggedInUser.and.returnValue(mockUser);
+    (comp as any).api.get.and.returnValue(of({ hmac: mockHmac }));
+    (comp as any).userAvatar.getSrc.and.returnValue(avatarSrc);
+    (comp as any).service.canUseChatwoot.and.returnValue(false);
+    Object.defineProperty(comp, 'isTenantNetwork', {
+      value: true,
+      writable: true,
+    });
+
+    (comp as any).initLoginStateSubscription();
+    (comp as any).session.loggedinEmitter.emit(true);
+    tick();
+
+    expect((comp as any).service.showBubble).not.toHaveBeenCalled();
+    expect((comp as any).service.hideBubble).toHaveBeenCalled();
+  }));
+
+  it('should not call to show or hide bubble on login to a non-tenant', fakeAsync(() => {
+    const mockHmac: string = 'abcdef123456';
+    const avatarSrc: string = 'localhost/avatar.jpg';
+    const mockUser: Partial<MindsUser> = {
+      guid: '123',
+      username: 'testaccount',
+    };
+    (comp as any).session.getLoggedInUser.and.returnValue(mockUser);
+    (comp as any).api.get.and.returnValue(of({ hmac: mockHmac }));
+    (comp as any).userAvatar.getSrc.and.returnValue(avatarSrc);
+    (comp as any).service.canUseChatwoot.and.returnValue(true);
+    Object.defineProperty(comp, 'isTenantNetwork', {
+      value: false,
+      writable: true,
+    });
+
+    (comp as any).initLoginStateSubscription();
+    (comp as any).session.loggedinEmitter.emit(true);
+    tick();
+
+    expect((comp as any).service.showBubble).not.toHaveBeenCalled();
+    expect((comp as any).service.hideBubble).not.toHaveBeenCalled();
   }));
 
   it('should reset chatwoot', () => {
