@@ -23,13 +23,6 @@ import { GroupChatRoomService } from '../services/group-chat-rooms.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { groupMock } from '../../../../mocks/responses/group.mock';
 
-let groupServiceMock: any = MockService(GroupService, {
-  has: ['group$'],
-  props: {
-    group$: { get: () => new BehaviorSubject<string>('') },
-  },
-});
-
 describe('GroupSettingsButton', () => {
   let comp: GroupSettingsButton;
   let fixture: ComponentFixture<GroupSettingsButton>;
@@ -38,7 +31,7 @@ describe('GroupSettingsButton', () => {
     return fixture.debugElement.query(By.css('m-dropdownMenu'));
   }
 
-  beforeEach(waitForAsync(() => {
+  beforeEach((done) => {
     TestBed.configureTestingModule({
       declarations: [
         MockComponent({
@@ -72,7 +65,15 @@ describe('GroupSettingsButton', () => {
         GroupSettingsButton,
       ],
       providers: [
-        { provide: GroupService, useValue: groupServiceMock },
+        {
+          provide: GroupService,
+          useValue: MockService(GroupService, {
+            has: ['group$'],
+            props: {
+              group$: { get: () => new BehaviorSubject<string>('') },
+            },
+          }),
+        },
         { provide: Session, useValue: sessionMock },
         { provide: ModalService, useValue: modalServiceMock },
         {
@@ -97,9 +98,7 @@ describe('GroupSettingsButton', () => {
         },
       ],
     }).compileComponents();
-  }));
 
-  beforeEach((done: DoneFn) => {
     fixture = TestBed.createComponent(GroupSettingsButton);
     comp = fixture.componentInstance;
 
@@ -140,7 +139,7 @@ describe('GroupSettingsButton', () => {
   });
 
   describe('deleteChatRoom', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       modalServiceMock.present.calls.reset();
       (comp as any).service.setConversationDisabled.calls.reset();
     });
@@ -242,15 +241,13 @@ describe('GroupSettingsButton', () => {
   });
 
   describe('createChatRoom', () => {
-    beforeAll(() => {
-      (comp as any).service.setConversationDisabled.calls.reset();
-    });
-
     afterEach(() => {
-      (comp as any).service.setConversationDisabled.calls.reset();
+      (comp as any).service?.setConversationDisabled.calls.reset();
     });
 
     it('should handle chat room creation', fakeAsync(() => {
+      (comp as any).service.setConversationDisabled.calls.reset();
+
       (comp as any).groupChatService.createGroupChatRoom.and.returnValue(
         Promise.resolve(true)
       );
@@ -270,6 +267,8 @@ describe('GroupSettingsButton', () => {
     }));
 
     it('should handle failures during chat room creation', fakeAsync(() => {
+      (comp as any).service.setConversationDisabled.calls.reset();
+
       (comp as any).groupChatService.createGroupChatRoom.and.returnValue(
         Promise.resolve(false)
       );
