@@ -132,18 +132,19 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
       baseUrl: this.baseUrl,
     });
 
-    // if logged in, set the user async.
-    if (this.session.isLoggedIn()) {
-      this.setUser();
-    } else {
-      // if logged out, reset chatwoot to ensure there is no lingering state.
-      this.resetChatwoot();
-    }
-
-    this.initLoginStateSubscription();
-
     window.addEventListener('chatwoot:error', function (e) {
       console.error(e);
+    });
+
+    window.addEventListener('chatwoot:ready', (ready) => {
+      if (this.session.isLoggedIn()) {
+        this.setUser();
+      } else {
+        // if logged out, reset chatwoot to ensure there is no lingering state.
+        this.resetChatwoot();
+      }
+
+      this.initLoginStateSubscription();
     });
   }
 

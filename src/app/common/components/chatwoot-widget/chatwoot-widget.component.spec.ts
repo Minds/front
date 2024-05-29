@@ -91,7 +91,7 @@ describe('ChatwootWidgetComponent', () => {
     expect((comp as any).config.get).toHaveBeenCalledWith('chatwoot');
   });
 
-  it('should init chatwoot for logged out user', () => {
+  it('should init chatwoot for logged out user', fakeAsync(() => {
     (comp as any).onChatwootLoad();
     (comp as any).session.isLoggedIn.and.returnValue(false);
 
@@ -100,9 +100,14 @@ describe('ChatwootWidgetComponent', () => {
       baseUrl: (comp as any).baseUrl,
     });
 
+    // emulate browser event coming back.
+    (comp as any).resetChatwoot();
+    (comp as any).initLoginStateSubscription();
+    tick();
+
     expect((window as any).$chatwoot.reset).toHaveBeenCalled();
     expect((comp as any).loggedInSubscription).toBeTruthy();
-  });
+  }));
 
   it('should init chatwoot on init with a user who can use chatwoot', () => {
     (window as any).chatwootSDK.run.calls.reset();
@@ -149,6 +154,11 @@ describe('ChatwootWidgetComponent', () => {
     (comp as any).api.get.and.returnValue(of({ hmac: mockHmac }));
     (comp as any).userAvatar.getSrc.and.returnValue(avatarSrc);
     (comp as any).onChatwootLoad();
+    tick();
+
+    // emulate browser event coming back.
+    (comp as any).setUser();
+    (comp as any).initLoginStateSubscription();
     tick();
 
     expect((window as any).chatwootSDK.run).toHaveBeenCalledOnceWith({
