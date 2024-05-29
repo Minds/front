@@ -19,13 +19,19 @@ import { NoticesModule } from '../notices/notices.module';
 import { MarkdownModule } from 'ngx-markdown';
 import { BoostConsoleFeedComponent } from './console-v2/feed/feed.component';
 import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
-import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
+import { boostEnabledGuard } from '../../common/guards/can-boost.guard';
+import { permissionGuard } from '../../common/guards/permission.guard';
+import { PermissionsEnum } from '../../../graphql/generated.engine';
 
 const boostRoutes: Routes = [
   {
     path: 'boost/boost-console',
     component: BoostConsoleV2Component,
-    canActivate: [MindsOnlyRedirectGuard, loggedOutExplainerScreenGuard()],
+    canActivate: [
+      loggedOutExplainerScreenGuard(),
+      boostEnabledGuard(),
+      permissionGuard(PermissionsEnum.CanBoost),
+    ],
     data: {
       title: 'Boost Console',
       description: 'Manage and monitor your boosts',
@@ -58,7 +64,7 @@ const boostRoutes: Routes = [
     BoostConsoleSingleComponent,
     BoostConsoleFeedComponent,
   ],
-  exports: [BoostConsoleV2Component],
+  exports: [BoostConsoleV2Component, BoostConsoleListComponent],
   providers: [BoostConsoleService],
 })
 export class BoostModule {}

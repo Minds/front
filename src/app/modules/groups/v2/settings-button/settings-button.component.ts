@@ -7,6 +7,7 @@ import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-
 import { GroupService } from '../group.service';
 import { Subscription } from 'rxjs';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 import { GroupChatRoomService } from '../services/group-chat-rooms.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 
@@ -22,8 +23,10 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 export class GroupSettingsButton implements OnInit, OnDestroy {
   group;
 
-  private subscriptions: Subscription[] = [];
+  /** Whether the user has permission to boost. */
+  protected hasBoostPermission: boolean = false;
 
+  private subscriptions: Subscription[] = [];
   constructor(
     public service: GroupService,
     public session: Session,
@@ -31,11 +34,13 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
     public modalService: ModalService,
     private boostModal: BoostModalV2LazyService,
     protected nsfwEnabledService: NsfwEnabledService,
+    private permissionsService: PermissionsService,
     private groupChatService: GroupChatRoomService,
     private toasterService: ToasterService
   ) {}
 
   ngOnInit(): void {
+    this.hasBoostPermission = this.permissionsService.canBoost();
     this.subscriptions.push(
       this.service.group$.subscribe((group) => {
         this.group = group;

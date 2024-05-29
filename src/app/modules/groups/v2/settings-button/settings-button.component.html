@@ -19,13 +19,13 @@
     <!-- ----------------------------- -->
     <ng-container *ngIf="service.isOwner$ | async">
       <!---------------------------->
-      <ng-container *mIfTenant="false">
-        <m-dropdownMenu__item
-          (click)="onBoostGroupClick()"
-          i18n="@@GROUP_SETTINGS__BOOST_GROUP"
-          >Boost group</m-dropdownMenu__item
-        >
-      </ng-container>
+      <m-dropdownMenu__item
+        *ngIf="hasBoostPermission"
+        (click)="onBoostGroupClick()"
+        i18n="@@GROUP_SETTINGS__BOOST_GROUP"
+        >Boost group</m-dropdownMenu__item
+      >
+
       <!---------------------------->
       <ng-container *mIfTenant="false">
         <m-dropdownMenu__item

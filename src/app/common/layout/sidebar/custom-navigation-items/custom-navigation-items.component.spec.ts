@@ -27,6 +27,7 @@ describe('CustomNavigationItemsComponent', () => {
 
   const mockPermissionsService = jasmine.createSpyObj('PermissionsService', [
     'canModerateContent',
+    'canBoost',
   ]);
 
   const mockRawCustomNavItems = [
@@ -129,6 +130,7 @@ describe('CustomNavigationItemsComponent', () => {
     fixture = TestBed.createComponent(CustomNavigationItemsComponent);
     component = fixture.componentInstance;
     component.rawCustomNavItems = mockRawCustomNavItems;
+    component.hiddenCustomNavItemsIds.clear();
 
     fixture.detectChanges();
   });
@@ -154,5 +156,38 @@ describe('CustomNavigationItemsComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
     expect(component.hiddenCustomNavItemsIds.has('memberships')).toBeFalse();
+  });
+
+  describe('setHiddenCustomNavItems', () => {
+    beforeEach(() => {
+      component.hiddenCustomNavItemsIds.clear();
+    });
+
+    it('should add boost to hidden items when user is not logged in', () => {
+      (component as any).session.isLoggedIn.and.returnValue(false);
+      (component as any).permissions.canBoost.and.returnValue(true);
+
+      component.setHiddenCustomNavItems();
+
+      expect(component.hiddenCustomNavItemsIds.has('boost')).toBeTrue();
+    });
+
+    it('should add boost to hidden items when user cannot boost', () => {
+      (component as any).session.isLoggedIn.and.returnValue(true);
+      (component as any).permissions.canBoost.and.returnValue(false);
+
+      component.setHiddenCustomNavItems();
+
+      expect(component.hiddenCustomNavItemsIds.has('boost')).toBeTrue();
+    });
+
+    it('should NOT add boost to hidden items when user is logged in and has permission to boost', () => {
+      (component as any).session.isLoggedIn.and.returnValue(true);
+      (component as any).permissions.canBoost.and.returnValue(true);
+
+      component.setHiddenCustomNavItems();
+
+      expect(component.hiddenCustomNavItemsIds.has('boost')).toBeFalse();
+    });
   });
 });

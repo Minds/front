@@ -137,4 +137,24 @@ describe('BoostModalV2Component', () => {
     );
     expect(comp.onDismissIntent).toHaveBeenCalled();
   });
+
+  describe('firstPanel$', () => {
+    it('should change active panel to first panel for GOAL panel', () => {
+      comp.activePanel$.next(null);
+      (comp as any).service.firstPanel$.next(BoostModalPanel.GOAL);
+      expect(comp.activePanel$.getValue()).toBe(BoostModalPanel.GOAL);
+    });
+
+    it('should change active panel to first panel for BUDGET panel', () => {
+      comp.activePanel$.next(null);
+      (comp as any).service.firstPanel$.next(BoostModalPanel.BUDGET);
+      expect(comp.activePanel$.getValue()).toBe(BoostModalPanel.BUDGET);
+    });
+
+    it('should NOT change active panel to first panel for AUDIENCE panel', () => {
+      comp.activePanel$.next(BoostModalPanel.BUDGET);
+      (comp as any).service.firstPanel$.next(BoostModalPanel.AUDIENCE);
+      expect(comp.activePanel$.getValue()).toBe(BoostModalPanel.BUDGET);
+    });
+  });
 });

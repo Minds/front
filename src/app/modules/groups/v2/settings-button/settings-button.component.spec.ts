@@ -18,6 +18,7 @@ import { ModalService } from '../../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../../tests/modal-service-mock.spec';
 import { BehaviorSubject } from 'rxjs';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm.component';
 import { GroupChatRoomService } from '../services/group-chat-rooms.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
@@ -89,6 +90,10 @@ describe('GroupSettingsButton', () => {
           useValue: MockService(NsfwEnabledService),
         },
         {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+        {
           provide: GroupChatRoomService,
           useValue: MockService(GroupChatRoomService),
         },
@@ -113,6 +118,20 @@ describe('GroupSettingsButton', () => {
         done();
       });
     }
+  });
+
+  describe('hasBoostPermission', () => {
+    it('should return true if the user has the boost permission', () => {
+      (comp as any).permissionsService.canBoost.and.returnValue(true);
+      comp.ngOnInit();
+      expect((comp as any).hasBoostPermission).toBe(true);
+    });
+
+    it('should return false if the user does not have the boost permission', () => {
+      (comp as any).permissionsService.canBoost.and.returnValue(false);
+      comp.ngOnInit();
+      expect((comp as any).hasBoostPermission).toBe(false);
+    });
   });
 
   it('should have a dropdown component', () => {

@@ -30,6 +30,7 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 /**
  * Container for a single blog.
@@ -105,6 +106,9 @@ export class BlogView implements OnInit, OnDestroy {
   @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
   @ViewChild('lockScreen') lockScreenComponent;
 
+  /** Whether the user has permission to boost. */
+  protected hasBoostPermission: boolean = false;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -122,6 +126,7 @@ export class BlogView implements OnInit, OnDestroy {
     private modalService: ModalService,
     private clientMetaService: ClientMetaService,
     protected toasterService: ToasterService,
+    private permissionsService: PermissionsService,
     @SkipSelf() injector: Injector,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
     configs: ConfigsService
@@ -140,6 +145,7 @@ export class BlogView implements OnInit, OnDestroy {
       medium: 'single',
     });
 
+    this.hasBoostPermission = this.permissionsService.canBoost();
     this.unlockIfQueryParam();
   }
 

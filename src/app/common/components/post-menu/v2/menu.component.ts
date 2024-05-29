@@ -77,7 +77,8 @@ export class PostMenuV2Component implements OnInit {
   shouldShowBoost(): boolean {
     return (
       this.options.indexOf('boost') !== -1 &&
-      this.entity.owner_guid !== this.session.getLoggedInUser().guid
+      this.entity.owner_guid !== this.session.getLoggedInUser().guid &&
+      this.permissions.canBoost()
     );
   }
 

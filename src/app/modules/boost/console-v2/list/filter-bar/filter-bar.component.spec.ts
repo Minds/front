@@ -6,16 +6,22 @@ import { BoostConsoleAdminStatsService } from '../../services/admin-stats.servic
 import { BoostConsoleService } from '../../services/console.service';
 import { BoostConsoleFilterBarComponent } from './filter-bar.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { IfTenantDirective } from '../../../../../common/directives/if-tenant.directive';
+import { IsTenantService } from '../../../../../common/services/is-tenant.service';
 
 describe('BoostConsoleFilterBarComponent', () => {
   let comp: BoostConsoleFilterBarComponent;
   let fixture: ComponentFixture<BoostConsoleFilterBarComponent>;
+
+  let isTenantServiceMock: jasmine.SpyObj<IsTenantService> =
+    jasmine.createSpyObj<IsTenantService>(['is']);
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [
         BoostConsoleFilterBarComponent,
+        IfTenantDirective,
         MockComponent({
           selector: 'm-dropdownMenu',
           inputs: ['menu'],
@@ -57,7 +63,18 @@ describe('BoostConsoleFilterBarComponent', () => {
         { provide: Router, useValue: MockService(Router) },
         { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
       ],
-    }).compileComponents();
+    })
+      .overrideDirective(IfTenantDirective, {
+        add: {
+          providers: [
+            {
+              provide: IsTenantService,
+              useValue: isTenantServiceMock,
+            },
+          ],
+        },
+      })
+      .compileComponents();
   }));
 
   beforeEach((done) => {
@@ -98,5 +115,15 @@ describe('BoostConsoleFilterBarComponent', () => {
       suitability: 'safe',
     });
     expect((comp as any).adminStats.fetch).toHaveBeenCalled();
+  });
+
+  describe('render settings button', () => {
+    it('should render settings button when in tenant context', () => {
+      isTenantServiceMock.is.and.returnValue(true);
+      fixture.detectChanges();
+      expect(
+        fixture.nativeElement.querySelector('.m-discovery__settingsButton')
+      ).toBeTruthy();
+    });
   });
 });

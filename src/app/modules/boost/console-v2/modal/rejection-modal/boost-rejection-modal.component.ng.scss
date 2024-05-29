@@ -31,11 +31,18 @@
             background-color: themed($m-bgColor--secondary);
           }
         }
+
+        &--selected {
+          @include m-theme() {
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
       }
     }
     .m-boost_rejection_modal__toolbar {
       display: flex;
       justify-content: flex-end;
+      gap: $spacing4;
 
       &.m-modalV2__toolbar {
         border-top: none;

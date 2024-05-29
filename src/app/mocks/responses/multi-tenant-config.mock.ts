@@ -10,6 +10,7 @@ export const multiTenantConfigMock: MultiTenantConfig = {
   primaryColor: '#ff0000',
   federationDisabled: true,
   replyEmail: 'some@email.com',
+  boostEnabled: true,
   canEnableFederation: true,
   customHomePageEnabled: true,
   customHomePageDescription: 'Hello world',
