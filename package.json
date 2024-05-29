@@ -48,7 +48,7 @@
     "@angular/service-worker": "^16.2.12",
     "@apollo/client": "^3.7.14",
     "@bhayward93/ckeditor5-build-minds": "^1.1.8",
-    "@bhayward93/web3modal-angular": "^1.8.2-beta.2",
+    "@mindsorg/web3modal-angular": "^16.2.12",
     "@ckeditor/ckeditor5-angular": "^5.2.0",
     "@ctrl/ngx-emoji-mart": "^6.2.0",
     "@danielmoncada/angular-datetime-picker": "^16.1.0",

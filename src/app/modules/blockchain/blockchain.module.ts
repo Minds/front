@@ -17,7 +17,7 @@ import { BlockchainEthModalComponent } from './eth-modal/eth-modal.component';
 import { BlockchainMarketingOnboardComponent } from './token-purchase/onboard.component';
 import { SendWyreService } from './sendwyre/sendwyre.service';
 import { ModalsModule } from '../modals/modals.module';
-import { Web3ModalModule } from '@bhayward93/web3modal-angular';
+import { Web3ModalModule } from '@mindsorg/web3modal-angular';
 
 const cryptoRoutes: Routes = [];
 

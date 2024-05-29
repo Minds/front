@@ -1,10 +1,7 @@
 import { NgModule, PLATFORM_ID } from '@angular/core';
 import { PageLayoutService } from './layout/page-layout.service';
 import { ConfigsService } from './services/configs.service';
-import {
-  Web3ModalModule,
-  Web3ModalService,
-} from '@bhayward93/web3modal-angular';
+import { Web3ModalModule, Web3ModalService } from '@mindsorg/web3modal-angular';
 import { createWeb3ModalConfig } from '../helpers/web3modal-configuration';
 import { TransactionOverlayService } from '../modules/blockchain/transaction-overlay/transaction-overlay.service';
 import { Web3WalletService } from '../modules/blockchain/web3-wallet.service';
