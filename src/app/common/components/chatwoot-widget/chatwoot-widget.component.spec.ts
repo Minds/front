@@ -54,7 +54,6 @@ describe('ChatwootWidgetComponent', () => {
           useValue: MockService(ChatwootWidgetService),
         },
         { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: CDN_ASSETS_URL, useValue: 'localhost:4200/static/en/' },
         { provide: IS_TENANT_NETWORK, useValue: false },
       ],
     }).compileComponents();

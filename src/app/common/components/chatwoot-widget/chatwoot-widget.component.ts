@@ -11,7 +11,6 @@ import { lastValueFrom, Subscription } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { ApiService } from '../../api/api.service';
-import { CDN_ASSETS_URL } from '../../injection-tokens/url-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
 import {
@@ -53,14 +52,13 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     private userAvatar: UserAvatarService,
     private service: ChatwootWidgetService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    @Inject(CDN_ASSETS_URL) private cdnAssetsUrl: string,
     @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {
     const chatwootConfig: ChatwootMindsConfig =
       this.config.get<ChatwootMindsConfig>('chatwoot');
     this.websiteToken = chatwootConfig.website_token;
     this.baseUrl = chatwootConfig.base_url;
-    this.scriptUrl = this.cdnAssetsUrl + 'assets/scripts/chatwoot.js';
+    this.scriptUrl = '/static/en/assets/scripts/chatwoot.js';
   }
 
   ngOnInit(): void {
