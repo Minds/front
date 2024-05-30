@@ -1,0 +1,18 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  max-width: 520px;
+
+  > * {
+    margin-bottom: $spacing4;
+  }
+
+  > *:last-child {
+    margin-bottom: $spacing9 !important;
+  }
+
+  .m-networkBoostConfiguration__title {
+    @include heading4Regular;
+  }
+}

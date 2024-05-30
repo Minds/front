@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject, of } from 'rxjs';
 import { NetworkAdminEnableBoostToggleComponent } from './enable-boost-toggle.component';
-import { MockComponent, MockService } from '../../../../../../../utils/mock';
-import { MultiTenantNetworkConfigService } from '../../../../../services/config.service';
-import { MultiTenantConfig } from '../../../../../../../../graphql/generated.engine';
-import { multiTenantConfigMock } from '../../../../../../../mocks/responses/multi-tenant-config.mock';
-import { ToasterService } from '../../../../../../../common/services/toaster.service';
-import { ConfigsService } from '../../../../../../../common/services/configs.service';
+import { MockComponent, MockService } from '../../../../../../../../utils/mock';
+import { MultiTenantNetworkConfigService } from '../../../../../../services/config.service';
+import { MultiTenantConfig } from '../../../../../../../../../graphql/generated.engine';
+import { multiTenantConfigMock } from '../../../../../../../../mocks/responses/multi-tenant-config.mock';
+import { ToasterService } from '../../../../../../../../common/services/toaster.service';
+import { ConfigsService } from '../../../../../../../../common/services/configs.service';
+import { CommonModule as NgCommonModule } from '@angular/common';
 
 describe('NetworkAdminEnableBoostToggleComponent', () => {
   let comp: NetworkAdminEnableBoostToggleComponent;
@@ -14,14 +15,7 @@ describe('NetworkAdminEnableBoostToggleComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        NetworkAdminEnableBoostToggleComponent,
-        MockComponent({
-          selector: 'm-toggle',
-          inputs: ['mModel', 'leftValue', 'rightValue', 'offState'],
-          outputs: ['mModelChange'],
-        }),
-      ],
+      imports: [NetworkAdminEnableBoostToggleComponent],
       providers: [
         {
           provide: MultiTenantNetworkConfigService,
@@ -38,6 +32,18 @@ describe('NetworkAdminEnableBoostToggleComponent', () => {
         { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
+    }).overrideComponent(NetworkAdminEnableBoostToggleComponent, {
+      set: {
+        imports: [
+          NgCommonModule,
+          MockComponent({
+            selector: 'm-toggle',
+            inputs: ['mModel', 'leftValue', 'rightValue', 'offState'],
+            outputs: ['mModelChange'],
+            standalone: true,
+          }),
+        ],
+      },
     });
 
     fixture = TestBed.createComponent(NetworkAdminEnableBoostToggleComponent);

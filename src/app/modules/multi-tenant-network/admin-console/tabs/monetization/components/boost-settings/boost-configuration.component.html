@@ -1,0 +1,13 @@
+<h4
+  class="m-networkBoostConfiguration__title"
+  i18n="@@NETWORK_ADMIN_MONETIZATION__BOOST_AND_ADVERTISING"
+>
+  Boost and advertising
+</h4>
+
+<m-networkAdminConsole__enableBoostToggle></m-networkAdminConsole__enableBoostToggle>
+
+<m-boostEmbedBuilder
+  *ngIf="shouldShowBoostEmbedBuilder$ | async"
+  [@growShrink]
+></m-boostEmbedBuilder>

@@ -1,0 +1,102 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  max-width: 520px;
+  cursor: pointer;
+
+  .m-boostEmbedBuilder__description {
+    margin: $spacing3 0;
+
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-boostEmbedCode__embedCodeContainer {
+    position: relative;
+    padding: $spacing3 $spacing9 $spacing3 $spacing3;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-boostEmbedCode__embedCode {
+      font-family: 'IBM Plex Mono';
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px;
+    }
+
+    .m-boostEmbedCode__embedCopyIcon {
+      position: absolute;
+      top: $spacing3;
+      right: $spacing3;
+      font-size: 14px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .m-boostEmbedBuilder__dimensionsForm {
+    display: flex;
+    flex-flow: row wrap;
+    gap: $spacing8;
+
+    .m-boostEmbedBuilder__dimensionInputContainer {
+      display: flex;
+      flex-flow: column nowrap;
+      width: 168px;
+
+      @media screen and (max-width: $min-tablet) {
+        width: 100%;
+      }
+
+      .m-boostEmbedBuilder__dimensionInputLabel {
+        margin-bottom: $spacing1;
+        @include body1Regular;
+      }
+
+      .m-boostEmbedBuilder__dimensionInput {
+        padding: $spacing3 $spacing4;
+        box-sizing: border-box;
+        background-color: transparent;
+        border-radius: 3px;
+        outline: none;
+
+        @include heading4Regular;
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+          color: themed($m-textColor--primary);
+        }
+
+        &.ng-invalid {
+          @include m-theme() {
+            border-color: themed($m-alert);
+          }
+        }
+      }
+    }
+
+    m-button {
+      display: flex;
+      align-items: flex-start;
+      margin-top: $spacing11;
+
+      // If we know that it fits on the screen, we want to prevent
+      // the button from moving down when validation errors appear.
+      @media screen and (max-width: $min-tablet) {
+        margin-top: unset;
+        align-items: flex-end;
+      }
+    }
+  }
+}
