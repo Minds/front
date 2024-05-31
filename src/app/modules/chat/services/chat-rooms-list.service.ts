@@ -23,6 +23,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { ApolloQueryResult } from '@apollo/client';
 import {
   ChatRoomEvent,
+  ChatRoomEventType,
   GlobalChatSocketService,
 } from './global-chat-socket.service';
 import { Session } from '../../../services/session';
@@ -199,7 +200,10 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
         (event: ChatRoomEvent): void => {
           if (
             !event.data ||
-            event.data['type'] !== 'NEW_MESSAGE' ||
+            ![
+              ChatRoomEventType.NewMessage,
+              ChatRoomEventType.MessageDeleted,
+            ].includes(event.data['type']) ||
             !event.roomGuid ||
             !this.session.isLoggedIn() ||
             !this.isViewingChatRoomsList

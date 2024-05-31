@@ -8,6 +8,7 @@ import {
 import { ReplaySubject, Subject, of } from 'rxjs';
 import {
   ChatRoomEvent,
+  ChatRoomEventType,
   GlobalChatSocketService,
 } from './global-chat-socket.service';
 import { MockService } from '../../../utils/mock';
@@ -121,7 +122,7 @@ describe('ChatReceiptService', () => {
       (service as any).globalChatSocketService.globalEvents$.next({
         roomGuid: 'roomGuid',
         data: {
-          type: 'NEW_MESSAGE',
+          type: ChatRoomEventType.NewMessage,
           messageGuid: 'messageGuid',
           userGuid: '1234567890123456',
         },
