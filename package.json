@@ -167,7 +167,7 @@
     "karma-jasmine-order-reporter": "^1.1.0",
     "karma-mocha-reporter": "^2.2.5",
     "nodemon": "^2.0.12",
-    "prettier": "3.2.4",
+    "prettier": "~3.2.5",
     "pretty-quick": "^4.0.0",
     "protractor": "~7.0.0",
     "sass": "^1.35.2",
