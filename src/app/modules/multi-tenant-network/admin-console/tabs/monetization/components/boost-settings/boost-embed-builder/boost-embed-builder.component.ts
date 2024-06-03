@@ -94,6 +94,6 @@ export class BoostEmbedBuilderComponent implements OnInit {
     const width: number = this.formGroup.get('iframeWidth').value;
     const height: number = this.formGroup.get('iframeHeight').value;
 
-    return `<div class="minds-boost-slot" data-height="${height}px" data-width="${width}px"></div><script async defer crossorigin="anonymous" src="${this.siteUrl}js/embed.min.js"></script>`;
+    return `<div class="minds-boost-slot" data-height="${height}px" data-width="${width}px" data-app-url="${this.siteUrl}plugins/embedded-boosts"></div><script async defer crossorigin="anonymous" src="${this.siteUrl}plugins/embedded-boosts/js/embed.min.js"></script>`;
   }
 }

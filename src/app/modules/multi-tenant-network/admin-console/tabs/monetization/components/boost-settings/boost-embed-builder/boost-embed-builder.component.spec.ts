@@ -66,7 +66,7 @@ describe('BoostEmbedBuilderComponent', () => {
       (comp as any).formGroup.setValue({ iframeWidth: 600, iframeHeight: 300 });
       comp.generateEmbedCode();
       expect((comp as any).embedCode$.getValue()).toBe(
-        '<div class="minds-boost-slot" data-height="300px" data-width="600px"></div><script async defer crossorigin="anonymous" src="https://example.minds.com/js/embed.min.js"></script>'
+        `<div class="minds-boost-slot" data-height="300px" data-width="600px" data-app-url="${defaultSiteUrl}plugins/embedded-boosts"></div><script async defer crossorigin="anonymous" src="${defaultSiteUrl}plugins/embedded-boosts/js/embed.min.js"></script>`
       );
       expect((comp as any).toaster.success).toHaveBeenCalledOnceWith(
         'Updated embed code dimensions.'
@@ -77,7 +77,7 @@ describe('BoostEmbedBuilderComponent', () => {
       (comp as any).formGroup.setValue({ iframeWidth: 600, iframeHeight: 300 });
       comp.generateEmbedCode(false);
       expect((comp as any).embedCode$.getValue()).toBe(
-        '<div class="minds-boost-slot" data-height="300px" data-width="600px"></div><script async defer crossorigin="anonymous" src="https://example.minds.com/js/embed.min.js"></script>'
+        `<div class="minds-boost-slot" data-height="300px" data-width="600px" data-app-url="${defaultSiteUrl}plugins/embedded-boosts"></div><script async defer crossorigin="anonymous" src="${defaultSiteUrl}plugins/embedded-boosts/js/embed.min.js"></script>`
       );
       expect((comp as any).toaster.success).not.toHaveBeenCalled();
     });
