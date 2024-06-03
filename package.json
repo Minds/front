@@ -118,7 +118,7 @@
     "url": "^0.11.0",
     "video.js": "^8.0.4",
     "walletlink": "^2.0.2",
-    "webtorrent": "^0.103.0",
+    "webtorrent": "^0.107.6",
     "yargs": "^17.0.1",
     "zone.js": "~0.11.4"
   },
