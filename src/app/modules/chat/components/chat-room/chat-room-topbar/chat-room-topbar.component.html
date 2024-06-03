@@ -12,6 +12,26 @@
   <span class="m-chatRoomTop__roomName" tabindex="0">{{ roomName }}</span>
 </div>
 <div class="m-chatRoomTop__rightContainer" *ngIf="!requestMode">
+  <m-tooltip
+    *ngIf="showEditRoomButton"
+    class="m-chatRoomTop__addIconTooltip"
+    [iconClass]="{
+      'm-chatRoomTop__icon': true
+    }"
+    [tooltipBubbleStyle]="{
+      'max-width': 'max-content',
+      'box-shadow': '1px 1px 1px'
+    }"
+    anchor="right"
+    icon="edit"
+    i18n="@@CHAT_ROOM_TOPBAR__EDIT_CHAT_ROOM"
+    tabindex="0"
+    (click)="onEditChatNameClick()"
+    (keyup.enter)="onEditChatNameClick()"
+    i18n="@@CHAT_ROOM_TOPBAR__TOOLTIP__EDIT_CHAT_ROOM_BUTTON"
+  >
+    Edit chat room
+  </m-tooltip>
   <!-- <m-tooltip
     *ngIf="showAddUsersButton" 
     class="m-chatRoomTop__addIconTooltip"

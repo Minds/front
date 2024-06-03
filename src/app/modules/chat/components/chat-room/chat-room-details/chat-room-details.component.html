@@ -52,6 +52,19 @@
   } as actionVars"
 >
   <span
+    *ngIf="
+      actionVars.chatRoomType === ChatRoomTypeEnum.MultiUser &&
+      actionVars.isUserRoomOwner
+    "
+    class="m-chatRoomDetails__actionText"
+    aria-role="button"
+    tabindex="1"
+    i18n="@@CHAT_ROOM_DETAILS__EDIT_CHAT_NAME"
+    (click)="onEditChatNameClick()"
+    data-ref="data-minds-chat-info-edit-chat-name-button"
+    >Edit chat name</span
+  >
+  <span
     *ngIf="actionVars.chatRoomType === ChatRoomTypeEnum.OneToOne"
     class="m-chatRoomDetails__actionText m-chatRoomDetails__actionText--red"
     aria-role="button"

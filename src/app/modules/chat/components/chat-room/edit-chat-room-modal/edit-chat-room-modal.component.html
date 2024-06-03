@@ -1,0 +1,63 @@
+<div class="m-editChatRoomModal__bodyContainer">
+  <header>
+    <div class="m-editChatRoomModal__titleContainer">
+      <h3
+        class="m-editChatRoomModal__title"
+        i18n="@@EDIT_CHAT_ROOM_MODAL__EDIT_CHAT"
+      >
+        Edit chat
+      </h3>
+      <h4
+        class="m-editChatRoomModal__subtitle"
+        i18n="@@EDIT_CHAT_ROOM_MODAL__GIVE_YOUR_CHAT_A_NAME"
+      >
+        Give your chat a name
+      </h4>
+    </div>
+    <m-modalCloseButton></m-modalCloseButton>
+  </header>
+  <form
+    *ngIf="formGroup"
+    [formGroup]="formGroup"
+    class="m-form m-formWrapper m-editChatRoomModal__form"
+  >
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--input">
+        <input
+          type="text"
+          formControlName="roomName"
+          name="roomName"
+          id="roomName"
+          placeholder="Chat room name"
+          data-ref="data-minds-edit-chat-modal-room-name-input"
+        />
+      </div>
+      <m-formError
+        *ngIf="formGroup.get('roomName')?.dirty"
+        [errors]="formGroup.get('roomName')?.errors"
+      >
+      </m-formError>
+    </div>
+  </form>
+</div>
+<footer
+  class="m-editChatRoomModal__footer"
+  *ngIf="{ saveInProgress: saveInProgress$ | async } as buttonVars"
+>
+  <m-button
+    color="blue"
+    size="medium"
+    solid="true"
+    [saving]="buttonVars.saveInProgress"
+    [disabled]="
+      buttonVars.saveInProgress || formGroup.invalid || formGroup.pristine
+    "
+    (onAction)="onUpdateClick()"
+    (keydown.enter)="onUpdateClick()"
+    tabindex="1"
+    aria-label="Save changes"
+    data-ref="data-minds-update-chat-room-button"
+    i18n="@@EDIT_CHAT_ROOM_MODAL__SAVE_BUTTON"
+    >Update</m-button
+  >
+</footer>

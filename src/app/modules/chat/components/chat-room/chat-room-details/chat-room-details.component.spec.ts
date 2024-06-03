@@ -22,6 +22,7 @@ import {
 } from '../../../../../../graphql/generated.engine';
 import { mockChatRoomEdge } from '../../../../../mocks/chat.mock';
 import { ConfirmV2Component } from '../../../../modals/confirm-v2/confirm.component';
+import { EditChatRoomModalService } from '../edit-chat-room-modal/edit-chat-room-modal.service';
 
 const DEFAULT_ROOM_GUID: string = '1234567890123456';
 
@@ -73,6 +74,10 @@ describe('ChatRoomDetailsComponent', () => {
         {
           provide: ChatRoomsListService,
           useValue: MockService(ChatRoomsListService),
+        },
+        {
+          provide: EditChatRoomModalService,
+          useValue: MockService(EditChatRoomModalService),
         },
         { provide: ModalService, useValue: MockService(ModalService) },
         { provide: Router, useValue: MockService(Router) },
@@ -226,5 +231,33 @@ describe('ChatRoomDetailsComponent', () => {
     expect((comp as any).router.navigate).toHaveBeenCalledWith(['..'], {
       relativeTo: (comp as any).route,
     });
+  });
+
+  describe('onEditChatNameClick', () => {
+    it('should handle successful chat room name edit', fakeAsync(() => {
+      (comp as any).editChatRoomModalService.open.and.returnValue(
+        Promise.resolve(true)
+      );
+
+      (comp as any).onEditChatNameClick();
+      tick();
+
+      expect((comp as any).editChatRoomModalService.open).toHaveBeenCalledWith(
+        mockChatRoomEdge
+      );
+    }));
+
+    it('should handle unsuccessful chat room name edit', fakeAsync(() => {
+      (comp as any).editChatRoomModalService.open.and.returnValue(
+        Promise.resolve(false)
+      );
+
+      (comp as any).onEditChatNameClick();
+      tick();
+
+      expect((comp as any).editChatRoomModalService.open).toHaveBeenCalledWith(
+        mockChatRoomEdge
+      );
+    }));
   });
 });

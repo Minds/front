@@ -54,10 +54,14 @@ $topbarHeight: 64px;
   }
 
   .m-chatRoomTop__rightContainer {
+    display: flex;
+    flex-flow: row nowrap;
+
     ::ng-deep .m-chatRoomTop__icon {
       margin-left: $spacing4;
       font-size: 20px;
       cursor: pointer;
+      @include unselectable;
 
       &.m-chatRoomTop__addIcon {
         @include m-theme() {
