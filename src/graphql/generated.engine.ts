@@ -1034,6 +1034,7 @@ export type Mutation = {
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+  updateChatRoomName: Scalars['Boolean']['output'];
   /** Updates the order of the navigation items */
   updateCustomNavigationItemsOrder: Array<NavigationItem>;
   updateNotificationSettings: Scalars['Boolean']['output'];
@@ -1265,6 +1266,11 @@ export type MutationUpdateAccountArgs = {
   newEmail?: InputMaybe<Scalars['String']['input']>;
   newUsername?: InputMaybe<Scalars['String']['input']>;
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type MutationUpdateChatRoomNameArgs = {
+  roomGuid: Scalars['String']['input'];
+  roomName: Scalars['String']['input'];
 };
 
 export type MutationUpdateCustomNavigationItemsOrderArgs = {
@@ -2691,6 +2697,16 @@ export type SetReadReceiptMutation = {
     id: string;
     unreadMessagesCount: number;
   };
+};
+
+export type UpdateChatRoomNameMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  roomName: Scalars['String']['input'];
+}>;
+
+export type UpdateChatRoomNameMutation = {
+  __typename?: 'Mutation';
+  updateChatRoomName: boolean;
 };
 
 export type UpdateChatRoomNotificationSettingsMutationVariables = Exact<{
@@ -8356,6 +8372,25 @@ export class SetReadReceiptGQL extends Apollo.Mutation<
   SetReadReceiptMutationVariables
 > {
   document = SetReadReceiptDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdateChatRoomNameDocument = gql`
+  mutation UpdateChatRoomName($roomGuid: String!, $roomName: String!) {
+    updateChatRoomName(roomGuid: $roomGuid, roomName: $roomName)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdateChatRoomNameGQL extends Apollo.Mutation<
+  UpdateChatRoomNameMutation,
+  UpdateChatRoomNameMutationVariables
+> {
+  document = UpdateChatRoomNameDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

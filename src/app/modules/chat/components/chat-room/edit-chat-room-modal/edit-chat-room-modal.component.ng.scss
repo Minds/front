@@ -1,0 +1,61 @@
+@import 'defaults.scss';
+
+:host {
+  .m-editChatRoomModal__bodyContainer {
+    padding: $spacing11 $spacing6 0 $spacing11;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column nowrap;
+
+    @media screen and (max-width: $min-tablet) {
+      padding-left: $spacing10;
+      padding-right: $spacing10;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $spacing6;
+      padding-right: $spacing6;
+    }
+
+    header {
+      margin-bottom: $spacing8;
+
+      .m-editChatRoomModal__titleContainer {
+        .m-editChatRoomModal__title {
+          margin: 0 0 $spacing2 0;
+          @include heading3Bold;
+        }
+
+        .m-editChatRoomModal__subtitle {
+          margin: 0;
+
+          @include body2Medium;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+
+    .m-editChatRoomModal__form {
+      margin: 0;
+
+      .m-form__field--text {
+        margin-bottom: $spacing2;
+      }
+
+      m-formError {
+        margin-top: $spacing1;
+      }
+    }
+  }
+
+  .m-editChatRoomModal__footer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: $spacing8 $spacing2 $spacing6 $spacing4;
+    box-sizing: border-box;
+  }
+}
