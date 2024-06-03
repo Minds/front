@@ -28,6 +28,7 @@ import {
   ModalService,
 } from '../../../../../services/ux/modal.service';
 import { ConfirmV2Component } from '../../../../modals/confirm-v2/confirm.component';
+import { EditChatRoomModalService } from '../edit-chat-room-modal/edit-chat-room-modal.service';
 
 /**
  * Details panel for a given chat room.
@@ -89,6 +90,7 @@ export class ChatRoomDetailsComponent implements OnInit {
     private singleChatRoomService: SingleChatRoomService,
     private userActionsService: ChatRoomUserActionsService,
     private chatRoomsListService: ChatRoomsListService,
+    private editChatRoomModalService: EditChatRoomModalService,
     private modalService: ModalService,
     private router: Router,
     private route: ActivatedRoute,
@@ -197,6 +199,16 @@ export class ChatRoomDetailsComponent implements OnInit {
         },
         injector: this.injector,
       }
+    );
+  }
+
+  /**
+   * Handle edit chat room click.
+   * @returns { Promise<void> }
+   */
+  protected async onEditChatNameClick(): Promise<void> {
+    await this.editChatRoomModalService.open(
+      await firstValueFrom(this.chatRoom$)
     );
   }
 

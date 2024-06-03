@@ -1,74 +1,77 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   BehaviorSubject,
   Observable,
+  Subscription,
   catchError,
-  filter,
   map,
   of,
-  shareReplay,
-  startWith,
-  switchMap,
 } from 'rxjs';
 import {
   ChatRoomEdge,
   GetChatRoomGQL,
   GetChatRoomQuery,
+  GetChatRoomQueryVariables,
 } from '../../../../graphql/generated.engine';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ApolloQueryResult } from '@apollo/client';
+import { QueryRef } from 'apollo-angular';
 
 /**
  * Service for management of data for a single chat room.
  */
 @Injectable()
-export class SingleChatRoomService {
-  /** Internal subject to hold the guid of the chat room. */
-  private readonly _roomGuid$: BehaviorSubject<string> =
-    new BehaviorSubject<string>(null);
+export class SingleChatRoomService implements OnDestroy {
+  /** Chat room. */
+  private _chatRoom$: BehaviorSubject<ChatRoomEdge> =
+    new BehaviorSubject<ChatRoomEdge>(null);
 
-  /** Internal subject to hold the guid of the chat room. */
-  public readonly roomGuid$: Observable<string> =
-    this._roomGuid$.asObservable();
+  /** Chat room observable. */
+  public chatRoom$: Observable<ChatRoomEdge> = this._chatRoom$.asObservable();
 
-  /** Exposed observable that represents the chat room. - pulls data from server and shares replay. */
-  public readonly chatRoom$: Observable<ChatRoomEdge> = this._roomGuid$.pipe(
-    startWith(null),
-    filter(Boolean),
-    switchMap(
-      (roomGuid: string): Observable<ApolloQueryResult<GetChatRoomQuery>> =>
-        this.getChatRoomGql.fetch(
-          {
-            roomGuid: roomGuid,
-            firstMembers: 12,
-            afterMembers: 0,
-          },
-          { fetchPolicy: 'no-cache' }
-        )
-    ),
-    map((result: ApolloQueryResult<GetChatRoomQuery>): ChatRoomEdge => {
-      return (result?.data?.chatRoom as ChatRoomEdge) ?? null;
-    }),
-    catchError((e: Error): Observable<null> => {
-      this.toaster.error(e);
-      console.error(e);
-      return of(null);
-    }),
-    shareReplay()
-  );
+  /** Query reference. */
+  private queryRef: QueryRef<GetChatRoomQuery, GetChatRoomQueryVariables>;
+
+  /** Subscription to value changes. */
+  private valueChangeSubscription: Subscription;
 
   constructor(
     private getChatRoomGql: GetChatRoomGQL,
     private toaster: ToasterService
   ) {}
 
+  ngOnDestroy(): void {
+    this.valueChangeSubscription?.unsubscribe();
+  }
+
   /**
-   * Set the room GUID of the service for loading data.
+   * Inits service for given room GUID.
    * @param { string } roomGuid - The GUID of the chat room.
    * @returns { void }
    */
-  public setRoomGuid(roomGuid: string): void {
-    this._roomGuid$.next(roomGuid);
+  public init(roomGuid: string): void {
+    this.valueChangeSubscription?.unsubscribe();
+
+    this.queryRef = this.getChatRoomGql.watch({
+      roomGuid: roomGuid,
+      firstMembers: 12,
+      afterMembers: 0,
+    });
+
+    this.valueChangeSubscription = this.queryRef.valueChanges
+      .pipe(
+        catchError((e: Error): Observable<null> => {
+          this.toaster.error(e);
+          console.error(e);
+          return of(null);
+        }),
+        map((result: ApolloQueryResult<GetChatRoomQuery>): ChatRoomEdge => {
+          return (result?.data?.chatRoom as ChatRoomEdge) ?? null;
+        })
+      )
+      .subscribe((chatRoom: ChatRoomEdge): void => {
+        this._chatRoom$.next(chatRoom);
+      });
   }
 
   /**
@@ -76,6 +79,6 @@ export class SingleChatRoomService {
    * @returns { void }
    */
   public refetch(): void {
-    this._roomGuid$.next(this._roomGuid$.getValue());
+    this.queryRef.refetch();
   }
 }

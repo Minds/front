@@ -122,7 +122,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     }
 
     this.roomGuid = roomId;
-    this.singleChatRoomService.setRoomGuid(roomId);
+    this.singleChatRoomService.init(roomId);
     this.totalChatRoomMembersService.setRoomGuid(roomId);
     this.chatMessagesService.init(roomId);
 

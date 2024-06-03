@@ -18,7 +18,7 @@ describe('SingleChatRoomService', () => {
         SingleChatRoomService,
         {
           provide: GetChatRoomGQL,
-          useValue: jasmine.createSpyObj<GetChatRoomGQL>(['fetch']),
+          useValue: jasmine.createSpyObj<GetChatRoomGQL>(['watch']),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
       ],
@@ -33,28 +33,26 @@ describe('SingleChatRoomService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('chatRoom$', () => {
+  describe('init', () => {
     it('should get chat room', (done: DoneFn) => {
       const roomGuid: string = '1234567890';
 
-      (service as any).getChatRoomGql.fetch.and.returnValue(
-        of({
-          data: { chatRoom: mockChatRoomEdge },
-        })
-      );
+      (service as any).getChatRoomGql.watch.and.returnValue({
+        refetch: jasmine.createSpy('refetch'),
+        valueChanges: of({ data: { chatRoom: mockChatRoomEdge } }),
+      });
 
-      service.setRoomGuid(roomGuid);
+      service.init(roomGuid);
+
+      expect((service as any).getChatRoomGql.watch).toHaveBeenCalledWith({
+        roomGuid: roomGuid,
+        firstMembers: 12,
+        afterMembers: 0,
+      });
+
       service.chatRoom$
         .pipe(take(1))
         .subscribe((chatRoom: ChatRoomEdge): void => {
-          expect((service as any).getChatRoomGql.fetch).toHaveBeenCalledWith(
-            {
-              roomGuid: roomGuid,
-              firstMembers: 12,
-              afterMembers: 0,
-            },
-            { fetchPolicy: 'no-cache' }
-          );
           expect(chatRoom).toEqual(mockChatRoomEdge);
           done();
         });
@@ -62,52 +60,40 @@ describe('SingleChatRoomService', () => {
 
     it('should handle errors when getting chat room', (done: DoneFn) => {
       const roomGuid: string = '1234567890';
-      const errorMessage: string = 'Error getting chat room';
+      const error: Error = new Error('Error getting chat room');
 
-      (service as any).getChatRoomGql.fetch.and.returnValue(
-        throwError(() => errorMessage)
-      );
+      (service as any).getChatRoomGql.watch.and.returnValue({
+        refetch: jasmine.createSpy('refetch'),
+        valueChanges: throwError(() => error),
+      });
 
-      service.setRoomGuid(roomGuid);
+      service.init(roomGuid);
+
+      expect((service as any).getChatRoomGql.watch).toHaveBeenCalledWith({
+        roomGuid: roomGuid,
+        firstMembers: 12,
+        afterMembers: 0,
+      });
+
       service.chatRoom$
         .pipe(take(1))
         .subscribe((chatRoom: ChatRoomEdge): void => {
-          expect((service as any).getChatRoomGql.fetch).toHaveBeenCalledWith(
-            {
-              roomGuid: roomGuid,
-              firstMembers: 12,
-              afterMembers: 0,
-            },
-            { fetchPolicy: 'no-cache' }
-          );
-          expect((service as any).toaster.error).toHaveBeenCalledWith(
-            errorMessage
-          );
+          expect((service as any).toaster.error).toHaveBeenCalledWith(error);
           expect(chatRoom).toBeNull();
           done();
         });
     });
   });
 
-  describe('setRoomGuid', () => {
-    it('should set room guid', () => {
-      const roomGuid: string = '1234567890';
-      (service as any)._roomGuid$.next(null);
-
-      service.setRoomGuid(roomGuid);
-
-      expect((service as any)._roomGuid$.getValue()).toEqual(roomGuid);
-    });
-  });
-
   describe('refetch', () => {
     it('should refetch', () => {
-      const roomGuid: string = '1234567890';
-      (service as any)._roomGuid$.next(roomGuid);
+      (service as any).queryRef = {
+        refetch: jasmine.createSpy('refetch'),
+      };
 
       service.refetch();
 
-      expect((service as any)._roomGuid$.getValue()).toEqual(roomGuid);
+      expect((service as any).queryRef.refetch).toHaveBeenCalledTimes(1);
     });
   });
 });

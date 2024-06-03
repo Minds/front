@@ -20,6 +20,12 @@ export type ChatRoomEvent = {
   data: Object;
 };
 
+/** Chat room event types */
+export enum ChatRoomEventType {
+  NewMessage = 'NEW_MESSAGE',
+  MessageDeleted = 'MESSAGE_DELETED',
+}
+
 /**
  * Service to handle global chat socket events.
  */

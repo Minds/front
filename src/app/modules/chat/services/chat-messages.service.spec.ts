@@ -11,13 +11,15 @@ import { MockService } from '../../../utils/mock';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, of } from 'rxjs';
-import { ApolloQueryResult } from '@apollo/client';
+import { ApolloQueryResult, InMemoryCache } from '@apollo/client';
 import { mockChatMessageEdge } from '../../../mocks/chat.mock';
 import { Session } from '../../../services/session';
 import {
   ChatRoomEvent,
+  ChatRoomEventType,
   GlobalChatSocketService,
 } from './global-chat-socket.service';
+import { Apollo } from 'apollo-angular';
 
 const DEFAULT_ROOM_GUID: string = '1234567890';
 
@@ -39,6 +41,8 @@ const mockResponse: ApolloQueryResult<GetChatMessagesQuery> = {
 
 describe('ChatMessagesService', () => {
   let service: ChatMessagesService;
+  const chatRoomEventsSubjectMock$: Subject<ChatRoomEvent> =
+    new Subject<ChatRoomEvent>();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -58,6 +62,22 @@ describe('ChatMessagesService', () => {
           provide: GlobalChatSocketService,
           useValue: MockService(GlobalChatSocketService),
         },
+        {
+          provide: Apollo,
+          useValue: MockService(Apollo, {
+            has: ['client'],
+            props: {
+              client: {
+                get: () => {
+                  return jasmine.createSpyObj<InMemoryCache>([
+                    'readQuery',
+                    'writeQuery',
+                  ]);
+                },
+              },
+            },
+          }),
+        },
         { provide: Session, useValue: MockService(Session) },
       ],
     });
@@ -74,7 +94,7 @@ describe('ChatMessagesService', () => {
     (
       service as any
     ).globalChatSocketService.getEventsByChatRoomGuid.and.returnValue(
-      new Subject<ChatRoomEvent>()
+      chatRoomEventsSubjectMock$
     );
     service.init(DEFAULT_ROOM_GUID);
   });
@@ -222,6 +242,54 @@ describe('ChatMessagesService', () => {
     });
   });
 
+  describe('handleNewMessageSocketEvent', () => {
+    it('should handle new message event via sockets', fakeAsync(() => {
+      service.hasNewMessage$.next = jasmine.createSpy('next');
+      (service as any)._pageInfo$.next(null);
+      (service as any).session.getLoggedInUser.and.returnValue({
+        guid: mockChatMessageEdge.node.sender.node.guid + '1', // different user
+      });
+
+      chatRoomEventsSubjectMock$.next({
+        roomGuid: DEFAULT_ROOM_GUID,
+        data: {
+          type: ChatRoomEventType.NewMessage,
+          metadata: {
+            senderGuid: mockChatMessageEdge.node.sender.node.guid,
+          },
+        },
+      });
+      tick();
+
+      expect((service as any)._pageInfo$.getValue()).toEqual({
+        hasNextPage: true,
+      });
+      expect(service.hasNewMessage$.next).toHaveBeenCalledTimes(1);
+    }));
+
+    it('should NOT handle new message events from same sender via sockets', fakeAsync(() => {
+      service.hasNewMessage$.next = jasmine.createSpy('next');
+      (service as any)._pageInfo$.next(null);
+      (service as any).session.getLoggedInUser.and.returnValue({
+        guid: mockChatMessageEdge.node.sender.node.guid, // same user
+      });
+
+      chatRoomEventsSubjectMock$.next({
+        roomGuid: DEFAULT_ROOM_GUID,
+        data: {
+          type: ChatRoomEventType.NewMessage,
+          metadata: {
+            senderGuid: mockChatMessageEdge.node.sender.node.guid,
+          },
+        },
+      });
+      tick();
+
+      expect((service as any)._pageInfo$.getValue()).toEqual(null);
+      expect(service.hasNewMessage$.next).not.toHaveBeenCalled();
+    }));
+  });
+
   describe('updateCacheWithNewMessage', () => {
     it('should return updated cache value with a new message', () => {
       const newStartCursor: string = 'newStartCursor';
@@ -330,22 +398,19 @@ describe('ChatMessagesService', () => {
         },
       };
 
-      const cache = {
-        readQuery: jasmine.createSpy('readQuery').and.returnValue({
-          chatMessages: {
-            edges: [mockChatMessageEdge],
-          },
-        }),
-        writeQuery: jasmine.createSpy('writeQuery'),
-      };
+      (service as any).apollo.client.readQuery.and.returnValue({
+        chatMessages: {
+          edges: [mockChatMessageEdge],
+        },
+      });
 
-      (service as any).handleMessageDeletion(cache, null, {
+      (service as any).handleMessageDeletionUpdate(null, null, {
         variables: {
           messageGuid: mockChatMessageEdge.node.guid,
         },
       });
 
-      expect(cache.readQuery).toHaveBeenCalledWith({
+      expect((service as any).apollo.client.readQuery).toHaveBeenCalledWith({
         query: GetChatMessagesDocument,
         variables: {
           first: PAGE_SIZE,
@@ -353,7 +418,7 @@ describe('ChatMessagesService', () => {
         },
       });
 
-      expect(cache.writeQuery).toHaveBeenCalledWith({
+      expect((service as any).apollo.client.writeQuery).toHaveBeenCalledWith({
         query: GetChatMessagesDocument,
         variables: {
           first: PAGE_SIZE,
@@ -397,22 +462,19 @@ describe('ChatMessagesService', () => {
         },
       };
 
-      const cache = {
-        readQuery: jasmine.createSpy('readQuery').and.returnValue({
-          chatMessages: {
-            edges: [message1, message2, message3],
-          },
-        }),
-        writeQuery: jasmine.createSpy('writeQuery'),
-      };
+      (service as any).apollo.client.readQuery.and.returnValue({
+        chatMessages: {
+          edges: [message1, message2, message3],
+        },
+      });
 
-      (service as any).handleMessageDeletion(cache, null, {
+      (service as any).handleMessageDeletionUpdate(null, null, {
         variables: {
           messageGuid: guidToDelete,
         },
       });
 
-      expect(cache.readQuery).toHaveBeenCalledWith({
+      expect((service as any).apollo.client.readQuery).toHaveBeenCalledWith({
         query: GetChatMessagesDocument,
         variables: {
           first: PAGE_SIZE,
@@ -420,7 +482,7 @@ describe('ChatMessagesService', () => {
         },
       });
 
-      expect(cache.writeQuery).toHaveBeenCalledWith({
+      expect((service as any).apollo.client.writeQuery).toHaveBeenCalledWith({
         query: GetChatMessagesDocument,
         variables: {
           first: PAGE_SIZE,
@@ -433,5 +495,81 @@ describe('ChatMessagesService', () => {
         },
       });
     });
+
+    it('should NOT update cache value with message deleted when there are no changes to cached value', () => {
+      (service as any).queryRef = {
+        variables: {
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+      };
+
+      (service as any).apollo.client.readQuery.and.returnValue({
+        chatMessages: {
+          edges: [mockChatMessageEdge],
+        },
+      });
+
+      (service as any).handleMessageDeletionUpdate(null, null, {
+        variables: {
+          messageGuid: mockChatMessageEdge.node.guid + '1', // nothing deleted.
+        },
+      });
+
+      expect((service as any).apollo.client.readQuery).toHaveBeenCalledWith({
+        query: GetChatMessagesDocument,
+        variables: {
+          first: PAGE_SIZE,
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+      });
+
+      expect((service as any).apollo.client.writeQuery).not.toHaveBeenCalled();
+    });
+
+    it('should update cache value with message deletion through sockets', fakeAsync(() => {
+      (service as any).queryRef = {
+        variables: {
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+      };
+
+      (service as any).apollo.client.readQuery.and.returnValue({
+        chatMessages: {
+          edges: [mockChatMessageEdge],
+        },
+      });
+
+      chatRoomEventsSubjectMock$.next({
+        roomGuid: DEFAULT_ROOM_GUID,
+        data: {
+          type: ChatRoomEventType.MessageDeleted,
+          metadata: {
+            messageGuid: mockChatMessageEdge.node.guid,
+          },
+        },
+      });
+      tick();
+
+      expect((service as any).apollo.client.readQuery).toHaveBeenCalledWith({
+        query: GetChatMessagesDocument,
+        variables: {
+          first: PAGE_SIZE,
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+      });
+
+      expect((service as any).apollo.client.writeQuery).toHaveBeenCalledWith({
+        query: GetChatMessagesDocument,
+        variables: {
+          first: PAGE_SIZE,
+          roomGuid: DEFAULT_ROOM_GUID,
+        },
+        data: {
+          chatMessages: {
+            edges: [],
+          },
+        },
+      });
+    }));
   });
 });

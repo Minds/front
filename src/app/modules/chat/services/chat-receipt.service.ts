@@ -9,6 +9,7 @@ import {
 } from '../../../../graphql/generated.engine';
 import {
   ChatRoomEvent,
+  ChatRoomEventType,
   GlobalChatSocketService,
 } from './global-chat-socket.service';
 import { Session } from '../../../services/session';
@@ -124,7 +125,10 @@ export class ChatReceiptService implements OnDestroy {
     this.socketEventSubscription =
       this.globalChatSocketService.globalEvents$.subscribe(
         (event: ChatRoomEvent): void => {
-          if (!event.data || event.data['type'] !== 'NEW_MESSAGE') {
+          if (
+            !event.data ||
+            event.data['type'] !== ChatRoomEventType.NewMessage
+          ) {
             return;
           }
 
