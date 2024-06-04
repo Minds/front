@@ -154,9 +154,9 @@ describe('ChatRoomComponent', () => {
 
   it('should init', fakeAsync(() => {
     expect(comp).toBeTruthy();
-    expect(
-      (comp as any).singleChatRoomService.setRoomGuid
-    ).toHaveBeenCalledWith(ROOM_ID);
+    expect((comp as any).singleChatRoomService.init).toHaveBeenCalledWith(
+      ROOM_ID
+    );
     expect(
       (comp as any).totalChatRoomMembersService.setRoomGuid
     ).toHaveBeenCalledWith(ROOM_ID);
