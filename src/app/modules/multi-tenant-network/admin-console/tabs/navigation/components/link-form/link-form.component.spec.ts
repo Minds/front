@@ -51,6 +51,7 @@ describe('NetworkAdminConsoleNavigationLinkFormComponent', () => {
     url: 'https://www.pets.com',
     type: NavigationItemTypeEnum.CustomLink,
     visible: true,
+    visibleMobile: true,
   };
 
   class MockModalRef {

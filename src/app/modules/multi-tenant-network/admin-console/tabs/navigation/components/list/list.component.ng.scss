@@ -167,7 +167,7 @@
     }
   }
 
-  // Fix min width to 500px, under that scrolls.
+  // Fix min width to 500px, less than that scrolls horizontally.
   .m-form__field--grid {
     overflow-x: scroll;
 
