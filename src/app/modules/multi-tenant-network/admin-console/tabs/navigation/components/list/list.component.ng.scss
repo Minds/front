@@ -28,10 +28,6 @@
     // Subtract the width of the drag-drop icon from the header row so columns are aligned :/
     width: calc(100% - 62px);
 
-    @media screen and (max-width: $layoutMax2ColWidth) {
-      display: none;
-    }
-
     h4 {
       font-size: $spacing4;
       font-weight: 700;
@@ -43,6 +39,26 @@
 
     .m-networkAdminConsoleNavigationListItem__cell--name {
       flex-basis: 100%;
+    }
+
+    .m-networkAdminConsoleNavigationListItem__cell--multiLineHeaderContainer {
+      .m-networkAdminConsoleNavigationListItem__cell--multiLineHeaderBox {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 0;
+        padding: 0;
+
+        .m-networkAdminConsoleNavigationListItem__cell--subHeader {
+          min-width: fit-content;
+          align-self: center;
+          padding: 0;
+
+          @include body3Regular;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
     }
   }
 
@@ -129,7 +145,13 @@
     &.m-networkAdminConsoleNavigationListItem__cell--toggle {
       display: flex;
       align-items: center;
+      margin-left: $spacing4;
+
+      m-toggle {
+        margin-left: $spacing3;
+      }
     }
+
     &.m-networkAdminConsoleNavigationListItem__cell--actions {
       justify-content: flex-end;
       padding-right: $spacing4;
@@ -142,6 +164,15 @@
       a {
         text-decoration: none;
       }
+    }
+  }
+
+  // Fix min width to 500px, under that scrolls.
+  .m-form__field--grid {
+    overflow-x: scroll;
+
+    .m-form__row--input {
+      min-width: 500px;
     }
   }
 }

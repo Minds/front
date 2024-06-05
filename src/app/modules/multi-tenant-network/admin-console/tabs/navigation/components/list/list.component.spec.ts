@@ -9,6 +9,8 @@ import {
   NavigationItem,
   NavigationItemTypeEnum,
 } from '../../../../../../../../graphql/generated.engine';
+import { MockComponent } from '../../../../../../../utils/mock';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const mockAllNavigationItems: NavigationItem[] = [
   {
@@ -16,6 +18,7 @@ const mockAllNavigationItems: NavigationItem[] = [
     name: 'Channel',
     path: '/channel',
     visible: true,
+    visibleMobile: true,
     iconId: '',
     type: NavigationItemTypeEnum.Core,
     order: 1,
@@ -25,6 +28,7 @@ const mockAllNavigationItems: NavigationItem[] = [
     name: 'Newsfeed',
     path: '/',
     visible: true,
+    visibleMobile: true,
     iconId: 'home',
     type: NavigationItemTypeEnum.Core,
     order: 2,
@@ -58,8 +62,30 @@ describe('NetworkAdminConsoleNavigationListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [NetworkAdminConsoleNavigationListComponent],
-      imports: [ReactiveFormsModule],
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      declarations: [
+        NetworkAdminConsoleNavigationListComponent,
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['color', 'solid', 'size', 'iconOnly', 'title'],
+          outputs: ['onAction'],
+        }),
+        MockComponent({
+          selector: 'm-draggableList',
+          inputs: ['data', 'id'],
+          outputs: ['arrayChanged'],
+        }),
+        MockComponent({
+          selector: 'm-toggle',
+          inputs: ['mModel', 'disabled', 'leftValue', 'rightValue', 'offState'],
+          outputs: ['mModelChange'],
+        }),
+        MockComponent({
+          selector: 'm-loadingSpinner',
+          inputs: ['inProgress'],
+          outputs: [],
+        }),
+      ],
       providers: [
         FormBuilder,
         {
@@ -103,6 +129,7 @@ describe('NetworkAdminConsoleNavigationListComponent', () => {
       {
         id: 'test',
         visible: true,
+        visibleMobile: true,
         name: 'Test',
         path: '/test',
         iconId: 'test',
@@ -131,6 +158,7 @@ describe('NetworkAdminConsoleNavigationListComponent', () => {
     const itemToDelete = {
       id: 'test',
       visible: true,
+      visibleMobile: true,
       name: 'Test Item',
       path: '/test',
       iconId: 'test',
@@ -174,5 +202,37 @@ describe('NetworkAdminConsoleNavigationListComponent', () => {
 
     // Verify that the service method to reorder items is called with the updated items
     expect(service.reorderNavigationItems).toHaveBeenCalledWith(updatedItems);
+  });
+
+  describe('toggleVisibilityMobile', () => {
+    it('should toggle visibilityMobile of an item off', () => {
+      component.navigationItems = [
+        {
+          id: 'test',
+          visible: true,
+          visibleMobile: true,
+          name: 'Test',
+          path: '/test',
+          iconId: 'test',
+          order: 1,
+          type: NavigationItemTypeEnum.Core,
+        },
+      ];
+      component.buildFormArray();
+      fixture.detectChanges();
+
+      (component as any).toggleVisibilityMobile(0);
+      fixture.detectChanges();
+
+      // Check if the visibilityMobile is toggled in the component state
+      expect(
+        component.navigationItemsFormArray.at(0).value.visibleMobile
+      ).toBeFalse();
+
+      // Check if upsertNavigationItem is called with the updated item
+      expect(service.upsertNavigationItem).toHaveBeenCalledWith(
+        jasmine.objectContaining({ visibleMobile: false })
+      );
+    });
   });
 });

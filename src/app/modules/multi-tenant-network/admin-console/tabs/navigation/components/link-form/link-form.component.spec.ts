@@ -40,6 +40,7 @@ describe('NetworkAdminConsoleNavigationLinkFormComponent', () => {
     path: '/newsfeed',
     type: NavigationItemTypeEnum.Core,
     visible: true,
+    visibleMobile: true,
   };
 
   const mockCustomNavigationItem = {
