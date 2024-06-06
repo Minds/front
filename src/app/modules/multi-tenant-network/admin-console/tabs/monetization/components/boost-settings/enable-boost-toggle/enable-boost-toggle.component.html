@@ -1,0 +1,15 @@
+<m-toggle
+  class="m-networkEnableBoost__toggle"
+  [mModel]="enabledToggleState"
+  (mModelChange)="onEnabledToggle($event)"
+  leftValue="off"
+  rightValue="on"
+  offState="off"
+></m-toggle>
+<div class="m-networkEnableBoost__toggleLabelContainer">
+  <label
+    class="m-networkEnableBoost__toggleLabel"
+    i18n="@@NETWORK_ADMIN__ENABLE_BOOST_TOGGLE__SUBTITLE_LABEL"
+    >Enable people on your network to advertise and expand reach</label
+  >
+</div>

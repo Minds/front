@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 520px;
+  gap: $spacing2;
+
+  .m-networkEnableBoost__toggleLabelContainer {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .m-networkEnableBoost__toggleLabel {
+      @include body1Regular;
+    }
+  }
+
+  m-toggle {
+    margin: $spacing2;
+    min-width: 26px;
+  }
+}

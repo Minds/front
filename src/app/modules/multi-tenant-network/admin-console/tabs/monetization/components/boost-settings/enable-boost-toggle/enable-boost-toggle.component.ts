@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MultiTenantConfig } from '../../../../../../../../graphql/generated.engine';
+import { MultiTenantConfig } from '../../../../../../../../../graphql/generated.engine';
 import { Subscription, filter, lastValueFrom, take } from 'rxjs';
-import { ToasterService } from '../../../../../../../common/services/toaster.service';
-import { GenericToggleValue } from '../../../../../../../common/components/toggle/toggle.component';
-import { MultiTenantNetworkConfigService } from '../../../../../services/config.service';
-import { ConfigsService } from '../../../../../../../common/services/configs.service';
+import { ToasterService } from '../../../../../../../../common/services/toaster.service';
+import { GenericToggleValue } from '../../../../../../../../common/components/toggle/toggle.component';
+import { MultiTenantNetworkConfigService } from '../../../../../../services/config.service';
+import { ConfigsService } from '../../../../../../../../common/services/configs.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '../../../../../../../../common/common.module';
+import { AsyncPipe } from '@angular/common';
 
 /**
  * Enable boost toggle component. Allows for network wide toggling of boost functionality.
@@ -13,6 +16,8 @@ import { ConfigsService } from '../../../../../../../common/services/configs.ser
   selector: 'm-networkAdminConsole__enableBoostToggle',
   styleUrls: ['./enable-boost-toggle.component.ng.scss'],
   templateUrl: './enable-boost-toggle.component.html',
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, AsyncPipe],
 })
 export class NetworkAdminEnableBoostToggleComponent
   implements OnInit, OnDestroy

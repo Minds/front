@@ -18,7 +18,7 @@ describe('NetworkAdminMonetizationComponent', () => {
           selector: 'm-networkAdminConsole__stripeCredentials',
         }),
         MockComponent({
-          selector: 'm-networkAdminConsole__enableBoostToggle',
+          selector: 'm-networkAdminConsole__boostConfiguration',
         }),
         MockComponent({
           selector: 'm-networkAdminMonetization__tabs',
@@ -55,7 +55,7 @@ describe('NetworkAdminMonetizationComponent', () => {
 
       const enableBoostToggle =
         fixture.debugElement.nativeElement.querySelector(
-          'm-networkAdminConsole__enableBoostToggle'
+          'm-networkAdminConsole__boostConfiguration'
         );
       expect(enableBoostToggle).toBeTruthy();
     });
@@ -66,7 +66,7 @@ describe('NetworkAdminMonetizationComponent', () => {
 
       const enableBoostToggle =
         fixture.debugElement.nativeElement.querySelector(
-          'm-networkAdminConsole__enableBoostToggle'
+          'm-networkAdminConsole__boostConfiguration'
         );
       expect(enableBoostToggle).toBeFalsy();
     });
