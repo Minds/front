@@ -15,7 +15,7 @@ import { NetworkAdminMonetizationGroupsListComponent } from './components/member
 import { NetworkAdminMonetizationMembershipFormComponent } from './components/memberships/form/form.component';
 import { CanDeactivateGuardService } from '../../../../../services/can-deactivate-guard';
 import { NetworkAdminConsoleSharedModule } from '../../network-admin-console-shared.module';
-import { NetworkAdminEnableBoostToggleComponent } from './components/enable-boost-toggle/enable-boost-toggle.component';
+import { NetworkAdminBoostConfigurationComponent } from './components/boost-settings/boost-configuration.component';
 
 /**
  * Routes for the network admin monetization console.
@@ -62,6 +62,7 @@ const routes: Routes = [
       },
     }),
     RouterModule.forChild(routes),
+    NetworkAdminBoostConfigurationComponent,
   ],
   declarations: [
     NetworkAdminMonetizationComponent,
@@ -71,7 +72,6 @@ const routes: Routes = [
     NetworkAdminMonetizationMembershipAccordianComponent,
     NetworkAdminMonetizationGroupsListComponent,
     NetworkAdminMonetizationMembershipFormComponent,
-    NetworkAdminEnableBoostToggleComponent,
   ],
 })
 export class NetworkAdminMonetizationLazyModule {}

@@ -1,0 +1,74 @@
+<p
+  class="m-boostEmbedBuilder__description"
+  i18n="@@BOOST_EMBED_BUILDER__DESCRIPTION"
+>
+  The boost plugin allows network owners to embed an ad unit on your site,
+  displaying ads that can be viewed on a site with traffic.
+</p>
+
+<div
+  class="m-boostEmbedCode__embedCodeContainer"
+  (click)="copyEmbedCodeToClipboard()"
+>
+  <span class="m-boostEmbedCode__embedCode">{{ embedCode$ | async }}</span>
+  <i class="material-icons m-boostEmbedCode__embedCopyIcon">content_copy</i>
+</div>
+
+<p class="m-boostEmbedBuilder__description">
+  <span i18n="@@BOOST_EMBED_BUILDER__SET_YOUR_DIMESNIONS"
+    >Set your embed dimensions.</span
+  >
+  <br />
+  <span i18n="@@BOOST_EMBED_BUILDER__MIN_HEIGHT_AND_WIDTH"
+    >We recommend a minimum width of 300px and a height of 250px.</span
+  >
+</p>
+
+<form class="m-boostEmbedBuilder__dimensionsForm" [formGroup]="formGroup">
+  <div class="m-boostEmbedBuilder__dimensionInputContainer">
+    <label
+      class="m-boostEmbedBuilder__dimensionInputLabel"
+      for="iframeWidth"
+      i18n="@@BOOST_EMBED_BUILDER__WIDTH_PX"
+      >Width (px)</label
+    >
+    <input
+      class="m-boostEmbedBuilder__dimensionInput"
+      id="iframeWidth"
+      type="number"
+      formControlName="iframeWidth"
+    />
+
+    <m-formError
+      *ngIf="formGroup.get('iframeWidth').dirty"
+      [errors]="formGroup.get('iframeWidth')?.errors"
+    ></m-formError>
+  </div>
+  <div class="m-boostEmbedBuilder__dimensionInputContainer">
+    <label
+      class="m-boostEmbedBuilder__dimensionInputLabel"
+      for="iframeHeight"
+      i18n="@@BOOST_EMBED_BUILDER__HEIGHT_PX"
+      >Height (px)</label
+    >
+    <input
+      class="m-boostEmbedBuilder__dimensionInput"
+      id="iframeHeight"
+      type="number"
+      formControlName="iframeHeight"
+    />
+    <m-formError
+      *ngIf="formGroup.get('iframeHeight').dirty"
+      [errors]="formGroup.get('iframeHeight')?.errors"
+    ></m-formError>
+  </div>
+  <m-button
+    color="blue"
+    size="xsmall"
+    [solid]="false"
+    [disabled]="formGroup.invalid"
+    (onAction)="generateEmbedCode()"
+    i18n="@@BOOST_EMBED_BUILDER__UPDATE_EMBED_CODE_BUTTON"
+    >Update</m-button
+  >
+</form>

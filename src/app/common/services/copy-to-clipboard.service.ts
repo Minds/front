@@ -10,6 +10,7 @@ export class CopyToClipboardService {
 
   /**
    * Copies the given text to the system clipboard.
+   * Only available over secure origin. No-op under http.
    * @param { string } text - the text to copy to the clipboard.
    * @returns { Promise<void> } - Resolves upon text copy completion.
    */
