@@ -18,7 +18,8 @@
             [entity]="preActivity"
             [displayOptions]="{
               showOnlyCommentsInput: true,
-              isFeed: true
+              isFeed: true,
+              canShowLargeCta: isFeedBoostCtaExperimentActive
             }"
             (deleted)="delete(preActivity)"
           ></m-activity>
@@ -78,7 +79,8 @@
                 showOnlyCommentsInput: true,
                 isFeed: true,
                 showExplicitVoteButtons: edge.explicitVotes && !isTenant.is(),
-                hideTopBorder: edges?.[i - 1]?.__typename === 'FeedHeaderEdge'
+                hideTopBorder: edges?.[i - 1]?.__typename === 'FeedHeaderEdge',
+                canShowLargeCta: isFeedBoostCtaExperimentActive
               }"
               [slot]="i + 1"
               (deleted)="delete(edge.node)"

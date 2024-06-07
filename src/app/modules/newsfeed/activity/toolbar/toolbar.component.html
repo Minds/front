@@ -3,19 +3,17 @@
 <!-- ---------------------------------------------------  -->
 <div
   class="m-activityToolbar__largeActions"
-  *ngIf="
-    service.displayOptions.showInteractions && !service.displayOptions.isFeed
-  "
+  *ngIf="service.displayOptions.canShowLargeCta"
 >
-  <ng-container *ngIf="!isOwner">
+  <ng-container *ngIf="!isOwner && !service.displayOptions.isFeed">
     <m-supermind__banner
       *mIfTenant="false"
       [entity]="entity"
       data-ref="activity-large-supermind-action--alt"
     ></m-supermind__banner>
   </ng-container>
-  <!-- Show boost if own post -->
 
+  <!-- Show boost if own post -->
   <ng-container *ngIf="isOwner && hasBoostPermission">
     <m-activity__boostButton
       (click)="openBoostModal($event)"

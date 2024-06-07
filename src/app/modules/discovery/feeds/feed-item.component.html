@@ -17,7 +17,8 @@
         [entity]="entity"
         [displayOptions]="{
           showOnlyCommentsInput: !openComments,
-          isFeed: true
+          isFeed: true,
+          canShowLargeCta: isFeedBoostCtaExperimentActive
         }"
         [slot]="slot"
         (deleted)="onDelete($event)"

@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PermissionsService } from '../../../../common/services/permissions.service';
+import { By } from '@angular/platform-browser';
 
 describe('ActivityToolbarComponent', () => {
   let comp: ActivityToolbarComponent;
@@ -63,6 +64,7 @@ describe('ActivityToolbarComponent', () => {
         }),
         MockComponent({
           selector: 'm-activity__boostButton',
+          inputs: ['iconOnly'],
           outputs: ['click'],
         }),
         MockComponent({
@@ -278,6 +280,40 @@ describe('ActivityToolbarComponent', () => {
       (comp as any).permissionsService.canBoost.and.returnValue(false);
       comp.ngOnInit();
       expect((comp as any).hasBoostPermission).toBe(false);
+    });
+  });
+
+  describe('rendering large actions', () => {
+    it('should render no large actions when canShowLargeCta is false', () => {
+      (comp as any).service.displayOptions.canShowLargeCta = false;
+      (comp as any).isOwner = true;
+      (comp as any).hasBoostPermission = true;
+
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-activity__boostButton'))
+      ).toBeFalsy();
+      expect(
+        fixture.debugElement.query(By.css('m-supermind__banner'))
+      ).toBeFalsy();
+    });
+
+    it('should render boost button canShowLargeCta is true and is an owner with boost permission', () => {
+      (comp as any).service.displayOptions.canShowLargeCta = true;
+      (comp as any).isOwner = true;
+      (comp as any).hasBoostPermission = true;
+
+      fixture.detectChanges();
+      (comp as any).cd.markForCheck();
+      (comp as any).cd.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-activity__boostButton'))
+      ).toBeTruthy();
+      expect(
+        fixture.debugElement.query(By.css('m-supermind__banner'))
+      ).toBeFalsy();
     });
   });
 });
