@@ -309,6 +309,74 @@
           />
         </fieldset>
       </div>
+      <!-- --------------------------------------- -->
+      <!-- Shop Now -->
+      <!-- --------------------------------------- -->
+      <div
+        class="m-boostGoalButtonSelector__radioButtonRow"
+        [ngClass]="{
+          'm-boostGoalButtonSelector__radioButtonRow--selected':
+            form?.controls.goal_button_text.value ===
+            BoostGoalButtonText.SHOP_NOW
+        }"
+        (click)="selectRadioButton(BoostGoalButtonText.SHOP_NOW)"
+      >
+        <div class="m-boostGoalButtonSelector__radioButtonLabels">
+          <label
+            class="m-boostGoalButtonSelector__radioButtonLabel"
+            for="shop"
+            id="shop-now-description"
+            i18n="@@BOOST_MODAL_V2_GOAL_BUTTON_TEXT__SHOP_NOW_LABEL"
+            >Shop now</label
+          >
+        </div>
+        <fieldset
+          data-ref="boost-modal-v2-goal-button-text-selector-shop-now-field-set"
+        >
+          <input
+            class="m-boostGoalButtonSelector__radioButton"
+            type="radio"
+            [value]="BoostGoalButtonText.SHOP_NOW"
+            aria-describedby="shop-now-description"
+            formControlName="goal_button_text"
+            data-ref="boost-modal-v2-goal-button-text-selector-shop-now-radio-button"
+          />
+        </fieldset>
+      </div>
+      <!-- --------------------------------------- -->
+      <!-- Buy Now -->
+      <!-- --------------------------------------- -->
+      <div
+        class="m-boostGoalButtonSelector__radioButtonRow"
+        [ngClass]="{
+          'm-boostGoalButtonSelector__radioButtonRow--selected':
+            form?.controls.goal_button_text.value ===
+            BoostGoalButtonText.BUY_NOW
+        }"
+        (click)="selectRadioButton(BoostGoalButtonText.BUY_NOW)"
+      >
+        <div class="m-boostGoalButtonSelector__radioButtonLabels">
+          <label
+            class="m-boostGoalButtonSelector__radioButtonLabel"
+            for="buy"
+            id="buy-now-description"
+            i18n="@@BOOST_MODAL_V2_GOAL_BUTTON_TEXT__BUY_NOW_LABEL"
+            >Buy now</label
+          >
+        </div>
+        <fieldset
+          data-ref="boost-modal-v2-goal-button-text-selector-buy-now-field-set"
+        >
+          <input
+            class="m-boostGoalButtonSelector__radioButton"
+            type="radio"
+            [value]="BoostGoalButtonText.BUY_NOW"
+            aria-describedby="buy-now-description"
+            formControlName="goal_button_text"
+            data-ref="boost-modal-v2-goal-button-text-selector-buy-now-radio-button"
+          />
+        </fieldset>
+      </div>
     </form>
   </div>
 </ng-container>
