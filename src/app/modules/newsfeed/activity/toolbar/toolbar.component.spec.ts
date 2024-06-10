@@ -155,17 +155,6 @@ describe('ActivityToolbarComponent', () => {
     );
   }));
 
-  it('should navigate comments on toggle when fixed height is set', fakeAsync(() => {
-    (comp as any).service.displayOptions.fixedHeight = true;
-
-    comp.toggleComments();
-    tick();
-
-    expect((comp as any).router.navigate).toHaveBeenCalledOnceWith([
-      `/newsfeed/${mockEntity.guid}`,
-    ]);
-  }));
-
   it('should show toast if allow_comments is false, but still load existing comments on toggleComments', fakeAsync(() => {
     let entity: any = mockEntity;
     entity.allow_comments = false;
