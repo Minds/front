@@ -68,7 +68,6 @@
         [canDelete]="canDelete$ | async"
         [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
         [hideToggle]="service.isSupermindRequestWithReply$ | async"
-        [fixedHeight]="service.displayOptions.fixedHeight"
         (onHeightChange)="onCommentsHeightChange($event)"
       >
       </m-comments__entityOutletV2>

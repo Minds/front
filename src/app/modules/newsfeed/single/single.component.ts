@@ -49,7 +49,6 @@ export class NewsfeedSingleComponent {
   error: string = '';
   focusedCommentGuid: string = '';
   editing = false;
-  fixedHeight = false;
   private siteName: string;
   private siteTitle: string;
 
@@ -119,9 +118,6 @@ export class NewsfeedSingleComponent {
       (params) => {
         if (params.has('editing')) {
           this.editing = !!params.get('editing');
-        }
-        if (params.has('fixedHeight')) {
-          this.fixedHeight = params.get('fixedHeight') === '1';
         }
       }
     );

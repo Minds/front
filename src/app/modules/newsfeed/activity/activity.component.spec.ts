@@ -67,8 +67,6 @@ describe('ActivityComponent', () => {
               showPostMenu: true,
               showPinnedBadge: true,
               showMetrics: true,
-              fixedHeight: false,
-              fixedHeightContainer: false,
               isModal: false,
               minimalMode: false,
               bypassMediaModal: false,

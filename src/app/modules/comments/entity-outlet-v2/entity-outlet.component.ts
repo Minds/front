@@ -40,7 +40,6 @@ export class CommentsEntityOutletV2Component {
   @Input() limit: number = 12;
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
-  @Input() fixedHeight = false;
   @Input() showOnlyToggle = false;
   @Input() compact = false;
   @Output() onHeightChange: EventEmitter<{
@@ -89,15 +88,11 @@ export class CommentsEntityOutletV2Component {
   }
 
   onPosted({ comment, index }): void {
-    if (this.fixedHeight) {
-      this.redirectToSinglePage();
-    }
     this.optimisticList[index] = comment;
     this.detectChanges();
   }
 
   onOptimisticPost(comment): void {
-    if (this.fixedHeight) return;
     this.optimisticList.push(comment);
   }
 
@@ -120,10 +115,6 @@ export class CommentsEntityOutletV2Component {
       return;
     }
 
-    if (this.fixedHeight) {
-      // redirect to full view newsfeed post
-      this.redirectToSinglePage();
-    }
     this.showOnlyToggle = false;
     this.activityService.displayOptions.showOnlyCommentsInput = false;
     this.detectChanges();
@@ -137,20 +128,12 @@ export class CommentsEntityOutletV2Component {
   }
 
   redirectToSinglePage(): void {
-    this.router.navigate([`/newsfeed/${this.entity.guid}`], {
-      queryParams: {
-        fixedHeight: 0,
-      },
-    });
+    this.router.navigate([`/newsfeed/${this.entity.guid}`]);
   }
 
   detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();
-  }
-
-  ngOnChanges(changes) {
-    //  console.log('[comment:list]: on changes', changes);
   }
 
   /**

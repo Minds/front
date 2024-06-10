@@ -126,7 +126,6 @@ describe('ActivityContentComponent', () => {
               displayOptions: {
                 get: () => {
                   return {
-                    fixedHeight: false,
                     minimalMode: false,
                     sidbarMode: false,
                   };

@@ -47,39 +47,6 @@
   }
 
   // *********************************
-  // ** FIXED HEIGHT **
-  // *********************************
-
-  &.m-activity--fixedHeight {
-    border-top: none !important;
-    display: contents;
-
-    .m-activity__wrapper {
-      display: flex;
-      width: 100%;
-      // leave room for top boost rotator buttons
-      height: calc(100% - 45px);
-
-      justify-content: space-between;
-
-      .m-activity__top {
-        padding-top: $spacing4;
-        overflow: hidden;
-        // leave room for bottom toolbar
-        height: calc(100% - 68px);
-      }
-
-      ::ng-deep {
-        m-activity__nsfwConsent {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-        }
-      }
-    }
-  }
-
-  // *********************************
   // ** MINIMAL MODE **
   // *********************************
 

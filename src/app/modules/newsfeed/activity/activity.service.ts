@@ -55,8 +55,6 @@ export type ActivityDisplayOptions = {
   showEditedTag: boolean;
   showVisibilityState: boolean;
   showTranslation: boolean;
-  fixedHeight: boolean;
-  fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height - i.e. for quote posts in the boost rotator?
   isModal: boolean;
   minimalMode: boolean; // For grid layouts
   bypassMediaModal: boolean; // Go to media page instead - i.e. by clicking on suggested sidebar post or image in notification preview
@@ -134,21 +132,8 @@ export type ActivityEntity = {
 };
 
 // Constants of blocks
-export const ACTIVITY_OWNERBLOCK_HEIGHT = 76;
-export const ACTIVITY_TOOLBAR_HEIGHT = 52;
-export const ACTIVITY_COMMENTS_POSTER_HEIGHT = 58;
-export const ACTIVITY_COMMENTS_MORE_HEIGHT = 42;
-export const ACTIVITY_CONTENT_PADDING = 16;
 export const ACTIVITY_V2_MAX_MEDIA_HEIGHT = 500;
 
-// Constants of fixed heights
-export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600;
-export const ACTIVITY_V2_FIXED_HEIGHT_HEIGHT = 525;
-export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
-export const ACTIVITY_FIXED_HEIGHT_RATIO =
-  ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
-export const ACTIVITY_V2_FIXED_HEIGHT_RATIO =
-  ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_V2_FIXED_HEIGHT_HEIGHT;
 // Constants for grid layout
 export const ACTIVITY_GRID_LAYOUT_MAX_HEIGHT = 200;
 
@@ -435,13 +420,6 @@ export class ActivityService implements OnDestroy {
   );
 
   /**
-   * The height of the activity post may be dynamic
-   */
-  height$: BehaviorSubject<number> = new BehaviorSubject(
-    ACTIVITY_FIXED_HEIGHT_HEIGHT
-  );
-
-  /**
    * Called when this post is deleted
    */
   onDelete$: Subject<boolean> = new Subject();
@@ -491,8 +469,6 @@ export class ActivityService implements OnDestroy {
     showPostMenu: true,
     showPinnedBadge: true,
     showMetrics: true,
-    fixedHeight: false,
-    fixedHeightContainer: false,
     isModal: false,
     minimalMode: false,
     bypassMediaModal: false,

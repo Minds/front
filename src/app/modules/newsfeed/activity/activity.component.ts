@@ -18,11 +18,7 @@ import {
 } from '@angular/core';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
-import {
-  ActivityService,
-  ACTIVITY_FIXED_HEIGHT_RATIO,
-  ActivityEntity,
-} from '../activity/activity.service';
+import { ActivityService, ActivityEntity } from '../activity/activity.service';
 import { Subscription, Observable, Subject } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
@@ -104,12 +100,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--isSidebarBoost')
   isSidebarBoost: boolean;
 
-  @HostBinding('class.m-activity--fixedHeight')
-  isFixedHeight: boolean;
-
-  @HostBinding('class.m-activity--fixedHeightContainer')
-  isFixedHeightContainer: boolean;
-
   @HostBinding('class.m-activity--noOwnerBlock')
   noOwnerBlock: boolean;
 
@@ -131,7 +121,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--hideTopBorder')
   hideTopBorder: boolean = false;
 
-  heightSubscription: Subscription;
   guestModeSubscription: Subscription;
   private intersectionObserverSubscription: Subscription;
 
@@ -174,9 +163,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.persistentFeedExperimentActive =
       this.persistentFeedExperiment.isActive();
 
-    this.isFixedHeight = this.service.displayOptions.fixedHeight;
-    this.isFixedHeightContainer =
-      this.service.displayOptions.fixedHeightContainer;
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
     this.noToolbar = !this.service.displayOptions.showToolbar;
     this.isFeed = this.service.displayOptions.isFeed;
@@ -189,16 +175,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     // we don't want to show the View comments link
     // and we DO want to show the See supermindReply
 
-    this.heightSubscription = this.service.height$.subscribe(
-      (height: number) => {
-        if (!this.service.displayOptions.fixedHeight) return;
-        if (this.service.displayOptions.fixedHeightContainer) return;
-        this.heightPx = `${height}px`;
-        this.cd.markForCheck();
-        this.cd.detectChanges();
-      }
-    );
-
     this.guestModeSubscription = this.service.isLoggedIn$.subscribe(
       (isLoggedIn: boolean) => {
         this.isGuestMode = !isLoggedIn;
@@ -209,7 +185,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
     if (this.intersectionObserverSubscription) {
       this.intersectionObserverSubscription.unsubscribe();
@@ -217,8 +192,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => this.calculateFixedHeight());
-
     if (this.canRecordAnalytics) {
       this.elementVisibilityService
         .setEntity(this.service.entity$.value)
@@ -270,30 +243,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         this.service.teardownMetricsSocketListener();
       });
   }
-
-  @HostListener('window:resize')
-  onResize(): void {
-    this.calculateFixedHeight();
-  }
-
-  /**
-   *
-   * For fixed height activities, height is
-   * determined by clientWidth / ratio
-   */
-  calculateFixedHeight(): void {
-    if (!this.service.displayOptions.fixedHeight) return;
-    if (this.service.displayOptions.fixedHeightContainer) return;
-    const height =
-      this.el.nativeElement.clientWidth / ACTIVITY_FIXED_HEIGHT_RATIO;
-    this.service.height$.next(height);
-  }
-
-  // TODO reinstate if we bring back boost rotator
-  // delete() {
-  // Tell the boost rotator to go to the next boost
-  // this.nextBoost.emit();
-  // }
 
   /**
    * Keep scroll position when comments height changes

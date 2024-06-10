@@ -7,81 +7,11 @@
 
   .m-activity--isFeed & {
     &.m-activityContent--textlessMedia {
-      &:not(.m-activityContent--minimalMode):not(
-          .m-activityContent--fixedHeight
-        ) {
+      &:not(.m-activityContent--minimalMode) {
         .m-activityContent__media--video,
         .m-activityContent__media--image {
           padding-top: $spacing2;
         }
-      }
-    }
-  }
-  // *********************************
-  // ** FIXED HEIGHT **
-  // *********************************
-
-  &.m-activityContent--fixedHeight {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    min-height: 0;
-
-    .m-activityContent__media--image img {
-      height: 100%;
-      width: auto;
-      max-height: 100%;
-      max-width: 100%;
-    }
-
-    .m-activityContent__quote--hasText & {
-      ::ng-deep .m-rich-embed-src {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        height: $spacing10 * 2;
-        padding: $spacing3;
-        position: relative;
-
-        .thumbnail {
-          width: 30%;
-          img {
-            height: 80px;
-            border-radius: $borderRadius--activity;
-          }
-        }
-        .meta {
-          flex: 1;
-        }
-      }
-    }
-
-    .m-activityContent__fixedHeightSpacer {
-      flex: 1;
-    }
-
-    ::ng-deep m-read-more--button {
-      .m-readMoreButton--v2 {
-        padding-top: $spacing14;
-      }
-    }
-
-    .m-activityContent__boostRotatorFadeout {
-      cursor: pointer;
-      display: block;
-      position: absolute;
-      bottom: 0;
-      height: 50px;
-      width: 100%;
-
-      @include m-theme() {
-        background: linear-gradient(
-          180deg,
-          rgba(themed($m-bgColor--primary), 0) 0%,
-          rgba(themed($m-bgColor--primary), 0.95) 64.58%,
-          themed($m-bgColor--primary) 100%
-        );
       }
     }
   }
@@ -639,9 +569,7 @@
   // TRANSLATED TEXT
 
   // READ MORE
-  &:not(.m-activityContent--status):not(.m-activityContent--minimalMode):not(
-      .m-activityContent--fixedHeight
-    ) {
+  &:not(.m-activityContent--status):not(.m-activityContent--minimalMode) {
     // Make a taller read more area
     ::ng-deep m-read-more--button {
       .m-readMoreButton--v2 {

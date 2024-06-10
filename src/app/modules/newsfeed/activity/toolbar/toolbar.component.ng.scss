@@ -33,19 +33,6 @@
   }
 
   // *********************************
-  // ** FIXED HEIGHT **
-  // *********************************
-
-  .m-activity--fixedHeight & {
-    z-index: 1;
-
-    .m-activityToolbar__actions {
-      padding-top: $spacing5;
-      padding-bottom: $spacing7;
-    }
-  }
-
-  // *********************************
   // ** MODAL **
   // *********************************
 
