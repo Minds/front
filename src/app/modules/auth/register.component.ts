@@ -127,7 +127,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.navigationService.setVisible(false);
     this.pageLayoutService.useFullWidth();
 
-    this.redirectTo = localStorage.getItem('redirect');
+    if (isPlatformBrowser(this.platformId)) {
+      this.redirectTo = localStorage.getItem('redirect');
+    }
 
     // Set referrer if there is one
     this.paramsSubscription = this.route.queryParams.subscribe((params) => {

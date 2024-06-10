@@ -14,7 +14,6 @@ import {
  * @author Ben Hayward
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-date-selector',
   templateUrl: './date-selector.component.html',
 })

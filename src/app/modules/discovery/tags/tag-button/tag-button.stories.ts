@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
-  Story,
   Meta,
   moduleMetadata,
   componentWrapperDecorator,
+  StoryFn,
 } from '@storybook/angular';
 import discoveryTagsMock from '../../../../mocks/responses/discovery-tags.mock';
 import { DiscoveryTagsService } from '../tags.service';
@@ -57,9 +57,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<DiscoveryTagButtonComponent> = (
-  args: DiscoveryTagButtonComponent
-) => ({
+const Template: StoryFn<any> = (args: DiscoveryTagButtonComponent) => ({
   props: args,
 });
 

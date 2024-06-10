@@ -5,12 +5,12 @@
  * @author Ben Hayward
  */
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ChildActivationEnd } from '@angular/router';
+import { Router, ChildActivationEnd } from '@angular/router';
 import { WalletTabHistoryService } from '../tab-history.service';
 import { filter, take } from 'rxjs/operators';
 
 @Injectable()
-export class TabStorageGuard implements CanActivate {
+export class TabStorageGuard {
   constructor(
     private tabHistory: WalletTabHistoryService,
     private router: Router

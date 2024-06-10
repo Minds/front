@@ -4,7 +4,7 @@ import { InMemoryCache } from '@apollo/client/core';
 import { cache } from './apollo-cache';
 
 import { InjectionToken, PLATFORM_ID } from '@angular/core';
-import { TransferState, makeStateKey } from '@angular/platform-browser';
+import { TransferState, makeStateKey } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { STRAPI_URL } from '../injection-tokens/url-injection-tokens';
 

@@ -31,7 +31,6 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
  * See it in the blog editor.
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-inlineEditor',
   template: ` <div #host></div> `,
   host: {

@@ -1,7 +1,7 @@
 // also exported from '@storybook/angular' if you can deal with breaking changes in 6.1
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { StoryFn, Meta, moduleMetadata } from '@storybook/angular';
 import { ApiService } from '../../api/api.service';
 import { PublisherCardComponent } from './publisher-card.component';
 import { ConfigsService } from '../../services/configs.service';
@@ -79,9 +79,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<PublisherCardComponent> = (
-  args: PublisherCardComponent
-) => ({
+const Template: StoryFn<any> = (args: PublisherCardComponent) => ({
   props: args,
 });
 

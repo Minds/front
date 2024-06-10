@@ -1,6 +1,5 @@
 import {
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   ChangeDetectorRef,
   Input,
@@ -26,10 +25,7 @@ export class NewsfeedEntityComponent {
   @Input() displayOptions = { isFeed: true };
   @Input() canDelete: boolean = null;
 
-  constructor(
-    protected componentFactoryResolver: ComponentFactoryResolver,
-    protected cd: ChangeDetectorRef
-  ) {}
+  constructor(protected cd: ChangeDetectorRef) {}
 
   @Input('entity') set setEntity(entity) {
     this.entity = entity;
@@ -55,13 +51,10 @@ export class NewsfeedEntityComponent {
     if (this.entity && this.entity.type === 'group') {
       this.clear();
 
-      const componentFactory =
-        this.componentFactoryResolver.resolveComponentFactory(
+      let componentRef: ComponentRef<any> =
+        this.host.viewContainerRef.createComponent(
           this.getComponent(this.entity.type)
         );
-
-      let componentRef: ComponentRef<any> =
-        this.host.viewContainerRef.createComponent(componentFactory);
       componentRef.instance.entity = this.entity;
       componentRef.changeDetectorRef.detectChanges();
     }

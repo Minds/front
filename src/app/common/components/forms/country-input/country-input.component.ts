@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-country-input',
   template: `
     <select

@@ -34,23 +34,7 @@ export class ThemeColorChangeService {
    * @returns { void }
    */
   private changePrimaryAccent(color: string): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.dom.documentElement.style.setProperty(
-        '--primary-action-light',
-        color
-      );
-      this.dom.documentElement.style.setProperty(
-        '--primary-action-dark',
-        color
-      );
-    } else {
-      const styleString = `--primary-action-light: ${color}; --primary-action-dark: ${color};`;
-
-      let style: HTMLLinkElement;
-      style = this.dom.createElement('style');
-      style.setAttribute('id', 'dynamicSsrTheme');
-      style.innerHTML = styleString;
-      this.dom.head.appendChild(style);
-    }
+    this.dom.documentElement.style.setProperty('--primary-action-light', color);
+    this.dom.documentElement.style.setProperty('--primary-action-dark', color);
   }
 }

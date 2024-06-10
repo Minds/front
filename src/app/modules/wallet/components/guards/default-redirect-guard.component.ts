@@ -4,11 +4,11 @@
  * @author Ben Hayward
  */
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { WalletTabHistoryService } from '../tab-history.service';
 
 @Injectable()
-export class DefaultRedirectGuard implements CanActivate {
+export class DefaultRedirectGuard {
   constructor(
     private router: Router,
     private tabHistory: WalletTabHistoryService

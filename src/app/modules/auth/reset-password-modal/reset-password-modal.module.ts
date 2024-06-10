@@ -1,8 +1,4 @@
-import {
-  NgModule,
-  ComponentFactoryResolver,
-  ComponentFactory,
-} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../../common/common.module';
 import { MindsFormsModule } from '../../forms/forms.module';
@@ -27,11 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   exports: [ResetPasswordModalComponent],
 })
 export class ResetPasswordModalModule {
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
-
-  public resolveComponent(): ComponentFactory<ResetPasswordModalComponent> {
-    return this.componentFactoryResolver.resolveComponentFactory(
-      ResetPasswordModalComponent
-    );
+  public resolveComponent(): typeof ResetPasswordModalComponent {
+    return ResetPasswordModalComponent;
   }
 }

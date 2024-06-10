@@ -1,13 +1,9 @@
 import { APP_BASE_HREF, CommonModule, Location } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule, PLATFORM_ID } from '@angular/core';
-import {
-  BrowserModule,
-  BrowserTransferStateModule,
-  TransferState,
-} from '@angular/platform-browser';
+import { APP_ID, APP_INITIALIZER, NgModule, PLATFORM_ID } from '@angular/core';
+import { TransferState } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CookieModule, CookieService } from '@mindsorg/ngx-universal';
+import { CookieModule, CookieService } from '@gorniv/ngx-universal';
 import { MindsHttpClient } from '../../common/api/client.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ConfigsService } from '../../common/services/configs.service';
@@ -31,8 +27,6 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
   exports: [EmbedComponent],
   imports: [
     CommonModule,
-    BrowserModule.withServerTransition({ appId: 'm-app' }),
-    BrowserTransferStateModule,
     HttpClientModule,
     VideoModule,
     CookieModule.forRoot(),
@@ -80,6 +74,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
       useFactory: EntitiesService._,
       deps: [Client, BlockListService],
     },
+    { provide: APP_ID, useValue: 'm-app' },
   ],
   bootstrap: [EmbedComponent],
 })

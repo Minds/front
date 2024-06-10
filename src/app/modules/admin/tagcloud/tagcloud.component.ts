@@ -4,7 +4,6 @@ import { Client } from '../../../services/api';
 import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-admin-tagcloud',
   templateUrl: 'tagcloud.component.html',
 })

@@ -1,4 +1,4 @@
-import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { StoryFn, Meta, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 import { FormInputSliderV2Component } from './slider.component';
 import { FormsModule } from '@angular/forms';
@@ -46,7 +46,7 @@ export const actionsData = {
 };
 
 // More on component templates: https://storybook.js.org/docs/angular/writing-stories/introduction#using-args
-const Template: Story<FormInputSliderV2Component> = (
+const Template: StoryFn<FormInputSliderV2Component> = (
   args: FormInputSliderV2Component
 ) => ({
   props: {

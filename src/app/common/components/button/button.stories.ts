@@ -1,4 +1,4 @@
-import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryFn, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 import { ButtonComponent } from './button.component';
 import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component';
@@ -77,7 +77,7 @@ export const actionsData = {
 };
 
 // More on component templates: https://storybook.js.org/docs/angular/writing-stories/introduction#using-args
-const Template: Story<ButtonComponent> = (args: ButtonComponent) => ({
+const Template: StoryFn<any> = (args: ButtonComponent) => ({
   props: {
     ...args,
     onAction: actionsData.onClickButton,
@@ -183,7 +183,7 @@ WarningDisabled.args = {
  * HasIcon
  */
 
-export const HasIcon: Story<ButtonComponent> = (args: ButtonComponent) => ({
+export const HasIcon: StoryFn<any> = (args: ButtonComponent) => ({
   props: {
     ...args,
     label: 'Button',
@@ -214,7 +214,7 @@ HasIcon.parameters = {
  * IconOnly
  */
 
-export const IconOnly: Story<ButtonComponent> = (args: ButtonComponent) => ({
+export const IconOnly: StoryFn<any> = (args: ButtonComponent) => ({
   props: {
     ...args,
     label: undefined,

@@ -1,5 +1,5 @@
 import { RouterTestingModule } from '@angular/router/testing';
-import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { StoryFn, moduleMetadata } from '@storybook/angular';
 import { Session } from '../../../../services/session';
 import { CommonModule } from '../../../../common/common.module';
 import { ConfigsService } from '../../../../common/services/configs.service';
@@ -56,9 +56,9 @@ export default {
       ],
     }),
   ],
-} as Meta;
+};
 
-const Template: Story<MutualSubscriptionsComponent> = (
+const Template: StoryFn<MutualSubscriptionsComponent> = (
   args: MutualSubscriptionsComponent
 ) => ({
   props: args,
@@ -69,7 +69,7 @@ Basic.args = {};
 
 //
 
-const SingleUserTemplate: Story<MutualSubscriptionsComponent> = (
+const SingleUserTemplate: StoryFn<MutualSubscriptionsComponent> = (
   args: MutualSubscriptionsComponent
 ) => ({
   props: args,
@@ -95,7 +95,7 @@ SingleUser.args = {};
 
 //
 
-const TwoUsersTemplate: Story<MutualSubscriptionsComponent> = (
+const TwoUsersTemplate: StoryFn<MutualSubscriptionsComponent> = (
   args: MutualSubscriptionsComponent
 ) => ({
   props: args,
@@ -121,7 +121,7 @@ TwoUsers.args = {};
 
 //
 
-const ThreeUsersTemplate: Story<MutualSubscriptionsComponent> = (
+const ThreeUsersTemplate: StoryFn<MutualSubscriptionsComponent> = (
   args: MutualSubscriptionsComponent
 ) => ({
   props: args,

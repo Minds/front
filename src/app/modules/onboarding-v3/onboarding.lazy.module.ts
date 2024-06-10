@@ -1,8 +1,4 @@
-import {
-  ComponentFactory,
-  ComponentFactoryResolver,
-  NgModule,
-} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
@@ -46,11 +42,7 @@ const MODULES = [NgCommonModule, CommonModule, ReactiveFormsModule];
   providers: [...PROVIDERS],
 })
 export class OnboardingV3ProgressLazyModule {
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
-
-  public resolveComponent(): ComponentFactory<OnboardingV3ModalComponent> {
-    return this.componentFactoryResolver.resolveComponentFactory(
-      OnboardingV3ModalComponent
-    );
+  public resolveComponent(): typeof OnboardingV3ModalComponent {
+    return OnboardingV3ModalComponent;
   }
 }

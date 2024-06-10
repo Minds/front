@@ -1,5 +1,3 @@
-import { Story, Meta } from '@storybook/angular';
-
 export default {
   title: 'Components / Tabs / Tabs',
   argTypes: {
@@ -15,9 +13,9 @@ export default {
     //anchorPosition: { top: '100%', left: '0' }
   },
   decorators: [],
-} as Meta;
+} as any;
 
-const Template: Story<any> = (args: any) => ({
+const Template: any = (args: any) => ({
   props: args,
   template: `
   <ul class="m-tabs__container">

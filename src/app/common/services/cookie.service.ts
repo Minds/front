@@ -1,1 +1,1 @@
-export { CookieService } from '@mindsorg/ngx-universal';
+export { CookieService } from '@gorniv/ngx-universal';

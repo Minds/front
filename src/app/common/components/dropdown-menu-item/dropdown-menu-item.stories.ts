@@ -1,8 +1,8 @@
 import {
-  Story,
   Meta,
   moduleMetadata,
   componentWrapperDecorator,
+  StoryFn,
 } from '@storybook/angular';
 import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component';
 import { DropdownMenuItemComponent } from './dropdown-menu-item.component';
@@ -104,7 +104,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<DropdownMenuItemComponent> = (
+const Template: StoryFn<DropdownMenuItemComponent> = (
   args: DropdownMenuItemComponent
 ) => ({
   props: args,

@@ -1,8 +1,4 @@
-import { NgModule } from '@angular/core';
-import {
-  BrowserModule,
-  BrowserTransferStateModule,
-} from '@angular/platform-browser';
+import { APP_ID, NgModule } from '@angular/core';
 import {
   BrowserHeadersService,
   HeadersService,
@@ -17,11 +13,7 @@ import { POSTHOG_JS } from '../../common/services/posthog/posthog-injection-toke
 import posthog from 'posthog-js';
 
 @NgModule({
-  imports: [
-    EmbedModule,
-    BrowserModule.withServerTransition({ appId: 'm-app' }),
-    BrowserTransferStateModule,
-  ],
+  imports: [EmbedModule],
   providers: [
     { provide: 'ORIGIN_URL', useValue: location.origin },
     { provide: 'QUERY_STRING', useValue: location.search || '' },
@@ -37,6 +29,7 @@ import posthog from 'posthog-js';
       provide: POSTHOG_JS,
       useValue: posthog,
     },
+    { provide: APP_ID, useValue: 'm-app' },
   ],
   bootstrap: [EmbedComponent],
 })

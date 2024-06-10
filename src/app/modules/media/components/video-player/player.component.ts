@@ -15,7 +15,7 @@ import {
 import { PLAYER_ANIMATIONS } from './player.animations';
 import { VideoPlayerService, VideoSource } from './player.service';
 import * as Plyr from 'plyr';
-import { PlyrComponent } from '@mindsorg/ngx-plyr';
+import { PlyrComponent } from 'ngx-plyr-mg';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';

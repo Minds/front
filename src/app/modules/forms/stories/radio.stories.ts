@@ -1,4 +1,4 @@
-import { Story, Meta } from '@storybook/angular';
+import { StoryFn } from '@storybook/angular';
 
 export default {
   title: 'Components / Inputs / Radio',
@@ -10,9 +10,9 @@ export default {
   },
   args: {},
   decorators: [],
-} as Meta;
+};
 
-const Template: Story<any> = (args: any) => ({
+const Template: StoryFn<any> = (args: any) => ({
   props: args,
   template: `
     <div class="m-formWrapper">

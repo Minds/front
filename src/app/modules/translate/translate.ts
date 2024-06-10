@@ -11,7 +11,6 @@ import { ToasterService } from '../../common/services/toaster.service';
  * See it by clicking 'translate' in an activity's dropdown menu
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-translate',
   inputs: ['_open: open', '_entity: entity', '_translateEvent: translateEvent'],
   outputs: ['onTranslateInit', 'onTranslate', 'onTranslateError'],

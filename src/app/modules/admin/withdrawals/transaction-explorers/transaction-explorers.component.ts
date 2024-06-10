@@ -12,7 +12,6 @@ export type Address = {
 };
 
 @Component({
-  moduleId: module.id,
   selector: 'm-admin__txExplorers',
   template: `
     <div class="m-txExplorers__container">

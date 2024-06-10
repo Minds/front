@@ -34,7 +34,7 @@ import {
   DEFAULT_ERROR_MESSAGE,
   ToasterService,
 } from '../../../../../../../../common/services/toaster.service';
-import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client';
 import { MindsGroup } from '../../../../../../../groups/v2/group.model';
 import { SiteMembershipsCountService } from '../../../../../../../site-memberships/services/site-membership-count.service';
@@ -48,7 +48,7 @@ import { SiteMembershipsCountService } from '../../../../../../../site-membershi
   styleUrls: ['./form.component.ng.scss'],
 })
 export class NetworkAdminMonetizationMembershipFormComponent
-  implements OnInit, OnInit, CanDeactivate<any>
+  implements OnInit, OnInit
 {
   /** Enum for use in template. */
   public readonly SiteMembershipPricingModelEnum: typeof SiteMembershipPricingModelEnum =

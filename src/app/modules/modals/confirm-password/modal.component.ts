@@ -10,7 +10,6 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-confirm-password--modal',
   templateUrl: 'modal.component.html',
 })

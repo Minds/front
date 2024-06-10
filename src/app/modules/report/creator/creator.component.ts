@@ -24,7 +24,6 @@ import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens
  * See it by clicking "report post" from the meatball menu of an activity post that is not your own
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-report--creator',
   templateUrl: 'creator.component.html',
   styleUrls: ['./creator.component.ng.scss'],

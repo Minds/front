@@ -2,8 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactory,
-  ComponentFactoryResolver,
   ComponentRef,
   EventEmitter,
   HostBinding,
@@ -51,10 +49,7 @@ export class PopupComponent {
    */
   protected current: Observable<any>;
 
-  constructor(
-    protected cd: ChangeDetectorRef,
-    protected componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+  constructor(protected cd: ChangeDetectorRef) {}
 
   /**
    * Creates a component instance and injects it onto the placeholder. The component *MUST* have a `dismissIntent` @Output
@@ -74,16 +69,13 @@ export class PopupComponent {
     }
 
     // Instantiate component and inject it
-    const componentFactory: ComponentFactory<C> =
-      this.componentFactoryResolver.resolveComponentFactory(component);
     const viewContainerRef: ViewContainerRef = this.host.viewContainerRef;
 
     viewContainerRef.clear();
 
     const componentRef: ComponentRef<C> = viewContainerRef.createComponent(
-      componentFactory,
-      void 0,
-      injector
+      component,
+      { injector: injector }
     );
 
     // Setup popup execution scope, for now it dismisses itself when a dismissIntent is received

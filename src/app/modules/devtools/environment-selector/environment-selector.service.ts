@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from '@mindsorg/ngx-universal';
+import { CookieService } from '@gorniv/ngx-universal';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';

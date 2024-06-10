@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions';
-import { Story, Meta } from '@storybook/angular';
+import { StoryFn, Meta } from '@storybook/angular';
 import { ToggleComponent } from './toggle.component';
 
 export default {
@@ -18,7 +18,7 @@ export const actionsData = {
   onClick: action('toggle'),
 };
 
-const Template: Story<ToggleComponent> = (args: ToggleComponent) => ({
+const Template: StoryFn<any> = (args: ToggleComponent) => ({
   props: {
     ...args,
     toggle: actionsData.onClick,

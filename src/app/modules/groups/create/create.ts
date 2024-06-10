@@ -17,7 +17,6 @@ import { ToasterService } from '../../../common/services/toaster.service';
  * See it by clicking "Groups" in the sidebar, then the "Create Group" button
  */
 @Component({
-  moduleId: module.id,
   selector: 'minds-groups-create',
   templateUrl: 'create.html',
 })

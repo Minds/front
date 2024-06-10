@@ -1,5 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID, inject } from '@angular/core';
-import { CanActivate, CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { Session } from '../../services/session';
 import { Location, isPlatformBrowser } from '@angular/common';
@@ -12,7 +12,7 @@ import { ToasterService } from '../services/toaster.service';
  * and the will sent the user to the login page via the router.
  */
 @Injectable({ providedIn: 'root' })
-export class LoggedInRedirectGuard implements CanActivate {
+export class LoggedInRedirectGuard {
   constructor(
     private router: Router,
     private session: Session,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from '@mindsorg/ngx-universal';
+import { CookieService } from '@gorniv/ngx-universal';
 import { BehaviorSubject } from 'rxjs';
 import { ToasterService } from '../../common/services/toaster.service';
 import { Client } from '../../services/api';

@@ -1,8 +1,4 @@
-import {
-  NgModule,
-  ComponentFactoryResolver,
-  ComponentFactory,
-} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UniswapModalComponent } from './uniswap-modal.component';
@@ -14,11 +10,7 @@ import { CommonModule } from '../../../../common/common.module';
   exports: [UniswapModalComponent],
 })
 export class UniswapModalModule {
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
-
-  public resolveComponent(): ComponentFactory<UniswapModalComponent> {
-    return this.componentFactoryResolver.resolveComponentFactory(
-      UniswapModalComponent
-    );
+  public resolveComponent(): typeof UniswapModalComponent {
+    return UniswapModalComponent;
   }
 }
