@@ -1,9 +1,4 @@
-import {
-  ChangeDetectorRef,
-  ComponentFactoryResolver,
-  Injector,
-  PLATFORM_ID,
-} from '@angular/core';
+import { ChangeDetectorRef, Injector, PLATFORM_ID } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -26,10 +21,6 @@ describe('FeaturedContentComponent', () => {
         {
           provide: FeaturedContentService,
           useValue: MockService(FeaturedContentService),
-        },
-        {
-          provide: ComponentFactoryResolver,
-          useValue: MockService(ComponentFactoryResolver),
         },
         {
           provide: ChangeDetectorRef,

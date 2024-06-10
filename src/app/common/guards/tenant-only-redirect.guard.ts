@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree,
@@ -14,7 +13,7 @@ import { IsTenantService } from '../services/is-tenant.service';
  * routes that are only relevant on tenant sites
  */
 @Injectable()
-export class TenantOnlyRedirectGuard implements CanActivate {
+export class TenantOnlyRedirectGuard {
   constructor(
     private isTenant: IsTenantService,
     private router: Router

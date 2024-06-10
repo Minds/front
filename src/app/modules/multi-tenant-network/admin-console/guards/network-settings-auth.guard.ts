@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
-  CanActivate,
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
@@ -15,7 +14,7 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
  * and the user IS an admin. (Or if we can moderate, if going to a moderation route)
  */
 @Injectable({ providedIn: 'root' })
-export class NetworkSettingsAuthGuard implements CanActivate {
+export class NetworkSettingsAuthGuard {
   constructor(
     protected configs: ConfigsService,
     private session: Session,

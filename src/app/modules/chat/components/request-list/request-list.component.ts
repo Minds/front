@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core';
 import {
   ActivatedRoute,
+  Event,
   NavigationEnd,
   Router,
   RouterEvent,
@@ -77,7 +78,7 @@ export class ChatRequestListComponent {
 
     this.routerEventsSubscription = this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
-      .subscribe((event: RouterEvent) => {
+      .subscribe((event: Event | RouterEvent) => {
         this.currentRoomId$.next(
           this.route.snapshot.firstChild.params['roomId']
         );

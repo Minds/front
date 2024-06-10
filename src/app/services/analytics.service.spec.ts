@@ -5,7 +5,7 @@ import {
   CookieOptionsProvider,
   CookieService,
   COOKIE_OPTIONS,
-} from '@mindsorg/ngx-universal';
+} from '@gorniv/ngx-universal';
 import { clientMock } from '../../tests/client-mock.spec';
 import { sessionMock } from '../../tests/session-mock.spec';
 import { SiteService } from '../common/services/site.service';

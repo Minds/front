@@ -4,7 +4,7 @@ import {
   CookieOptionsProvider,
   CookieService,
   COOKIE_OPTIONS,
-} from '@mindsorg/ngx-universal';
+} from '@gorniv/ngx-universal';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { compassServiceMock } from '../../mocks/modules/compass/compass.service.mock';
 import { CompassService } from '../../modules/compass/compass.service';

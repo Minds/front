@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import {
   ActivatedRoute,
+  Event,
   NavigationEnd,
   Router,
   RouterEvent,
@@ -95,7 +96,7 @@ export class ChatPageLayoutComponent implements OnInit, OnDestroy {
 
     this.routerEventSubscription = this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
-      .subscribe((event: RouterEvent) => {
+      .subscribe((event: Event | RouterEvent) => {
         this.fullWidthOnlyChildRoute$.next(
           this.route.snapshot.firstChild?.data?.fullWidthOnly
         );

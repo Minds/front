@@ -1,8 +1,4 @@
-import {
-  NgModule,
-  ComponentFactoryResolver,
-  ComponentFactory,
-} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
 import { CommonModule } from '../../../../common/common.module';
@@ -14,8 +10,6 @@ import { ChannelShopMembershipsSupportTierComponent } from './memberships/suppor
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ChannelShopMembershipsMembersComponent } from './memberships/members-modal/members-modal.component';
-
-const EXPORTS = [ChannelShopComponent, ChannelShopBriefComponent];
 
 @NgModule({
   imports: [NgCommonModule, RouterModule, FormsModule, CommonModule],
@@ -29,15 +23,14 @@ const EXPORTS = [ChannelShopComponent, ChannelShopBriefComponent];
   ],
 })
 export class ChannelsShopModule {
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
-
-  public resolveComponents(): { [selector: string]: ComponentFactory<any> } {
-    const factories = {};
-    for (let component of EXPORTS) {
-      const factory: ComponentFactory<any> =
-        this.componentFactoryResolver.resolveComponentFactory(component);
-      factories[factory.selector] = factory;
-    }
-    return factories;
+  public resolveComponents(): {
+    [key in string]: ChannelShopComponent | ChannelShopBriefComponent;
+  } {
+    return {
+      [(ChannelShopComponent as any).ɵcmp.selectors[0][0]]:
+        ChannelShopComponent,
+      [(ChannelShopBriefComponent as any).ɵcmp.selectors[0][0]]:
+        ChannelShopBriefComponent,
+    };
   }
 }

@@ -11,7 +11,6 @@ import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-notifications--flyout',
   templateUrl: 'flyout.component.html',
   styleUrls: ['./flyout.component.ng.scss'],

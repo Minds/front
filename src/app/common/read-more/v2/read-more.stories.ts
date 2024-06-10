@@ -1,5 +1,5 @@
 import { RouterTestingModule } from '@angular/router/testing';
-import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { StoryFn, Meta, moduleMetadata } from '@storybook/angular';
 import { SiteService } from '../../services/site.service';
 import { ReadMoreComponent } from './read-more.component';
 import { ReadMoreModule } from './read-more.module';
@@ -36,7 +36,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<ReadMoreComponent> = (args: any) => ({
+const Template: StoryFn<ReadMoreComponent> = (args: any) => ({
   props: args,
 });
 

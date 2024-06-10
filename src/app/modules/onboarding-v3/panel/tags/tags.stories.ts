@@ -1,5 +1,5 @@
 import {
-  Story,
+  StoryFn,
   Meta,
   moduleMetadata,
   componentWrapperDecorator,
@@ -46,7 +46,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<OnboardingV3TagsComponent> = (
+const Template: StoryFn<OnboardingV3TagsComponent> = (
   args: OnboardingV3TagsComponent
 ) => ({
   props: args,

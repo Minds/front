@@ -7,7 +7,6 @@ import { SiteService } from '../../services/site.service';
  * Can be enabled/disabled in user settings.
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-social-icons',
   inputs: ['_url: url', '_title: title', '_embed: embed'],
   templateUrl: 'social-icons.html',

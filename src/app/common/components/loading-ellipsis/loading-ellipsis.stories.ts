@@ -1,4 +1,4 @@
-import { Story, Meta } from '@storybook/angular';
+import { Meta, StoryFn } from '@storybook/angular';
 import { LoadingEllipsisComponent } from './loading-ellipsis.component';
 
 export default {
@@ -17,7 +17,7 @@ export default {
   args: {},
 } as Meta;
 
-const Template: Story<LoadingEllipsisComponent> = (
+const Template: StoryFn<LoadingEllipsisComponent> = (
   args: LoadingEllipsisComponent
 ) => ({
   props: args,

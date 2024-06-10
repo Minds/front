@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as Sentry from '@sentry/browser';
+// import * as Sentry from '@sentry/angular';
 import { Session } from '../../../services/session';
 import { environment } from '../../../../environments/environment';
 import { ConfigsService } from '../configs.service';

@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { UserAvatarService } from '../../../../common/services/user-avatar.service';
 import { Router } from '@angular/router';
-import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { Upload } from '../../../../services/api/upload';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { OnboardingV2Service } from '../../service/onboarding.service';
@@ -80,7 +79,7 @@ export class AvatarStepComponent {
       });
   }
 
-  onImageCropped(event: ImageCroppedEvent) {
+  onImageCropped(event) {
     this.croppedImage = event.base64;
   }
 

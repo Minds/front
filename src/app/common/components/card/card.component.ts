@@ -2,7 +2,6 @@ import {
   Component,
   ViewChild,
   Input,
-  ComponentFactoryResolver,
   AfterViewInit,
   Type,
   ChangeDetectorRef,
@@ -60,10 +59,7 @@ export class MindsCard implements AfterViewInit {
 
   private initialized: boolean = false;
 
-  constructor(
-    private _componentFactoryResolver: ComponentFactoryResolver,
-    private _injector: Injector
-  ) {}
+  constructor(private _injector: Injector) {}
 
   @Input('object') set _object(value: any) {
     const oldType = this.type;
@@ -133,17 +129,12 @@ export class MindsCard implements AfterViewInit {
       return;
     }
 
-    const componentFactory =
-        this._componentFactoryResolver.resolveComponentFactory(componentClass),
-      viewContainerRef = this.cardHost.viewContainerRef;
-
+    const viewContainerRef = this.cardHost.viewContainerRef;
     viewContainerRef.clear();
 
-    this.componentRef = viewContainerRef.createComponent(
-      componentFactory,
-      undefined,
-      this._injector
-    );
+    this.componentRef = viewContainerRef.createComponent(componentClass, {
+      injector: this._injector,
+    });
     this.componentInstance = this.componentRef.instance;
     this.anchorRef = viewContainerRef.element;
 

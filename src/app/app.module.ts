@@ -1,12 +1,9 @@
 import {
   APP_INITIALIZER,
   CUSTOM_ELEMENTS_SCHEMA,
+  ErrorHandler,
   NgModule,
 } from '@angular/core';
-import {
-  BrowserModule,
-  BrowserTransferStateModule,
-} from '@angular/platform-browser';
 // import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -46,7 +43,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
 //import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
-import { CookieModule } from '@mindsorg/ngx-universal';
+import { CookieModule } from '@gorniv/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
@@ -64,13 +61,13 @@ import { ApolloModule } from 'apollo-angular';
 import { MarkdownModule } from 'ngx-markdown';
 import { GiftCardModule } from './modules/gift-card/gift-card.module';
 import { ValuePropModule } from './modules/value-prop/value-prop.module';
+import * as Sentry from '@sentry/angular';
+import { Router } from '@angular/router';
 
 @NgModule({
   bootstrap: [Minds],
   declarations: [Minds, Pages],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'm-app' }),
-    BrowserTransferStateModule,
     CookieModule.forRoot(),
     ApolloModule,
     MarkdownModule.forRoot(),
@@ -124,9 +121,17 @@ import { ValuePropModule } from './modules/value-prop/value-prop.module';
   providers: [
     MINDS_PROVIDERS,
     {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler(),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
       provide: APP_INITIALIZER,
       useFactory: (configs) => () => configs.loadFromRemote(),
-      deps: [ConfigsService],
+      deps: [ConfigsService, Sentry.TraceService],
       multi: true,
     },
   ],

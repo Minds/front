@@ -8,11 +8,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import {
-  TransferState,
-  makeStateKey,
-  StateKey,
-} from '@angular/platform-browser';
+import { TransferState, makeStateKey, StateKey } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
 @Injectable({

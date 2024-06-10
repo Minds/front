@@ -15,7 +15,6 @@ import { skip } from 'rxjs/operators';
 import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-admin-firehose',
   templateUrl: 'firehose.component.html',
   styleUrls: ['./firehose.component.ng.scss'],

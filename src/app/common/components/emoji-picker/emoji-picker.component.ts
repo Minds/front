@@ -4,10 +4,7 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  Compiler,
-  Injector,
   ChangeDetectorRef,
-  ComponentFactoryResolver,
   ViewContainerRef,
   Input,
 } from '@angular/core';
@@ -49,10 +46,7 @@ export class EmojiPickerComponent {
 
   constructor(
     public themeService: ThemeService,
-    private compiler: Compiler,
-    private injector: Injector,
-    private cd: ChangeDetectorRef,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private cd: ChangeDetectorRef
   ) {}
 
   emojiSelect($event) {
@@ -77,10 +71,6 @@ export class EmojiPickerComponent {
     // Import our module
     const { PickerComponent } = await import('@ctrl/ngx-emoji-mart');
 
-    // Resolves the available components
-    const componentFactory =
-      this.componentFactoryResolver.resolveComponentFactory(PickerComponent);
-
     if (!this.emojiPickerOutlet) {
       console.error('Could not find emoji picker outlet');
     }
@@ -90,7 +80,7 @@ export class EmojiPickerComponent {
 
     // Attach the component
     const componentRef =
-      this.emojiPickerOutlet.createComponent(componentFactory);
+      this.emojiPickerOutlet.createComponent(PickerComponent);
 
     componentRef.instance.autoFocus = true;
     componentRef.instance.isNative = true;

@@ -11,7 +11,6 @@ import { ToasterService } from '../../../common/services/toaster.service';
  * Messenger was replaced with Minds Chat
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-messenger--encryption',
   host: {
     class: 'm-messenger--encryption',

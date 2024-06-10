@@ -16,7 +16,6 @@ import { NotificationService } from './notification.service';
 import { InfiniteScroll } from '../../common/components/infinite-scroll/infinite-scroll';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-notifications',
   templateUrl: 'notifications.component.html',
 })

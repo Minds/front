@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   Router,
@@ -13,7 +12,7 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
 @Injectable({
   providedIn: 'root',
 })
-export class CanModerateContentGuard implements CanActivate {
+export class CanModerateContentGuard {
   constructor(
     private permissions: PermissionsService,
     private router: Router

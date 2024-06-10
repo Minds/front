@@ -230,7 +230,8 @@
               "includePaths": ["src/stylesheets"]
             },
             "sourceMap": true,
-            "optimization": false
+            "optimization": false,
+            "buildOptimizer": false
           },
           "configurations": {
             "production": {
@@ -242,7 +243,8 @@
               ],
               "sourceMap": false,
               "optimization": true,
-              "preserveSymlinks": true
+              "preserveSymlinks": true,
+              "buildOptimizer": true
             }
           },
           "defaultConfiguration": ""

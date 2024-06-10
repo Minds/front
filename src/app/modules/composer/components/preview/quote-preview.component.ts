@@ -3,12 +3,8 @@ import {
   ChangeDetectorRef,
   Compiler,
   Component,
-  ComponentFactory,
-  ComponentFactoryResolver,
   Injector,
-  Input,
   ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
 import { DynamicHostDirective } from '../../../../common/directives/dynamic-host.directive';
 import { ActivityComponent } from '../../../newsfeed/activity/activity.component';
@@ -35,7 +31,6 @@ export class QuotePreviewComponent {
     protected service: ComposerService,
     protected injector: Injector,
     protected compiler: Compiler,
-    protected componentFactoryResolver: ComponentFactoryResolver,
     protected cd: ChangeDetectorRef
   ) {}
 
@@ -44,11 +39,8 @@ export class QuotePreviewComponent {
   }
 
   loadActivityModule() {
-    const componentFactory =
-      this.componentFactoryResolver.resolveComponentFactory(ActivityComponent);
-
     const activity =
-      this.outletRef.viewContainerRef.createComponent(componentFactory);
+      this.outletRef.viewContainerRef.createComponent(ActivityComponent);
 
     activity.instance.entity = this.service.remind$.getValue();
     activity.instance.displayOptions = {

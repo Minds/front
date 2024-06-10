@@ -21,7 +21,6 @@ import { OnboardingV2Service } from './service/onboarding.service';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { PhoneVerificationComponent } from './steps/info/phone-input/input.component';
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { AvatarStepComponent } from './steps/avatar/avatar.component';
 import { PathMatch } from '../../common/types/angular.types';
 
@@ -75,7 +74,6 @@ const routes: Routes = [
     SuggestionsModule,
     MindsFormsModule,
     GroupsModule,
-    ImageCropperModule,
   ],
   exports: [],
   declarations: [

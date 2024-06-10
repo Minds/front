@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import {
   ActivatedRoute,
+  Event,
   NavigationEnd,
   Router,
   RouterEvent,
@@ -322,7 +323,9 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
        */
       this.router.events
         .pipe(
-          filter((event: RouterEvent) => event instanceof NavigationEnd),
+          filter(
+            (event: Event | RouterEvent) => event instanceof NavigationEnd
+          ),
           startWith(this.router)
         )
         .subscribe(() => {

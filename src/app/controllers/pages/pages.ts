@@ -10,7 +10,6 @@ import { PagesService } from '../../common/services/pages.service';
 
 @Component({
   selector: 'm-pages',
-  moduleId: module.id,
   templateUrl: 'pages.html',
 })
 export class Pages {

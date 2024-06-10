@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 /**
  * Service for the storing of a local storage item when a user
@@ -12,6 +13,8 @@ export class OnboardingV5CompletionStorageService {
   /** Storage key prefix */
   private readonly STORAGE_KEY_PREFIX = 'onboarding-v5-completed-';
 
+  constructor(@Inject(PLATFORM_ID) private platformId) {}
+
   /**
    * Set a storage item exists that indicates that
    * the user has completed onboarding.
@@ -19,6 +22,10 @@ export class OnboardingV5CompletionStorageService {
    * @returns { void }
    */
   public setAsCompleted(guid: string): void {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     localStorage.setItem(this.getStorageKey(guid), '1');
   }
 
@@ -30,6 +37,10 @@ export class OnboardingV5CompletionStorageService {
    * indicates that the user has completed onboarding.
    */
   public isCompleted(guid: string): boolean {
+    if (isPlatformServer(this.platformId)) {
+      return true;
+    }
+
     return localStorage.getItem(this.getStorageKey(guid)) === '1';
   }
 

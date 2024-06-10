@@ -38,12 +38,12 @@ export class ChannelShopLazyComponent {
     const moduleRef = moduleFactory.create(this.injector);
 
     // Resolves the available components
-    const componentFactories = moduleRef.instance.resolveComponents();
-    const componentFactory = componentFactories[this.component];
+    const components: any = moduleRef.instance.resolveComponents();
+    const component: any = components[this.component];
 
     // Attach the component
     this.anchor.clear();
-    this.anchor.createComponent(componentFactory);
+    this.anchor.createComponent(component);
 
     // Trigger change detection
     this.cd.markForCheck();

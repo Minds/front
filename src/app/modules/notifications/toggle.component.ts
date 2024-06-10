@@ -19,7 +19,6 @@ import { Storage } from '../../services/storage';
  * Topbar notification bell toggle.
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-notifications--topbar-toggle',
   templateUrl: 'toggle.component.html',
   styleUrls: ['toggle.component.ng.scss'],
@@ -32,9 +31,7 @@ export class NotificationsTopbarToggleComponent implements OnInit, OnDestroy {
 
   private soundTimeout: any;
   private soundTimeoutElapsed: boolean = false;
-  private notificationSound = new Audio(
-    '../../../assets/audio/notification.wav'
-  );
+  private readonly notificationSound;
 
   constructor(
     public session: Session,
@@ -42,7 +39,11 @@ export class NotificationsTopbarToggleComponent implements OnInit, OnDestroy {
     private router: Router,
     private storage: Storage,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    this.notificationSound = isPlatformBrowser(this.platformId)
+      ? new Audio('../../../assets/audio/notification.wav')
+      : null;
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {

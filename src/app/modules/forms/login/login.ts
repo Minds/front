@@ -35,7 +35,6 @@ export type Source = 'auth-modal' | 'other' | null;
  * Includes name/password inputs and a link to register
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-loginForm',
   templateUrl: 'login.html',
   styleUrls: [

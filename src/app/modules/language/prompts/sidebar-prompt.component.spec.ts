@@ -15,7 +15,7 @@ import {
   CookieOptionsProvider,
   COOKIE_OPTIONS,
   CookieModule,
-} from '@mindsorg/ngx-universal';
+} from '@gorniv/ngx-universal';
 import { ApiService } from '../../../common/api/api.service';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 

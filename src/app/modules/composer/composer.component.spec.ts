@@ -15,7 +15,7 @@ import {
   CookieOptionsProvider,
   COOKIE_OPTIONS,
   CookieModule,
-} from '@mindsorg/ngx-universal';
+} from '@gorniv/ngx-universal';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LivestreamService } from '../../modules/composer/services/livestream.service';
 

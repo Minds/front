@@ -32,7 +32,6 @@ import { EmailConfirmationService } from '../../../../../common/components/email
  * See it by selecting "transfer on-chain" in the wallet > tokens > meatball menu (next to wallet address)
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-walletOnchainTransfer',
   templateUrl: './onchain-transfer.component.html',
   styleUrls: ['./onchain-transfer.component.ng.scss'],
