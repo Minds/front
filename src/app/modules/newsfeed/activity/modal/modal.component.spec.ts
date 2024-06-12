@@ -193,10 +193,10 @@ describe('ActivityModalComponent', () => {
       showInteractions: true,
       canShowLargeCta: true,
       isModal: true,
-      fixedHeight: false,
       autoplayVideo: true,
       permalinkBelowContent: true,
     });
+
     expect((comp as any).relatedContent.setBaseEntity).toHaveBeenCalledOnceWith(
       mockParams.entity
     );
