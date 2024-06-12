@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
+import { FeedBoostCtaExperimentService } from '../../experiments/sub-services/feed-boost-cta-experiment.service';
 
 @Component({
   selector: 'm-discovery__feedItem',
@@ -15,11 +15,17 @@ export class DiscoveryFeedItemComponent {
   @Input() openComments: boolean = false;
   readonly cdnUrl: string;
 
+  /** Whether feed boost cta experiment is active. */
+  protected isFeedBoostCtaExperimentActive: boolean = false;
+
   constructor(
+    private feedBoostCtaExperimentService: FeedBoostCtaExperimentService,
     private configs: ConfigsService,
     private cd: ChangeDetectorRef
   ) {
     this.cdnUrl = configs.get('cdn_url');
+    this.isFeedBoostCtaExperimentActive =
+      this.feedBoostCtaExperimentService.isActive();
   }
 
   onDelete(activity): void {

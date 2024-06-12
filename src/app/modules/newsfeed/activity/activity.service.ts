@@ -52,6 +52,7 @@ export type ActivityDisplayOptions = {
   showToolbarButtonsRow: boolean; // (Assuming showToolbar is true), set this to false if you only want to see boost CTA/supermind buttons
   showExplicitVoteButtons: boolean; // Display thumb buttons on own row with "see more/less of this" text
   showInteractions: boolean;
+  canShowLargeCta: boolean; // Show large CTA buttons if appropriate (boost, supermind, etc.)
   showEditedTag: boolean;
   showVisibilityState: boolean;
   showTranslation: boolean;
@@ -463,6 +464,7 @@ export class ActivityService implements OnDestroy {
     showToolbarButtonsRow: true,
     showExplicitVoteButtons: false,
     showInteractions: false,
+    canShowLargeCta: false,
     showEditedTag: false,
     showVisibilityState: false,
     showTranslation: false,

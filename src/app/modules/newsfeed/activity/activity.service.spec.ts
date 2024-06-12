@@ -316,6 +316,7 @@ describe('ActivityService', () => {
         showToolbarButtonsRow: true,
         showExplicitVoteButtons: false,
         showInteractions: false,
+        canShowLargeCta: false,
         showEditedTag: false,
         showVisibilityState: false,
         showTranslation: false,
