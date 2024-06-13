@@ -5,7 +5,6 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, switchMap, take, throttleTime } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import { Session } from '../../../../services/session';
 import { BoostConsoleAdminStatsService } from './admin-stats.service';
 import {
   Boost,
@@ -20,6 +19,7 @@ import {
   BoostState,
   BoostSuitability,
 } from '../../boost.types';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 /**
  * Service that handles logic for the boost console
@@ -75,10 +75,10 @@ export class BoostConsoleService {
     new BehaviorSubject<string>(null);
 
   constructor(
-    public session: Session,
     private api: ApiService,
     private toasterService: ToasterService,
     private adminStats: BoostConsoleAdminStatsService,
+    private permissionsService: PermissionsService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -137,7 +137,7 @@ export class BoostConsoleService {
         }
         // -------------------------------------------
         // FILTERS FOR ADMINS ONLY
-        if (this.session.isAdmin()) {
+        if (this.permissionsService.canModerateContent()) {
           if (adminContext) {
             params.status = BoostState.PENDING;
 
@@ -178,8 +178,8 @@ export class BoostConsoleService {
    * @param boost
    */
   async approve(boost: Boost): Promise<void> {
-    if (!this.session.isAdmin()) {
-      console.log('Only admins can approve boosts');
+    if (!this.permissionsService.canModerateContent()) {
+      console.log('You do not have permissions to approve boosts');
       return;
     }
 
@@ -202,8 +202,8 @@ export class BoostConsoleService {
    * @return Observable<ApiResponse>
    */
   public reject(boost: Boost): Observable<ApiResponse> {
-    if (!this.session.isAdmin()) {
-      console.log('Only admins can reject boosts');
+    if (!this.permissionsService.canModerateContent()) {
+      console.log('You do not have permission to reject boosts');
       return;
     }
 

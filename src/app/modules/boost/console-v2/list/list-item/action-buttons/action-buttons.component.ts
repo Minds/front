@@ -36,10 +36,6 @@ export class BoostConsoleActionButtonsComponent {
    * @returns { Promise<void> }
    */
   async onApprove(e: MouseEvent): Promise<void> {
-    if (!this.session.isAdmin()) {
-      return;
-    }
-
     this.approving = true;
     const promise = this.service.approve(this.boost);
 
@@ -54,10 +50,6 @@ export class BoostConsoleActionButtonsComponent {
    * @returns { void }
    */
   public onReject(e: MouseEvent): void {
-    if (!this.session.isAdmin()) {
-      return;
-    }
-
     this.boostRejectionModal.open(this.boost);
   }
 
