@@ -78,13 +78,12 @@
           <input type="text" id="hostname" formControlName="hostname" />
         </div>
       </div>
-      <div class="m-form__row--validation">
-        <p
-          *ngIf="formGroup.controls.hostname.errors?.invalidUrl"
-          i18n="@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__INVALID_DOMAIN"
-        >
-          This is an invalid domain name
-        </p>
+      <div
+        *ngIf="hostNameErrorText$ | async as hostNameErrorText"
+        class="m-form__row--validation"
+        [@growShrink]
+      >
+        <p>{{ hostNameErrorText }}</p>
       </div>
     </div>
   </form>
