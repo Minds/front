@@ -1,5 +1,7 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
+import { Session } from '../../../services/session';
 
 /** Toggle state for chatwoot widget. */
 export type ChatwootToggleState = 'close' | 'open' | null;
@@ -10,8 +12,10 @@ export type ChatwootToggleState = 'close' | 'open' | null;
 @Injectable({ providedIn: 'root' })
 export class ChatwootWidgetService {
   constructor(
+    private session: Session,
     @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
   /**
@@ -19,7 +23,7 @@ export class ChatwootWidgetService {
    * @returns { void }
    */
   public popoutChatWindow(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && this.canUseChatwoot()) {
       (this.document.defaultView as any).$chatwoot?.popoutChatWindow();
     }
   }
@@ -30,7 +34,7 @@ export class ChatwootWidgetService {
    * @returns { void }
    */
   public toggleChatWindow(toggleState: ChatwootToggleState = null): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && this.canUseChatwoot()) {
       (this.document.defaultView as any).$chatwoot?.toggle(toggleState);
     }
   }
@@ -56,7 +60,7 @@ export class ChatwootWidgetService {
    * @returns { void }
    */
   public showBubble(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && this.canUseChatwoot()) {
       try {
         (this.document.defaultView as any).$chatwoot?.toggleBubbleVisibility(
           'show'
@@ -65,5 +69,13 @@ export class ChatwootWidgetService {
         console.error(e);
       }
     }
+  }
+
+  /**
+   * Whether chatwoot can be used by the user.
+   * @returns { boolean } - true if chatwoot can be used, false otherwise.
+   */
+  public canUseChatwoot(): boolean {
+    return !this.isTenantNetwork || this.session.isAdmin();
   }
 }
