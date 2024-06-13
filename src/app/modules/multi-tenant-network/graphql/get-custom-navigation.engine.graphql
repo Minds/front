@@ -8,6 +8,7 @@ query getNavigationItems {
     order
     url
     visible
+    visibleMobile
     path
   }
 }

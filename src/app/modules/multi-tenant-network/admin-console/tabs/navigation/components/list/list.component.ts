@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MultiTenantNavigationService } from './../../services/navigation.service';
+import {
+  DisabledNavigationItems,
+  MultiTenantNavigationService,
+} from './../../services/navigation.service';
 import { Session } from '../../../../../../../services/session';
 import { MindsUser } from '../../../../../../../interfaces/entities';
 import { ConfigsService } from '../../../../../../../common/services/configs.service';
@@ -42,6 +45,14 @@ export class NetworkAdminConsoleNavigationListComponent implements OnInit {
   protected channelAvatarUrl: string;
 
   public form: FormGroup;
+
+  /** Navigation items that are disabled on web. */
+  protected disabledWebItems: DisabledNavigationItems =
+    this.service.disabledWebItems;
+
+  /** Navigation items that are disabled on mobile. */
+  protected disabledMobileItems: DisabledNavigationItems =
+    this.service.disabledMobileItems;
 
   constructor(
     protected service: MultiTenantNavigationService,
@@ -164,6 +175,37 @@ export class NetworkAdminConsoleNavigationListComponent implements OnInit {
         },
         error: (error) => {
           toggleVisibility();
+        },
+      })
+    );
+  }
+
+  /**
+   * Called when an item's visibility on mobile devices toggle is clicked
+   * @param { number } index - The index of the item.
+   * @returns { void }
+   */
+  protected toggleVisibilityMobile(index: number): void {
+    const item = this.navigationItemsFormArray.at(index);
+
+    const updateToggleState = () => {
+      item.get('visibleMobile').setValue(!item.get('visibleMobile').value);
+    };
+
+    // Optimistically toggle in anticipation of a successful save
+    updateToggleState();
+
+    this.subscriptions.push(
+      this.service.upsertNavigationItem(item.value).subscribe({
+        next: (success) => {
+          if (!success) {
+            console.warn('Failed to save navigation item.');
+            // Undo the optimistic toggle in case of failure
+            updateToggleState();
+          }
+        },
+        error: (error) => {
+          updateToggleState();
         },
       })
     );

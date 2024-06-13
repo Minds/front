@@ -3,6 +3,7 @@ mutation upsertNavigationItem(
   $name: String!
   $type: NavigationItemTypeEnum!
   $visible: Boolean!
+  $visibleMobile: Boolean!
   $iconId: String!
   $order: Int!
   $path: String
@@ -14,6 +15,7 @@ mutation upsertNavigationItem(
     name: $name
     type: $type
     visible: $visible
+    visibleMobile: $visibleMobile
     iconId: $iconId
     order: $order
     path: $path
