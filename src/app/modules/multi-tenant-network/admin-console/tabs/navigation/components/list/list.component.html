@@ -43,10 +43,38 @@
             <div class="m-networkAdminConsoleNavigationListItem__cell--type">
               <h4 i18n="@@COMMON__TYPE">Type</h4>
             </div>
-            <div class="m-networkAdminConsoleNavigationListItem__cell--toggle">
-              <h4 i18n="@@NETWORK_ADMIN_CONSOLE_NAVIGATION__LIST__VISIBLE">
-                Visible
-              </h4>
+            <div
+              class="m-networkAdminConsoleNavigationListItem__cell--toggle m-networkAdminConsoleNavigationListItem__cell--multiLineHeaderContainer"
+            >
+              <div
+                class="m-networkAdminConsoleNavigationListItem__cell--multiLineHeaderBox"
+              >
+                <h4 i18n="@@NETWORK_ADMIN_CONSOLE_NAVIGATION__LIST__VISIBLE">
+                  Visible
+                </h4>
+                <span
+                  class="m-networkAdminConsoleNavigationListItem__cell--subHeader"
+                  i18n="@@NETWORK_ADMIN_CONSOLE_NAVIGATION__LIST__WEB_PLATFORM"
+                  >Web</span
+                >
+              </div>
+            </div>
+            <div
+              class="m-networkAdminConsoleNavigationListItem__cell--toggle m-networkAdminConsoleNavigationListItem__cell--multiLineHeaderContainer"
+            >
+              <div
+                class="m-networkAdminConsoleNavigationListItem__cell--multiLineHeaderBox"
+              >
+                <h4 i18n="@@NETWORK_ADMIN_CONSOLE_NAVIGATION__LIST__VISIBLE">
+                  Visible
+                </h4>
+                <span
+                  class="m-networkAdminConsoleNavigationListItem__cell--subHeader"
+                  i18n="
+                    @@NETWORK_ADMIN_CONSOLE_NAVIGATION__LIST__MOBILE_PLATFORM"
+                  >Mobile</span
+                >
+              </div>
             </div>
             <div
               class="m-networkAdminConsoleNavigationListItem__cell--actions"
@@ -91,11 +119,56 @@
                 </div>
                 <div
                   class="m-networkAdminConsoleNavigationListItem__cell--toggle"
+                  *ngIf="{
+                    isDisabled: disabledWebItems[item.id] !== undefined,
+                    disabledDefaultState:
+                      disabledWebItems[item.id]?.defaultState ?? null
+                  } as toggleVars"
                 >
                   <m-toggle
-                    [mModel]="item.visible ? 'on' : 'off'"
+                    [mModel]="
+                      toggleVars.isDisabled
+                        ? toggleVars.disabledDefaultState
+                          ? 'on'
+                          : 'off'
+                        : item.visible
+                          ? 'on'
+                          : 'off'
+                    "
                     (mModelChange)="toggleVisibility(i)"
-                    [disabled]="service.savingNavigationItem$ | async"
+                    [disabled]="
+                      toggleVars.isDisabled ||
+                      (service.savingNavigationItem$ | async)
+                    "
+                    leftValue="off"
+                    rightValue="on"
+                    offState="off"
+                  >
+                  </m-toggle>
+                </div>
+                <div
+                  class="m-networkAdminConsoleNavigationListItem__cell--toggle"
+                  *ngIf="{
+                    isDisabled: disabledMobileItems[item.id] !== undefined,
+                    disabledDefaultState:
+                      disabledMobileItems[item.id]?.defaultState ?? null
+                  } as toggleVars"
+                >
+                  <m-toggle
+                    [mModel]="
+                      toggleVars.isDisabled
+                        ? toggleVars.disabledDefaultState
+                          ? 'on'
+                          : 'off'
+                        : item.visibleMobile
+                          ? 'on'
+                          : 'off'
+                    "
+                    (mModelChange)="toggleVisibilityMobile(i)"
+                    [disabled]="
+                      toggleVars.isDisabled ||
+                      (service.savingNavigationItem$ | async)
+                    "
                     leftValue="off"
                     rightValue="on"
                     offState="off"
