@@ -184,6 +184,7 @@ export type AnalyticsTableRowUserNode = AnalyticsTableRowNodeInterface &
 export enum ApiScopeEnum {
   All = 'ALL',
   SiteMembershipWrite = 'SITE_MEMBERSHIP_WRITE',
+  TenantCreateTrial = 'TENANT_CREATE_TRIAL',
 }
 
 export type AppReadyMobileConfig = {
@@ -1036,6 +1037,7 @@ export type Mutation = {
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+  /** Update chat room name. */
   updateChatRoomName: Scalars['Boolean']['output'];
   /** Updates the order of the navigation items */
   updateCustomNavigationItemsOrder: Array<NavigationItem>;
@@ -1303,6 +1305,7 @@ export type MutationUpsertCustomNavigationItemArgs = {
   type: NavigationItemTypeEnum;
   url?: InputMaybe<Scalars['String']['input']>;
   visible: Scalars['Boolean']['input'];
+  visibleMobile: Scalars['Boolean']['input'];
 };
 
 export type NavigationItem = {
@@ -1316,6 +1319,7 @@ export type NavigationItem = {
   type: NavigationItemTypeEnum;
   url?: Maybe<Scalars['String']['output']>;
   visible: Scalars['Boolean']['output'];
+  visibleMobile: Scalars['Boolean']['output'];
 };
 
 export enum NavigationItemActionEnum {
@@ -3910,6 +3914,7 @@ export type GetNavigationItemsQuery = {
     order: number;
     url?: string | null;
     visible: boolean;
+    visibleMobile: boolean;
     path?: string | null;
   }>;
 };
@@ -4171,6 +4176,7 @@ export type UpsertNavigationItemMutationVariables = Exact<{
   name: Scalars['String']['input'];
   type: NavigationItemTypeEnum;
   visible: Scalars['Boolean']['input'];
+  visibleMobile: Scalars['Boolean']['input'];
   iconId: Scalars['String']['input'];
   order: Scalars['Int']['input'];
   path?: InputMaybe<Scalars['String']['input']>;
@@ -9536,6 +9542,7 @@ export const GetNavigationItemsDocument = gql`
       order
       url
       visible
+      visibleMobile
       path
     }
   }
@@ -9949,6 +9956,7 @@ export const UpsertNavigationItemDocument = gql`
     $name: String!
     $type: NavigationItemTypeEnum!
     $visible: Boolean!
+    $visibleMobile: Boolean!
     $iconId: String!
     $order: Int!
     $path: String
@@ -9960,6 +9968,7 @@ export const UpsertNavigationItemDocument = gql`
       name: $name
       type: $type
       visible: $visible
+      visibleMobile: $visibleMobile
       iconId: $iconId
       order: $order
       path: $path

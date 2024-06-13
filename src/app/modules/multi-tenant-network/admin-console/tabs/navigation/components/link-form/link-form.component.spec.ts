@@ -40,6 +40,7 @@ describe('NetworkAdminConsoleNavigationLinkFormComponent', () => {
     path: '/newsfeed',
     type: NavigationItemTypeEnum.Core,
     visible: true,
+    visibleMobile: true,
   };
 
   const mockCustomNavigationItem = {
@@ -50,6 +51,7 @@ describe('NetworkAdminConsoleNavigationLinkFormComponent', () => {
     url: 'https://www.pets.com',
     type: NavigationItemTypeEnum.CustomLink,
     visible: true,
+    visibleMobile: true,
   };
 
   class MockModalRef {

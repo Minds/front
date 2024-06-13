@@ -187,6 +187,7 @@ export class NetworkAdminConsoleNavigationLinkFormComponent
             : null,
         type: this.itemType,
         visible: this.navigationItem?.visible ?? true,
+        visibleMobile: this.navigationItem?.visibleMobile ?? true,
         order: this.navigationItem?.order ?? 500,
       };
 

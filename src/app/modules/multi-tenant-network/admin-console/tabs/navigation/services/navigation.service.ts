@@ -29,6 +29,12 @@ import { ToasterService } from '../../../../../../common/services/toaster.servic
 import { ModalService } from '../../../../../../services/ux/modal.service';
 import { ConfirmV2Component } from '../../../../../modals/confirm-v2/confirm.component';
 
+/** Holds disabled state for a navigation item. */
+export type DisabledNavigationItem = { defaultState: boolean };
+
+/** ID mapped to disabled state */
+export type DisabledNavigationItems = { [key: string]: DisabledNavigationItem };
+
 /**
  * Service for management of custom navigation items
  */
@@ -41,6 +47,18 @@ export class MultiTenantNavigationService implements OnDestroy {
     new BehaviorSubject<boolean>(false);
 
   private subscriptions: Subscription[] = [];
+
+  /** Navigation items that are disabled on mobile. */
+  public readonly disabledMobileItems: DisabledNavigationItems = {
+    boost: { defaultState: false },
+    admin: { defaultState: false },
+    memberships: { defaultState: false },
+  };
+
+  /** Navigation items that are disabled on web. */
+  public readonly disabledWebItems: DisabledNavigationItems = {
+    admin: { defaultState: true },
+  };
 
   constructor(
     private getNavigationItemsGQL: GetNavigationItemsGQL,
