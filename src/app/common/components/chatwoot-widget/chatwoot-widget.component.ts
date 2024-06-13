@@ -11,13 +11,14 @@ import { lastValueFrom, Subscription } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { ApiService } from '../../api/api.service';
-import { CDN_ASSETS_URL } from '../../injection-tokens/url-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
 import {
   ChatwootHmacGetResponse,
   ChatwootMindsConfig,
 } from './chatwoot-widget.types';
+import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
+import { ChatwootWidgetService } from './chatwoot-widget.service';
 
 /**
  * Chatwoot widget - injects a script into the DOM that loads the widget.
@@ -41,26 +42,44 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
   /** subscription to login and logout states */
   private loggedInSubscription: Subscription;
 
+  /** subscription to login and logout states handling chatwoot init. */
+  private loggedInInitSubscription: Subscription;
+
   constructor(
     private session: Session,
     private api: ApiService,
     private config: ConfigsService,
     private userAvatar: UserAvatarService,
+    private service: ChatwootWidgetService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    @Inject(CDN_ASSETS_URL) private cdnAssetsUrl: string
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {
     const chatwootConfig: ChatwootMindsConfig =
       this.config.get<ChatwootMindsConfig>('chatwoot');
     this.websiteToken = chatwootConfig.website_token;
     this.baseUrl = chatwootConfig.base_url;
-    this.scriptUrl = this.cdnAssetsUrl + 'assets/scripts/chatwoot.js';
+    this.scriptUrl = '/static/en/assets/scripts/chatwoot.js';
   }
 
   ngOnInit(): void {
     if (isPlatformServer(this.platformId)) {
       return;
     }
-    this.initChatwoot();
+
+    if (this.service.canUseChatwoot()) {
+      this.initChatwoot();
+    } else {
+      this.loggedInInitSubscription = this.session.loggedinEmitter.subscribe(
+        (loggedIn: boolean): void => {
+          if (
+            this.service.canUseChatwoot() &&
+            (!(window as any).$chatwoot || !(window as any).$chatwoot?.isLoaded)
+          ) {
+            this.initChatwoot();
+          }
+        }
+      );
+    }
   }
 
   ngOnDestroy(): void {
@@ -69,6 +88,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     }
     this.resetChatwoot();
     this.loggedInSubscription?.unsubscribe();
+    this.loggedInInitSubscription?.unsubscribe();
   }
 
   /**
@@ -112,18 +132,19 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
       baseUrl: this.baseUrl,
     });
 
-    // if logged in, set the user async.
-    if (this.session.isLoggedIn()) {
-      this.setUser();
-    } else {
-      // if logged out, reset chatwoot to ensure there is no lingering state.
-      this.resetChatwoot();
-    }
-
-    this.initLoginStateSubscription();
-
     window.addEventListener('chatwoot:error', function (e) {
       console.error(e);
+    });
+
+    window.addEventListener('chatwoot:ready', (ready) => {
+      if (this.session.isLoggedIn()) {
+        this.setUser();
+      } else {
+        // if logged out, reset chatwoot to ensure there is no lingering state.
+        this.resetChatwoot();
+      }
+
+      this.initLoginStateSubscription();
     });
   }
 
@@ -183,6 +204,14 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     }
     this.loggedInSubscription = this.session.loggedinEmitter.subscribe(
       (loggedIn: boolean): void => {
+        if (this.isTenantNetwork) {
+          if (loggedIn && this.service.canUseChatwoot()) {
+            this.service.showBubble();
+          } else {
+            this.service.hideBubble();
+          }
+        }
+
         if (loggedIn) {
           this.setUser();
           return;
