@@ -185,7 +185,7 @@ export class NetworkAdminConsoleEditDomainModalComponent {
       } else if (errors.mindsDomain) {
         return $localize`:@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__USE_OWN_DOMAIN:Please use your own domain.`;
       } else if (errors.invalidSubdomain) {
-        return $localize`:@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__PLEASE_USE_SUBDOMAIN:Top level domains require a business plan and custom configuration. Please use a subdomain at this time.`;
+        return $localize`:@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__PLEASE_USE_SUBDOMAIN:Root (Apex) domains require a business plan and custom configuration. Please use a subdomain at this time.`;
       }
     }
 

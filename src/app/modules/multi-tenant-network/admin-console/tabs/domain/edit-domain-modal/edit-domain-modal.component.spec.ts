@@ -208,7 +208,7 @@ describe('NetworkAdminConsoleEditDomainModalComponent', () => {
       invalidSubdomain: true,
     });
     expect((component as any).getFirstFormErrorText()).toBe(
-      'Top level domains require a business plan and custom configuration. Please use a subdomain at this time.'
+      'Root (Apex) domains require a business plan and custom configuration. Please use a subdomain at this time.'
     );
 
     hostnameControl.setValue('minds.com/123');
