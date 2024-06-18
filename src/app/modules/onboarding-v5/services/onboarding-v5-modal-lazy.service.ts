@@ -109,7 +109,8 @@ export class OnboardingV5ModalLazyService {
         ) {
           return;
         }
-        setTimeout(() => this.siteMembershipsPageModal.open(), 800);
+        // TODO: Uncomment following the resolution of https://gitlab.com/minds/minds/-/issues/4857
+        // setTimeout(() => this.siteMembershipsPageModal.open(), 800);
       }
     }
   }
