@@ -91,9 +91,9 @@ export class PaymentsSelectCard {
         this.selected.next(this.paymentMethodId);
       } else if (paymentmethods && paymentmethods.length) {
         // else set the payment method to the first non-gift card payment method.
-        for (const paymentmethod of paymentmethods) {
-          if (paymentmethod.id !== 'gift_card') {
-            this.paymentMethodId = paymentmethod.id;
+        for (const paymentMethod of paymentmethods) {
+          if (paymentMethod.id !== 'gift_card') {
+            this.paymentMethodId = paymentMethod.id;
             this.selected.next(this.paymentMethodId);
             break;
           }
