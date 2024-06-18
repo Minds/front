@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,9 +7,15 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
-import { ToasterService } from '../../../../../../common/services/toaster.service';
+import {
+  BehaviorSubject,
+  Observable,
+  debounceTime,
+  lastValueFrom,
+  map,
+} from 'rxjs';
 import { MultiTenantDomainService } from '../../../../services/domain.service';
+import { GrowShrinkFast } from '../../../../../../animations';
 
 /**
  * Modal for editing the domain of a tenant site
@@ -18,6 +24,7 @@ import { MultiTenantDomainService } from '../../../../services/domain.service';
   selector: 'm-networkAdminConsole__editDomainModal',
   templateUrl: './edit-domain-modal.component.html',
   styleUrls: ['./edit-domain-modal.component.ng.scss'],
+  animations: [GrowShrinkFast],
 })
 export class NetworkAdminConsoleEditDomainModalComponent {
   /**
@@ -32,6 +39,9 @@ export class NetworkAdminConsoleEditDomainModalComponent {
   public savingInProgress$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
+  /** Error text for hostname form control. */
+  protected hostNameErrorText$: Observable<string>;
+
   /**
    * If the changes were saved
    */
@@ -44,9 +54,18 @@ export class NetworkAdminConsoleEditDomainModalComponent {
     this.formGroup = this.formBuilder.group({
       hostname: new FormControl<string>('', [
         Validators.required,
+        this.notMindsDomainValidator,
+        this.includesSubdomainValidator,
         this.urlValidator,
       ]),
     });
+
+    /** Error text, debounced to be set when no events have been fired for the specified timespan. */
+    this.hostNameErrorText$ =
+      this.formGroup.controls.hostname.valueChanges.pipe(
+        debounceTime(400),
+        map((val: any): string => this.getFirstFormErrorText())
+      );
   }
 
   /**
@@ -84,9 +103,10 @@ export class NetworkAdminConsoleEditDomainModalComponent {
 
   /**
    * Match a valid URL without requiring http or https
-   * @param control
+   * @param { AbstractControl } control - The control to validate.
+   * @returns { ValidationErrors | null } - The validation error or null if valid.
    */
-  urlValidator(control: AbstractControl): ValidationErrors | null {
+  private urlValidator(control: AbstractControl): ValidationErrors | null {
     if (!control.value) {
       // Return null for empty values (no validation error)
       return null;
@@ -103,6 +123,72 @@ export class NetworkAdminConsoleEditDomainModalComponent {
     }
 
     // It's valid
+    return null;
+  }
+
+  /**
+   * Validates that a URL is 3 parts, seperated by periods.
+   * @param { AbstractControl } control - The control to validate.
+   * @returns { ValidationErrors | null } - The validation error or null if valid.
+   */
+  private includesSubdomainValidator(
+    control: AbstractControl
+  ): ValidationErrors | null {
+    if (!control.value) {
+      // Return null for empty values (no validation error)
+      return null;
+    }
+
+    if (!/^(\w+\.){2,}\w+$/i.test(control.value)) {
+      return {
+        invalidSubdomain: true,
+      };
+    }
+
+    // It's valid
+    return null;
+  }
+
+  /**
+   * Validates that a URL is not a Minds domain.
+   * @param { ValidationErrors } control - The control to validate.
+   * @returns { ValidationErrors | null } - The validation error or null if valid.
+   */
+  private notMindsDomainValidator(
+    control: AbstractControl
+  ): ValidationErrors | null {
+    if (!control.value) {
+      // Return null for empty values (no validation error)
+      return null;
+    }
+
+    if (/(^|(\w+\.|^(http|https):\/\/))minds\.com/i.test(control.value)) {
+      return {
+        mindsDomain: true,
+      };
+    }
+
+    // It's valid
+    return null;
+  }
+
+  /**
+   * Gets the first form error's text. This exists because we only want to show one error at a time.
+   * @returns { string } - The error text.
+   */
+  private getFirstFormErrorText(): string {
+    const errors: ValidationErrors = this.formGroup.controls.hostname.errors;
+
+    if (errors) {
+      if (errors.invalidUrl) {
+        return $localize`:@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__INVALID_DOMAIN:This is an invalid domain name.`;
+      } else if (errors.mindsDomain) {
+        return $localize`:@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__USE_OWN_DOMAIN:Please use your own domain.`;
+      } else if (errors.invalidSubdomain) {
+        return $localize`:@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__PLEASE_USE_SUBDOMAIN:Root (Apex) domains require a business plan and custom configuration. Please use a subdomain at this time.`;
+      }
+    }
+
     return null;
   }
 
