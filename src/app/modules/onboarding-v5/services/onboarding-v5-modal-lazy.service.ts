@@ -103,13 +103,13 @@ export class OnboardingV5ModalLazyService {
       } else if (this.isTenantNetwork) {
         // Don't open the modal if user onboarded from a
         // membership join page
-        if (
-          this.urlOnOpen.startsWith('/memberships/join') ||
-          this.membershipCheckoutRedirect
-        ) {
-          return;
-        }
         // TODO: Uncomment following the resolution of https://gitlab.com/minds/minds/-/issues/4857
+        // if (
+        //   this.urlOnOpen.startsWith('/memberships/join') ||
+        //   this.membershipCheckoutRedirect
+        // ) {
+        //   return;
+        // }
         // setTimeout(() => this.siteMembershipsPageModal.open(), 800);
       }
     }
