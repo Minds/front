@@ -18,6 +18,7 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { TooltipComponentMock } from '../../../mocks/common/components/tooltip/tooltip.component';
 import { ThemeService } from '../../services/theme.service';
 import { themeServiceMock } from '../../../mocks/common/services/theme.service-mock.spec';
+import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 
 describe('ChannelBadgesComponent', () => {
   let comp: ChannelBadgesComponent;
@@ -36,6 +37,7 @@ describe('ChannelBadgesComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: ThemeService, useValue: themeServiceMock },
+        { provide: IS_TENANT_NETWORK, useValue: false },
       ],
     }).compileComponents();
   }));
@@ -102,7 +104,11 @@ describe('ChannelBadgesComponent', () => {
     expect(badge.nativeElement.textContent).toContain('Admin');
   });
 
-  it('should show the founder badge only if the user is a founder', () => {
+  it('should show the founder badge only if the user is a founder on a non-tenant network', () => {
+    Object.defineProperty(comp, 'isTenantNetwork', {
+      writable: true,
+      value: false,
+    });
     sessionMock.user.admin = false;
     sessionMock.user.founder = false;
 
@@ -122,6 +128,31 @@ describe('ChannelBadgesComponent', () => {
 
     expect(badge).not.toBeNull();
     expect(badge.nativeElement.textContent).toContain('Founder');
+  });
+
+  it('should NOT show the founder badge if the user is on a tenant network', () => {
+    Object.defineProperty(comp, 'isTenantNetwork', {
+      writable: true,
+      value: true,
+    });
+    sessionMock.user.admin = false;
+    sessionMock.user.founder = false;
+
+    comp.user = sessionMock.user;
+    comp.badges = ['founder'];
+    fixture.detectChanges();
+
+    let badge = getCurrentBadge();
+    expect(badge).toBeNull();
+
+    sessionMock.user.founder = true;
+    comp.user = sessionMock.user;
+
+    fixture.detectChanges();
+
+    badge = getCurrentBadge();
+
+    expect(badge).toBeNull();
   });
 
   it('should show the founder badge for admins and also let them modify the status', fakeAsync(() => {
@@ -165,7 +196,11 @@ describe('ChannelBadgesComponent', () => {
     expect(clientMock.delete).toHaveBeenCalled();
   }));
 
-  it('should show the verified badge only if the user is verified and not an admin, or if the logged in user is an admin', fakeAsync(() => {
+  it('should show the verified badge only if the user is verified and not an admin, or if the logged in user is an admin, on a non-tenant network', fakeAsync(() => {
+    Object.defineProperty(comp, 'isTenantNetwork', {
+      writable: true,
+      value: false,
+    });
     sessionMock.user.admin = false;
     sessionMock.user.is_admin = false;
     sessionMock.user.verified = false;
@@ -207,6 +242,24 @@ describe('ChannelBadgesComponent', () => {
 
     badge = getCurrentBadge();
 
+    expect(badge).toBeNull();
+  }));
+
+  it('should NOT show the verified badge on a tenant network', fakeAsync(() => {
+    Object.defineProperty(comp, 'isTenantNetwork', {
+      writable: true,
+      value: true,
+    });
+    comp.user = sessionMock.user;
+
+    comp.user.admin = true;
+    comp.user.is_admin = true;
+    comp.user.verified = true;
+
+    comp.badges = ['verified'];
+    fixture.detectChanges();
+
+    let badge = getCurrentBadge();
     expect(badge).toBeNull();
   }));
 });

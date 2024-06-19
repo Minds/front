@@ -1,12 +1,10 @@
-//
-
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ThemeService } from '../../services/theme.service';
 import { Subscription } from 'rxjs';
+import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 
 export interface SocialProfileMeta {
   key: string;
@@ -55,7 +53,8 @@ export class ChannelBadgesComponent {
     public session: Session,
     private client: Client,
     private router: Router,
-    protected themeService: ThemeService
+    protected themeService: ThemeService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
   ngOnInit(): void {
@@ -69,7 +68,7 @@ export class ChannelBadgesComponent {
   }
 
   showVerifiedBadge() {
-    if (this.badges.indexOf('verified') === -1) {
+    if (this.badges.indexOf('verified') === -1 || this.isTenantNetwork) {
       return false;
     }
 
@@ -100,6 +99,7 @@ export class ChannelBadgesComponent {
 
   showFounderBadge(): boolean {
     return (
+      !this.isTenantNetwork &&
       this.user.founder &&
       !this.session.isAdmin() &&
       this.badges.indexOf('founder') > -1
@@ -134,7 +134,11 @@ export class ChannelBadgesComponent {
    * Admins only
    */
   showFounderSwitch(): boolean {
-    return this.session.isAdmin() && this.badges.indexOf('founder') > -1;
+    return (
+      !this.isTenantNetwork &&
+      this.session.isAdmin() &&
+      this.badges.indexOf('founder') > -1
+    );
   }
 
   /**
