@@ -78,18 +78,26 @@ export class PaymentsSelectCard {
       paymentmethods.filter((paymentmethod: PaymentMethod) => {
         return (
           paymentmethod.id === 'gift_card' &&
-          paymentmethod.balance > this.paymentTotal
+          paymentmethod.balance >= this.paymentTotal
         );
       }).length > 0;
 
     if (enoughCredits) {
+      // if user has enough Boost credits, select gift card payment.
       this.selected.next((this.paymentMethodId = 'gift_card'));
     } else {
       if (this.paymentMethodId && this.paymentMethodId !== 'gift_card') {
+        // if user has a selected payment method already, select it.
         this.selected.next(this.paymentMethodId);
       } else if (paymentmethods && paymentmethods.length) {
-        this.paymentMethodId = paymentmethods[1]?.id;
-        this.selected.next(this.paymentMethodId);
+        // else set the payment method to the first non-gift card payment method.
+        for (const paymentMethod of paymentmethods) {
+          if (paymentMethod.id !== 'gift_card') {
+            this.paymentMethodId = paymentMethod.id;
+            this.selected.next(this.paymentMethodId);
+            break;
+          }
+        }
       }
     }
     this.inProgress = false;
