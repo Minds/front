@@ -9,11 +9,20 @@
   }
 
   .m-networkAdminConsole__subtitle {
-    margin: $spacing1 0 $spacing8 0;
+    margin: $spacing1 0 $spacing4 0;
 
     @include body2Medium;
     @include m-theme() {
       color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-networkAdminAppearance__setupLink {
+    margin: $spacing2 0 $spacing10;
+
+    @include body2Bold;
+    @include m-theme() {
+      color: themed($m-action);
     }
   }
 

@@ -85,10 +85,9 @@
   }
 
   .m-networkAdminDomainInstructions__link {
-    display: inline-block;
-    @include body1Bold;
     margin: $spacing2 0 $spacing6;
 
+    @include body2Bold;
     @include m-theme() {
       color: themed($m-action);
     }

@@ -8,4 +8,14 @@
     margin-right: $spacing8;
     margin-left: $spacing8;
   }
+
+  .m-networkAdminMobile__setupLink {
+    display: block;
+    margin-bottom: $spacing10;
+
+    @include body2Bold;
+    @include m-theme() {
+      color: themed($m-action);
+    }
+  }
 }
