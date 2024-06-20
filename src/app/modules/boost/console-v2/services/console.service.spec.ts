@@ -8,11 +8,12 @@ import {
 import { BoostPaymentCategory } from '../../modal-v2/boost-modal-v2.types';
 import { BoostConsoleService } from './console.service';
 
-let sessionMock = new (function () {
-  this.isAdmin = jasmine.createSpy('isAdmin');
+let permissionsServiceMock = new (function () {
+  this.canModerateContent = jasmine.createSpy('canModerateContent');
 })();
 
 let apiMock = new (function () {
+  this.get = jasmine.createSpy('get');
   this.post = jasmine.createSpy('post');
 })();
 
@@ -60,19 +61,21 @@ describe('BoostConsoleService', () => {
     jasmine.clock().install();
 
     service = new BoostConsoleService(
-      sessionMock,
       apiMock,
       toasterMock,
       adminStatsMock,
+      permissionsServiceMock,
       routerMock,
       routeMock
     );
 
     (service as any).toasterService.error.calls.reset();
-    (service as any).session.isAdmin.calls.reset();
     (service as any).api.post.calls.reset();
-
-    (service as any).session.isAdmin.and.returnValue(false);
+    (service as any).api.get.calls.reset();
+    (service as any).permissionsService.canModerateContent.calls.reset();
+    (service as any).permissionsService.canModerateContent.and.returnValue(
+      false
+    );
 
     (service as any).adminStats.decrementPendingSafeCount.calls.reset();
     (
@@ -92,7 +95,9 @@ describe('BoostConsoleService', () => {
 
   it('should approve and decrement admin stat count for safe boosts', async () => {
     service.suitabilityFilterValue$.next('safe');
-    (service as any).session.isAdmin.and.returnValue(true);
+    (service as any).permissionsService.canModerateContent.and.returnValue(
+      true
+    );
     (service as any).api.post.and.returnValue(of({}));
 
     await service.approve(mockBoost);
@@ -104,7 +109,9 @@ describe('BoostConsoleService', () => {
 
   it('should approve and decrement admin stat count for controversial boosts', async () => {
     service.suitabilityFilterValue$.next('controversial');
-    (service as any).session.isAdmin.and.returnValue(true);
+    (service as any).permissionsService.canModerateContent.and.returnValue(
+      true
+    );
     (service as any).api.post.and.returnValue(of({}));
 
     await service.approve(mockBoost);
@@ -116,7 +123,9 @@ describe('BoostConsoleService', () => {
 
   it('should reject and decrement admin stat count for safe boosts', async () => {
     service.suitabilityFilterValue$.next('safe');
-    (service as any).session.isAdmin.and.returnValue(true);
+    (service as any).permissionsService.canModerateContent.and.returnValue(
+      true
+    );
     (service as any).api.post.and.returnValue(of({}));
     let boost = mockBoost;
     boost.rejection_reason = 1;
@@ -133,7 +142,9 @@ describe('BoostConsoleService', () => {
 
   it('should reject and decrement admin stat count for controversial boosts', async () => {
     service.suitabilityFilterValue$.next('controversial');
-    (service as any).session.isAdmin.and.returnValue(true);
+    (service as any).permissionsService.canModerateContent.and.returnValue(
+      true
+    );
     (service as any).api.post.and.returnValue(of({}));
     let boost = mockBoost;
     boost.rejection_reason = 1;
@@ -146,5 +157,68 @@ describe('BoostConsoleService', () => {
         reason: boost.rejection_reason,
       }
     );
+  });
+
+  it('should get list for non admins', (done: DoneFn) => {
+    (service as any).adminContext$.next(false);
+    (service as any).permissionsService.canModerateContent.and.returnValue(
+      false
+    );
+    (service as any).api.get.and.returnValue(
+      of({
+        status: '200',
+        boosts: [mockBoost],
+      })
+    );
+
+    service.getList$().subscribe((result) => {
+      expect((service as any).api.get).toHaveBeenCalledWith('api/v3/boosts', {
+        limit: 12,
+        offset: 0,
+        location: 1,
+        status: null,
+        audience: null,
+        payment_method: null,
+        remote_user_guid: null,
+      });
+      expect(result).toEqual({
+        status: '200',
+        boosts: [mockBoost],
+      });
+      done();
+    });
+  });
+
+  it('should get list for admins', (done: DoneFn) => {
+    (service as any).adminContext$.next(true);
+    (service as any).permissionsService.canModerateContent.and.returnValue(
+      true
+    );
+    (service as any).api.get.and.returnValue(
+      of({
+        status: '200',
+        boosts: [mockBoost],
+      })
+    );
+
+    service.getList$().subscribe((result) => {
+      expect((service as any).api.get).toHaveBeenCalledWith(
+        'api/v3/boosts/admin',
+        {
+          limit: 12,
+          offset: 0,
+          location: 1,
+          status: 1,
+          audience: 1,
+          payment_method: null,
+          remote_user_guid: null,
+        }
+      );
+      expect(result).toEqual({
+        status: '200',
+        boosts: [mockBoost],
+      });
+      done();
+    });
   });
 });
