@@ -11,6 +11,7 @@
   <m-boostEmbedBuilder [@growShrink]></m-boostEmbedBuilder>
 
   <m-networkAdminConsole__createBoostLink
+    *ngIf="isCustomHomepageEnabled$ | async"
     [@growShrink]
   ></m-networkAdminConsole__createBoostLink>
 </ng-container>

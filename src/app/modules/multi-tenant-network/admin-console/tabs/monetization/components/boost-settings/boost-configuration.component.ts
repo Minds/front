@@ -34,6 +34,14 @@ export class NetworkAdminBoostConfigurationComponent {
       })
     );
 
+  /** Whether custom homepage is enabled. */
+  protected readonly isCustomHomepageEnabled$: Observable<boolean> =
+    this.multiTenantConfigService.config$.pipe(
+      map((config: MultiTenantConfig): boolean => {
+        return config?.customHomePageEnabled;
+      })
+    );
+
   constructor(
     private multiTenantConfigService: MultiTenantNetworkConfigService
   ) {}

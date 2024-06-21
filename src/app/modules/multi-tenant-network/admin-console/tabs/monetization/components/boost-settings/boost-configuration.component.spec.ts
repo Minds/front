@@ -63,6 +63,7 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
       (comp as any).multiTenantConfigService.config$.next({
         ...multiTenantConfigMock,
         boostEnabled: true,
+        customHomePageEnabled: true,
       });
       fixture.detectChanges();
 
@@ -80,12 +81,31 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
       (comp as any).multiTenantConfigService.config$.next({
         ...multiTenantConfigMock,
         boostEnabled: false,
+        customHomePageEnabled: true,
       });
       fixture.detectChanges();
 
       expect(
         fixture.nativeElement.querySelector('m-boostEmbedBuilder')
       ).toBeFalsy();
+      expect(
+        fixture.nativeElement.querySelector(
+          'm-networkAdminConsole__createBoostLink'
+        )
+      ).toBeFalsy();
+    });
+
+    it('should NOT render boost create link section when boosting is enabled but custom homepage is disabled', () => {
+      (comp as any).multiTenantConfigService.config$.next({
+        ...multiTenantConfigMock,
+        boostEnabled: true,
+        customHomePageEnabled: false,
+      });
+      fixture.detectChanges();
+
+      expect(
+        fixture.nativeElement.querySelector('m-boostEmbedBuilder')
+      ).toBeTruthy();
       expect(
         fixture.nativeElement.querySelector(
           'm-networkAdminConsole__createBoostLink'
