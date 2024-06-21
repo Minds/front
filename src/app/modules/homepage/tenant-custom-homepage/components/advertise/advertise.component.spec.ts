@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { AuthRedirectService } from '../../../../../common/services/auth-redirect.service';
 import { SITE_NAME } from '../../../../../common/injection-tokens/common-injection-tokens';
-import { ConfigsService } from '../../../../../common/services/configs.service';
 
 describe('TenantCustomHomepageAdvertiseComponent', () => {
   let comp: TenantCustomHomepageAdvertiseComponent;
@@ -27,7 +26,6 @@ describe('TenantCustomHomepageAdvertiseComponent', () => {
           useValue: MockService(AuthRedirectService),
         },
         { provide: SITE_NAME, useValue: 'Tenant' },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     });
 

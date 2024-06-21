@@ -13,6 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TenantCustomHomepageService } from '../../services/tenant-custom-homepage.service';
 import { ActivatedRoute } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 describe('TenantCustomHomepageBaseComponent', () => {
   let comp: TenantCustomHomepageBaseComponent;
@@ -84,6 +85,10 @@ describe('TenantCustomHomepageBaseComponent', () => {
           }),
         },
         {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+        {
           provide: PLATFORM_ID,
           useValue: 'browser',
         },
@@ -92,6 +97,11 @@ describe('TenantCustomHomepageBaseComponent', () => {
 
     fixture = TestBed.createComponent(TenantCustomHomepageBaseComponent);
     comp = fixture.componentInstance;
+
+    (comp as any).configs.get
+      .withArgs('tenant')
+      .and.returnValue({ boost_enabled: true });
+    (comp as any).boostEnabled = true;
 
     fixture.detectChanges();
     if (fixture.isStable()) {

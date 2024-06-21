@@ -2,6 +2,7 @@
 <m-tenant__featuredGroupCards></m-tenant__featuredGroupCards>
 <m-customTenantHomepage__memberships></m-customTenantHomepage__memberships>
 <m-customTenantHomepage__advertise
+  *ngIf="boostEnabled"
   #advertiseSection
 ></m-customTenantHomepage__advertise>
 <m-marketing__footer alignLegalSection="left"></m-marketing__footer>

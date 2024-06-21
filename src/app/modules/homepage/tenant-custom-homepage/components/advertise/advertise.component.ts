@@ -13,9 +13,6 @@ import { SITE_NAME } from '../../../../../common/injection-tokens/common-injecti
   styleUrls: ['advertise.component.ng.scss'],
 })
 export class TenantCustomHomepageAdvertiseComponent {
-  /** Whether boosting is enabled for the network. */
-  protected readonly boostEnabled: boolean;
-
   /** Section title (localized). */
   protected readonly title: string;
 
@@ -25,10 +22,8 @@ export class TenantCustomHomepageAdvertiseComponent {
   constructor(
     private router: Router,
     private authRedirectService: AuthRedirectService,
-    @Inject(SITE_NAME) protected readonly siteName: string,
-    configs: ConfigsService
+    @Inject(SITE_NAME) protected readonly siteName: string
   ) {
-    this.boostEnabled = configs.get('tenant')?.['boost_enabled'] ?? false;
     this.title = this.getTitle();
     this.description = this.getDescription();
   }

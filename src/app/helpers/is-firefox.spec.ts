@@ -1,6 +1,19 @@
 import { isFirefox } from './is-firefox';
 
 describe('isFirefox', () => {
+  let userAgent: string;
+
+  beforeAll(() => {
+    userAgent = navigator.userAgent;
+  });
+
+  afterAll(() => {
+    Object.defineProperty(navigator, 'userAgent', {
+      writable: true,
+      value: userAgent,
+    });
+  });
+
   it('should return true if the browser is firefox', () => {
     Object.defineProperty(navigator, 'userAgent', {
       writable: true,

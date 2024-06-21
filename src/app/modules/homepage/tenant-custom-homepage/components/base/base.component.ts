@@ -14,6 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { TenantCustomHomepageService } from '../../services/tenant-custom-homepage.service';
 import { Subscription, filter, take } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 /**
  * Base component for tenant custom homepage.
@@ -24,6 +25,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['base.component.ng.scss'],
 })
 export class TenantCustomHomepageBaseComponent implements OnInit, OnDestroy {
+  /** Whether boosting is enabled for the network. */
+  protected readonly boostEnabled: boolean;
+
   /** Viewchild of advertise section. */
   @ViewChild('advertiseSection', { read: ElementRef })
   protected advertiseSection: ElementRef;
@@ -37,8 +41,11 @@ export class TenantCustomHomepageBaseComponent implements OnInit, OnDestroy {
     private pageLayoutService: PageLayoutService,
     private topbarService: TopbarService,
     private route: ActivatedRoute,
+    private configs: ConfigsService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    this.boostEnabled = configs.get('tenant')?.['boost_enabled'] ?? false;
+  }
 
   ngOnInit(): void {
     this.navigationService.setVisible(false);
@@ -47,7 +54,7 @@ export class TenantCustomHomepageBaseComponent implements OnInit, OnDestroy {
     this.topbarService.toggleSearchBar(false);
 
     // Handle scroll anchors after components are done loading.
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && this.boostEnabled) {
       this.loadedSubscription = this.tenantCustomHomepageService.isLoaded$
         .pipe(filter(Boolean), take(1))
         .subscribe((val: boolean): void => {
