@@ -37,6 +37,10 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
             standalone: true,
           }),
           MockComponent({
+            selector: 'm-networkAdminConsole__createBoostLink',
+            standalone: true,
+          }),
+          MockComponent({
             selector: 'm-networkAdminConsole__enableBoostToggle',
             standalone: true,
           }),
@@ -55,7 +59,7 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
   });
 
   describe('render', () => {
-    it('should render boost embed builder when boost is enabled', () => {
+    it('should render boost embed builder and create boost link when boost is enabled', () => {
       (comp as any).multiTenantConfigService.config$.next({
         ...multiTenantConfigMock,
         boostEnabled: true,
@@ -65,9 +69,14 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
       expect(
         fixture.nativeElement.querySelector('m-boostEmbedBuilder')
       ).toBeTruthy();
+      expect(
+        fixture.nativeElement.querySelector(
+          'm-networkAdminConsole__createBoostLink'
+        )
+      ).toBeTruthy();
     });
 
-    it('should NOT render boost embed builder when boost is NOT enabled', () => {
+    it('should NOT render boost embed builder and create boost link when boost is NOT enabled', () => {
       (comp as any).multiTenantConfigService.config$.next({
         ...multiTenantConfigMock,
         boostEnabled: false,
@@ -76,6 +85,11 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
 
       expect(
         fixture.nativeElement.querySelector('m-boostEmbedBuilder')
+      ).toBeFalsy();
+      expect(
+        fixture.nativeElement.querySelector(
+          'm-networkAdminConsole__createBoostLink'
+        )
       ).toBeFalsy();
     });
   });

@@ -19,11 +19,12 @@ import { ResetPasswordModalService } from '../auth/reset-password-modal/reset-pa
 import { SiteService } from '../../common/services/site.service';
 import { IsTenantService } from '../../common/services/is-tenant.service';
 import { Session } from '../../services/session';
-import { MockService } from '../../utils/mock';
+import { MockComponent, MockService } from '../../utils/mock';
 import { MetaService } from '../../common/services/meta.service';
 import { IfTenantDirective } from '../../common/directives/if-tenant.directive';
 import { ConfigsService } from '../../common/services/configs.service';
 import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
+import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 
 describe('HomepageContainerComponent', () => {
   let component: HomepageContainerComponent;
@@ -49,6 +50,7 @@ describe('HomepageContainerComponent', () => {
   let mockActivatedRoute = {
     snapshot: {
       queryParamMap: convertToParamMap(queryParamsSubject.value),
+      fragment: '',
     },
     queryParams: queryParamsSubject.asObservable(),
   };
@@ -70,7 +72,13 @@ describe('HomepageContainerComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [HomepageContainerComponent, IfTenantDirective],
+      declarations: [
+        HomepageContainerComponent,
+        IfTenantDirective,
+        MockComponent({ selector: 'm-productPage__base' }),
+        MockComponent({ selector: 'm-defaultFeed__container' }),
+        MockComponent({ selector: 'm-homepage--customTenant' }),
+      ],
       providers: [
         {
           provide: Session,
@@ -97,6 +105,10 @@ describe('HomepageContainerComponent', () => {
           useValue: MockService(ResetPasswordModalService),
         },
         {
+          provide: AuthRedirectService,
+          useValue: MockService(AuthRedirectService),
+        },
+        {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
@@ -117,7 +129,11 @@ describe('HomepageContainerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should redirect to newsfeed if logged in', fakeAsync(() => {
+  it('should redirect if logged in', fakeAsync(() => {
+    (component as any).authRedirectService.getRedirectUrl.and.returnValue(
+      '/newsfeed'
+    );
+    mockActivatedRoute.snapshot.fragment = '';
     mockSession.isLoggedIn.and.returnValue(true);
     spyOn(mockRouter, 'navigate');
 
@@ -125,6 +141,22 @@ describe('HomepageContainerComponent', () => {
     tick();
 
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/newsfeed']);
+  }));
+
+  it('should redirect if logged in, with createBoost parameter when boost fragment is present', fakeAsync(() => {
+    (component as any).authRedirectService.getRedirectUrl.and.returnValue(
+      '/newsfeed'
+    );
+    mockActivatedRoute.snapshot.fragment = 'boost';
+    mockSession.isLoggedIn.and.returnValue(true);
+    spyOn(mockRouter, 'navigate');
+
+    component.ngOnInit();
+    tick();
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/newsfeed'], {
+      queryParams: { createBoost: 1 },
+    });
   }));
 
   it('should display default feed if tenant', () => {

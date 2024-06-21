@@ -1,9 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BaseComponent } from './base.component';
 import { ComposerService } from '../../services/composer.service';
 import { PopupService } from '../popup/popup.service';
@@ -27,6 +22,8 @@ import { ComposerSiteMembershipsService } from '../../services/site-memberships.
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { SiteMembership } from '../../../../../graphql/generated.engine';
 import { SimpleChange } from '@angular/core';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
+import { By } from '@angular/platform-browser';
 
 describe('BaseComponent', () => {
   let comp: BaseComponent;
@@ -51,7 +48,7 @@ describe('BaseComponent', () => {
         }),
         MockComponent({
           selector: 'm-composer__textArea',
-          inputs: ['inputId', 'compactMode'],
+          inputs: ['inputId', 'compactMode', 'disabled', 'isModal'],
           outputs: ['filePaste'],
         }),
         MockComponent({
@@ -70,7 +67,11 @@ describe('BaseComponent', () => {
         }),
         MockComponent({
           selector: 'm-composer__siteMembershipPostPreview',
+          inputs: ['isModal'],
         }),
+        MockComponent({ selector: 'm-composer__livestream' }),
+        MockComponent({ selector: 'm-composer__audienceSelectorButton' }),
+        MockComponent({ selector: 'm-composer__boostToggle' }),
       ],
       providers: [
         {
@@ -150,6 +151,10 @@ describe('BaseComponent', () => {
               },
             },
           }),
+        },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: false,
         },
       ],
     })
@@ -296,5 +301,135 @@ describe('BaseComponent', () => {
     });
 
     expect(showPreviewPane).toBeFalse();
+  });
+
+  describe('m-composer__audienceSelectorButton render', () => {
+    it('should show audience selector button when in modal and not editing', () => {
+      (comp as any).service.isEditing$.next(false);
+      comp.isModal = true;
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-composer__audienceSelectorButton'))
+      ).not.toBeNull();
+    });
+
+    it('should NOT show audience selector button when in modal and editing', () => {
+      (comp as any).service.isEditing$.next(true);
+      comp.isModal = true;
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-composer__audienceSelectorButton'))
+      ).toBeNull();
+    });
+
+    it('should NOT show audience selector button when NOT in modal', () => {
+      (comp as any).service.isEditing$.next(false);
+      comp.isModal = false;
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-composer__audienceSelectorButton'))
+      ).toBeNull();
+    });
+  });
+
+  describe('m-composer__boostToggle render', () => {
+    it('should show boost toggle when user can boost, it is not in a modal and we are not editing', () => {
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        writable: true,
+        value: false,
+      });
+      comp.isModal = true;
+      (comp as any).permissions.canBoost.and.returnValue(true);
+      (comp as any).isEditing$.next(false);
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-composer__boostToggle'))
+      ).not.toBeNull();
+    });
+
+    it('should show boost toggle when user can boost, it is not in a modal and we are not editing, on a tenant network with boost enabled', () => {
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+      (comp as any).configs.get.withArgs('tenant').and.returnValue({
+        boost_enabled: true,
+      });
+      comp.isModal = true;
+      (comp as any).permissions.canBoost.and.returnValue(true);
+      (comp as any).isEditing$.next(false);
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-composer__boostToggle'))
+      ).not.toBeNull();
+    });
+
+    it('should NOT show boost toggle when we are editing', () => {
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        writable: true,
+        value: false,
+      });
+      comp.isModal = true;
+      (comp as any).permissions.canBoost.and.returnValue(true);
+      (comp as any).isEditing$.next(true);
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-composer__boostToggle'))
+      ).toBeNull();
+    });
+
+    it('should NOT show boost toggle when not in a modal', () => {
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        writable: true,
+        value: false,
+      });
+      comp.isModal = false;
+      (comp as any).permissions.canBoost.and.returnValue(true);
+      (comp as any).isEditing$.next(false);
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-composer__boostToggle'))
+      ).toBeNull();
+    });
+
+    it('should NOT show boost toggle when user cannot Boost', () => {
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        writable: true,
+        value: false,
+      });
+      comp.isModal = true;
+      (comp as any).permissions.canBoost.and.returnValue(false);
+      (comp as any).isEditing$.next(false);
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-composer__boostToggle'))
+      ).toBeNull();
+    });
+
+    it('should NOT show boost toggle when on a tenant network with Boost not enabled', () => {
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+      (comp as any).configs.get.withArgs('tenant').and.returnValue({
+        boost_enabled: false,
+      });
+      comp.isModal = true;
+      (comp as any).permissions.canBoost.and.returnValue(true);
+      (comp as any).isEditing$.next(false);
+      fixture.detectChanges();
+
+      expect(
+        fixture.debugElement.query(By.css('m-composer__boostToggle'))
+      ).toBeNull();
+    });
   });
 });

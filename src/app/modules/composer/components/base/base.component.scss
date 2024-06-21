@@ -31,6 +31,12 @@ m-composer__base {
     @media screen and (max-width: $max-mobile) {
       justify-content: space-between;
     }
+
+    .m-composerBase__topActionRow {
+      display: flex;
+      flex-flow: row wrap;
+      gap: $spacing2;
+    }
   }
 
   m-composer__titleBar {

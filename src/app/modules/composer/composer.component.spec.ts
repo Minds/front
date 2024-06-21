@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { ComposerComponent } from './composer.component';
 import { ComposerService } from './services/composer.service';
 import { MockComponent, MockService } from '../../utils/mock';
@@ -18,6 +24,7 @@ import {
 } from '@gorniv/ngx-universal';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LivestreamService } from '../../modules/composer/services/livestream.service';
+import { ComposerBoostService } from './services/boost.service';
 
 describe('Composer', () => {
   let comp: ComposerComponent;
@@ -45,6 +52,17 @@ describe('Composer', () => {
           useValue: MockService(ComposerModalService),
         },
         {
+          provide: ComposerBoostService,
+          useValue: MockService(ComposerBoostService, {
+            has: ['isBoostMode$'],
+            props: {
+              isBoostMode$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+            },
+          }),
+        },
+        {
           provide: ToasterService,
           useValue: MockService(ToasterService),
         },
@@ -56,6 +74,7 @@ describe('Composer', () => {
           provide: ActivatedRoute,
           useValue: {
             queryParamMap: new BehaviorSubject(convertToParamMap({})),
+            snapshot: { queryParamMap: convertToParamMap({}) },
           },
         },
         {
@@ -116,4 +135,51 @@ describe('Composer', () => {
     );
     expect(baseComposer).not.toBeNull();
   });
+
+  it('should handle createBoost query parameter', fakeAsync(() => {
+    (comp as any).composerModalService.setInjector.and.returnValue(
+      (comp as any).composerModalService
+    );
+    (comp as any).composerModalService.present.and.returnValue(
+      Promise.resolve({})
+    );
+    (comp as any).service.setContainer = jasmine.createSpy();
+    (comp as any).composerBoostService.isBoostMode$.next(false);
+    (comp as any).route.queryParamMap.next(
+      convertToParamMap({ createBoost: '1' })
+    );
+    (comp as any).route.snapshot.queryParamMap = convertToParamMap({
+      createBoost: '1',
+    });
+
+    tick();
+
+    expect((comp as any).composerBoostService.isBoostMode$.getValue()).toBe(
+      true
+    );
+    expect((comp as any).service.setContainer).toHaveBeenCalled();
+    expect((comp as any).composerModalService.present).toHaveBeenCalled();
+    expect((comp as any).router.navigate).toHaveBeenCalledOnceWith(['.'], {
+      queryParams: {},
+      relativeTo: (comp as any).route,
+    });
+  }));
+
+  it('should handle no createBoost query parameter', fakeAsync(() => {
+    (comp as any).composerModalService.setInjector.and.returnValue(
+      (comp as any).composerModalService
+    );
+    (comp as any).service.setContainer = jasmine.createSpy();
+    (comp as any).composerBoostService.isBoostMode$.next(false);
+    (comp as any).route.queryParamMap.next(convertToParamMap({}));
+
+    tick();
+
+    expect((comp as any).composerBoostService.isBoostMode$.getValue()).toBe(
+      false
+    );
+    expect((comp as any).service.setContainer).not.toHaveBeenCalled();
+    expect((comp as any).composerModalService.present).not.toHaveBeenCalled();
+    expect((comp as any).router.navigate).not.toHaveBeenCalled();
+  }));
 });

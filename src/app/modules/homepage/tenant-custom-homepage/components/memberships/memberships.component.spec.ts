@@ -15,6 +15,7 @@ import { AuthModalService } from '../../../../auth/modal/auth-modal.service';
 import { OnboardingV5Service } from '../../../../onboarding-v5/services/onboarding-v5.service';
 import { SiteMembershipManagementService } from '../../../../site-memberships/services/site-membership-management.service';
 import userMock from '../../../../../mocks/responses/user.mock';
+import { TenantCustomHomepageService } from '../../services/tenant-custom-homepage.service';
 
 describe('TenantCustomHomepageMembershipsComponent', () => {
   let comp: TenantCustomHomepageMembershipsComponent;
@@ -32,9 +33,20 @@ describe('TenantCustomHomepageMembershipsComponent', () => {
       ],
       providers: [
         {
+          provide: TenantCustomHomepageService,
+          useValue: MockService(TenantCustomHomepageService, {
+            has: ['isMembersSectionLoaded$'],
+            props: {
+              isMembersSectionLoaded$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+            },
+          }),
+        },
+        {
           provide: SiteMembershipService,
           useValue: MockService(SiteMembershipService, {
-            has: ['siteMemberships$'],
+            has: ['siteMemberships$', 'initialized$'],
             props: {
               siteMemberships$: {
                 get: () =>
@@ -42,6 +54,9 @@ describe('TenantCustomHomepageMembershipsComponent', () => {
                     siteMembershipMock,
                     siteMembershipMock,
                   ]),
+              },
+              initialized$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
             },
           }),
@@ -82,6 +97,21 @@ describe('TenantCustomHomepageMembershipsComponent', () => {
   it('should init', () => {
     expect(comp).toBeTruthy();
   });
+
+  it('should set isMembersSectionLoaded$ to true when members section data is loaded', fakeAsync(() => {
+    (comp as any).tenantCustomHomepageService.isMembersSectionLoaded$.next(
+      false
+    );
+
+    (comp as any).siteMembershipService.initialized$.next(true);
+    tick();
+
+    expect(
+      (
+        comp as any
+      ).tenantCustomHomepageService.isMembersSectionLoaded$.getValue()
+    ).toBe(true);
+  }));
 
   describe('rendering', () => {
     it('should render site memberships when available', () => {

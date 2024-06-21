@@ -4,11 +4,17 @@ import {
   MockService,
   MockDirective,
 } from '../../../../utils/mock';
-import { TextAreaComponent } from './text-area.component';
+import {
+  BOOST_PLACEHOLDER_TEXT,
+  DEFAULT_PLACEHOLDER_TEXT,
+  TextAreaComponent,
+} from './text-area.component';
 import { ComposerService } from '../../services/composer.service';
 import { FormsModule } from '@angular/forms';
 import { AutocompleteSuggestionsService } from '../../../suggestions/services/autocomplete-suggestions.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { ComposerBoostService } from '../../services/boost.service';
+import { PLATFORM_ID } from '@angular/core';
 
 describe('Composer Text Area', () => {
   let comp: TextAreaComponent;
@@ -66,6 +72,19 @@ describe('Composer Text Area', () => {
         {
           provide: AutocompleteSuggestionsService,
           useValue: MockService(AutocompleteSuggestionsService),
+        },
+        {
+          provide: PLATFORM_ID,
+          useValue: 'browser',
+        },
+        {
+          provide: ComposerBoostService,
+          useValue: MockService(ComposerBoostService, {
+            has: ['isBoostMode$'],
+            props: {
+              isBoostMode$: { get: () => new BehaviorSubject<boolean>(false) },
+            },
+          }),
         },
       ],
     }).compileComponents();
@@ -125,5 +144,37 @@ describe('Composer Text Area', () => {
 
     comp.toggleTitle();
     expect(title$.next).toHaveBeenCalledWith(null);
+  });
+
+  describe('textAreaPlaceholderText$', () => {
+    it('should return default placeholder text when not in boost mode', (done: DoneFn) => {
+      (comp as any).isModal = true;
+      (comp as any).composerBoostService.isBoostMode$.next(false);
+
+      (comp as any).textAreaPlaceholderText$.subscribe((text: string) => {
+        expect(text).toBe(DEFAULT_PLACEHOLDER_TEXT);
+        done();
+      });
+    });
+
+    it('should return default placeholder text when in boost mode but not in a modal', (done: DoneFn) => {
+      (comp as any).isModal = false;
+      (comp as any).composerBoostService.isBoostMode$.next(true);
+
+      (comp as any).textAreaPlaceholderText$.subscribe((text: string) => {
+        expect(text).toBe(DEFAULT_PLACEHOLDER_TEXT);
+        done();
+      });
+    });
+
+    it('should return boost placeholder text when isBoostMode$ is true and in a modal', (done: DoneFn) => {
+      (comp as any).isModal = true;
+      (comp as any).composerBoostService.isBoostMode$.next(true);
+
+      (comp as any).textAreaPlaceholderText$.subscribe((text: string) => {
+        expect(text).toBe(BOOST_PLACEHOLDER_TEXT);
+        done();
+      });
+    });
   });
 });

@@ -7,6 +7,7 @@ import { IsTenantService } from '../../common/services/is-tenant.service';
 import { Session } from '../../services/session';
 import { ConfigsService } from '../../common/services/configs.service';
 import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
+import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 
 /**
  * Routes users to a "homepage" depending on active experiments.
@@ -25,6 +26,7 @@ export class HomepageContainerComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private resetPasswordModal: ResetPasswordModalService,
+    private authRedirectService: AuthRedirectService,
     private site: SiteService,
     private isTenant: IsTenantService,
     private session: Session,
@@ -36,8 +38,13 @@ export class HomepageContainerComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.session.isLoggedIn()) {
-      this.router.navigate(['/newsfeed']);
-      return;
+      if (this.route.snapshot.fragment === 'boost') {
+        this.router.navigate([this.authRedirectService.getRedirectUrl()], {
+          queryParams: { createBoost: 1 },
+        });
+      } else {
+        this.router.navigate([this.authRedirectService.getRedirectUrl()]);
+      }
     }
 
     if (

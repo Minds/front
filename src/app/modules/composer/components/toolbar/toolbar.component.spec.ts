@@ -23,6 +23,7 @@ import { By } from '@angular/platform-browser';
 import { IfTenantDirective } from '../../../../common/directives/if-tenant.directive';
 import { IsTenantService } from '../../../../common/services/is-tenant.service';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
+import { ComposerBoostService } from '../../services/boost.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -157,6 +158,17 @@ describe('Composer Toolbar', () => {
           useValue: composerServiceMock,
         },
         {
+          provide: ComposerBoostService,
+          useValue: MockService(ComposerBoostService, {
+            has: ['isBoostMode$'],
+            props: {
+              isBoostMode$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+            },
+          }),
+        },
+        {
           provide: PopupService,
           useValue: popupServiceMock,
         },
@@ -264,10 +276,32 @@ describe('Composer Toolbar', () => {
     expect(uploaderServiceMock.file$$.next).toHaveBeenCalledWith(file);
   });
 
-  it('should emit on NSFW popup', () => {
-    comp.onNsfwClick();
-    expect(popupServiceMock.create).toHaveBeenCalledWith(NsfwComponent);
-    expect(popupServiceMock.present).toHaveBeenCalled();
+  describe('onNsfwClick', () => {
+    beforeEach(() => {
+      popupServiceMock.create.calls.reset();
+      popupServiceMock.present.calls.reset();
+    });
+
+    it('should emit on NSFW popup when not in boost mode', () => {
+      (comp as any).composerBoostService.isBoostMode$.next(false);
+
+      comp.onNsfwClick();
+
+      expect(popupServiceMock.create).toHaveBeenCalledWith(NsfwComponent);
+      expect(popupServiceMock.present).toHaveBeenCalled();
+    });
+
+    it('should not trigger NSFW popup when in boost mode', () => {
+      (comp as any).composerBoostService.isBoostMode$.next(true);
+
+      comp.onNsfwClick();
+
+      expect((comp as any).toaster.error).toHaveBeenCalledOnceWith(
+        'NSFW content cannot be boosted'
+      );
+      expect(popupServiceMock.create).not.toHaveBeenCalled();
+      expect(popupServiceMock.present).not.toHaveBeenCalled();
+    });
   });
 
   it('should be created', () => {

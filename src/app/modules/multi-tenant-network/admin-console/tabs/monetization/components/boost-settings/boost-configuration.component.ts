@@ -6,6 +6,7 @@ import { BoostEmbedBuilderComponent } from './boost-embed-builder/boost-embed-bu
 import { NetworkAdminEnableBoostToggleComponent } from './enable-boost-toggle/enable-boost-toggle.component';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { GrowShrinkFast } from '../../../../../../../animations';
+import { NetworkAdminCreateBoostLinkComponent } from './create-boost-link/create-boost-link.component';
 
 /**
  * Network admin boost configuration component.
@@ -18,6 +19,7 @@ import { GrowShrinkFast } from '../../../../../../../animations';
   imports: [
     BoostEmbedBuilderComponent,
     NetworkAdminEnableBoostToggleComponent,
+    NetworkAdminCreateBoostLinkComponent,
     AsyncPipe,
     NgIf,
   ],
@@ -25,7 +27,7 @@ import { GrowShrinkFast } from '../../../../../../../animations';
 })
 export class NetworkAdminBoostConfigurationComponent {
   /** Whether boost embed builder should be shown. */
-  protected readonly shouldShowBoostEmbedBuilder$: Observable<boolean> =
+  protected readonly isBoostEnabled$: Observable<boolean> =
     this.multiTenantConfigService.config$.pipe(
       map((config: MultiTenantConfig): boolean => {
         return config?.boostEnabled;
