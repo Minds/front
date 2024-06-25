@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { AnalyticsService } from '../../../services/analytics';
 import { Storage } from '../../../services/storage';
-import { IsCommentingService } from '../../comments/poster/is-commenting.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 
 const SUPERMIND_BANNER_POPUP_STORAGE_KEY = 'supermind-banner-popup';
@@ -39,17 +38,9 @@ export class SupermindBannerPopupService
   constructor(
     private storage: Storage,
     private experiments: ExperimentsService,
-    private isCommenting: IsCommentingService,
     private analytics: AnalyticsService
   ) {
     super();
-  }
-
-  public experimentEnabled(): boolean {
-    return this.experiments.hasVariation(
-      'front-5813-supermind-comment-prompt',
-      true
-    );
   }
 
   /**

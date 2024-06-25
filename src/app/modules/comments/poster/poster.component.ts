@@ -26,7 +26,6 @@ import { IsCommentingService } from './is-commenting.service';
 import { Router } from '@angular/router';
 import isMobile from '../../../helpers/is-mobile';
 import moveCursorToEnd from '../../../helpers/move-cursor-to-end';
-import { SupermindBannerPopupService } from '../../supermind/supermind-banner/supermind-banner-popup.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import {
   COMMENT_PERMISSIONS_ERROR_MESSAGE,
@@ -69,8 +68,6 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   attachmentIntent: boolean = false; // whether user wants to attach file
   postIntent: boolean = false; // whether user wants to post the comment
 
-  supermindBannerPopupSeen: boolean = false;
-
   commentConvertedToActivity: boolean = false;
 
   subscriptions: Subscription[] = [];
@@ -90,73 +87,23 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     private authModal: AuthModalService,
     private isCommentingService: IsCommentingService,
     public elRef: ElementRef,
-    public supermindBannerPopup: SupermindBannerPopupService,
     protected permissions: PermissionsService,
     protected toaster: ToasterService,
     protected nsfwEnabledService: NsfwEnabledService
   ) {}
 
   ngOnInit() {
-    // Check this before we determine if it should be shown
-    this.supermindBannerPopupSeen = this.supermindBannerPopup.hasBeenSeen();
-
     this.subscriptions.push(
       this.session.loggedinEmitter.subscribe((emitted) => {
         this.detectChanges();
-      }),
-      this.supermindBannerPopup.visible$.subscribe((visible) => {
-        if (visible && this.canShowSupermindBannerPopup) {
-          // Save if banner was seen so we don't show again
-          this.supermindBannerPopup.setSeen();
-        }
-        this.detectChanges();
-      }),
-      this.supermindBannerPopup.supermindPosted$.subscribe((posted) => {
-        if (posted) {
-          // Reset comment if it has been converted into a supermind
-          this.commentConvertedToActivity = true;
-          this.content = '';
-          this.attachment.reset();
-
-          this.detectChanges();
-        }
       })
     );
-
-    this.supermindBannerPopup.entity$.next(this.entity);
   }
 
   ngOnDestroy(): void {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
-  }
-
-  /**
-   * Enable popup timer if experiment is enabled,
-   * it hasn't been seen already this session
-   * and this is a new top-level comment w/o attachments
-   *
-   */
-  get canShowSupermindBannerPopup(): boolean {
-    if (
-      !this.supermindBannerPopup.experimentEnabled() ||
-      this.supermindBannerPopupSeen
-    ) {
-      return false;
-    }
-
-    const isCommentingOnOwnEntity =
-      this.session.getLoggedInUser().guid === this.entity.ownerObj.guid;
-
-    return (
-      this.level === 0 &&
-      !this.editing &&
-      !this.attachmentIntent &&
-      !this.postIntent &&
-      !this.commentConvertedToActivity &&
-      !isCommentingOnOwnEntity
-    );
   }
 
   keyup(e: KeyboardEvent) {
@@ -171,8 +118,6 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   keydown(e: KeyboardEvent) {
     // set is typing state for other components to hook into.
     this.isCommentingService.isCommenting$.next(this.content.trim().length > 1);
-
-    this.supermindBannerPopup.startTimer();
   }
 
   keypress(e: KeyboardEvent) {
