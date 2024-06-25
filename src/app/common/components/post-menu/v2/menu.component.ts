@@ -38,7 +38,8 @@ type Option =
   | 'disable-comments'
   | 'download'
   | 'boost'
-  | 'view-federated';
+  | 'view-federated'
+  | 'cancel-boost';
 
 @Component({
   selector: 'm-postMenu--v2',
@@ -95,6 +96,14 @@ export class PostMenuV2Component implements OnInit {
       this.options.indexOf('edit') !== -1 &&
       this.entity.owner_guid == this.session.getLoggedInUser().guid
     );
+  }
+
+  /**
+   * Whether Cancel Boost option should be shown.
+   * @returns { boolean } True if Cancel Boost option should be shown.
+   */
+  public shouldShowCancelBoostOption(): boolean {
+    return this.entity.boosted && this.permissions.canModerateContent();
   }
 
   shouldShowDelete(): boolean {
@@ -190,7 +199,9 @@ export class PostMenuV2Component implements OnInit {
       case 'boost':
         this.service.openBoostModal();
         break;
-
+      case 'cancel-boost':
+        actionCancelled = !(await this.service.confirmBoostCancellation());
+        break;
       // Destructive options
       case 'delete':
         actionCancelled = !(await this.service.confirmDelete());

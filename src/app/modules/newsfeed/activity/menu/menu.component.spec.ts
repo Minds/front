@@ -21,6 +21,7 @@ import { ModerationActionGqlService } from '../../../admin/moderation/services/m
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { BehaviorSubject } from 'rxjs';
+import { BoostAdminActionsService } from '../../../boost/console-v2/services/admin-actions.service';
 
 describe('ActivityMenuComponent', () => {
   let comp: ActivityMenuComponent;
@@ -46,7 +47,13 @@ describe('ActivityMenuComponent', () => {
         {
           provide: ActivityService,
           useValue: MockService(ActivityService, {
-            has: ['entity$', 'canDelete$', 'isTranslatable$', 'canDownload$'],
+            has: [
+              'entity$',
+              'canDelete$',
+              'isTranslatable$',
+              'canDownload$',
+              'canShow$',
+            ],
             props: {
               entity$: {
                 get: () =>
@@ -60,6 +67,7 @@ describe('ActivityMenuComponent', () => {
                 get: () => new BehaviorSubject<boolean>(false),
               },
               canDownload$: { get: () => new BehaviorSubject<boolean>(false) },
+              canShow$: { get: () => new BehaviorSubject<boolean>(false) },
             },
           }),
         },
@@ -86,6 +94,10 @@ describe('ActivityMenuComponent', () => {
         {
           provide: ModerationActionGqlService,
           useValue: MockService(ModerationActionGqlService),
+        },
+        {
+          provide: BoostAdminActionsService,
+          useValue: MockService(BoostAdminActionsService),
         },
         { provide: IS_TENANT_NETWORK, useValue: IS_TENANT_NETWORK },
       ],
@@ -173,6 +185,51 @@ describe('ActivityMenuComponent', () => {
       ).not.toHaveBeenCalled();
       expect((comp as any).service.onDelete).toHaveBeenCalled();
       expect((comp as any).client.delete).toHaveBeenCalled();
+    }));
+  });
+
+  describe('onOptionSelected - cancel-boost', () => {
+    it('should handle cancel-boost option when successful', fakeAsync(() => {
+      (comp as any).entity = { guid: '123' } as any;
+      (
+        comp as any
+      ).boostAdminActionsService.cancelBoostsByEntityGuid.and.returnValue(
+        Promise.resolve(true)
+      );
+      (comp as any).service.canShow$.next(true);
+
+      comp.onOptionSelected('cancel-boost');
+      tick();
+
+      expect(
+        (comp as any).boostAdminActionsService.cancelBoostsByEntityGuid
+      ).toHaveBeenCalledWith('123');
+      expect((comp as any).service.canShow$.getValue()).toBe(false);
+      expect((comp as any).toasterService.success).toHaveBeenCalledOnceWith(
+        'Boost successfully cancelled.'
+      );
+    }));
+
+    it('should handle cancel-boost option when unsuccessful', fakeAsync(() => {
+      (comp as any).entity = { guid: '123' } as any;
+      (
+        comp as any
+      ).boostAdminActionsService.cancelBoostsByEntityGuid.and.returnValue(
+        Promise.resolve(false)
+      );
+      (comp as any).service.canShow$.next(true);
+
+      comp.onOptionSelected('cancel-boost');
+      tick();
+
+      expect(
+        (comp as any).boostAdminActionsService.cancelBoostsByEntityGuid
+      ).toHaveBeenCalledWith('123');
+      expect((comp as any).service.canShow$.getValue()).toBe(true);
+      expect((comp as any).toasterService.success).not.toHaveBeenCalled();
+      expect((comp as any).toasterService.error).toHaveBeenCalledOnceWith(
+        'An error occurred whilst trying to cancel this Boost.'
+      );
     }));
   });
 });

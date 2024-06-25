@@ -1,0 +1,3 @@
+mutation AdminCancelBoosts($entityGuid: String!) {
+  adminCancelBoosts(entityGuid: $entityGuid)
+}
