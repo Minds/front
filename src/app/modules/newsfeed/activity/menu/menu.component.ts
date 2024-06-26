@@ -26,6 +26,7 @@ import { ApiService } from '../../../../common/api/api.service';
 import { ModerationActionGqlService } from '../../../admin/moderation/services/moderation-action-gql.service';
 import { Session } from '../../../../services/session';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
+import { BoostAdminActionsService } from '../../../boost/console-v2/services/admin-actions.service';
 
 /**
  * Options for the activity's meatball menu (different options show for owners).
@@ -59,6 +60,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     private wireModalService: WireModalService,
     private session: Session,
     private moderationActionsGql: ModerationActionGqlService,
+    private boostAdminActionsService: BoostAdminActionsService,
     @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork
   ) {}
 
@@ -141,6 +143,26 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
           this.service.onDelete();
         } catch (e) {
           this.toasterService.error(e.message);
+          console.error(e);
+        }
+        break;
+      case 'cancel-boost':
+        try {
+          if (
+            !(await this.boostAdminActionsService.cancelBoostsByEntityGuid(
+              this.entity.guid
+            ))
+          ) {
+            throw new Error(
+              'An error occurred whilst trying to cancel this Boost.'
+            );
+          }
+          this.service.canShow$.next(false);
+          this.toasterService.success('Boost successfully cancelled.');
+        } catch (e) {
+          this.toasterService.error(
+            'An error occurred whilst trying to cancel this Boost.'
+          );
           console.error(e);
         }
         break;

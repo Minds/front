@@ -154,6 +154,24 @@ describe('PostMenuV2Component', () => {
     expect(comp.optionSelected.emit).toHaveBeenCalledWith(option);
   });
 
+  it('should call confirmBoostCancellation and NOT emit optionSelected when option is cancel-boost for onSelectedOption and action is not confirmed', async () => {
+    (comp as any).service.confirmBoostCancellation.and.returnValue(
+      Promise.resolve(false)
+    );
+    const option = 'cancel-boost';
+    await comp.onSelectedOption(option);
+    expect(comp.optionSelected.emit).not.toHaveBeenCalledWith(option);
+  });
+
+  it('should call confirmBoostCancellation and emit optionSelected when option is cancel-boost for onSelectedOption and action is confirmed', async () => {
+    (comp as any).service.confirmBoostCancellation.and.returnValue(
+      Promise.resolve(true)
+    );
+    const option = 'cancel-boost';
+    await comp.onSelectedOption(option);
+    expect(comp.optionSelected.emit).toHaveBeenCalledWith(option);
+  });
+
   it('should call confirmDelete and emit optionSelected when option is delete for onSelectedOption', async () => {
     const option = 'delete';
     await comp.onSelectedOption(option);
@@ -442,6 +460,29 @@ describe('PostMenuV2Component', () => {
       (comp as any).permissions.canBoost.and.returnValue(false);
 
       expect(comp.shouldShowBoost()).toBeFalse();
+    });
+  });
+
+  describe('shouldShowCancelBoostOption', () => {
+    it('should return true when the entity is a boost and user has permission to moderate content', () => {
+      comp.entity = { boosted: true };
+      (comp as any).permissions.canModerateContent.and.returnValue(true);
+
+      expect(comp.shouldShowCancelBoostOption()).toBeTrue();
+    });
+
+    it('should return false when the entity is not a boost', () => {
+      comp.entity = { boosted: false };
+      (comp as any).permissions.canModerateContent.and.returnValue(true);
+
+      expect(comp.shouldShowCancelBoostOption()).toBeFalse();
+    });
+
+    it('should return false when user has no permission to moderate content', () => {
+      comp.entity = { boosted: true };
+      (comp as any).permissions.canModerateContent.and.returnValue(false);
+
+      expect(comp.shouldShowCancelBoostOption()).toBeFalse();
     });
   });
 });

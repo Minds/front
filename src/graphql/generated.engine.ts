@@ -966,6 +966,8 @@ export type MultiTenantDomainDnsRecord = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Cancel all Boosts on a given entity. */
+  adminCancelBoosts: Scalars['Boolean']['output'];
   archiveSiteMembership: Scalars['Boolean']['output'];
   /** Assigns a user to a role */
   assignUserToRole: Role;
@@ -1046,6 +1048,10 @@ export type Mutation = {
   updateSiteMembership: SiteMembership;
   /** Add or update a navigation item */
   upsertCustomNavigationItem: NavigationItem;
+};
+
+export type MutationAdminCancelBoostsArgs = {
+  entityGuid: Scalars['String']['input'];
 };
 
 export type MutationArchiveSiteMembershipArgs = {
@@ -1505,6 +1511,8 @@ export type Query = {
   chatUnreadMessagesCount: Scalars['Int']['output'];
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
+  /** Returns key value configs */
+  config?: Maybe<Scalars['String']['output']>;
   /** Returns the navigation items that are configured for a site */
   customNavigationItems: Array<NavigationItem>;
   customPage: CustomPage;
@@ -1650,6 +1658,10 @@ export type QueryCheckoutPageArgs = {
   page: CheckoutPageKeyEnum;
   planId: Scalars['String']['input'];
   timePeriod: CheckoutTimePeriodEnum;
+};
+
+export type QueryConfigArgs = {
+  key: Scalars['String']['input'];
 };
 
 export type QueryCustomPageArgs = {
@@ -2262,6 +2274,15 @@ export type GetBoostFeedQuery = {
       startCursor?: string | null;
     };
   };
+};
+
+export type AdminCancelBoostsMutationVariables = Exact<{
+  entityGuid: Scalars['String']['input'];
+}>;
+
+export type AdminCancelBoostsMutation = {
+  __typename?: 'Mutation';
+  adminCancelBoosts: boolean;
 };
 
 export type CreateChatMessageMutationVariables = Exact<{
@@ -7757,6 +7778,25 @@ export class GetBoostFeedGQL extends Apollo.Query<
   GetBoostFeedQueryVariables
 > {
   document = GetBoostFeedDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const AdminCancelBoostsDocument = gql`
+  mutation AdminCancelBoosts($entityGuid: String!) {
+    adminCancelBoosts(entityGuid: $entityGuid)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminCancelBoostsGQL extends Apollo.Mutation<
+  AdminCancelBoostsMutation,
+  AdminCancelBoostsMutationVariables
+> {
+  document = AdminCancelBoostsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
