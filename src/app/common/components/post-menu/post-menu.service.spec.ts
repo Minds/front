@@ -15,6 +15,8 @@ import { BoostModalV2LazyService } from '../../../modules/boost/modal-v2/boost-m
 import { ModerationActionGqlService } from '../../../modules/admin/moderation/services/moderation-action-gql.service';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { PermissionsService } from '../../services/permissions.service';
+import { Injector } from '@angular/core';
+import { ConfirmV2Component } from '../../../modules/modals/confirm-v2/confirm.component';
 
 describe('PostMenuService', () => {
   let service: PostMenuService;
@@ -51,6 +53,10 @@ describe('PostMenuService', () => {
         {
           provide: IS_TENANT_NETWORK,
           useValue: true,
+        },
+        {
+          provide: Injector,
+          useValue: MockService(Injector),
         },
       ],
     });
@@ -252,6 +258,28 @@ describe('PostMenuService', () => {
         (service as any).moderationActionGql.setUserBanState
       ).not.toHaveBeenCalled();
       expect((service as any).isBanned$.getValue()).toBe(true);
+    }));
+  });
+
+  describe('confirmBoostCancellation', () => {
+    it('should open the confirm dialog', fakeAsync(() => {
+      service.confirmBoostCancellation();
+      tick();
+
+      expect((service as any).modalService.present).toHaveBeenCalledOnceWith(
+        ConfirmV2Component,
+        {
+          data: {
+            title: 'Cancel this Boost?',
+            body: 'Are you sure you want to cancel this Boosted post? All active Boosts with this post will be immediately cancelled and will stop serving on your network, and the customer(s) will not be refunded.',
+            confirmButtonText: 'Cancel Boost',
+            confirmButtonColor: 'red',
+            showCancelButton: false,
+            onConfirm: jasmine.any(Function),
+          },
+          injector: (service as any).injector,
+        }
+      );
     }));
   });
 
