@@ -19,6 +19,7 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { PathMatch } from '../../common/types/angular.types';
 import { SearchComponent } from '../search/search.component';
 import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
+import { tenantConditionalRedirectGuard } from '../../common/guards/tenant-conditional-redirect.guard';
 
 @NgModule({
   imports: [
@@ -30,8 +31,15 @@ import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.
         children: [
           {
             path: '',
-            redirectTo: 'trending',
             pathMatch: 'full' as PathMatch,
+            // Conditionally redirect based on whether we are on a tenant network or not.
+            loadComponent: () => void 0,
+            canActivate: [
+              tenantConditionalRedirectGuard(
+                '/discovery/latest',
+                '/discovery/trending'
+              ),
+            ],
           },
           {
             path: 'overview',
@@ -49,6 +57,14 @@ import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.
           {
             path: 'search',
             component: DiscoverySearchComponent,
+          },
+          {
+            path: 'latest',
+            component: SearchComponent,
+            data: {
+              filter: 'latest',
+              explore: true,
+            },
           },
           {
             path: 'tags',

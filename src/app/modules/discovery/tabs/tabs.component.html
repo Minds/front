@@ -2,6 +2,16 @@
   <ng-container *ngIf="(isPlusPage$ | async) === false; else plusTabs">
     <div class="m-tabs__tab">
       <a
+        *mIfTenant="true"
+        routerLink="/discovery/latest"
+        routerLinkActive="m-tabs__tab--selected"
+        data-ref="discovery-tab-link-latest"
+        i18n="@@DISCOVERY_TABS__LATEST"
+        >Latest</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
         routerLink="/discovery/trending"
         routerLinkActive="m-tabs__tab--selected"
         data-ref="discovery-tab-link-trending"
