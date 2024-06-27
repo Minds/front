@@ -1,8 +1,7 @@
 <div class="m-tabs__container">
   <ng-container *ngIf="(isPlusPage$ | async) === false; else plusTabs">
-    <div class="m-tabs__tab">
+    <div class="m-tabs__tab" *mIfTenant="true">
       <a
-        *mIfTenant="true"
         routerLink="/discovery/latest"
         routerLinkActive="m-tabs__tab--selected"
         data-ref="discovery-tab-link-latest"
