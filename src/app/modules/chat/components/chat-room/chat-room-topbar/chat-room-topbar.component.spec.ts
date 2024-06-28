@@ -20,12 +20,16 @@ import {
   ChatRoomListAvatarObject,
 } from '../../../services/chat-room-avatars.service';
 import {
+  AddMembersToChatRoomGQL,
   ChatRoomEdge,
+  ChatRoomMemberEdge,
   ChatRoomTypeEnum,
 } from '../../../../../../graphql/generated.engine';
 import { EditChatRoomModalService } from '../edit-chat-room-modal/edit-chat-room-modal.service';
 import { SingleChatRoomService } from '../../../services/single-chat-room.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
+import { UserSelectModalService } from '../../user-select-modal/user-select-modal.service';
+import userMock from '../../../../../mocks/responses/user.mock';
 
 describe('ChatRoomTopComponent', () => {
   let comp: ChatRoomTopComponent;
@@ -55,6 +59,14 @@ describe('ChatRoomTopComponent', () => {
               },
             },
           }),
+        },
+        {
+          provide: UserSelectModalService,
+          useValue: MockService(UserSelectModalService),
+        },
+        {
+          provide: AddMembersToChatRoomGQL,
+          useValue: jasmine.createSpyObj<AddMembersToChatRoomGQL>(['mutate']),
         },
       ],
     }).overrideComponent(ChatRoomTopComponent, {
@@ -94,6 +106,59 @@ describe('ChatRoomTopComponent', () => {
 
   it('should init', () => {
     expect(comp).toBeTruthy();
+  });
+
+  describe('Setting the chat room edge', () => {
+    it('should set class variables from chatroom edge', () => {
+      (comp as any).chatRoomEdge = {
+        ...mockChatRoomEdge,
+        node: {
+          ...mockChatRoomEdge.node,
+          roomType: ChatRoomTypeEnum.OneToOne,
+        },
+      };
+      expect((comp as any).roomName).toBe(mockChatRoomEdge.node.name);
+      expect((comp as any).roomGuid).toBe(mockChatRoomEdge.node.guid);
+      expect((comp as any).memberEdges).toBe(mockChatRoomEdge.members.edges);
+      expect((comp as any).showEditRoomButton).toBe(false);
+      expect((comp as any).showAddUsersButton).toBe(false);
+    });
+
+    it('should show add user button when multi-user room and not chat request', () => {
+      (comp as any).chatRoomEdge = {
+        ...mockChatRoomEdge,
+        node: {
+          ...mockChatRoomEdge.node,
+          roomType: ChatRoomTypeEnum.MultiUser,
+          isChatRequest: false,
+        },
+      };
+      expect((comp as any).showAddUsersButton).toBe(true);
+    });
+
+    it('should not show add user button when not in multi-user room', () => {
+      (comp as any).chatRoomEdge = {
+        ...mockChatRoomEdge,
+        node: {
+          ...mockChatRoomEdge.node,
+          roomType: ChatRoomTypeEnum.OneToOne,
+          isChatRequest: false,
+        },
+      };
+      expect((comp as any).showAddUsersButton).toBe(false);
+    });
+
+    it('should not show add user button when it is a chat request', () => {
+      (comp as any).chatRoomEdge = {
+        ...mockChatRoomEdge,
+        node: {
+          ...mockChatRoomEdge.node,
+          roomType: ChatRoomTypeEnum.MultiUser,
+          isChatRequest: true,
+        },
+      };
+      expect((comp as any).showAddUsersButton).toBe(false);
+    });
   });
 
   describe('avatar objects', () => {
@@ -234,6 +299,37 @@ describe('ChatRoomTopComponent', () => {
       expect((comp as any).editChatRoomModalService.open).toHaveBeenCalledWith(
         mockChatRoomEdge
       );
+    }));
+  });
+
+  describe('handleAddToChatClick', () => {
+    it('should open user select modal, and handle save function', fakeAsync(() => {
+      (comp as any).addMembersToChatRoomGql.mutate.and.returnValue(of(true));
+
+      (comp as any).handleAddToChatClick();
+
+      expect((comp as any).userSelectModalService.open).toHaveBeenCalledWith({
+        saveFunction: jasmine.any(Function),
+        title: 'Add to chat',
+        ctaText: 'Add members',
+        emptyStateText: 'Try searching for users.',
+        excludedUserGuids: mockChatRoomEdge.members.edges.map(
+          (edge: ChatRoomMemberEdge) => edge.node.guid
+        ),
+      });
+
+      (comp as any).userSelectModalService.open.calls
+        .mostRecent()
+        .args[0].saveFunction([userMock]);
+      tick();
+
+      expect((comp as any).addMembersToChatRoomGql.mutate).toHaveBeenCalledWith(
+        {
+          roomGuid: mockChatRoomEdge.node.guid,
+          memberGuids: [userMock.guid],
+        }
+      );
+      expect((comp as any).singleChatRoomService.refetch).toHaveBeenCalled();
     }));
   });
 });

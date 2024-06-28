@@ -966,6 +966,7 @@ export type MultiTenantDomainDnsRecord = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addMembersToChatRoom: Scalars['Boolean']['output'];
   /** Cancel all Boosts on a given entity. */
   adminCancelBoosts: Scalars['Boolean']['output'];
   archiveSiteMembership: Scalars['Boolean']['output'];
@@ -1048,6 +1049,11 @@ export type Mutation = {
   updateSiteMembership: SiteMembership;
   /** Add or update a navigation item */
   upsertCustomNavigationItem: NavigationItem;
+};
+
+export type MutationAddMembersToChatRoomArgs = {
+  memberGuids: Array<Scalars['String']['input']>;
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationAdminCancelBoostsArgs = {
@@ -2283,6 +2289,16 @@ export type AdminCancelBoostsMutationVariables = Exact<{
 export type AdminCancelBoostsMutation = {
   __typename?: 'Mutation';
   adminCancelBoosts: boolean;
+};
+
+export type AddMembersToChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  memberGuids: Array<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+export type AddMembersToChatRoomMutation = {
+  __typename?: 'Mutation';
+  addMembersToChatRoom: boolean;
 };
 
 export type CreateChatMessageMutationVariables = Exact<{
@@ -7797,6 +7813,25 @@ export class AdminCancelBoostsGQL extends Apollo.Mutation<
   AdminCancelBoostsMutationVariables
 > {
   document = AdminCancelBoostsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const AddMembersToChatRoomDocument = gql`
+  mutation AddMembersToChatRoom($roomGuid: String!, $memberGuids: [String!]!) {
+    addMembersToChatRoom(roomGuid: $roomGuid, memberGuids: $memberGuids)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AddMembersToChatRoomGQL extends Apollo.Mutation<
+  AddMembersToChatRoomMutation,
+  AddMembersToChatRoomMutationVariables
+> {
+  document = AddMembersToChatRoomDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
