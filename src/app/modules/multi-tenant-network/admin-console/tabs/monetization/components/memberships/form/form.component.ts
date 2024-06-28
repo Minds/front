@@ -191,6 +191,14 @@ export class NetworkAdminMonetizationMembershipFormComponent
   }
 
   /**
+   * Payment method form control getter.
+   * @returns { AbstractControl<SiteMembershipPricingModelEnum> } - Pricing model form control.
+   */
+  get isExternalFormControl(): AbstractControl<boolean> {
+    return this.formGroup.get('isExternal') ?? null;
+  }
+
+  /**
    * Pricing model form control getter.
    * @returns { AbstractControl<SiteMembershipPricingModelEnum> } - Pricing model form control.
    */
@@ -252,6 +260,15 @@ export class NetworkAdminMonetizationMembershipFormComponent
   }
 
   /**
+   * Handles click on radio button container.
+   */
+  public onIsExternalButtonContainerClick(isExternal: boolean): void {
+    if (this.editMode) return;
+    this.isExternalFormControl.setValue(isExternal);
+    this.isExternalFormControl.markAsDirty();
+  }
+
+  /**
    * Removes group from selected groups.
    * @param { MindsGroup } group - Group to remove.
    * @returns { void }
@@ -310,6 +327,9 @@ export class NetworkAdminMonetizationMembershipFormComponent
             .getValue()
             .map((group: MindsGroup) => group.guid),
           roles: this.getSelectedRoleIds(),
+          isExternal: this.isExternalFormControl.value,
+          purchaseUrl: this.formGroup.controls['purchaseUrl'].value,
+          manageUrl: this.formGroup.controls['manageUrl'].value,
         })
       );
 
@@ -351,6 +371,8 @@ export class NetworkAdminMonetizationMembershipFormComponent
             .getValue()
             .map((group: MindsGroup) => group.guid),
           roles: this.getSelectedRoleIds(),
+          purchaseUrl: this.formGroup.controls['purchaseUrl'].value,
+          manageUrl: this.formGroup.controls['manageUrl'].value,
         })
       );
 
@@ -440,10 +462,20 @@ export class NetworkAdminMonetizationMembershipFormComponent
           SiteMembershipBillingPeriodEnum.Monthly,
         [Validators.required]
       ),
+      isExternal: new FormControl<boolean>(
+        this.preloadedSiteMembership?.isExternal ?? false
+      ),
+      purchaseUrl: new FormControl<string>(
+        this.preloadedSiteMembership?.purchaseUrl ?? null
+      ),
+      manageUrl: new FormControl<string>(
+        this.preloadedSiteMembership?.manageUrl ?? null
+      ),
       currentGroupSelection: new FormControl<MindsGroup>(null),
     });
 
     if (this.editMode) {
+      this.isExternalFormControl.disable();
       this.pricingModelFormControl.disable();
       this.priceFormControl.disable();
       this.billingPeriodFormControl.disable();
@@ -471,6 +503,14 @@ export class NetworkAdminMonetizationMembershipFormComponent
           this.currentGroupSelectionFormControl.markAsUntouched();
           this.currentGroupSelectionFormControl.markAsPristine();
           this.addGroup(group);
+        }),
+      this.isExternalFormControl.valueChanges
+        .pipe(distinctUntilChanged())
+        .subscribe((isExternal) => {
+          if (!isExternal) {
+            this.formGroup.controls['purchaseUrl'].reset();
+            this.formGroup.controls['manageUrl'].reset();
+          }
         })
     );
   }

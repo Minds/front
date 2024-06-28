@@ -18,5 +18,8 @@ query GetSiteMemberships {
       membersCount
       legacy
     }
+    isExternal
+    purchaseUrl
+    manageUrl
   }
 }

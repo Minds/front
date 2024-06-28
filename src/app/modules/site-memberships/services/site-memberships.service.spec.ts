@@ -31,6 +31,7 @@ export const mockSiteMemberships: SiteMembership[] = [
     ],
     groups: [],
     archived: false,
+    isExternal: false,
   },
   {
     id: '2',
@@ -47,6 +48,7 @@ export const mockSiteMemberships: SiteMembership[] = [
     ],
     groups: [],
     archived: false,
+    isExternal: false,
   },
 ];
 

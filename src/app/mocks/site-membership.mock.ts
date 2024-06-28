@@ -51,4 +51,5 @@ export const siteMembershipMock: SiteMembership = {
     { name: 'VERIFIED', id: 3, permissions: [] },
   ],
   membershipDescription: 'mockMembershipDescription',
+  isExternal: false,
 };

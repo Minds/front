@@ -157,6 +157,14 @@ export class JoinManageSiteMembershipButtonComponent implements OnInit {
    * @returns { Promise<void> }
    */
   public async onManagePlanClick(): Promise<void> {
+    const membership = await firstValueFrom(this.membership$);
+
+    // Go to custom manage link if external
+    if (membership.isExternal) {
+      window.open(membership.manageUrl, '_self');
+      return;
+    }
+
     this.navigationInProgress$.next(true);
 
     const membershipSubscriptionId: number = this.getMembershipSubscriptionId();
@@ -184,6 +192,14 @@ export class JoinManageSiteMembershipButtonComponent implements OnInit {
    * @returns { Promise<void> }
    */
   private async navigateToCheckout(): Promise<void> {
+    const membership = await firstValueFrom(this.membership$);
+
+    // Go to custom purchase link if external
+    if (membership.isExternal) {
+      window.open(membership.purchaseUrl, '_self');
+      return;
+    }
+
     this.navigationInProgress$.next(true);
 
     // refetch membership subscription guids.

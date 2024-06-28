@@ -46,6 +46,7 @@ describe('JoinManageSiteMembershipButtonComponent', () => {
       ],
       groups: [],
       archived: false,
+      isExternal: false,
     },
     {
       id: '2',
@@ -62,6 +63,7 @@ describe('JoinManageSiteMembershipButtonComponent', () => {
       ],
       groups: [],
       archived: false,
+      isExternal: false,
     },
   ];
 
@@ -193,6 +195,8 @@ describe('JoinManageSiteMembershipButtonComponent', () => {
         Promise.resolve(true)
       );
 
+      comp.membership$ = new BehaviorSubject(mockSiteMemberships[0]);
+
       comp.onJoinMembershipClick();
       tick();
 
@@ -255,6 +259,8 @@ describe('JoinManageSiteMembershipButtonComponent', () => {
         Promise.resolve(true)
       );
 
+      comp.membership$ = new BehaviorSubject(mockSiteMemberships[0]);
+
       comp.onJoinMembershipClick();
       tick();
 
@@ -284,6 +290,8 @@ describe('JoinManageSiteMembershipButtonComponent', () => {
         })
       );
 
+      comp.membership$ = new BehaviorSubject(mockSiteMemberships[0]);
+
       comp.onJoinMembershipClick();
       tick();
 
@@ -307,6 +315,9 @@ describe('JoinManageSiteMembershipButtonComponent', () => {
 
     it('should navigate to manage plan', fakeAsync(() => {
       spyOn(comp, 'getMembershipSubscriptionId').and.returnValue(1);
+
+      comp.membership$ = new BehaviorSubject(siteMembershipMock);
+
       comp.onManagePlanClick();
       tick();
 

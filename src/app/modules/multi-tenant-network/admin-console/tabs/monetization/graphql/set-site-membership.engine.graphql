@@ -6,6 +6,9 @@ mutation SetSiteMembership(
   $membershipDescription: String
   $roles: [Int!]
   $groups: [String!]
+  $isExternal: Boolean!
+  $purchaseUrl: String
+  $manageUrl: String
 ) {
   siteMembership(
     siteMembershipInput: {
@@ -16,6 +19,9 @@ mutation SetSiteMembership(
       membershipDescription: $membershipDescription
       roles: $roles
       groups: $groups
+      isExternal: $isExternal
+      purchaseUrl: $purchaseUrl
+      manageUrl: $manageUrl
     }
   ) {
     id
@@ -37,5 +43,8 @@ mutation SetSiteMembership(
       membersCount
       legacy
     }
+    isExternal
+    purchaseUrl
+    manageUrl
   }
 }

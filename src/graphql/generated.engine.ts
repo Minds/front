@@ -1983,6 +1983,8 @@ export type SiteMembership = {
   archived: Scalars['Boolean']['output'];
   groups?: Maybe<Array<GroupNode>>;
   id: Scalars['ID']['output'];
+  isExternal: Scalars['Boolean']['output'];
+  manageUrl?: Maybe<Scalars['String']['output']>;
   membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
   membershipDescription?: Maybe<Scalars['String']['output']>;
   membershipGuid: Scalars['String']['output'];
@@ -1990,6 +1992,7 @@ export type SiteMembership = {
   membershipPriceInCents: Scalars['Int']['output'];
   membershipPricingModel: SiteMembershipPricingModelEnum;
   priceCurrency: Scalars['String']['output'];
+  purchaseUrl?: Maybe<Scalars['String']['output']>;
   roles?: Maybe<Array<Role>>;
 };
 
@@ -2000,11 +2003,14 @@ export enum SiteMembershipBillingPeriodEnum {
 
 export type SiteMembershipInput = {
   groups?: InputMaybe<Array<Scalars['String']['input']>>;
+  isExternal?: InputMaybe<Scalars['Boolean']['input']>;
+  manageUrl?: InputMaybe<Scalars['String']['input']>;
   membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
   membershipDescription?: InputMaybe<Scalars['String']['input']>;
   membershipName: Scalars['String']['input'];
   membershipPriceInCents: Scalars['Int']['input'];
   membershipPricingModel: SiteMembershipPricingModelEnum;
+  purchaseUrl?: InputMaybe<Scalars['String']['input']>;
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
@@ -2025,9 +2031,11 @@ export type SiteMembershipSubscription = {
 
 export type SiteMembershipUpdateInput = {
   groups?: InputMaybe<Array<Scalars['String']['input']>>;
+  manageUrl?: InputMaybe<Scalars['String']['input']>;
   membershipDescription?: InputMaybe<Scalars['String']['input']>;
   membershipGuid: Scalars['String']['input'];
   membershipName: Scalars['String']['input'];
+  purchaseUrl?: InputMaybe<Scalars['String']['input']>;
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
@@ -3721,6 +3729,9 @@ export type GetSiteMembershipQuery = {
     membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
     membershipPricingModel: SiteMembershipPricingModelEnum;
     archived: boolean;
+    isExternal: boolean;
+    purchaseUrl?: string | null;
+    manageUrl?: string | null;
     roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
     groups?: Array<{
       __typename?: 'GroupNode';
@@ -3746,6 +3757,9 @@ export type GetSiteMembershipsQuery = {
     priceCurrency: string;
     membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
     membershipPricingModel: SiteMembershipPricingModelEnum;
+    isExternal: boolean;
+    purchaseUrl?: string | null;
+    manageUrl?: string | null;
     roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
     groups?: Array<{
       __typename?: 'GroupNode';
@@ -3774,6 +3788,9 @@ export type SetSiteMembershipMutationVariables = Exact<{
   groups?: InputMaybe<
     Array<Scalars['String']['input']> | Scalars['String']['input']
   >;
+  isExternal: Scalars['Boolean']['input'];
+  purchaseUrl?: InputMaybe<Scalars['String']['input']>;
+  manageUrl?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type SetSiteMembershipMutation = {
@@ -3788,6 +3805,9 @@ export type SetSiteMembershipMutation = {
     membershipPricingModel: SiteMembershipPricingModelEnum;
     membershipDescription?: string | null;
     priceCurrency: string;
+    isExternal: boolean;
+    purchaseUrl?: string | null;
+    manageUrl?: string | null;
     roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
     groups?: Array<{
       __typename?: 'GroupNode';
@@ -3818,6 +3838,8 @@ export type UpdateSiteMembershipMutationVariables = Exact<{
   groups?: InputMaybe<
     Array<Scalars['String']['input']> | Scalars['String']['input']
   >;
+  purchaseUrl?: InputMaybe<Scalars['String']['input']>;
+  manageUrl?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type UpdateSiteMembershipMutation = {
@@ -3832,6 +3854,9 @@ export type UpdateSiteMembershipMutation = {
     membershipPricingModel: SiteMembershipPricingModelEnum;
     membershipDescription?: string | null;
     priceCurrency: string;
+    isExternal: boolean;
+    purchaseUrl?: string | null;
+    manageUrl?: string | null;
     roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
     groups?: Array<{
       __typename?: 'GroupNode';
@@ -7534,6 +7559,9 @@ export type GetSiteMembershipsAndSubscriptionsQuery = {
     priceCurrency: string;
     membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
     membershipPricingModel: SiteMembershipPricingModelEnum;
+    isExternal: boolean;
+    purchaseUrl?: string | null;
+    manageUrl?: string | null;
     roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
     groups?: Array<{
       __typename?: 'GroupNode';
@@ -9227,6 +9255,9 @@ export const GetSiteMembershipDocument = gql`
         membersCount
         legacy
       }
+      isExternal
+      purchaseUrl
+      manageUrl
     }
   }
 `;
@@ -9265,6 +9296,9 @@ export const GetSiteMembershipsDocument = gql`
         membersCount
         legacy
       }
+      isExternal
+      purchaseUrl
+      manageUrl
     }
   }
 `;
@@ -9313,6 +9347,9 @@ export const SetSiteMembershipDocument = gql`
     $membershipDescription: String
     $roles: [Int!]
     $groups: [String!]
+    $isExternal: Boolean!
+    $purchaseUrl: String
+    $manageUrl: String
   ) {
     siteMembership(
       siteMembershipInput: {
@@ -9323,6 +9360,9 @@ export const SetSiteMembershipDocument = gql`
         membershipDescription: $membershipDescription
         roles: $roles
         groups: $groups
+        isExternal: $isExternal
+        purchaseUrl: $purchaseUrl
+        manageUrl: $manageUrl
       }
     ) {
       id
@@ -9344,6 +9384,9 @@ export const SetSiteMembershipDocument = gql`
         membersCount
         legacy
       }
+      isExternal
+      purchaseUrl
+      manageUrl
     }
   }
 `;
@@ -9387,6 +9430,8 @@ export const UpdateSiteMembershipDocument = gql`
     $membershipDescription: String
     $roles: [Int!]
     $groups: [String!]
+    $purchaseUrl: String
+    $manageUrl: String
   ) {
     updateSiteMembership(
       siteMembershipInput: {
@@ -9395,6 +9440,8 @@ export const UpdateSiteMembershipDocument = gql`
         membershipDescription: $membershipDescription
         roles: $roles
         groups: $groups
+        purchaseUrl: $purchaseUrl
+        manageUrl: $manageUrl
       }
     ) {
       id
@@ -9416,6 +9463,9 @@ export const UpdateSiteMembershipDocument = gql`
         membersCount
         legacy
       }
+      isExternal
+      purchaseUrl
+      manageUrl
     }
   }
 `;
@@ -10861,6 +10911,9 @@ export const GetSiteMembershipsAndSubscriptionsDocument = gql`
         membersCount
         legacy
       }
+      isExternal
+      purchaseUrl
+      manageUrl
     }
     siteMembershipSubscriptions {
       membershipGuid
