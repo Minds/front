@@ -18,6 +18,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import sidebarMenu from './sidebar-menu.default';
 import { DataTab } from '../../../interfaces/dashboard';
 import { Menu } from '../../../interfaces/menu';
+import { TokenPricesService } from './components/currency-value/token-prices.service';
 
 /**
  * Top-level container for all things wallet
@@ -60,6 +61,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected router: Router,
     protected route: ActivatedRoute,
+    protected tokenPricesService: TokenPricesService,
     protected cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId
   ) {}
@@ -128,11 +130,14 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Whether to show the token price badge (if a user is on a wallet/tokens route).
+   * Whether to show the token price badge.
    * @returns { boolean } true if token price badge should be shown.
    */
   shouldShowTokenPriceBadge(): boolean {
-    return this.router.url.includes('/wallet/tokens');
+    return (
+      this.router.url.includes('/wallet/tokens') &&
+      this.tokenPricesService.minds > 0
+    );
   }
 
   scrollToSettingsEl() {
