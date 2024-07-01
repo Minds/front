@@ -166,6 +166,11 @@ export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
         add: ['boost'],
         remove: [],
       },
+      {
+        test: () => this.isLoggedIn() && this.permissions.canBoost(),
+        add: [],
+        remove: ['boost'],
+      },
     ];
 
     // Process conditions to update hiddenCustomNavItemsIds

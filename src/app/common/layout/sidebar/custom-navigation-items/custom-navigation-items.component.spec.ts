@@ -196,5 +196,16 @@ describe('CustomNavigationItemsComponent', () => {
 
       expect(component.hiddenCustomNavItemsIds.has('boost')).toBeFalse();
     });
+
+    it('should remove boost from hidden items when user cannot boost', () => {
+      component.hiddenCustomNavItemsIds.add('boost');
+
+      (component as any).session.isLoggedIn.and.returnValue(true);
+      (component as any).permissions.canBoost.and.returnValue(true);
+
+      component.setHiddenCustomNavItems();
+
+      expect(component.hiddenCustomNavItemsIds.has('boost')).toBeFalse();
+    });
   });
 });

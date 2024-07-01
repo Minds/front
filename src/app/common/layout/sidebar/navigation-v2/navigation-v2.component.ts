@@ -154,6 +154,9 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     this.hasBoostPermission = this.permissions.canBoost();
 
     this.subscriptions.push(
+      this.session.loggedinEmitter.subscribe((isLoggedIn: boolean): void => {
+        this.hasBoostPermission = this.permissions.canBoost();
+      }),
       this.themeService.isDark$.subscribe((isDark) => {
         this.isDarkTheme = isDark;
       }),
