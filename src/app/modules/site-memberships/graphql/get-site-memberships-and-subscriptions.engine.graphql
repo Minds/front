@@ -18,6 +18,9 @@ query GetSiteMembershipsAndSubscriptions {
       membersCount
       legacy
     }
+    isExternal
+    purchaseUrl
+    manageUrl
   }
   siteMembershipSubscriptions {
     membershipGuid

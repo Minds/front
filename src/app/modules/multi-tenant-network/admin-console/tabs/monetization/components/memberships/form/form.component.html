@@ -121,6 +121,71 @@
       </p>
     </div>
 
+    <!-- Membership payment method radio buttons -->
+    <div class="m-adminMembershipCreateForm__formField">
+      <label
+        class="m-adminMembershipCreateForm__formLabel"
+        for="isExternal"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__PAYMENT_METHOD_TITLE"
+        >Payment Method</label
+      >
+      <fieldset class="m-adminMembershipCreateForm__fieldset">
+        <div
+          class="m-adminMembershipCreateForm__radioButtonInputContainer"
+          (click)="onIsExternalButtonContainerClick(false)"
+        >
+          <input
+            class="m-adminMembershipCreateForm__radioButtonInput"
+            name="isExternal"
+            type="radio"
+            id="is_external"
+            formControlName="isExternal"
+            [value]="false"
+          />
+          <label
+            class="m-adminMembershipCreateForm__radioButtonInputLabel--hidden"
+            [ngClass]="{
+              'm-adminMembershipCreateForm__radioButtonInputLabel--disabled':
+                editMode
+            }"
+            ><!--Icon positioning element--></label
+          >
+          <label
+            class="m-adminMembershipCreateForm__radioButtonLabel"
+            i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__DEFAULT"
+            >Stripe (default)</label
+          >
+        </div>
+
+        <div
+          class="m-adminMembershipCreateForm__radioButtonInputContainer"
+          (click)="onIsExternalButtonContainerClick(true)"
+        >
+          <input
+            class="m-adminMembershipCreateForm__radioButtonInput"
+            name="isExternal"
+            type="radio"
+            id="is_external"
+            formControlName="isExternal"
+            [value]="true"
+          />
+          <label
+            class="m-adminMembershipCreateForm__radioButtonInputLabel--hidden"
+            [ngClass]="{
+              'm-adminMembershipCreateForm__radioButtonInputLabel--disabled':
+                editMode
+            }"
+            ><!--Icon positioning element--></label
+          >
+          <label
+            class="m-adminMembershipCreateForm__radioButtonLabel"
+            i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__EXTERNAL"
+            >External</label
+          >
+        </div>
+      </fieldset>
+    </div>
+
     <!-- Membership price model radio buttons -->
     <div class="m-adminMembershipCreateForm__formField">
       <label
@@ -279,6 +344,72 @@
         To change the billing period, you will need to a create a new
         membership.
       </label>
+    </div>
+
+    <!-- Purchase link input -->
+    <div
+      class="m-adminMembershipCreateForm__formField"
+      *ngIf="isExternalFormControl.value === true"
+    >
+      <label
+        class="m-adminMembershipCreateForm__formLabel"
+        for="purchaseUrl"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__PURCHASE_URL_TITLE"
+        >External purchase link</label
+      >
+      <input
+        class="m-adminMembershipCreateForm__formInput--text"
+        type="text"
+        formControlName="purchaseUrl"
+        name="purchaseUrl"
+        id="purchase_url"
+      />
+      <label
+        class="m-adminMembershipCreateForm__formLabel m-adminMembershipCreateForm__formLabel--secondaryBottom"
+        for="purchase_url"
+      >
+        Add a link here to an external payment page where your customers can
+        purchase a membership. <br />
+        <b>Note:</b> Memberships that are bought wth an external link will not
+        show revenue in Stripe.
+      </label>
+      <m-formError
+        *ngIf="formGroup.get('purchaseUrl')?.dirty"
+        [errors]="formGroup.get('purchaseUrl')?.errors"
+      ></m-formError>
+    </div>
+
+    <!-- Manage link input -->
+    <div
+      class="m-adminMembershipCreateForm__formField"
+      *ngIf="isExternalFormControl.value === true"
+    >
+      <label
+        class="m-adminMembershipCreateForm__formLabel"
+        for="manageUrl"
+        i18n="@@NETWORK_ADMIN_MEMBERSHIP_CREATE_FORM__MANAGE_URL_TITLE"
+        >Manage membership link</label
+      >
+
+      <input
+        class="m-adminMembershipCreateForm__formInput--text"
+        type="text"
+        formControlName="manageUrl"
+        name="manageUrl"
+        id="purchase_url"
+      />
+      <label
+        class="m-adminMembershipCreateForm__formLabel m-adminMembershipCreateForm__formLabel--secondaryBottom"
+        for="manageUrl"
+      >
+        (*) Optional <br />
+        Add a link here to an external membership page where your customers can
+        manage their membership.
+      </label>
+      <m-formError
+        *ngIf="formGroup.get('manageUrl')?.dirty"
+        [errors]="formGroup.get('manageUrl')?.errors"
+      ></m-formError>
     </div>
 
     <!-- User roles -->
