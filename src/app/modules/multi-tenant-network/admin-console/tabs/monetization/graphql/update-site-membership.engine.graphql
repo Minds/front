@@ -4,6 +4,8 @@ mutation UpdateSiteMembership(
   $membershipDescription: String
   $roles: [Int!]
   $groups: [String!]
+  $purchaseUrl: String
+  $manageUrl: String
 ) {
   updateSiteMembership(
     siteMembershipInput: {
@@ -12,6 +14,8 @@ mutation UpdateSiteMembership(
       membershipDescription: $membershipDescription
       roles: $roles
       groups: $groups
+      purchaseUrl: $purchaseUrl
+      manageUrl: $manageUrl
     }
   ) {
     id
@@ -33,5 +37,8 @@ mutation UpdateSiteMembership(
       membersCount
       legacy
     }
+    isExternal
+    purchaseUrl
+    manageUrl
   }
 }

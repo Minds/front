@@ -41,6 +41,7 @@ describe('SiteMembershipsPageComponent', () => {
       ],
       groups: [],
       archived: false,
+      isExternal: false,
     },
     {
       id: '2',
@@ -57,6 +58,7 @@ describe('SiteMembershipsPageComponent', () => {
       ],
       groups: [],
       archived: false,
+      isExternal: false,
     },
   ];
 

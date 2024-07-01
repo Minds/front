@@ -19,5 +19,8 @@ query GetSiteMembership($membershipGuid: String!) {
       membersCount
       legacy
     }
+    isExternal
+    purchaseUrl
+    manageUrl
   }
 }

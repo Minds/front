@@ -129,6 +129,10 @@
         @include body2Regular;
         margin-bottom: $spacing1;
 
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
         &.m-adminMembershipCreateForm__formLabel--secondary {
           @include m-theme() {
             color: themed($m-textColor--secondary);

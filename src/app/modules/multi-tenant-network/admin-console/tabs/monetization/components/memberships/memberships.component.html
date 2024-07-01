@@ -23,9 +23,7 @@
     color="blue"
     size="xsmall"
     solid="true"
-    [disabled]="
-      (membershipLoadInProgress$ | async) || !(hasSetStripeKeys$ | async)
-    "
+    [disabled]="membershipLoadInProgress$ | async"
     (onAction)="onCreateButtonClick()"
   >
     <ng-container i18n="@@NETWORK_ADMIN_MEMBERSHIPS__CREATE_MEMBERSHIP"

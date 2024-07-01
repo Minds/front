@@ -363,6 +363,9 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
         membershipBillingPeriod: billingPeriod,
         groups: groups.map((group) => group.guid),
         roles: [2, 3],
+        isExternal: false,
+        purchaseUrl: null,
+        manageUrl: null,
       });
       expect(comp.formGroup.pristine).toBeTrue();
       expect(comp.formGroup.touched).toBeFalse();
@@ -417,6 +420,9 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
         membershipBillingPeriod: billingPeriod,
         groups: groups.map((group) => group.guid),
         roles: [2, 3],
+        isExternal: false,
+        purchaseUrl: null,
+        manageUrl: null,
       });
 
       expect((comp as any).toasterService.success).not.toHaveBeenCalled();
@@ -467,6 +473,9 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
         membershipBillingPeriod: billingPeriod,
         groups: groups.map((group) => group.guid),
         roles: [2, 3],
+        isExternal: false,
+        purchaseUrl: null,
+        manageUrl: null,
       });
 
       expect((comp as any).toasterService.success).not.toHaveBeenCalled();
@@ -511,6 +520,8 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
           membershipDescription: description,
           groups: groups.map((group) => group.guid),
           roles: [2, 3],
+          purchaseUrl: null,
+          manageUrl: null,
         }
       );
       expect(comp.formGroup.pristine).toBeTrue();
@@ -555,6 +566,8 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
           membershipDescription: description,
           groups: groups.map((group) => group.guid),
           roles: [2, 3],
+          purchaseUrl: null,
+          manageUrl: null,
         }
       );
       expect((comp as any).toasterService.success).not.toHaveBeenCalledWith(
@@ -601,6 +614,8 @@ describe('NetworkAdminMonetizationMembershipFormComponent', () => {
           membershipDescription: description,
           groups: groups.map((group) => group.guid),
           roles: [2, 3],
+          purchaseUrl: null,
+          manageUrl: null,
         }
       );
       expect((comp as any).toasterService.success).not.toHaveBeenCalledWith(
