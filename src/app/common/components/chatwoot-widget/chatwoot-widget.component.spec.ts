@@ -135,6 +135,30 @@ describe('ChatwootWidgetComponent', () => {
     expect((comp as any).initChatwoot).toHaveBeenCalled();
   }));
 
+  it('should not init chatwoot if no website token is provided', fakeAsync(() => {
+    (comp as any).chatWootConfig = {
+      website_token: '',
+      base_url: '~base_url~',
+      script_url: '~script_url~',
+    };
+    (window as any).chatwootSDK.run.calls.reset();
+    (comp as any).ngOnInit();
+
+    expect((window as any).chatwootSDK.run).not.toHaveBeenCalled();
+  }));
+
+  it('should not init chatwoot if no base url is provided', fakeAsync(() => {
+    (comp as any).chatWootConfig = {
+      website_token: '~website_url~',
+      base_url: '',
+      script_url: '~script_url~',
+    };
+    (window as any).chatwootSDK.run.calls.reset();
+    (comp as any).ngOnInit();
+
+    expect((window as any).chatwootSDK.run).not.toHaveBeenCalled();
+  }));
+
   it('should reset chatwoot on log out', fakeAsync(() => {
     (comp as any).initLoginStateSubscription();
     (comp as any).session.loggedinEmitter.emit(false);

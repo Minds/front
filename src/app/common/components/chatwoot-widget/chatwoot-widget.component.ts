@@ -66,6 +66,11 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (!this.websiteToken || !this.baseUrl) {
+      console.warn('Config values not provided for Chatwoot');
+      return;
+    }
+
     if (this.service.canUseChatwoot()) {
       this.initChatwoot();
     } else {
