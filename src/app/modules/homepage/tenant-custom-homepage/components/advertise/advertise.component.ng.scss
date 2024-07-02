@@ -1,0 +1,94 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  justify-content: center;
+
+  @include m-theme() {
+    background-color: themed($m-action);
+  }
+
+  section {
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 1160px;
+    margin: 160px $spacing8;
+    box-sizing: border-box;
+
+    @media screen and (max-width: $min-huge) {
+      flex-flow: column nowrap;
+    }
+
+    .m-tenantHomepageAdvertise__containerLeft {
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: flex-start;
+
+      @media screen and (max-width: $min-huge) {
+        align-items: center;
+        text-align: center;
+        max-width: 600px;
+      }
+
+      .m-tenantHomepageAdvertise__title {
+        font-family: Inter;
+        font-size: 52.2px;
+        font-weight: 900;
+        line-height: 53.2px;
+        margin: 0 0 $spacing12 0;
+
+        @include m-theme() {
+          color: themed($m-textColor--primaryInverted);
+        }
+      }
+
+      .m-tenantHomepageAdvertise__description {
+        font-family: Inter;
+        font-size: 16.2px;
+        font-weight: 400;
+        line-height: 27.3px;
+        margin-bottom: $spacing10;
+
+        @include m-theme() {
+          color: themed($m-textColor--primaryInverted);
+        }
+      }
+
+      .m-tenantHomepageAdvertise__actionButton {
+        border-radius: 4px;
+
+        @include m-theme() {
+          border: 1px solid themed($m-textColor--primaryInverted);
+        }
+      }
+    }
+
+    .m-tenantHomepageAdvertise__containerRight {
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: flex-end;
+
+      @media screen and (max-width: $min-huge) {
+        display: none;
+      }
+
+      .m-tenantHomepageAdvertise__boostIcon {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 320px;
+        font-weight: 400;
+
+        @include unselectable;
+        @include m-theme() {
+          color: themed($m-textColor--primaryInverted);
+        }
+      }
+    }
+  }
+}

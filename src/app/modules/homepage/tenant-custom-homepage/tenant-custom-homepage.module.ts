@@ -9,6 +9,7 @@ import { MarketingModule } from '../../marketing/marketing.module';
 import { TenantCustomHomepageHeroComponent } from './components/hero/hero.component';
 import { TenantFeaturedGroupCardsComponent } from './components/featured-group-cards/featured-group-cards.component';
 import { TenantCustomHomepageMembershipsComponent } from './components/memberships/memberships.component';
+import { TenantCustomHomepageAdvertiseComponent } from './components/advertise/advertise.component';
 
 @NgModule({
   imports: [NgCommonModule, CommonModule, NgOptimizedImage, MarketingModule],
@@ -17,6 +18,7 @@ import { TenantCustomHomepageMembershipsComponent } from './components/membershi
     TenantCustomHomepageHeroComponent,
     TenantFeaturedGroupCardsComponent,
     TenantCustomHomepageMembershipsComponent,
+    TenantCustomHomepageAdvertiseComponent,
   ],
   exports: [TenantCustomHomepageBaseComponent],
 })

@@ -2,10 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TenantFeaturedGroupCardsComponent } from './featured-group-cards.component';
 import { MockComponent } from '../../../../../utils/mock';
 import { GetFeaturedEntitiesGQL } from '../../../../../../graphql/generated.engine';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { TruncatePipe } from '../../../../../common/pipes/truncate.pipe';
 import { By } from '@angular/platform-browser';
+import { TenantCustomHomepageService } from '../../services/tenant-custom-homepage.service';
 
 describe('TenantFeaturedGroupCardsComponent', () => {
   let comp: TenantFeaturedGroupCardsComponent;
@@ -61,6 +62,12 @@ describe('TenantFeaturedGroupCardsComponent', () => {
             ),
           },
         },
+        {
+          provide: TenantCustomHomepageService,
+          useValue: {
+            isGroupsSectionLoaded$: new BehaviorSubject<boolean>(false),
+          },
+        },
       ],
     });
 
@@ -104,6 +111,11 @@ describe('TenantFeaturedGroupCardsComponent', () => {
           briefDescription: 'description3',
         },
       ]);
+      expect(
+        (
+          comp as any
+        ).tenantCustomHomepageService.isGroupsSectionLoaded$.getValue()
+      ).toBeTrue();
       done();
     });
   });

@@ -1,0 +1,50 @@
+@import 'defaults.scss';
+
+:host {
+  cursor: pointer;
+
+  .m-networkCreateBoostLink__description {
+    @include body2Regular;
+    margin: $spacing9 0 $spacing3 0;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-networkCreateBoostLink__linkContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing2;
+    padding: $spacing3;
+    margin-bottom: $spacing6;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      border-radius: 2px;
+    }
+
+    .m-networkCreateBoostLink__link {
+      font-family: monospace;
+      font-size: 10px;
+      font-weight: 400;
+      line-height: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-networkCreateBoostLink__copyIcon {
+      font-size: 16px;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}

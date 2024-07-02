@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  Inject,
   Injector,
   Input,
   OnChanges,
@@ -43,6 +44,7 @@ import { ComposerModalService } from '../modal/modal.service';
 import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
 import { ComposerAudienceSelectorService } from '../../services/audience.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -118,6 +120,20 @@ export class BaseComponent
   /** Is this an edit? */
   public readonly isEditing$: Observable<boolean> = this.service.isEditing$;
 
+  /** Whether boost toggle should be shown. */
+  public readonly shouldShowBoostToggle$: Observable<boolean> =
+    this.isEditing$.pipe(
+      map((isEditing: boolean) => {
+        if (
+          this.isTenantNetwork &&
+          !this.configs.get('tenant')?.['boost_enabled']
+        ) {
+          return false;
+        }
+        return this.isModal && !isEditing && this.permissions.canBoost();
+      })
+    );
+
   /**
    * Constructor
    * @param service
@@ -138,9 +154,10 @@ export class BaseComponent
     protected toasterService: ToasterService,
     protected blogPreloadService: BlogPreloadService,
     private composerModal: ComposerModalService,
-    configs: ConfigsService,
+    private configs: ConfigsService,
     protected uploaderService: UploaderService,
-    protected permissions: PermissionsService
+    protected permissions: PermissionsService,
+    @Inject(IS_TENANT_NETWORK) protected readonly isTenantNetwork: boolean
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
 

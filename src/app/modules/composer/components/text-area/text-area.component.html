@@ -37,7 +37,7 @@
   <m-text-input--autocomplete-container>
     <textarea
       class="m-composerTextarea__message"
-      placeholder="Speak your mind..."
+      [placeholder]="textAreaPlaceholderText$ | async"
       i18n-placeholder="@@COMPOSER_POPUP__SPEAK_YOUR_MINDS_ELLIPSIS"
       [id]="inputId"
       [ngModel]="message$ | async"

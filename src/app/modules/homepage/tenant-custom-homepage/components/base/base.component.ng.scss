@@ -4,12 +4,15 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  overflow-x: hidden;
 
-  *:not(m-marketing__footer) {
+  *:not(m-marketing__footer),
+  *:not(m-customTenantHomepage__advertise) {
     max-width: 1920px;
   }
 
-  m-marketing__footer {
+  m-marketing__footer,
+  m-customTenantHomepage__advertise {
     min-width: 100%;
   }
 }

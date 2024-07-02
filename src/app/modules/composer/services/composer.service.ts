@@ -63,6 +63,7 @@ import {
 } from './audience.service';
 import { LivestreamService } from './livestream.service';
 import { isPlatformBrowser } from '@angular/common';
+import { ComposerBoostService } from './boost.service';
 
 /**
  * Default values
@@ -442,6 +443,7 @@ export class ComposerService implements OnDestroy {
     private uploaderService: UploaderService,
     private toasterService: ToasterService,
     private livestreamService: LivestreamService,
+    private composerBoostService: ComposerBoostService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     // Setup data stream using the latest subject values
@@ -924,6 +926,9 @@ export class ComposerService implements OnDestroy {
     this.siteMembershipGuids$.next(null);
     this.showSiteMembershipPostPreview$.next(false);
 
+    // Reset boost state.
+    this.composerBoostService.reset();
+
     // Reset original source
     this.entity = null;
   }
@@ -1259,6 +1264,10 @@ export class ComposerService implements OnDestroy {
         this.feedsUpdate.postEmitter.emit(activity);
         this.onboardingService.forceCompletion('CreatePostStep');
         this.livestreamService.setStream(null);
+
+        if (this.composerBoostService.isBoostMode$.getValue()) {
+          this.composerBoostService.openBoostModal(activity);
+        }
       }
 
       if (this.payload.supermind_reply_guid) {

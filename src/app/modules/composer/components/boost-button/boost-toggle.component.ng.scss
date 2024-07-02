@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+:host {
+  @media screen and (max-width: calc($min-mobile - 1px)) {
+    display: none;
+  }
+
+  .m-composerBoostToggle__button {
+    background: none;
+    outline: inherit;
+    padding: $spacing2 calc($spacing3 + 2px);
+    border-radius: 32px;
+    cursor: pointer;
+
+    @include body3Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    &--selected {
+      padding: $spacing2 $spacing3;
+
+      @include body3Bold;
+      @include m-theme() {
+        color: themed($m-action);
+        border: 1px solid themed($m-action);
+      }
+    }
+  }
+}

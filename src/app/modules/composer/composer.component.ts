@@ -20,6 +20,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CookieService } from '../../common/services/cookie.service';
 import { UploaderService } from './services/uploader.service';
 import { ActivityContainer } from './services/audience.service';
+import { ComposerBoostService } from './services/boost.service';
 
 /**
  * Wrapper component for composer. It can hold an embedded base composer
@@ -120,6 +121,7 @@ export class ComposerComponent implements OnInit, OnDestroy {
     protected composerModalService: ComposerModalService,
     protected toaster: ToasterService,
     protected service: ComposerService /* NOTE: Used for DI. DO NOT REMOVE OR CHANGE !!! */,
+    private composerBoostService: ComposerBoostService,
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
     protected session: Session,
@@ -156,6 +158,11 @@ export class ComposerComponent implements OnInit, OnDestroy {
           } else {
             this.cookieService.put('intent-url', intentUrl);
           }
+        }
+
+        if (['1', 'true'].includes(params.get('createBoost'))) {
+          this.composerBoostService.isBoostMode$.next(true);
+          this.onTriggerClick();
         }
       }
     );
@@ -203,7 +210,10 @@ export class ComposerComponent implements OnInit, OnDestroy {
     this.modalOpen = false;
 
     // Intent url cleanup
-    if (this.route.snapshot.queryParamMap.get('intentUrl')) {
+    if (
+      this.route.snapshot.queryParamMap.get('intentUrl') ||
+      this.route.snapshot.queryParamMap.get('createBoost')
+    ) {
       this.router.navigate(['.'], {
         queryParams: {},
         relativeTo: this.route,

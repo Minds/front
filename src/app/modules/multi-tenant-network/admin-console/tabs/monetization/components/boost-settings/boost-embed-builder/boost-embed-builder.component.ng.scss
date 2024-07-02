@@ -23,11 +23,12 @@
     }
 
     .m-boostEmbedCode__embedCode {
-      font-family: 'IBM Plex Mono';
+      font-family: monospace;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
       line-height: 20px;
+      word-wrap: break-word;
     }
 
     .m-boostEmbedCode__embedCopyIcon {

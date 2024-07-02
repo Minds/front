@@ -89,7 +89,7 @@
   <!-- BOOST CHANNEL/LATEST POST NOTICE: DESKTOP -->
   <!-- ---------------------------------------- -->
   <div class="m-boostConsole__boostLatestPostWrapper--desktop">
-    <ng-container *ngTemplateOutlet="boostLatestPostNotice"></ng-container>
+    <ng-container *ngTemplateOutlet="boostNoticeTemplate"></ng-container>
   </div>
 
   <!-- ------------------------ -->
@@ -181,7 +181,7 @@
 <!-- BOOST CHANNEL/LATEST POST NOTICE: MOBILE -->
 <!-- ---------------------------------------- -->
 <div class="m-boostConsole__boostLatestPostWrapper--mobile">
-  <ng-container *ngTemplateOutlet="boostLatestPostNotice"></ng-container>
+  <ng-container *ngTemplateOutlet="boostNoticeTemplate"></ng-container>
 </div>
 <!-- -------------------------------------------- -->
 <!-- -------------------------------------------- -->
@@ -343,13 +343,26 @@
   </span>
 </ng-template>
 <!-- ------------------------------------->
-<!-- TEMPLATE: BOOST LATEST POST NOTICE -->
+<!-- TEMPLATE: BOOST NOTICE -->
 <!-- ------------------------------------->
-<ng-template #boostLatestPostNotice>
-  <m-feedNotice--boostLatestPost
+<ng-template #boostNoticeTemplate>
+  <ng-container
     *ngIf="!(service.adminContext$ | async) && boostLatestNoticeType"
-    [isInFeed]="false"
-    [dismissible]="false"
-    [targetBoostLocation]="boostLatestNoticeType"
-  ></m-feedNotice--boostLatestPost>
+  >
+    <ng-container
+      *ngIf="
+        ['feed', 'all'].includes(boostLatestNoticeType);
+        else boostLatestPostNoticeTemplate
+      "
+    >
+      <m-feedNotice--createBoost></m-feedNotice--createBoost>
+    </ng-container>
+    <ng-template #boostLatestPostNoticeTemplate>
+      <m-feedNotice--boostLatestPost
+        [isInFeed]="false"
+        [dismissible]="false"
+        [targetBoostLocation]="boostLatestNoticeType"
+      ></m-feedNotice--boostLatestPost>
+    </ng-template>
+  </ng-container>
 </ng-template>

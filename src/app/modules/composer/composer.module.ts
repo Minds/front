@@ -43,6 +43,7 @@ import { ComposerAudienceSelectorPanelComponent } from './components/popup/audie
 import { LiveStreamComponent } from './components/livestream/livestream.component';
 import { ComposerSiteMembershipSelectorComponent } from './components/popup/site-membership-selector/site-membership-selector.component';
 import { ComposerSiteMembershipPostPreview } from './components/site-membership-post-preview/site-membership-post-preview.component';
+import { ComposerBoostToggleComponent } from './components/boost-button/boost-toggle.component';
 /**
  * Exported components
  */
@@ -80,6 +81,7 @@ const INTERNAL_COMPONENTS = [
   ComposerAudienceSelectorPanelComponent,
   ComposerSiteMembershipSelectorComponent,
   ComposerSiteMembershipPostPreview,
+  ComposerBoostToggleComponent,
 ];
 
 const PROVIDERS = [
