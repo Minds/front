@@ -1,10 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { TenantCustomHomepageBaseComponent } from './base.component';
 import { SidebarNavigationService } from '../../../../../common/layout/sidebar/navigation.service';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { PageLayoutService } from '../../../../../common/layout/page-layout.service';
 import { TopbarService } from '../../../../../common/layout/topbar.service';
 import { BehaviorSubject } from 'rxjs';
+import { TenantCustomHomepageService } from '../../services/tenant-custom-homepage.service';
+import { ActivatedRoute } from '@angular/router';
+import { PLATFORM_ID } from '@angular/core';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 describe('TenantCustomHomepageBaseComponent', () => {
   let comp: TenantCustomHomepageBaseComponent;
@@ -24,11 +33,25 @@ describe('TenantCustomHomepageBaseComponent', () => {
           selector: 'm-customTenantHomepage__memberships',
         }),
         MockComponent({
+          selector: 'm-customTenantHomepage__advertise',
+        }),
+        MockComponent({
           selector: 'm-marketing__footer',
           inputs: ['alignLegalSection'],
         }),
       ],
       providers: [
+        {
+          provide: TenantCustomHomepageService,
+          useValue: MockService(TenantCustomHomepageService, {
+            has: ['isLoaded$'],
+            props: {
+              isLoaded$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+            },
+          }),
+        },
         {
           provide: SidebarNavigationService,
           useValue: MockService(SidebarNavigationService),
@@ -48,11 +71,37 @@ describe('TenantCustomHomepageBaseComponent', () => {
             },
           }),
         },
+        {
+          provide: ActivatedRoute,
+          useValue: MockService(ActivatedRoute, {
+            has: ['snapshot'],
+            props: {
+              snapshot: {
+                get: () => ({
+                  fragment: '',
+                }),
+              },
+            },
+          }),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+        {
+          provide: PLATFORM_ID,
+          useValue: 'browser',
+        },
       ],
     });
 
     fixture = TestBed.createComponent(TenantCustomHomepageBaseComponent);
     comp = fixture.componentInstance;
+
+    (comp as any).configs.get
+      .withArgs('tenant')
+      .and.returnValue({ boost_enabled: true });
+    (comp as any).boostEnabled = true;
 
     fixture.detectChanges();
     if (fixture.isStable()) {
@@ -88,4 +137,28 @@ describe('TenantCustomHomepageBaseComponent', () => {
     );
     expect((comp as any).pageLayoutService.cancelFullWidth).toHaveBeenCalled();
   });
+
+  it('should handle anchor tag scroll when loaded', fakeAsync(() => {
+    const scrollIntoViewSpy = spyOn(
+      (comp as any).advertiseSection.nativeElement,
+      'scrollIntoView'
+    );
+    (comp as any).route.snapshot.fragment = 'boost';
+    (comp as any).tenantCustomHomepageService.isLoaded$.next(true);
+    tick();
+
+    expect(scrollIntoViewSpy).toHaveBeenCalled();
+  }));
+
+  it('should NOT handle anchor tag scroll when loaded when no fragment is set', fakeAsync(() => {
+    const scrollIntoViewSpy = spyOn(
+      (comp as any).advertiseSection.nativeElement,
+      'scrollIntoView'
+    );
+    (comp as any).route.snapshot.fragment = '';
+    (comp as any).tenantCustomHomepageService.isLoaded$.next(true);
+    tick();
+
+    expect(scrollIntoViewSpy).not.toHaveBeenCalled();
+  }));
 });

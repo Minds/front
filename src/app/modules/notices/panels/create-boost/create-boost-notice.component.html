@@ -1,0 +1,31 @@
+<m-feedNotice
+  dataRefId="create-boost-notice"
+  [showIcon]="false"
+  [dismissible]="false"
+>
+  <span
+    class="m-feedNotice__title"
+    i18n="@@CREATE_BOOST_NOTICE__EXPAND_YOUR_REACH"
+  >
+    Expand your reach
+  </span>
+  <p
+    class="m-feedNotice__body"
+    i18n="@@CREATE_BOOST_NOTICE__GET_MORE_REACH_AND_ENGAGEMENT"
+  >
+    Get more reach and engagement by creating a post and boosting across the
+    network.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick()"
+    data-ref="feed-notice-create-boost-primary-click"
+  >
+    <ng-container i18n="@@CREATE_BOOST_NOTICE__CREATE_BOOST">
+      Create Boost
+    </ng-container>
+  </m-button>
+</m-feedNotice>

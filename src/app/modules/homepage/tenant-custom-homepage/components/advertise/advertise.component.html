@@ -1,0 +1,22 @@
+<section>
+  <div class="m-tenantHomepageAdvertise__containerLeft">
+    <h2 class="m-tenantHomepageAdvertise__title">{{ title }}</h2>
+    <p class="m-tenantHomepageAdvertise__description">{{ description }}</p>
+    <m-button
+      class="m-tenantHomepageAdvertise__actionButton"
+      color="blue"
+      size="small"
+      [solid]="true"
+      [softSquare]="true"
+      (onAction)="startBoostCreationFlow()"
+      ><ng-container i18n="@@CUSTOM_HOMEPAGE__BOOST_SECTION__GET_STARTED"
+        >Get started</ng-container
+      ></m-button
+    >
+  </div>
+  <div class="m-tenantHomepageAdvertise__containerRight">
+    <i class="material-icons m-tenantHomepageAdvertise__boostIcon"
+      >trending_up</i
+    >
+  </div>
+</section>

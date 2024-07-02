@@ -1,5 +1,13 @@
-import { Component } from '@angular/core';
-import { Observable, catchError, map, of, shareReplay } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Observable,
+  Subscription,
+  catchError,
+  map,
+  of,
+  shareReplay,
+  take,
+} from 'rxjs';
 import {
   FeaturedEntityTypeEnum,
   FeaturedGroup,
@@ -7,6 +15,7 @@ import {
   GetFeaturedEntitiesQuery,
 } from '../../../../../../graphql/generated.engine';
 import { ApolloQueryResult } from '@apollo/client';
+import { TenantCustomHomepageService } from '../../services/tenant-custom-homepage.service';
 
 /**
  * Tenant featured group cards.
@@ -16,7 +25,10 @@ import { ApolloQueryResult } from '@apollo/client';
   templateUrl: 'featured-group-cards.component.html',
   styleUrls: ['featured-group-cards.component.ng.scss'],
 })
-export class TenantFeaturedGroupCardsComponent {
+export class TenantFeaturedGroupCardsComponent implements OnInit, OnDestroy {
+  // subscription for initialization.
+  private initSubscription: Subscription;
+
   /** Featured groups from server. */
   protected readonly featuredGroups$: Observable<FeaturedGroup[]> =
     this.getFeaturedEntitiesGQL
@@ -39,5 +51,20 @@ export class TenantFeaturedGroupCardsComponent {
         shareReplay()
       );
 
-  constructor(private getFeaturedEntitiesGQL: GetFeaturedEntitiesGQL) {}
+  constructor(
+    private getFeaturedEntitiesGQL: GetFeaturedEntitiesGQL,
+    private tenantCustomHomepageService: TenantCustomHomepageService
+  ) {}
+
+  ngOnInit(): void {
+    this.initSubscription = this.featuredGroups$
+      .pipe(take(1))
+      .subscribe((val: FeaturedGroup[]): void => {
+        this.tenantCustomHomepageService.isGroupsSectionLoaded$.next(true);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.initSubscription?.unsubscribe();
+  }
 }

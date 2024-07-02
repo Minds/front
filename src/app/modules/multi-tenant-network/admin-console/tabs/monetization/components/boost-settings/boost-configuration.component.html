@@ -7,7 +7,11 @@
 
 <m-networkAdminConsole__enableBoostToggle></m-networkAdminConsole__enableBoostToggle>
 
-<m-boostEmbedBuilder
-  *ngIf="shouldShowBoostEmbedBuilder$ | async"
-  [@growShrink]
-></m-boostEmbedBuilder>
+<ng-container *ngIf="isBoostEnabled$ | async">
+  <m-boostEmbedBuilder [@growShrink]></m-boostEmbedBuilder>
+
+  <m-networkAdminConsole__createBoostLink
+    *ngIf="isCustomHomepageEnabled$ | async"
+    [@growShrink]
+  ></m-networkAdminConsole__createBoostLink>
+</ng-container>

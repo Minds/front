@@ -10,10 +10,21 @@ import {
   ViewChild,
   HostListener,
   AfterViewInit,
+  OnDestroy,
 } from '@angular/core';
 import { ComposerService } from '../../services/composer.service';
 import { isPlatformBrowser } from '@angular/common';
 import { AutocompleteSuggestionsService } from '../../../suggestions/services/autocomplete-suggestions.service';
+import { ComposerBoostService } from '../../services/boost.service';
+import { Observable, Subscription, map } from 'rxjs';
+import { isFirefox } from '../../../../helpers/is-firefox';
+
+/** Placeholder text for text input. */
+export const DEFAULT_PLACEHOLDER_TEXT: string = 'Speak your mind...';
+
+/** Placeholder text for when in boost mode. */
+export const BOOST_PLACEHOLDER_TEXT: string =
+  'Advertising is as simple as creating a post and filling this with text and image content.\n\nOnce you’re happy with your post, click Post and launch your very own ad campaign! Get views, increase your reach, and even link people out to another site.';
 
 /**
  * Composer message and title components.
@@ -23,7 +34,7 @@ import { AutocompleteSuggestionsService } from '../../../suggestions/services/au
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'text-area.component.html',
 })
-export class TextAreaComponent implements AfterViewInit {
+export class TextAreaComponent implements AfterViewInit, OnDestroy {
   /**
    * Textarea input ID. Used for external label.
    */
@@ -33,6 +44,11 @@ export class TextAreaComponent implements AfterViewInit {
    * Compact mode
    */
   @Input() compactMode: boolean = false;
+
+  /**
+   * Whether this component is within a composer modal.
+   */
+  @Input() isModal: boolean = false;
 
   /**
    * Emits pasted file
@@ -57,6 +73,27 @@ export class TextAreaComponent implements AfterViewInit {
   @ViewChild('messageInput')
   messageInput: ElementRef<HTMLTextAreaElement>;
 
+  /** Placeholder text for input. */
+  protected textAreaPlaceholderText$: Observable<string> =
+    this.composerBoostService.isBoostMode$.pipe(
+      map((isBoostMode: boolean): string => {
+        /**
+         * Firefox does not correctly report placeholder text as being part of scrollHeight.
+         * This makes our auto-resize functionality break when using multi-line placeholders.
+         * https://bugzilla.mozilla.org/show_bug.cgi?id=1239595
+         */
+        if (isPlatformBrowser(this.platformId) && isFirefox()) {
+          return DEFAULT_PLACEHOLDER_TEXT;
+        }
+        return isBoostMode && this.isModal
+          ? BOOST_PLACEHOLDER_TEXT
+          : DEFAULT_PLACEHOLDER_TEXT;
+      })
+    );
+
+  /** Subscription to whether we are in boost mode. */
+  private boostModeSubscription: Subscription;
+
   /**
    * Constructor
    * @param service
@@ -65,7 +102,8 @@ export class TextAreaComponent implements AfterViewInit {
   constructor(
     protected service: ComposerService,
     @Inject(PLATFORM_ID) protected platformId: Object,
-    public suggestions: AutocompleteSuggestionsService
+    public suggestions: AutocompleteSuggestionsService,
+    private composerBoostService: ComposerBoostService
   ) {}
 
   /**
@@ -93,6 +131,20 @@ export class TextAreaComponent implements AfterViewInit {
     if (this.message$ && isPlatformBrowser(this.platformId)) {
       setTimeout(() => this.resizeMessageHeight(), 100);
     }
+
+    // Re-calculate height as Boost mode changes due to placeholder size shift.
+    if (isPlatformBrowser(this.platformId) && !isFirefox()) {
+      this.boostModeSubscription =
+        this.composerBoostService.isBoostMode$.subscribe(
+          (isBoostMode: boolean): void => {
+            setTimeout(() => this.resizeMessageHeight(), 0); // Push to back of event queue.
+          }
+        );
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.boostModeSubscription?.unsubscribe();
   }
 
   /**

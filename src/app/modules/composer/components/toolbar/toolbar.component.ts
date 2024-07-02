@@ -66,6 +66,7 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
 import { ComposerSiteMembershipSelectorComponent } from '../popup/site-membership-selector/site-membership-selector.component';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
+import { ComposerBoostService } from '../../services/boost.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -196,6 +197,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   constructor(
     protected service: ComposerService,
+    private composerBoostService: ComposerBoostService,
     protected popup: PopupService,
     protected cd: ChangeDetectorRef,
     protected toaster: ToasterService,
@@ -432,6 +434,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   async onNsfwClick($event?: MouseEvent): Promise<void> {
+    if (this.composerBoostService.isBoostMode$.getValue()) {
+      this.toaster.error('NSFW content cannot be boosted');
+      return;
+    }
+
     await this.popup
       .create(NsfwComponent)
       .present()

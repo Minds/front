@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, distinctUntilChanged, filter, take } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Observable,
+  Subscription,
+  distinctUntilChanged,
+  filter,
+  take,
+} from 'rxjs';
 import {
   SiteMembership,
   SiteMembershipBillingPeriodEnum,
@@ -11,6 +17,7 @@ import { AuthModalService } from '../../../../auth/modal/auth-modal.service';
 import { OnboardingV5Service } from '../../../../onboarding-v5/services/onboarding-v5.service';
 import { SiteMembershipManagementService } from '../../../../site-memberships/services/site-membership-management.service';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { TenantCustomHomepageService } from '../../services/tenant-custom-homepage.service';
 
 /**
  * Memberships display component for custom tenant homepage.
@@ -22,8 +29,11 @@ import { AbstractSubscriberComponent } from '../../../../../common/components/ab
 })
 export class TenantCustomHomepageMembershipsComponent
   extends AbstractSubscriberComponent
-  implements OnInit
+  implements OnInit, OnDestroy
 {
+  // subscription to initialization.
+  private initSubscription: Subscription;
+
   /** Enum for use in template. */
   public readonly SiteMembershipBillingPeriodEnum: typeof SiteMembershipBillingPeriodEnum =
     SiteMembershipBillingPeriodEnum;
@@ -37,6 +47,7 @@ export class TenantCustomHomepageMembershipsComponent
     this.siteMembershipService.siteMemberships$.pipe(distinctUntilChanged());
 
   constructor(
+    private tenantCustomHomepageService: TenantCustomHomepageService,
     private siteMembershipService: SiteMembershipService,
     private authModal: AuthModalService,
     private onboardingV5Service: OnboardingV5Service,
@@ -48,6 +59,16 @@ export class TenantCustomHomepageMembershipsComponent
   ngOnInit(): void {
     // will populate siteMemberships$ asynchronously.
     this.siteMembershipService.fetch();
+
+    this.initSubscription = this.siteMembershipService.initialized$
+      .pipe(filter(Boolean), take(1))
+      .subscribe(() => {
+        this.tenantCustomHomepageService.isMembersSectionLoaded$.next(true);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.initSubscription?.unsubscribe();
   }
 
   /**
