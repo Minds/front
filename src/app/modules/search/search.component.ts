@@ -171,6 +171,11 @@ export class SearchComponent {
       .filter((n) => n.selected)
       .map((n) => n.value);
 
+    // Allow setting of filter via route data.
+    if (this.route.snapshot.data?.['filter']) {
+      this.filter = this.route.snapshot.data['filter'];
+    }
+
     /**
      * This is the initial query
      */
