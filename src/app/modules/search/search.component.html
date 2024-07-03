@@ -130,11 +130,21 @@
             <!-- NO SEARCH RESULTS -->
             <ng-container *ngIf="!exploreTabContext">
               <m-notice iconId="search">
-                <span
-                  m-notice__title
-                  i18n="@@SEARCH__SEARCH__EMPTY_NOTICE_TITLE"
-                  >We couldn’t find any results for “{{ query }}”.</span
-                >
+                <span m-notice__title>
+                  <ng-container
+                    *ngIf="query?.length; else noQueryTemplate"
+                    i18n="
+                      @@SEARCH__SEARCH__EMPTY_NOTICE_TITLE_NO_RESULTS_FOR_QUERY"
+                  >
+                    We couldn’t find any results for “{{ query }}”.
+                  </ng-container>
+                  <ng-template
+                    #noQueryTemplate
+                    i18n="@@SEARCH__SEARCH__EMPTY_NOTICE_TITLE_NO_RESULTS"
+                  >
+                    We couldn’t find any results.
+                  </ng-template>
+                </span>
                 <span
                   m-notice__description
                   i18n="@@SEARCH__SEARCH__EMPTY_NOTICE_DESC"
