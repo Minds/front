@@ -1,8 +1,7 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { AnalyticsService } from '../../../services/analytics';
-import { SupermindBannerPopupService } from './supermind-banner-popup.service';
 
-export type SupermindBannerType = 'repliesFromCreators' | 'upgradeComment';
+export type SupermindBannerType = 'repliesFromCreators';
 /**
  * Banner that prompts users to upgrade to a supermind
  *
@@ -27,17 +26,13 @@ export class SupermindBannerComponent implements OnInit {
   @Input() type: SupermindBannerType = 'repliesFromCreators';
 
   /**
-   * For 'upgradeComment' type, we want to pass whatever comment
-   * text input the user has already entered to the composer
+   * Optional text to pre-fill composer with.
    */
   @Input() message: string;
 
   displayName: string;
 
-  constructor(
-    private analytics: AnalyticsService,
-    private supermindBannerPopup: SupermindBannerPopupService
-  ) {}
+  constructor(private analytics: AnalyticsService) {}
 
   ngOnInit(): void {
     if (!this.entity) {
@@ -72,18 +67,5 @@ export class SupermindBannerComponent implements OnInit {
    */
   onClickSupermindButton(clickEventKey): void {
     this.trackClick(clickEventKey);
-
-    if (this.type === 'upgradeComment') {
-      // Hide the banner after it has been interacted with
-      this.supermindBannerPopup.visible$.next(false);
-    }
-  }
-  /**
-   * Called when a supermind is posted via the supermind button
-   */
-  onSupermindPosted(): void {
-    if (this.type === 'upgradeComment') {
-      this.supermindBannerPopup.supermindPosted$.next(true);
-    }
   }
 }

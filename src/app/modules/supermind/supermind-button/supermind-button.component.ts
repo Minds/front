@@ -99,8 +99,7 @@ export class SupermindButtonComponent {
       refund_policy_agreed: false,
     });
 
-    // Pre-populate composer with comment text when supermind button
-    // is clicked from the 'upgradeComment' supermind banner popup
+    // Pre-populate composer with any pre-set text.
     if (this.message) {
       this.composerService.message$.next(this.message);
     }

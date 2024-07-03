@@ -25,37 +25,5 @@
         "
       ></m-supermind__button>
     </ng-container>
-    <!-- ------------------------------------------------ -->
-    <!-- TYPE: upgradeComment -->
-    <!-- ------------------------------------------------ -->
-    <ng-container *ngIf="type === 'upgradeComment'">
-      <p class="m-supermindBanner__text">
-        <span
-          class="m-supermindBannerText--bold"
-          i18n="@@M__SUPERMIND_BANNER__GET_REPLIES"
-          >Get Replies!
-        </span>
-        <span
-          i18n="@@M__SUPERMIND_BANNER__UPGRADE_YOUR_COMMENT"
-          class="m-supermindBannerText--secondary"
-          >Upgrade your comment to a Supermind!</span
-        >
-      </p>
-      <m-supermind__button
-        [entity]="entity"
-        [message]="message"
-        [iconOnly]="false"
-        size="xsmall"
-        data-ref="supermind-banner-action-button"
-        class="m-supermindBanner__button"
-        (onSupermindPosted)="onSupermindPosted()"
-        (click)="
-          onClickSupermindButton(
-            'supermind-banner-action-button--upgrade-comment'
-          )
-        "
-        ><span i18n="@@COMMON__UPGRADE">Upgrade</span></m-supermind__button
-      >
-    </ng-container>
   </div>
 </ng-container>
