@@ -926,6 +926,7 @@ export type MultiTenantConfig = {
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
+  permissionHandlingIntents?: Maybe<Array<PermissionHandlingIntent>>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   replyEmail?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
@@ -1025,6 +1026,7 @@ export type Mutation = {
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  setPermissionHandlingIntent: Scalars['Boolean']['output'];
   /** Sets a permission for that a role has */
   setRolePermission: Role;
   /** Set the stripe keys for the network */
@@ -1238,6 +1240,12 @@ export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
 };
 
+export type MutationSetPermissionHandlingIntentArgs = {
+  intentType: PermissionHandlingIntentTypeEnum;
+  membershipGuid?: InputMaybe<Scalars['String']['input']>;
+  permissionId: PermissionsEnum;
+};
+
 export type MutationSetRolePermissionArgs = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   permission: PermissionsEnum;
@@ -1398,6 +1406,19 @@ export type PaymentMethod = {
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
 };
+
+export type PermissionHandlingIntent = {
+  __typename?: 'PermissionHandlingIntent';
+  intentType?: Maybe<PermissionHandlingIntentTypeEnum>;
+  membershipGuid?: Maybe<Scalars['String']['output']>;
+  permissionId: PermissionsEnum;
+};
+
+export enum PermissionHandlingIntentTypeEnum {
+  Hide = 'HIDE',
+  Upgrade = 'UPGRADE',
+  WarningMessage = 'WARNING_MESSAGE',
+}
 
 export enum PermissionsEnum {
   CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
@@ -3869,6 +3890,17 @@ export type UpdateSiteMembershipMutation = {
   };
 };
 
+export type SetPermissionHandlingIntentMutationVariables = Exact<{
+  permissionId: PermissionsEnum;
+  intentType: PermissionHandlingIntentTypeEnum;
+  membershipGuid?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type SetPermissionHandlingIntentMutation = {
+  __typename?: 'Mutation';
+  setPermissionHandlingIntent: boolean;
+};
+
 export type AssignUserToRoleMutationVariables = Exact<{
   userGuid: Scalars['String']['input'];
   roleId: Scalars['Int']['input'];
@@ -4041,6 +4073,12 @@ export type GetMultiTenantConfigQuery = {
     customHomePageEnabled?: boolean | null;
     customHomePageDescription?: string | null;
     walledGardenEnabled?: boolean | null;
+    permissionHandlingIntents?: Array<{
+      __typename?: 'PermissionHandlingIntent';
+      permissionId: PermissionsEnum;
+      intentType?: PermissionHandlingIntentTypeEnum | null;
+      membershipGuid?: string | null;
+    }> | null;
   } | null;
 };
 
@@ -9483,6 +9521,33 @@ export class UpdateSiteMembershipGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const SetPermissionHandlingIntentDocument = gql`
+  mutation SetPermissionHandlingIntent(
+    $permissionId: PermissionsEnum!
+    $intentType: PermissionHandlingIntentTypeEnum!
+    $membershipGuid: String
+  ) {
+    setPermissionHandlingIntent(
+      permissionId: $permissionId
+      intentType: $intentType
+      membershipGuid: $membershipGuid
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetPermissionHandlingIntentGQL extends Apollo.Mutation<
+  SetPermissionHandlingIntentMutation,
+  SetPermissionHandlingIntentMutationVariables
+> {
+  document = SetPermissionHandlingIntentDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const AssignUserToRoleDocument = gql`
   mutation AssignUserToRole($userGuid: String!, $roleId: Int!) {
     assignUserToRole(userGuid: $userGuid, roleId: $roleId) {
@@ -9736,6 +9801,11 @@ export const GetMultiTenantConfigDocument = gql`
       customHomePageEnabled
       customHomePageDescription
       walledGardenEnabled
+      permissionHandlingIntents {
+        permissionId
+        intentType
+        membershipGuid
+      }
     }
   }
 `;

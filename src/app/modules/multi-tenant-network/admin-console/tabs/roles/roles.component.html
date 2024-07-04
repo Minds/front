@@ -25,6 +25,15 @@
   </div>
   <div class="m-tabs__tab">
     <a
+      [routerLink]="['/network/admin/roles/permission-handling']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-roles-tab-permission-handling"
+      i18n="@@NETWORK_ADMIN_CONSOLE_ROLES_TAB__PERMISSION_HANDLING"
+      >Permission handling</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
       [routerLink]="['/network/admin/roles/users']"
       [routerLinkActive]="'m-tabs__tab--selected'"
       data-ref="network-admin-console-roles-tab-users"
@@ -39,6 +48,15 @@
 <ng-container *ngIf="(view$ | async) === multiTenantRolesView.PERMISSIONS"
   ><m-networkAdminConsoleRoles__permissions></m-networkAdminConsoleRoles__permissions
 ></ng-container>
+
+<!-- ------------------------------ -->
+<!-- PERMISSION HANDLING TAB  -->
+<!-- ------------------------------ -->
+<ng-container
+  *ngIf="(view$ | async) === multiTenantRolesView.PERMISSION_HANDLING"
+  ><m-networkAdminConsoleRoles__permissionHandling></m-networkAdminConsoleRoles__permissionHandling
+></ng-container>
+
 <!-- ------------------------------ -->
 <!-- USERS TAB  -->
 <!-- ------------------------------ -->
