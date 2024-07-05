@@ -1,8 +1,6 @@
 <div class="m-newsfeed__inner">
   <ng-container [m-clientMeta]="{ source: 'feed/subscribed', medium: 'feed' }">
-    <ng-container *ngIf="permissions.canCreatePost()">
-      <m-composer [size]="'compact'" #composer></m-composer>
-    </ng-container>
+    <m-composer [size]="'compact'" #composer></m-composer>
 
     <m-newsfeed__tabs></m-newsfeed__tabs>
 

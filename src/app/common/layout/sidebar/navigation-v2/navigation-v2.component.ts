@@ -27,7 +27,10 @@ import { IS_TENANT_NETWORK } from '../../../injection-tokens/tenant-injection-to
 import { PermissionsService } from '../../../services/permissions.service';
 import { MultiTenantConfigImageService } from '../../../../modules/multi-tenant-network/services/config-image.service';
 import { SiteMembershipsCountService } from '../../../../modules/site-memberships/services/site-membership-count.service';
-import { NavigationItem } from '../../../../../graphql/generated.engine';
+import {
+  NavigationItem,
+  PermissionsEnum,
+} from '../../../../../graphql/generated.engine';
 
 export type NavigationItemExtended = NavigationItem & {
   mustBeLoggedIn?: boolean;
@@ -35,6 +38,7 @@ export type NavigationItemExtended = NavigationItem & {
 };
 import { ChatExperimentService } from '../../../../modules/experiments/sub-services/chat-experiment.service';
 import { ChatReceiptService } from '../../../../modules/chat/services/chat-receipt.service';
+import { PermissionIntentsService } from '../../../services/permission-intents.service';
 
 /**
  * V2 version of sidebar component.
@@ -45,6 +49,9 @@ import { ChatReceiptService } from '../../../../modules/chat/services/chat-recei
   styleUrls: ['./navigation-v2.component.ng.scss'],
 })
 export class SidebarNavigationV2Component implements OnInit, OnDestroy {
+  /** Enum for use in template. */
+  protected PermissionsEnum: typeof PermissionsEnum = PermissionsEnum;
+
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
   readonly chatUrl: string;
@@ -131,6 +138,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private experiments: ExperimentsService,
     private tenantConfigImageService: MultiTenantConfigImageService,
     protected permissions: PermissionsService,
+    protected permissionIntentsService: PermissionIntentsService,
     private chatExperimentService: ChatExperimentService,
     private chatReceiptService: ChatReceiptService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
