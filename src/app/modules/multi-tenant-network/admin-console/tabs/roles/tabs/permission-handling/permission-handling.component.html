@@ -35,13 +35,13 @@
     </h5>
   </div>
   <div
-    *ngFor="let permissionHandlingIntent of permissionHandlingIntents$ | async"
+    *ngFor="let permissionIntent of permissionIntents$ | async"
     class="m-permissionHandling__optionsRow m-permissionHandling__optionsRowOption"
   >
     <div
       class="m-permissionHandling__optionLabelColumn m-permissionHandling__horizontalMargin"
     >
-      <ng-container [ngSwitch]="permissionHandlingIntent.permissionId">
+      <ng-container [ngSwitch]="permissionIntent.permissionId">
         <ng-container *ngSwitchCase="PermissionsEnum.CanCreatePost">
           <span
             class="m-permissionHandling__optionTitle"
@@ -123,29 +123,26 @@
             <div class="m-form__row--input">
               <select
                 class="m-permissionHandling__optionSelector"
-                (change)="onSelectorChange($event, permissionHandlingIntent)"
+                (change)="onSelectorChange($event, permissionIntent)"
               >
                 <option
                   [selected]="
-                    permissionHandlingIntent.intentType ===
-                    PermissionHandlingIntentTypeEnum.Hide
+                    permissionIntent.intentType ===
+                    PermissionIntentTypeEnum.Hide
                   "
-                  [value]="
-                    { intentType: PermissionHandlingIntentTypeEnum.Hide } | json
-                  "
+                  [value]="{ intentType: PermissionIntentTypeEnum.Hide } | json"
                   i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__HIDE_FUNCTIONALITY"
                 >
                   hide functionality
                 </option>
                 <option
                   [selected]="
-                    permissionHandlingIntent.intentType ===
-                    PermissionHandlingIntentTypeEnum.WarningMessage
+                    permissionIntent.intentType ===
+                    PermissionIntentTypeEnum.WarningMessage
                   "
                   [value]="
                     {
-                      intentType:
-                        PermissionHandlingIntentTypeEnum.WarningMessage
+                      intentType: PermissionIntentTypeEnum.WarningMessage
                     } | json
                   "
                   i18n="
@@ -158,14 +155,14 @@
                 >
                   <option
                     [selected]="
-                      permissionHandlingIntent.intentType ===
-                        PermissionHandlingIntentTypeEnum.Upgrade &&
-                      permissionHandlingIntent.membershipGuid ===
+                      permissionIntent.intentType ===
+                        PermissionIntentTypeEnum.Upgrade &&
+                      permissionIntent.membershipGuid ===
                         siteMembership.membershipGuid
                     "
                     [value]="
                       {
-                        intentType: PermissionHandlingIntentTypeEnum.Upgrade,
+                        intentType: PermissionIntentTypeEnum.Upgrade,
                         membershipGuid: siteMembership.membershipGuid
                       } | json
                     "

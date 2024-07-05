@@ -926,7 +926,6 @@ export type MultiTenantConfig = {
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
-  permissionHandlingIntents?: Maybe<Array<PermissionHandlingIntent>>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   replyEmail?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
@@ -1026,7 +1025,7 @@ export type Mutation = {
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
-  setPermissionHandlingIntent: Scalars['Boolean']['output'];
+  setPermissionIntent?: Maybe<PermissionIntent>;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
   /** Set the stripe keys for the network */
@@ -1240,8 +1239,8 @@ export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
 };
 
-export type MutationSetPermissionHandlingIntentArgs = {
-  intentType: PermissionHandlingIntentTypeEnum;
+export type MutationSetPermissionIntentArgs = {
+  intentType: PermissionIntentTypeEnum;
   membershipGuid?: InputMaybe<Scalars['String']['input']>;
   permissionId: PermissionsEnum;
 };
@@ -1407,14 +1406,14 @@ export type PaymentMethod = {
   name: Scalars['String']['output'];
 };
 
-export type PermissionHandlingIntent = {
-  __typename?: 'PermissionHandlingIntent';
-  intentType?: Maybe<PermissionHandlingIntentTypeEnum>;
+export type PermissionIntent = {
+  __typename?: 'PermissionIntent';
+  intentType?: Maybe<PermissionIntentTypeEnum>;
   membershipGuid?: Maybe<Scalars['String']['output']>;
   permissionId: PermissionsEnum;
 };
 
-export enum PermissionHandlingIntentTypeEnum {
+export enum PermissionIntentTypeEnum {
   Hide = 'HIDE',
   Upgrade = 'UPGRADE',
   WarningMessage = 'WARNING_MESSAGE',
@@ -1585,6 +1584,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  permissionIntents: Array<PermissionIntent>;
   personalApiKey?: Maybe<PersonalApiKey>;
   postHogPerson: PostHogPerson;
   postSubscription: PostSubscription;
@@ -3890,15 +3890,34 @@ export type UpdateSiteMembershipMutation = {
   };
 };
 
-export type SetPermissionHandlingIntentMutationVariables = Exact<{
+export type GetPermissionIntentsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetPermissionIntentsQuery = {
+  __typename?: 'Query';
+  permissionIntents: Array<{
+    __typename?: 'PermissionIntent';
+    permissionId: PermissionsEnum;
+    intentType?: PermissionIntentTypeEnum | null;
+    membershipGuid?: string | null;
+  }>;
+};
+
+export type SetPermissionIntentMutationVariables = Exact<{
   permissionId: PermissionsEnum;
-  intentType: PermissionHandlingIntentTypeEnum;
+  intentType: PermissionIntentTypeEnum;
   membershipGuid?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-export type SetPermissionHandlingIntentMutation = {
+export type SetPermissionIntentMutation = {
   __typename?: 'Mutation';
-  setPermissionHandlingIntent: boolean;
+  setPermissionIntent?: {
+    __typename?: 'PermissionIntent';
+    permissionId: PermissionsEnum;
+    intentType?: PermissionIntentTypeEnum | null;
+    membershipGuid?: string | null;
+  } | null;
 };
 
 export type AssignUserToRoleMutationVariables = Exact<{
@@ -4073,12 +4092,6 @@ export type GetMultiTenantConfigQuery = {
     customHomePageEnabled?: boolean | null;
     customHomePageDescription?: string | null;
     walledGardenEnabled?: boolean | null;
-    permissionHandlingIntents?: Array<{
-      __typename?: 'PermissionHandlingIntent';
-      permissionId: PermissionsEnum;
-      intentType?: PermissionHandlingIntentTypeEnum | null;
-      membershipGuid?: string | null;
-    }> | null;
   } | null;
 };
 
@@ -9521,28 +9534,55 @@ export class UpdateSiteMembershipGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
-export const SetPermissionHandlingIntentDocument = gql`
-  mutation SetPermissionHandlingIntent(
-    $permissionId: PermissionsEnum!
-    $intentType: PermissionHandlingIntentTypeEnum!
-    $membershipGuid: String
-  ) {
-    setPermissionHandlingIntent(
-      permissionId: $permissionId
-      intentType: $intentType
-      membershipGuid: $membershipGuid
-    )
+export const GetPermissionIntentsDocument = gql`
+  query GetPermissionIntents {
+    permissionIntents {
+      permissionId
+      intentType
+      membershipGuid
+    }
   }
 `;
 
 @Injectable({
   providedIn: 'root',
 })
-export class SetPermissionHandlingIntentGQL extends Apollo.Mutation<
-  SetPermissionHandlingIntentMutation,
-  SetPermissionHandlingIntentMutationVariables
+export class GetPermissionIntentsGQL extends Apollo.Query<
+  GetPermissionIntentsQuery,
+  GetPermissionIntentsQueryVariables
 > {
-  document = SetPermissionHandlingIntentDocument;
+  document = GetPermissionIntentsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetPermissionIntentDocument = gql`
+  mutation SetPermissionIntent(
+    $permissionId: PermissionsEnum!
+    $intentType: PermissionIntentTypeEnum!
+    $membershipGuid: String
+  ) {
+    setPermissionIntent(
+      permissionId: $permissionId
+      intentType: $intentType
+      membershipGuid: $membershipGuid
+    ) {
+      permissionId
+      intentType
+      membershipGuid
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetPermissionIntentGQL extends Apollo.Mutation<
+  SetPermissionIntentMutation,
+  SetPermissionIntentMutationVariables
+> {
+  document = SetPermissionIntentDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -9801,11 +9841,6 @@ export const GetMultiTenantConfigDocument = gql`
       customHomePageEnabled
       customHomePageDescription
       walledGardenEnabled
-      permissionHandlingIntents {
-        permissionId
-        intentType
-        membershipGuid
-      }
     }
   }
 `;

@@ -1,11 +1,15 @@
-mutation SetPermissionHandlingIntent(
+mutation SetPermissionIntent(
   $permissionId: PermissionsEnum!,
-  $intentType: PermissionHandlingIntentTypeEnum!,
+  $intentType: PermissionIntentTypeEnum!,
   $membershipGuid: String
 ) {
-  setPermissionHandlingIntent(
+  setPermissionIntent(
     permissionId: $permissionId,
     intentType: $intentType,
     membershipGuid: $membershipGuid
-  )
+  ) {
+      permissionId,
+      intentType,
+      membershipGuid
+  }
 }

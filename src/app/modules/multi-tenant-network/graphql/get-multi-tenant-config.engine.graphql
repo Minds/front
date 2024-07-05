@@ -11,10 +11,5 @@ query GetMultiTenantConfig {
     customHomePageEnabled
     customHomePageDescription
     walledGardenEnabled
-    permissionHandlingIntents {
-      permissionId,
-      intentType,
-      membershipGuid
-    }
   }
 }
