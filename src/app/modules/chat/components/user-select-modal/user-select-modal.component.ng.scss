@@ -1,0 +1,191 @@
+@import 'defaults.scss';
+
+$footerHeight: 85px;
+
+:host {
+  height: 664px;
+
+  .m-userSelectModal__bodyContainer {
+    padding: $spacing11 $spacing17 0 $spacing11;
+    box-sizing: border-box;
+    max-height: calc(100% - $footerHeight);
+    display: flex;
+    flex-flow: column nowrap;
+
+    @media screen and (max-width: $min-tablet) {
+      padding-left: $spacing10;
+      padding-right: $spacing10;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $spacing6;
+      padding-right: $spacing6;
+    }
+
+    .m-userSelectModal__title {
+      @include heading3Bold;
+      margin: 0 0 $spacing6 0;
+    }
+
+    .m-userSelectModal__form {
+      margin: 0 0 $spacing6 0;
+    }
+
+    .m-userSelectModal__selectedUsersContainer {
+      display: inline-flex;
+      flex-flow: row wrap;
+      overflow-y: auto;
+      flex-grow: 1;
+      flex-shrink: 0;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 4px;
+      max-height: 100px;
+      padding-bottom: $spacing5;
+      margin-bottom: $spacing5;
+
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+
+      .m-userSelectModal__selectedUser {
+        display: flex;
+        align-items: center;
+        height: fit-content;
+        padding: $spacing2 $spacing5;
+        border-radius: 16px;
+
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+        }
+
+        .m-userSelectModal__selectedUserName {
+          @include body3Bold;
+        }
+
+        i {
+          font-size: 15px;
+          margin-left: $spacing2;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .m-userSelectModal__resultsContainer {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: $spacing2;
+      margin-bottom: $spacing4;
+      overflow-y: auto;
+      overflow-x: hidden;
+      width: 100%;
+      @include vertical-scroll;
+
+      .m-userSelectModal__userRow {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: $spacing2;
+        box-sizing: border-box;
+        gap: $spacing3;
+        cursor: pointer;
+        max-width: 100%;
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
+
+        &:last-of-type {
+          margin-bottom: 1rem;
+        }
+
+        .m-userSelectModal__userRow--left {
+          .m-userSelectModal__avatar {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            min-height: 40px;
+            max-width: 40px;
+            max-height: 40px;
+            background-position: center;
+            background-size: cover;
+            border-radius: 50%;
+            flex-basis: 100%;
+            box-sizing: border-box;
+
+            &.m-userSelectModal__avatar--selected {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: 24px;
+              /**
+              * Keep the background image loaded and avoid "flashing in"
+              * by always having the src set and changing it to a size of 0
+              * when selected.
+              */
+              background-size: 0 0;
+              background-repeat: no-repeat;
+
+              @include m-theme() {
+                background-color: themed($m-action);
+
+                span {
+                  color: themed($m-bgColor--primary);
+                }
+              }
+            }
+          }
+        }
+
+        .m-userSelectModal__userRow--right {
+          display: flex;
+          flex-flow: column nowrap;
+
+          p {
+            margin: unset;
+          }
+
+          .m-userSelectModal__userName {
+            @include body1Bold;
+          }
+
+          .m-userSelectModal__userUsername {
+            @include body2Regular;
+
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .m-userSelectModal__footer {
+    height: $footerHeight;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: $spacing8;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-userSelectModal__trySearchingText {
+    text-align: center;
+    margin-top: $spacing20;
+
+    @include body1Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}
