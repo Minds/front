@@ -42,7 +42,8 @@
   >
     <ng-container *ngTemplateOutlet="thumbs"></ng-container>
   </ng-container>
-  <m-activity__remindButton *ngIf="allowReminds"> </m-activity__remindButton>
+  <m-activity__remindButton *ngIf="allowReminds && !shouldHideRemindButton">
+  </m-activity__remindButton>
 
   <minds-button-comment
     [object]="entity"

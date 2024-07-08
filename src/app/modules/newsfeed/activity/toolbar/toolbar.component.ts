@@ -53,6 +53,9 @@ export class ActivityToolbarComponent {
   /** Whether vote buttons should be hidden. */
   protected shouldHideVoteButtons: boolean = false;
 
+  /** Whether remind button should be hidden. */
+  protected shouldHideRemindButton: boolean = false;
+
   constructor(
     public service: ActivityService,
     public session: Session,
@@ -85,6 +88,9 @@ export class ActivityToolbarComponent {
       });
 
     this.hasBoostPermission = this.permissionsService.canBoost();
+    this.shouldHideRemindButton =
+      this.permissionIntentsService.shouldHide(PermissionsEnum.CanCreatePost) &&
+      this.permissionIntentsService.shouldHide(PermissionsEnum.CanInteract);
     this.shouldHideVoteButtons = this.permissionIntentsService.shouldHide(
       PermissionsEnum.CanInteract
     );
