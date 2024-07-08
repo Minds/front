@@ -10,6 +10,7 @@ import { SiteMembershipCardComponent } from './components/membership-card/site-m
 import { SiteMembershipsRouteGuard } from './guards/site-memberships-route.guard';
 import { SiteMembershipPageComponent } from './components/site-membership-page/site-membership-page.component';
 import { JoinManageSiteMembershipButtonComponent } from './components/join-manage-membership-button/join-manage-membership-button.component';
+import { SingleSiteMembershipModalComponent } from './components/single-site-membership-modal/single-site-membership-modal.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,7 @@ const routes: Routes = [
   ],
   declarations: [
     SiteMembershipsPageComponent,
+    SingleSiteMembershipModalComponent,
     SiteMembershipPageComponent,
     JoinManageSiteMembershipButtonComponent,
   ],
@@ -54,5 +56,13 @@ export class SiteMembershipsLazyModule {
    */
   public resolveSiteMembershipsPageComponent(): typeof SiteMembershipsPageComponent {
     return SiteMembershipsPageComponent;
+  }
+
+  /**
+   * Resolve component to SingleSiteMembershipModalComponent instance.
+   * @returns { typeof SingleSiteMembershipModalComponent }
+   */
+  public resolveSingleSiteMembershipsModalComponent(): typeof SingleSiteMembershipModalComponent {
+    return SingleSiteMembershipModalComponent;
   }
 }

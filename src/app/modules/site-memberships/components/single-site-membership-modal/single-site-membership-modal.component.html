@@ -1,0 +1,36 @@
+<h3 class="m-singleSiteMembershipModal__title">{{ title }}</h3>
+<p class="m-singleSiteMembershipModal__subtitle">{{ subtitle }}</p>
+
+<ng-container *ngIf="initialized$ | async; else loadingSpinnerTemplate">
+  <m-siteMembershipCard
+    class="m-singleSiteMembershipModal__siteMembershipCard"
+    *ngIf="siteMembership$ | async as siteMembership"
+    [name]="siteMembership.membershipName"
+    [description]="siteMembership.membershipDescription"
+    [priceInCents]="siteMembership.membershipPriceInCents"
+    [priceCurrencyCode]="siteMembership.membershipPriceCurrency"
+    [billingPeriod]="siteMembership.membershipBillingPeriod"
+    [pricingModel]="siteMembership.membershipPricingModel"
+  >
+    <m-joinManageSiteMembershipButton
+      [membershipGuid]="siteMembership.membershipGuid"
+    ></m-joinManageSiteMembershipButton>
+  </m-siteMembershipCard>
+
+  <m-button
+    class="m-singleSiteMembershipModal__closeCta"
+    size="small"
+    [stretch]="true"
+    (onAction)="onDismissIntent()"
+    data-ref="data-minds-single-site-membership-modal-close-cta"
+    >{{ closeCtaText }}</m-button
+  >
+</ng-container>
+
+<m-modalCloseButton
+  data-ref="data-minds-single-site-membership-modal-close-button"
+></m-modalCloseButton>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

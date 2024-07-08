@@ -1,0 +1,32 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  padding: $spacing16 $spacing12 $spacing6 $spacing12;
+  box-sizing: border-box;
+
+  .m-singleSiteMembershipModal__title {
+    @include heading2Bold;
+    text-align: center;
+    margin-bottom: $spacing2;
+  }
+
+  .m-singleSiteMembershipModal__subtitle {
+    @include body3Regular;
+    text-align: center;
+    margin-bottom: $spacing12;
+  }
+
+  .m-singleSiteMembershipModal__siteMembershipCard {
+    margin-top: $spacing6;
+    margin-bottom: $spacing8;
+  }
+
+  .m-singleSiteMembershipModal__closeCta {
+    ::ng-deep button div {
+      display: block !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
