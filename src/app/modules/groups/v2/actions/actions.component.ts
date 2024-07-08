@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, Injector } from '@angular/core';
 import { GroupService } from '../group.service';
 import { Observable, Subscription, combineLatest, map } from 'rxjs';
 import { GroupMembershipChangeOuput } from '../../../../common/components/group-membership-button/group-membership-button.component';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 /**
  * Toolbar at top of group banner, with options that change
@@ -30,6 +32,14 @@ export class GroupActionsComponent {
         boolean,
         boolean,
       ]): boolean => {
+        if (
+          isCoversationDisabled &&
+          this.permissionIntentsService.shouldHide(
+            PermissionsEnum.CanCreateChatRoom
+          )
+        ) {
+          return false;
+        }
         return (isMember && !isCoversationDisabled) || isOwner;
       }
     )
@@ -41,6 +51,7 @@ export class GroupActionsComponent {
    */
   constructor(
     public service: GroupService,
+    private permissionIntentsService: PermissionIntentsService,
     private injector: Injector
   ) {}
 

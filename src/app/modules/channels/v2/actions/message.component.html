@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isTenantNetwork || isChatExperimentActive">
+<ng-container *ngIf="shouldShow">
   <m-button (onAction)="message()" iconOnly="true" overlay="true">
     <m-icon *ngIf="!inProgress" iconId="chat_bubble" [sizeFactor]="0"></m-icon>
     <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
