@@ -1,0 +1,6 @@
+mutation AddMembersToChatRoom(
+  $roomGuid: String!
+  $memberGuids: [String!]!
+) {
+  addMembersToChatRoom(roomGuid: $roomGuid, memberGuids: $memberGuids)
+}
