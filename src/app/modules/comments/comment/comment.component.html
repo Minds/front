@@ -502,11 +502,13 @@
       >
         <div class="m-commentToolbar__buttons m-legible" [hidden]="editing">
           <minds-button-thumbs-up
+            *ngIf="!shouldHideVoteButtons"
             class="m-commentToolbarButton"
             [object]="comment"
             [class.has-count]="comment['thumbs:up:count'] > 0"
           ></minds-button-thumbs-up>
           <minds-button-thumbs-down
+            *ngIf="!shouldHideVoteButtons"
             class="m-commentToolbarButton"
             [object]="comment"
           ></minds-button-thumbs-down>

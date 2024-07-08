@@ -21,6 +21,8 @@ import { PersistentFeedExperimentService } from '../../../experiments/sub-servic
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 /**
  * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
@@ -48,6 +50,9 @@ export class ActivityToolbarComponent {
   // Used to remove a downvoted item from the feed.
   @Output() onDownvote: EventEmitter<void> = new EventEmitter<void>();
 
+  /** Whether vote buttons should be hidden. */
+  protected shouldHideVoteButtons: boolean = false;
+
   constructor(
     public service: ActivityService,
     public session: Session,
@@ -57,6 +62,7 @@ export class ActivityToolbarComponent {
     private interactionsModalService: InteractionsModalService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
     private permissionsService: PermissionsService,
+    private permissionIntentsService: PermissionIntentsService,
     public experimentsService: ExperimentsService,
     private cd: ChangeDetectorRef,
     private toast: ToasterService
@@ -79,6 +85,9 @@ export class ActivityToolbarComponent {
       });
 
     this.hasBoostPermission = this.permissionsService.canBoost();
+    this.shouldHideVoteButtons = this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanInteract
+    );
   }
 
   ngOnDestroy() {

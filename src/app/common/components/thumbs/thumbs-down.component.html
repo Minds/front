@@ -3,7 +3,7 @@
   (click)="thumb()"
   [ngClass]="{
     selected: userHasDownvoted(),
-    'm-thumbButton--noPermission': !permissions.canInteract()
+    'm-thumbButton--noPermission': !canInteract
   }"
   data-ref="data-minds-thumbs-down-button"
 >
@@ -20,7 +20,7 @@
   *ngIf="explicit"
   class="m-thumbButton--explicit"
   [ngClass]="{
-    'm-thumbButton--noPermission': !permissions.canInteract()
+    'm-thumbButton--noPermission': !canInteract
   }"
   (onAction)="thumb()"
   [highlightText]="userHasDownvoted()"
