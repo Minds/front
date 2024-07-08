@@ -10,6 +10,7 @@ export type SingleSiteMembershipModalOptions = {
   title: string;
   subtitle: string;
   closeCtaText: string;
+  upgradeMode: boolean;
   membershipGuid: string;
 };
 
@@ -43,6 +44,7 @@ export class SingleSiteMembershipModalService {
         subtitle: opts.subtitle,
         closeCtaText: opts.closeCtaText,
         membershipGuid: opts.membershipGuid,
+        upgradeMode: opts.upgradeMode,
         onJoinIntent: () => {
           modal.dismiss();
         },

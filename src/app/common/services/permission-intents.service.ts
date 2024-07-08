@@ -177,6 +177,7 @@ export class PermissionIntentsService {
       subtitle:
         "You don't have access to this feature. Please upgrade to one of the below memberships to unlock.",
       closeCtaText: `Go back to ${this.siteName}`,
+      upgradeMode: true,
       membershipGuid: paymentIntent.membershipGuid,
     });
   }
