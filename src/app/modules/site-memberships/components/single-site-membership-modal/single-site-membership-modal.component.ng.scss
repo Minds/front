@@ -4,6 +4,7 @@
   display: block;
   padding: $spacing16 $spacing12 $spacing6 $spacing12;
   box-sizing: border-box;
+  min-height: 500px;
 
   .m-singleSiteMembershipModal__title {
     @include heading2Bold;
