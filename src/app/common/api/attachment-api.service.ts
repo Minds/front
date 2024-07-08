@@ -23,11 +23,9 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import getFileType from '../../helpers/get-file-type';
-import {
-  PermissionsService,
-  VIDEO_PERMISSIONS_ERROR_MESSAGE,
-} from '../services/permissions.service';
-import { ToasterService } from '../services/toaster.service';
+import { VIDEO_PERMISSIONS_ERROR_MESSAGE } from '../services/permissions.service';
+import { PermissionIntentsService } from '../services/permission-intents.service';
+import { PermissionsEnum } from '../../../graphql/generated.engine';
 
 /**
  * Upload event type
@@ -146,8 +144,7 @@ export class AttachmentApiService {
   constructor(
     protected api: ApiService,
     protected http: HttpClient,
-    private permissions: PermissionsService,
-    private toaster: ToasterService
+    private permissionIntentsService: PermissionIntentsService
   ) {}
 
   /**
@@ -168,9 +165,11 @@ export class AttachmentApiService {
     if (/image\/.+/.test(file.type)) {
       return this.uploadToApi(file, metadata);
     } else if (/video\/.+/.test(file.type)) {
-      if (!this.permissions.canUploadVideo()) {
-        this.toaster.error(VIDEO_PERMISSIONS_ERROR_MESSAGE);
-
+      if (
+        !this.permissionIntentsService.checkAndHandleAction(
+          PermissionsEnum.CanUploadVideo
+        )
+      ) {
         this.videoPermissionsError$.next(true);
         return throwError(new Error(VIDEO_PERMISSIONS_ERROR_MESSAGE));
       }

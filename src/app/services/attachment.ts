@@ -13,11 +13,9 @@ import { Client, Upload } from './api';
 import { Session } from './session';
 import { ConfigsService } from '../common/services/configs.service';
 import { TextParserService } from '../common/services/text-parser.service';
-import {
-  PermissionsService,
-  VIDEO_PERMISSIONS_ERROR_MESSAGE,
-} from '../common/services/permissions.service';
-import { ToasterService } from '../common/services/toaster.service';
+import { VIDEO_PERMISSIONS_ERROR_MESSAGE } from '../common/services/permissions.service';
+import { PermissionsEnum } from '../../graphql/generated.engine';
+import { PermissionIntentsService } from '../common/services/permission-intents.service';
 
 @Injectable()
 export class AttachmentService {
@@ -47,8 +45,7 @@ export class AttachmentService {
     public uploadService: Upload,
     private http: HttpClient,
     public textParser: TextParserService,
-    private permissions: PermissionsService,
-    private toaster: ToasterService,
+    private permissionIntentsService: PermissionIntentsService,
     configs: ConfigsService
   ) {
     this.maxVideoFileSize = configs.get('max_video_file_size');
@@ -542,11 +539,12 @@ export class AttachmentService {
   private checkFileType(file): Promise<any> {
     return new Promise<void>((resolve, reject) => {
       if (file.type && file.type.indexOf('video/') === 0) {
-        if (!this.permissions.canUploadVideo()) {
-          const errorMessage = VIDEO_PERMISSIONS_ERROR_MESSAGE;
-
-          this.toaster.error(errorMessage);
-          throw new Error(errorMessage);
+        if (
+          !this.permissionIntentsService.checkAndHandleAction(
+            PermissionsEnum.CanUploadVideo
+          )
+        ) {
+          throw new Error(VIDEO_PERMISSIONS_ERROR_MESSAGE);
         }
 
         const maxFileSize = this.maxVideoFileSize;
