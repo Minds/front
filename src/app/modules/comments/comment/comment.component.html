@@ -517,12 +517,8 @@
               ><i class="material-icons">ios_share</i></a
             >
           </div>
-          <ng-container *ngIf="permissions.canComment()">
-            <div
-              class="m-commentToolbarButton"
-              (click)="toggleReplies()"
-              *ngIf="session.isLoggedIn()"
-            >
+          <ng-container *ngIf="session.isLoggedIn() && !shouldHideReplyButton">
+            <div class="m-commentToolbarButton" (click)="toggleReplies()">
               <a
                 ><span *ngIf="activityService.allowComment$ | async"
                   >Reply</span

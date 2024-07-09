@@ -141,6 +141,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   /** Whether the user should have vote buttons hidden. */
   protected shouldHideVoteButtons: boolean = false;
 
+  /** Whether reply button should be hidden. */
+  protected shouldHideReplyButton: boolean = false;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -186,6 +189,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       this.showMature = true;
     }
 
+    this.shouldHideReplyButton = this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanComment
+    );
     this.shouldHideVoteButtons = this.permissionIntentsService.shouldHide(
       PermissionsEnum.CanInteract
     );

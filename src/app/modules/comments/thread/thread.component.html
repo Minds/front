@@ -130,7 +130,7 @@
 <ng-template #posterOutlet>
   <m-comment__poster
     #poster
-    *ngIf="activityService.allowComment$ | async"
+    *ngIf="(activityService.allowComment$ | async) && !shouldHideCommentPoster"
     [guid]="guid"
     [parent]="parent"
     [entity]="entity"
