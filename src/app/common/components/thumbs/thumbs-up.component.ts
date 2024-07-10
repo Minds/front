@@ -131,7 +131,10 @@ export class ThumbsUpButton implements DoCheck, OnInit, OnChanges {
 
     if (!this.session.isLoggedIn()) {
       const user = await this.authModal.open();
-      if (!user) return;
+      if (!user) {
+        this.inProgress = false;
+        return;
+      }
     }
 
     if (
