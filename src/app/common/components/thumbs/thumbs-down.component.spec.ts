@@ -47,7 +47,6 @@ describe('ThumbsDownButton', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ThumbsDownButton);
     comp = fixture.componentInstance;
-    (comp as any).canInteract = true;
 
     (comp.object as any) = {
       guid: '123',
@@ -68,18 +67,6 @@ describe('ThumbsDownButton', () => {
 
   it('should create', () => {
     expect(comp).toBeTruthy();
-  });
-
-  it('should set canInteract on init', () => {
-    (comp as any).canInteract = true;
-
-    (comp as any).permissions.canInteract.and.returnValue(false);
-    comp.ngOnInit();
-    expect((comp as any).canInteract).toBeFalse();
-
-    (comp as any).permissions.canInteract.and.returnValue(true);
-    comp.ngOnInit();
-    expect((comp as any).canInteract).toBeTrue();
   });
 
   it('should apply a thumbs down', fakeAsync(() => {

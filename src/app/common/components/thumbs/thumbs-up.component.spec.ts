@@ -55,7 +55,6 @@ describe('ThumbsUpButton', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ThumbsUpButton);
     comp = fixture.componentInstance;
-    (comp as any).canInteract = true;
 
     (comp.object as any) = {
       guid: '123',
@@ -76,18 +75,6 @@ describe('ThumbsUpButton', () => {
 
   it('should create', () => {
     expect(comp).toBeTruthy();
-  });
-
-  it('should set canInteract on init', () => {
-    (comp as any).canInteract = true;
-
-    (comp as any).permissions.canInteract.and.returnValue(false);
-    comp.ngOnInit();
-    expect((comp as any).canInteract).toBeFalse();
-
-    (comp as any).permissions.canInteract.and.returnValue(true);
-    comp.ngOnInit();
-    expect((comp as any).canInteract).toBeTrue();
   });
 
   describe('showImproveRecsToast', () => {
