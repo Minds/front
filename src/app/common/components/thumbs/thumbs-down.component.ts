@@ -4,15 +4,12 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core';
-
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ToasterService } from '../../services/toaster.service';
-import { PermissionsService } from '../../services/permissions.service';
 import { PermissionIntentsService } from '../../services/permission-intents.service';
 import { PermissionsEnum } from '../../../../graphql/generated.engine';
 
@@ -23,7 +20,7 @@ import { PermissionsEnum } from '../../../../graphql/generated.engine';
   styleUrls: [`thumbs-up.component.ng.scss`],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThumbsDownButton implements OnInit {
+export class ThumbsDownButton {
   changesDetected: boolean = false;
   object;
 
@@ -43,22 +40,14 @@ export class ThumbsDownButton implements OnInit {
   @Output('thumbsDownChange') thumbsDownChange: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
-  /** Whether the user can interact with the button. */
-  protected canInteract: boolean = true;
-
   constructor(
     private cd: ChangeDetectorRef,
     public session: Session,
     public client: Client,
     private authModal: AuthModalService,
     private toast: ToasterService,
-    private permissions: PermissionsService,
     private permissionIntents: PermissionIntentsService
   ) {}
-
-  ngOnInit(): void {
-    this.canInteract = this.permissions.canInteract();
-  }
 
   set _object(value: any) {
     this.object = value;

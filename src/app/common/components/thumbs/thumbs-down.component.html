@@ -1,10 +1,7 @@
 <a
   *ngIf="!explicit"
   (click)="thumb()"
-  [ngClass]="{
-    selected: userHasDownvoted(),
-    'm-thumbButton--noPermission': !canInteract
-  }"
+  [ngClass]="{ selected: userHasDownvoted() }"
   data-ref="data-minds-thumbs-down-button"
 >
   <i
@@ -19,9 +16,6 @@
 <m-button
   *ngIf="explicit"
   class="m-thumbButton--explicit"
-  [ngClass]="{
-    'm-thumbButton--noPermission': !canInteract
-  }"
   (onAction)="thumb()"
   [highlightText]="userHasDownvoted()"
   size="xsmall"

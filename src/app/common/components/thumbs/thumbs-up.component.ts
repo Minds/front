@@ -6,7 +6,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -20,7 +19,6 @@ import { ToasterService } from '../../services/toaster.service';
 import { CounterChangeFadeIn } from '../../../animations';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
 import { IsTenantService } from '../../services/is-tenant.service';
-import { PermissionsService } from '../../services/permissions.service';
 import { PermissionIntentsService } from '../../services/permission-intents.service';
 import { PermissionsEnum } from '../../../../graphql/generated.engine';
 
@@ -32,7 +30,7 @@ import { PermissionsEnum } from '../../../../graphql/generated.engine';
   styleUrls: [`thumbs-up.component.ng.scss`],
   animations: [CounterChangeFadeIn],
 })
-export class ThumbsUpButton implements DoCheck, OnInit, OnChanges {
+export class ThumbsUpButton implements DoCheck, OnChanges {
   changesDetected: boolean = false;
   object = {
     guid: null,
@@ -68,9 +66,6 @@ export class ThumbsUpButton implements DoCheck, OnInit, OnChanges {
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
-  /** Whether the user can interact with the button. */
-  protected canInteract: boolean = true;
-
   constructor(
     public session: Session,
     public client: Client,
@@ -79,13 +74,8 @@ export class ThumbsUpButton implements DoCheck, OnInit, OnChanges {
     private experiments: ExperimentsService,
     private toast: ToasterService,
     private isTenant: IsTenantService,
-    private permissions: PermissionsService,
     private permissionIntents: PermissionIntentsService
   ) {}
-
-  ngOnInit(): void {
-    this.canInteract = this.permissions.canInteract();
-  }
 
   set _object(value: any) {
     if (!value) return;
