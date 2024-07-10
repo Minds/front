@@ -27,7 +27,7 @@ export type SingleSiteMembershipModalData = {
   styleUrls: ['./single-site-membership-modal.component.ng.scss'],
 })
 export class SingleSiteMembershipModalComponent implements OnInit, OnDestroy {
-  /** Whether component can be consider as initialized. */
+  /** Whether component can be considered as initialized. */
   protected readonly initialized$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 

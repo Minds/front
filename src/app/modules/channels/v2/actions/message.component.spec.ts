@@ -16,18 +16,36 @@ import { ChatExperimentService } from '../../../experiments/sub-services/chat-ex
 import { CreateChatRoomService } from '../../../chat/services/create-chat-room.service';
 import { Router } from '@angular/router';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
-import { MockService } from '../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../utils/mock';
 import { BehaviorSubject, of } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 import userMock from '../../../../mocks/responses/user.mock';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
-describe('MyComponent', () => {
+describe('ChannelActionsMessageComponent', () => {
   let comp: ChannelActionsMessageComponent;
   let fixture: ComponentFixture<ChannelActionsMessageComponent>;
 
   beforeEach((done: DoneFn) => {
     TestBed.configureTestingModule({
-      declarations: [ChannelActionsMessageComponent],
+      declarations: [
+        ChannelActionsMessageComponent,
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['iconOnly', 'overlay'],
+          outputs: ['onAction'],
+          template: `<ng-container></ng-container>`,
+        }),
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['iconId', 'sizeFactor'],
+        }),
+        MockComponent({
+          selector: 'm-loadingSpinner',
+          inputs: ['inProgress'],
+        }),
+      ],
       providers: [
         {
           provide: ChannelsV2Service,
@@ -59,6 +77,10 @@ describe('MyComponent', () => {
           provide: CreateChatRoomService,
           useValue: MockService(CreateChatRoomService),
         },
+        {
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
+        },
         { provide: Router, useValue: MockService(Router) },
         { provide: IS_TENANT_NETWORK, useValue: true },
         ChangeDetectorRef,
@@ -70,6 +92,11 @@ describe('MyComponent', () => {
     spyOn(window, 'open');
 
     (comp as any).isChatExperimentActive = false;
+
+    Object.defineProperty(comp, 'isTenantNetwork', {
+      value: true,
+      writable: true,
+    });
 
     fixture.detectChanges();
     if (fixture.isStable()) {
@@ -86,9 +113,54 @@ describe('MyComponent', () => {
     expect(comp).toBeTruthy();
   });
 
+  describe('shouldShow', () => {
+    it('should determine button should show because not on tenant network and user has permission', () => {
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(false);
+      (comp as any).isChatExperimentActive = false;
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        value: false,
+        writable: true,
+      });
+
+      comp.ngOnInit();
+      fixture.detectChanges();
+
+      expect((comp as any).shouldShow).toBeTrue();
+    });
+
+    it('should determine button should show because on tenant network and chat experiment is active with permission', () => {
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(false);
+      (comp as any).isChatExperimentActive = true;
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        value: true,
+        writable: true,
+      });
+
+      comp.ngOnInit();
+
+      expect((comp as any).shouldShow).toBeTrue();
+    });
+
+    it('should determine button should NOT show because not on tenant network, but the user has no permission', () => {
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(true);
+      (comp as any).isChatExperimentActive = true;
+      Object.defineProperty(comp, 'isTenantNetwork', {
+        value: false,
+        writable: true,
+      });
+
+      comp.ngOnInit();
+
+      expect((comp as any).shouldShow).toBeFalse();
+    });
+  });
+
   describe('internal chat requests', () => {
     it('should handle minds internal chat requests', fakeAsync(() => {
       const chatRoomId: string = '12345';
+      (comp as any).permissionIntentsService.checkAndHandleAction
+        .withArgs(PermissionsEnum.CanCreateChatRoom)
+        .and.returnValue(true);
       (comp as any).isChatExperimentActive = true;
       (comp as any).createChatRoom.createChatRoom.and.returnValue(
         Promise.resolve(chatRoomId)
@@ -105,6 +177,9 @@ describe('MyComponent', () => {
 
     it('should handle minds internal chat requests and not navigate when no room id is returned', fakeAsync(() => {
       const chatRoomId: string = null;
+      (comp as any).permissionIntentsService.checkAndHandleAction
+        .withArgs(PermissionsEnum.CanCreateChatRoom)
+        .and.returnValue(true);
       (comp as any).isChatExperimentActive = true;
       (comp as any).createChatRoom.createChatRoom.and.returnValue(
         Promise.resolve(chatRoomId)
@@ -119,6 +194,9 @@ describe('MyComponent', () => {
 
     it('should handle minds internal chat requests and not navigate when there is an error', fakeAsync(() => {
       (comp as any).isChatExperimentActive = true;
+      (comp as any).permissionIntentsService.checkAndHandleAction
+        .withArgs(PermissionsEnum.CanCreateChatRoom)
+        .and.returnValue(true);
       (comp as any).createChatRoom.createChatRoom.and.returnValue(
         Promise.reject(new Error('Chat room creation failed'))
       );
@@ -127,6 +205,21 @@ describe('MyComponent', () => {
       tick();
 
       expect((comp as any).createChatRoom.createChatRoom).toHaveBeenCalled();
+      expect((comp as any).router.navigateByUrl).not.toHaveBeenCalled();
+    }));
+
+    it('should NOT handle minds internal chat requests and not navigate when the user does not have permission', fakeAsync(() => {
+      (comp as any).isChatExperimentActive = true;
+      (comp as any).permissionIntentsService.checkAndHandleAction
+        .withArgs(PermissionsEnum.CanCreateChatRoom)
+        .and.returnValue(false);
+
+      comp.message();
+      tick();
+
+      expect(
+        (comp as any).createChatRoom.createChatRoom
+      ).not.toHaveBeenCalled();
       expect((comp as any).router.navigateByUrl).not.toHaveBeenCalled();
     }));
   });

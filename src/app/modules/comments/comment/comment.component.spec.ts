@@ -38,6 +38,7 @@ import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-ena
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 import { ModerationActionGqlService } from '../../admin/moderation/services/moderation-action-gql.service';
 import { PermissionsEnum } from '../../../../graphql/generated.engine';
+import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
 
 describe('CommentComponentV2', () => {
   let comp: CommentComponentV2;
@@ -184,6 +185,10 @@ describe('CommentComponentV2', () => {
           useValue: MockService(PermissionsService),
         },
         {
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
+        },
+        {
           provide: NsfwEnabledService,
           useValue: MockService(NsfwEnabledService),
         },
@@ -249,6 +254,38 @@ describe('CommentComponentV2', () => {
 
   it('should initialize', () => {
     expect(comp).toBeTruthy();
+  });
+
+  it('should initialize and handle showing and hiding reply buttons', () => {
+    (comp as any).shouldHideReplyButton = false;
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanComment)
+      .and.returnValue(true);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideReplyButton).toBeTrue();
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanComment)
+      .and.returnValue(false);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideReplyButton).toBeFalse();
+  });
+
+  it('should initialize and handle showing and hiding vote buttons', () => {
+    (comp as any).shouldHideVoteButtons = false;
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanInteract)
+      .and.returnValue(true);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideVoteButtons).toBeTrue();
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanInteract)
+      .and.returnValue(false);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideVoteButtons).toBeFalse();
   });
 
   it('should call to open modal when shouldOpenModal is true', () => {

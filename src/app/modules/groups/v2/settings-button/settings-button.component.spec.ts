@@ -23,6 +23,8 @@ import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm.component
 import { GroupChatRoomService } from '../services/group-chat-rooms.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { groupMock } from '../../../../mocks/responses/group.mock';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 describe('GroupSettingsButton', () => {
   let comp: GroupSettingsButton;
@@ -94,6 +96,10 @@ describe('GroupSettingsButton', () => {
           useValue: MockService(PermissionsService),
         },
         {
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
+        },
+        {
           provide: GroupChatRoomService,
           useValue: MockService(GroupChatRoomService),
         },
@@ -118,6 +124,22 @@ describe('GroupSettingsButton', () => {
         done();
       });
     }
+  });
+
+  it('should set canShowEnableChatRoom on init', () => {
+    (comp as any).canShowEnableChatRoom = true;
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanCreateChatRoom)
+      .and.returnValue(true);
+    comp.ngOnInit();
+    expect((comp as any).canShowEnableChatRoom).toBeFalse();
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanCreateChatRoom)
+      .and.returnValue(false);
+    comp.ngOnInit();
+    expect((comp as any).canShowEnableChatRoom).toBeTrue();
   });
 
   describe('hasBoostPermission', () => {
@@ -266,10 +288,12 @@ describe('GroupSettingsButton', () => {
 
     it('should handle chat room creation', fakeAsync(() => {
       (comp as any).service.setConversationDisabled.calls.reset();
-
       (comp as any).groupChatService.createGroupChatRoom.and.returnValue(
         Promise.resolve(true)
       );
+      (comp as any).permissionIntentsService.checkAndHandleAction
+        .withArgs(PermissionsEnum.CanCreateChatRoom)
+        .and.returnValue(true);
 
       comp.createChatRoom();
       tick();
@@ -291,6 +315,9 @@ describe('GroupSettingsButton', () => {
       (comp as any).groupChatService.createGroupChatRoom.and.returnValue(
         Promise.resolve(false)
       );
+      (comp as any).permissionIntentsService.checkAndHandleAction
+        .withArgs(PermissionsEnum.CanCreateChatRoom)
+        .and.returnValue(true);
 
       comp.createChatRoom();
       tick();
@@ -302,6 +329,23 @@ describe('GroupSettingsButton', () => {
         (comp as any).service.setConversationDisabled
       ).not.toHaveBeenCalled();
       expect((comp as any).toasterService.success).not.toHaveBeenCalled();
+    }));
+
+    it('should NOT handle chat room creation if a user does not have permission', fakeAsync(() => {
+      (comp as any).service.setConversationDisabled.calls.reset();
+      (comp as any).groupChatService.createGroupChatRoom.and.returnValue(
+        Promise.resolve(true)
+      );
+      (comp as any).permissionIntentsService.checkAndHandleAction
+        .withArgs(PermissionsEnum.CanCreateChatRoom)
+        .and.returnValue(false);
+
+      comp.createChatRoom();
+      tick();
+
+      expect(
+        (comp as any).groupChatService.createGroupChatRoom
+      ).not.toHaveBeenCalled();
     }));
   });
 });

@@ -104,28 +104,6 @@ export class PermissionIntentsService {
   }
 
   /**
-   * Get the permission intent for a given permission.
-   * @param { PermissionEnum } permissionId - The permission to get the intent for.
-   * @returns { PermissionIntent } - The permission intent.
-   */
-  public getPermissionIntent(permissionId: PermissionsEnum): PermissionIntent {
-    return (
-      this.configs
-        .get<ExportedPermissionIntent[]>('permission_intents')
-        ?.filter((intent: ExportedPermissionIntent): boolean => {
-          return intent['permission_id'] === permissionId;
-        })
-        .map(
-          (intent: ExportedPermissionIntent): PermissionIntent => ({
-            permissionId: intent['permission_id'],
-            intentType: intent['intent_type'],
-            membershipGuid: intent['membership_guid'],
-          })
-        )?.[0] ?? null
-    );
-  }
-
-  /**
    * Show a warning toast message for a given permission.
    * @param { PermissionEnum } permissionId - The permission to show the warning message for.
    * @returns { void }
@@ -180,5 +158,27 @@ export class PermissionIntentsService {
       upgradeMode: true,
       membershipGuid: paymentIntent.membershipGuid,
     });
+  }
+
+  /**
+   * Get the permission intent for a given permission.
+   * @param { PermissionEnum } permissionId - The permission to get the intent for.
+   * @returns { PermissionIntent } - The permission intent.
+   */
+  private getPermissionIntent(permissionId: PermissionsEnum): PermissionIntent {
+    return (
+      this.configs
+        .get<ExportedPermissionIntent[]>('permission_intents')
+        ?.filter((intent: ExportedPermissionIntent): boolean => {
+          return intent['permission_id'] === permissionId;
+        })
+        .map(
+          (intent: ExportedPermissionIntent): PermissionIntent => ({
+            permissionId: intent['permission_id'],
+            intentType: intent['intent_type'],
+            membershipGuid: intent['membership_guid'],
+          })
+        )?.[0] ?? null
+    );
   }
 }
