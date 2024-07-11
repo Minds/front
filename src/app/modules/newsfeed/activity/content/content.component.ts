@@ -220,9 +220,10 @@ export class ActivityContentComponent
 
   get hasSiteMembershipPayallThumbnail(): boolean {
     return (
-      this.entity.site_membership &&
+      Boolean(this.entity.site_membership) &&
       !this.entity.site_membership_unlocked &&
-      !!this.entity.paywall_thumbnail
+      (Boolean(this.entity.paywall_thumbnail) ||
+        (this.isVideo && Boolean(this.entity.thumbnail_src)))
     );
   }
 

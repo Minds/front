@@ -4,7 +4,11 @@ import {
   ActivityEntity,
   ActivityService,
 } from '../../activity/activity.service';
-import { MockComponent, MockService } from '../../../../utils/mock';
+import {
+  MockComponent,
+  MockDirective,
+  MockService,
+} from '../../../../utils/mock';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { Router } from '@angular/router';
 import { RedirectService } from '../../../../common/services/redirect.service';
@@ -17,6 +21,8 @@ import { ActivityContentComponent } from './content.component';
 import { BehaviorSubject } from 'rxjs';
 import userMock from '../../../../mocks/responses/user.mock';
 import { TagsPipeMock } from '../../../../mocks/pipes/tagsPipe.mock';
+import { IsTenantService } from '../../../../common/services/is-tenant.service';
+import { IfTenantDirective } from '../../../../common/directives/if-tenant.directive';
 
 describe('ActivityContentComponent', () => {
   let comp: ActivityContentComponent;
@@ -83,6 +89,7 @@ describe('ActivityContentComponent', () => {
           selector: 'm-activity__paywall',
           inputs: ['hideText'],
         }),
+        IfTenantDirective,
         TagsPipeMock,
       ],
       providers: [
@@ -154,6 +161,7 @@ describe('ActivityContentComponent', () => {
           useValue: MockService(ChangeDetectorRef),
         },
         { provide: IS_TENANT_NETWORK, useValue: false },
+        { provide: IsTenantService, useValue: MockService(IsTenantService) },
       ],
     }).compileComponents();
   }));
@@ -304,6 +312,77 @@ describe('ActivityContentComponent', () => {
         title: 'title',
       };
       expect(comp.titleText).toEqual(comp.entity.title);
+    });
+  });
+
+  describe('hasSiteMembershipPayallThumbnail', () => {
+    it('should determine there is a site membership paywall thumbnail that should be shown', () => {
+      (comp as any).entity = {
+        ...mockEntity,
+        custom_type: 'video',
+        site_membership: { guid: 123 },
+        site_membership_unlocked: false,
+        paywall_thumbnail: {
+          height: 10,
+          width: 10,
+        },
+      };
+
+      expect(comp.hasSiteMembershipPayallThumbnail).toBe(true);
+    });
+
+    it('should determine there is a thumbnail src that should be shown as a fallback', () => {
+      (comp as any).entity = {
+        ...mockEntity,
+        custom_type: 'video',
+        site_membership: { guid: 123 },
+        site_membership_unlocked: false,
+        thumbnail_src: 'https://example.minds.com/newsfeed/1234567891',
+      };
+
+      expect(comp.hasSiteMembershipPayallThumbnail).toBe(true);
+    });
+
+    it('should determine there is a thumbnail src fallback should NOT be shown because the entity is not a video', () => {
+      (comp as any).entity = {
+        ...mockEntity,
+        custom_type: 'image',
+        site_membership: { guid: 123 },
+        site_membership_unlocked: false,
+        thumbnail_src: 'https://example.minds.com/newsfeed/1234567891',
+      };
+
+      expect(comp.hasSiteMembershipPayallThumbnail).toBe(false);
+    });
+
+    it('should determine site membership paywall thumbnail should not be shown because paywall is unlocked', () => {
+      (comp as any).entity = {
+        ...mockEntity,
+        custom_type: 'video',
+        site_membership: { guid: 123 },
+        site_membership_unlocked: true,
+        paywall_thumbnail: {
+          height: 10,
+          width: 10,
+        },
+      };
+
+      expect(comp.hasSiteMembershipPayallThumbnail).toBe(false);
+    });
+
+    it('should determine site membership paywall thumbnail should not be shown because there is no site membership', () => {
+      (comp as any).entity = {
+        ...mockEntity,
+        custom_type: 'video',
+        site_membership: null,
+        site_membership_unlocked: null,
+        paywall_thumbnail: {
+          height: 10,
+          width: 10,
+        },
+      };
+
+      expect(comp.hasSiteMembershipPayallThumbnail).toBe(false);
     });
   });
 });

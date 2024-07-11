@@ -17,6 +17,22 @@
   />
 </div>
 
+<div
+  class="m-activitySiteMembershipCta__thumbnail"
+  *ngIf="!entity?.paywall_thumbnail && entity?.thumbnail_src"
+  (click)="onClick($event)"
+>
+  <span *ngIf="isVideo">
+    <i class="material-icons minds-video-play-icon"> play_circle_outline </i>
+  </span>
+  <img
+    [m-blurhash]="entity.blurhash"
+    [src]="entity.thumbnail_src"
+    [style.width.%]="100"
+    [style.height.px]="thumbnailHeightPx"
+  />
+</div>
+
 <m-button
   *ngIf="showButton"
   [solid]="true"

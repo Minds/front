@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitySiteMembershipCtaComponent } from './site-membership-cta.component';
 import { ActivityEntity, ActivityService } from '../activity.service';
-import { MockService } from '../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../utils/mock';
 import { ReplaySubject } from 'rxjs';
 import { WINDOW } from '../../../../common/injection-tokens/common-injection-tokens';
 import userMock from '../../../../mocks/responses/user.mock';
+import { ElementRef } from '@angular/core';
 
 describe('ActivitySiteMembershipCtaComponent', () => {
   let comp: ActivitySiteMembershipCtaComponent;
@@ -40,7 +41,14 @@ describe('ActivitySiteMembershipCtaComponent', () => {
 
   beforeEach((done: DoneFn) => {
     TestBed.configureTestingModule({
-      declarations: [ActivitySiteMembershipCtaComponent],
+      declarations: [
+        ActivitySiteMembershipCtaComponent,
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['solid', 'borderless', 'saving', 'color', 'size'],
+          outputs: ['onAction'],
+        }),
+      ],
       providers: [
         {
           provide: ActivityService,
@@ -89,5 +97,49 @@ describe('ActivitySiteMembershipCtaComponent', () => {
       '/api/v3/payments/site-memberships/paywalled-entities/1234567891234560/checkout?redirectPath=/newsfeed/1234567891234560',
       '_self'
     );
+  });
+
+  describe('calculateThumbnailHeight', () => {
+    it('should calculcate the thumbnail height when there is a paywall thumbnail', () => {
+      (comp as any).thumbnailHeightPx = null;
+      spyOnProperty(
+        (comp as any).el.nativeElement,
+        'clientWidth',
+        'get'
+      ).and.returnValue(800);
+
+      (comp as any).entity = {
+        ...mockEntity,
+        custom_type: 'video',
+        site_membership: { guid: 123 },
+        site_membership_unlocked: false,
+        paywall_thumbnail: { height: 1080, width: 1920 },
+      };
+
+      (comp as any).calculateThumbnailHeight();
+
+      expect(comp.thumbnailHeightPx).toEqual(450);
+    });
+
+    it('should calculcate the thumbnail height when there is a thumbnail src only', () => {
+      (comp as any).thumbnailHeightPx = null;
+      spyOnProperty(
+        (comp as any).el.nativeElement,
+        'clientWidth',
+        'get'
+      ).and.returnValue(800);
+
+      (comp as any).entity = {
+        ...mockEntity,
+        custom_type: 'video',
+        site_membership: { guid: 123 },
+        site_membership_unlocked: false,
+        thumbnail_src: 'https://example.minds.com/newsfeed/1234567891',
+      };
+
+      (comp as any).calculateThumbnailHeight();
+
+      expect(comp.thumbnailHeightPx).toEqual(450);
+    });
   });
 });
