@@ -43,7 +43,7 @@ export class HomepageContainerComponent implements OnInit {
           queryParams: { createBoost: 1 },
         });
       } else {
-        this.router.navigate([this.authRedirectService.getRedirectUrl()]);
+        this.router.navigate(['/newsfeed']);
       }
     }
 
