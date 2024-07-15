@@ -1,0 +1,34 @@
+<h4
+  class="m-networkDigestEmailSettings__title"
+  i18n="@@NETWORK_ADMIN_DIGEST_EMAIL_SETTINGS__TITLE"
+>
+  Email digest
+</h4>
+<p class="m-networkDigestEmailSettings__body">
+  <span i18n="@@NETWORK_ADMIN_DIGEST_EMAIL_SETTINGS__DESCRIPTION"
+    >Automatically send an email digest to your users of recent top posts from
+    your network.</span
+  >
+  <br />
+  <a
+    href="https://help.minds.com/hc/minds/articles/1719423221-send-an-email-digest-minds-networks"
+    target="_blank"
+    >Learn more</a
+  >
+  about how email digest works.
+</p>
+<div class="m-networkDigestEmailSettings__toggleContainer">
+  <m-toggle
+    class="m-networkDigestEmailSettings__toggle"
+    [mModel]="enabledToggleState"
+    (mModelChange)="onEnabledToggle($event)"
+    leftValue="off"
+    rightValue="on"
+    offState="off"
+  ></m-toggle>
+  <span
+    class="m-networkDigestEmailSettings__toggleText"
+    i18n="@@NETWORK_ADMIN_DIGEST_EMAIL_SETTINGS__TITLE"
+    >Email digest</span
+  >
+</div>
