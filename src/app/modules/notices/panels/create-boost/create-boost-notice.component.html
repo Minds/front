@@ -21,11 +21,22 @@
     color="blue"
     solid="true"
     size="small"
-    (onAction)="onPrimaryOptionClick()"
-    data-ref="feed-notice-create-boost-primary-click"
+    (onAction)="onCreateBoostClick()"
+    data-ref="feed-notice-create-boost-create-boost-click"
   >
     <ng-container i18n="@@CREATE_BOOST_NOTICE__CREATE_BOOST">
       Create Boost
+    </ng-container>
+  </m-button>
+  <m-button
+    class="m-feedNotice__buttonSecondary"
+    color="blue"
+    size="small"
+    (onAction)="onBoostLatestPostClick()"
+    data-ref="feed-notice-create-boost-boost-latest-post-click"
+  >
+    <ng-container i18n="@@CREATE_BOOST_NOTICE__BOOST_LATEST_POST">
+      Boost latest post
     </ng-container>
   </m-button>
 </m-feedNotice>
