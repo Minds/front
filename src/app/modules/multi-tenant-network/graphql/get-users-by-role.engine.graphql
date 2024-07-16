@@ -1,5 +1,5 @@
-query GetUsersByRole($roleId: Int, $first: Int, $after: String) {
-  usersByRole(roleId: $roleId, first: $first, after: $after) {
+query GetUsersByRole($roleId: Int, $username: String, $first: Int, $after: String) {
+  usersByRole(roleId: $roleId, username: $username, first: $first, after: $after) {
     pageInfo {
       hasNextPage
       hasPreviousPage

@@ -340,6 +340,29 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+
+    @media screen and (max-width: $min-tablet) {
+      flex-direction: column;
+      gap: $spacing4 $spacing2;
+
+      .m-networkAdminConsoleListHeaderRow__columnTitle {
+        display: none;
+      }
+
+      .m-networkAdminConsoleListHeaderRow__filtersWrapper {
+        flex-flow: row wrap;
+        justify-content: flex-start;
+
+        m-dropdownSelector,
+        .m-networkAdminConsoleListHeaderRow__filter--dropdown,
+        ::ng-deep .m-dropdownSelector__header,
+        .m-networkAdminConsoleListHeaderRow__filter--search,
+        .m-networkAdminConsoleListHeaderRow__filter--search input {
+          width: 100%;
+        }
+      }
+    }
+
     div:first-child {
       span {
         @include body1Bold;
@@ -348,6 +371,8 @@
 
     .m-networkAdminConsoleListHeaderRow__filtersWrapper {
       display: flex;
+      gap: $spacing4;
+
       .m-networkAdminConsoleListHeaderRow__filter--dropdown {
         display: flex;
         align-items: center;
@@ -376,8 +401,8 @@
         align-items: center;
         @include border;
         border-radius: $spacing1;
-        margin-left: $spacing4;
         padding: $spacing1 $spacing1 $spacing1 $spacing3;
+        min-height: 34px;
 
         input {
           border: none;
