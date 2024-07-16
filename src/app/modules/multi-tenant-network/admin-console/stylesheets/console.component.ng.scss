@@ -415,6 +415,10 @@
               color: themed($m-textColor--secondary);
             }
           }
+
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
         }
         .material-icons {
           margin: $spacing1;
