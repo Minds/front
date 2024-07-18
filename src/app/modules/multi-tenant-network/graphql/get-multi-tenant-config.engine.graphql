@@ -11,5 +11,6 @@ query GetMultiTenantConfig {
     customHomePageEnabled
     customHomePageDescription
     walledGardenEnabled
+    digestEmailEnabled
   }
 }

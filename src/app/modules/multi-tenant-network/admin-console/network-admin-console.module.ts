@@ -53,6 +53,7 @@ import { NetworkAdminConsoleEnableWalledGardenToggleComponent } from './tabs/gen
 import { boostEnabledGuard } from '../../../common/guards/can-boost.guard';
 import { PermissionsEnum } from '../../../../graphql/generated.engine';
 import { permissionGuard } from '../../../common/guards/permission.guard';
+import { NetworkAdminConsoleDigestEmailSettingsComponent } from './tabs/general/digest-email-toggle/digest-email-toggle.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -225,6 +226,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleLandingPageDescriptionComponent,
     NetworkAdminConsoleEnableLandingPageToggleComponent,
     NetworkAdminConsoleEnableWalledGardenToggleComponent,
+    NetworkAdminConsoleDigestEmailSettingsComponent,
     NetworkAdminConsoleReplyEmailSettingsComponent,
     NetworkAdminConsoleNsfwToggleComponent,
     NetworkAdminConsoleInviteComponent,

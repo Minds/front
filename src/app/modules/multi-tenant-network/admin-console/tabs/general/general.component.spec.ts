@@ -34,6 +34,9 @@ describe('NetworkAdminConsoleGeneralComponent', () => {
           selector: 'm-networkAdminConsole__enableWalledGardenToggle',
         }),
         MockComponent({
+          selector: 'm-networkAdminConsole__digestEmailSettings',
+        }),
+        MockComponent({
           selector: 'm-networkAdminConsole__replyEmailSettings',
         }),
         MockComponent({
