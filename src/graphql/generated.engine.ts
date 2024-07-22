@@ -923,6 +923,7 @@ export type MultiTenantConfig = {
   colorScheme?: Maybe<MultiTenantColorScheme>;
   customHomePageDescription?: Maybe<Scalars['String']['output']>;
   customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
+  digestEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
@@ -939,6 +940,7 @@ export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
@@ -966,6 +968,7 @@ export type MultiTenantDomainDnsRecord = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Add members to a chat room. */
   addMembersToChatRoom: Scalars['Boolean']['output'];
   /** Cancel all Boosts on a given entity. */
   adminCancelBoosts: Scalars['Boolean']['output'];
@@ -4108,6 +4111,7 @@ export type GetMultiTenantConfigQuery = {
     customHomePageEnabled?: boolean | null;
     customHomePageDescription?: string | null;
     walledGardenEnabled?: boolean | null;
+    digestEmailEnabled?: boolean | null;
   } | null;
 };
 
@@ -4216,6 +4220,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -9876,6 +9881,7 @@ export const GetMultiTenantConfigDocument = gql`
       customHomePageEnabled
       customHomePageDescription
       walledGardenEnabled
+      digestEmailEnabled
     }
   }
 `;
@@ -10044,6 +10050,7 @@ export const SetMultiTenantConfigDocument = gql`
     $customHomePageEnabled: Boolean
     $customHomePageDescription: String
     $walledGardenEnabled: Boolean
+    $digestEmailEnabled: Boolean
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
@@ -10057,6 +10064,7 @@ export const SetMultiTenantConfigDocument = gql`
         customHomePageEnabled: $customHomePageEnabled
         customHomePageDescription: $customHomePageDescription
         walledGardenEnabled: $walledGardenEnabled
+        digestEmailEnabled: $digestEmailEnabled
       }
     )
   }

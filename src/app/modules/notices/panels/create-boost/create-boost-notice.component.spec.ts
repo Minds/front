@@ -6,10 +6,14 @@ import { ComposerBoostService } from '../../../composer/services/boost.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { CreateBoostNoticeComponent } from './create-boost-notice.component';
 import { BehaviorSubject } from 'rxjs';
+import { BoostLatestPostNoticeService } from '../boost-latest-post/boost-latest-post-notice.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
+import { Router } from '@angular/router';
 
 describe('CreateBoostNoticeComponent', () => {
   let comp: CreateBoostNoticeComponent;
   let fixture: ComponentFixture<CreateBoostNoticeComponent>;
+  const mockEntity: any = { guid: 123 };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -18,7 +22,7 @@ describe('CreateBoostNoticeComponent', () => {
         CreateBoostNoticeComponent,
         MockComponent({
           selector: 'm-feedNotice',
-          inputs: ['icon', 'dismissible'],
+          inputs: ['icon', 'dismissible', 'showIcon'],
           template: `<ng-content></ng-content>`,
         }),
         MockComponent({
@@ -42,6 +46,25 @@ describe('CreateBoostNoticeComponent', () => {
               },
             },
           }),
+        },
+        {
+          provide: BoostLatestPostNoticeService,
+          useValue: MockService(BoostLatestPostNoticeService, {
+            has: ['latestPost$'],
+            props: {
+              latestPost$: {
+                get: () => new BehaviorSubject<any>(mockEntity),
+              },
+            },
+          }),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
         },
         Injector,
       ],
@@ -72,12 +95,37 @@ describe('CreateBoostNoticeComponent', () => {
     (comp as any).composerModalService.setInjector.and.returnValue(
       (comp as any).composerModalService
     );
-    comp.onPrimaryOptionClick();
+    comp.onCreateBoostClick();
 
     expect((comp as any).composerBoostService.isBoostMode$.getValue()).toBe(
       true
     );
     expect((comp as any).composerModalService.setInjector).toHaveBeenCalled();
     expect((comp as any).composerModalService.present).toHaveBeenCalled();
+  });
+
+  describe('onBoostLatestPostClick', () => {
+    it('should navigate to newsfeed if no latest post is found', () => {
+      (comp as any).boostLatestPostNoticeService.latestPost$.next(mockEntity);
+      comp.onBoostLatestPostClick();
+
+      expect((comp as any).toaster.warn).not.toHaveBeenCalled();
+      expect((comp as any).router.navigate).toHaveBeenCalledWith(
+        ['newsfeed', mockEntity.guid],
+        {
+          queryParams: {
+            boostModalDelayMs: 1000,
+          },
+        }
+      );
+    });
+
+    it('should warn if latest post is not found', () => {
+      (comp as any).boostLatestPostNoticeService.latestPost$.next(null);
+      comp.onBoostLatestPostClick();
+
+      expect((comp as any).toaster.warn).toHaveBeenCalled();
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+    });
   });
 });

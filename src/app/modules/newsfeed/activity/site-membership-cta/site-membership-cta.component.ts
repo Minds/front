@@ -62,6 +62,9 @@ export class ActivitySiteMembershipCtaComponent
 
       const aspectRatio = originalHeight / originalWidth;
       this.thumbnailHeightPx = componentWidth * aspectRatio;
+    } else if (this.entity?.thumbnail_src) {
+      // We do not have height and width, so we have to default the aspect ratio.
+      this.thumbnailHeightPx = componentWidth * (1080 / 1920);
     }
   }
 
