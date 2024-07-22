@@ -17,7 +17,7 @@ import { BoostModalV2LazyService } from '../../../modules/boost/modal-v2/boost-m
 import { ModerationActionGqlService } from '../../../modules/admin/moderation/services/moderation-action-gql.service';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { PermissionsService } from '../../services/permissions.service';
-import { ConfirmV2Component } from '../../../modules/modals/confirm-v2/confirm.component';
+import { BoostCancelModalService } from '../../../modules/boost/console-v2/services/cancel-modal.service';
 
 @Injectable()
 export class PostMenuService {
@@ -50,7 +50,7 @@ export class PostMenuService {
     private boostModal: BoostModalV2LazyService,
     private moderationActionGql: ModerationActionGqlService,
     private permissionsService: PermissionsService,
-    private injector: Injector,
+    private boostCancelModalService: BoostCancelModalService,
     @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
@@ -383,20 +383,7 @@ export class PostMenuService {
    * @returns { Promise<boolean> } - Whether the user confirmed the action.
    */
   public async confirmBoostCancellation(): Promise<boolean> {
-    const modal = this.modalService.present(ConfirmV2Component, {
-      data: {
-        title: 'Cancel this Boost?',
-        body: 'Are you sure you want to cancel this Boosted post? All active Boosts with this post will be immediately cancelled and will stop serving on your network, and the customer(s) will not be refunded.',
-        confirmButtonText: 'Cancel Boost',
-        confirmButtonColor: 'red',
-        showCancelButton: false,
-        onConfirm: () => {
-          modal.close(true);
-        },
-      },
-      injector: this.injector,
-    });
-    return modal?.result;
+    return this.boostCancelModalService.confirmModeratorBoostCancellation();
   }
 
   async openShareModal(): Promise<void> {
