@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { Session } from '../../../../../../services/session';
 import { Boost, BoostState } from '../../../../boost.types';
 import { BoostConsoleService } from '../../../services/console.service';
 import { BoostRejectionModalService } from '../../../modal/rejection-modal/services/boost-rejection-modal.service';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
+import { BoostCancelModalService } from '../../../services/cancel-modal.service';
 
 /**
  * Boost console list item action buttons
@@ -24,10 +25,28 @@ export class BoostConsoleActionButtonsComponent {
   rejecting: boolean = false;
   cancelling: boolean = false;
 
+  /** Whether a boost has been cancelled via action. */
+  private readonly boostCancelled$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  /** Whether cancel button should be shown. */
+  protected readonly shouldShowCancelButton$: Observable<boolean> =
+    combineLatest([this.service.adminContext$, this.boostCancelled$]).pipe(
+      map(([adminContext, boostCancelled]: [boolean, boolean]): boolean => {
+        return (
+          !boostCancelled &&
+          !adminContext &&
+          [BoostState.PENDING, BoostState.APPROVED].includes(
+            this.boost.boost_status
+          )
+        );
+      })
+    );
+
   constructor(
-    private session: Session,
     public service: BoostConsoleService,
-    private boostRejectionModal: BoostRejectionModalService
+    private boostRejectionModal: BoostRejectionModalService,
+    private boostCancelModalService: BoostCancelModalService
   ) {}
 
   /**
@@ -58,12 +77,18 @@ export class BoostConsoleActionButtonsComponent {
    * @param { MouseEvent } e - mouse event.
    * @returns { void }
    */
-  public onCancel(e: MouseEvent): void {
+  public async onCancel(e: MouseEvent): Promise<void> {
+    if (!(await this.boostCancelModalService.confirmSelfBoostCancellation())) {
+      return;
+    }
+
     this.cancelling = true;
     const promise = this.service.cancel(this.boost);
 
     promise.then(() => {
       this.cancelling = false;
+      this.boost.boost_status = BoostState.CANCELLED;
+      this.boostCancelled$.next(true);
     });
   }
 
