@@ -1828,6 +1828,7 @@ export type QueryUsersByRoleArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   roleId?: InputMaybe<Scalars['Int']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QuotaDetails = {
@@ -2070,6 +2071,7 @@ export type Tenant = {
   ownerGuid?: Maybe<Scalars['String']['output']>;
   plan: TenantPlanEnum;
   rootUserGuid?: Maybe<Scalars['String']['output']>;
+  suspendedTimestamp?: Maybe<Scalars['Int']['output']>;
   trialStartTimestamp?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -4091,6 +4093,7 @@ export type GetMultiTenantDomainQuery = {
 
 export type GetUsersByRoleQueryVariables = Exact<{
   roleId?: InputMaybe<Scalars['Int']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -9827,8 +9830,18 @@ export class GetMultiTenantDomainGQL extends Apollo.Query<
   }
 }
 export const GetUsersByRoleDocument = gql`
-  query GetUsersByRole($roleId: Int, $first: Int, $after: String) {
-    usersByRole(roleId: $roleId, first: $first, after: $after) {
+  query GetUsersByRole(
+    $roleId: Int
+    $username: String
+    $first: Int
+    $after: String
+  ) {
+    usersByRole(
+      roleId: $roleId
+      username: $username
+      first: $first
+      after: $after
+    ) {
       pageInfo {
         hasNextPage
         hasPreviousPage
