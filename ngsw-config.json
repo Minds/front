@@ -32,7 +32,9 @@
       "urls": [
         "https://**/api/v**",
         "https://**/plugins/**",
-        "http://localhost:8080/api/**"
+        "http://localhost:8080/api/**",
+        "https://**/emails/unsubscribe/**",
+        "http://localhost:8080/emails/unsubscribe/**"
       ],
       "cacheConfig": {
         "maxSize": 50,
