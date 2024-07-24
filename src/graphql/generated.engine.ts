@@ -923,6 +923,7 @@ export type MultiTenantConfig = {
   colorScheme?: Maybe<MultiTenantColorScheme>;
   customHomePageDescription?: Maybe<Scalars['String']['output']>;
   customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
+  digestEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
@@ -939,6 +940,7 @@ export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
@@ -966,6 +968,7 @@ export type MultiTenantDomainDnsRecord = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Add members to a chat room. */
   addMembersToChatRoom: Scalars['Boolean']['output'];
   /** Cancel all Boosts on a given entity. */
   adminCancelBoosts: Scalars['Boolean']['output'];
@@ -1825,6 +1828,7 @@ export type QueryUsersByRoleArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   roleId?: InputMaybe<Scalars['Int']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QuotaDetails = {
@@ -2067,6 +2071,7 @@ export type Tenant = {
   ownerGuid?: Maybe<Scalars['String']['output']>;
   plan: TenantPlanEnum;
   rootUserGuid?: Maybe<Scalars['String']['output']>;
+  suspendedTimestamp?: Maybe<Scalars['Int']['output']>;
   trialStartTimestamp?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -4087,6 +4092,7 @@ export type GetMultiTenantDomainQuery = {
 
 export type GetUsersByRoleQueryVariables = Exact<{
   roleId?: InputMaybe<Scalars['Int']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -9821,8 +9827,18 @@ export class GetMultiTenantDomainGQL extends Apollo.Query<
   }
 }
 export const GetUsersByRoleDocument = gql`
-  query GetUsersByRole($roleId: Int, $first: Int, $after: String) {
-    usersByRole(roleId: $roleId, first: $first, after: $after) {
+  query GetUsersByRole(
+    $roleId: Int
+    $username: String
+    $first: Int
+    $after: String
+  ) {
+    usersByRole(
+      roleId: $roleId
+      username: $username
+      first: $first
+      after: $after
+    ) {
       pageInfo {
         hasNextPage
         hasPreviousPage
