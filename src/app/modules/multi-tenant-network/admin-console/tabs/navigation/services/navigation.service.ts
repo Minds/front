@@ -53,6 +53,9 @@ export class MultiTenantNavigationService implements OnDestroy {
     boost: { defaultState: false },
     admin: { defaultState: false },
     memberships: { defaultState: false },
+    newsfeed: { defaultState: true },
+    chat: { defaultState: true },
+    explore: { defaultState: true },
   };
 
   /** Navigation items that are disabled on web. */
