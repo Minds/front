@@ -1029,6 +1029,7 @@ export type Mutation = {
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  setPermissionIntent?: Maybe<PermissionIntent>;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
   /** Set the stripe keys for the network */
@@ -1247,6 +1248,12 @@ export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
 };
 
+export type MutationSetPermissionIntentArgs = {
+  intentType: PermissionIntentTypeEnum;
+  membershipGuid?: InputMaybe<Scalars['String']['input']>;
+  permissionId: PermissionsEnum;
+};
+
 export type MutationSetRolePermissionArgs = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   permission: PermissionsEnum;
@@ -1407,6 +1414,19 @@ export type PaymentMethod = {
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
 };
+
+export type PermissionIntent = {
+  __typename?: 'PermissionIntent';
+  intentType?: Maybe<PermissionIntentTypeEnum>;
+  membershipGuid?: Maybe<Scalars['String']['output']>;
+  permissionId: PermissionsEnum;
+};
+
+export enum PermissionIntentTypeEnum {
+  Hide = 'HIDE',
+  Upgrade = 'UPGRADE',
+  WarningMessage = 'WARNING_MESSAGE',
+}
 
 export enum PermissionsEnum {
   CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
@@ -1573,6 +1593,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  permissionIntents: Array<PermissionIntent>;
   personalApiKey?: Maybe<PersonalApiKey>;
   postHogPerson: PostHogPerson;
   postSubscription: PostSubscription;
@@ -3886,6 +3907,36 @@ export type UpdateSiteMembershipMutation = {
       legacy: string;
     }> | null;
   };
+};
+
+export type GetPermissionIntentsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetPermissionIntentsQuery = {
+  __typename?: 'Query';
+  permissionIntents: Array<{
+    __typename?: 'PermissionIntent';
+    permissionId: PermissionsEnum;
+    intentType?: PermissionIntentTypeEnum | null;
+    membershipGuid?: string | null;
+  }>;
+};
+
+export type SetPermissionIntentMutationVariables = Exact<{
+  permissionId: PermissionsEnum;
+  intentType: PermissionIntentTypeEnum;
+  membershipGuid?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type SetPermissionIntentMutation = {
+  __typename?: 'Mutation';
+  setPermissionIntent?: {
+    __typename?: 'PermissionIntent';
+    permissionId: PermissionsEnum;
+    intentType?: PermissionIntentTypeEnum | null;
+    membershipGuid?: string | null;
+  } | null;
 };
 
 export type AssignUserToRoleMutationVariables = Exact<{
@@ -9518,6 +9569,60 @@ export class UpdateSiteMembershipGQL extends Apollo.Mutation<
   UpdateSiteMembershipMutationVariables
 > {
   document = UpdateSiteMembershipDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetPermissionIntentsDocument = gql`
+  query GetPermissionIntents {
+    permissionIntents {
+      permissionId
+      intentType
+      membershipGuid
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetPermissionIntentsGQL extends Apollo.Query<
+  GetPermissionIntentsQuery,
+  GetPermissionIntentsQueryVariables
+> {
+  document = GetPermissionIntentsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetPermissionIntentDocument = gql`
+  mutation SetPermissionIntent(
+    $permissionId: PermissionsEnum!
+    $intentType: PermissionIntentTypeEnum!
+    $membershipGuid: String
+  ) {
+    setPermissionIntent(
+      permissionId: $permissionId
+      intentType: $intentType
+      membershipGuid: $membershipGuid
+    ) {
+      permissionId
+      intentType
+      membershipGuid
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetPermissionIntentGQL extends Apollo.Mutation<
+  SetPermissionIntentMutation,
+  SetPermissionIntentMutationVariables
+> {
+  document = SetPermissionIntentDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

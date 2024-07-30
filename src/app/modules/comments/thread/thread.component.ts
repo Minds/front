@@ -17,6 +17,8 @@ import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
 import { BlockListService } from '../../../common/services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
+import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../graphql/generated.engine';
 
 @Component({
   selector: 'm-comments__thread',
@@ -68,6 +70,9 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
   };
   direction: 'asc' | 'desc' = 'desc';
 
+  /** Whether comment poster should be hidden. */
+  protected shouldHideCommentPoster: boolean = false;
+
   constructor(
     public session: Session,
     private commentsService: CommentsService,
@@ -75,7 +80,8 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     protected blockListService: BlockListService,
     private cd: ChangeDetectorRef,
-    public activityService: ActivityService
+    public activityService: ActivityService,
+    private permissionIntentsService: PermissionIntentsService
   ) {}
 
   ngOnInit() {
@@ -83,6 +89,9 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
       this.direction = 'asc';
     }
 
+    this.shouldHideCommentPoster = this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanComment
+    );
     this.load(true);
   }
 

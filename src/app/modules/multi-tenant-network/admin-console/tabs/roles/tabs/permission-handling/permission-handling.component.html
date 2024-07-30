@@ -1,0 +1,186 @@
+<div class="m-permissionHandling__header">
+  <h2
+    class="m-permissionHandling__title m-permissionHandling__horizontalMargin"
+    i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__PERMISSION_HANDLING"
+  >
+    Permission handling
+  </h2>
+  <p
+    class="m-permissionHandling__description m-permissionHandling__horizontalMargin"
+    i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__CONTROL_WHAT_A_USER_SEES"
+  >
+    Control what a user sees when they try to access a feature of your network,
+    and their permission is turned off. This is a great way to promote
+    memberships and offer users a smoother experience.
+  </p>
+</div>
+<div
+  class="m-permissionHandling__optionsContainer"
+  *ngIf="dataLoaded$ | async; else loadingSpinnerTemplate"
+>
+  <div
+    class="m-permissionHandling__optionsRow m-permissionHandling__optionsHeaderRow"
+  >
+    <h5
+      class="m-permissionHandling__optionsColumnHeader"
+      i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__PERMISSION"
+    >
+      Permission
+    </h5>
+    <h5
+      class="m-permissionHandling__optionsColumnHeader m-permissionHandling__optionSelectorColumn"
+      i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__VISIBLITY"
+    >
+      Visibility
+    </h5>
+  </div>
+  <div
+    *ngFor="let permissionIntent of permissionIntents$ | async"
+    class="m-permissionHandling__optionsRow m-permissionHandling__optionsRowOption"
+  >
+    <div
+      class="m-permissionHandling__optionLabelColumn m-permissionHandling__horizontalMargin"
+    >
+      <ng-container [ngSwitch]="permissionIntent.permissionId">
+        <ng-container *ngSwitchCase="PermissionsEnum.CanCreatePost">
+          <span
+            class="m-permissionHandling__optionTitle"
+            i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__CREATE_POST"
+            >Create post</span
+          >
+          <span
+            class="m-permissionHandling__optionDescription"
+            i18n="
+              @@NETWORK_ADMIN_PERMISSION_HANDLING__CREATE_A_POST_ON_YOUR_NETWORK"
+            >Create a post on your network</span
+          >
+        </ng-container>
+        <ng-container *ngSwitchCase="PermissionsEnum.CanInteract">
+          <span
+            class="m-permissionHandling__optionTitle"
+            i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__VOTE_AND_REMIND"
+            >Vote and remind</span
+          >
+          <span
+            class="m-permissionHandling__optionDescription"
+            i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__ENGAGE_BY_VOTING"
+            >Engage with posts by voting them up / down or reposting from
+            another channel.</span
+          >
+        </ng-container>
+        <ng-container *ngSwitchCase="PermissionsEnum.CanUploadVideo">
+          <span
+            class="m-permissionHandling__optionTitle"
+            i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__UPLOAD_VIDEO"
+            >Upload video</span
+          >
+          <span
+            class="m-permissionHandling__optionDescription"
+            i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__UPLOAD_VIDEOS_ON_POSTS"
+            >Upload videos on posts.</span
+          >
+        </ng-container>
+        <ng-container *ngSwitchCase="PermissionsEnum.CanCreateChatRoom">
+          <span
+            class="m-permissionHandling__optionTitle"
+            i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__CREATE_CHAT_ROOM"
+            >Create chat room</span
+          >
+          <span
+            class="m-permissionHandling__optionDescription"
+            i18n="
+              @@NETWORK_ADMIN_PERMISSION_HANDLING__CREATE_A_CHAT_ROOM_WITH_OTHERS"
+            >Create a chat room with a channel or multiple channels.</span
+          >
+        </ng-container>
+        <ng-container *ngSwitchCase="PermissionsEnum.CanComment">
+          <span
+            class="m-permissionHandling__optionTitle"
+            i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__WRITE_COMMENTS"
+            >Write comment</span
+          >
+          <span
+            class="m-permissionHandling__optionDescription"
+            i18n="
+              @@NETWORK_ADMIN_PERMISSION_HANDLING__COMMENT_AND_REPLY_ON_POSTS"
+            >Comment and reply on posts.</span
+          >
+        </ng-container>
+      </ng-container>
+    </div>
+    <div
+      class="m-permissionHandling__optionSelectorColumn m-permissionHandling__horizontalMargin"
+    >
+      <span
+        class="m-permissionHandling__optionSelectorLabel"
+        i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__WHEN_THIS_PERMISSION_IS_OFF"
+        >When this permission is off</span
+      >
+
+      <div class="m-formWrapper">
+        <div class="m-form__fieldsContainer">
+          <div class="m-form__field--select stretchedField">
+            <div class="m-form__row--input">
+              <select
+                class="m-permissionHandling__optionSelector"
+                (change)="onSelectorChange($event, permissionIntent)"
+              >
+                <option
+                  [selected]="
+                    permissionIntent.intentType ===
+                    PermissionIntentTypeEnum.Hide
+                  "
+                  [value]="{ intentType: PermissionIntentTypeEnum.Hide } | json"
+                  i18n="@@NETWORK_ADMIN_PERMISSION_HANDLING__HIDE_FUNCTIONALITY"
+                >
+                  hide functionality
+                </option>
+                <option
+                  [selected]="
+                    permissionIntent.intentType ===
+                    PermissionIntentTypeEnum.WarningMessage
+                  "
+                  [value]="
+                    {
+                      intentType: PermissionIntentTypeEnum.WarningMessage
+                    } | json
+                  "
+                  i18n="
+                    @@NETWORK_ADMIN_PERMISSION_HANDLING__SHOW_A_WARNING_MESSAGE"
+                >
+                  show a warning message
+                </option>
+                <ng-container
+                  *ngFor="let siteMembership of siteMemberships$ | async"
+                >
+                  <option
+                    [selected]="
+                      permissionIntent.intentType ===
+                        PermissionIntentTypeEnum.Upgrade &&
+                      permissionIntent.membershipGuid ===
+                        siteMembership.membershipGuid
+                    "
+                    [value]="
+                      {
+                        intentType: PermissionIntentTypeEnum.Upgrade,
+                        membershipGuid: siteMembership.membershipGuid
+                      } | json
+                    "
+                  >
+                    show paywall ({{
+                      siteMembership.membershipName | truncate: 20
+                    }})
+                  </option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

@@ -502,11 +502,13 @@
       >
         <div class="m-commentToolbar__buttons m-legible" [hidden]="editing">
           <minds-button-thumbs-up
+            *ngIf="!shouldHideVoteButtons"
             class="m-commentToolbarButton"
             [object]="comment"
             [class.has-count]="comment['thumbs:up:count'] > 0"
           ></minds-button-thumbs-up>
           <minds-button-thumbs-down
+            *ngIf="!shouldHideVoteButtons"
             class="m-commentToolbarButton"
             [object]="comment"
           ></minds-button-thumbs-down>
@@ -515,12 +517,8 @@
               ><i class="material-icons">ios_share</i></a
             >
           </div>
-          <ng-container *ngIf="permissions.canComment()">
-            <div
-              class="m-commentToolbarButton"
-              (click)="toggleReplies()"
-              *ngIf="session.isLoggedIn()"
-            >
+          <ng-container *ngIf="session.isLoggedIn() && !shouldHideReplyButton">
+            <div class="m-commentToolbarButton" (click)="toggleReplies()">
               <a
                 ><span *ngIf="activityService.allowComment$ | async"
                   >Reply</span

@@ -4,6 +4,8 @@ import { ModalComponent } from './modal.component';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
 import { ClientMetaData } from '../../../../common/services/client-meta.service';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 /**
  * Composer data structure
@@ -25,7 +27,8 @@ export class ComposerModalService {
     protected modalService: ModalService,
     protected router: Router,
     protected route: ActivatedRoute,
-    protected emailConfirmation: EmailConfirmationService
+    protected emailConfirmation: EmailConfirmationService,
+    private permissionIntentsService: PermissionIntentsService
   ) {}
 
   /**
@@ -53,6 +56,15 @@ export class ComposerModalService {
    */
   present(clientMeta: ClientMetaData = null): Promise<any> {
     if (!this.emailConfirmation.ensureEmailConfirmed()) return;
+
+    if (
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanCreatePost
+      )
+    ) {
+      return;
+    }
+
     const modal = this.modalService.present(ModalComponent, {
       data: {
         onPost: (response) => {

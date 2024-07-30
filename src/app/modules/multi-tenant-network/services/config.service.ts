@@ -116,8 +116,10 @@ export class MultiTenantNetworkConfigService implements OnDestroy {
    * to update local state with.
    * @returns { void }
    */
-  private updateLocalState(
-    values: Omit<SetMultiTenantConfigMutationVariables, 'tenantId'>
+  public updateLocalState(
+    values:
+      | Omit<SetMultiTenantConfigMutationVariables, 'tenantId'>
+      | MultiTenantConfig
   ): void {
     this.config$.next({
       ...this.config$.getValue(),

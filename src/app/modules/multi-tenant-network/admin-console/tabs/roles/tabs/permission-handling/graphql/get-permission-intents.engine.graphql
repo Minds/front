@@ -1,0 +1,7 @@
+query GetPermissionIntents {
+  permissionIntents {
+    permissionId,
+    intentType,
+    membershipGuid
+  }
+}

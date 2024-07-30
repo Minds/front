@@ -1,0 +1,103 @@
+@import 'defaults.scss';
+@import '../../../../../../../common/layout/layout.scss';
+
+:host {
+  .m-permissionHandling__horizontalMargin {
+    margin: 0 $spacing8;
+  }
+
+  .m-permissionHandling__header {
+    margin: $spacing8 0 $spacing16 0;
+
+    .m-permissionHandling__title {
+      @include heading4Bold;
+    }
+
+    .m-permissionHandling__description {
+      @include body2Medium;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-permissionHandling__optionsContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .m-permissionHandling__optionsRow {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      gap: $spacing8;
+      width: 100%;
+      padding: $spacing3 0;
+
+      @media screen and (max-width: $layoutMin3ColWidth) {
+        flex-flow: column nowrap;
+        gap: $spacing4;
+
+        &.m-permissionHandling__optionsHeaderRow {
+          display: none;
+        }
+      }
+
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+
+      .m-permissionHandling__optionsColumnHeader {
+        @include body1Bold;
+        margin: 0 $spacing8;
+      }
+
+      .m-permissionHandling__optionLabelColumn {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        gap: $spacing1;
+
+        .m-permissionHandling__optionTitle {
+          @include body3Bold;
+        }
+
+        .m-permissionHandling__optionDescription {
+          @include body3Regular;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
+      .m-permissionHandling__optionSelectorColumn {
+        width: 300px;
+
+        .m-permissionHandling__optionSelectorLabel {
+          display: block;
+          margin: $spacing2 0;
+
+          @include body3Regular;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        .m-form__field--select {
+          max-width: 250px;
+          margin-bottom: 0;
+
+          .m-permissionHandling__optionSelector {
+            padding-right: 30px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,8 @@ import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-
 import { PermissionsService } from '../../../../common/services/permissions.service';
 import { GroupChatRoomService } from '../services/group-chat-rooms.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 /**
  * Dropdown menu with options to change various group behaviors.
@@ -27,6 +29,10 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
   protected hasBoostPermission: boolean = false;
 
   private subscriptions: Subscription[] = [];
+
+  /** Whether enable chat room button can be shown. */
+  protected canShowEnableChatRoom: boolean = true;
+
   constructor(
     public service: GroupService,
     public session: Session,
@@ -35,12 +41,18 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
     private boostModal: BoostModalV2LazyService,
     protected nsfwEnabledService: NsfwEnabledService,
     private permissionsService: PermissionsService,
+    private permissionIntentsService: PermissionIntentsService,
     private groupChatService: GroupChatRoomService,
     private toasterService: ToasterService
   ) {}
 
   ngOnInit(): void {
     this.hasBoostPermission = this.permissionsService.canBoost();
+
+    this.canShowEnableChatRoom = !this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanCreateChatRoom
+    );
+
     this.subscriptions.push(
       this.service.group$.subscribe((group) => {
         this.group = group;
@@ -126,6 +138,14 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
    * @returns { Promise<void> }
    */
   public async createChatRoom(): Promise<void> {
+    if (
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanCreateChatRoom
+      )
+    ) {
+      return;
+    }
+
     try {
       if (await this.groupChatService.createGroupChatRoom(this.group.guid)) {
         this.service.setConversationDisabled(false);

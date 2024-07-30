@@ -25,6 +25,7 @@ import {
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LivestreamService } from '../../modules/composer/services/livestream.service';
 import { ComposerBoostService } from './services/boost.service';
+import { PermissionIntentsService } from '../../common/services/permission-intents.service';
 
 describe('Composer', () => {
   let comp: ComposerComponent;
@@ -76,6 +77,10 @@ describe('Composer', () => {
             queryParamMap: new BehaviorSubject(convertToParamMap({})),
             snapshot: { queryParamMap: convertToParamMap({}) },
           },
+        },
+        {
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
         },
         {
           provide: Router,

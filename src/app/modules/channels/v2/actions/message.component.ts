@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
+  OnInit,
 } from '@angular/core';
 import { MessengerConversationDockpanesService } from '../../../messenger/dockpanes/dockpanes.service';
 import { MessengerConversationBuilderService } from '../../../messenger/dockpanes/conversation-builder.service';
@@ -17,6 +18,8 @@ import { ChatExperimentService } from '../../../experiments/sub-services/chat-ex
 import { CreateChatRoomService } from '../../../chat/services/create-chat-room.service';
 import { Router } from '@angular/router';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 /**
  * Message button (non-owner) - action button shown to logged-in channel visitors.
@@ -27,11 +30,14 @@ import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-in
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'message.component.html',
 })
-export class ChannelActionsMessageComponent {
+export class ChannelActionsMessageComponent implements OnInit {
   inProgress = false;
 
   /** Whether chat experiment is active. */
   protected isChatExperimentActive: boolean = false;
+
+  /** Whether button should be shown */
+  protected shouldShow = false;
 
   /**
    * Constructor
@@ -49,10 +55,19 @@ export class ChannelActionsMessageComponent {
     private toaster: ToasterService,
     private chatExperiment: ChatExperimentService,
     private createChatRoom: CreateChatRoomService,
+    private permissionIntentsService: PermissionIntentsService,
     private router: Router,
     @Inject(IS_TENANT_NETWORK) protected isTenantNetwork: boolean
   ) {
     this.isChatExperimentActive = this.chatExperiment.isActive();
+  }
+
+  ngOnInit(): void {
+    this.shouldShow =
+      (!this.isTenantNetwork || this.isChatExperimentActive) &&
+      !this.permissionIntentsService.shouldHide(
+        PermissionsEnum.CanCreateChatRoom
+      );
   }
 
   /**
@@ -89,6 +104,14 @@ export class ChannelActionsMessageComponent {
    * @returns { Promise<void> }
    */
   private async handleMindsInternalChatRequest(): Promise<void> {
+    if (
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanCreateChatRoom
+      )
+    ) {
+      return;
+    }
+
     this.inProgress = true;
     this.detectChanges();
 

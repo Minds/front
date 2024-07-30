@@ -19,10 +19,8 @@ import { ToasterService } from '../../services/toaster.service';
 import { CounterChangeFadeIn } from '../../../animations';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
 import { IsTenantService } from '../../services/is-tenant.service';
-import {
-  INTERACTION_PERMISSIONS_ERROR_MESSAGE,
-  PermissionsService,
-} from '../../services/permissions.service';
+import { PermissionIntentsService } from '../../services/permission-intents.service';
+import { PermissionsEnum } from '../../../../graphql/generated.engine';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -76,7 +74,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     private experiments: ExperimentsService,
     private toast: ToasterService,
     private isTenant: IsTenantService,
-    protected permissions: PermissionsService
+    private permissionIntents: PermissionIntentsService
   ) {}
 
   set _object(value: any) {
@@ -92,11 +90,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    * @returns void
    */
   onClick(e: MouseEvent): void {
-    if (!this.permissions.canInteract()) {
-      this.toast.error(INTERACTION_PERMISSIONS_ERROR_MESSAGE);
-      return;
-    }
-
     if (this.inProgress) {
       return;
     }
@@ -128,7 +121,17 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
 
     if (!this.session.isLoggedIn()) {
       const user = await this.authModal.open();
-      if (!user) return;
+      if (!user) {
+        this.inProgress = false;
+        return;
+      }
+    }
+
+    if (
+      !this.permissionIntents.checkAndHandleAction(PermissionsEnum.CanInteract)
+    ) {
+      this.inProgress = false;
+      return;
     }
 
     let data = {

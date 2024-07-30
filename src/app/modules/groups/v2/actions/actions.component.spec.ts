@@ -6,6 +6,7 @@ import { Injector } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MindsGroup } from '../group.model';
 import { groupMock } from '../../../../mocks/responses/group.mock';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
 
 describe('GroupActionsComponent', () => {
   let comp: GroupActionsComponent;
@@ -59,6 +60,10 @@ describe('GroupActionsComponent', () => {
             },
           }),
         },
+        {
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
+        },
         { provide: Injector, useValue: MockService(Injector) },
       ],
     });
@@ -86,6 +91,7 @@ describe('GroupActionsComponent', () => {
       (comp as any).service.isCoversationDisabled$.next(false);
       (comp as any).service.isMember$.next(true);
       (comp as any).service.isOwner$.next(false);
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(false);
 
       (comp as any).shouldShowChatButton$.subscribe(
         (shouldShowChatButton: boolean): void => {
@@ -99,6 +105,7 @@ describe('GroupActionsComponent', () => {
       (comp as any).service.isCoversationDisabled$.next(true);
       (comp as any).service.isMember$.next(true);
       (comp as any).service.isOwner$.next(true);
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(false);
 
       (comp as any).shouldShowChatButton$.subscribe(
         (shouldShowChatButton: boolean): void => {
@@ -112,6 +119,21 @@ describe('GroupActionsComponent', () => {
       (comp as any).service.isCoversationDisabled$.next(true);
       (comp as any).service.isMember$.next(true);
       (comp as any).service.isOwner$.next(false);
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(false);
+
+      (comp as any).shouldShowChatButton$.subscribe(
+        (shouldShowChatButton: boolean): void => {
+          expect(shouldShowChatButton).toBeFalse();
+          done();
+        }
+      );
+    });
+
+    it('should determine if chat button should NOT be shown because conversation is disabled and create option should be hidden', (done: DoneFn) => {
+      (comp as any).service.isCoversationDisabled$.next(true);
+      (comp as any).service.isMember$.next(true);
+      (comp as any).service.isOwner$.next(false);
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(true);
 
       (comp as any).shouldShowChatButton$.subscribe(
         (shouldShowChatButton: boolean): void => {

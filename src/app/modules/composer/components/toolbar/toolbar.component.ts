@@ -67,6 +67,8 @@ import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-
 import { ComposerSiteMembershipSelectorComponent } from '../popup/site-membership-selector/site-membership-selector.component';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 /**
  * Composer toolbar. Displays important actions
@@ -206,7 +208,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     @Inject(PLATFORM_ID) protected platformId: Object,
     public modalService: ModalService,
     private injector: Injector,
-    private permissions: PermissionsService,
+    protected permissions: PermissionsService,
+    private permissionIntentsService: PermissionIntentsService,
     protected nsfwEnabledService: NsfwEnabledService,
     protected siteMembershipsCountService: SiteMembershipsCountService
   ) {}
@@ -373,7 +376,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public get shouldShowLivestreamButton(): boolean {
-    return this.permissions.canUploadVideo();
+    return !this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanUploadVideo
+    );
   }
 
   /**

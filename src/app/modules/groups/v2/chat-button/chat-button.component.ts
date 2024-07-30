@@ -1,9 +1,14 @@
 import { Component, Input } from '@angular/core';
-import { ChatRoomEdge } from '../../../../../graphql/generated.engine';
+import {
+  ChatRoomEdge,
+  PermissionsEnum,
+} from '../../../../../graphql/generated.engine';
 import { BehaviorSubject } from 'rxjs';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { Router } from '@angular/router';
 import { GroupChatRoomService } from '../services/group-chat-rooms.service';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { GroupService } from '../group.service';
 
 /**
  * Button to create a chat room for a group.
@@ -37,6 +42,8 @@ export class GroupChatButton {
 
   constructor(
     private groupChatRoomService: GroupChatRoomService,
+    private permissionIntentsService: PermissionIntentsService,
+    private groupService: GroupService,
     private toasterService: ToasterService,
     private router: Router
   ) {}
@@ -46,6 +53,15 @@ export class GroupChatButton {
    * @returns { Promise<void> }
    */
   protected async handleClick(): Promise<void> {
+    if (
+      this.groupService.isCoversationDisabled$.getValue() &&
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanCreateChatRoom
+      )
+    ) {
+      return;
+    }
+
     this.actionInProgress$.next(true);
 
     try {

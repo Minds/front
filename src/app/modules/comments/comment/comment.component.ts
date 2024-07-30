@@ -50,6 +50,7 @@ import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-ena
 import { PermissionsEnum } from '../../../../graphql/generated.engine';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 import { ModerationActionGqlService } from '../../admin/moderation/services/moderation-action-gql.service';
+import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
 
 @Component({
   selector: 'm-comment',
@@ -137,6 +138,12 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     return;
   }
 
+  /** Whether the user should have vote buttons hidden. */
+  protected shouldHideVoteButtons: boolean = false;
+
+  /** Whether reply button should be hidden. */
+  protected shouldHideReplyButton: boolean = false;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -157,6 +164,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     public suggestions: AutocompleteSuggestionsService,
     private clientMetaService: ClientMetaService,
     protected permissions: PermissionsService,
+    protected permissionIntentsService: PermissionIntentsService,
     protected nsfwEnabledService: NsfwEnabledService,
     private moderationActionsGql: ModerationActionGqlService,
     @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective,
@@ -181,6 +189,12 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       this.showMature = true;
     }
 
+    this.shouldHideReplyButton = this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanComment
+    );
+    this.shouldHideVoteButtons = this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanInteract
+    );
     this.onResize();
   }
 
