@@ -27,7 +27,8 @@ import { catchError, take } from 'rxjs/operators';
 import { AnalyticsService } from '../../../../services/analytics';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { ComposerService } from '../../../composer/services/composer.service';
-import { PermissionsService } from '../../../../common/services/permissions.service';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 /**
  * Container for channel feed, including filters and composer (if user is channel owner)
@@ -110,7 +111,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private injector: Injector,
     private analyticsService: AnalyticsService,
     private clientMeta: ClientMetaDirective,
-    protected permissions: PermissionsService,
+    protected permissionIntentsService: PermissionIntentsService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -244,9 +245,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    * @returns { Promise<void> } - awaitable.
    */
   public async openComposerModal(): Promise<void> {
-    if (!this.permissions.canCreatePost()) {
-      return;
-    }
     try {
       await this.composerModal.setInjector(this.injector).present();
     } catch (e) {
@@ -297,6 +295,16 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
         this.session.getLoggedInUser()?.guid &&
       // Displays in the 2nd slot and then every 6 posts
       ((position > 4 && position % 5 === 0) || position === 0)
+    );
+  }
+
+  /**
+   * Whether no post prompt should be shown.
+   * @returns { boolean } - true if no post prompt should be shown.
+   */
+  protected shouldShowNoPostsPrompt(): boolean {
+    return !this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanCreatePost
     );
   }
 }

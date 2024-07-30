@@ -1,8 +1,12 @@
-<m-composer__base
-  *ngIf="embedded; else popupComposer"
-  (onPost)="onPostEmitter.emit($event)"
-  #embeddedBaseComposer
-></m-composer__base>
+<ng-container
+  *ngIf="!permissionIntentsService.shouldHide(PermissionsEnum.CanCreatePost)"
+>
+  <m-composer__base
+    *ngIf="embedded; else popupComposer"
+    (onPost)="onPostEmitter.emit($event)"
+    #embeddedBaseComposer
+  ></m-composer__base>
+</ng-container>
 <ng-template #popupComposer>
   <div class="m-composer__trigger" (click)="onTriggerClick($event)">
     <m-composer__base

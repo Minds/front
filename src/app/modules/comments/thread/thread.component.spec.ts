@@ -19,6 +19,8 @@ import { SocketsService } from '../../../services/sockets';
 import { ActivityService } from '../../../common/services/activity.service';
 import { BehaviorSubject } from 'rxjs';
 import { LoadingSpinnerComponent } from '../../../common/components/loading-spinner/loading-spinner.component';
+import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../graphql/generated.engine';
 
 let commentsServiceMock: any = MockService(CommentsService, {
   get: Promise.resolve(true),
@@ -41,6 +43,7 @@ describe('CommentsThreadComponent', () => {
             'currentIndex',
             'conversation',
             'level',
+            'readonly',
           ],
         }),
         MockComponent({
@@ -75,6 +78,10 @@ describe('CommentsThreadComponent', () => {
         { provide: CommentsService, useValue: commentsServiceMock },
         { provide: SocketsService, useValue: MockService(SocketsService) },
         { provide: ActivityService, useValue: MockService(ActivityService) },
+        {
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
+        },
       ],
     }).compileComponents();
   }));
@@ -126,5 +133,21 @@ describe('CommentsThreadComponent', () => {
 
   it('should be instantiated', () => {
     expect(comp).toBeTruthy();
+  });
+
+  it('should instantiate and set shouldHideCommentPoster appropriately', () => {
+    (comp as any).shouldHideCommentPoster = false;
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanComment)
+      .and.returnValue(true);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideCommentPoster).toBeTrue();
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanComment)
+      .and.returnValue(false);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideCommentPoster).toBeFalse();
   });
 });

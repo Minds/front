@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChatActionCardComponent } from '../../../action-cards/action-card.component';
 import { StartChatModalService } from '../../../start-chat-modal/start-chat-modal.service';
-import { PermissionsService } from '../../../../../../common/services/permissions.service';
-import { ToasterService } from '../../../../../../common/services/toaster.service';
 import { ChatRoomsListService } from '../../../../services/chat-rooms-list.service';
+import { PermissionIntentsService } from '../../../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../../../graphql/generated.engine';
 
 /**
  * Subpage to be shown when no chats are opened.
@@ -27,9 +27,8 @@ import { ChatRoomsListService } from '../../../../services/chat-rooms-list.servi
 export class NoChatsSubPageComponent {
   constructor(
     private startChatModal: StartChatModalService,
-    private permissionsService: PermissionsService,
     private chatRoomsListService: ChatRoomsListService,
-    private toaster: ToasterService
+    private permissionIntentsService: PermissionIntentsService
   ) {}
 
   /**
@@ -37,8 +36,11 @@ export class NoChatsSubPageComponent {
    * @returns { Promise<void> }
    */
   protected async onStartNewChatClick(): Promise<void> {
-    if (!this.permissionsService.canCreateChatRoom()) {
-      this.toaster.warn("You don't have permission to create a chat room");
+    if (
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanCreateChatRoom
+      )
+    ) {
       return;
     }
 

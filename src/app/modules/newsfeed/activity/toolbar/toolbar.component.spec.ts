@@ -19,6 +19,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PermissionsService } from '../../../../common/services/permissions.service';
 import { By } from '@angular/platform-browser';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 describe('ActivityToolbarComponent', () => {
   let comp: ActivityToolbarComponent;
@@ -107,6 +109,10 @@ describe('ActivityToolbarComponent', () => {
           useValue: MockService(PersistentFeedExperimentService),
         },
         {
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
+        },
+        {
           provide: PermissionsService,
           useValue: MockService(PermissionsService),
         },
@@ -136,6 +142,58 @@ describe('ActivityToolbarComponent', () => {
 
   it('should create', () => {
     expect(comp).toBeTruthy();
+  });
+
+  it('should set shouldHideRemindButton on init', () => {
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanCreatePost)
+      .and.returnValue(true);
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanInteract)
+      .and.returnValue(true);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideRemindButton).toBeTrue();
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanCreatePost)
+      .and.returnValue(false);
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanInteract)
+      .and.returnValue(true);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideRemindButton).toBeFalse();
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanCreatePost)
+      .and.returnValue(true);
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanInteract)
+      .and.returnValue(false);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideRemindButton).toBeFalse();
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanCreatePost)
+      .and.returnValue(false);
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanInteract)
+      .and.returnValue(false);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideRemindButton).toBeFalse();
+  });
+
+  it('should set shouldHideVoteButtons on init', () => {
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanInteract)
+      .and.returnValue(true);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideVoteButtons).toBeTrue();
+
+    (comp as any).permissionIntentsService.shouldHide
+      .withArgs(PermissionsEnum.CanInteract)
+      .and.returnValue(false);
+    comp.ngOnInit();
+    expect((comp as any).shouldHideVoteButtons).toBeFalse();
   });
 
   it('should toggle comments on', fakeAsync(() => {

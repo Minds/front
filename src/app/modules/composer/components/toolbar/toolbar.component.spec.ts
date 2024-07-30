@@ -24,6 +24,7 @@ import { IfTenantDirective } from '../../../../common/directives/if-tenant.direc
 import { IsTenantService } from '../../../../common/services/is-tenant.service';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -199,6 +200,10 @@ describe('Composer Toolbar', () => {
         {
           provide: PermissionsService,
           useValue: MockService(PermissionsService),
+        },
+        {
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
         },
         {
           provide: NsfwEnabledService,
@@ -382,5 +387,17 @@ describe('Composer Toolbar', () => {
     );
 
     expect(membershipButton).toBeFalsy();
+  });
+
+  describe('shouldShowLivestreamButton', () => {
+    it('should determine if livestream button should be shown', () => {
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(false);
+      expect(comp.shouldShowLivestreamButton).toBeTrue();
+    });
+
+    it('should determine if livestream button should NOT be shown', () => {
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(true);
+      expect(comp.shouldShowLivestreamButton).toBeFalse();
+    });
   });
 });

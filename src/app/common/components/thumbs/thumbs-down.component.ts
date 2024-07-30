@@ -6,15 +6,12 @@ import {
   Input,
   Output,
 } from '@angular/core';
-
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ToasterService } from '../../services/toaster.service';
-import {
-  INTERACTION_PERMISSIONS_ERROR_MESSAGE,
-  PermissionsService,
-} from '../../services/permissions.service';
+import { PermissionIntentsService } from '../../services/permission-intents.service';
+import { PermissionsEnum } from '../../../../graphql/generated.engine';
 
 @Component({
   selector: 'minds-button-thumbs-down',
@@ -49,7 +46,7 @@ export class ThumbsDownButton {
     public client: Client,
     private authModal: AuthModalService,
     private toast: ToasterService,
-    protected permissions: PermissionsService
+    private permissionIntents: PermissionIntentsService
   ) {}
 
   set _object(value: any) {
@@ -59,10 +56,6 @@ export class ThumbsDownButton {
   }
 
   async thumb(): Promise<void> {
-    if (!this.permissions.canInteract()) {
-      this.toast.error(INTERACTION_PERMISSIONS_ERROR_MESSAGE);
-      return;
-    }
     if (this.inProgress) {
       return;
     }
@@ -71,7 +64,17 @@ export class ThumbsDownButton {
     this.cd.detectChanges();
     if (!this.session.isLoggedIn()) {
       const user = await this.authModal.open();
-      if (!user) return;
+      if (!user) {
+        this.inProgress = false;
+        return;
+      }
+    }
+
+    if (
+      !this.permissionIntents.checkAndHandleAction(PermissionsEnum.CanInteract)
+    ) {
+      this.inProgress = false;
+      return;
     }
 
     try {

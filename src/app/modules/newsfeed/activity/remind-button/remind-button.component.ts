@@ -17,6 +17,8 @@ import { ClientMetaDirective } from '../../../../common/directives/client-meta.d
 import { ClientMetaData } from '../../../../common/services/client-meta.service';
 import { ComposerAudienceSelectorService } from '../../../composer/services/audience.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../../graphql/generated.engine';
 
 /**
  * Button used in the activity toolbar. When clicked, a dropdown menu appears and users choose between creating/undoing a remind, creating a quote post or creating a group share.
@@ -48,6 +50,12 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
    */
   protected remindOptionsEnabled: boolean = true;
 
+  /** Whether post actions (e.g. quote / group share) should be hidden. */
+  protected shouldHidePostActions: boolean;
+
+  /** Whether the remind actions (e.g. remind / undo remind) should be hidden. */
+  protected shouldHideRemindActions: boolean;
+
   constructor(
     public service: ActivityService,
     private injector: Injector,
@@ -57,7 +65,8 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     private toasterService: ToasterService,
     private session: Session,
     private authModal: AuthModalService,
-    protected permissions: PermissionsService
+    protected permissions: PermissionsService,
+    private permissionIntentsService: PermissionIntentsService
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +80,13 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
           this.remindOptionsEnabled = true;
         }
       })
+    );
+
+    this.shouldHidePostActions = this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanCreatePost
+    );
+    this.shouldHideRemindActions = this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanInteract
     );
   }
 
@@ -90,6 +106,15 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     if (!this.remindOptionsEnabled) {
       return;
     }
+
+    if (
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanInteract
+      )
+    ) {
+      return;
+    }
+
     this.remindOptionsEnabled = false;
     await this.service.undoRemind();
     this.justReminded = false;
@@ -103,6 +128,14 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     }
 
     if (!this.remindOptionsEnabled) {
+      return;
+    }
+
+    if (
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanInteract
+      )
+    ) {
       return;
     }
 
@@ -184,18 +217,6 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
 
     // Open the composer modal
     this.composerModalService.setInjector(this.injector).present();
-  }
-
-  /**
-   * If a user doesn't have permission to do anything
-   * inside the dropdown menu, show an explanatory toast
-   */
-  onClickTrigger(): void {
-    if (!this.permissions.canInteract() && !this.permissions.canCreatePost()) {
-      this.toasterService.error(
-        'Your user role does not allow you to remind or quote post.'
-      );
-    }
   }
 
   incrementCounter(): void {

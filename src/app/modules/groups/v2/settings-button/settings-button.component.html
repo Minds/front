@@ -63,7 +63,10 @@
         </m-dropdownMenu__item>
       </ng-container>
       <ng-template #enableChatOptionTemplate>
-        <m-dropdownMenu__item (click)="createChatRoom()">
+        <m-dropdownMenu__item
+          (click)="createChatRoom()"
+          *ngIf="canShowEnableChatRoom"
+        >
           <ng-container i18n="@@GROUP_SETTINGS__ENABLE_GROUP_CHAT_ROOM"
             >Enable group chat room</ng-container
           >

@@ -21,6 +21,7 @@ import {
 import {
   ChatRoomEdge,
   PageInfo,
+  PermissionsEnum,
 } from '../../../../../graphql/generated.engine';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { ChatRoomListItemComponent } from './room-list-item/room-list-item.component';
@@ -34,8 +35,7 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { TotalChatRoomInviteRequestsService } from '../../services/total-chat-room-invite-requests.service';
-import { PermissionsService } from '../../../../common/services/permissions.service';
-import { ToasterService } from '../../../../common/services/toaster.service';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
 
 /**
  * List of chat rooms.
@@ -88,12 +88,14 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
       map((totalRequests: number): boolean => Boolean(totalRequests))
     );
 
+  /** Whether start chat button can be shown. */
+  protected canShowStartChatButton: boolean = false;
+
   constructor(
     private startChatModal: StartChatModalService,
     private chatRoomsListService: ChatRoomsListService,
     private totalChatRequestsService: TotalChatRoomInviteRequestsService,
-    private permissionsService: PermissionsService,
-    private toaster: ToasterService,
+    private permissionIntentsService: PermissionIntentsService,
     private route: ActivatedRoute,
     private router: Router,
     protected elementRef: ElementRef
@@ -110,6 +112,9 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
     this.chatRoomsListService.setIsViewingChatRoomList(true);
     this.currentRoomId$.next(this.route.snapshot.firstChild.params['roomId']);
 
+    this.canShowStartChatButton = !this.permissionIntentsService.shouldHide(
+      PermissionsEnum.CanCreateChatRoom
+    );
     this.routerEventsSubscription = this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe((event: Event | RouterEvent) => {
@@ -137,10 +142,14 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> }
    */
   protected async onStartChatClick(): Promise<void> {
-    if (!this.permissionsService.canCreateChatRoom()) {
-      this.toaster.warn("You don't have permission to create a chat room");
+    if (
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanCreateChatRoom
+      )
+    ) {
       return;
     }
+
     const result: string = await this.startChatModal.open(true);
     if (result) {
       this.chatRoomsListService.refetch();

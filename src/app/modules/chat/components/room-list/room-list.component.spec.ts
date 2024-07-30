@@ -19,8 +19,7 @@ import {
 } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { PageInfo } from '../../../../../graphql/generated.engine';
-import { ToasterService } from '../../../../common/services/toaster.service';
-import { PermissionsService } from '../../../../common/services/permissions.service';
+import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
 
 const ROOM_ID: string = '1234567890';
 
@@ -60,12 +59,8 @@ describe('ChatRoomListComponent', () => {
           }),
         },
         {
-          provide: PermissionsService,
-          useValue: MockService(PermissionsService),
-        },
-        {
-          provide: ToasterService,
-          useValue: MockService(ToasterService),
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
         },
         {
           provide: Router,
@@ -176,6 +171,18 @@ describe('ChatRoomListComponent', () => {
     ).toHaveBeenCalledWith(true);
   });
 
+  describe('canShowStartChatButton', () => {
+    it('should determine whether the start chat button should be shown', () => {
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(false);
+      comp.ngOnInit();
+      expect((comp as any).canShowStartChatButton).toBeTrue();
+
+      (comp as any).permissionIntentsService.shouldHide.and.returnValue(true);
+      comp.ngOnInit();
+      expect((comp as any).canShowStartChatButton).toBeFalse();
+    });
+  });
+
   it('should set is viewing chat room to false on destroy', () => {
     comp.ngOnDestroy();
     expect(
@@ -199,7 +206,9 @@ describe('ChatRoomListComponent', () => {
   });
 
   it('should handle start chat click and refetch on success', fakeAsync(() => {
-    (comp as any).permissionsService.canCreateChatRoom.and.returnValue(true);
+    (comp as any).permissionIntentsService.checkAndHandleAction.and.returnValue(
+      true
+    );
     (comp as any).startChatModal.open.and.returnValue(Promise.resolve(true));
     (comp as any).onStartChatClick(ROOM_ID);
 
@@ -208,12 +217,14 @@ describe('ChatRoomListComponent', () => {
     expect((comp as any).startChatModal.open).toHaveBeenCalledWith(true);
     expect((comp as any).chatRoomsListService.refetch).toHaveBeenCalled();
     expect(
-      (comp as any).permissionsService.canCreateChatRoom
+      (comp as any).permissionIntentsService.checkAndHandleAction
     ).toHaveBeenCalled();
   }));
 
   it('should handle start chat click and NOT refetch on failure', fakeAsync(() => {
-    (comp as any).permissionsService.canCreateChatRoom.and.returnValue(true);
+    (comp as any).permissionIntentsService.checkAndHandleAction.and.returnValue(
+      true
+    );
     (comp as any).startChatModal.open.and.returnValue(Promise.resolve(false));
     (comp as any).onStartChatClick(ROOM_ID);
 
@@ -222,24 +233,23 @@ describe('ChatRoomListComponent', () => {
     expect((comp as any).startChatModal.open).toHaveBeenCalledWith(true);
     expect((comp as any).chatRoomsListService.refetch).not.toHaveBeenCalled();
     expect(
-      (comp as any).permissionsService.canCreateChatRoom
+      (comp as any).permissionIntentsService.checkAndHandleAction
     ).toHaveBeenCalled();
   }));
 
   it('should handle start chat click and show toast if user does not have correct permission ', fakeAsync(() => {
-    (comp as any).permissionsService.canCreateChatRoom.and.returnValue(false);
+    (comp as any).permissionIntentsService.checkAndHandleAction.and.returnValue(
+      false
+    );
     (comp as any).startChatModal.open.and.returnValue(Promise.resolve(true));
     (comp as any).onStartChatClick(ROOM_ID);
 
     tick();
 
-    expect((comp as any).toaster.warn).toHaveBeenCalledWith(
-      "You don't have permission to create a chat room"
-    );
     expect((comp as any).startChatModal.open).not.toHaveBeenCalled();
     expect((comp as any).chatRoomsListService.refetch).not.toHaveBeenCalled();
     expect(
-      (comp as any).permissionsService.canCreateChatRoom
+      (comp as any).permissionIntentsService.checkAndHandleAction
     ).toHaveBeenCalled();
   }));
 

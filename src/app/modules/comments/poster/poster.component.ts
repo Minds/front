@@ -33,6 +33,8 @@ import {
 } from '../../../common/services/permissions.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-enabled.service';
+import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../graphql/generated.engine';
 
 @Component({
   selector: 'm-comment__poster',
@@ -88,6 +90,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     private isCommentingService: IsCommentingService,
     public elRef: ElementRef,
     protected permissions: PermissionsService,
+    protected permissionIntentsService: PermissionIntentsService,
     protected toaster: ToasterService,
     protected nsfwEnabledService: NsfwEnabledService
   ) {}
@@ -127,7 +130,12 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   }
 
   async post(e) {
-    if (!this.postEnabled()) {
+    if (
+      !this.postEnabled() ||
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanComment
+      )
+    ) {
       console.error(COMMENT_PERMISSIONS_ERROR_MESSAGE);
       return;
     }
@@ -373,9 +381,11 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   }
 
   protected checkPermissions($event): void {
-    if (!this.permissions.canComment()) {
-      this.toaster.error(COMMENT_PERMISSIONS_ERROR_MESSAGE);
-
+    if (
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanComment
+      )
+    ) {
       $event.preventDefault();
       $event.stopPropagation();
     }

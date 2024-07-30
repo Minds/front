@@ -25,6 +25,7 @@ import { TextParserService } from '../common/services/text-parser.service';
 import { PermissionsService } from '../common/services/permissions.service';
 import { ToasterService } from '../common/services/toaster.service';
 import { permissionsServiceMock } from '../../tests/permissions-service-mock.spec';
+import { PermissionIntentsService } from '../common/services/permission-intents.service';
 
 /* tslint:disable */
 
@@ -32,6 +33,8 @@ describe('Service: Attachment Service', () => {
   let service: AttachmentService;
   let mockObject;
   let httpMock;
+  let permissionIntentsServiceMock =
+    jasmine.createSpyObj<PermissionIntentsService>(['checkAndHandleAction']);
   let toasterMock = new (function () {
     this.error = jasmine.createSpy('error');
     this.success = jasmine.createSpy('success');
@@ -48,8 +51,8 @@ describe('Service: Attachment Service', () => {
         { provide: TextParserService, useValue: TextParserService },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
         {
-          provide: PermissionsService,
-          useValue: MockService(PermissionsService),
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
         },
         {
           provide: ToasterService,
@@ -68,8 +71,7 @@ describe('Service: Attachment Service', () => {
       uploadMock,
       httpMock,
       new TextParserService(),
-      permissionsServiceMock,
-      toasterMock,
+      permissionIntentsServiceMock,
       TestBed.inject(ConfigsService)
     );
 

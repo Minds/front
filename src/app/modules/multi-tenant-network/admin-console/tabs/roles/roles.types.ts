@@ -1,5 +1,6 @@
 export enum MultiTenantRolesView {
   PERMISSIONS = 'permissions',
+  PERMISSION_HANDLING = 'permission-handling',
   USERS = 'users',
 }
 

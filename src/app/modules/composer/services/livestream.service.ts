@@ -3,10 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, firstValueFrom } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
-import {
-  PermissionsService,
-  VIDEO_PERMISSIONS_ERROR_MESSAGE,
-} from '../../../common/services/permissions.service';
+import { VIDEO_PERMISSIONS_ERROR_MESSAGE } from '../../../common/services/permissions.service';
+import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
+import { PermissionsEnum } from '../../../../graphql/generated.engine';
 @Injectable({ providedIn: 'root' })
 export class LivestreamService {
   private apiUrl = 'https://livepeer.studio/api/stream';
@@ -16,11 +15,15 @@ export class LivestreamService {
     private http: HttpClient,
     private session: Session,
     private mindsConfigService: ConfigsService,
-    private permissions: PermissionsService
+    private permissionIntentsService: PermissionIntentsService
   ) {}
 
   async createLiveStream(): Promise<any> {
-    if (!this.permissions.canUploadVideo()) {
+    if (
+      !this.permissionIntentsService.checkAndHandleAction(
+        PermissionsEnum.CanUploadVideo
+      )
+    ) {
       console.error(VIDEO_PERMISSIONS_ERROR_MESSAGE);
       return;
     }

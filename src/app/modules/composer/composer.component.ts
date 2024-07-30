@@ -21,6 +21,8 @@ import { CookieService } from '../../common/services/cookie.service';
 import { UploaderService } from './services/uploader.service';
 import { ActivityContainer } from './services/audience.service';
 import { ComposerBoostService } from './services/boost.service';
+import { PermissionsEnum } from '../../../graphql/generated.engine';
+import { PermissionIntentsService } from '../../common/services/permission-intents.service';
 
 /**
  * Wrapper component for composer. It can hold an embedded base composer
@@ -33,6 +35,9 @@ import { ComposerBoostService } from './services/boost.service';
   templateUrl: 'composer.component.html',
 })
 export class ComposerComponent implements OnInit, OnDestroy {
+  /** Enum for use in template. */
+  protected PermissionsEnum: typeof PermissionsEnum = PermissionsEnum;
+
   private container: ActivityContainer;
 
   /**
@@ -127,6 +132,7 @@ export class ComposerComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected route: ActivatedRoute,
     public cookieService: CookieService,
+    protected permissionIntentsService: PermissionIntentsService,
     public router: Router
   ) {
     this.tooManyTagsSubscription = this.service.tooManyTags$.subscribe(

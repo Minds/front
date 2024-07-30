@@ -9,6 +9,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { IsTenantService } from '../../services/is-tenant.service';
 import { PermissionsService } from '../../services/permissions.service';
+import { PermissionIntentsService } from '../../services/permission-intents.service';
+import userMock from '../../../mocks/responses/user.mock';
 
 describe('ThumbsUpButton', () => {
   let comp: ThumbsUpButton;
@@ -41,6 +43,10 @@ describe('ThumbsUpButton', () => {
         {
           provide: PermissionsService,
           useValue: MockService(PermissionsService),
+        },
+        {
+          provide: PermissionIntentsService,
+          useValue: MockService(PermissionIntentsService),
         },
       ],
     }).compileComponents();
@@ -114,6 +120,42 @@ describe('ThumbsUpButton', () => {
 
       expect((comp as any).toast.success).not.toHaveBeenCalled();
       expect(localStorage.setItem).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('submit', () => {
+    it('should submit', async () => {
+      (comp as any).session.isLoggedIn.and.returnValue(true);
+      (comp as any).session.getLoggedInUser.and.returnValue(userMock);
+      (comp as any).permissionIntents.checkAndHandleAction.and.returnValue(
+        true
+      );
+      (comp as any).clientMeta = {
+        build: jasmine.createSpy('build').and.returnValue(null),
+      };
+      (comp as any).experiments.hasVariation.and.returnValue(false);
+      (comp as any).client.put.and.returnValue(Promise.resolve({}));
+
+      await comp.submit();
+
+      expect((comp as any).client.put).toHaveBeenCalled();
+    });
+
+    it('should not submit when user does not have permission', async () => {
+      (comp as any).session.isLoggedIn.and.returnValue(true);
+      (comp as any).session.getLoggedInUser.and.returnValue(userMock);
+      (comp as any).permissionIntents.checkAndHandleAction.and.returnValue(
+        false
+      );
+      (comp as any).clientMeta = {
+        build: jasmine.createSpy('build').and.returnValue(null),
+      };
+      (comp as any).experiments.hasVariation.and.returnValue(false);
+      (comp as any).client.put.and.returnValue(Promise.resolve({}));
+
+      await comp.submit();
+
+      expect((comp as any).client.put).not.toHaveBeenCalled();
     });
   });
 });
