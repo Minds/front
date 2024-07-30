@@ -70,12 +70,8 @@
   }
 
   &.disabled {
-    .m-toggle__switch {
-      @include m-theme() {
-        background: themed($m-textColor--tertiary);
-        color: themed($m-borderColor--secondary);
-      }
-    }
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   // ***********************************************

@@ -1,45 +1,42 @@
-<ng-container *ngIf="boostIsPending()">
-  <div class="m-boostConsoleListItem__actionButtons">
-    <!-- ---------------------------------------- -->
-    <!-- ADMIN BUTTONS: APPROVE / REJECT -------- -->
-    <!-- ---------------------------------------- -->
-    <ng-container *ngIf="service.adminContext$ | async">
-      <m-button
-        class="m-boostConsoleListItem__buttonSecondary"
-        size="small"
-        color="red"
-        (onAction)="onReject($event)"
-        [saving]="rejecting"
-        ><ng-container i18n="@@BOOST_CONSOLE__ACTION_BUTTONS__REJECT_OPTION"
-          >Reject</ng-container
-        ></m-button
-      >
-      <m-button
-        class="m-boostConsoleListItem__buttonPrimary"
-        size="small"
-        color="blue"
-        (onAction)="onApprove($event)"
-        [saving]="approving"
-        ><ng-container
-          i18n="@@BOOST_CONSOLE__ACTION_BUTTONS__APPROVE_BOOST_OPTION"
-          >Approve boost</ng-container
-        ></m-button
-      >
-    </ng-container>
-    <!-- ---------------------------------------- -->
-    <!-- USER BUTTON: CANCEL -------------------- -->
-    <!-- ---------------------------------------- -->
-    <ng-container *ngIf="!(service.adminContext$ | async)">
-      <m-button
-        class="m-boostConsoleListItem__buttonSecondary--fullWidth"
-        size="small"
-        (onAction)="onCancel($event)"
-        [saving]="cancelling"
-        ><ng-container
-          i18n="@@BOOST_CONSOLE__ACTION_BUTTONS__CANCEL_BOOST_OPTION"
-          >Cancel boost</ng-container
-        ></m-button
-      >
-    </ng-container>
-  </div>
-</ng-container>
+<div class="m-boostConsoleListItem__actionButtons">
+  <!-- ---------------------------------------- -->
+  <!-- ADMIN BUTTONS: APPROVE / REJECT -------- -->
+  <!-- ---------------------------------------- -->
+  <ng-container *ngIf="(service.adminContext$ | async) && boostIsPending()">
+    <m-button
+      class="m-boostConsoleListItem__buttonSecondary"
+      size="small"
+      color="red"
+      (onAction)="onReject($event)"
+      [saving]="rejecting"
+      ><ng-container i18n="@@BOOST_CONSOLE__ACTION_BUTTONS__REJECT_OPTION"
+        >Reject</ng-container
+      ></m-button
+    >
+    <m-button
+      class="m-boostConsoleListItem__buttonPrimary"
+      size="small"
+      color="blue"
+      (onAction)="onApprove($event)"
+      [saving]="approving"
+      ><ng-container
+        i18n="@@BOOST_CONSOLE__ACTION_BUTTONS__APPROVE_BOOST_OPTION"
+        >Approve boost</ng-container
+      ></m-button
+    >
+  </ng-container>
+  <!-- ---------------------------------------- -->
+  <!-- USER BUTTON: CANCEL -------------------- -->
+  <!-- ---------------------------------------- -->
+  <ng-container *ngIf="shouldShowCancelButton$ | async">
+    <m-button
+      class="m-boostConsoleListItem__buttonSecondary--fullWidth"
+      size="small"
+      (onAction)="onCancel($event)"
+      [saving]="cancelling"
+      ><ng-container i18n="@@BOOST_CONSOLE__ACTION_BUTTONS__CANCEL_BOOST_OPTION"
+        >Cancel boost</ng-container
+      ></m-button
+    >
+  </ng-container>
+</div>
