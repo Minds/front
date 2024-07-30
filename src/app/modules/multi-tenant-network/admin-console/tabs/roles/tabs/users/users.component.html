@@ -1,7 +1,9 @@
 <div
   class="m-networkAdminConsoleList__row--header m-networkAdminConsoleList__row"
 >
-  <div><span i18n="@@COMMON_USER">User</span></div>
+  <div class="m-networkAdminConsoleListHeaderRow__columnTitle">
+    <span i18n="@@COMMON_USER">User</span>
+  </div>
   <!-- ------------------------------------------- -->
   <!-- ROLE FILTER  -->
   <!-- ------------------------------------------- -->
@@ -15,10 +17,12 @@
       ></m-dropdownSelector>
     </div>
     <!-- ------------------------------------------- -->
-    <!-- SEARCH BAR (DISABLED) -->
+    <!-- SEARCH BAR -->
     <!-- ------------------------------------------- -->
-    <!-- <div class="m-networkAdminConsoleListHeaderRow__filter--search">
+    <div class="m-networkAdminConsoleListHeaderRow__filter--search">
       <input
+        [ngModel]="searchTerm$ | async"
+        (ngModelChange)="searchTerm$.next($event)"
         name="q"
         type="text"
         id="search"
@@ -27,7 +31,7 @@
         #searchInput
       />
       <i class="material-icons">search</i>
-    </div> -->
+    </div>
   </div>
 </div>
 <!-- ------------------------------------------- -->

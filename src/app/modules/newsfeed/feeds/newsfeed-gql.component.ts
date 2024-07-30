@@ -422,7 +422,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   prepend(activity: any) {
-    if (activity?.containerObj) {
+    if (activity?.containerObj && !this.isTenant.is()) {
       return;
     }
 

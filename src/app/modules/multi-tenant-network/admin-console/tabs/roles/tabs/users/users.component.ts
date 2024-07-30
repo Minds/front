@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, debounceTime, Subject, Subscription } from 'rxjs';
 import {
   GetUsersByRoleGQL,
   GetUsersByRoleQuery,
@@ -75,6 +75,9 @@ export class NetworkAdminConsoleRolesUsersComponent
     options: [],
   };
 
+  /** Search term. */
+  protected searchTerm$: Subject<string> = new Subject<string>();
+
   constructor(
     private service: MultiTenantRolesService,
     private assignRolesModal: AssignRolesModalService,
@@ -123,7 +126,16 @@ export class NetworkAdminConsoleRolesUsersComponent
             this.updateUsersList(updatedUserWithRoles);
           }
         }
-      )
+      ),
+      this.searchTerm$
+        .pipe(debounceTime(500))
+        .subscribe((searchTerm: string): void => {
+          this.inProgress$.next(true);
+          this.users$.next([]);
+          this.getUsersByRoleQuery.refetch({
+            username: searchTerm,
+          });
+        })
     );
   }
 
@@ -200,6 +212,10 @@ export class NetworkAdminConsoleRolesUsersComponent
       selectedFilter = null;
     } else {
       selectedFilter = Number(selectedFilter);
+    }
+
+    if (this.roleFilter$.getValue() === selectedFilter) {
+      return;
     }
 
     this.roleFilter$.next(selectedFilter);
