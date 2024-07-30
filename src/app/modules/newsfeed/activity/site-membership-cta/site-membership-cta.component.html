@@ -42,6 +42,8 @@
   size="medium"
   (onAction)="onClick($event)"
 >
-  <span *ngIf="!isMinimalMode; else shortText">Join membership to unlock</span>
+  <span *ngIf="!isMinimalMode && !(isMobileViewport$ | async); else shortText"
+    >Join membership to unlock</span
+  >
   <ng-template #shortText>Join to unlock</ng-template>
 </m-button>

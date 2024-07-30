@@ -27,6 +27,12 @@
     .m-activity--minimalMode & {
       margin: $spacing4;
     }
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   ::ng-deep m-button button {
