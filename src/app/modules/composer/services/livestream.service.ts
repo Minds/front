@@ -4,8 +4,7 @@ import { Observable, BehaviorSubject, firstValueFrom } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import { VIDEO_PERMISSIONS_ERROR_MESSAGE } from '../../../common/services/permissions.service';
-import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
-import { PermissionsEnum } from '../../../../graphql/generated.engine';
+
 @Injectable({ providedIn: 'root' })
 export class LivestreamService {
   private apiUrl = 'https://livepeer.studio/api/stream';
@@ -14,8 +13,7 @@ export class LivestreamService {
   constructor(
     private http: HttpClient,
     private session: Session,
-    private mindsConfigService: ConfigsService,
-    private permissionIntentsService: PermissionIntentsService
+    private mindsConfigService: ConfigsService
   ) {}
 
   async createLiveStream(): Promise<any> {
