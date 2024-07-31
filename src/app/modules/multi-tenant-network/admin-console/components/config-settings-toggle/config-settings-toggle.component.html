@@ -1,0 +1,13 @@
+<h4 class="m-configSettingsToggle__title">{{ title }}</h4>
+<p class="m-configSettingsToggle__body">{{ description }}</p>
+<div class="m-configSettingsToggle__toggleContainer">
+  <m-toggle
+    class="m-configSettingsToggle__toggle"
+    [mModel]="enabledToggleState"
+    (mModelChange)="onEnabledToggle($event)"
+    leftValue="off"
+    rightValue="on"
+    offState="off"
+  ></m-toggle>
+  <span class="m-configSettingsToggle__toggleText">{{ toggleText }}</span>
+</div>

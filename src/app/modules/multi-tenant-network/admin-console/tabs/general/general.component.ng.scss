@@ -13,7 +13,8 @@
   m-networkAdminConsole__federationSettings,
   m-networkAdminConsole__enableLandingPageToggle,
   m-networkAdminConsole__enableWalledGardenToggle,
-  m-networkAdminConsole__replyEmailSettings {
+  m-networkAdminConsole__replyEmailSettings,
+  m-networkAdminConsole__digestEmailSettings {
     margin-bottom: $spacing12;
     max-width: 700px;
   }
