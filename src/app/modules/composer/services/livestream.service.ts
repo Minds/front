@@ -19,11 +19,7 @@ export class LivestreamService {
   ) {}
 
   async createLiveStream(): Promise<any> {
-    if (
-      !this.permissionIntentsService.checkAndHandleAction(
-        PermissionsEnum.CanUploadVideo
-      )
-    ) {
+    if (!this.session.isAdmin()) {
       console.error(VIDEO_PERMISSIONS_ERROR_MESSAGE);
       return;
     }
