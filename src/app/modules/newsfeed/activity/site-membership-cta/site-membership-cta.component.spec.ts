@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitySiteMembershipCtaComponent } from './site-membership-cta.component';
 import { ActivityEntity, ActivityService } from '../activity.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
-import { ReplaySubject } from 'rxjs';
+import { of, ReplaySubject } from 'rxjs';
 import { WINDOW } from '../../../../common/injection-tokens/common-injection-tokens';
 import userMock from '../../../../mocks/responses/user.mock';
-import { ElementRef } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 describe('ActivitySiteMembershipCtaComponent', () => {
   let comp: ActivitySiteMembershipCtaComponent;
@@ -39,6 +39,9 @@ describe('ActivitySiteMembershipCtaComponent', () => {
     minimalMode: false,
   };
 
+  let breakpointObserverMock: any = MockService(BreakpointObserver);
+  breakpointObserverMock.observe.and.returnValue(of({ matches: true }));
+
   beforeEach((done: DoneFn) => {
     TestBed.configureTestingModule({
       declarations: [
@@ -63,6 +66,10 @@ describe('ActivitySiteMembershipCtaComponent', () => {
               },
             },
           }),
+        },
+        {
+          provide: BreakpointObserver,
+          useValue: breakpointObserverMock,
         },
         { provide: WINDOW, useValue: mockWindow },
       ],

@@ -4,10 +4,13 @@ import {
   ElementRef,
   Inject,
   Input,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { ActivityEntity, ActivityService } from '../activity.service';
 import { WINDOW } from '../../../../common/injection-tokens/common-injection-tokens';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { map, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-activity__siteMembershipCta',
@@ -15,7 +18,7 @@ import { WINDOW } from '../../../../common/injection-tokens/common-injection-tok
   styleUrls: ['./site-membership-cta.component.ng.scss'],
 })
 export class ActivitySiteMembershipCtaComponent
-  implements OnInit, AfterViewInit
+  implements OnInit, OnDestroy, AfterViewInit
 {
   /** Whether the button should be shown,
    * e.g. false on the left side of a media modal,
@@ -28,6 +31,19 @@ export class ActivitySiteMembershipCtaComponent
   thumbnailHeightPx: number;
   inProgress = false;
 
+  /** Whether we are in a mobile viewport (under 400px wide) */
+  protected readonly isMobileViewport$: Observable<boolean> =
+    this.breakpointObserver
+      .observe('(max-width: 400px)')
+      .pipe(
+        map(
+          (breakpointState: BreakpointState): boolean => breakpointState.matches
+        )
+      );
+
+  // subscriptions.
+  private entitySubscription: Subscription;
+
   get isVideo(): boolean {
     return this.entity.custom_type === 'video';
   }
@@ -35,14 +51,19 @@ export class ActivitySiteMembershipCtaComponent
   constructor(
     private service: ActivityService,
     private el: ElementRef,
+    private breakpointObserver: BreakpointObserver,
     @Inject(WINDOW) private window: Window
   ) {}
 
   ngOnInit(): void {
-    this.service.entity$.subscribe((entity) => {
+    this.entitySubscription = this.service.entity$.subscribe((entity) => {
       this.entity = entity;
       this.calculateThumbnailHeight();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.entitySubscription?.unsubscribe();
   }
 
   ngAfterViewInit(): void {
