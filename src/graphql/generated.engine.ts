@@ -199,6 +199,8 @@ export type AppReadyMobileConfig = {
   APP_SCHEME?: Maybe<Scalars['String']['output']>;
   APP_SLUG?: Maybe<Scalars['String']['output']>;
   APP_SPLASH_RESIZE: Scalars['String']['output'];
+  APP_TRACKING_MESSAGE?: Maybe<Scalars['String']['output']>;
+  APP_TRACKING_MESSAGE_ENABLED?: Maybe<Scalars['Boolean']['output']>;
   EAS_PROJECT_ID?: Maybe<Scalars['String']['output']>;
   TENANT_ID: Scalars['Int']['output'];
   THEME: Scalars['String']['output'];
@@ -885,6 +887,8 @@ export type KeyValueType = {
 
 export type MobileConfig = {
   __typename?: 'MobileConfig';
+  appTrackingMessage?: Maybe<Scalars['String']['output']>;
+  appTrackingMessageEnabled?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['ID']['output'];
   previewQRCode: Scalars['String']['output'];
   previewStatus: MobilePreviewStatusEnum;
@@ -933,6 +937,7 @@ export type MultiTenantConfig = {
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
   walledGardenEnabled?: Maybe<Scalars['Boolean']['output']>;
+  welcomeEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type MultiTenantConfigInput = {
@@ -948,6 +953,7 @@ export type MultiTenantConfigInput = {
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
   walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  welcomeEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MultiTenantDomain = {
@@ -1029,6 +1035,7 @@ export type Mutation = {
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  /** Set a permission intent. */
   setPermissionIntent?: Maybe<PermissionIntent>;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
@@ -1192,6 +1199,8 @@ export type MutationLeaveChatRoomArgs = {
 };
 
 export type MutationMobileConfigArgs = {
+  appTrackingMessage?: InputMaybe<Scalars['String']['input']>;
+  appTrackingMessageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
   mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
   mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
@@ -1417,7 +1426,7 @@ export type PaymentMethod = {
 
 export type PermissionIntent = {
   __typename?: 'PermissionIntent';
-  intentType?: Maybe<PermissionIntentTypeEnum>;
+  intentType: PermissionIntentTypeEnum;
   membershipGuid?: Maybe<Scalars['String']['output']>;
   permissionId: PermissionsEnum;
 };
@@ -1593,6 +1602,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  /** Get permission intents. */
   permissionIntents: Array<PermissionIntent>;
   personalApiKey?: Maybe<PersonalApiKey>;
   postHogPerson: PostHogPerson;
@@ -3203,6 +3213,8 @@ export type GetMobileConfigQuery = {
     welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
     previewStatus: MobilePreviewStatusEnum;
     previewQRCode: string;
+    appTrackingMessageEnabled?: boolean | null;
+    appTrackingMessage?: string | null;
   };
 };
 
@@ -3210,6 +3222,8 @@ export type SetMobileConfigMutationVariables = Exact<{
   mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
   mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
   mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
+  appTrackingMessageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  appTrackingMessage?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type SetMobileConfigMutation = {
@@ -3222,6 +3236,8 @@ export type SetMobileConfigMutation = {
     previewStatus: MobilePreviewStatusEnum;
     previewQRCode: string;
     updateTimestamp: number;
+    appTrackingMessageEnabled?: boolean | null;
+    appTrackingMessage?: string | null;
   };
 };
 
@@ -3920,7 +3936,7 @@ export type GetPermissionIntentsQuery = {
   permissionIntents: Array<{
     __typename?: 'PermissionIntent';
     permissionId: PermissionsEnum;
-    intentType?: PermissionIntentTypeEnum | null;
+    intentType: PermissionIntentTypeEnum;
     membershipGuid?: string | null;
   }>;
 };
@@ -3936,7 +3952,7 @@ export type SetPermissionIntentMutation = {
   setPermissionIntent?: {
     __typename?: 'PermissionIntent';
     permissionId: PermissionsEnum;
-    intentType?: PermissionIntentTypeEnum | null;
+    intentType: PermissionIntentTypeEnum;
     membershipGuid?: string | null;
   } | null;
 };
@@ -9103,6 +9119,8 @@ export const GetMobileConfigDocument = gql`
       welcomeScreenLogoType
       previewStatus
       previewQRCode
+      appTrackingMessageEnabled
+      appTrackingMessage
     }
   }
 `;
@@ -9125,11 +9143,15 @@ export const SetMobileConfigDocument = gql`
     $mobileWelcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum
     $mobileSplashScreenType: MobileSplashScreenTypeEnum
     $mobilePreviewStatus: MobilePreviewStatusEnum
+    $appTrackingMessageEnabled: Boolean
+    $appTrackingMessage: String
   ) {
     mobileConfig(
       mobileWelcomeScreenLogoType: $mobileWelcomeScreenLogoType
       mobileSplashScreenType: $mobileSplashScreenType
       mobilePreviewStatus: $mobilePreviewStatus
+      appTrackingMessageEnabled: $appTrackingMessageEnabled
+      appTrackingMessage: $appTrackingMessage
     ) {
       id
       splashScreenType
@@ -9137,6 +9159,8 @@ export const SetMobileConfigDocument = gql`
       previewStatus
       previewQRCode
       updateTimestamp
+      appTrackingMessageEnabled
+      appTrackingMessage
     }
   }
 `;

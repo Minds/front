@@ -1,0 +1,61 @@
+<h4
+  class="m-networkAdminAppTracking__title"
+  i18n="@@NETWORK_ADMIN__MOBILE_TRACKING_TRANSPARENCY__TITLE"
+>
+  App tracking transparency
+</h4>
+<p
+  class="m-networkAdminAppTracking__subtitle"
+  i18n="@@NETWORK_ADMIN__MOBILE_TRACKING_TRANSPARENCY__DESCRIPTION"
+>
+  Your iOS app on the Apple app stores requires you to enable this setting if
+  you have set your own privacy policy on the privacy policy and terms of
+  service section.
+</p>
+<div class="m-networkAdminAppTracking__toggleContainer">
+  <m-toggle
+    class="m-networkAdminAppTracking__toggle"
+    [mModel]="enabledToggleState"
+    (mModelChange)="onEnabledToggle($event)"
+    leftValue="off"
+    rightValue="on"
+    offState="off"
+  ></m-toggle>
+  <span
+    class="m-networkAdminAppTracking__toggleText"
+    i18n="
+      @@NETWORK_ADMIN__MOBILE_TRACKING_TRANSPARENCY__ENABLE_APP_TRACKING_MESSAGE"
+    >Enable app tracking message</span
+  >
+</div>
+<div
+  class="m-networkAdminAppTracking__messageContainer"
+  *ngIf="enabledToggleState === 'on'"
+  [@growShrink]
+>
+  <label
+    for="message"
+    i18n="@@NETWORK_ADMIN__MOBILE_TRACKING_TRANSPARENCY__IN_APP_MESSAGE"
+    >In-app message</label
+  >
+  <textarea
+    id="message"
+    name="message"
+    placeholder="Enter your app tracking message"
+    [autoGrow]
+    [ngModel]="message$ | async"
+    (ngModelChange)="message$.next($event)"
+    maxlength="5000"
+    rows="3"
+  ></textarea>
+
+  <m-button
+    [disabled]="setMobileConfigInProgress$ | async"
+    [saving]="setMobileConfigInProgress$ | async"
+    (onAction)="onMessageSave()"
+    color="blue"
+    size="xsmall"
+  >
+    <ng-container i18n="@@COMMON_SAVE">Save</ng-container>
+  </m-button>
+</div>
