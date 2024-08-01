@@ -39,6 +39,7 @@ export class ChannelBadgesComponent {
     'admin',
     'onchain_booster',
     'federation',
+    'member',
   ];
 
   /**
@@ -138,6 +139,12 @@ export class ChannelBadgesComponent {
       !this.isTenantNetwork &&
       this.session.isAdmin() &&
       this.badges.indexOf('founder') > -1
+    );
+  }
+
+  protected showMemberBadge(): boolean {
+    return (
+      this.badges.indexOf('member') > -1 && this.user.has_active_site_membership
     );
   }
 
