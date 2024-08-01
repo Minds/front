@@ -56,6 +56,12 @@
       Pro
     </m-tooltip>
   </li>
+
+  <li *ngIf="showMemberBadge()" routerLink="/memberships">
+    <m-tooltip icon="verified" i18n="@@COMMON__BADGES__MEMBER">
+      Member
+    </m-tooltip>
+  </li>
   <!-- ---------------- -->
   <!-- FOUNDER -->
   <!-- ---------------- -->
