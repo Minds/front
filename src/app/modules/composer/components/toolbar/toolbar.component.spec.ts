@@ -25,6 +25,7 @@ import { IsTenantService } from '../../../../common/services/is-tenant.service';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
 import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { Session } from '../../../../services/session';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -225,6 +226,10 @@ describe('Composer Toolbar', () => {
             },
           }),
         },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
       ],
     }).compileComponents();
     service = TestBed.inject(LivestreamService);
@@ -391,12 +396,12 @@ describe('Composer Toolbar', () => {
 
   describe('shouldShowLivestreamButton', () => {
     it('should determine if livestream button should be shown', () => {
-      (comp as any).permissionIntentsService.shouldHide.and.returnValue(false);
+      (comp as any).session.isAdmin.and.returnValue(true);
       expect(comp.shouldShowLivestreamButton).toBeTrue();
     });
 
     it('should determine if livestream button should NOT be shown', () => {
-      (comp as any).permissionIntentsService.shouldHide.and.returnValue(true);
+      (comp as any).session.isAdmin.and.returnValue(false);
       expect(comp.shouldShowLivestreamButton).toBeFalse();
     });
   });
