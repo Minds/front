@@ -21,7 +21,9 @@
         color="blue"
         size="xsmall"
         [solid]="false"
-        [disabled]="(navigationInProgress$ | async) || (isManual$ | async)"
+        [disabled]="
+          (navigationInProgress$ | async) || !(membership$ | async).manageUrl
+        "
         [saving]="navigationInProgress$ | async"
         (onAction)="onManagePlanClick()"
       >
