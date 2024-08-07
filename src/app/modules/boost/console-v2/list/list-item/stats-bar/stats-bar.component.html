@@ -42,7 +42,7 @@
         *ngIf="!wrongAudience"
         i18n="@@COMMON__LEARN_MORE"
         class="m-boostConsoleStatsBar__desc m-boostConsoleStatsBar__link"
-        href="https://support.minds.com/hc/en-us/articles/11723536774292-Boost-Content-Policy"
+        [href]="rejectionInfoLink"
         target="_blank"
         >Learn more</a
       >

@@ -6,6 +6,7 @@ import { MockComponent, MockService } from '../../../../../../utils/mock';
 import { Boost, BoostPaymentMethod, BoostState } from '../../../../boost.types';
 import { BoostConsoleService } from '../../../services/console.service';
 import { BehaviorSubject, take } from 'rxjs';
+import { IS_TENANT_NETWORK } from '../../../../../../common/injection-tokens/tenant-injection-tokens';
 
 describe('BoostConsoleStatsBarComponent', () => {
   let component: BoostConsoleStatsBarComponent;
@@ -69,6 +70,10 @@ describe('BoostConsoleStatsBarComponent', () => {
         {
           provide: BoostModalV2LazyService,
           useValue: MockService(BoostModalV2LazyService),
+        },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: true,
         },
       ],
     }).compileComponents();
@@ -206,5 +211,96 @@ describe('BoostConsoleStatsBarComponent', () => {
         expect(showCtaPreview).toBeFalse();
         done();
       });
+  });
+
+  describe('getRejectionInfoLink', () => {
+    beforeEach(() => {
+      (component as any).rejectionReasons = [
+        {
+          code: 2,
+          label: 'Against Boost policy',
+        },
+        {
+          code: 3,
+          label: 'Against Stripe terms of service',
+        },
+        {
+          code: 5,
+          label: 'Reported',
+        },
+      ];
+    });
+
+    it('should get reject info link for a non tenant network', () => {
+      Object.defineProperty(component, 'isTenantNetwork', {
+        writable: true,
+        value: false,
+      });
+      expect((component as any).getRejectionInfoLink()).toBe(
+        'https://help.minds.com/hc/minds/articles/1686936417-boost#why-was-my-boost-rejected'
+      );
+    });
+
+    it('should get reject info link for a stripe terms violation', () => {
+      Object.defineProperty(component, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+      component.boost = {
+        ...component.boost,
+        rejection_reason: 3,
+      };
+      expect((component as any).getRejectionInfoLink()).toBe(
+        'https://stripe.com/legal/restricted-businesses'
+      );
+    });
+
+    it('should get reject info link for a reported boost', () => {
+      Object.defineProperty(component, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+      component.boost = {
+        ...component.boost,
+        rejection_reason: 5,
+      };
+      expect((component as any).getRejectionInfoLink()).toBe('/content-policy');
+    });
+
+    it('should get reject info link for a boost against boost policy', () => {
+      Object.defineProperty(component, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+      component.boost = {
+        ...component.boost,
+        rejection_reason: 2,
+      };
+      expect((component as any).getRejectionInfoLink()).toBe('/content-policy');
+    });
+
+    it('should get reject info link for a tenant network with an unmapped reason', () => {
+      Object.defineProperty(component, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+      component.boost = {
+        ...component.boost,
+        rejection_reason: 99999,
+      };
+      expect((component as any).getRejectionInfoLink()).toBe('/content-policy');
+    });
+
+    it('should get reject info link for a tenant network with an no reason', () => {
+      Object.defineProperty(component, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+      component.boost = {
+        ...component.boost,
+        rejection_reason: null,
+      };
+      expect((component as any).getRejectionInfoLink()).toBe('/content-policy');
+    });
   });
 });

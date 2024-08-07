@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import {
   Boost,
   BoostPaymentMethod,
@@ -10,6 +10,18 @@ import { ConfigsService } from '../../../../../../common/services/configs.servic
 import { BoostModalV2LazyService } from '../../../../modal-v2/boost-modal-v2-lazy.service';
 import { Observable, map } from 'rxjs';
 import { BoostConsoleService } from '../../../services/console.service';
+import { IS_TENANT_NETWORK } from '../../../../../../common/injection-tokens/tenant-injection-tokens';
+
+/** Learn more link for Minds. */
+const LEARN_MORE_REJECTION_MINDS_LINK: string =
+  'https://help.minds.com/hc/minds/articles/1686936417-boost#why-was-my-boost-rejected';
+
+/** Learn more link for tenant networks. */
+const CONTENT_POLICY_LINK: string = '/content-policy';
+
+/** Stripe TOS link. */
+const STRIPE_TOS_LINK: string =
+  'https://stripe.com/legal/restricted-businesses';
 
 /**
  * Row presented in boost console list items (where applicable)
@@ -30,6 +42,10 @@ export class BoostConsoleStatsBarComponent implements OnInit {
   boostIsApproved: boolean = false;
 
   formattedStartDate: string = '';
+
+  /** Link shown to learn more about a rejected Boost. */
+  protected rejectionInfoLink: string;
+
   public rejectionReasons: RejectionReason[] = [];
 
   // Whether CTA preview should be shown.
@@ -47,7 +63,8 @@ export class BoostConsoleStatsBarComponent implements OnInit {
   constructor(
     private service: BoostConsoleService,
     private mindsConfig: ConfigsService,
-    private boostModal: BoostModalV2LazyService
+    private boostModal: BoostModalV2LazyService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +82,10 @@ export class BoostConsoleStatsBarComponent implements OnInit {
     this.rejectionReasons = this.mindsConfig.get('boost')[
       'rejection_reasons'
     ] as RejectionReason[];
+
+    if (this.boostIsRejected) {
+      this.rejectionInfoLink = this.getRejectionInfoLink();
+    }
   }
 
   /**
@@ -138,5 +159,23 @@ export class BoostConsoleStatsBarComponent implements OnInit {
     return (
       (this.boost.payment_amount / this.boost.summary.views_delivered) * 1000
     );
+  }
+
+  /**
+   * Gets link with information on a Boost rejection.
+   * @returns { string } link with information on a Boost rejection.
+   */
+  private getRejectionInfoLink(): string {
+    if (!this.isTenantNetwork) {
+      return LEARN_MORE_REJECTION_MINDS_LINK;
+    }
+
+    const rejectionReason: RejectionReason = this.rejectionReasons.filter(
+      (reason) => {
+        return reason.code === this.boost.rejection_reason;
+      }
+    )?.[0];
+
+    return rejectionReason?.code === 3 ? STRIPE_TOS_LINK : CONTENT_POLICY_LINK;
   }
 }
