@@ -10,6 +10,7 @@ mutation SetMultiTenantConfig(
   $customHomePageDescription: String
   $walledGardenEnabled: Boolean
   $digestEmailEnabled: Boolean
+  $welcomeEmailEnabled: Boolean
 ) {
   multiTenantConfig(
     multiTenantConfigInput: {
@@ -24,6 +25,7 @@ mutation SetMultiTenantConfig(
       customHomePageDescription: $customHomePageDescription
       walledGardenEnabled: $walledGardenEnabled
       digestEmailEnabled: $digestEmailEnabled
+      welcomeEmailEnabled: $welcomeEmailEnabled
     }
   )
 }

@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+@import '../../stylesheets/console.component.ng.scss';
+
+:host {
+  padding-bottom: 0;
+
+  .m-configSettingsToggle__title {
+    @include heading4Regular;
+    margin: 0 0 $spacing1 0;
+  }
+
+  .m-configSettingsToggle__body {
+    margin-bottom: $spacing8;
+    margin-right: $spacing2;
+
+    @include body1Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    a {
+      @include m-theme() {
+        color: themed($m-action);
+      }
+    }
+  }
+
+  .m-configSettingsToggle__toggleContainer {
+    display: flex;
+    align-items: center;
+
+    .m-configSettingsToggle__toggle {
+      margin-right: $spacing4;
+    }
+
+    .m-configSettingsToggle__toggleText {
+      @include body1Regular;
+    }
+  }
+}
