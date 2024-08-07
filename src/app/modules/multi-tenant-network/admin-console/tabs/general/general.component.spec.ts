@@ -42,6 +42,10 @@ describe('NetworkAdminConsoleGeneralComponent', () => {
         MockComponent({
           selector: 'm-networkAdminConsole__landingPageDescription',
         }),
+        MockComponent({
+          selector: 'm-networkAdminConsole__configSettingsToggle',
+          inputs: ['fieldName', 'title', 'description', 'toggleText'],
+        }),
         MockComponent({ selector: 'm-loadingSpinner', inputs: ['inProgress'] }),
         MockComponent({ selector: 'm-formError', inputs: ['error'] }),
       ],
