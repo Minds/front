@@ -1,0 +1,64 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 485px;
+  padding: $spacing6 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin-bottom: $spacing6;
+
+  .m-networkAdminAppTracking__title {
+    @include heading3Bold;
+    margin: 0 0 $spacing1 0;
+  }
+
+  .m-networkAdminAppTracking__subtitle {
+    @include body2Medium;
+    margin-bottom: $spacing4;
+  }
+
+  .m-networkAdminAppTracking__toggleContainer {
+    display: flex;
+    align-items: center;
+    margin: $spacing4 0;
+
+    .m-networkAdminAppTracking__toggle {
+      margin-right: $spacing4;
+    }
+
+    .m-networkAdminAppTracking__toggleText {
+      @include body1Regular;
+    }
+  }
+
+  .m-networkAdminAppTracking__messageContainer {
+    margin: $spacing4 0 0 0;
+
+    label {
+      @include body1Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin: $spacing2 0 $spacing6 0;
+      padding: $spacing3 $spacing4;
+      border-radius: 3px;
+      outline: none;
+
+      @include body1Regular;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    m-button {
+      margin: $spacing6 0;
+    }
+  }
+}
