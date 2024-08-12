@@ -5,7 +5,6 @@ import { LivestreamService } from './livestream.service';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
-import { PermissionsEnum } from '../../../../graphql/generated.engine';
 import userMock from '../../../mocks/responses/user.mock';
 import { of } from 'rxjs';
 
@@ -32,10 +31,8 @@ describe('LivestreamService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should create a live stream if the user has permission', () => {
-    (service as any).permissionIntentsService.checkAndHandleAction
-      .withArgs(PermissionsEnum.CanUploadVideo)
-      .and.returnValue(true);
+  it('should create a live stream if the user is an admin', () => {
+    (service as any).session.isAdmin.and.returnValue(true);
     (service as any).session.getLoggedInUser.and.returnValue(userMock);
     (service as any).http.post.and.returnValue(of({ status: 200 }));
 
@@ -44,10 +41,8 @@ describe('LivestreamService', () => {
     expect((service as any).http.post).toHaveBeenCalled();
   });
 
-  it('should not create a live stream if the user has no permission', () => {
-    (service as any).permissionIntentsService.checkAndHandleAction
-      .withArgs(PermissionsEnum.CanUploadVideo)
-      .and.returnValue(false);
+  it('should not create a live stream if the user is not an admin', () => {
+    (service as any).session.isAdmin.and.returnValue(false);
 
     service.createLiveStream();
 

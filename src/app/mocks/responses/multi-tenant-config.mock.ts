@@ -16,4 +16,5 @@ export const multiTenantConfigMock: MultiTenantConfig = {
   customHomePageDescription: 'Hello world',
   walledGardenEnabled: true,
   digestEmailEnabled: true,
+  welcomeEmailEnabled: true,
 };

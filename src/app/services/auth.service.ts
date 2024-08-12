@@ -20,10 +20,11 @@ export class AuthService {
 
     try {
       await this.pushNotificationService.unregisterToken();
+      await this.client.delete(endpoint);
     } catch (e) {
       console.error('[AuthService] failed to unregister token');
     }
-    await this.client.delete(endpoint);
+
     this.session.logout();
 
     return true;

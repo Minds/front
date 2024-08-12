@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { NetworkAdminConsoleMobilePreviewBuilderComponent } from './components/preview-builder/preview-builder.component';
 import { NetworkAdminConsoleMobileEditAppearanceComponent } from './components/edit-appearance/edit-appearance.component';
 import { NetworkAdminConsoleMobileReleaseComponent } from './components/release/release.component';
+import { NetworkAdminConsoleMobileAppTrackingMessageComponent } from './components/app-tracking-message/app-tracking-message.component';
 
 const routes: Routes = [
   { path: '', component: NetworkAdminConsoleMobileComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
     NetworkAdminConsoleMobilePreviewBuilderComponent,
     NetworkAdminConsoleMobileEditAppearanceComponent,
     NetworkAdminConsoleMobileReleaseComponent,
+    NetworkAdminConsoleMobileAppTrackingMessageComponent,
   ],
 })
 export class NetworkAdminMobileLazyModule {}

@@ -199,6 +199,8 @@ export type AppReadyMobileConfig = {
   APP_SCHEME?: Maybe<Scalars['String']['output']>;
   APP_SLUG?: Maybe<Scalars['String']['output']>;
   APP_SPLASH_RESIZE: Scalars['String']['output'];
+  APP_TRACKING_MESSAGE?: Maybe<Scalars['String']['output']>;
+  APP_TRACKING_MESSAGE_ENABLED?: Maybe<Scalars['Boolean']['output']>;
   EAS_PROJECT_ID?: Maybe<Scalars['String']['output']>;
   TENANT_ID: Scalars['Int']['output'];
   THEME: Scalars['String']['output'];
@@ -885,6 +887,8 @@ export type KeyValueType = {
 
 export type MobileConfig = {
   __typename?: 'MobileConfig';
+  appTrackingMessage?: Maybe<Scalars['String']['output']>;
+  appTrackingMessageEnabled?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['ID']['output'];
   previewQRCode: Scalars['String']['output'];
   previewStatus: MobilePreviewStatusEnum;
@@ -1199,6 +1203,8 @@ export type MutationLeaveChatRoomArgs = {
 };
 
 export type MutationMobileConfigArgs = {
+  appTrackingMessage?: InputMaybe<Scalars['String']['input']>;
+  appTrackingMessageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
   mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
   mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
@@ -3211,6 +3217,8 @@ export type GetMobileConfigQuery = {
     welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
     previewStatus: MobilePreviewStatusEnum;
     previewQRCode: string;
+    appTrackingMessageEnabled?: boolean | null;
+    appTrackingMessage?: string | null;
   };
 };
 
@@ -3218,6 +3226,8 @@ export type SetMobileConfigMutationVariables = Exact<{
   mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
   mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
   mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
+  appTrackingMessageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  appTrackingMessage?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type SetMobileConfigMutation = {
@@ -3230,6 +3240,8 @@ export type SetMobileConfigMutation = {
     previewStatus: MobilePreviewStatusEnum;
     previewQRCode: string;
     updateTimestamp: number;
+    appTrackingMessageEnabled?: boolean | null;
+    appTrackingMessage?: string | null;
   };
 };
 
@@ -4122,6 +4134,7 @@ export type GetMultiTenantConfigQuery = {
     customHomePageDescription?: string | null;
     walledGardenEnabled?: boolean | null;
     digestEmailEnabled?: boolean | null;
+    welcomeEmailEnabled?: boolean | null;
   } | null;
 };
 
@@ -4232,6 +4245,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  welcomeEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   loggedInLandingPageIdWeb?: InputMaybe<Scalars['String']['input']>;
   loggedInLandingPageIdMobile?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -9113,6 +9127,8 @@ export const GetMobileConfigDocument = gql`
       welcomeScreenLogoType
       previewStatus
       previewQRCode
+      appTrackingMessageEnabled
+      appTrackingMessage
     }
   }
 `;
@@ -9135,11 +9151,15 @@ export const SetMobileConfigDocument = gql`
     $mobileWelcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum
     $mobileSplashScreenType: MobileSplashScreenTypeEnum
     $mobilePreviewStatus: MobilePreviewStatusEnum
+    $appTrackingMessageEnabled: Boolean
+    $appTrackingMessage: String
   ) {
     mobileConfig(
       mobileWelcomeScreenLogoType: $mobileWelcomeScreenLogoType
       mobileSplashScreenType: $mobileSplashScreenType
       mobilePreviewStatus: $mobilePreviewStatus
+      appTrackingMessageEnabled: $appTrackingMessageEnabled
+      appTrackingMessage: $appTrackingMessage
     ) {
       id
       splashScreenType
@@ -9147,6 +9167,8 @@ export const SetMobileConfigDocument = gql`
       previewStatus
       previewQRCode
       updateTimestamp
+      appTrackingMessageEnabled
+      appTrackingMessage
     }
   }
 `;
@@ -9895,6 +9917,7 @@ export const GetMultiTenantConfigDocument = gql`
       customHomePageDescription
       walledGardenEnabled
       digestEmailEnabled
+      welcomeEmailEnabled
     }
   }
 `;
@@ -10074,6 +10097,7 @@ export const SetMultiTenantConfigDocument = gql`
     $customHomePageDescription: String
     $walledGardenEnabled: Boolean
     $digestEmailEnabled: Boolean
+    $welcomeEmailEnabled: Boolean
     $loggedInLandingPageIdWeb: String
     $loggedInLandingPageIdMobile: String
   ) {
@@ -10090,6 +10114,7 @@ export const SetMultiTenantConfigDocument = gql`
         customHomePageDescription: $customHomePageDescription
         walledGardenEnabled: $walledGardenEnabled
         digestEmailEnabled: $digestEmailEnabled
+        welcomeEmailEnabled: $welcomeEmailEnabled
         loggedInLandingPageIdWeb: $loggedInLandingPageIdWeb
         loggedInLandingPageIdMobile: $loggedInLandingPageIdMobile
       }

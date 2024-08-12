@@ -5,5 +5,7 @@ query GetMobileConfig {
     welcomeScreenLogoType
     previewStatus
     previewQRCode
+    appTrackingMessageEnabled
+    appTrackingMessage
   }
 }

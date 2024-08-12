@@ -44,6 +44,14 @@ export class MobileAppPreviewService implements OnDestroy {
   public readonly previewQRCode$: BehaviorSubject<string> =
     new BehaviorSubject<string>(null);
 
+  /** Whether App tracking message is enabled. */
+  public readonly appTrackingMessageEnabled$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  /** App tracking message text content. */
+  public readonly appTrackingMessage$: BehaviorSubject<string> =
+    new BehaviorSubject<string>(null);
+
   /** Whether init is in progress. */
   public readonly initInProgress$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(true);
@@ -118,6 +126,16 @@ export class MobileAppPreviewService implements OnDestroy {
             if (mobileConfig.mobilePreviewStatus) {
               this.previewStatus$.next(mobileConfig.mobilePreviewStatus);
             }
+
+            if (mobileConfig.appTrackingMessageEnabled) {
+              this.appTrackingMessageEnabled$.next(
+                mobileConfig.appTrackingMessageEnabled
+              );
+            }
+
+            if (mobileConfig.appTrackingMessage) {
+              this.appTrackingMessage$.next(mobileConfig.appTrackingMessage);
+            }
           }
         )
     );
@@ -164,6 +182,12 @@ export class MobileAppPreviewService implements OnDestroy {
             );
             this.previewQRCode$.next(
               response.data?.mobileConfig?.previewQRCode
+            );
+            this.appTrackingMessageEnabled$.next(
+              response.data?.mobileConfig?.appTrackingMessageEnabled
+            );
+            this.appTrackingMessage$.next(
+              response.data?.mobileConfig?.appTrackingMessage
             );
 
             if (

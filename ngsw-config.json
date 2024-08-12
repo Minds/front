@@ -51,7 +51,9 @@
     "!/**/*__*/**",
     "!/embed/**",
     "!/storybook",
-    "!/storybook/**"
+    "!/storybook/**",
+    "!/fs/**",
+    "!/icon/**"
   ],
   "appData": {
     "commit": "undefined-undefined"

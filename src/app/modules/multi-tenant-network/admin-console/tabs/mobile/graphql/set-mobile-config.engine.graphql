@@ -2,11 +2,15 @@ mutation SetMobileConfig(
   $mobileWelcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum
   $mobileSplashScreenType: MobileSplashScreenTypeEnum
   $mobilePreviewStatus: MobilePreviewStatusEnum
+  $appTrackingMessageEnabled: Boolean
+  $appTrackingMessage: String
 ) {
   mobileConfig(
     mobileWelcomeScreenLogoType: $mobileWelcomeScreenLogoType
     mobileSplashScreenType: $mobileSplashScreenType
     mobilePreviewStatus: $mobilePreviewStatus
+    appTrackingMessageEnabled: $appTrackingMessageEnabled
+    appTrackingMessage: $appTrackingMessage
   ) {
     id
     splashScreenType
@@ -14,5 +18,7 @@ mutation SetMobileConfig(
     previewStatus
     previewQRCode
     updateTimestamp
+    appTrackingMessageEnabled
+    appTrackingMessage
   }
 }

@@ -59,6 +59,8 @@ describe('MobileAppPreviewService', () => {
               welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum.Horizontal,
               previewStatus: MobilePreviewStatusEnum.Ready,
               previewQRCode: 'test',
+              appTrackingMessageEnabled: true,
+              appTrackingMessage: 'appTrackingMessage',
             },
           },
         })
@@ -95,6 +97,10 @@ describe('MobileAppPreviewService', () => {
         MobilePreviewStatusEnum.Ready
       );
       expect((service as any).previewQRCode$.getValue()).toBe('test');
+      expect((service as any).appTrackingMessageEnabled$.getValue()).toBe(true);
+      expect((service as any).appTrackingMessage$.getValue()).toBe(
+        'appTrackingMessage'
+      );
     }));
 
     it('should handle error on call server to init on init function call', fakeAsync(() => {
@@ -122,6 +128,8 @@ describe('MobileAppPreviewService', () => {
         mobileSplashScreenType: MobileSplashScreenTypeEnum.Contain,
         mobilePreviewStatus: MobilePreviewStatusEnum.NoPreview,
         mobileWelcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum.Horizontal,
+        appTrackingMessageEnabled: true,
+        appTrackingMessage: 'appTrackingMessage',
       };
 
       (service as any).setMobileConfigGql.mutate.and.returnValue(
@@ -146,6 +154,10 @@ describe('MobileAppPreviewService', () => {
       );
       expect((service as any).previewStatus$.getValue()).toBe(
         MobilePreviewStatusEnum.NoPreview
+      );
+      expect((service as any).appTrackingMessageEnabled$.getValue()).toBe(true);
+      expect((service as any).appTrackingMessage$.getValue()).toBe(
+        'appTrackingMessage'
       );
     }));
 

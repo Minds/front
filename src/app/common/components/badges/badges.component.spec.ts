@@ -262,4 +262,27 @@ describe('ChannelBadgesComponent', () => {
     let badge = getCurrentBadge();
     expect(badge).toBeNull();
   }));
+
+  it('should show membership badge only if the user has an active site membership', () => {
+    comp.user = {
+      ...sessionMock.user,
+      has_active_site_membership: true,
+    };
+    comp.badges = ['member'];
+    fixture.detectChanges();
+
+    let badge = getCurrentBadge();
+    expect(badge).not.toBeNull();
+    expect(badge.nativeElement.textContent).toContain('Member');
+
+    comp.user = {
+      ...sessionMock.user,
+      has_active_site_membership: false,
+    };
+    fixture.detectChanges();
+
+    badge = getCurrentBadge();
+
+    expect(badge).toBeNull();
+  });
 });
