@@ -39,11 +39,18 @@ export class HomepageContainerComponent implements OnInit {
   ngOnInit(): void {
     if (this.session.isLoggedIn()) {
       if (this.route.snapshot.fragment === 'boost') {
-        this.router.navigate([this.authRedirectService.getRedirectUrl()], {
-          queryParams: { createBoost: 1 },
-        });
+        this.router.navigate(
+          [this.authRedirectService.getDefaultRedirectUrl()],
+          {
+            queryParams: { createBoost: 1 },
+          }
+        );
       } else {
-        this.router.navigate(['/newsfeed']);
+        if (this.isTenantNetwork) {
+          this.authRedirectService.redirect();
+        } else {
+          this.router.navigate(['/newsfeed']);
+        }
       }
     }
 

@@ -36,7 +36,7 @@ export class TenantCustomHomepageAdvertiseComponent {
     this.router.navigate(['/register'], {
       queryParams: {
         redirectUrl: encodeURI(
-          this.authRedirectService.getRedirectUrl() + '?createBoost=1'
+          this.authRedirectService.getDefaultRedirectUrl() + '?createBoost=1'
         ),
       },
     });

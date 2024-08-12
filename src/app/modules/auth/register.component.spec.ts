@@ -24,6 +24,7 @@ import { IsTenantService } from '../../common/services/is-tenant.service';
 import { SiteService } from '../../common/services/site.service';
 import { PagesService } from '../../common/services/pages.service';
 import { WINDOW } from '../../common/injection-tokens/common-injection-tokens';
+import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 describe('RegisterComponent', () => {
   let comp: RegisterComponent;
@@ -110,6 +111,10 @@ describe('RegisterComponent', () => {
             },
           },
         },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: true,
+        },
       ],
     });
 
@@ -172,12 +177,11 @@ describe('RegisterComponent', () => {
     it('should navigate to auth redirect service url on register, when no redirectTo is set', fakeAsync(() => {
       const redirectTo: string = '/test';
       (comp as any).redirectTo = null;
-      (comp as any).authRedirectService.getRedirectUrl.and.returnValue('/test');
 
       (comp as any).onboardingV5Service.onboardingCompleted$.next(true);
       tick();
 
-      expect((comp as any).router.navigate).toHaveBeenCalledWith([redirectTo]);
+      expect((comp as any).authRedirectService.redirect).toHaveBeenCalled();
     }));
   });
 });

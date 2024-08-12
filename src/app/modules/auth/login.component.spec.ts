@@ -20,6 +20,7 @@ import { OnboardingV5Service } from '../onboarding-v5/services/onboarding-v5.ser
 import { MockService } from '../../utils/mock';
 import { BehaviorSubject } from 'rxjs';
 import { WINDOW } from '../../common/injection-tokens/common-injection-tokens';
+import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 describe('LoginComponent', () => {
   let comp: LoginComponent;
@@ -92,6 +93,10 @@ describe('LoginComponent', () => {
             },
           },
         },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: true,
+        },
       ],
     });
 
@@ -150,12 +155,11 @@ describe('LoginComponent', () => {
     it('should navigate to auth redirect service url on register, when no redirectTo is set', fakeAsync(() => {
       const redirectTo: string = '/test';
       (comp as any).redirectTo = null;
-      (comp as any).authRedirectService.getRedirectUrl.and.returnValue('/test');
 
       (comp as any).onboardingV5Service.onboardingCompleted$.next(true);
       tick();
 
-      expect((comp as any).router.navigate).toHaveBeenCalledWith([redirectTo]);
+      expect((comp as any).authRedirectService.redirect).toHaveBeenCalled();
     }));
   });
 });

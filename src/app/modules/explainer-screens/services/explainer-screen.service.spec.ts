@@ -13,6 +13,7 @@ import { of, take } from 'rxjs';
 import { ExplainerScreenModalService } from './explainer-screen-lazy-modal.service';
 import { DismissalV2Service } from '../../../common/services/dismissal-v2.service';
 import { MockService } from '../../../utils/mock';
+import { Session } from '../../../services/session';
 
 describe('ExplainerScreensService', () => {
   let service: ExplainerScreensService;
@@ -202,6 +203,10 @@ describe('ExplainerScreensService', () => {
           provide: DismissalV2Service,
           useValue: MockService(DismissalV2Service),
         },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
       ],
     });
 
@@ -295,6 +300,10 @@ describe('ExplainerScreensService', () => {
 
   describe('handleRouteChange', () => {
     it('should handle matching trigger routes', fakeAsync(() => {
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      (service as any).session.getLoggedInUser.and.returnValue({
+        email_confirmed: true,
+      });
       (service as any).dismissalV2Service.getDismissals.and.returnValue(of([]));
       (service as any).triggerRoutes$ = of([
         '/boost/boost-console',
@@ -309,6 +318,10 @@ describe('ExplainerScreensService', () => {
     }));
 
     it('should handle completely non-matching trigger routes', fakeAsync(() => {
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      (service as any).session.getLoggedInUser.and.returnValue({
+        email_confirmed: true,
+      });
       (service as any).dismissalV2Service.getDismissals.and.returnValue(of([]));
       (service as any).triggerRoutes$ = of([
         '/boost/boost-console',
@@ -323,6 +336,10 @@ describe('ExplainerScreensService', () => {
     }));
 
     it('should handle wildcard matching trigger routes', fakeAsync(() => {
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      (service as any).session.getLoggedInUser.and.returnValue({
+        email_confirmed: true,
+      });
       (service as any).dismissalV2Service.getDismissals.and.returnValue(of([]));
       mockExplainerScreens[1].triggerRoute = '/boost/boost-console/*';
       (service as any).getExplainerScreens$ = of(mockExplainerScreens);
@@ -339,9 +356,31 @@ describe('ExplainerScreensService', () => {
     }));
 
     it('should handle partially non-matching trigger routes', fakeAsync(() => {
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      (service as any).session.getLoggedInUser.and.returnValue({
+        email_confirmed: true,
+      });
       (service as any).dismissalV2Service.getDismissals.and.returnValue(of([]));
       (service as any).triggerRoutes$ = of([
         '/boost/boost-console/subroute',
+        '/settings/affiliates',
+      ]);
+      (service as any).getExplainerScreens$ = of(mockExplainerScreens);
+
+      service.handleRouteChange('/boost/boost-console');
+      tick();
+
+      expect((service as any).explainerScreenModal.open).not.toHaveBeenCalled();
+    }));
+
+    it('should NOT handle matching trigger routes when logged in with no confirmed email', fakeAsync(() => {
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      (service as any).session.getLoggedInUser.and.returnValue({
+        email_confirmed: false,
+      });
+      (service as any).dismissalV2Service.getDismissals.and.returnValue(of([]));
+      (service as any).triggerRoutes$ = of([
+        '/boost/boost-console',
         '/settings/affiliates',
       ]);
       (service as any).getExplainerScreens$ = of(mockExplainerScreens);

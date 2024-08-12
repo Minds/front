@@ -926,6 +926,8 @@ export type MultiTenantConfig = {
   digestEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
+  loggedInLandingPageIdMobile?: Maybe<Scalars['String']['output']>;
+  loggedInLandingPageIdWeb?: Maybe<Scalars['String']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   replyEmail?: Maybe<Scalars['String']['output']>;
@@ -933,6 +935,7 @@ export type MultiTenantConfig = {
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
   walledGardenEnabled?: Maybe<Scalars['Boolean']['output']>;
+  welcomeEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type MultiTenantConfigInput = {
@@ -942,12 +945,15 @@ export type MultiTenantConfigInput = {
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
+  loggedInLandingPageIdMobile?: InputMaybe<Scalars['String']['input']>;
+  loggedInLandingPageIdWeb?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
   walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  welcomeEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MultiTenantDomain = {
@@ -1029,6 +1035,7 @@ export type Mutation = {
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  /** Set a permission intent. */
   setPermissionIntent?: Maybe<PermissionIntent>;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
@@ -1417,7 +1424,7 @@ export type PaymentMethod = {
 
 export type PermissionIntent = {
   __typename?: 'PermissionIntent';
-  intentType?: Maybe<PermissionIntentTypeEnum>;
+  intentType: PermissionIntentTypeEnum;
   membershipGuid?: Maybe<Scalars['String']['output']>;
   permissionId: PermissionsEnum;
 };
@@ -1593,6 +1600,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  /** Get permission intents. */
   permissionIntents: Array<PermissionIntent>;
   personalApiKey?: Maybe<PersonalApiKey>;
   postHogPerson: PostHogPerson;
@@ -3920,7 +3928,7 @@ export type GetPermissionIntentsQuery = {
   permissionIntents: Array<{
     __typename?: 'PermissionIntent';
     permissionId: PermissionsEnum;
-    intentType?: PermissionIntentTypeEnum | null;
+    intentType: PermissionIntentTypeEnum;
     membershipGuid?: string | null;
   }>;
 };
@@ -3936,7 +3944,7 @@ export type SetPermissionIntentMutation = {
   setPermissionIntent?: {
     __typename?: 'PermissionIntent';
     permissionId: PermissionsEnum;
-    intentType?: PermissionIntentTypeEnum | null;
+    intentType: PermissionIntentTypeEnum;
     membershipGuid?: string | null;
   } | null;
 };
@@ -4224,6 +4232,8 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  loggedInLandingPageIdWeb?: InputMaybe<Scalars['String']['input']>;
+  loggedInLandingPageIdMobile?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -10064,6 +10074,8 @@ export const SetMultiTenantConfigDocument = gql`
     $customHomePageDescription: String
     $walledGardenEnabled: Boolean
     $digestEmailEnabled: Boolean
+    $loggedInLandingPageIdWeb: String
+    $loggedInLandingPageIdMobile: String
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
@@ -10078,6 +10090,8 @@ export const SetMultiTenantConfigDocument = gql`
         customHomePageDescription: $customHomePageDescription
         walledGardenEnabled: $walledGardenEnabled
         digestEmailEnabled: $digestEmailEnabled
+        loggedInLandingPageIdWeb: $loggedInLandingPageIdWeb
+        loggedInLandingPageIdMobile: $loggedInLandingPageIdMobile
       }
     )
   }

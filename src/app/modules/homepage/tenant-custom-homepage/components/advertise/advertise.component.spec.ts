@@ -49,7 +49,7 @@ describe('TenantCustomHomepageAdvertiseComponent', () => {
 
   it('should start boost creation flow', () => {
     const redirectUrl: string = '/newsfeed';
-    (comp as any).authRedirectService.getRedirectUrl.and.returnValue(
+    (comp as any).authRedirectService.getDefaultRedirectUrl.and.returnValue(
       redirectUrl
     );
 

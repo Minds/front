@@ -1,0 +1,90 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0 $spacing8 0 0;
+  box-sizing: border-box;
+
+  .m-landingPageSelector__title {
+    margin-top: 0;
+
+    @include heading4Medium;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-landingPageSelector__description {
+    @include body2Medium;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-landingPageSelector__selectors {
+    display: flex;
+    flex-flow: row wrap;
+    gap: $spacing4 $spacing16;
+
+    .m-landingPageSelector__selectorContainer {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .m-landingPageSelector__selectorLabel {
+        margin-bottom: $spacing4;
+
+        @include body2Medium;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      .m-landingPageSelector__dropdownSelector {
+        width: 220px;
+        min-width: 220px;
+        max-width: 220px;
+        padding: $spacing3 $spacing4 $spacing3 $spacing6;
+        box-sizing: border-box;
+        border-radius: 2px;
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+
+        ::ng-deep .m-dropdownMenu__trigger {
+          max-width: 100%;
+        }
+
+        ::ng-deep .m-dropdownMenuItem__text--label {
+          margin-left: 0;
+        }
+
+        .m-landingPageSelector__dropdownSelectorTrigger {
+          display: flex;
+          justify-content: space-between;
+
+          @include body2Medium;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+
+          .m-landingPageSelector__dropdownSelectorSelectedName {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+          }
+
+          .m-landingPageSelector__dropdownSelectorIcon {
+            min-width: 24px;
+
+            @include m-theme() {
+              color: themed($m-borderColor--secondary);
+            }
+          }
+        }
+      }
+    }
+  }
+}

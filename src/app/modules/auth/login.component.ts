@@ -24,6 +24,7 @@ import { AuthRedirectService } from '../../common/services/auth-redirect.service
 import { OnboardingV5Service } from '../onboarding-v5/services/onboarding-v5.service';
 import { WINDOW } from '../../common/injection-tokens/common-injection-tokens';
 import { isPlatformBrowser } from '@angular/common';
+import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Standalone login page
@@ -71,7 +72,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authRedirectService: AuthRedirectService,
     private onboardingV5Service: OnboardingV5Service,
     @Inject(WINDOW) private window: Window,
-    @Inject(PLATFORM_ID) protected platformId: Object
+    @Inject(PLATFORM_ID) protected platformId: Object,
+    @Inject(IS_TENANT_NETWORK) protected readonly isTenantNetwork: boolean
   ) {}
 
   ngOnInit() {
@@ -137,8 +139,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl(this.referrer);
     } else if (this.redirectTo) {
       this.navigateToRedirection();
-    } else {
+    } else if (!this.isTenantNetwork || this.loginReferrer.hasRegisteredUrl()) {
       this.loginReferrer.navigate();
+    } else {
+      this.authRedirectService.redirect();
     }
   }
 
@@ -146,11 +150,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.redirectTo) {
       this.navigateToRedirection();
     } else {
-      /**
-       * If a redirect hasn't already been defined,
-       * use the experiment to determine where to go
-       */
-      this.router.navigate([this.authRedirectService.getRedirectUrl()]);
+      this.authRedirectService.redirect();
     }
   }
 

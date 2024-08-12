@@ -19,6 +19,7 @@ import { DismissalV2Service } from '../../../common/services/dismissal-v2.servic
 import { Dismissal } from '../../../../graphql/generated.engine';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { isPlatformServer } from '@angular/common';
+import { Session } from '../../../services/session';
 
 /**
  * Service handling the showing and loading of data for explainer screens.
@@ -30,6 +31,7 @@ export class ExplainerScreensService extends AbstractSubscriberComponent {
     private getExplainerScreensGQL: GetExplainerScreensGQL,
     private explainerScreenModal: ExplainerScreenModalService,
     private dismissalV2Service: DismissalV2Service,
+    private session: Session,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     super();
@@ -76,6 +78,18 @@ export class ExplainerScreensService extends AbstractSubscriberComponent {
     if (isPlatformServer(this.platformId)) {
       return;
     }
+
+    /**
+     * Do not show if logged in and email is not yet confirmed,
+     * so that we don't show over the onboarding modal.
+     */
+    if (
+      this.session.isLoggedIn() &&
+      !this.session.getLoggedInUser()?.email_confirmed
+    ) {
+      return;
+    }
+
     this.subscriptions.push(
       this.triggerRoutes$
         .pipe(take(1))
