@@ -24,9 +24,16 @@
       [menu]="webLandingPageDropdownItems"
     >
       <div class="m-landingPageSelector__dropdownSelectorTrigger">
-        <span class="m-landingPageSelector__dropdownSelectorSelectedName">{{
-          (currentWebLandingPageItem$ | async)?.name
-        }}</span>
+        <span class="m-landingPageSelector__dropdownSelectorSelectedName">
+          <ng-container
+            *ngIf="
+              (currentWebLandingPageItem$ | async)?.id !== 'channel';
+              else channelTextTemplate
+            "
+          >
+            {{ (currentWebLandingPageItem$ | async)?.name }}
+          </ng-container>
+        </span>
         <span class="material-icons m-landingPageSelector__dropdownSelectorIcon"
           >keyboard_arrow_down</span
         >
@@ -64,7 +71,13 @@
       (click)="onWebLandingPageChange(webLandingPageItem)"
       selectable="true"
       [selected]="(currentWebLandingPageItem$ | async) === webLandingPageItem"
-      ><span>{{ webLandingPageItem.name }}</span>
+      ><span>
+        <ng-container
+          *ngIf="webLandingPageItem.id !== 'channel'; else channelTextTemplate"
+        >
+          {{ webLandingPageItem.name }}
+        </ng-container>
+      </span>
     </m-dropdownMenu__item>
   </ul>
 </ng-template>
@@ -81,4 +94,10 @@
       ><span>{{ mobileLandingPageItem.name }}</span>
     </m-dropdownMenu__item>
   </ul>
+</ng-template>
+
+<ng-template #channelTextTemplate>
+  <ng-container i18n="@@LANDING_PAGE_SELECTOR__CHANNEL_PAGE"
+    >Channel page</ng-container
+  >
 </ng-template>

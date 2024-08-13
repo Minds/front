@@ -8,6 +8,8 @@ import { SITE_URL } from '../../../common/injection-tokens/url-injection-tokens'
 import { mockNavigationItems } from '../admin-console/tabs/navigation/components/landing-page-section/landing-page-selector.component.spec';
 import { MockService } from '../../../utils/mock';
 import { NavigationItemTypeEnum } from '../../../../graphql/generated.engine';
+import { Session } from '../../../services/session';
+import userMock from '../../../mocks/responses/user.mock';
 
 describe('TenantLoggedInLandingRedirectService', () => {
   let service: TenantLoggedInLandingRedirectService;
@@ -18,6 +20,7 @@ describe('TenantLoggedInLandingRedirectService', () => {
         TenantLoggedInLandingRedirectService,
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
         { provide: Router, useValue: MockService(Router) },
+        { provide: Session, useValue: MockService(Session) },
         { provide: IS_TENANT_NETWORK, useValue: false },
         { provide: WINDOW, useValue: jasmine.createSpyObj('WINDOW', ['open']) },
         { provide: SITE_URL, useValue: 'https://example.minds.com/' },
@@ -66,6 +69,31 @@ describe('TenantLoggedInLandingRedirectService', () => {
 
       expect((service as any).router.navigateByUrl).toHaveBeenCalledWith(
         mockNavigationItems[1].path
+      );
+    });
+
+    it('should redirect to core channel page', () => {
+      (service as any).isTenantNetwork = true;
+      (service as any).session.getLoggedInUser.and.returnValue({
+        ...userMock,
+        username: 'test',
+      });
+      (service as any).configs.get.withArgs('custom').and.returnValue({
+        navigation: [
+          {
+            id: 'channel',
+            type: NavigationItemTypeEnum.Core,
+          },
+        ],
+      });
+      (service as any).configs.get.withArgs('tenant').and.returnValue({
+        logged_in_landing_page_id_web: 'channel',
+      });
+
+      service.redirect();
+
+      expect((service as any).router.navigateByUrl).toHaveBeenCalledWith(
+        '/test'
       );
     });
 

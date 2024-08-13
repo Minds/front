@@ -8,6 +8,7 @@ import {
 } from '../../../../graphql/generated.engine';
 import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens';
 import { SITE_URL } from '../../../common/injection-tokens/url-injection-tokens';
+import { Session } from '../../../services/session';
 
 const FALLBACK_LANDING_PAGE_PATH: string = '/newsfeed';
 
@@ -19,6 +20,7 @@ export class TenantLoggedInLandingRedirectService {
   constructor(
     private configs: ConfigsService,
     private router: Router,
+    private session: Session,
     @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean,
     @Inject(WINDOW) private readonly window: Window,
     @Inject(SITE_URL) private readonly siteUrl: string
@@ -39,9 +41,16 @@ export class TenantLoggedInLandingRedirectService {
 
     switch (landingPage?.type) {
       case NavigationItemTypeEnum.Core:
-        this.router.navigateByUrl(
-          landingPage?.path ?? FALLBACK_LANDING_PAGE_PATH
-        );
+        if (landingPage?.id === 'channel') {
+          this.router.navigateByUrl(
+            '/' + this.session.getLoggedInUser()?.username ??
+              FALLBACK_LANDING_PAGE_PATH
+          );
+        } else {
+          this.router.navigateByUrl(
+            landingPage?.path ?? FALLBACK_LANDING_PAGE_PATH
+          );
+        }
         break;
       case NavigationItemTypeEnum.CustomLink:
         this.handleCustomLinkRedirect(landingPage);
