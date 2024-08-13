@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Session } from '../../services/session';
+import { Component } from '@angular/core';
 
 /**
  * Container for default feed - contains page layout and sidebar.
@@ -10,16 +8,4 @@ import { Session } from '../../services/session';
   templateUrl: 'default-feed-container.component.html',
   styleUrls: ['./default-feed-container.component.ng.scss'],
 })
-export class DefaultFeedContainerComponent implements OnInit {
-  constructor(
-    private router: Router,
-    private session: Session
-  ) {}
-
-  public ngOnInit(): void {
-    if (this.session.isLoggedIn()) {
-      this.router.navigate(['/newsfeed']);
-      return;
-    }
-  }
-}
+export class DefaultFeedContainerComponent {}
