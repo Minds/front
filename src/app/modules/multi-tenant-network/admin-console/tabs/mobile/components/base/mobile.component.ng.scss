@@ -8,6 +8,34 @@
     margin-right: $spacing8;
     margin-left: $spacing8;
   }
+  m-networkAdminConsole__previewBuilder,
+  m-networkAdminConsole__configSettingsToggle,
+  m-networkAdminConsole__appTrackingMessage {
+    margin-bottom: $spacing8;
+  }
+
+  m-networkAdminConsole__configSettingsToggle {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 600px;
+
+    ::ng-deep .m-configSettingsToggle__title {
+      @include heading3Bold;
+      margin: 0 0 $spacing1 0;
+    }
+
+    .m-configSettingsToggle__body {
+      @include body2Medium;
+      margin-bottom: $spacing8;
+      margin-right: $spacing2;
+
+      a {
+        @include m-theme() {
+          color: themed($m-action);
+        }
+      }
+    }
+  }
 
   .m-networkAdminMobile__setupLink {
     display: block;

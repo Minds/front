@@ -55,7 +55,6 @@ import { PermissionsEnum } from '../../../../graphql/generated.engine';
 import { permissionGuard } from '../../../common/guards/permission.guard';
 import { NetworkAdminConsoleRolesPermissionHandlingComponent } from './tabs/roles/tabs/permission-handling/permission-handling.component';
 import { NetworkAdminConsoleDigestEmailSettingsComponent } from './tabs/general/digest-email-toggle/digest-email-toggle.component';
-import { NetworkAdminConsoleConfigSettingsToggleComponent } from './components/config-settings-toggle/config-settings-toggle.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -240,7 +239,6 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     RoleAggregatorComponent,
     GroupAggregatorComponent,
     AssignRolesModalComponent,
-    NetworkAdminConsoleConfigSettingsToggleComponent,
     CustomPageFormComponent,
     CustomPageFormContentPreviewModalComponent,
     NetworkAdminConsoleNavigationComponent,

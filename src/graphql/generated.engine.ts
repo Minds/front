@@ -929,6 +929,7 @@ export type MultiTenantConfig = {
   customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
   digestEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
+  isNonProfit?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
@@ -947,6 +948,7 @@ export type MultiTenantConfigInput = {
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
+  isNonProfit?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
@@ -4131,6 +4133,7 @@ export type GetMultiTenantConfigQuery = {
     walledGardenEnabled?: boolean | null;
     digestEmailEnabled?: boolean | null;
     welcomeEmailEnabled?: boolean | null;
+    isNonProfit?: boolean | null;
   } | null;
 };
 
@@ -4242,6 +4245,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   welcomeEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  isNonProfit?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -9912,6 +9916,7 @@ export const GetMultiTenantConfigDocument = gql`
       walledGardenEnabled
       digestEmailEnabled
       welcomeEmailEnabled
+      isNonProfit
     }
   }
 `;
@@ -10092,6 +10097,7 @@ export const SetMultiTenantConfigDocument = gql`
     $walledGardenEnabled: Boolean
     $digestEmailEnabled: Boolean
     $welcomeEmailEnabled: Boolean
+    $isNonProfit: Boolean
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
@@ -10107,6 +10113,7 @@ export const SetMultiTenantConfigDocument = gql`
         walledGardenEnabled: $walledGardenEnabled
         digestEmailEnabled: $digestEmailEnabled
         welcomeEmailEnabled: $welcomeEmailEnabled
+        isNonProfit: $isNonProfit
       }
     )
   }
