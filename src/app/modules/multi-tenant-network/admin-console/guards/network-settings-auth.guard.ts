@@ -52,6 +52,13 @@ export class NetworkSettingsAuthGuard {
           return false;
         }
       }
+
+      if (!this.session.isLoggedIn()) {
+        this.router.navigate(['/login'], {
+          queryParams: { redirectUrl: state.url },
+        });
+        return false;
+      }
     }
 
     this.toaster.warn('You do not have permission to access this route.');
