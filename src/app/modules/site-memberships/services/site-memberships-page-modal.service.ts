@@ -4,8 +4,15 @@ import { IsTenantService } from '../../../common/services/is-tenant.service';
 import { SiteMembershipsPageComponent } from '../components/memberships-page/site-memberships-page.component';
 import { SiteMembershipService } from './site-memberships.service';
 import { filter, firstValueFrom } from 'rxjs';
-import { SiteMembership } from '../../../../graphql/generated.engine';
+import {
+  SiteMembership,
+  SiteMembershipSubscription,
+} from '../../../../graphql/generated.engine';
 
+/** Modal options. */
+type SiteMembershipsPageModalOpts = {
+  showWhenMember?: boolean;
+};
 /**
  * Service that loads and presents
  * the site memberships page component as a modal
@@ -23,9 +30,12 @@ export class SiteMembershipsPageModal {
 
   /**
    * Presents the modal.
+   * @param { SiteMembershipsPageModalOpts } opts - Options for the modal.
    * @returns { Promise<ModalRef<SiteMembershipsPageComponent>> }
    */
-  public async open(): Promise<ModalRef<SiteMembershipsPageComponent>> {
+  public async open(
+    opts: SiteMembershipsPageModalOpts = {}
+  ): Promise<ModalRef<SiteMembershipsPageComponent>> {
     // Only show on tenant sites
     if (!this.isTenant.is()) {
       return;
@@ -55,6 +65,18 @@ export class SiteMembershipsPageModal {
     // Skip initializing in the modal component if there are no memberships.
     if (!siteMemberships.length) {
       return;
+    }
+
+    if (!opts?.showWhenMember) {
+      const siteMembershipSubscriptions: SiteMembershipSubscription[] =
+        await firstValueFrom(
+          this.siteMembershipsService.siteMembershipSubscriptions$
+        );
+
+      // Skip opening in the modal component if a user is already has a membership.
+      if (siteMembershipSubscriptions?.length) {
+        return;
+      }
     }
 
     const modal = this.modalService.present(siteMembershipsPageComponent, {

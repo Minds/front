@@ -80,11 +80,9 @@ export class SiteMembershipService {
         response.data.siteMemberships as SiteMembership[]
       );
 
-      if (response.data.siteMembershipSubscriptions?.length) {
-        this.siteMembershipSubscriptions$.next(
-          response.data.siteMembershipSubscriptions
-        );
-      }
+      this.siteMembershipSubscriptions$.next(
+        response.data.siteMembershipSubscriptions ?? []
+      );
     } catch (error) {
       console.error(error);
       this.toaster.error(DEFAULT_ERROR_MESSAGE);

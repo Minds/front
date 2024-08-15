@@ -5,7 +5,7 @@ import { ModalService } from '../../../services/ux/modal.service';
 import { Injector } from '@angular/core';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
 import { SiteMembershipService } from './site-memberships.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { SiteMembership } from '../../../../graphql/generated.engine';
 import { siteMembershipMock } from '../../../mocks/site-membership.mock';
 
@@ -22,7 +22,11 @@ describe('SiteMembershipsPageModal', () => {
         {
           provide: SiteMembershipService,
           useValue: MockService(SiteMembershipService, {
-            has: ['initialized$', 'siteMemberships$'],
+            has: [
+              'initialized$',
+              'siteMemberships$',
+              'siteMembershipSubscriptions$',
+            ],
             props: {
               initialized$: {
                 get: () => new BehaviorSubject<boolean>(false),
@@ -30,6 +34,9 @@ describe('SiteMembershipsPageModal', () => {
               siteMemberships$: {
                 get: () =>
                   new BehaviorSubject<SiteMembership[]>([siteMembershipMock]),
+              },
+              siteMembershipSubscriptions$: {
+                get: () => new ReplaySubject<SiteMembership[]>(),
               },
             },
           }),
@@ -49,6 +56,9 @@ describe('SiteMembershipsPageModal', () => {
     (service as any).siteMembershipsService.siteMemberships$.next([
       siteMembershipMock,
     ]);
+    (service as any).siteMembershipsService.siteMembershipSubscriptions$.next(
+      []
+    );
 
     service.open();
     (service as any).siteMembershipsService.initialized$.next(true);
@@ -92,5 +102,52 @@ describe('SiteMembershipsPageModal', () => {
 
     expect((service as any).siteMembershipsService.fetch).toHaveBeenCalled();
     expect((service as any).modalService.present).not.toHaveBeenCalled();
+  }));
+
+  it('should NOT open if the user has site memberships and has not set showWhenMember', fakeAsync(() => {
+    (service as any).isTenant.is.and.returnValue(true);
+    (service as any).siteMembershipsService.siteMemberships$.next([
+      siteMembershipMock,
+    ]);
+    // arbitrary values as we only check length
+    (service as any).siteMembershipsService.siteMembershipSubscriptions$.next([
+      1, 2,
+    ]);
+
+    service.open();
+    (service as any).siteMembershipsService.initialized$.next(true);
+    tick();
+
+    expect((service as any).siteMembershipsService.fetch).toHaveBeenCalled();
+    expect((service as any).modalService.present).not.toHaveBeenCalled();
+  }));
+
+  it('should open regardless of subscriptions when showWhenMember is true', fakeAsync(() => {
+    (service as any).isTenant.is.and.returnValue(true);
+    (service as any).siteMembershipsService.siteMemberships$.next([
+      siteMembershipMock,
+    ]);
+    (service as any).siteMembershipsService.siteMembershipSubscriptions$.next([
+      1, 2,
+    ]);
+
+    service.open({ showWhenMember: true });
+    (service as any).siteMembershipsService.initialized$.next(true);
+    tick();
+
+    expect((service as any).siteMembershipsService.fetch).toHaveBeenCalled();
+    expect((service as any).modalService.present).toHaveBeenCalledOnceWith(
+      jasmine.anything(),
+      {
+        data: {
+          isModal: true,
+          onJoinClick: jasmine.any(Function),
+          skipInitialFetch: true,
+        },
+        injector: (service as any).injector,
+        size: 'lg',
+        windowClass: 'm-modalV2__mobileFullCover',
+      }
+    );
   }));
 });
