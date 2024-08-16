@@ -100,8 +100,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       // if (isPlatformBrowser(this.platformId)) {
       this.authModal.open({ formDisplay: 'login', standalonePage: true });
-      console.log((document as any)?.window?.navigator?.userAgent);
-      console.log(window.navigator.userAgent);
+      console.log('(document as any)?.window?.navigator?.userAgent: ', (document as any)?.window?.navigator?.userAgent);
+      console.log('window.innerWidth :', window.innerWidth)
+      console.log('window.navigator.userAgent: ', window.navigator.userAgent);
       setTimeout(() => {
         console.log('done server side set timeout...');
       });
