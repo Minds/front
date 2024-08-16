@@ -27,6 +27,7 @@ export class BrowserDiagnosticsService implements DiagnosticsInterface {
         /AbortError: The operation was aborted./i,
         /AbortError: The play\(\) request was interrupted by a new load request./i,
         /NotAllowedError: play\(\) can only be initiated by a user gesture./i,
+        /Recognizer.noMatchError/,
         'RangeError',
       ],
     });
