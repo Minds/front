@@ -93,6 +93,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
     );
 
+    console.log("--------------------------------\n\nOPENING\n\n--------------------------------");
     if (isPlatformBrowser(this.platformId)) {
       this.authModal.open({ formDisplay: 'login', standalonePage: true });
     }

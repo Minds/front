@@ -231,10 +231,7 @@
             },
             "sourceMap": true,
             "optimization": false,
-            "buildOptimizer": false,
-            "externalDependencies": [
-              "@sentry/profiling-node"
-            ]
+            "buildOptimizer": false
           },
           "configurations": {
             "production": {
