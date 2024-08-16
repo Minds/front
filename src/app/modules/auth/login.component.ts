@@ -94,7 +94,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
 
     if (isPlatformServer(this.platformId)) {
-      
       console.log(
         '--------------------------------\n\nOPENING\n\n--------------------------------'
       );
@@ -104,9 +103,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       console.log((document as any)?.window?.navigator?.userAgent);
       console.log(window.navigator.userAgent);
       setTimeout(() => {
-        console.log("done server side set timeout...")
+        console.log('done server side set timeout...');
       });
-      console.log("done server side...")
+      console.log('done server side...');
     }
 
     this.redirectTo = this.cookieService.get('redirect');
