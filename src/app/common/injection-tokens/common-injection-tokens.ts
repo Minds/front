@@ -9,5 +9,5 @@ export const WINDOW = new InjectionToken<string>('window');
 
 // Sentry integrations for SSR.
 export const SSR_SENTRY_INTEGRATIONS = new InjectionToken<Integration[]>(
-    'SSR_SENTRY_INTEGRATIONS'
+  'SSR_SENTRY_INTEGRATIONS'
 );

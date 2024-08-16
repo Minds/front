@@ -15,9 +15,9 @@ export class BrowserDiagnosticsService implements DiagnosticsInterface {
     configs: ConfigsService
   ) {
     this.environment = configs.get('environment');
-    
+
     Sentry.init({
-      dsn: "https://7998981a581a2fb91a13a2cbf192fd1d@o339296.ingest.us.sentry.io/1875291",
+      dsn: 'https://7998981a581a2fb91a13a2cbf192fd1d@o339296.ingest.us.sentry.io/1875291',
       environment: this.environment,
       release: environment.version,
       ignoreErrors: [
@@ -28,7 +28,7 @@ export class BrowserDiagnosticsService implements DiagnosticsInterface {
         /AbortError: The play\(\) request was interrupted by a new load request./i,
         /NotAllowedError: play\(\) can only be initiated by a user gesture./i,
         'RangeError',
-      ]
+      ],
     });
   }
 

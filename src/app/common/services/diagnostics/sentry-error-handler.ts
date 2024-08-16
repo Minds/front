@@ -1,5 +1,9 @@
 import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
-import { getIsolationScope, addIntegration, SentryErrorHandler } from '@sentry/angular';
+import {
+  getIsolationScope,
+  addIntegration,
+  SentryErrorHandler,
+} from '@sentry/angular';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
 import { SSR_SENTRY_INTEGRATIONS } from '../../injection-tokens/common-injection-tokens';
 import type { Integration } from '@sentry/types';
@@ -12,17 +16,19 @@ export { DiagnosticsService } from './diagnostics.service';
 @Injectable({ providedIn: 'root' })
 export class MindsSentryErrorHandler extends SentryErrorHandler {
   constructor(
-      @Optional() @Inject(SSR_SENTRY_INTEGRATIONS) private ssrIntegrations: Integration[],
-      @Optional() @Inject(REQUEST) private request: Request,
-      @Optional() @Inject(PLATFORM_ID) private platformId: Object
-  ){ 
-      super();
-      // take SSR integrations from server injection.
-      if(this.ssrIntegrations){
-        for (const integration of this.ssrIntegrations) {
-          addIntegration(integration);
-        }
+    @Optional()
+    @Inject(SSR_SENTRY_INTEGRATIONS)
+    private ssrIntegrations: Integration[],
+    @Optional() @Inject(REQUEST) private request: Request,
+    @Optional() @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    super();
+    // take SSR integrations from server injection.
+    if (this.ssrIntegrations) {
+      for (const integration of this.ssrIntegrations) {
+        addIntegration(integration);
       }
+    }
   }
 
   /**
@@ -33,14 +39,13 @@ export class MindsSentryErrorHandler extends SentryErrorHandler {
   handleError(error: any): void {
     // Discard client side for now.
     if (isPlatformBrowser(this.platformId)) return;
-    
+
     if (this.request) {
-        getIsolationScope()
-            .setSDKProcessingMetadata({
-                request: this.request,
-            });
+      getIsolationScope().setSDKProcessingMetadata({
+        request: this.request,
+      });
     }
 
-    super.handleError(error)
+    super.handleError(error);
   }
 }
