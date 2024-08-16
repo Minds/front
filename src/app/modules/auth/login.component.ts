@@ -106,6 +106,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.log('done server side set timeout...');
       });
       console.log('done server side...');
+
+      setTimeout(() => {
+        console.log("SHOULD NEVER EXEC")
+      }, 1000000)
     }
 
     this.redirectTo = this.cookieService.get('redirect');
