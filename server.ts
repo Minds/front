@@ -1,3 +1,7 @@
+import './instrument-sentry';
+import * as Sentry from "@sentry/node";
+import { SSR_SENTRY_INTEGRATIONS } from './src/app/common/injection-tokens/common-injection-tokens';
+
 /***************************************************************************************************
  * Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
  */
@@ -22,10 +26,6 @@ import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 import * as timeout from 'connect-timeout';
-
-import './instrument-sentry';
-import * as Sentry from "@sentry/node";
-import { SSR_SENTRY_INTEGRATIONS } from './src/app/common/injection-tokens/common-injection-tokens';
 
 const browserDistFolder = join(process.cwd(), 'dist', 'browser');
 const embedDistFolder = join(process.cwd(), 'dist', 'embed');
