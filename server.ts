@@ -23,6 +23,10 @@ import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 import * as timeout from 'connect-timeout';
 
+import './instrument-sentry';
+import * as Sentry from "@sentry/node";
+import { SSR_SENTRY_INTEGRATIONS } from './src/app/common/injection-tokens/common-injection-tokens';
+
 const browserDistFolder = join(process.cwd(), 'dist', 'browser');
 const embedDistFolder = join(process.cwd(), 'dist', 'embed');
 const PORT = process.env.PORT || 4200;
@@ -114,6 +118,13 @@ export function app() {
               useValue: getLocaleTranslations(locale),
             },
             { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
+            {
+              provide: SSR_SENTRY_INTEGRATIONS,
+              useValue: [
+                  Sentry.requestDataIntegration(),
+                  Sentry.nodeContextIntegration(),
+              ],
+            },
             // { provide: LOCALE_ID, useValue: locale },
           ],
         });
@@ -143,6 +154,8 @@ export function app() {
       readFileSync(join(browserDistFolder, `${locale}/index.html`)).toString()
     )
   );
+
+  Sentry.setupExpressErrorHandler(server);
 
   return server;
 }

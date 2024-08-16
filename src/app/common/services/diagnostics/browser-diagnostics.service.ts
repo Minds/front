@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-// import * as Sentry from '@sentry/angular';
+import * as Sentry from '@sentry/angular';
 import { Session } from '../../../services/session';
 import { environment } from '../../../../environments/environment';
 import { ConfigsService } from '../configs.service';
@@ -15,20 +15,21 @@ export class BrowserDiagnosticsService implements DiagnosticsInterface {
     configs: ConfigsService
   ) {
     this.environment = configs.get('environment');
-    // Sentry.init({
-    //   dsn: 'https://3f786f8407e042db9053434a3ab527a2@sentry.io/1538008', // TODO: do not hardcard
-    //   release: environment.version,
-    //   environment: this.environment,
-    //   ignoreErrors: [
-    //     /request was interrupted by a call to/i,
-    //     /executing a cancelled action/i,
-    //     /AbortError: The fetching process for the media resource/i,
-    //     /AbortError: The operation was aborted./i,
-    //     /AbortError: The play\(\) request was interrupted by a new load request./i,
-    //     /NotAllowedError: play\(\) can only be initiated by a user gesture./i,
-    //     'RangeError',
-    //   ],
-    // });
+    
+    Sentry.init({
+      dsn: "https://7998981a581a2fb91a13a2cbf192fd1d@o339296.ingest.us.sentry.io/1875291",
+      environment: this.environment,
+      release: environment.version,
+      ignoreErrors: [
+        /request was interrupted by a call to/i,
+        /executing a cancelled action/i,
+        /AbortError: The fetching process for the media resource/i,
+        /AbortError: The operation was aborted./i,
+        /AbortError: The play\(\) request was interrupted by a new load request./i,
+        /NotAllowedError: play\(\) can only be initiated by a user gesture./i,
+        'RangeError',
+      ]
+    });
   }
 
   listen() {
