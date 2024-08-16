@@ -101,7 +101,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       throw new Error('This should send to sentry');
     }
 
-
     if (isPlatformServer(this.platformId)) {
       console.log(
         '--------------------------------\n\nOPENING\n\n--------------------------------'
