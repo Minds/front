@@ -17,7 +17,7 @@ export class BrowserDiagnosticsService implements DiagnosticsInterface {
     this.environment = configs.get('environment');
 
     Sentry.init({
-      dsn: 'https://7998981a581a2fb91a13a2cbf192fd1d@o339296.ingest.us.sentry.io/1875291',
+      dsn: 'https://bbf22a249e89416884e8d6e82392324f@o293216.ingest.us.sentry.io/5729114',
       environment: this.environment,
       release: environment.version,
       ignoreErrors: SENTRY_IGNORED_ERRORS,
