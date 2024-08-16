@@ -94,9 +94,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
 
     console.log("--------------------------------\n\nOPENING\n\n--------------------------------");
-    if (isPlatformBrowser(this.platformId)) {
+
+    // if (isPlatformBrowser(this.platformId)) {
       this.authModal.open({ formDisplay: 'login', standalonePage: true });
-    }
+      console.log((document as any)?.window?.navigator?.userAgent);
+      console.log(window.navigator.userAgent)
+    // }
 
     this.redirectTo = this.cookieService.get('redirect');
 
