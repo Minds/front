@@ -1,3 +1,7 @@
+import './instrument-sentry';
+import * as Sentry from "@sentry/node";
+import { SSR_SENTRY_INTEGRATIONS } from './src/app/common/injection-tokens/common-injection-tokens';
+
 /***************************************************************************************************
  * Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
  */
@@ -114,6 +118,13 @@ export function app() {
               useValue: getLocaleTranslations(locale),
             },
             { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
+            {
+              provide: SSR_SENTRY_INTEGRATIONS,
+              useValue: [
+                  Sentry.requestDataIntegration(),
+                  Sentry.nodeContextIntegration(),
+              ],
+            },
             // { provide: LOCALE_ID, useValue: locale },
           ],
         });
@@ -143,6 +154,8 @@ export function app() {
       readFileSync(join(browserDistFolder, `${locale}/index.html`)).toString()
     )
   );
+
+  Sentry.setupExpressErrorHandler(server);
 
   return server;
 }
