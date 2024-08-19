@@ -32,5 +32,12 @@ export const STRAPI_FOOTER_STUB_DATA: Footer = {
       dataRef: 'tenant-footer-link-content',
       __typename: 'ComponentFooterLink',
     },
+    {
+      id: '4',
+      text: 'Powered by Minds Networks',
+      url: 'https://networks.minds.com/',
+      dataRef: 'tenant-footer-link-',
+      __typename: 'ComponentFooterLink',
+    },
   ],
 };
