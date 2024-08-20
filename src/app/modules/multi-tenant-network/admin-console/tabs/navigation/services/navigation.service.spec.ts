@@ -55,7 +55,6 @@ describe('MultiTenantNavigationService', () => {
       admin: { defaultState: false },
       memberships: { defaultState: false },
       newsfeed: { defaultState: true },
-      chat: { defaultState: true },
       explore: { defaultState: true },
     });
   });
