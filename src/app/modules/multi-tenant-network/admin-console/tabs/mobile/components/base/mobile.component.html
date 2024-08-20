@@ -25,6 +25,25 @@
   <m-networkAdminConsole__mobileSplashConfig></m-networkAdminConsole__mobileSplashConfig>
   <m-networkAdminConsole__editAppearance></m-networkAdminConsole__editAppearance>
   <m-networkAdminConsole__previewBuilder></m-networkAdminConsole__previewBuilder>
+  <m-networkAdminConsole__configSettingsToggle
+    title="Approved nonprofit"
+    toggleText="My org is an approved nonprofit"
+    fieldName="isNonProfit"
+  >
+    <ng-container description>
+      <span class="m-configSettingsToggle__body"
+        >App stores allow direct linking to join memberships only for approved
+        nonprofits. If your organization is an approved nonprofit, enable this
+        toggle to link your app users to where they can donate to join a
+        membership tier.
+        <a
+          href="https://networks.minds.com/blog/post/approved-nonprofits"
+          target="_blank"
+          >Learn more</a
+        >
+      </span>
+    </ng-container>
+  </m-networkAdminConsole__configSettingsToggle>
   <m-networkAdminConsole__appTrackingMessage></m-networkAdminConsole__appTrackingMessage>
   <m-networkAdminConsole__release></m-networkAdminConsole__release>
 </ng-container>

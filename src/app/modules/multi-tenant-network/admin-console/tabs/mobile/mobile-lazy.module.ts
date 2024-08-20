@@ -17,6 +17,7 @@ import { NetworkAdminConsoleMobilePreviewBuilderComponent } from './components/p
 import { NetworkAdminConsoleMobileEditAppearanceComponent } from './components/edit-appearance/edit-appearance.component';
 import { NetworkAdminConsoleMobileReleaseComponent } from './components/release/release.component';
 import { NetworkAdminConsoleMobileAppTrackingMessageComponent } from './components/app-tracking-message/app-tracking-message.component';
+import { NetworkAdminConsoleSharedModule } from '../../network-admin-console-shared.module';
 
 const routes: Routes = [
   { path: '', component: NetworkAdminConsoleMobileComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NetworkAdminConsoleImageInputComponent,
     NetworkAdminConsoleRadioBoxComponent,
+    NetworkAdminConsoleSharedModule,
   ],
   declarations: [
     NetworkAdminConsoleMobileComponent,

@@ -26,6 +26,7 @@ global['document'] = win.document;
 global['window']['Promise'] = global.Promise;
 global['localStorage'] = global['window']['localStorage'];
 global['window']['scrollTo'] = (pos) => {};
+global['fetch'] = win.fetch;
 
 Object.defineProperty(window.document, 'cookie', {
   writable: true,

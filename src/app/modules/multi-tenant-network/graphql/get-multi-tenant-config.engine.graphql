@@ -13,5 +13,6 @@ query GetMultiTenantConfig {
     walledGardenEnabled
     digestEmailEnabled
     welcomeEmailEnabled
+    isNonProfit
   }
 }

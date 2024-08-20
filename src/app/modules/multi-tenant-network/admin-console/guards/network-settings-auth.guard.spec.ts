@@ -14,6 +14,7 @@ const configsMock: jasmine.SpyObj<ConfigsService> =
   jasmine.createSpyObj<ConfigsService>(['get']);
 const sessionMock: jasmine.SpyObj<Session> = jasmine.createSpyObj<Session>([
   'isAdmin',
+  'isLoggedIn',
 ]);
 const routerMock: jasmine.SpyObj<Router> = jasmine.createSpyObj<Router>([
   'navigate',
@@ -48,6 +49,7 @@ describe('NetworkSettingsAuthGuard', () => {
   afterEach(() => {
     configsMock.get.calls.reset();
     sessionMock.isAdmin.calls.reset();
+    sessionMock.isLoggedIn.calls.reset();
     routerMock.navigate.calls.reset();
     toasterServiceMock.warn.calls.reset();
     permissionsMock.canModerateContent.calls.reset();
@@ -74,6 +76,7 @@ describe('NetworkSettingsAuthGuard', () => {
     it('should NOT be able to activate when user is NOT admin and does NOT have canModerateContent permission on tenant network', () => {
       sessionMock.isAdmin.and.returnValue(false);
       permissionsMock.canModerateContent.and.returnValue(false);
+      sessionMock.isLoggedIn.and.returnValue(true);
       configsMock.get.and.returnValue(true);
 
       expect(
@@ -88,6 +91,7 @@ describe('NetworkSettingsAuthGuard', () => {
     it('should NOT be able to activate when user is an admin, but NOT on tenant network', () => {
       sessionMock.isAdmin.and.returnValue(true);
       configsMock.get.and.returnValue(false);
+      sessionMock.isLoggedIn.and.returnValue(true);
 
       expect(
         service.canActivate(mockActivatedRouteSnapshot, mockRouterStateSnapshot)
@@ -101,6 +105,7 @@ describe('NetworkSettingsAuthGuard', () => {
     it('should NOT be able to activate when user is NOT an admin, OR on a tenant network', () => {
       sessionMock.isAdmin.and.returnValue(false);
       configsMock.get.and.returnValue(false);
+      sessionMock.isLoggedIn.and.returnValue(true);
 
       expect(
         service.canActivate(mockActivatedRouteSnapshot, mockRouterStateSnapshot)
@@ -115,6 +120,7 @@ describe('NetworkSettingsAuthGuard', () => {
       configsMock.get.and.returnValue(true);
       sessionMock.isAdmin.and.returnValue(false);
       permissionsMock.canModerateContent.and.returnValue(true);
+      sessionMock.isLoggedIn.and.returnValue(true);
 
       const routeMock: any = { url: '/moderation/reports' };
       const stateMock: RouterStateSnapshot = {
@@ -132,6 +138,7 @@ describe('NetworkSettingsAuthGuard', () => {
       configsMock.get.and.returnValue(true);
       sessionMock.isAdmin.and.returnValue(false);
       permissionsMock.canModerateContent.and.returnValue(false);
+      sessionMock.isLoggedIn.and.returnValue(true);
       const routeMock: any = { url: '/moderation/reports' };
 
       expect(
@@ -141,6 +148,21 @@ describe('NetworkSettingsAuthGuard', () => {
       expect(toasterServiceMock.warn).toHaveBeenCalledWith(
         'You do not have permission to access this route.'
       );
+    });
+
+    it('should NOT be able to activate for not logged in tenant users', () => {
+      configsMock.get.and.returnValue(true);
+      sessionMock.isAdmin.and.returnValue(false);
+      permissionsMock.canModerateContent.and.returnValue(false);
+      sessionMock.isLoggedIn.and.returnValue(false);
+      const routeMock: any = { url: '/general' };
+
+      expect(
+        service.canActivate(routeMock, mockRouterStateSnapshot)
+      ).toBeFalse();
+      expect(routerMock.navigate).toHaveBeenCalledWith(['/login'], {
+        queryParams: { redirectUrl: mockRouterStateSnapshot.url },
+      });
     });
   });
 

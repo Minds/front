@@ -63,6 +63,7 @@ import { GiftCardModule } from './modules/gift-card/gift-card.module';
 import { ValuePropModule } from './modules/value-prop/value-prop.module';
 import * as Sentry from '@sentry/angular';
 import { Router } from '@angular/router';
+import { MindsSentryErrorHandler } from './common/services/diagnostics/sentry-error-handler';
 
 @NgModule({
   bootstrap: [Minds],
@@ -122,7 +123,7 @@ import { Router } from '@angular/router';
     MINDS_PROVIDERS,
     {
       provide: ErrorHandler,
-      useValue: Sentry.createErrorHandler(),
+      useExisting: MindsSentryErrorHandler,
     },
     {
       provide: Sentry.TraceService,

@@ -13,6 +13,7 @@ mutation SetMultiTenantConfig(
   $welcomeEmailEnabled: Boolean
   $loggedInLandingPageIdWeb: String
   $loggedInLandingPageIdMobile: String
+  $isNonProfit: Boolean
 ) {
   multiTenantConfig(
     multiTenantConfigInput: {
@@ -30,6 +31,7 @@ mutation SetMultiTenantConfig(
       welcomeEmailEnabled: $welcomeEmailEnabled
       loggedInLandingPageIdWeb: $loggedInLandingPageIdWeb
       loggedInLandingPageIdMobile: $loggedInLandingPageIdMobile
+      isNonProfit: $isNonProfit
     }
   )
 }
