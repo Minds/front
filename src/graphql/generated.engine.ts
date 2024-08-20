@@ -202,6 +202,7 @@ export type AppReadyMobileConfig = {
   APP_TRACKING_MESSAGE?: Maybe<Scalars['String']['output']>;
   APP_TRACKING_MESSAGE_ENABLED?: Maybe<Scalars['Boolean']['output']>;
   EAS_PROJECT_ID?: Maybe<Scalars['String']['output']>;
+  IS_NON_PROFIT?: Maybe<Scalars['Boolean']['output']>;
   TENANT_ID: Scalars['Int']['output'];
   THEME: Scalars['String']['output'];
   WELCOME_LOGO: Scalars['String']['output'];
@@ -931,6 +932,8 @@ export type MultiTenantConfig = {
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   isNonProfit?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
+  loggedInLandingPageIdMobile?: Maybe<Scalars['String']['output']>;
+  loggedInLandingPageIdWeb?: Maybe<Scalars['String']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   replyEmail?: Maybe<Scalars['String']['output']>;
@@ -949,6 +952,8 @@ export type MultiTenantConfigInput = {
   digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   isNonProfit?: InputMaybe<Scalars['Boolean']['input']>;
+  loggedInLandingPageIdMobile?: InputMaybe<Scalars['String']['input']>;
+  loggedInLandingPageIdWeb?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
@@ -4245,6 +4250,8 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   welcomeEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  loggedInLandingPageIdWeb?: InputMaybe<Scalars['String']['input']>;
+  loggedInLandingPageIdMobile?: InputMaybe<Scalars['String']['input']>;
   isNonProfit?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
@@ -10097,6 +10104,8 @@ export const SetMultiTenantConfigDocument = gql`
     $walledGardenEnabled: Boolean
     $digestEmailEnabled: Boolean
     $welcomeEmailEnabled: Boolean
+    $loggedInLandingPageIdWeb: String
+    $loggedInLandingPageIdMobile: String
     $isNonProfit: Boolean
   ) {
     multiTenantConfig(
@@ -10113,6 +10122,8 @@ export const SetMultiTenantConfigDocument = gql`
         walledGardenEnabled: $walledGardenEnabled
         digestEmailEnabled: $digestEmailEnabled
         welcomeEmailEnabled: $welcomeEmailEnabled
+        loggedInLandingPageIdWeb: $loggedInLandingPageIdWeb
+        loggedInLandingPageIdMobile: $loggedInLandingPageIdMobile
         isNonProfit: $isNonProfit
       }
     )
