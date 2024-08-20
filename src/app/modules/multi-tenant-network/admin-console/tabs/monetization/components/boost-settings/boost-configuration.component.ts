@@ -68,7 +68,7 @@ export class NetworkAdminBoostConfigurationComponent implements OnInit {
 
     // check whether user has set stripe keys, redirect if they have not.
     if (!await firstValueFrom(this.stripeKeysService.hasSetStripeKeys$)) {
-      this.toaster.warn('You must enable Stripe keys before accessing this page.')
+      this.toaster.warn('You must set Stripe keys before accessing this page.')
       this.router.navigate(['/network/admin/monetization']);
     }
   }

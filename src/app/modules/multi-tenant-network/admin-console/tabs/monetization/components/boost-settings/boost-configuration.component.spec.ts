@@ -146,7 +146,7 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
       tick();
 
       expect((comp as any).stripeKeysService.fetchStripeKeys).toHaveBeenCalled();
-      expect((comp as any).toaster.warn).toHaveBeenCalledOnceWith('You must enable Stripe keys before accessing this page.');
+      expect((comp as any).toaster.warn).toHaveBeenCalledOnceWith('You must set Stripe keys before accessing this page.');
       expect((comp as any).router.navigate).toHaveBeenCalledOnceWith(['/network/admin/monetization']);
     }));
 
@@ -170,7 +170,7 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
       tick();
 
       expect((comp as any).stripeKeysService.fetchStripeKeys).not.toHaveBeenCalled();
-      expect((comp as any).toaster.warn).toHaveBeenCalledOnceWith('You must enable Stripe keys before accessing this page.');
+      expect((comp as any).toaster.warn).toHaveBeenCalledOnceWith('You must set Stripe keys before accessing this page.');
       expect((comp as any).router.navigate).toHaveBeenCalledOnceWith(['/network/admin/monetization']);
     }));
 
