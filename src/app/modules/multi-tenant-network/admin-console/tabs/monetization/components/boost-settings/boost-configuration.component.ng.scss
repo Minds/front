@@ -2,10 +2,15 @@
 
 :host {
   display: block;
-  max-width: 520px;
+  max-width: 780px;
+  margin: $spacing8 $spacing8 $spacing16 $spacing8;
 
-  > * {
-    margin-bottom: $spacing4;
+  .m-networkAdminConsole__settingsContainer {
+    max-width: 556px;
+
+    > * {
+      margin-bottom: $spacing6;
+    }
   }
 
   > *:last-child {
@@ -13,6 +18,18 @@
   }
 
   .m-networkBoostConfiguration__title {
-    @include heading4Regular;
+    margin: unset;
+    @include heading3Bold;
   }
+
+  .m-networkBoostConfiguration__description {
+    margin: unset;
+    margin-bottom: $spacing6;
+
+    @include body2Medium;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
 }

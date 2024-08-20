@@ -1,17 +1,26 @@
 <h4
   class="m-networkBoostConfiguration__title"
-  i18n="@@NETWORK_ADMIN_MONETIZATION__BOOST_AND_ADVERTISING"
+  i18n="@@NETWORK_ADMIN_MONETIZATION__BOOST"
 >
-  Boost and advertising
+  Boost
 </h4>
 
-<m-networkAdminConsole__enableBoostToggle></m-networkAdminConsole__enableBoostToggle>
+<p
+  class="m-networkBoostConfiguration__description"
+  i18n="@@NETWORK_ADMIN_MONETIZATION__ALLOW_YOUR_USERS_TO_BOOST"
+>
+  Allow your users to Boost their posts to promoted feed placements on your network. Enables users to get more reach, and advertisers to pay you for promotion. You can review all paid Boosts before they run publicly.
+</p>
 
-<ng-container *ngIf="isBoostEnabled$ | async">
-  <m-boostEmbedBuilder [@growShrink]></m-boostEmbedBuilder>
+<div class="m-networkAdminConsole__settingsContainer">
+  <m-networkAdminConsole__enableBoostToggle></m-networkAdminConsole__enableBoostToggle>
 
-  <m-networkAdminConsole__createBoostLink
-    *ngIf="isCustomHomepageEnabled$ | async"
-    [@growShrink]
-  ></m-networkAdminConsole__createBoostLink>
-</ng-container>
+  <ng-container *ngIf="isBoostEnabled$ | async">
+    <m-boostEmbedBuilder [@growShrink]></m-boostEmbedBuilder>
+
+    <m-networkAdminConsole__createBoostLink
+      *ngIf="isCustomHomepageEnabled$ | async"
+      [@growShrink]
+    ></m-networkAdminConsole__createBoostLink>
+  </ng-container>
+</div> 
