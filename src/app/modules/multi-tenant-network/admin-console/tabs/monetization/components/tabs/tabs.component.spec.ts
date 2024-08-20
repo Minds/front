@@ -17,11 +17,13 @@ describe('NetworkAdminMonetizationTabsComponent', () => {
           useValue: MockService(StripeKeysService, {
             has: ['hasSetStripeKeys$'],
             props: {
-              hasSetStripeKeys$: { get: () => new BehaviorSubject<boolean>(true) }
-            }
-          })
-        }
-      ]
+              hasSetStripeKeys$: {
+                get: () => new BehaviorSubject<boolean>(true),
+              },
+            },
+          }),
+        },
+      ],
     });
 
     fixture = TestBed.createComponent(NetworkAdminMonetizationTabsComponent);
@@ -53,7 +55,7 @@ describe('NetworkAdminMonetizationTabsComponent', () => {
   describe('Boost tab', () => {
     it('should not show Boost tab when Stripe keys are not set', () => {
       (comp as any).stripeKeysService.hasSetStripeKeys$.next(false);
-      
+
       fixture.detectChanges();
       expect(
         fixture.nativeElement.querySelector(
@@ -64,7 +66,7 @@ describe('NetworkAdminMonetizationTabsComponent', () => {
 
     it('should show Boost tab when Stripe keys are set', () => {
       (comp as any).stripeKeysService.hasSetStripeKeys$.next(true);
-      
+
       fixture.detectChanges();
       expect(
         fixture.nativeElement.querySelector(

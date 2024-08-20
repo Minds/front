@@ -44,7 +44,7 @@ const routes: Routes = [
       },
       {
         path: 'boost',
-        component: NetworkAdminBoostConfigurationComponent
+        component: NetworkAdminBoostConfigurationComponent,
       },
     ],
   },

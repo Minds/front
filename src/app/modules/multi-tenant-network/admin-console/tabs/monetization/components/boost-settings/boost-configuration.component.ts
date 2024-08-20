@@ -58,17 +58,17 @@ export class NetworkAdminBoostConfigurationComponent implements OnInit {
 
   /**
    * Checks whether stripe keys are set, and redirects if the user has not set any.
-   * @returns { void } 
+   * @returns { void }
    */
   private async checkStripeKeys(): Promise<void> {
     // if not initialized, fetch any keys from server.
-    if (!await firstValueFrom(this.stripeKeysService.initialized$)) {
+    if (!(await firstValueFrom(this.stripeKeysService.initialized$))) {
       await this.stripeKeysService.fetchStripeKeys();
     }
 
     // check whether user has set stripe keys, redirect if they have not.
-    if (!await firstValueFrom(this.stripeKeysService.hasSetStripeKeys$)) {
-      this.toaster.warn('You must set Stripe keys before accessing this page.')
+    if (!(await firstValueFrom(this.stripeKeysService.hasSetStripeKeys$))) {
+      this.toaster.warn('You must set Stripe keys before accessing this page.');
       this.router.navigate(['/network/admin/monetization']);
     }
   }
