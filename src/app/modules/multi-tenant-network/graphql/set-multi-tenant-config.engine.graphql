@@ -11,6 +11,7 @@ mutation SetMultiTenantConfig(
   $walledGardenEnabled: Boolean
   $digestEmailEnabled: Boolean
   $welcomeEmailEnabled: Boolean
+  $isNonProfit: Boolean
 ) {
   multiTenantConfig(
     multiTenantConfigInput: {
@@ -26,6 +27,7 @@ mutation SetMultiTenantConfig(
       walledGardenEnabled: $walledGardenEnabled
       digestEmailEnabled: $digestEmailEnabled
       welcomeEmailEnabled: $welcomeEmailEnabled
+      isNonProfit: $isNonProfit
     }
   )
 }

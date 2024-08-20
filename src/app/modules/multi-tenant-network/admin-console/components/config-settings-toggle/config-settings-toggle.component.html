@@ -1,5 +1,17 @@
 <h4 class="m-configSettingsToggle__title">{{ title }}</h4>
-<p class="m-configSettingsToggle__body">{{ description }}</p>
+
+<!-- Description can either be provided through a component input OR a content projection slot. -->
+<p
+  class="m-configSettingsToggle__body"
+  *ngIf="description; else contentSlotTemplate"
+>
+  {{ description }}
+</p>
+<ng-template #contentSlotTemplate>
+  <ng-content select="[description]"></ng-content>
+</ng-template>
+
+<!-- Toggle -->
 <div class="m-configSettingsToggle__toggleContainer">
   <m-toggle
     class="m-configSettingsToggle__toggle"

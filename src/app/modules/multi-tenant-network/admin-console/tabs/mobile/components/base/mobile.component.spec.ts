@@ -28,6 +28,11 @@ describe('NetworkAdminConsoleMobileComponent', () => {
           selector: 'm-networkAdminConsole__release',
         }),
         MockComponent({
+          selector: 'm-networkAdminConsole__configSettingsToggle',
+          inputs: ['title', 'toggleText', 'fieldName'],
+          template: `<ng-content></ng-content>`,
+        }),
+        MockComponent({
           selector: 'm-loadingSpinner',
           inputs: ['inProgress'],
         }),
