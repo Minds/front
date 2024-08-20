@@ -1,0 +1,103 @@
+<h4 class="m-landingPageSelector__title" i18n="@@LANDING_PAGE_SELECTOR__TITLE">
+  Landing page (logged in)
+</h4>
+<p
+  class="m-landingPageSelector__description"
+  i18n="@@LANDING_PAGE_SELECTOR__DESCRIPTION"
+>
+  Choose the homepage for your network that a logged in user first lands on,
+  ensuring a memorable user experience. Every network’s initial home page is the
+  newsfeed.
+</p>
+
+<div class="m-landingPageSelector__selectors">
+  <div class="m-landingPageSelector__selectorContainer">
+    <label
+      class="m-landingPageSelector__selectorLabel"
+      for="web_landing_page"
+      i18n="@@LANDING_PAGE_SELECTOR__WEB_LANDING_PAGE"
+      >Web</label
+    >
+    <m-dropdownMenu
+      class="m-landingPageSelector__dropdownSelector"
+      name="web_landing_page"
+      [menu]="webLandingPageDropdownItems"
+    >
+      <div class="m-landingPageSelector__dropdownSelectorTrigger">
+        <span class="m-landingPageSelector__dropdownSelectorSelectedName">
+          <ng-container
+            *ngIf="
+              (currentWebLandingPageItem$ | async)?.id !== 'channel';
+              else channelTextTemplate
+            "
+          >
+            {{ (currentWebLandingPageItem$ | async)?.name }}
+          </ng-container>
+        </span>
+        <span class="material-icons m-landingPageSelector__dropdownSelectorIcon"
+          >keyboard_arrow_down</span
+        >
+      </div>
+    </m-dropdownMenu>
+  </div>
+  <div class="m-landingPageSelector__selectorContainer">
+    <label
+      class="m-landingPageSelector__selectorLabel"
+      for="mobile_landing_page"
+      i18n="@@LANDING_PAGE_SELECTOR__MOBILE_LANDING_PAGE"
+      >Mobile</label
+    >
+    <m-dropdownMenu
+      class="m-landingPageSelector__dropdownSelector"
+      name="mobile_landing_page"
+      [menu]="mobileLandingPageDropdownItems"
+    >
+      <div class="m-landingPageSelector__dropdownSelectorTrigger">
+        <span class="m-landingPageSelector__dropdownSelectorSelectedName">{{
+          (currentMobileLandingPageItem$ | async)?.name
+        }}</span>
+        <span class="material-icons m-landingPageSelector__dropdownSelectorIcon"
+          >keyboard_arrow_down</span
+        >
+      </div>
+    </m-dropdownMenu>
+  </div>
+</div>
+
+<ng-template #webLandingPageDropdownItems>
+  <ul>
+    <m-dropdownMenu__item
+      *ngFor="let webLandingPageItem of webLandingPageItems$ | async"
+      (click)="onWebLandingPageChange(webLandingPageItem)"
+      selectable="true"
+      [selected]="(currentWebLandingPageItem$ | async) === webLandingPageItem"
+      ><span>
+        <ng-container
+          *ngIf="webLandingPageItem.id !== 'channel'; else channelTextTemplate"
+        >
+          {{ webLandingPageItem.name }}
+        </ng-container>
+      </span>
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>
+
+<ng-template #mobileLandingPageDropdownItems>
+  <ul>
+    <m-dropdownMenu__item
+      *ngFor="let mobileLandingPageItem of mobileLandingPageItems$ | async"
+      (click)="onMobileLandingPageChange(mobileLandingPageItem)"
+      selectable="true"
+      [selected]="
+        (currentMobileLandingPageItem$ | async) === mobileLandingPageItem
+      "
+      ><span>{{ mobileLandingPageItem.name }}</span>
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>
+
+<ng-template #channelTextTemplate>
+  <ng-container i18n="@@LANDING_PAGE_SELECTOR__CHANNEL_PAGE"
+    >Channel page</ng-container
+  >
+</ng-template>
