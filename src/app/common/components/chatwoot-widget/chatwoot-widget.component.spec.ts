@@ -58,7 +58,7 @@ describe('ChatwootWidgetComponent', () => {
         },
         {
           provide: EmailAddressService,
-          useValue: MockService(EmailAddressService)
+          useValue: MockService(EmailAddressService),
         },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: IS_TENANT_NETWORK, useValue: false },
@@ -329,7 +329,9 @@ describe('ChatwootWidgetComponent', () => {
 
       (comp as any).onBubbleClick(new Event('click'));
 
-      expect((comp as any).emailAddressService.getEmailAddress).not.toHaveBeenCalled();
+      expect(
+        (comp as any).emailAddressService.getEmailAddress
+      ).not.toHaveBeenCalled();
     });
 
     it('should handle bubble click when current chatwoot user is not set', () => {
@@ -337,13 +339,15 @@ describe('ChatwootWidgetComponent', () => {
 
       (comp as any).onBubbleClick(new Event('click'));
 
-      expect((comp as any).emailAddressService.getEmailAddress).not.toHaveBeenCalled();
+      expect(
+        (comp as any).emailAddressService.getEmailAddress
+      ).not.toHaveBeenCalled();
     });
 
     it('should handle bubble click when current chatwoot user has no email', () => {
       (window as any).$chatwoot = {
         user: { username: '@minds' },
-        setUser: jasmine.createSpy('setUser')
+        setUser: jasmine.createSpy('setUser'),
       };
       (comp as any).session.getLoggedInUser.and.returnValue(userMock);
       (comp as any).emailAddressService.getEmailAddress.and.returnValue(
@@ -352,7 +356,9 @@ describe('ChatwootWidgetComponent', () => {
 
       (comp as any).onBubbleClick(new Event('click'));
 
-      expect((comp as any).emailAddressService.getEmailAddress).toHaveBeenCalled();
+      expect(
+        (comp as any).emailAddressService.getEmailAddress
+      ).toHaveBeenCalled();
     });
   });
 });

@@ -100,7 +100,8 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     this.loggedInSubscription?.unsubscribe();
     this.loggedInInitSubscription?.unsubscribe();
     this.getChatwootBubbleElement()?.removeEventListener(
-      'click', this.onBubbleClick.bind(this)
+      'click',
+      this.onBubbleClick.bind(this)
     );
   }
 
@@ -115,7 +116,8 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
       this.document.getElementsByTagName('script')[0];
 
     // create new script element
-    let newScriptElement: HTMLScriptElement = this.document.createElement('script');
+    let newScriptElement: HTMLScriptElement =
+      this.document.createElement('script');
     newScriptElement.src = this.scriptUrl;
     newScriptElement.defer = true;
     newScriptElement.async = true;
@@ -151,11 +153,12 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
 
     this.window.addEventListener('chatwoot:ready', (ready) => {
       /**
-       * The SDK does not give us an "open" event, so we have to 
+       * The SDK does not give us an "open" event, so we have to
        * listen to clicks on the chat bubble.
        */
       this.getChatwootBubbleElement()?.addEventListener(
-        'click', this.onBubbleClick.bind(this)
+        'click',
+        this.onBubbleClick.bind(this)
       );
 
       if (this.session.isLoggedIn()) {
@@ -200,8 +203,8 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   private onBubbleClick(event: Event): void {
-    const currentChatwootUser = this.window.$chatwoot?.user; 
-    
+    const currentChatwootUser = this.window.$chatwoot?.user;
+
     if (currentChatwootUser && !currentChatwootUser?.email) {
       this.patchEmail(); // async
     }
@@ -219,8 +222,9 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const emailAddress: string = await this.emailAddressService.getEmailAddress();
-   
+    const emailAddress: string =
+      await this.emailAddressService.getEmailAddress();
+
     if (!emailAddress) {
       console.warn('No email found in settings');
       return;
@@ -229,7 +233,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     // patch user object.
     this.window.$chatwoot.setUser(loggedInUser.guid, {
       ...this.window.$chatwoot.user,
-      email: emailAddress
+      email: emailAddress,
     });
   }
 
@@ -285,7 +289,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
    * Get chatwoot bubble element.
    * @returns { Element|null } chatwoot bubble element.
    */
-  private getChatwootBubbleElement(): Element|null {
+  private getChatwootBubbleElement(): Element | null {
     return this.document.getElementsByClassName('woot-widget-bubble')?.[0];
   }
 }

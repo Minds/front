@@ -1,9 +1,9 @@
-import { TestBed } from "@angular/core/testing";
-import { EmailAddressService } from "./email-address.service";
-import { ApiService } from "../api/api.service";
-import { MockService } from "../../utils/mock";
-import { Session } from "../../services/session";
-import { of } from "rxjs";
+import { TestBed } from '@angular/core/testing';
+import { EmailAddressService } from './email-address.service';
+import { ApiService } from '../api/api.service';
+import { MockService } from '../../utils/mock';
+import { Session } from '../../services/session';
+import { of } from 'rxjs';
 
 describe('EmailAddressService', () => {
   let service: EmailAddressService;
@@ -28,11 +28,18 @@ describe('EmailAddressService', () => {
   describe('getEmailAddress', () => {
     it('should fetch email address', (done: DoneFn) => {
       (service as any).session.isLoggedIn.and.returnValue(true);
-      (service as any).api.get.withArgs('/api/v3/email/address').and.returnValue(of({
-        status: 'success', email: 'noreply@minds.com'
-      }));
+      (service as any).api.get
+        .withArgs('/api/v3/email/address')
+        .and.returnValue(
+          of({
+            status: 'success',
+            email: 'noreply@minds.com',
+          })
+        );
 
-      expectAsync(service.getEmailAddress()).toBeResolvedTo('noreply@minds.com');
+      expectAsync(service.getEmailAddress()).toBeResolvedTo(
+        'noreply@minds.com'
+      );
       done();
     });
 
@@ -45,9 +52,13 @@ describe('EmailAddressService', () => {
 
     it('should handle no success state when fetching email address', (done: DoneFn) => {
       (service as any).session.isLoggedIn.and.returnValue(true);
-      (service as any).api.get.withArgs('/api/v3/email/address').and.returnValue(of({
-        status: 'error'
-      }));
+      (service as any).api.get
+        .withArgs('/api/v3/email/address')
+        .and.returnValue(
+          of({
+            status: 'error',
+          })
+        );
 
       expectAsync(service.getEmailAddress()).toBeResolvedTo(null);
       done();
