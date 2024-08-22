@@ -67,6 +67,17 @@ export class TopbarComponent implements OnInit, OnDestroy {
   public readonly isMinimalMode$: BehaviorSubject<boolean> =
     this.topbarService.isMinimalMode$;
 
+  /** Whether push notification alert should be shown. */
+  protected readonly shouldShowPushNotificationAlert$: Observable<boolean> =
+    this.topbarAlertService.shouldShowPushNotificationAlert$;
+
+  /** Whether CMS driven alert should be shown. */
+  protected shouldShowCmsAlert$: Observable<boolean> =
+    this.topbarAlertService.shouldShowCmsAlert$;
+
+  /** Whether this is in a browser context. */
+  protected readonly isBrowser: boolean = false;
+
   constructor(
     protected sidebarService: SidebarNavigationService,
     protected themeService: ThemeService,
@@ -86,6 +97,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
     if (isPlatformBrowser(this.platformId)) {
+      this.isBrowser = true;
       this.onResize();
     }
   }
@@ -257,5 +269,13 @@ export class TopbarComponent implements OnInit, OnDestroy {
    */
   get isDarkTheme$(): Observable<boolean> {
     return this.themeService.isDark$;
+  }
+
+  /**
+   * Whether tenant trial alert should be shown.
+   * @returns { void }
+   */
+  protected shouldShowTenantTrialAlert(): void {
+    this.topbarAlertService.shouldShowTenantTrialAlert();
   }
 }
