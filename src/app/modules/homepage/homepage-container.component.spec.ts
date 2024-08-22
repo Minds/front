@@ -126,39 +126,66 @@ describe('HomepageContainerComponent', () => {
     mockIsTenantService.is.and.returnValue(false);
     fixture = TestBed.createComponent(HomepageContainerComponent);
     component = fixture.componentInstance;
+
+    Object.defineProperty(component, 'isTenantNetwork', {
+      writable: true,
+      value: false,
+    });
+
     fixture.detectChanges();
   });
 
-  it('should redirect if logged in', fakeAsync(() => {
-    (component as any).authRedirectService.getRedirectUrl.and.returnValue(
-      '/newsfeed'
-    );
-    mockActivatedRoute.snapshot.fragment = '';
-    mockSession.isLoggedIn.and.returnValue(true);
-    spyOn(mockRouter, 'navigate');
+  describe('ngOnInit', () => {
+    it('should redirect if logged in to a non-tenant', fakeAsync(() => {
+      Object.defineProperty(component, 'isTenantNetwork', {
+        writable: true,
+        value: false,
+      });
+      mockActivatedRoute.snapshot.fragment = '';
+      mockSession.isLoggedIn.and.returnValue(true);
+      spyOn(mockRouter, 'navigate');
 
-    component.ngOnInit();
-    tick();
+      component.ngOnInit();
+      tick();
 
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/newsfeed']);
-  }));
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/newsfeed']);
+    }));
 
-  it('should redirect if logged in, with createBoost parameter when boost fragment is present', fakeAsync(() => {
-    (component as any).authRedirectService.getRedirectUrl.and.returnValue(
-      '/newsfeed'
-    );
-    mockActivatedRoute.snapshot.fragment = 'boost';
-    mockSession.isLoggedIn.and.returnValue(true);
-    spyOn(mockRouter, 'navigate');
+    it('should redirect if logged in to a tenant', fakeAsync(() => {
+      Object.defineProperty(component, 'isTenantNetwork', {
+        writable: true,
+        value: true,
+      });
+      (component as any).config.get
+        .withArgs('tenant')
+        .and.returnValue({ 'custom_home_page_enabled': false });
+      mockActivatedRoute.snapshot.fragment = '';
+      mockSession.isLoggedIn.and.returnValue(true);
 
-    component.ngOnInit();
-    tick();
+      component.ngOnInit();
+      tick();
 
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/newsfeed'], {
-      queryParams: { createBoost: 1 },
-    });
-  }));
+      expect(
+        (component as any).authRedirectService.redirect
+      ).toHaveBeenCalled();
+    }));
 
+    it('should redirect if logged in, with createBoost parameter when boost fragment is present', fakeAsync(() => {
+      (
+        component as any
+      ).authRedirectService.getDefaultRedirectUrl.and.returnValue('/newsfeed');
+      mockActivatedRoute.snapshot.fragment = 'boost';
+      mockSession.isLoggedIn.and.returnValue(true);
+      spyOn(mockRouter, 'navigate');
+
+      component.ngOnInit();
+      tick();
+
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/newsfeed'], {
+        queryParams: { createBoost: 1 },
+      });
+    }));
+  });
   it('should display default feed if tenant', () => {
     mockSession.isLoggedIn.and.returnValue(false);
     mockIsTenantService.is.and.returnValue(true);

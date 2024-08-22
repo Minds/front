@@ -92,6 +92,14 @@ export class LoginReferrerService {
     return !!~this.exceptions.indexOf(cleanUrl);
   }
 
+  /**
+   * Whether the service has a registered URL.
+   * @returns { boolean } - true if the service has a registered URL.
+   */
+  public hasRegisteredUrl(): boolean {
+    return Boolean(this.url);
+  }
+
   // based on: https://stackoverflow.com/a/36391166
   private _trim(s): string {
     const mask = ' /';

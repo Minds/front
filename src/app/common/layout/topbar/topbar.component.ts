@@ -202,7 +202,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   doRedirect(): void {
     if (this.router.url === '/' || this.router.url === '/about') {
-      this.router.navigate([this.authRedirectService.getRedirectUrl()]);
+      this.authRedirectService.redirect();
     }
   }
 

@@ -209,8 +209,7 @@ export class HomepageV3Component implements OnInit {
     const user = await this.authModal.open();
 
     if (user) {
-      const url = this.authRedirectService.getRedirectUrl();
-      this.router.navigate([url]);
+      this.authRedirectService.redirect();
     }
   }
 }

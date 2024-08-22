@@ -27,6 +27,7 @@ import { HORIZONTAL_LOGO_PATH as TENANT_HORIZONTAL_LOGO } from '../multi-tenant-
 import { OnboardingV5Service } from '../onboarding-v5/services/onboarding-v5.service';
 import { WINDOW } from '../../common/injection-tokens/common-injection-tokens';
 import { isPlatformBrowser } from '@angular/common';
+import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Standalone register page for new users to sign up
@@ -82,7 +83,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private isTenant: IsTenantService,
     private site: SiteService,
     @Inject(WINDOW) private window: Window,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(IS_TENANT_NETWORK) protected readonly isTenantNetwork: boolean
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -219,8 +221,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl(this.referrer);
     } else if (this.redirectTo) {
       this.navigateToRedirection();
-    } else {
+    } else if (!this.isTenantNetwork || this.loginReferrer.hasRegisteredUrl()) {
       this.loginReferrer.navigate();
+    } else {
+      this.authRedirectService.redirect();
     }
   }
 
@@ -228,11 +232,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.redirectTo) {
       this.navigateToRedirection();
     } else {
-      /**
-       * If a redirect hasn't already been defined,
-       * use the experiment to determine where to go
-       */
-      this.router.navigate([this.authRedirectService.getRedirectUrl()]);
+      this.authRedirectService.redirect();
     }
   }
 
