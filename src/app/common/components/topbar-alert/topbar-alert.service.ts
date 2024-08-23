@@ -91,18 +91,18 @@ export class TopbarAlertService {
             .valueChanges.pipe(
               map((result: any) => result.data.topbarAlert.data)
             )
-        : of(EMPTY);
+        : of(null);
 
     this.identifier$ = this.copyData$.pipe(
-      map((copyData) => copyData.attributes.identifier)
+      map((copyData) => copyData?.attributes?.identifier)
     );
 
     this.enabled$ = this.copyData$.pipe(
-      map((copyData) => Boolean(copyData.attributes.enabled))
+      map((copyData) => Boolean(copyData?.attributes?.enabled))
     );
 
     this.onlyDisplayAfter$ = this.copyData$.pipe(
-      map((copyData) => Date.parse(copyData.attributes.onlyDisplayAfter))
+      map((copyData) => Date.parse(copyData?.attributes?.onlyDisplayAfter))
     );
 
     this.shouldShowPushNotificationAlert$ = isPlatformServer(this.platformId)
