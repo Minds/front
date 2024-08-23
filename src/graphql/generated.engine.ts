@@ -1631,6 +1631,7 @@ export type Query = {
   /** Returns a paginated list of popular content */
   tenantAdminAnalyticsTable: AnalyticsTableConnection;
   tenantAssets: AssetConnection;
+  tenantBilling: TenantBillingType;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
   totalRoomInviteRequests: Scalars['Int']['output'];
@@ -2111,6 +2112,18 @@ export type Tenant = {
   rootUserGuid?: Maybe<Scalars['String']['output']>;
   suspendedTimestamp?: Maybe<Scalars['Int']['output']>;
   trialStartTimestamp?: Maybe<Scalars['Int']['output']>;
+};
+
+export type TenantBillingType = {
+  __typename?: 'TenantBillingType';
+  isActive: Scalars['Boolean']['output'];
+  manageBillingUrl?: Maybe<Scalars['String']['output']>;
+  nextBillingAmountCents: Scalars['Int']['output'];
+  nextBillingDate?: Maybe<Scalars['DateTime']['output']>;
+  period: CheckoutTimePeriodEnum;
+  plan: TenantPlanEnum;
+  previousBillingAmountCents: Scalars['Int']['output'];
+  previousBillingDate?: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type TenantInput = {
@@ -3078,6 +3091,23 @@ export type GetTenantAnalyticsTableQuery = {
       startCursor?: string | null;
       endCursor?: string | null;
     };
+  };
+};
+
+export type GetTenantBillingQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetTenantBillingQuery = {
+  __typename?: 'Query';
+  tenantBilling: {
+    __typename?: 'TenantBillingType';
+    plan: TenantPlanEnum;
+    period: CheckoutTimePeriodEnum;
+    isActive: boolean;
+    manageBillingUrl?: string | null;
+    nextBillingAmountCents: number;
+    nextBillingDate?: any | null;
+    previousBillingAmountCents: number;
+    previousBillingDate?: any | null;
   };
 };
 
@@ -8986,6 +9016,34 @@ export class GetTenantAnalyticsTableGQL extends Apollo.Query<
   GetTenantAnalyticsTableQueryVariables
 > {
   document = GetTenantAnalyticsTableDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetTenantBillingDocument = gql`
+  query GetTenantBilling {
+    tenantBilling {
+      plan
+      period
+      isActive
+      manageBillingUrl
+      nextBillingAmountCents
+      nextBillingDate
+      previousBillingAmountCents
+      previousBillingDate
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetTenantBillingGQL extends Apollo.Query<
+  GetTenantBillingQuery,
+  GetTenantBillingQueryVariables
+> {
+  document = GetTenantBillingDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
