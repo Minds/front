@@ -188,17 +188,17 @@
         &.m-sidebarNavigation__item--chat {
           transform: translateY(2px);
 
-          i.showDot {
+          i.m-sidebarNavigationItem__unreadChatDot {
             position: relative;
             &::after {
               content: '';
               display: block;
-              width: 5px;
-              height: 5px;
+              width: 8px;
+              height: 8px;
               position: absolute;
               border-radius: 50%;
-              top: 0;
-              right: 0;
+              top: -2px;
+              right: -2px;
               @include m-theme() {
                 background-color: themed($m-blue);
               }

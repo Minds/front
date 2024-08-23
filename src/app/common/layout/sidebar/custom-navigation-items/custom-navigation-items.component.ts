@@ -21,6 +21,7 @@ export type NavigationItemExtended = NavigationItem & {
   routerLinkActiveExact?: boolean;
 };
 import { MindsUser } from '../../../../interfaces/entities';
+import { ChatReceiptService } from '../../../../modules/chat/services/chat-receipt.service';
 
 /**
  * Custom navigation items for tenants
@@ -70,11 +71,16 @@ export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
       })
     );
 
+  /** Count of a users unread messages. */
+  protected unreadChatMessageCount$: Observable<number> =
+    this.chatReceiptService.unreadCount$;
+
   constructor(
     public session: Session,
     protected configs: ConfigsService,
     private siteMembershipsCountService: SiteMembershipsCountService,
     protected permissions: PermissionsService,
+    private chatReceiptService: ChatReceiptService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
     this.cdnUrl = this.configs.get('cdn_url');

@@ -235,7 +235,11 @@
               data-ref="sidenav-chat"
             >
               <div class="m-sidebarNavigationItem__hoverArea">
-                <i class="material-icons" [class.showDot]="chatUnreadCount > 0"
+                <i
+                  class="material-icons"
+                  [class.m-sidebarNavigationItem__unreadChatDot]="
+                    chatUnreadCount > 0
+                  "
                   >chat_bubble</i
                 >
                 <span

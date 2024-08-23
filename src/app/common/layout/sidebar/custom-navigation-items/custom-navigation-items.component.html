@@ -3,6 +3,7 @@
     <li
       *ngIf="item.id !== 'channel'"
       class="m-sidebarNavigation__item"
+      [class.m-sidebarNavigation__item--chat]="item.id === 'chat'"
       [routerLinkActive]="'m-sidebarNavigation__item--active'"
       [routerLinkActiveOptions]="{
         exact: customNavItemsRequiringExactRouteMatchIds.includes(item.id)
@@ -37,7 +38,13 @@
 
     <ng-template #customNavLinkInterior let-item="item">
       <div class="m-sidebarNavigationItem__hoverArea">
-        <i class="material-icons">{{ item?.iconId }}</i>
+        <i
+          class="material-icons"
+          [class.m-sidebarNavigationItem__unreadChatDot]="
+            item.id === 'chat' && (unreadChatMessageCount$ | async) > 0
+          "
+          >{{ item?.iconId }}</i
+        >
         <span class="m-sidebarNavigationItem__text m-legible">{{
           item?.name
         }}</span>
