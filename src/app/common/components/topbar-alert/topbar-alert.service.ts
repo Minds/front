@@ -67,6 +67,9 @@ export class TopbarAlertService {
   /** Logic for dictating if the CMS driven alert should display */
   shouldShowCmsAlert$: Observable<boolean>;
 
+  /** Logic for dictating if the tenant trial alert should be shown. */
+  shouldShowTenantTrialAlert$: Observable<boolean>;
+
   /** storage key */
   private readonly storageKey = 'topbar-alert:dismissed';
 
@@ -149,19 +152,25 @@ export class TopbarAlertService {
           )
         );
 
+    this.shouldShowTenantTrialAlert$ = of(
+      this.isTenantNetwork && this.config.get('tenant')?.['is_trial']
+    );
+
     this.shouldShow$ = isPlatformServer(this.platformId)
       ? of(null)
       : combineLatest([
           this.shouldShowCmsAlert$,
+          this.shouldShowTenantTrialAlert$,
           this.shouldShowPushNotificationAlert$,
         ]).pipe(
           map(
-            ([shouldShowCmsAlert, shouldShowPushNotificationAlert]: [
-              boolean,
-              boolean,
-            ]) => {
+            ([
+              shouldShowCmsAlert,
+              shouldShowTenantTrialAlert,
+              shouldShowPushNotificationAlert,
+            ]: [boolean, boolean, boolean]) => {
               return (
-                this.shouldShowTenantTrialAlert() ||
+                shouldShowTenantTrialAlert ||
                 shouldShowPushNotificationAlert ||
                 shouldShowCmsAlert
               );

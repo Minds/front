@@ -30,16 +30,13 @@
     <ng-template #notCmsTopbarAlertTemplate>
       <m-networkTrialBanner
         *ngIf="
-          shouldShowTenantTrialAlert();
+          shouldShowTenantTrialAlert$ | async;
           else enablePushNotificationTemplate
         "
       ></m-networkTrialBanner>
-      <m-topbarAlert__enablePushNotification
-        *ngIf="
-          !shouldShowTenantTrialAlert() && shouldShowPushNotificationAlert$
-            | async
-        "
-      ></m-topbarAlert__enablePushNotification>
+      <ng-template #enablePushNotificationTemplate>
+        <m-topbarAlert__enablePushNotification></m-topbarAlert__enablePushNotification>
+      </ng-template>
     </ng-template>
   </ng-container>
 

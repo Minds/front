@@ -75,6 +75,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
   protected shouldShowCmsAlert$: Observable<boolean> =
     this.topbarAlertService.shouldShowCmsAlert$;
 
+  /** Whether tenant trial alert should be shown. */
+  protected readonly shouldShowTenantTrialAlert$: Observable<boolean> =
+    this.topbarAlertService.shouldShowTenantTrialAlert$;
+
   /** Whether this is in a browser context. */
   protected readonly isBrowser: boolean = false;
 
@@ -269,13 +273,5 @@ export class TopbarComponent implements OnInit, OnDestroy {
    */
   get isDarkTheme$(): Observable<boolean> {
     return this.themeService.isDark$;
-  }
-
-  /**
-   * Whether tenant trial alert should be shown.
-   * @returns { void }
-   */
-  protected shouldShowTenantTrialAlert(): void {
-    this.topbarAlertService.shouldShowTenantTrialAlert();
   }
 }
