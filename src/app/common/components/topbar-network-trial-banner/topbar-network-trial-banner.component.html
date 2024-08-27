@@ -5,24 +5,24 @@
     ngPreserveWhitespace
   >
     This
-    <a [href]="externalNetworksUpgradeUrl" target="_blank">Minds Network</a> is
-    expired and will be deleted
+    <a [href]="externalNetworksUrl" target="_blank">Minds Network</a> is expired
+    and will be deleted
     <span>{{
       trialDeletionTimestamp && !isPastDeletionThreshold
         ? (trialDeletionTimestamp | friendlytime: true)
         : 'soon'
     }}</span
-    >. <a [href]="externalNetworksUrl" target="_blank">Upgrade now</a>.
+    >. <a routerLink="network/admin/billing">Upgrade now</a>.
   </ng-container>
   <ng-template #activeTrialTextTemplate i18n>
     This trial of
-    <a [href]="externalNetworksUpgradeUrl" target="_blank" ngPreserveWhitespace
+    <a [href]="externalNetworksUrl" target="_blank" ngPreserveWhitespace
       >Minds Networks</a
     >
     expires
     <span>{{
       trialEndTimestamp ? (trialEndTimestamp | friendlytime: true) : 'soon'
     }}</span
-    >. <a [href]="externalNetworksUrl" target="_blank">Upgrade now</a>.
+    >. <a routerLink="network/admin/billing">Upgrade now</a>.
   </ng-template>
 </span>

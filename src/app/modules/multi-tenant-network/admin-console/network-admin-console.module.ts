@@ -56,6 +56,7 @@ import { permissionGuard } from '../../../common/guards/permission.guard';
 import { NetworkAdminConsoleRolesPermissionHandlingComponent } from './tabs/roles/tabs/permission-handling/permission-handling.component';
 import { NetworkAdminConsoleDigestEmailSettingsComponent } from './tabs/general/digest-email-toggle/digest-email-toggle.component';
 import { NetworkAdminConsoleLandingPageSelectorComponent } from './tabs/navigation/components/landing-page-section/landing-page-selector.component';
+import { NetworkAdminConsoleBillingComponent } from './tabs/billing/billing.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -67,6 +68,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
       { path: 'general', component: NetworkAdminConsoleGeneralComponent },
       { path: 'appearance', component: NetworkAdminConsoleAppearanceComponent },
       { path: 'domain', component: NetworkAdminConsoleDomainComponent },
+      { path: 'billing', component: NetworkAdminConsoleBillingComponent },
       {
         path: 'monetization',
         loadChildren: async () =>

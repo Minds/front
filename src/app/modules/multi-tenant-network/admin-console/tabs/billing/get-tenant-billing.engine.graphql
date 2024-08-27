@@ -1,0 +1,12 @@
+query GetTenantBilling {
+    tenantBilling {
+        plan
+        period
+        isActive
+        manageBillingUrl
+        nextBillingAmountCents
+        nextBillingDate
+        previousBillingAmountCents
+        previousBillingDate
+    }
+}
