@@ -1631,6 +1631,7 @@ export type Query = {
   /** Returns a paginated list of popular content */
   tenantAdminAnalyticsTable: AnalyticsTableConnection;
   tenantAssets: AssetConnection;
+  tenantBilling: TenantBillingType;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
   totalRoomInviteRequests: Scalars['Int']['output'];
@@ -2111,6 +2112,18 @@ export type Tenant = {
   rootUserGuid?: Maybe<Scalars['String']['output']>;
   suspendedTimestamp?: Maybe<Scalars['Int']['output']>;
   trialStartTimestamp?: Maybe<Scalars['Int']['output']>;
+};
+
+export type TenantBillingType = {
+  __typename?: 'TenantBillingType';
+  isActive: Scalars['Boolean']['output'];
+  manageBillingUrl?: Maybe<Scalars['String']['output']>;
+  nextBillingAmountCents: Scalars['Int']['output'];
+  nextBillingDate?: Maybe<Scalars['DateTime']['output']>;
+  period: CheckoutTimePeriodEnum;
+  plan: TenantPlanEnum;
+  previousBillingAmountCents: Scalars['Int']['output'];
+  previousBillingDate?: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type TenantInput = {
@@ -2619,6 +2632,22 @@ export type GetChatRoomMembersQuery = {
       hasPreviousPage: boolean;
       startCursor?: string | null;
       endCursor?: string | null;
+    };
+  };
+};
+
+export type GetChatRoomNotificationStatusQueryVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type GetChatRoomNotificationStatusQuery = {
+  __typename?: 'Query';
+  chatRoom: {
+    __typename?: 'ChatRoomEdge';
+    id: string;
+    node: {
+      __typename?: 'ChatRoomNode';
+      chatRoomNotificationStatus?: ChatRoomNotificationStatusEnum | null;
     };
   };
 };
@@ -8319,6 +8348,30 @@ export class GetChatRoomMembersGQL extends Apollo.Query<
   GetChatRoomMembersQueryVariables
 > {
   document = GetChatRoomMembersDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetChatRoomNotificationStatusDocument = gql`
+  query GetChatRoomNotificationStatus($roomGuid: String!) {
+    chatRoom(roomGuid: $roomGuid) {
+      id
+      node {
+        chatRoomNotificationStatus
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetChatRoomNotificationStatusGQL extends Apollo.Query<
+  GetChatRoomNotificationStatusQuery,
+  GetChatRoomNotificationStatusQueryVariables
+> {
+  document = GetChatRoomNotificationStatusDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

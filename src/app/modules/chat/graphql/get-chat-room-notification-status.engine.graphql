@@ -1,0 +1,10 @@
+query GetChatRoomNotificationStatus(
+    $roomGuid: String!
+) {
+    chatRoom(roomGuid: $roomGuid) {
+        id
+        node {
+            chatRoomNotificationStatus
+        }
+    }
+}

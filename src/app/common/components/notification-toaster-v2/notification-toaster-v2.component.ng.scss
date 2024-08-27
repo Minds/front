@@ -1,0 +1,62 @@
+@import 'defaults.scss';
+
+:host {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  box-sizing: border-box;
+  cursor: pointer;
+  max-width: 400px;
+  @include z-index(toast);
+
+  .m-notificationToast {
+    padding: $spacing3;
+    margin-bottom: $spacing2;
+    border-radius: 10px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-notificationToaster__toast--info {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+
+  .m-notificationToaster__toast--success {
+    background-color: #59a05e;
+
+    @include m-theme() {
+      color: themed($m-white-always);
+    }
+  }
+
+  .m-notificationToaster__toast--danger {
+    @include m-theme() {
+      background-color: color-by-theme($m-alert, 'light');
+      color: themed($m-white-always);
+    }
+  }
+
+  ::ng-deep .toast-body {
+    display: flex;
+    align-items: center;
+    gap: $spacing2;
+
+    .minds-avatar {
+      margin: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-position: center;
+      background-size: cover;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+}

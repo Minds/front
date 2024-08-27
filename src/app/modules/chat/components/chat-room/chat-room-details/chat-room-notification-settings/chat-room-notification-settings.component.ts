@@ -12,6 +12,8 @@ import { SingleChatRoomService } from '../../../../services/single-chat-room.ser
 import {
   ChatRoomEdge,
   ChatRoomNotificationStatusEnum,
+  GetChatRoomNotificationStatusDocument,
+  GetChatRoomNotificationStatusQuery,
   UpdateChatRoomNotificationSettingsGQL,
   UpdateChatRoomNotificationSettingsMutation,
 } from '../../../../../../../graphql/generated.engine';
@@ -20,6 +22,8 @@ import {
   ToasterService,
 } from '../../../../../../common/services/toaster.service';
 import { MutationResult } from 'apollo-angular';
+import { InMemoryCache } from '@apollo/client';
+import { cloneDeep } from '@apollo/client/utilities';
 
 /**
  * Notification settings for a chat room.
@@ -82,12 +86,17 @@ export class ChatRoomNotificationSettingsComponent implements OnInit {
     try {
       const result: MutationResult<UpdateChatRoomNotificationSettingsMutation> =
         await lastValueFrom(
-          this.updateChatRoomNotificationSettingsGql.mutate({
-            roomGuid: chatRoom?.node?.guid,
-            notificationStatus: value
-              ? ChatRoomNotificationStatusEnum.Muted
-              : ChatRoomNotificationStatusEnum.All,
-          })
+          this.updateChatRoomNotificationSettingsGql.mutate(
+            {
+              roomGuid: chatRoom?.node?.guid,
+              notificationStatus: value
+                ? ChatRoomNotificationStatusEnum.Muted
+                : ChatRoomNotificationStatusEnum.All,
+            },
+            {
+              update: this.handleNotificationStatusChange.bind(this),
+            }
+          )
         );
 
       if (result?.errors?.length) {
@@ -102,5 +111,40 @@ export class ChatRoomNotificationSettingsComponent implements OnInit {
       this.toaster.error(e);
       this.notificationsMuted$.next(previousValue);
     }
+  }
+
+  /**
+   * Handle notification status change.
+   * @param { InMemoryCache } cache - cache.
+   * @param { MutationResult<UpdateChatRoomNotificationSettingsMutation> } result - mutation result.
+   * @param { any } options - options.
+   * @returns { void }
+   */
+  private handleNotificationStatusChange(
+    cache: InMemoryCache,
+    result: MutationResult<UpdateChatRoomNotificationSettingsMutation>,
+    options: any
+  ): void {
+    if (!result?.data?.updateNotificationSettings) return;
+
+    let newValue: GetChatRoomNotificationStatusQuery = cloneDeep(
+      cache.readQuery<GetChatRoomNotificationStatusQuery>({
+        query: GetChatRoomNotificationStatusDocument,
+        variables: {
+          roomGuid: options?.variables?.roomGuid,
+        },
+      })
+    );
+
+    newValue.chatRoom.node.chatRoomNotificationStatus =
+      options?.variables?.notificationStatus;
+
+    cache.writeQuery({
+      query: GetChatRoomNotificationStatusDocument,
+      variables: {
+        roomGuid: options?.variables?.roomGuid,
+      },
+      data: newValue,
+    });
   }
 }

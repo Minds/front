@@ -7,6 +7,8 @@ import { ConfigsService } from '../../../services/configs.service';
 import { PermissionsService } from '../../../services/permissions.service';
 import { SiteMembershipsCountService } from '../../../../modules/site-memberships/services/site-membership-count.service';
 import { NavigationItemTypeEnum } from '../../../../../graphql/generated.engine';
+import { ChatReceiptService } from '../../../../modules/chat/services/chat-receipt.service';
+import { MockService } from '../../../../utils/mock';
 
 describe('CustomNavigationItemsComponent', () => {
   let component: CustomNavigationItemsComponent;
@@ -128,6 +130,17 @@ describe('CustomNavigationItemsComponent', () => {
         {
           provide: SiteMembershipsCountService,
           useValue: mockSiteMembershipsCountService,
+        },
+        {
+          provide: ChatReceiptService,
+          useValue: MockService(ChatReceiptService, {
+            has: ['unreadCount$'],
+            props: {
+              unreadCount$: {
+                get: () => new BehaviorSubject<number>(0),
+              },
+            },
+          }),
         },
       ],
     }).compileComponents();

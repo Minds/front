@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscription, distinctUntilChanged, map, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import {
   InitChatGQL,
   InitChatQuery,
@@ -7,6 +7,7 @@ import {
 import { Session } from '../../../services/session';
 import { QueryRef } from 'apollo-angular';
 import { GlobalChatSocketService } from './global-chat-socket.service';
+import { ChatNotificationToasterService } from './chat-notification-toast.service';
 
 /**
  * Service to aggregate queries used to initialize the chat service.
@@ -19,6 +20,7 @@ export class ChatInitService {
   constructor(
     private initChatGQL: InitChatGQL,
     private globalChatSocketService: GlobalChatSocketService,
+    private chatNotificationToasterService: ChatNotificationToasterService,
     private session: Session
   ) {}
 
@@ -33,6 +35,7 @@ export class ChatInitService {
     }
 
     this.globalChatSocketService.listen();
+    this.chatNotificationToasterService.init();
   }
 
   /**

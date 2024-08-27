@@ -195,6 +195,8 @@ import { TopbarNetworkTrialBannerComponent } from './components/topbar-network-t
 import { ThrottledClickDirective } from './directives/throttled-click.directive';
 import { ShowOnHoverDirective } from './directives/show-on-hover-directive';
 import { CustomNavigationItemsComponent } from './layout/sidebar/custom-navigation-items/custom-navigation-items.component';
+import { NotificationToasterV2Component } from './components/notification-toaster-v2/notification-toaster-v2.component';
+import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -311,6 +313,7 @@ const MINDS_COMMON_COMPONENTS = [
   NoticeComponent,
   PlanCardComponent,
   TopbarNetworkTrialBannerComponent,
+  NotificationToasterV2Component,
 ];
 // ------------------------------------
 // ------------------------------------
@@ -366,6 +369,7 @@ const routes: Routes = [
     OwlNativeDateTimeModule,
     NgxPopperjsModule,
     QRCodeModule,
+    NgbToastModule,
     RouterModule.forChild(routes),
     MarkdownModule.forChild(),
   ],

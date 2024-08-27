@@ -5,6 +5,7 @@ import { GlobalChatSocketService } from './global-chat-socket.service';
 import { MockService } from '../../../utils/mock';
 import { Session } from '../../../services/session';
 import { BehaviorSubject } from 'rxjs';
+import { ChatNotificationToasterService } from './chat-notification-toast.service';
 
 describe('ChatInitService', () => {
   let service: ChatInitService;
@@ -19,6 +20,10 @@ describe('ChatInitService', () => {
         {
           provide: GlobalChatSocketService,
           useValue: MockService(GlobalChatSocketService),
+        },
+        {
+          provide: ChatNotificationToasterService,
+          useValue: MockService(ChatNotificationToasterService),
         },
         { provide: Session, useValue: MockService(Session) },
         ChatInitService,
@@ -66,6 +71,9 @@ describe('ChatInitService', () => {
       expect((service as any).session.isLoggedIn).toHaveBeenCalled();
       expect(
         (service as any).globalChatSocketService.listen
+      ).toHaveBeenCalled();
+      expect(
+        (service as any).chatNotificationToasterService.init
       ).toHaveBeenCalled();
     }));
   });

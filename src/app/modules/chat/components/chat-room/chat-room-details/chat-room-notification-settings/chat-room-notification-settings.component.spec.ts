@@ -124,10 +124,15 @@ describe('ChatRoomNotificationSettingsComponent', () => {
       expect((comp as any).notificationsMuted$.getValue()).toBe(true);
       expect(
         (comp as any).updateChatRoomNotificationSettingsGql.mutate
-      ).toHaveBeenCalledWith({
-        roomGuid: mockChatRoomEdge.node.guid,
-        notificationStatus: ChatRoomNotificationStatusEnum.Muted,
-      });
+      ).toHaveBeenCalledWith(
+        {
+          roomGuid: mockChatRoomEdge.node.guid,
+          notificationStatus: ChatRoomNotificationStatusEnum.Muted,
+        },
+        {
+          update: jasmine.any(Function),
+        }
+      );
       expect((comp as any).toaster.error).not.toHaveBeenCalled();
     }));
 
@@ -147,10 +152,15 @@ describe('ChatRoomNotificationSettingsComponent', () => {
       expect((comp as any).notificationsMuted$.getValue()).toBe(false);
       expect(
         (comp as any).updateChatRoomNotificationSettingsGql.mutate
-      ).toHaveBeenCalledWith({
-        roomGuid: mockChatRoomEdge.node.guid,
-        notificationStatus: ChatRoomNotificationStatusEnum.All,
-      });
+      ).toHaveBeenCalledWith(
+        {
+          roomGuid: mockChatRoomEdge.node.guid,
+          notificationStatus: ChatRoomNotificationStatusEnum.All,
+        },
+        {
+          update: jasmine.any(Function),
+        }
+      );
       expect((comp as any).toaster.error).not.toHaveBeenCalled();
     }));
 
@@ -171,10 +181,15 @@ describe('ChatRoomNotificationSettingsComponent', () => {
       expect((comp as any).notificationsMuted$.getValue()).toBe(false);
       expect(
         (comp as any).updateChatRoomNotificationSettingsGql.mutate
-      ).toHaveBeenCalledWith({
-        roomGuid: mockChatRoomEdge.node.guid,
-        notificationStatus: ChatRoomNotificationStatusEnum.Muted,
-      });
+      ).toHaveBeenCalledWith(
+        {
+          roomGuid: mockChatRoomEdge.node.guid,
+          notificationStatus: ChatRoomNotificationStatusEnum.Muted,
+        },
+        {
+          update: jasmine.any(Function),
+        }
+      );
       expect((comp as any).toaster.error).toHaveBeenCalledWith(error);
     }));
 
@@ -194,10 +209,15 @@ describe('ChatRoomNotificationSettingsComponent', () => {
       expect((comp as any).notificationsMuted$.getValue()).toBe(false);
       expect(
         (comp as any).updateChatRoomNotificationSettingsGql.mutate
-      ).toHaveBeenCalledWith({
-        roomGuid: mockChatRoomEdge.node.guid,
-        notificationStatus: ChatRoomNotificationStatusEnum.Muted,
-      });
+      ).toHaveBeenCalledWith(
+        {
+          roomGuid: mockChatRoomEdge.node.guid,
+          notificationStatus: ChatRoomNotificationStatusEnum.Muted,
+        },
+        {
+          update: jasmine.any(Function),
+        }
+      );
       expect((comp as any).toaster.error).toHaveBeenCalledWith(
         new Error(DEFAULT_ERROR_MESSAGE)
       );
