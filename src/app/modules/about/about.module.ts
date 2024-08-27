@@ -99,6 +99,6 @@ const routes: Routes = [
     ProductPageClosingCtaComponent,
     ProductPageImageCardComponent,
   ],
-  exports: [ProductPageBaseComponent],
+  exports: [ProductPageBaseComponent, ProductPagePricingCardsComponent],
 })
 export class AboutModule {}

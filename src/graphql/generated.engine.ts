@@ -3110,6 +3110,23 @@ export type GetTenantAnalyticsTableQuery = {
   };
 };
 
+export type GetTenantBillingQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetTenantBillingQuery = {
+  __typename?: 'Query';
+  tenantBilling: {
+    __typename?: 'TenantBillingType';
+    plan: TenantPlanEnum;
+    period: CheckoutTimePeriodEnum;
+    isActive: boolean;
+    manageBillingUrl?: string | null;
+    nextBillingAmountCents: number;
+    nextBillingDate?: any | null;
+    previousBillingAmountCents: number;
+    previousBillingDate?: any | null;
+  };
+};
+
 export type GetFeaturedEntitiesQueryVariables = Exact<{
   type: FeaturedEntityTypeEnum;
   after?: InputMaybe<Scalars['Int']['input']>;
@@ -9039,6 +9056,34 @@ export class GetTenantAnalyticsTableGQL extends Apollo.Query<
   GetTenantAnalyticsTableQueryVariables
 > {
   document = GetTenantAnalyticsTableDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetTenantBillingDocument = gql`
+  query GetTenantBilling {
+    tenantBilling {
+      plan
+      period
+      isActive
+      manageBillingUrl
+      nextBillingAmountCents
+      nextBillingDate
+      previousBillingAmountCents
+      previousBillingDate
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetTenantBillingGQL extends Apollo.Query<
+  GetTenantBillingQuery,
+  GetTenantBillingQueryVariables
+> {
+  document = GetTenantBillingDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

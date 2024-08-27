@@ -1,0 +1,43 @@
+<ng-container *ngIf="billingOverview; else loadingSpinnerTemplate">
+  <h4
+    class="m-networkAdminConsole__title"
+    i18n="@@NETWORK_ADMIN_CONSOLE_BILLING__TITLE"
+  >
+    Billing settings
+  </h4>
+
+  <ng-container *ngIf="billingOverview.isActive; else purchaseTemplate">
+    <div class="m-networkAdminBilling__summary">
+      <div class="m-networkAdminBillingSummary__row--plan">
+        <span class="plan">{{ billingOverview.plan | lowercase }} plan</span>
+        <span class="price"
+          >({{
+            billingOverview.nextBillingAmountCents / 100 | currency: 'USD'
+          }}/{{ billingOverview.period === 'MONTHLY' ? 'mo' : 'yr' }})</span
+        >
+      </div>
+
+      <div class="m-networkAdminBillingSummary__row--nextBilling">
+        <span>Next payment: {{ billingOverview.nextBillingDate | date }}</span>
+      </div>
+
+      <div class="m-networkAdminBillingSummary__row--manageUrl">
+        <a [href]="billingOverview.manageBillingUrl" target="_blank"
+          >Manage plan & billing</a
+        >
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #purchaseTemplate>
+  <div>
+    <m-productPage__pricingCards
+      [productPlans]="products"
+    ></m-productPage__pricingCards>
+  </div>
+</ng-template>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

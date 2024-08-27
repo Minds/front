@@ -19,6 +19,15 @@
   </div>
   <div class="m-tabs__tab" *ngIf="isAdmin">
     <a
+      [routerLink]="['/network/admin/billing']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-tab-billing"
+      i18n="@@NETWORK_ADMIN_CONSOLE__TAB_BILLING"
+      >Billing</a
+    >
+  </div>
+  <div class="m-tabs__tab" *ngIf="isAdmin">
+    <a
       [routerLink]="['/network/admin/invite']"
       [routerLinkActive]="'m-tabs__tab--selected'"
       data-ref="network-admin-console-tab-invite"

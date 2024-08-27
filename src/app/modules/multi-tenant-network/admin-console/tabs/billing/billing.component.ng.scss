@@ -1,0 +1,43 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networkAdminBilling__summary {
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    border-radius: $spacing2;
+
+    padding: $spacing4;
+
+    div[class*='m-networkAdminBillingSummary__row--'] {
+      padding-bottom: $spacing2;
+    }
+
+    .m-networkAdminBillingSummary__row--plan {
+      .plan {
+        @include heading3Bold;
+        text-transform: capitalize;
+        vertical-align: middle;
+      }
+      .price {
+        vertical-align: middle;
+        margin-left: $spacing2;
+      }
+    }
+
+    .m-networkAdminBillingSummary__row--manageUrl a {
+      @include m-theme() {
+        color: themed($m-action);
+      }
+    }
+  }
+
+  ::ng-deep m-productpage__pricingcards {
+    margin: 0;
+
+    .m-productPagePricingCards__cards
+      .m-productPagePricingCards__cardContainer {
+      flex-basis: 30% !important;
+    }
+  }
+}

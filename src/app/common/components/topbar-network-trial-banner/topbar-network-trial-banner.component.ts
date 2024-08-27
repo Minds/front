@@ -34,13 +34,9 @@ export class TopbarNetworkTrialBannerComponent {
   /** Whether the trial is PAST the deletion timestamp threshold. */
   protected readonly isPastDeletionThreshold: boolean;
 
-  /** Full URL for networks about page. */
-  protected readonly externalNetworksUpgradeUrl: string =
-    'https://www.minds.com/about/networks';
-
   /** Full URL for network upgrade. */
   protected readonly externalNetworksUrl: string =
-    'https://www.minds.com/about/networks-upgrade';
+    'https://networks.minds.com/';
 
   /** Host classes */
   @HostBinding('class')
