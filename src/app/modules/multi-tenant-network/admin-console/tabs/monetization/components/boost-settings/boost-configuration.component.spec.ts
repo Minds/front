@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { NetworkAdminBoostConfigurationComponent } from './boost-configuration.component';
@@ -6,6 +11,9 @@ import { MultiTenantNetworkConfigService } from '../../../../../services/config.
 import { MultiTenantConfig } from '../../../../../../../../graphql/generated.engine';
 import { multiTenantConfigMock } from '../../../../../../../mocks/responses/multi-tenant-config.mock';
 import { MockComponent, MockService } from '../../../../../../../utils/mock';
+import { StripeKeysService } from '../../services/stripe-keys.service';
+import { Router } from '@angular/router';
+import { ToasterService } from '../../../../../../../common/services/toaster.service';
 
 describe('NetworkAdminBoostConfigurationComponent', () => {
   let comp: NetworkAdminBoostConfigurationComponent;
@@ -26,6 +34,26 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
               },
             },
           }),
+        },
+        {
+          provide: StripeKeysService,
+          useValue: MockService(StripeKeysService, {
+            has: ['initialized$', 'hasSetStripeKeys$'],
+            props: {
+              initialized$: { get: () => new BehaviorSubject<boolean>(true) },
+              hasSetStripeKeys$: {
+                get: () => new BehaviorSubject<boolean>(true),
+              },
+            },
+          }),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
         },
       ],
     }).overrideComponent(NetworkAdminBoostConfigurationComponent, {
@@ -56,6 +84,8 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
 
   it('should init', () => {
     expect(comp).toBeTruthy();
+    expect((comp as any).router.navigate).not.toHaveBeenCalled();
+    expect((comp as any).toaster.warn).not.toHaveBeenCalled();
   });
 
   describe('render', () => {
@@ -112,5 +142,71 @@ describe('NetworkAdminBoostConfigurationComponent', () => {
         )
       ).toBeFalsy();
     });
+  });
+
+  describe('checkStripeKeys', () => {
+    it('should get stripe keys from server and navigate if not set', fakeAsync(() => {
+      (comp as any).stripeKeysService.initialized$.next(false);
+      (comp as any).stripeKeysService.hasSetStripeKeys$.next(false);
+
+      comp.ngOnInit();
+      tick();
+
+      expect(
+        (comp as any).stripeKeysService.fetchStripeKeys
+      ).toHaveBeenCalled();
+      expect((comp as any).toaster.warn).toHaveBeenCalledOnceWith(
+        'You must set Stripe keys before accessing this page.'
+      );
+      expect((comp as any).router.navigate).toHaveBeenCalledOnceWith([
+        '/network/admin/monetization',
+      ]);
+    }));
+
+    it('should get stripe keys from server and not navigate if set', fakeAsync(() => {
+      (comp as any).stripeKeysService.initialized$.next(false);
+      (comp as any).stripeKeysService.hasSetStripeKeys$.next(true);
+
+      comp.ngOnInit();
+      tick();
+
+      expect(
+        (comp as any).stripeKeysService.fetchStripeKeys
+      ).toHaveBeenCalled();
+      expect((comp as any).toaster.warn).not.toHaveBeenCalled();
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+    }));
+
+    it('should not get stripe keys from server when already inited and navigate if not set', fakeAsync(() => {
+      (comp as any).stripeKeysService.initialized$.next(true);
+      (comp as any).stripeKeysService.hasSetStripeKeys$.next(false);
+
+      comp.ngOnInit();
+      tick();
+
+      expect(
+        (comp as any).stripeKeysService.fetchStripeKeys
+      ).not.toHaveBeenCalled();
+      expect((comp as any).toaster.warn).toHaveBeenCalledOnceWith(
+        'You must set Stripe keys before accessing this page.'
+      );
+      expect((comp as any).router.navigate).toHaveBeenCalledOnceWith([
+        '/network/admin/monetization',
+      ]);
+    }));
+
+    it('should not get stripe keys from server when already inited and not navigate if set', fakeAsync(() => {
+      (comp as any).stripeKeysService.initialized$.next(true);
+      (comp as any).stripeKeysService.hasSetStripeKeys$.next(true);
+
+      comp.ngOnInit();
+      tick();
+
+      expect(
+        (comp as any).stripeKeysService.fetchStripeKeys
+      ).not.toHaveBeenCalled();
+      expect((comp as any).toaster.warn).not.toHaveBeenCalled();
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+    }));
   });
 });

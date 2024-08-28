@@ -42,6 +42,10 @@ const routes: Routes = [
         path: 'memberships',
         component: NetworkAdminMonetizationMembershipsComponent,
       },
+      {
+        path: 'boost',
+        component: NetworkAdminBoostConfigurationComponent,
+      },
     ],
   },
 ];
