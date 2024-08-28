@@ -46,6 +46,11 @@
     align-items: center;
     gap: $spacing2;
 
+    span {
+      display: inline-block;
+      word-break: break-word;
+    }
+
     .minds-avatar {
       margin: 0;
       width: 40px;
