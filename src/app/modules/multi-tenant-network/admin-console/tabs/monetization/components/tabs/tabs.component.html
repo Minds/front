@@ -8,4 +8,13 @@
       >Memberships</a
     >
   </div>
+  <div class="m-tabs__tab" *ngIf="hasSetStripeKeys$ | async">
+    <a
+      routerLink="./boost"
+      routerLinkActive="m-tabs__tab--selected"
+      data-ref="tenant-admin-monetization-tab-boost"
+      i18n="@@TENANT_ADMIN_MONETIZATION__BOOST"
+      >Boost</a
+    >
+  </div>
 </div>
