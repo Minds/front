@@ -139,7 +139,7 @@ export class NetworkAdminConsoleEditDomainModalComponent {
       return null;
     }
 
-    if (!/^(\w+\.){2,}\w+$/i.test(control.value)) {
+    if (!/^([a-z0-9-]+\.){2,}\w+$/i.test(control.value)) {
       return {
         invalidSubdomain: true,
       };
