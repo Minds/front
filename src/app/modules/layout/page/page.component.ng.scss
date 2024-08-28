@@ -20,4 +20,10 @@
       display: none;
     }
   }
+
+  @media screen and (max-width: $max-mobile) {
+    m-notificationToaster {
+      display: none;
+    }
+  }
 }
