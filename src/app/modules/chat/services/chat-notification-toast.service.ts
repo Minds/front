@@ -16,7 +16,7 @@ import {
 import { ApolloQueryResult } from '@apollo/client';
 
 /** Throttle time that prevents spam when new messages are sent. */
-const NEW_MESSAGE_THROTTLE_TIME: number = 5000;
+const NEW_MESSAGE_THROTTLE_TIME: number = 30000;
 
 /**
  * Service to handle toast notifications of chat messages.
