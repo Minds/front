@@ -11,12 +11,15 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { MockService } from '../../../utils/mock';
 import { ApiService } from '../../api/api.service';
-import { CDN_ASSETS_URL } from '../../injection-tokens/url-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
 import { ChatwootWidgetComponent } from './chatwoot-widget.component';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { ChatwootWidgetService } from './chatwoot-widget.service';
+import { DOCUMENT } from '@angular/common';
+import { WINDOW } from '../../injection-tokens/common-injection-tokens';
+import { EmailAddressService } from '../../services/email-address.service';
+import userMock from '../../../mocks/responses/user.mock';
 
 let configMock = new (function () {
   this.get = jasmine.createSpy('get').and.returnValue({
@@ -53,8 +56,14 @@ describe('ChatwootWidgetComponent', () => {
           provide: ChatwootWidgetService,
           useValue: MockService(ChatwootWidgetService),
         },
+        {
+          provide: EmailAddressService,
+          useValue: MockService(EmailAddressService),
+        },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: IS_TENANT_NETWORK, useValue: false },
+        { provide: DOCUMENT, useValue: document },
+        { provide: WINDOW, useValue: window },
       ],
     }).compileComponents();
   }));
@@ -312,5 +321,44 @@ describe('ChatwootWidgetComponent', () => {
   it('should reset chatwoot', () => {
     (comp as any).resetChatwoot();
     expect((window as any).$chatwoot.reset).toHaveBeenCalled();
+  });
+
+  describe('onBubbleClick', () => {
+    it('should handle bubble click when current chatwoot user has an email', () => {
+      (comp as any).window.$chatwoot.user = { email: 'noreply@minds.com' };
+
+      (comp as any).onBubbleClick(new Event('click'));
+
+      expect(
+        (comp as any).emailAddressService.getEmailAddress
+      ).not.toHaveBeenCalled();
+    });
+
+    it('should handle bubble click when current chatwoot user is not set', () => {
+      (comp as any).window.$chatwoot.user = undefined;
+
+      (comp as any).onBubbleClick(new Event('click'));
+
+      expect(
+        (comp as any).emailAddressService.getEmailAddress
+      ).not.toHaveBeenCalled();
+    });
+
+    it('should handle bubble click when current chatwoot user has no email', () => {
+      (window as any).$chatwoot = {
+        user: { username: '@minds' },
+        setUser: jasmine.createSpy('setUser'),
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue(userMock);
+      (comp as any).emailAddressService.getEmailAddress.and.returnValue(
+        Promise.resolve('noreply@minds.com')
+      );
+
+      (comp as any).onBubbleClick(new Event('click'));
+
+      expect(
+        (comp as any).emailAddressService.getEmailAddress
+      ).toHaveBeenCalled();
+    });
   });
 });
