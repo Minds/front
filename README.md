@@ -27,7 +27,7 @@ For running Playwright tests on Browserstack: [QA] (https://developers.minds.com
 
 ## Contributing
 
-If you'd like to contribute to the Minds project, check out the [Contribution](https://www.minds.org/docs/contributing.html) section of Minds.org or head right over to the [Minds Open Source Community](https://www.minds.com/group/365903183068794880). If you've found or fixed a bug, let us know through our [Help Desk](https://support.minds.com/)!
+If you'd like to contribute to the Minds project, check out the [Contribution](https://developers.minds.com/docs/contributing) section of Minds.org or head right over to the [Minds Open Source Community](https://www.minds.com/group/365903183068794880). If you've found or fixed a bug, let us know through our [Help Desk](https://support.minds.com/)!
 
 ## Security reports
 
