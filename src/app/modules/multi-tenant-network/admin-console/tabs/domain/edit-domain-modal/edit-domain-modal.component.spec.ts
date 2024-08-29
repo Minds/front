@@ -65,6 +65,9 @@ describe('NetworkAdminConsoleEditDomainModalComponent', () => {
     hostnameControl.setValue('a.b.c');
     expect(hostnameControl.valid).toBeTruthy();
 
+    hostnameControl.setValue('test.a-b.com');
+    expect(hostnameControl.valid).toBeTruthy();
+
     // Invalid hostnames:
 
     // Contains a space
