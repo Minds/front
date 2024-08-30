@@ -5,7 +5,6 @@
   <ng-container *ngIf="service.isOwner$ | async; else nonOwner">
     <m-channelActions__boost></m-channelActions__boost>
     <m-channelActions__edit></m-channelActions__edit>
-    <m-channelActions__proChannel></m-channelActions__proChannel>
   </ng-container>
 
   <!-- ------------------------------------------ -->
@@ -39,9 +38,6 @@
         *ngIf="!(service.isSubscribed$ | async)"
       ></m-channelActions__subscribe>
 
-      <m-channelActions__proChannel
-        *mIfTenant="false"
-      ></m-channelActions__proChannel>
       <m-channelActions__supermind
         *mIfTenant="false"
       ></m-channelActions__supermind>
