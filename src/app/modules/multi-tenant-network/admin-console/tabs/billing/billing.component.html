@@ -34,6 +34,9 @@
   <div>
     <m-productPage__pricingCards
       [productPlans]="products"
+      [colorScheme]="
+        (isDarkMode$ | async) ? ColorScheme.Dark : ColorScheme.Light
+      "
     ></m-productPage__pricingCards>
   </div>
 </ng-template>

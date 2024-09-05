@@ -19,10 +19,18 @@ import {
   GetTenantBillingQueryVariables,
   TenantBillingType,
 } from '../../../../../../graphql/generated.engine';
+import { Enum_Componentv2Productfeaturehighlight_Colorscheme as ColorScheme } from '../../../../../../graphql/generated.strapi';
 import { QueryRef } from 'apollo-angular';
-import { Subscription } from 'rxjs';
-import { CurrencyPipe, DatePipe, LowerCasePipe, NgIf } from '@angular/common';
+import { Observable, Subscription } from 'rxjs';
+import {
+  AsyncPipe,
+  CurrencyPipe,
+  DatePipe,
+  LowerCasePipe,
+  NgIf,
+} from '@angular/common';
 import { CommonModule } from '../../../../../common/common.module';
+import { ThemeService } from '../../../../../common/services/theme.service';
 
 /**
  * Domain settings tab for network admin console.
@@ -37,6 +45,7 @@ import { CommonModule } from '../../../../../common/common.module';
   imports: [
     AboutModule,
     NgIf,
+    AsyncPipe,
     CommonModule,
     CurrencyPipe,
     LowerCasePipe,
@@ -60,11 +69,19 @@ export class NetworkAdminConsoleBillingComponent implements OnInit, OnDestroy {
 
   billingOverview: TenantBillingType;
 
+  /** Enum for use in template. */
+  public readonly ColorScheme: typeof ColorScheme = ColorScheme;
+
+  /** Whether the theme is in dark mode. */
+  protected readonly isDarkMode$: Observable<boolean> =
+    this.themeService.isDark$;
+
   constructor(
     protected service: MultiTenantDomainService,
     private configsService: ConfigsService,
     private pricingService: ProductPagePricingService,
-    private tenantBillingGql: GetTenantBillingGQL
+    private tenantBillingGql: GetTenantBillingGQL,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit(): void {
