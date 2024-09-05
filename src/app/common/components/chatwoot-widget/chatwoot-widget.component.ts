@@ -174,15 +174,19 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
 
   /**
    * Sets user for widget.
+   * @param { { email?: string } } additionalProps - additional properties to set on the user.
    * @returns { Promise<void> }
    */
-  private async setUser(): Promise<void> {
+  private async setUser(
+    additionalProps: { email?: string } = {}
+  ): Promise<void> {
     const user: MindsUser = this.session.getLoggedInUser();
 
     this.window.$chatwoot.setUser(user.guid, {
       name: `@${user.username}`,
       identifier_hash: await this.getIdentifierHash(),
       avatar_url: this.userAvatar.getSrc(),
+      ...additionalProps,
     });
   }
 
@@ -202,11 +206,22 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
    * @param { Event } event - click event.
    * @returns { void }
    */
-  private onBubbleClick(event: Event): void {
+  private async onBubbleClick(event: Event): Promise<void> {
+    if (!this.session.isLoggedIn()) {
+      return;
+    }
+
     const currentChatwootUser = this.window.$chatwoot?.user;
 
-    if (currentChatwootUser && !currentChatwootUser?.email) {
-      this.patchEmail(); // async
+    if (!currentChatwootUser) {
+      // clear any lingering state as it's gotten out of sync.
+      this.resetChatwoot();
+
+      // set the user again with the email address.
+      this.setUser({ email: await this.emailAddressService.getEmailAddress() });
+      return;
+    } else if (!currentChatwootUser?.email) {
+      this.patchEmail();
     }
   }
 
