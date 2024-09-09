@@ -324,30 +324,54 @@ describe('ChatwootWidgetComponent', () => {
   });
 
   describe('onBubbleClick', () => {
-    it('should handle bubble click when current chatwoot user has an email', () => {
+    it('should handle bubble click when current chatwoot user has an email', fakeAsync(() => {
       (comp as any).window.$chatwoot.user = { email: 'noreply@minds.com' };
 
       (comp as any).onBubbleClick(new Event('click'));
+      tick();
 
       expect(
         (comp as any).emailAddressService.getEmailAddress
       ).not.toHaveBeenCalled();
-    });
+    }));
 
-    it('should handle bubble click when current chatwoot user is not set', () => {
+    it('should handle bubble click when current chatwoot user is not set', fakeAsync(() => {
+      const mockHmac: string = 'abcdef123456';
+      const avatarSrc: string = 'localhost/avatar.jpg';
+
+      (comp as any).emailAddressService.getEmailAddress.and.returnValue(
+        Promise.resolve('noreply@minds.com')
+      );
+      (comp as any).session.isLoggedIn.and.returnValue(true);
+      (comp as any).session.getLoggedInUser.and.returnValue(userMock);
       (comp as any).window.$chatwoot.user = undefined;
+      (comp as any).api.get.and.returnValue(of({ hmac: mockHmac }));
+      (comp as any).userAvatar.getSrc.and.returnValue(avatarSrc);
 
       (comp as any).onBubbleClick(new Event('click'));
+      tick();
 
+      expect((comp as any).window.$chatwoot.reset).toHaveBeenCalled();
+      expect((comp as any).window.$chatwoot.setUser).toHaveBeenCalledWith(
+        userMock.guid,
+        {
+          name: `@${userMock.username}`,
+          identifier_hash: mockHmac,
+          avatar_url: avatarSrc,
+          email: 'noreply@minds.com',
+        }
+      );
       expect(
         (comp as any).emailAddressService.getEmailAddress
-      ).not.toHaveBeenCalled();
-    });
+      ).toHaveBeenCalled();
+    }));
 
-    it('should handle bubble click when current chatwoot user has no email', () => {
+    it('should handle bubble click when current chatwoot user has no email', fakeAsync(() => {
+      (comp as any).session.isLoggedIn.and.returnValue(true);
       (window as any).$chatwoot = {
         user: { username: '@minds' },
         setUser: jasmine.createSpy('setUser'),
+        reset: jasmine.createSpy('reset'),
       };
       (comp as any).session.getLoggedInUser.and.returnValue(userMock);
       (comp as any).emailAddressService.getEmailAddress.and.returnValue(
@@ -355,10 +379,11 @@ describe('ChatwootWidgetComponent', () => {
       );
 
       (comp as any).onBubbleClick(new Event('click'));
+      tick();
 
       expect(
         (comp as any).emailAddressService.getEmailAddress
       ).toHaveBeenCalled();
-    });
+    }));
   });
 });
