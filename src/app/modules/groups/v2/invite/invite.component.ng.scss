@@ -42,7 +42,10 @@
       }
     }
 
-    ::ng-deep m-formInput__autocompleteUserInput {
+    ::ng-deep m-formInput__autocompleteEntityInput {
+      width: 100%;
+      margin-bottom: $spacing4;
+
       .m-formInputAutocompleteUserInput__popout {
         top: 28px;
         max-height: 290px;
