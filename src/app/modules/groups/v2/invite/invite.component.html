@@ -26,25 +26,17 @@
         <!------------------------>
         <div class="m-form__field--text stretchedField">
           <div class="m-form__row--input">
-            <m-formInput__autocompleteUserInput
-              id="username"
-              formControlName="username"
+            <m-formInput__autocompleteEntityInput
+              class="m-addFeaturedEntity__input"
+              id="user"
+              name="user"
+              formControlName="user"
               placeholder="@username"
-            ></m-formInput__autocompleteUserInput>
+              limit="6"
+              [entityType]="AutoCompleteEntityTypeEnum.User"
+              [allowEmpty]="true"
+            ></m-formInput__autocompleteEntityInput>
           </div>
-        </div>
-        <!-- Validation row is outside the row wrapper b/c of
-      dropdown positioning -->
-        <div class="m-form__row--validation">
-          <p
-            i18n="@@GROUP_INVITE__INVALID_INVITEE"
-            *ngIf="
-              !inProgress &&
-              formGroup.controls.username.errors?.eligibilityInvalid
-            "
-          >
-            You can only invite users who are subscribed to you
-          </p>
         </div>
       </div>
       <p class="m-groupInvite__note" *ngIf="isModerator(group)">
