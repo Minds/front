@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
+  GetSiteMembershipsGQL,
+  GetSiteMembershipsQuery,
   GetStripeKeysGQL,
   GetStripeKeysQuery,
   SetStripeKeysGQL,
   SetStripeKeysMutation,
+  SiteMembership,
   StripeKeysType,
 } from '../../../../../../../graphql/generated.engine';
 import { BehaviorSubject, Observable, lastValueFrom, map } from 'rxjs';
@@ -43,6 +46,7 @@ export class StripeKeysService {
   constructor(
     private getStripeKeysGQL: GetStripeKeysGQL,
     private setStripeKeyGQL: SetStripeKeysGQL,
+    private getSiteMembershipsGQL: GetSiteMembershipsGQL,
     private toaster: ToasterService
   ) {}
 
@@ -82,6 +86,12 @@ export class StripeKeysService {
     publicKey: string,
     secretKey: string
   ): Promise<boolean> {
+    if (await this.hasNonExternalSiteMemberships()) {
+      throw new Error(
+        'Please archive all membership tiers related to the current Stripe public key before changing it.'
+      );
+    }
+
     const response: MutationResult<SetStripeKeysMutation> = await lastValueFrom(
       this.setStripeKeyGQL.mutate({
         pubKey: publicKey,
@@ -99,5 +109,27 @@ export class StripeKeysService {
     });
 
     return true;
+  }
+
+  /**
+   * Checks if there are any non-external site memberships.
+   * @returns { Promise<boolean> } Whether there are any non-external site memberships.
+   */
+  private async hasNonExternalSiteMemberships(): Promise<boolean> {
+    try {
+      const response: ApolloQueryResult<GetSiteMembershipsQuery> =
+        await lastValueFrom(this.getSiteMembershipsGQL.fetch());
+
+      if (!response?.data?.siteMemberships?.length) {
+        return false;
+      }
+
+      return response?.data?.siteMemberships?.some(
+        (membership: SiteMembership) => !membership.isExternal
+      );
+    } catch (e) {
+      console.error(e);
+      return true;
+    }
   }
 }

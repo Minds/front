@@ -143,9 +143,14 @@ describe('NetworkAdminMonetizationMembershipAccordianComponent', () => {
 
       expect(
         (comp as any).archiveSiteMembershipGQL.mutate
-      ).toHaveBeenCalledWith({
-        siteMembershipGuid: siteMembershipMock.membershipGuid,
-      });
+      ).toHaveBeenCalledWith(
+        {
+          siteMembershipGuid: siteMembershipMock.membershipGuid,
+        },
+        {
+          update: jasmine.any(Function),
+        }
+      );
       expect((comp as any).toaster.success).toHaveBeenCalledWith(
         'Successfully archived membership.'
       );
@@ -161,5 +166,36 @@ describe('NetworkAdminMonetizationMembershipAccordianComponent', () => {
       '/network/admin/monetization/memberships/edit/' +
         siteMembershipMock.membershipGuid
     );
+  });
+
+  describe('handleArchiveSuccess', () => {
+    it('should handle archive success', () => {
+      const cache = {
+        identify: jasmine.createSpy('identify'),
+        evict: jasmine.createSpy('evict'),
+        gc: jasmine.createSpy('gc'),
+      };
+
+      (comp as any).handleArchiveSuccess(
+        cache,
+        {
+          data: {
+            archiveSiteMembership: true,
+          },
+        },
+        {
+          variables: {
+            siteMembershipGuid: siteMembershipMock.membershipGuid,
+          },
+        }
+      );
+
+      expect(cache.identify).toHaveBeenCalledWith({
+        __typename: 'SiteMembership',
+        id: siteMembershipMock.membershipGuid,
+      });
+      expect(cache.evict).toHaveBeenCalled();
+      expect(cache.gc).toHaveBeenCalled();
+    });
   });
 });

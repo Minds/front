@@ -28,6 +28,7 @@ import {
 } from '../../../../../../../../common/services/toaster.service';
 import { Router } from '@angular/router';
 import { SiteMembershipsCountService } from '../../../../../../../site-memberships/services/site-membership-count.service';
+import { InMemoryCache } from '@apollo/client';
 
 /**
  * Network admin monetization membership accordian. Used to display a quick
@@ -150,9 +151,14 @@ export class NetworkAdminMonetizationMembershipAccordianComponent {
     try {
       const response: MutationResult<ArchiveSiteMembershipMutation> =
         await lastValueFrom(
-          this.archiveSiteMembershipGQL.mutate({
-            siteMembershipGuid: membership.membershipGuid,
-          })
+          this.archiveSiteMembershipGQL.mutate(
+            {
+              siteMembershipGuid: membership.membershipGuid,
+            },
+            {
+              update: this.handleArchiveSuccess.bind(this),
+            }
+          )
         );
 
       if (!Boolean(response.data?.archiveSiteMembership)) {
@@ -173,5 +179,24 @@ export class NetworkAdminMonetizationMembershipAccordianComponent {
     } finally {
       this.archiveInProgress$.next(false);
     }
+  }
+
+  /**
+   * Handle cache updates on success.
+   * @param { InMemoryCache } cache - the in memory cache.
+   * @param { MutationResult<UpdateChatRoomNameMutation> } result - the mutation result.
+   * @param { any } options - the options.
+   */
+  private handleArchiveSuccess(
+    cache: InMemoryCache,
+    result: MutationResult<ArchiveSiteMembershipMutation>,
+    options: any
+  ): void {
+    const id = cache.identify({
+      __typename: 'SiteMembership',
+      id: options.variables.siteMembershipGuid,
+    });
+    cache.evict({ id });
+    cache.gc();
   }
 }

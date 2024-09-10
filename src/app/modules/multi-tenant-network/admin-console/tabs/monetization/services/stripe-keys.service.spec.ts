@@ -1,6 +1,7 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { StripeKeysService } from './stripe-keys.service';
 import {
+  GetSiteMembershipsGQL,
   GetStripeKeysGQL,
   SetStripeKeysGQL,
   StripeKeysType,
@@ -23,6 +24,10 @@ describe('StripeKeysService', () => {
         {
           provide: SetStripeKeysGQL,
           useValue: jasmine.createSpyObj<SetStripeKeysGQL>(['mutate']),
+        },
+        {
+          provide: GetSiteMembershipsGQL,
+          useValue: jasmine.createSpyObj<GetSiteMembershipsGQL>(['fetch']),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
       ],
@@ -81,6 +86,8 @@ describe('StripeKeysService', () => {
 
   describe('saveStripeKeys', () => {
     it('should set stripeKeys and return true on success', async () => {
+      (service as any).getSiteMembershipsGQL.fetch.and.returnValue(of(null));
+
       service.stripeKeys$.next(null);
       const stripeKeys: StripeKeysType = { pubKey: 'pubKey', secKey: 'secKey' };
       (service as any).setStripeKeyGQL.mutate.and.returnValue(
@@ -94,6 +101,8 @@ describe('StripeKeysService', () => {
     });
 
     it('should handle an error while saving stripe keys', async () => {
+      (service as any).getSiteMembershipsGQL.fetch.and.returnValue(of(null));
+
       const stripeKeys: StripeKeysType = { pubKey: 'pubKey', secKey: 'secKey' };
       (service as any).setStripeKeyGQL.mutate.and.returnValue(
         of({ errors: [{ message: 'error' }] })
@@ -107,6 +116,76 @@ describe('StripeKeysService', () => {
       }
 
       expect(caughtError).toEqual(new Error('error'));
+    });
+
+    it('should throw an error if there are non-external site memberships', async () => {
+      const siteMemberships = [{ isExternal: false }, { isExternal: true }];
+      (service as any).getSiteMembershipsGQL.fetch.and.returnValue(
+        of({ data: { siteMemberships } })
+      );
+
+      await expectAsync(
+        service.saveStripeKeys('newPubKey', 'newSecKey')
+      ).toBeRejectedWithError(
+        'Please archive all membership tiers related to the current Stripe public key before changing it.'
+      );
+    });
+
+    it('should save stripe keys if all site memberships are external', async () => {
+      const siteMemberships = [{ isExternal: true }, { isExternal: true }];
+      (service as any).getSiteMembershipsGQL.fetch.and.returnValue(
+        of({ data: { siteMemberships } })
+      );
+
+      const stripeKeys: StripeKeysType = {
+        pubKey: 'newPubKey',
+        secKey: 'newSecKey',
+      };
+      (service as any).setStripeKeyGQL.mutate.and.returnValue(
+        of({ data: { setStripeKeys: stripeKeys } })
+      );
+
+      const result = await service.saveStripeKeys(
+        stripeKeys.pubKey,
+        stripeKeys.secKey
+      );
+
+      expect(result).toBeTrue();
+      expect(service.stripeKeys$.getValue()).toEqual(stripeKeys);
+    });
+
+    it('should save stripe keys if there are no site memberships', async () => {
+      (service as any).getSiteMembershipsGQL.fetch.and.returnValue(
+        of({ data: { siteMemberships: [] } })
+      );
+
+      const stripeKeys: StripeKeysType = {
+        pubKey: 'newPubKey',
+        secKey: 'newSecKey',
+      };
+      (service as any).setStripeKeyGQL.mutate.and.returnValue(
+        of({ data: { setStripeKeys: stripeKeys } })
+      );
+
+      const result = await service.saveStripeKeys(
+        stripeKeys.pubKey,
+        stripeKeys.secKey
+      );
+
+      expect(result).toBeTrue();
+      expect(service.stripeKeys$.getValue()).toEqual(stripeKeys);
+    });
+
+    it('should throw an error if fetching site memberships fails', async () => {
+      (service as any).getSiteMembershipsGQL.fetch.and.returnValue(
+        throwError(() => new Error('Failed to fetch site memberships'))
+      );
+
+      await expectAsync(
+        service.saveStripeKeys('newPubKey', 'newSecKey')
+      ).toBeRejectedWithError(
+        'Please archive all membership tiers related to the current Stripe public key before changing it.'
+      );
     });
   });
 });
