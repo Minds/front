@@ -26,8 +26,8 @@ export type GroupMembershipResponse = {
 
 /** Options for group join requests. */
 export type GroupJoinOptions = {
-  targetUserGuid?: string;
-  navigateOnSuccess?: boolean;
+  targetUserGuid?: string; // guid of the user to be added to the group (used when group moderator accepts a request to join a closed group)
+  navigateOnSuccess?: boolean; // whether group should be navigated to on success.
 };
 
 /**
@@ -116,8 +116,7 @@ export class GroupMembershipService implements OnDestroy {
 
   /**
    * Join the group
-   *
-   * @param targetUserGuid guid of the user to be added to the group (used when group moderator accepts a request to join a closed group)
+   * @param { GroupJoinOptions } groupJoinOptions - options.
    * @returns { void }
    */
   public join(groupJoinOptions: GroupJoinOptions = {}): void {
