@@ -26,11 +26,22 @@
     class="m-productPagePricingCards__cardContainer"
     [ngClass]="{
       'm-productPagePricingCards__cardContainer--mostPopular':
-        productPlan.attributes.mostPopular
+        productPlan.attributes.mostPopular,
+      'm-productPagePricingCards__cardContainer--lightMode':
+        colorScheme === ColorScheme.Light,
+      'm-productPagePricingCards__cardContainer--darkMode':
+        colorScheme === ColorScheme.Dark
     }"
   >
     <div
       class="m-productPagePricingCards__mostPopularHeader"
+      [ngClass]="{
+        'm-productPagePricingCards__mostPopularHeader--lightMode':
+          productPlan.attributes.mostPopular &&
+          colorScheme === ColorScheme.Light,
+        'm-productPagePricingCards__mostPopularHeader--darkMode':
+          productPlan.attributes.mostPopular && colorScheme === ColorScheme.Dark
+      }"
       *ngIf="productPlan.attributes?.mostPopular"
     >
       <span>Most Popular</span>
@@ -68,6 +79,7 @@
       </ng-template>
       <m-productPage__button
         [data]="productPlan.attributes.button"
+        [colorScheme]="colorScheme"
       ></m-productPage__button>
       <div class="m-productPagePricingCards__cardPerks">
         <p class="m-productPagePricingCards__cardPerkTitle">

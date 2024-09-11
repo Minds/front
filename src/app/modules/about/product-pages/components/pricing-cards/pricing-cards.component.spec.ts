@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
+  Enum_Componentv2Productfeaturehighlight_Colorscheme as ColorScheme,
   Enum_Productplan_Tier,
   ProductPlan,
   ProductPlanEntity,
@@ -108,7 +109,7 @@ describe('ProductPagePricingCardsComponent', () => {
         }),
         MockComponent({
           selector: 'm-productPage__button',
-          inputs: ['data'],
+          inputs: ['data', 'colorScheme'],
         }),
       ],
       providers: [
