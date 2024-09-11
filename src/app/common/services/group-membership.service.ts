@@ -16,12 +16,20 @@ import { ToasterService } from './toaster.service';
 import { MindsGroup } from '../../modules/groups/v2/group.model';
 import { ApiService } from '../api/api.service';
 import { GroupAccessType } from '../../modules/groups/v2/group.types';
+import { Router } from '@angular/router';
 
 export type GroupMembershipResponse = {
   done: boolean;
   status: string;
   message?: string;
 };
+
+/** Options for group join requests. */
+export type GroupJoinOptions = {
+  targetUserGuid?: string;
+  navigateOnSuccess?: boolean;
+};
+
 /**
  * Service that handles group membership changes
  * (a.k.a. join, leave, accept/decline invitation, cancel request)
@@ -92,7 +100,8 @@ export class GroupMembershipService implements OnDestroy {
 
   constructor(
     private api: ApiService,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private router: Router
   ) {}
 
   setGroup(group: MindsGroup) {
@@ -111,7 +120,7 @@ export class GroupMembershipService implements OnDestroy {
    * @param targetUserGuid guid of the user to be added to the group (used when group moderator accepts a request to join a closed group)
    * @returns { void }
    */
-  public join(targetUserGuid: string = null): void {
+  public join(groupJoinOptions: GroupJoinOptions = {}): void {
     this.inProgress$.next(true);
 
     const joinResponse$ = this.groupGuid$.pipe(
@@ -121,8 +130,8 @@ export class GroupMembershipService implements OnDestroy {
         // switch outer observable to api req.
         let endpoint = `${this.base}membership/${groupGuid}`;
 
-        if (targetUserGuid) {
-          endpoint += `/${targetUserGuid}`;
+        if (groupJoinOptions?.targetUserGuid) {
+          endpoint += `/${groupJoinOptions.targetUserGuid}`;
         }
 
         return this.api.put(endpoint);
@@ -140,19 +149,30 @@ export class GroupMembershipService implements OnDestroy {
     );
 
     this.subscriptions.push(
-      combineLatest([joinResponse$, this.isPublic$])
+      combineLatest([joinResponse$, this.isPublic$, this.groupGuid$])
         .pipe(
-          map(([response, isPublic]) => {
+          map(([response, isPublic, groupGuid]) => {
             this.inProgress$.next(false);
 
             if (response && response.status === 'success') {
               if (isPublic) {
+                this.isMember$.next(true);
+              } else if (response['invite_accepted']) {
+                this.isAwaiting$.next(false);
                 this.isMember$.next(true);
               } else {
                 this.isAwaiting$.next(true);
                 this.toaster.success(
                   'Your request to join this group has been sent.'
                 );
+              }
+
+              // only navigate if requested, and the user is not already on the page.
+              if (
+                groupJoinOptions?.navigateOnSuccess &&
+                !this.router.url.includes(`/group/${groupGuid}`)
+              ) {
+                this.router.navigateByUrl(`/group/${groupGuid}`);
               }
               return;
             }
@@ -346,7 +366,7 @@ export class GroupMembershipService implements OnDestroy {
    * Used by group moderator to accept a join request from targetUserGuid
    */
   acceptRequest(targetUserGuid: string) {
-    return this.join(targetUserGuid);
+    return this.join({ targetUserGuid });
   }
 
   /**
