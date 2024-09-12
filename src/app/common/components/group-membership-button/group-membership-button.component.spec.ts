@@ -17,6 +17,7 @@ import { ClientMetaService } from '../../services/client-meta.service';
 import { groupMock } from '../../../mocks/responses/group.mock';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
 import { ToasterService } from '../../services/toaster.service';
+import { Router } from '@angular/router';
 
 describe('GroupMembershipButtonComponent', () => {
   let fixture: ComponentFixture<GroupMembershipButtonComponent>;
@@ -67,9 +68,9 @@ describe('GroupMembershipButtonComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [GroupMembershipButtonComponent, ButtonComponent],
-      imports: [RouterTestingModule],
       providers: [
-        { provide: Session, useValue: sessionMock },
+        { provide: Session, useValue: MockService(Session) },
+        { provide: Router, useValue: MockService(Router) },
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
         {
           provide: ClientMetaService,
@@ -162,6 +163,45 @@ describe('GroupMembershipButtonComponent', () => {
         (comp as any).clientMetaService.recordClick
       ).not.toHaveBeenCalled();
       expect((comp as any).joinClickRecorded).toBe(true);
+    });
+  });
+
+  describe('join', () => {
+    beforeEach(() => {
+      comp.group = groupMock;
+    });
+
+    it('should navigate to login if not logged in', () => {
+      (comp as any).session.isLoggedIn.and.returnValue(false);
+
+      comp.join();
+
+      expect((comp as any).loginReferrer.register).toHaveBeenCalledWith(
+        `/group/${groupMock.guid}?join=true`
+      );
+      expect((comp as any).router.navigate).toHaveBeenCalledWith(['/login']);
+    });
+
+    it('should join a group when logged in, passing navigateOnJoin when true', () => {
+      (comp as any).session.isLoggedIn.and.returnValue(true);
+      comp.navigateOnJoin = true;
+
+      comp.join();
+
+      expect((comp as any).service.join).toHaveBeenCalledWith({
+        navigateOnSuccess: true,
+      });
+    });
+
+    it('should join a group when logged in, passing navigateOnJoin when false', () => {
+      (comp as any).session.isLoggedIn.and.returnValue(true);
+      comp.navigateOnJoin = false;
+
+      comp.join();
+
+      expect((comp as any).service.join).toHaveBeenCalledWith({
+        navigateOnSuccess: false,
+      });
     });
   });
 });
