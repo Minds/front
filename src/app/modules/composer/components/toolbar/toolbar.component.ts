@@ -59,15 +59,12 @@ import {
 } from '../popup/supermind/superminds-creation.service';
 import { SupermindReplyConfirmModalComponent } from '../../../modals/supermind-reply-confirm/supermind-reply-confirm-modal.component';
 import { Supermind } from '../../../supermind/supermind.types';
-import { LiveStreamComponent } from '../livestream/livestream.component';
-import { LivestreamService } from '../../services/livestream.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
 import { ComposerSiteMembershipSelectorComponent } from '../popup/site-membership-selector/site-membership-selector.component';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
-import { Session } from '../../../../services/session';
 
 /**
  * Composer toolbar. Displays important actions
@@ -98,11 +95,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   @ViewChild('fileUploadComponent')
   fileUploadComponent: FileUploadComponent;
-  /**
-   * Livestream information
-   */
-  @ViewChild('LivestreamComponent')
-  livestreamComponent: LiveStreamComponent;
+
   /**
    * Toolbar main <div> element
    */
@@ -190,7 +183,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param cd
    * @param toaster
    * @param uploaderService
-   * @param livestreamService
    * @param platformId
    * @param modalService
    * @param injector
@@ -203,14 +195,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected toaster: ToasterService,
     protected uploaderService: UploaderService,
-    protected livestreamService: LivestreamService,
     @Inject(PLATFORM_ID) protected platformId: Object,
     public modalService: ModalService,
     private injector: Injector,
     protected permissions: PermissionsService,
     protected nsfwEnabledService: NsfwEnabledService,
-    protected siteMembershipsCountService: SiteMembershipsCountService,
-    private session: Session
+    protected siteMembershipsCountService: SiteMembershipsCountService
   ) {}
 
   /**
@@ -274,13 +264,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   @HostListener('window:resize') onWindowResize() {
     this.windowResize$.next();
-  }
-  async createLiveStream(): Promise<void> {
-    try {
-      await this.livestreamService.createLiveStream();
-    } catch (error) {
-      console.error('Error creating live stream:', error);
-    }
   }
 
   /**
@@ -372,10 +355,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   get siteMembershipGuids$() {
     return this.service.siteMembershipGuids$;
-  }
-
-  public get shouldShowLivestreamButton(): boolean {
-    return this.session.isAdmin();
   }
 
   /**

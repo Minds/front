@@ -13,7 +13,6 @@ import { BehaviorSubject, of, Subject } from 'rxjs';
 import { UploaderService } from '../../services/uploader.service';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
-import { LivestreamService } from '../../../../modules/composer/services/livestream.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
@@ -25,12 +24,10 @@ import { IsTenantService } from '../../../../common/services/is-tenant.service';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
 import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
-import { Session } from '../../../../services/session';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
   let fixture: ComponentFixture<ToolbarComponent>;
-  let service: LivestreamService;
 
   const attachment$ = jasmine.createSpyObj('attachment$', {
     next: () => {},
@@ -187,10 +184,6 @@ describe('Composer Toolbar', () => {
           useValue: uploaderServiceMock,
         },
         {
-          provide: LivestreamService,
-          useValue: MockService(LivestreamService),
-        },
-        {
           provide: ExperimentsService,
           useValue: MockService(ExperimentsService),
         },
@@ -226,13 +219,8 @@ describe('Composer Toolbar', () => {
             },
           }),
         },
-        {
-          provide: Session,
-          useValue: MockService(Session),
-        },
       ],
     }).compileComponents();
-    service = TestBed.inject(LivestreamService);
   }));
 
   beforeEach((done) => {
@@ -314,10 +302,6 @@ describe('Composer Toolbar', () => {
     });
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-
   it('should emit on monetize popup', () => {
     comp.onMonetizeClick();
     expect(popupServiceMock.create).toHaveBeenCalledWith(
@@ -392,17 +376,5 @@ describe('Composer Toolbar', () => {
     );
 
     expect(membershipButton).toBeFalsy();
-  });
-
-  describe('shouldShowLivestreamButton', () => {
-    it('should determine if livestream button should be shown', () => {
-      (comp as any).session.isAdmin.and.returnValue(true);
-      expect(comp.shouldShowLivestreamButton).toBeTrue();
-    });
-
-    it('should determine if livestream button should NOT be shown', () => {
-      (comp as any).session.isAdmin.and.returnValue(false);
-      expect(comp.shouldShowLivestreamButton).toBeFalse();
-    });
   });
 });
