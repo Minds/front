@@ -243,7 +243,7 @@ describe('ProductPageButtonComponent', () => {
   });
 
   describe('onClick', () => {
-    it('should handle button click when navigationUrl is set', () => {
+    it('should handle button click when navigationUrl is set to a relative url', () => {
       const navigationUrl: string = '/url';
       comp.data.navigationUrl = navigationUrl;
       comp.onClick();
@@ -251,6 +251,24 @@ describe('ProductPageButtonComponent', () => {
       expect((comp as any).router.navigateByUrl).toHaveBeenCalledWith(
         navigationUrl
       );
+    });
+
+    it('should handle button click when navigationUrl is set to an api URL', () => {
+      spyOn(window, 'open');
+      const navigationUrl: string = '/api/';
+      comp.data.navigationUrl = navigationUrl;
+      comp.onClick();
+
+      expect(window.open).toHaveBeenCalledWith(navigationUrl, '_blank');
+    });
+
+    it('should handle button click when navigationUrl is set to an absolute URL', () => {
+      spyOn(window, 'open');
+      const navigationUrl: string = 'https://www.minds.com/';
+      comp.data.navigationUrl = navigationUrl;
+      comp.onClick();
+
+      expect(window.open).toHaveBeenCalledWith(navigationUrl, '_blank');
     });
 
     it('should handle button click when action is set', () => {
