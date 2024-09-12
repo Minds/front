@@ -61,7 +61,19 @@ export class GroupsTileComponent {
     }
   }
 
+  /**
+   * Prevents the click event from propagating to the parent elements.
+   * This is necessary because the membership button behavior should not be
+   * overridden by parent anchor tags when clicking on the button.
+   * @param $event - The mouse event.
+   * @returns { void }
+   */
+  protected onMembershipButtonClick($event: MouseEvent): void {
+    $event.preventDefault();
+    $event.stopPropagation();
+  }
+
   ngOnDestroy() {
-    this.$updateMarker.unsubscribe();
+    this.$updateMarker?.unsubscribe();
   }
 }
