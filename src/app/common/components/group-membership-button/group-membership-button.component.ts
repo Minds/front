@@ -119,6 +119,9 @@ export class GroupMembershipButtonComponent implements OnDestroy {
   @Input()
   displayAsButton: boolean = true;
 
+  /** Whether to navigate to the group page after join action. */
+  @Input() navigateOnJoin: boolean = false;
+
   @Output() onMembershipChange: EventEmitter<GroupMembershipChangeOuput> =
     new EventEmitter();
 
@@ -234,8 +237,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
 
   /**
    * Join a group.
-   * @param { MouseEvent } - mouse event.
-   * @returns { void }
+   * @returns { Promise<void> }
    */
   public async join(): Promise<void> {
     if (!this.session.isLoggedIn()) {
@@ -244,7 +246,8 @@ export class GroupMembershipButtonComponent implements OnDestroy {
       this.router.navigate(['/login']);
       return;
     }
-    this.service.join();
+
+    this.service.join({ navigateOnSuccess: this.navigateOnJoin });
   }
 
   /**
