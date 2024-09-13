@@ -332,8 +332,6 @@ export class MindsRichEmbed implements OnDestroy {
           html: this.sanitizer.bypassSecurityTrustHtml(
             `<iframe
               src="https://www.scribd.com/embeds/${matches[1]}/content"
-              style="aspect-ratio: 1;"
-              width="100%"
               frameborder="0"
             ></iframe>`
           ),
