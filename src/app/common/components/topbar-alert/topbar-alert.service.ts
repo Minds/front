@@ -3,9 +3,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
   combineLatest,
   EMPTY,
-  filter,
   firstValueFrom,
-  from,
   map,
   Observable,
   of,
@@ -16,6 +14,8 @@ import { ObjectLocalStorageService } from '../../services/object-local-storage.s
 import { Apollo, gql } from 'apollo-angular';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
+import { PushNotificationService } from '../../services/push-notification.service';
+import { PUSH_NOTIFICATION_BANNER_KEY } from '../topbar-enable-push-notifications-banner/topbar-enable-push-notifications-banner.component';
 
 /** Alert key type */
 export type AlertKey = string;
@@ -61,6 +61,15 @@ export class TopbarAlertService {
   /** Logic for dictating if the alert should display */
   shouldShow$: Observable<boolean>;
 
+  /** Logic for dictating if the push notification alert should display */
+  shouldShowPushNotificationAlert$: Observable<boolean>;
+
+  /** Logic for dictating if the CMS driven alert should display */
+  shouldShowCmsAlert$: Observable<boolean>;
+
+  /** Logic for dictating if the tenant trial alert should be shown. */
+  shouldShowTenantTrialAlert$: Observable<boolean>;
+
   /** storage key */
   private readonly storageKey = 'topbar-alert:dismissed';
 
@@ -69,6 +78,7 @@ export class TopbarAlertService {
     private objectStorage: ObjectLocalStorageService,
     private apollo: Apollo,
     private config: ConfigsService,
+    private pushNotificationService: PushNotificationService,
     @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean,
     @Inject(PLATFORM_ID) private platformId: string
   ) {
@@ -84,48 +94,97 @@ export class TopbarAlertService {
             .valueChanges.pipe(
               map((result: any) => result.data.topbarAlert.data)
             )
-        : of(EMPTY);
+        : of(null);
 
     this.identifier$ = this.copyData$.pipe(
-      map((copyData) => copyData.attributes.identifier)
+      map((copyData) => copyData?.attributes?.identifier)
     );
 
     this.enabled$ = this.copyData$.pipe(
-      map((copyData) => Boolean(copyData.attributes.enabled))
+      map((copyData) => Boolean(copyData?.attributes?.enabled))
     );
 
     this.onlyDisplayAfter$ = this.copyData$.pipe(
-      map((copyData) => Date.parse(copyData.attributes.onlyDisplayAfter))
+      map((copyData) => Date.parse(copyData?.attributes?.onlyDisplayAfter))
+    );
+
+    this.shouldShowPushNotificationAlert$ = isPlatformServer(this.platformId)
+      ? of(null)
+      : combineLatest([
+          this.pushNotificationService.enabled$,
+          this.pushNotificationService.supported$,
+          this.dismissedAlerts$,
+        ]).pipe(
+          map(
+            ([enabled, supported, dismissedAlerts]) =>
+              this.session.isLoggedIn() &&
+              supported &&
+              !enabled &&
+              dismissedAlerts.indexOf(PUSH_NOTIFICATION_BANNER_KEY) === -1
+          )
+        );
+
+    this.shouldShowCmsAlert$ = isPlatformServer(this.platformId)
+      ? of(null)
+      : combineLatest([
+          this.identifier$,
+          this.dismissedAlerts$,
+          this.onlyDisplayAfter$,
+          this.enabled$,
+          this.session.user$.pipe(map((user) => !!user)),
+        ]).pipe(
+          map(
+            ([
+              identifier,
+              dismissedAlerts,
+              onlyDisplayAfter,
+              enabled,
+              isLoggedIn,
+            ]) => {
+              return (
+                !this.isTenantNetwork &&
+                dismissedAlerts.indexOf(identifier) === -1 &&
+                onlyDisplayAfter < Date.now() &&
+                enabled &&
+                isLoggedIn
+              );
+            }
+          )
+        );
+
+    this.shouldShowTenantTrialAlert$ = of(
+      this.isTenantNetwork && this.config.get('tenant')?.['is_trial']
     );
 
     this.shouldShow$ = isPlatformServer(this.platformId)
-      ? of(false)
-      : this.isTenantNetwork
-        ? of(this.config.get('tenant')?.['is_trial'] ?? false)
-        : combineLatest([
-            this.identifier$,
-            this.dismissedAlerts$,
-            this.onlyDisplayAfter$,
-            this.enabled$,
-            this.session.user$.pipe(map((user) => !!user)),
-          ]).pipe(
-            map(
-              ([
-                identifier,
-                dismissedAlerts,
-                onlyDisplayAfter,
-                enabled,
-                isLoggedIn,
-              ]) => {
-                return (
-                  dismissedAlerts.indexOf(identifier) === -1 &&
-                  onlyDisplayAfter < Date.now() &&
-                  enabled &&
-                  isLoggedIn
-                );
-              }
-            )
-          );
+      ? of(null)
+      : combineLatest([
+          this.shouldShowCmsAlert$,
+          this.shouldShowTenantTrialAlert$,
+          this.shouldShowPushNotificationAlert$,
+        ]).pipe(
+          map(
+            ([
+              shouldShowCmsAlert,
+              shouldShowTenantTrialAlert,
+              shouldShowPushNotificationAlert,
+            ]: [boolean, boolean, boolean]) => {
+              return (
+                shouldShowTenantTrialAlert ||
+                shouldShowPushNotificationAlert ||
+                shouldShowCmsAlert
+              );
+            }
+          )
+        );
+  }
+
+  /**
+   * Whether tenant trial alert should be shown.
+   * @returns { boolean } - true if tenant trial alert should be shown.
+   */
+  public shouldShowTenantTrialAlert(): boolean {
+    return this.isTenantNetwork && this.config.get('tenant')?.['is_trial'];
   }
 
   /**
@@ -133,8 +192,10 @@ export class TopbarAlertService {
    * @param { AlertKey } alertKey - key for alert to dismiss.
    * @returns { void }
    */
-  public async dismiss(): Promise<void> {
-    const alertKey = await firstValueFrom(this.identifier$);
+  public async dismiss(alertKey: string = null): Promise<void> {
+    if (!alertKey) {
+      alertKey = await firstValueFrom(this.identifier$);
+    }
     if (isPlatformBrowser(this.platformId)) {
       this.objectStorage.setSingle(this.storageKey, {
         [alertKey]: '1',
