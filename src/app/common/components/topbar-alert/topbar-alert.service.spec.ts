@@ -8,7 +8,7 @@ import { Session } from '../../../services/session';
 import { ObjectLocalStorageService } from '../../services/object-local-storage.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, lastValueFrom, skip } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, skip, take } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { MockService } from '../../../utils/mock';
 import {
@@ -18,6 +18,7 @@ import {
 import userMock from '../../../mocks/responses/user.mock';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
+import { PushNotificationService } from '../../services/push-notification.service';
 
 describe('TopbarAlertService', () => {
   let service: TopbarAlertService;
@@ -27,6 +28,7 @@ describe('TopbarAlertService', () => {
   beforeEach(() => {
     sessionMock = {
       user$: new BehaviorSubject<MindsUser | null>(null),
+      isLoggedIn: jasmine.createSpy('isLoggedIn').and.returnValue(true),
     };
 
     TestBed.configureTestingModule({
@@ -46,6 +48,16 @@ describe('TopbarAlertService', () => {
           }),
         },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: PushNotificationService,
+          useValue: MockService(PushNotificationService, {
+            has: ['enabled$', 'supported$'],
+            props: {
+              enabled$: { get: () => new BehaviorSubject<boolean>(true) },
+              supported$: { get: () => new BehaviorSubject<boolean>(true) },
+            },
+          }),
+        },
         { provide: PLATFORM_ID, useValue: 'browser' },
         {
           provide: IS_TENANT_NETWORK,
@@ -304,5 +316,97 @@ describe('TopbarAlertService', () => {
     });
 
     expect(await firstValueFrom(service.shouldShow$)).toBe(true);
+  });
+
+  describe('shouldShowPushNotificationAlert$', () => {
+    it('should emit true for shouldShow$ when a push notification banner should be shown', (done: DoneFn) => {
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      (service as any).pushNotificationService.enabled$.next(false);
+      (service as any).pushNotificationService.supported$.next(true);
+
+      service.shouldShowPushNotificationAlert$
+        .pipe(take(1))
+        .subscribe((shouldShow) => {
+          expect(shouldShow).toBe(true);
+          done();
+        });
+    });
+
+    it('should emit false for shouldShow$ when a push notification banner should NOT be shown because the user is not logged in', (done: DoneFn) => {
+      (service as any).session.isLoggedIn.and.returnValue(false);
+      (service as any).pushNotificationService.enabled$.next(false);
+      (service as any).pushNotificationService.supported$.next(true);
+
+      service.shouldShowPushNotificationAlert$
+        .pipe(take(1))
+        .subscribe((shouldShow) => {
+          expect(shouldShow).toBe(false);
+          done();
+        });
+    });
+
+    it('should emit false for shouldShow$ when a push notification banner should NOT be shown because push notifications are enabled', (done: DoneFn) => {
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      (service as any).pushNotificationService.enabled$.next(true);
+      (service as any).pushNotificationService.supported$.next(true);
+
+      service.shouldShowPushNotificationAlert$
+        .pipe(take(1))
+        .subscribe((shouldShow) => {
+          expect(shouldShow).toBe(false);
+          done();
+        });
+    });
+
+    it('should emit false for shouldShow$ when a push notification banner should NOT be shown because push notifications are not supported', (done: DoneFn) => {
+      (service as any).session.isLoggedIn.and.returnValue(true);
+      (service as any).pushNotificationService.enabled$.next(false);
+      (service as any).pushNotificationService.supported$.next(false);
+
+      service.shouldShowPushNotificationAlert$
+        .pipe(take(1))
+        .subscribe((shouldShow) => {
+          expect(shouldShow).toBe(false);
+          done();
+        });
+    });
+  });
+
+  describe('shouldShowTenantTrialAlert', () => {
+    it('should determine when a trial banner should be shown', () => {
+      Object.defineProperty(service, 'isTenantNetwork', {
+        value: true,
+        writable: true,
+      });
+      (service as any).config.get.withArgs('tenant').and.returnValue({
+        'is_trial': true,
+      });
+
+      expect(service.shouldShowTenantTrialAlert()).toBe(true);
+    });
+
+    it('should determine when a trial banner should NOT be shown because it is not a tenant network', () => {
+      Object.defineProperty(service, 'isTenantNetwork', {
+        value: false,
+        writable: true,
+      });
+      (service as any).config.get.withArgs('tenant').and.returnValue({
+        'is_trial': true,
+      });
+
+      expect(service.shouldShowTenantTrialAlert()).toBe(false);
+    });
+
+    it('should determine when a trial banner should NOT be shown because it is not a tenant trial', () => {
+      Object.defineProperty(service, 'isTenantNetwork', {
+        value: true,
+        writable: true,
+      });
+      (service as any).config.get.withArgs('tenant').and.returnValue({
+        'is_trial': false,
+      });
+
+      expect(service.shouldShowTenantTrialAlert()).toBe(false);
+    });
   });
 });

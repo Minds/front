@@ -39,7 +39,10 @@
       padding-right: $spacing6;
     }
 
-    ::ng-deep a {
+    ::ng-deep a,
+    .m-topbarAlert__actionText {
+      cursor: pointer;
+
       @include m-theme() {
         color: themed($m-blue);
       }
