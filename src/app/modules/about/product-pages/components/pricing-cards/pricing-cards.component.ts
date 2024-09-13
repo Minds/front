@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import {
   Enum_Productplan_Tier as ProductPlanTier,
   ProductPlanEntity,
+  Enum_Componentv2Productfeaturehighlight_Colorscheme as ColorScheme,
 } from '../../../../../../graphql/generated.strapi';
 import { ProductPageUpgradeTimePeriod } from '../../product-pages.types';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -21,6 +22,12 @@ export class ProductPagePricingCardsComponent {
 
   /** Product plans data. */
   @Input() public productPlans: ProductPlanEntity[];
+
+  /** Color scheme for component. */
+  @Input() public readonly colorScheme: ColorScheme = ColorScheme.Light;
+
+  /** Enum for use in template. */
+  public readonly ColorScheme: typeof ColorScheme = ColorScheme;
 
   /** Enum for use in template. */
   public readonly ProductPageUpgradeTimePeriod: typeof ProductPageUpgradeTimePeriod =

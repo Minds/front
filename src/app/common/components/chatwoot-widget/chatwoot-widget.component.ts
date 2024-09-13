@@ -1,4 +1,4 @@
-import { isPlatformServer } from '@angular/common';
+import { DOCUMENT, isPlatformServer } from '@angular/common';
 import {
   Component,
   Inject,
@@ -19,6 +19,8 @@ import {
 } from './chatwoot-widget.types';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { ChatwootWidgetService } from './chatwoot-widget.service';
+import { EmailAddressService } from '../../services/email-address.service';
+import { WINDOW } from '../../injection-tokens/common-injection-tokens';
 
 /**
  * Chatwoot widget - injects a script into the DOM that loads the widget.
@@ -51,8 +53,11 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     private config: ConfigsService,
     private userAvatar: UserAvatarService,
     private service: ChatwootWidgetService,
+    private emailAddressService: EmailAddressService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean,
+    @Inject(DOCUMENT) private readonly document: Document,
+    @Inject(WINDOW) private readonly window: any
   ) {
     const chatwootConfig: ChatwootMindsConfig =
       this.config.get<ChatwootMindsConfig>('chatwoot');
@@ -78,7 +83,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
         (loggedIn: boolean): void => {
           if (
             this.service.canUseChatwoot() &&
-            (!(window as any).$chatwoot || !(window as any).$chatwoot?.isLoaded)
+            (!this.window.$chatwoot || !this.window.$chatwoot?.isLoaded)
           ) {
             this.initChatwoot();
           }
@@ -94,6 +99,10 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     this.resetChatwoot();
     this.loggedInSubscription?.unsubscribe();
     this.loggedInInitSubscription?.unsubscribe();
+    this.getChatwootBubbleElement()?.removeEventListener(
+      'click',
+      this.onBubbleClick.bind(this)
+    );
   }
 
   /**
@@ -104,10 +113,11 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
   private initChatwoot(): void {
     // grab existing script elements
     const firstScriptElement: HTMLScriptElement =
-      document.getElementsByTagName('script')[0];
+      this.document.getElementsByTagName('script')[0];
 
     // create new script element
-    let newScriptElement: HTMLScriptElement = document.createElement('script');
+    let newScriptElement: HTMLScriptElement =
+      this.document.createElement('script');
     newScriptElement.src = this.scriptUrl;
     newScriptElement.defer = true;
     newScriptElement.async = true;
@@ -132,16 +142,25 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     this.setChatwootSettings();
 
     // run chatwoot widget
-    (window as any).chatwootSDK.run({
+    this.window.chatwootSDK.run({
       websiteToken: this.websiteToken,
       baseUrl: this.baseUrl,
     });
 
-    window.addEventListener('chatwoot:error', function (e) {
+    this.window.addEventListener('chatwoot:error', function (e) {
       console.error(e);
     });
 
-    window.addEventListener('chatwoot:ready', (ready) => {
+    this.window.addEventListener('chatwoot:ready', (ready) => {
+      /**
+       * The SDK does not give us an "open" event, so we have to
+       * listen to clicks on the chat bubble.
+       */
+      this.getChatwootBubbleElement()?.addEventListener(
+        'click',
+        this.onBubbleClick.bind(this)
+      );
+
       if (this.session.isLoggedIn()) {
         this.setUser();
       } else {
@@ -155,15 +174,19 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
 
   /**
    * Sets user for widget.
+   * @param { { email?: string } } additionalProps - additional properties to set on the user.
    * @returns { Promise<void> }
    */
-  private async setUser(): Promise<void> {
+  private async setUser(
+    additionalProps: { email?: string } = {}
+  ): Promise<void> {
     const user: MindsUser = this.session.getLoggedInUser();
 
-    (window as any).$chatwoot.setUser(user.guid, {
+    this.window.$chatwoot.setUser(user.guid, {
       name: `@${user.username}`,
       identifier_hash: await this.getIdentifierHash(),
       avatar_url: this.userAvatar.getSrc(),
+      ...additionalProps,
     });
   }
 
@@ -179,11 +202,62 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Handle clicks on Chatwoot bubble.
+   * @param { Event } event - click event.
+   * @returns { void }
+   */
+  private async onBubbleClick(event: Event): Promise<void> {
+    if (!this.session.isLoggedIn()) {
+      return;
+    }
+
+    const currentChatwootUser = this.window.$chatwoot?.user;
+
+    if (!currentChatwootUser) {
+      // clear any lingering state as it's gotten out of sync.
+      this.resetChatwoot();
+
+      // set the user again with the email address.
+      this.setUser({ email: await this.emailAddressService.getEmailAddress() });
+      return;
+    } else if (!currentChatwootUser?.email) {
+      this.patchEmail();
+    }
+  }
+
+  /**
+   * Patch users email into user object. Expects a user to already be set
+   * And the current session to be logged in.
+   * @returns { Promise<void> }
+   */
+  private async patchEmail(): Promise<void> {
+    const loggedInUser: MindsUser = this.session.getLoggedInUser();
+
+    if (!loggedInUser) {
+      return;
+    }
+
+    const emailAddress: string =
+      await this.emailAddressService.getEmailAddress();
+
+    if (!emailAddress) {
+      console.warn('No email found in settings');
+      return;
+    }
+
+    // patch user object.
+    this.window.$chatwoot.setUser(loggedInUser.guid, {
+      ...this.window.$chatwoot.user,
+      email: emailAddress,
+    });
+  }
+
+  /**
    * Reset chatwoot. Should be called on logout.
    * @returns { void }
    */
   private resetChatwoot(): void {
-    (window as any).$chatwoot?.reset();
+    this.window.$chatwoot?.reset();
   }
 
   /**
@@ -191,7 +265,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   private setChatwootSettings(): void {
-    (window as any).chatwootSettings = {
+    this.window.chatwootSettings = {
       locale: 'en',
       darkMode: 'light',
     };
@@ -224,5 +298,13 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
         this.resetChatwoot();
       }
     );
+  }
+
+  /**
+   * Get chatwoot bubble element.
+   * @returns { Element|null } chatwoot bubble element.
+   */
+  private getChatwootBubbleElement(): Element | null {
+    return this.document.getElementsByClassName('woot-widget-bubble')?.[0];
   }
 }

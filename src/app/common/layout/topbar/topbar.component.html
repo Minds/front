@@ -23,12 +23,20 @@
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"
 >
   <!-- Topbar alerts -->
-  <ng-container *ngIf="shouldShowTopbarAlert$ | async">
-    <ng-container *ngIf="!isTenantNetwork; else tenantNetworkBannerTemplate">
-      <m-topbarAlert></m-topbarAlert>
-    </ng-container>
-    <ng-template #tenantNetworkBannerTemplate>
-      <m-networkTrialBanner></m-networkTrialBanner>
+  <ng-container *ngIf="isBrowser && shouldShowTopbarAlert$ | async">
+    <m-topbarAlert
+      *ngIf="shouldShowCmsAlert$ | async; else notCmsTopbarAlertTemplate"
+    ></m-topbarAlert>
+    <ng-template #notCmsTopbarAlertTemplate>
+      <m-networkTrialBanner
+        *ngIf="
+          shouldShowTenantTrialAlert$ | async;
+          else enablePushNotificationTemplate
+        "
+      ></m-networkTrialBanner>
+      <ng-template #enablePushNotificationTemplate>
+        <m-topbarAlert__enablePushNotification></m-topbarAlert__enablePushNotification>
+      </ng-template>
     </ng-template>
   </ng-container>
 

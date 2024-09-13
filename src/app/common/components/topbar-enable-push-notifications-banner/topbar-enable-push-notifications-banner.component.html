@@ -1,0 +1,22 @@
+<span class="m-topbarAlert__message">
+  <span i18n="@@TOPBAR__ENABLE_PUSH_NOTIF_BANNER__GET_NOTIFIED"
+    >Get notified of engagements as they happen.</span
+  >
+  <span>&nbsp;</span>
+  <span
+    (click)="enableNotificationsClick()"
+    class="m-topbarAlert__actionText"
+    [attr.data-ref]="
+      'topbar-alert-' + PUSH_NOTIFICATION_BANNER_KEY + '-action-click'
+    "
+    i18n="@@TOPBAR__ENABLE_PUSH_NOTIF_BANNER__ENABLE_NOTIFICATIONS"
+    >Enable notifications</span
+  >.
+</span>
+
+<i
+  class="material-icons m-topbarAlert__dismissIcon"
+  (click)="dismiss()"
+  [attr.data-ref]="'topbar-alert-' + PUSH_NOTIFICATION_BANNER_KEY + '-dismiss'"
+  >close</i
+>

@@ -197,6 +197,7 @@ import { ShowOnHoverDirective } from './directives/show-on-hover-directive';
 import { CustomNavigationItemsComponent } from './layout/sidebar/custom-navigation-items/custom-navigation-items.component';
 import { NotificationToasterV2Component } from './components/notification-toaster-v2/notification-toaster-v2.component';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { TopbarEnablePushNotificationsBannerComponent } from './components/topbar-enable-push-notifications-banner/topbar-enable-push-notifications-banner.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -314,6 +315,7 @@ const MINDS_COMMON_COMPONENTS = [
   PlanCardComponent,
   TopbarNetworkTrialBannerComponent,
   NotificationToasterV2Component,
+  TopbarEnablePushNotificationsBannerComponent,
 ];
 // ------------------------------------
 // ------------------------------------

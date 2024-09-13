@@ -82,8 +82,16 @@ $maxPricingCardWidth: 278px;
       }
 
       &.m-productPagePricingCards__cardContainer--mostPopular {
-        @include m-theme() {
-          border: 1px solid color-by-theme($m-bgColor--primary, 'dark');
+        &.m-productPagePricingCards__cardContainer--lightMode {
+          @include m-theme() {
+            border: 1px solid color-by-theme($m-bgColor--primary, 'dark');
+          }
+        }
+
+        &.m-productPagePricingCards__cardContainer--darkMode {
+          @include m-theme() {
+            border: 1px solid color-by-theme($m-bgColor--primary, 'light');
+          }
         }
       }
 
@@ -101,10 +109,28 @@ $maxPricingCardWidth: 278px;
         border-radius: 8px 8px 0 0;
         @include body2Bold;
 
-        @include m-theme() {
-          border: 1px solid color-by-theme($m-bgColor--primary, 'dark');
-          color: color-by-theme($m-textColor--primary, 'dark');
-          background-color: color-by-theme($m-bgColor--primary, 'dark');
+        &.m-productPagePricingCards__mostPopularHeader--lightMode {
+          @include m-theme() {
+            border: 1px solid color-by-theme($m-bgColor--primary, 'dark');
+            color: color-by-theme($m-textColor--primary, 'dark');
+            background-color: color-by-theme($m-bgColor--primary, 'dark');
+
+            ::ng-deep m-icon svg {
+              fill: themed($m-white-always);
+            }
+          }
+        }
+
+        &.m-productPagePricingCards__mostPopularHeader--darkMode {
+          @include m-theme() {
+            border: 1px solid color-by-theme($m-bgColor--primary, 'light');
+            color: color-by-theme($m-textColor--primary, 'light');
+            background-color: color-by-theme($m-bgColor--primary, 'light');
+
+            ::ng-deep m-icon svg {
+              fill: themed($m-black-always);
+            }
+          }
         }
 
         span {
