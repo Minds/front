@@ -221,6 +221,16 @@ describe('MindsRichEmbed', () => {
       );
     });
 
+    it('should NOT parse Scribd URL when in a comment', () => {
+      comp.src = {
+        perma_url: 'https://www.scribd.com/document/123456789/',
+        type: 'comment',
+      };
+
+      const result = comp.parseInlineEmbed();
+      expect(result).toBeNull();
+    });
+
     it('should handle invalid Scribd URLs', () => {
       comp.src = {
         perma_url: 'https://www.scribd.com/invalid/url',

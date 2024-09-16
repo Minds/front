@@ -323,7 +323,8 @@ export class MindsRichEmbed implements OnDestroy {
     // Scribd
     let scribd = this.embedLinkWhitelist.getRegex('scribd');
 
-    if ((matches = scribd.exec(url)) !== null) {
+    // We don't want to match scribd links in comments
+    if (this.src?.type !== 'comment' && (matches = scribd.exec(url)) !== null) {
       if (matches[1]) {
         this.mediaSource = 'scribd';
         return {
