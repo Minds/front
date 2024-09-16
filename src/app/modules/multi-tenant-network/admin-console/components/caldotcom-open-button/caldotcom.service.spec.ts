@@ -54,7 +54,7 @@ describe('CalDotComService', () => {
       expect((service as any).document.createElement).toHaveBeenCalledWith(
         'script'
       );
-      expect(mockScriptElement.src).toBe('/assets/scripts/cal.js');
+      expect(mockScriptElement.src).toBe('/static/en/assets/scripts/cal.js');
       expect(mockScriptElement.defer).toBeTrue();
       expect(mockScriptElement.async).toBeTrue();
       expect(mockParentNode.insertBefore).toHaveBeenCalledWith(
