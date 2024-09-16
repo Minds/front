@@ -21,7 +21,10 @@ export class CalDotComService {
       return;
     }
 
-    // Cal.com embed script.
+    /**
+     * Cal.com embed script loader. The core script is loaded from
+     * our assets rather than https://app.cal.com/embed/embed.js
+     */
     (function (C, A, L) {
       let p = function (a, ar) {
         a.q.push(ar);
@@ -53,7 +56,7 @@ export class CalDotComService {
           }
           p(cal, ar);
         };
-    })(window, 'https://app.cal.com/embed/embed.js', 'init');
+    })(window, '/static/en/assets/scripts/cal.js', 'init');
 
     this.loaded = true;
   }
