@@ -1,7 +1,5 @@
-import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { WINDOW } from '../../../../../common/injection-tokens/common-injection-tokens';
-import { BehaviorSubject } from 'rxjs';
 
 /**
  * Service for loading and interacting with the cal.com SDK.
@@ -9,46 +7,55 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class CalDotComService {
   /** Whether the cal.com script has been loaded. */
-  public readonly scriptLoaded$: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+  private loaded: boolean = false;
 
-  constructor(
-    @Inject(DOCUMENT) private readonly document: Document,
-    @Inject(WINDOW) private readonly window: Window
-  ) {}
+  constructor(@Inject(WINDOW) private readonly window: Window) {}
 
   /**
    * Load the cal.com script.
    * @returns { void }
    */
   public loadScript(): void {
-    if (this.scriptLoaded$.getValue()) {
+    if (this.loaded) {
       console.info('Did not reload cal.com script - it is already loaded');
       return;
     }
 
-    // grab existing script elements
-    const firstScriptElement: HTMLScriptElement =
-      this.document.getElementsByTagName('script')[0];
+    // Cal.com embed script.
+    (function (C, A, L) {
+      let p = function (a, ar) {
+        a.q.push(ar);
+      };
+      let d = C.document;
+      (C as any).Cal =
+        (C as any).Cal ||
+        function () {
+          let cal = (C as any).Cal;
+          let ar = arguments;
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            d.head.appendChild(d.createElement('script')).src = A;
+            cal.loaded = true;
+          }
+          if (ar[0] === L) {
+            const api = function () {
+              p(api, arguments);
+            };
+            const namespace = ar[1];
+            api.q = api.q || [];
+            if (typeof namespace === 'string') {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p(cal.ns[namespace], ar);
+              p(cal, ['initNamespace', namespace]);
+            } else p(cal, ar);
+            return;
+          }
+          p(cal, ar);
+        };
+    })(window, 'https://app.cal.com/embed/embed.js', 'init');
 
-    // create new script element
-    let newScriptElement: HTMLScriptElement =
-      this.document.createElement('script');
-
-    newScriptElement.src = '/static/en/assets/scripts/cal.js';
-    newScriptElement.defer = true;
-    newScriptElement.async = true;
-
-    // add new script element to DOM
-    firstScriptElement.parentNode.insertBefore(
-      newScriptElement,
-      firstScriptElement
-    );
-
-    // attach on load listener for script to init.
-    newScriptElement.onload = (): void => {
-      this.scriptLoaded$.next(true);
-    };
+    this.loaded = true;
   }
 
   /**

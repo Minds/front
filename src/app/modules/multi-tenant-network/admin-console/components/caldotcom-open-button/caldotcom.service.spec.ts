@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { CalDotComService } from './caldotcom.service';
-import { DOCUMENT } from '@angular/common';
 import { WINDOW } from '../../../../../common/injection-tokens/common-injection-tokens';
 
 describe('CalDotComService', () => {
@@ -11,17 +10,10 @@ describe('CalDotComService', () => {
       providers: [
         CalDotComService,
         {
-          provide: DOCUMENT,
-          useValue: jasmine.createSpyObj('Document', [
-            'createElement',
-            'getElementsByTagName',
-          ]),
-        },
-        {
           provide: WINDOW,
-          useValue: jasmine.createSpyObj('Window', [], {
-            Cal: jasmine.createSpy('Cal'),
-          }),
+          useValue: {
+            Cal: jasmine.createSpy('Cal').and.callFake(() => {}),
+          },
         },
       ],
     });
@@ -34,59 +26,39 @@ describe('CalDotComService', () => {
   });
 
   describe('loadScript', () => {
-    it('should create and insert script element', () => {
-      let mockScriptElement: jasmine.SpyObj<HTMLScriptElement> =
-        jasmine.createSpyObj('HTMLScriptElement', [], {
-          parentNode: jasmine.createSpyObj('Node', ['insertBefore']),
-        });
-      let mockParentNode: jasmine.SpyObj<Node> =
-        mockScriptElement.parentNode as any;
-
-      (service as any).document.getElementsByTagName.and.returnValue([
-        mockScriptElement,
-      ] as any);
-      (service as any).document.createElement.and.returnValue(
-        mockScriptElement
-      );
-
+    it('should set up Cal object and set scriptLoaded$ to true', () => {
+      spyOn(console, 'info');
       service.loadScript();
 
-      expect((service as any).document.createElement).toHaveBeenCalledWith(
-        'script'
-      );
-      expect(mockScriptElement.src).toBe('/static/en/assets/scripts/cal.js');
-      expect(mockScriptElement.defer).toBeTrue();
-      expect(mockScriptElement.async).toBeTrue();
-      expect(mockParentNode.insertBefore).toHaveBeenCalledWith(
-        mockScriptElement,
-        mockScriptElement
-      );
-
-      (mockScriptElement as any).onload();
-      expect(service.scriptLoaded$.getValue()).toBeTrue();
+      expect((service as any).loaded).toBeTrue();
+      expect(console.info).not.toHaveBeenCalled();
     });
 
     it('should not reload script if already loaded', () => {
-      service.scriptLoaded$.next(true);
+      spyOn(console, 'info');
+
       service.loadScript();
-      expect((service as any).document.createElement).not.toHaveBeenCalled();
+      service.loadScript();
+
+      expect(console.info).toHaveBeenCalledWith(
+        'Did not reload cal.com script - it is already loaded'
+      );
     });
   });
 
   describe('initializeCalendar', () => {
-    it('should call Cal.init and Cal.ns with correct parameters', () => {
-      const namespace: string = 'testNamespace';
-      (service as any).window.Cal.ns = [];
-      (service as any).window.Cal.ns[namespace] = jasmine.createSpy();
+    it('should call Cal with correct parameters', () => {
+      const namespace = 'testNamespace';
+      (service as any).window.Cal.ns = {
+        [namespace]: jasmine.createSpy('namespaceFn'),
+      };
 
       service.initializeCalendar(namespace);
 
       expect((service as any).window.Cal).toHaveBeenCalledWith(
         'init',
         namespace,
-        {
-          origin: 'https://cal.com',
-        }
+        { origin: 'https://cal.com' }
       );
       expect((service as any).window.Cal.ns[namespace]).toHaveBeenCalledWith(
         'ui',

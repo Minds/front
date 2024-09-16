@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
 import { CalDotComOpenButtonComponent } from './caldotcom-open-button';
 import { CalDotComService } from './caldotcom.service';
 import { MockComponent, MockService } from '../../../../../utils/mock';
@@ -17,14 +16,7 @@ describe('CalDotComOpenButtonComponent', () => {
       providers: [
         {
           provide: CalDotComService,
-          useValue: MockService(CalDotComService, {
-            has: ['scriptLoaded$'],
-            props: {
-              scriptLoaded$: {
-                get: () => new BehaviorSubject<boolean>(false),
-              },
-            },
-          }),
+          useValue: MockService(CalDotComService),
         },
       ],
     })
@@ -54,28 +46,12 @@ describe('CalDotComOpenButtonComponent', () => {
   it('should init', () => {
     expect(comp).toBeTruthy();
     expect((comp as any).calDotComService.loadScript).toHaveBeenCalled();
-  });
-
-  it('should initialize calendar when script is loaded', () => {
-    (comp as any).calDotComService.initializeCalendar.calls.reset();
-    (comp as any).calDotComService.scriptLoaded$.next(true);
     expect(
       (comp as any).calDotComService.initializeCalendar
     ).toHaveBeenCalledWith('30min');
   });
 
-  it('should NOT initialize calendar when script NOT is loaded', () => {
-    (comp as any).calDotComService.initializeCalendar.calls.reset();
-    (comp as any).calDotComService.scriptLoaded$.next(false);
-    expect(
-      (comp as any).calDotComService.initializeCalendar
-    ).not.toHaveBeenCalled();
-  });
-
   it('should render button', () => {
-    (comp as any).calDotComService.scriptLoaded$.next(true);
-    fixture.detectChanges();
-
     const button: DebugElement = fixture.debugElement.query(By.css('m-button'));
     expect(button).toBeTruthy();
     expect(button.attributes['data-cal-link']).toBe('mindsnetworks/30min');
