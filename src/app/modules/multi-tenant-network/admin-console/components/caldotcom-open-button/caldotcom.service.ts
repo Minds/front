@@ -35,7 +35,7 @@ export class CalDotComService {
     let newScriptElement: HTMLScriptElement =
       this.document.createElement('script');
 
-    newScriptElement.src = '/assets/scripts/cal.js';
+    newScriptElement.src = '/static/en/assets/scripts/cal.js';
     newScriptElement.defer = true;
     newScriptElement.async = true;
 
