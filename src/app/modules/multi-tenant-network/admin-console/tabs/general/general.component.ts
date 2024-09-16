@@ -47,8 +47,6 @@ export class NetworkAdminConsoleGeneralComponent implements OnInit, OnDestroy {
   // subscriptions.
   private configLoadSubscription: Subscription;
 
-  protected isSwActive: boolean = false;
-
   constructor(
     private multiTenantConfigService: MultiTenantNetworkConfigService,
     private formBuilder: FormBuilder,
@@ -63,10 +61,6 @@ export class NetworkAdminConsoleGeneralComponent implements OnInit, OnDestroy {
         Validators.maxLength(50),
       ]),
     });
-
-    this.isSwActive = Boolean(
-      navigator?.serviceWorker?.controller?.state === 'activated'
-    );
   }
 
   ngOnInit(): void {
