@@ -205,4 +205,55 @@ describe('MindsRichEmbed', () => {
       });
     });
   });
+
+  describe('Scribd', () => {
+    it('should parse Scribd URL correctly', () => {
+      comp.src = {
+        perma_url: 'https://www.scribd.com/document/123456789/',
+      };
+
+      const result = comp.parseInlineEmbed();
+      expect(result).toBeTruthy();
+      expect(result.id).toBe('document-scribd-123456789');
+      expect(result.className).toContain('m-rich-embed-document-scribd');
+      expect(result.html.toString()).toContain(
+        'https://www.scribd.com/embeds/123456789/content'
+      );
+    });
+
+    it('should NOT parse Scribd URL when in a comment', () => {
+      comp.src = {
+        perma_url: 'https://www.scribd.com/document/123456789/',
+        type: 'comment',
+      };
+
+      const result = comp.parseInlineEmbed();
+      expect(result).toBeNull();
+    });
+
+    it('should handle invalid Scribd URLs', () => {
+      comp.src = {
+        perma_url: 'https://www.scribd.com/invalid/url',
+      };
+      const result = comp.parseInlineEmbed();
+      expect(result).toBeNull();
+    });
+
+    it('should set embeddedInline to true for Scribd embeds', () => {
+      comp.src = {
+        perma_url: 'https://www.scribd.com/document/123456789/',
+      };
+      comp.init();
+      expect(comp.embeddedInline).toBe(true);
+    });
+
+    it('should not set up intersection observer for Scribd embeds', () => {
+      spyOn(comp as any, 'setupIntersectionObserver');
+      comp.src = {
+        perma_url: 'https://www.scribd.com/document/123456789/',
+      };
+      comp.init();
+      expect((comp as any).setupIntersectionObserver).not.toHaveBeenCalled();
+    });
+  });
 });

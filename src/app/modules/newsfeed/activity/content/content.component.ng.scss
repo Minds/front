@@ -353,6 +353,14 @@
     }
   }
 
+  // We want to give scribd embeds full height of the modal.
+  ::ng-deep
+    .m-activityContent__media--richEmbed:has(.m-richEmbedPreview--modal):has(
+      .m-rich-embed-document-scribd
+    ) {
+    height: 100%;
+  }
+
   // *********************************
   // ** MEDIA - IMAGE **
   // *********************************

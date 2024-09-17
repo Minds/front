@@ -182,4 +182,30 @@
     display: flex;
     flex-flow: column-reverse;
   }
+
+  .m-rich-embed-src {
+    &.m-richEmbedPreview--modal .m-rich-embed-document-scribd {
+      position: relative;
+      width: 100%;
+      height: 90%;
+
+      @include m-theme() {
+        background-color: themed($m-black-always);
+      }
+
+      ::ng-deep iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &:not(.m-richEmbedPreview--modal) .m-rich-embed-document-scribd {
+      ::ng-deep iframe {
+        aspect-ratio: 1;
+      }
+    }
+  }
 }

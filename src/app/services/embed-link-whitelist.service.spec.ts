@@ -45,4 +45,24 @@ describe('EmbedLinkWhitelistService', () => {
       service.isWhitelisted('https://www.youtube.com/watch?v=jNQXAC9IVRw')
     ).toBeFalsy();
   });
+
+  describe('Scribd', () => {
+    it('should determine a Scribd document embed link is whitelisted', () => {
+      expect(
+        service.isWhitelisted('https://www.scribd.com/document/123456789')
+      ).toBeTruthy();
+    });
+
+    it('should determine a Scribd document embed link without www is whitelisted', () => {
+      expect(
+        service.isWhitelisted('https://scribd.com/document/987654321')
+      ).toBeTruthy();
+    });
+
+    it('should NOT determine a non document Scribd link is whitelisted', () => {
+      expect(
+        service.isWhitelisted('https://www.scribd.com/search')
+      ).toBeFalsy();
+    });
+  });
 });

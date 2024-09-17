@@ -174,6 +174,7 @@ export class MindsRichEmbed implements OnDestroy {
 
     if (
       this.mediaSource === 'minds' ||
+      this.mediaSource === 'scribd' ||
       (this.mediaSource === 'youtube' && !this.isTenant.is())
     ) {
       this.hasModalRequestObservers =
@@ -213,6 +214,10 @@ export class MindsRichEmbed implements OnDestroy {
 
     if (this.mediaSource === 'livepeer') {
       this.getLiveStreamInfo();
+    }
+
+    if (this.mediaSource === 'scribd') {
+      this.embeddedInline = true;
     }
   }
 
@@ -311,6 +316,27 @@ export class MindsRichEmbed implements OnDestroy {
           frameborder="0"
           webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>`),
           playable: true,
+        };
+      }
+    }
+
+    // Scribd
+    let scribd = this.embedLinkWhitelist.getRegex('scribd');
+
+    // We don't want to match scribd links in comments
+    if (this.src?.type !== 'comment' && (matches = scribd.exec(url)) !== null) {
+      if (matches[1]) {
+        this.mediaSource = 'scribd';
+        return {
+          id: `document-scribd-${matches[1]}`,
+          className: 'm-rich-embed-document-scribd',
+          html: this.sanitizer.bypassSecurityTrustHtml(
+            `<iframe
+              src="https://www.scribd.com/embeds/${matches[1]}/content"
+              frameborder="0"
+            ></iframe>`
+          ),
+          playable: false,
         };
       }
     }
@@ -473,7 +499,11 @@ export class MindsRichEmbed implements OnDestroy {
    * Make these ones big (displayed as column)
    */
   get isFeaturedSource(): boolean {
-    return this.mediaSource === 'youtube' || this.mediaSource === 'minds';
+    return (
+      this.mediaSource === 'youtube' ||
+      this.mediaSource === 'minds' ||
+      this.mediaSource === 'scribd'
+    );
   }
 
   async getLiveStreamInfo() {
