@@ -1,0 +1,13 @@
+@import '../../../stylesheets/console.component.ng.scss';
+
+:host {
+  .m-networkAdminBookAMeeting__description {
+    margin-bottom: $spacing8;
+    margin-right: $spacing2;
+
+    @include body1Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}
