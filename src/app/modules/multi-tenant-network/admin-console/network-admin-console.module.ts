@@ -57,6 +57,7 @@ import { NetworkAdminConsoleRolesPermissionHandlingComponent } from './tabs/role
 import { NetworkAdminConsoleDigestEmailSettingsComponent } from './tabs/general/digest-email-toggle/digest-email-toggle.component';
 import { NetworkAdminConsoleLandingPageSelectorComponent } from './tabs/navigation/components/landing-page-section/landing-page-selector.component';
 import { NetworkAdminConsoleBillingComponent } from './tabs/billing/billing.component';
+import { NetworkAdminBookAMeetingComponent } from './tabs/general/book-a-meeting/book-a-meeting.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -209,6 +210,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     SiteMembershipCardComponent,
     CopyToClipboardButtonComponent,
     SelectableIconComponent,
+    NetworkAdminBookAMeetingComponent,
     NetworkAdminConsoleRolesPermissionHandlingComponent,
   ],
   declarations: [
