@@ -24,6 +24,13 @@
   z-index: 1050 !important;
 }
 
+.modal-backdrop {
+  @include m-on-theme(dark) {
+    background: #28282b;
+    opacity: 0.8;
+  }
+}
+
 // prevent body scrolling when modal is opened
 body.modal-open {
   overflow: hidden;
