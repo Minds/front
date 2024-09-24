@@ -114,6 +114,7 @@ export class AnalyticsService implements OnDestroy {
       capture_pageview: false, // Do not send initial pageview, angular will
       autocapture: false, // Disable auto-capture by default
       advanced_disable_feature_flags: true, // We provide these from our backend
+      disable_session_recording: true,
       bootstrap: {
         featureFlags,
       },
