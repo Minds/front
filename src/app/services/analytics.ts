@@ -145,6 +145,11 @@ export class AnalyticsService implements OnDestroy {
       }
     }
 
+    // If this is a new tenant admin, record the session
+    if (user.time_created < Date.now() - 86400) {
+      this.posthog.startSessionRecording();
+    }
+
     // Call once per session
     this.posthog.identify(user.guid);
   }
