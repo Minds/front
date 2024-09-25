@@ -114,6 +114,7 @@ export class AnalyticsService implements OnDestroy {
       capture_pageview: false, // Do not send initial pageview, angular will
       autocapture: false, // Disable auto-capture by default
       advanced_disable_feature_flags: true, // We provide these from our backend
+      disable_session_recording: true,
       bootstrap: {
         featureFlags,
       },
@@ -143,6 +144,11 @@ export class AnalyticsService implements OnDestroy {
       if (this.posthog.has_opted_out_capturing()) {
         this.posthog.clear_opt_in_out_capturing();
       }
+    }
+
+    // If this is a new tenant admin, record the session
+    if (user.time_created > Date.now() / 1000 - 86400 && user.is_admin) {
+      this.posthog.startSessionRecording();
     }
 
     // Call once per session
