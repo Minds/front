@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VideoModule } from '../../../../media/components/video/video.module';
 import { VideoSource } from '../../../../media/components/video-player/player.service';
 import { PlyrModule } from 'ngx-plyr-mg';
+import { CDN_ASSETS_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 
 /**
  * Video shown to welcome a tenant to their network.
@@ -22,17 +23,18 @@ import { PlyrModule } from 'ngx-plyr-mg';
   `,
 })
 export class NewTenantWelcomeVideoComponent {
-  /**
-   * Source object for video.
-   */
-  protected sources: VideoSource[] = [
-    {
-      id: '',
-      type: '',
-      size: null,
-      src: '../../../../../../../assets/videos/new-tenant-welcome/new-tenant-welcome.mp4',
-    },
-  ];
+  protected readonly sources: VideoSource[];
+
+  constructor(@Inject(CDN_ASSETS_URL) private readonly cdnAssetsUrl: string) {
+    this.sources = [
+      {
+        id: '',
+        type: '',
+        size: null,
+        src: `${this.cdnAssetsUrl}assets/videos/new-tenant-welcome/new-tenant-welcome.mp4`,
+      },
+    ];
+  }
 
   /**
    * Options for Plyr to use

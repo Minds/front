@@ -5,7 +5,8 @@ import { PageLayoutService } from '../../../../../common/layout/page-layout.serv
 import { TopbarService } from '../../../../../common/layout/topbar.service';
 import { BootstrapProgressSplashService } from './bootstrap-progress-splash.service';
 import { BehaviorSubject } from 'rxjs';
-import { MockService } from '../../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../../utils/mock';
+import { CommonModule as NgCommonModule } from '@angular/common';
 
 describe('MultiTenantBootstrapProgressSplashComponent', () => {
   let comp: MultiTenantBootstrapProgressSplashComponent;
@@ -37,7 +38,19 @@ describe('MultiTenantBootstrapProgressSplashComponent', () => {
         },
         { provide: TopbarService, useValue: MockService(TopbarService) },
       ],
-    }).compileComponents();
+    })
+      .overrideComponent(MultiTenantBootstrapProgressSplashComponent, {
+        set: {
+          imports: [
+            NgCommonModule,
+            MockComponent({
+              selector: 'm-newTenantWelcomeVideo',
+              standalone: true,
+            }),
+          ],
+        },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(
       MultiTenantBootstrapProgressSplashComponent

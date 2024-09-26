@@ -3,6 +3,7 @@ import { NewTenantWelcomeVideoComponent } from './new-tenant-welcome-video.compo
 import { PlyrModule } from 'ngx-plyr-mg';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from '../../../../../utils/mock';
+import { CDN_ASSETS_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 
 describe('IntroVideoComponent', () => {
   let comp: NewTenantWelcomeVideoComponent;
@@ -11,6 +12,9 @@ describe('IntroVideoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NewTenantWelcomeVideoComponent, PlyrModule],
+      providers: [
+        { provide: CDN_ASSETS_URL, useValue: 'https://example.minds.com/' },
+      ],
     })
       .overrideComponent(NewTenantWelcomeVideoComponent, {
         set: {
@@ -44,7 +48,7 @@ describe('IntroVideoComponent', () => {
         id: '',
         type: '',
         size: null,
-        src: '../../../../../../../assets/videos/new-tenant-welcome/new-tenant-welcome.mp4',
+        src: 'https://example.minds.com/assets/videos/new-tenant-welcome/new-tenant-welcome.mp4',
       },
     ]);
   });
