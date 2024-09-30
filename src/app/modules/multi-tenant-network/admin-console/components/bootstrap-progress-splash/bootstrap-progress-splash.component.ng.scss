@@ -1,0 +1,109 @@
+@import 'defaults.scss';
+
+@mixin mainContainerWidth {
+  max-width: 740px;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: $spacing8 $spacing20 $spacing10 $spacing20;
+  min-height: calc(100vh - 125px);
+
+  @media screen and (max-width: $min-desktop) {
+    margin: $spacing10 $spacing10;
+    justify-content: flex-start;
+  }
+
+  .m-bootstrapProgressSplash {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing10;
+    width: 100%;
+
+    @media screen and (max-height: 750px) {
+      gap: $spacing5;
+    }
+
+    .m-bootstrapProgress__title {
+      text-align: center;
+      @include heading1Bold;
+      @include mainContainerWidth;
+    }
+
+    .m-bootstrapProgress__description {
+      text-align: center;
+      margin-bottom: unset;
+
+      @include heading3Medium;
+      @include mainContainerWidth;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      @media screen and (max-height: 650px) {
+        display: none;
+      }
+    }
+
+    m-newTenantWelcomeVideo {
+      width: 100%;
+      max-width: 800px;
+      aspect-ratio: 16 / 9;
+    }
+
+    .m-bootstrapProgress__loadingBarContainer {
+      height: 40px;
+      overflow: hidden;
+      border-radius: 20px;
+      width: 100%;
+      @include mainContainerWidth;
+
+      .m-bootstrapProgress__loadingBar {
+        width: 200%;
+        height: 100%;
+        background-image: linear-gradient(
+          -45deg,
+          rgba(255, 255, 255, 0.15) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba(255, 255, 255, 0.15) 50%,
+          rgba(255, 255, 255, 0.15) 75%,
+          transparent 75%,
+          transparent 100%
+        );
+        background-size: 100px 100px;
+        animation: barberPole 1s linear infinite;
+
+        @include m-theme() {
+          background-color: themed($m-action);
+        }
+      }
+    }
+
+    .m-bootstrapProgress__lastStepCompletedSpan {
+      @include heading4Bold;
+      @include mainContainerWidth;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-bootstrapProgress__completedButton {
+      margin-bottom: $spacing14;
+    }
+  }
+
+  @keyframes barberPole {
+    0% {
+      transform: translateX(-100px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}
