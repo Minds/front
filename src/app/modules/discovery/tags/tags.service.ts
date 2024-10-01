@@ -219,4 +219,20 @@ export class DiscoveryTagsService {
     const count = await this.countTags();
     return count > 0;
   }
+
+  /**
+   * Removes a tag from the trending list.
+   * @param { DiscoveryTag } tag - The tag to remove.
+   * @returns { void }
+   */
+  public removeTagFromTrending(tag: DiscoveryTag): void {
+    const index: number = this.trending$.value.findIndex(
+      (i) => i.value === tag.value
+    );
+    if (index === -1) return;
+
+    const tags = this.trending$.value.slice(0);
+    tags.splice(index, 1);
+    this.trending$.next(tags);
+  }
 }

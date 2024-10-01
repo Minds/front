@@ -58,6 +58,10 @@ import { NetworkAdminConsoleDigestEmailSettingsComponent } from './tabs/general/
 import { NetworkAdminConsoleLandingPageSelectorComponent } from './tabs/navigation/components/landing-page-section/landing-page-selector.component';
 import { NetworkAdminConsoleBillingComponent } from './tabs/billing/billing.component';
 import { NetworkAdminBookAMeetingComponent } from './tabs/general/book-a-meeting/book-a-meeting.component';
+import { MultiTenantBootstrapProgressSplashComponent } from './components/bootstrap-progress-splash/bootstrap-progress-splash.component';
+import { adminOnlyGuard } from '../../../common/guards/admin-only.guard';
+import { NetworkAdminConsoleExcludedHashtagsListComponent } from './tabs/moderation/excluded-hashtags/list/excluded-hashtags-list.component';
+import { NetworkAdminExcludedHashtagsSharedModule } from './tabs/moderation/excluded-hashtags/excluded-hashtags-shared.module';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -115,6 +119,11 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
             loadChildren: async () =>
               (await import('./tabs/moderation/reports/reports-lazy.module'))
                 .NetworkAdminReportLazyModule,
+            canActivate: [CanModerateContentGuard],
+          },
+          {
+            path: 'hashtags',
+            component: NetworkAdminConsoleExcludedHashtagsListComponent,
             canActivate: [CanModerateContentGuard],
           },
         ],
@@ -204,6 +213,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     FormsModule,
     ReactiveFormsModule,
     NetworkAdminConsoleSharedModule,
+    NetworkAdminExcludedHashtagsSharedModule,
     RouterModule.forChild(NETWORK_ADMIN_CONSOLE_ROUTES),
     NetworkAdminConsoleImageInputComponent,
     MarkdownModule.forChild(),

@@ -1,0 +1,18 @@
+query GetExcludedHashtags($first: Int!, $after: Int) {
+  hashtagExclusions(first: $first, after: $after) {
+    edges {
+      node {
+        id
+        tag
+        createdTimestamp
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    id
+  }
+}

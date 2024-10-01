@@ -68,6 +68,10 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
   isPlusPage: boolean = false;
 
+  /** Whether the user has permission to moderate content. */
+  protected readonly canModerateContent$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   constructor(
     public tagsService: DiscoveryTagsService,
     private session: Session,
@@ -130,8 +134,14 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
         if (is) {
           this.limit = this.DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT;
         }
+
+        this.canModerateContent$.next(
+          is && this.permissions.canModerateContent()
+        );
       }
     );
+
+    this.canModerateContent$.next(this.permissions.canModerateContent());
   }
 
   ngOnDestroy() {

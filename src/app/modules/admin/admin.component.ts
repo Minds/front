@@ -18,7 +18,8 @@ export type Filter =
   | 'features'
   | 'push-notifications'
   | 'accounts'
-  | 'liquidity-providers';
+  | 'liquidity-providers'
+  | 'hashtags';
 
 @Component({
   selector: 'minds-admin',

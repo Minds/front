@@ -37,6 +37,15 @@
       >Boosts</a
     >
   </div>
+  <div class="m-tabs__tab" *ngIf="permissions.canModerateContent()">
+    <a
+      [routerLink]="['./hashtags']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-tab-hashtags"
+      i18n="@@NETWORK_ADMIN_CONSOLE__TAB_HASHTAGS"
+      >Hidden tags</a
+    >
+  </div>
   <div class="m-tabs__tab" *ngIf="session.isAdmin()">
     <a
       [routerLink]="['./community-guidelines']"

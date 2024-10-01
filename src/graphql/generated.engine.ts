@@ -829,6 +829,38 @@ export type GroupNode = NodeInterface & {
   urn: Scalars['String']['output'];
 };
 
+export type HashtagExclusionEdge = EdgeInterface & {
+  __typename?: 'HashtagExclusionEdge';
+  /** Gets cursor for GraphQL. */
+  cursor: Scalars['String']['output'];
+  /** Gets ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  /** Gets node. */
+  node?: Maybe<HashtagExclusionNode>;
+  /** Gets type for GraphQL. */
+  type: Scalars['String']['output'];
+};
+
+export type HashtagExclusionNode = NodeInterface & {
+  __typename?: 'HashtagExclusionNode';
+  adminGuid?: Maybe<Scalars['String']['output']>;
+  createdTimestamp?: Maybe<Scalars['Int']['output']>;
+  /** Gets ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  tag?: Maybe<Scalars['String']['output']>;
+  tenantId?: Maybe<Scalars['String']['output']>;
+  updatedTimestamp?: Maybe<Scalars['Int']['output']>;
+};
+
+export type HashtagExclusionsConnection = ConnectionInterface & {
+  __typename?: 'HashtagExclusionsConnection';
+  /** Gets connections edges. */
+  edges: Array<HashtagExclusionEdge>;
+  /** ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  pageInfo: PageInfo;
+};
+
 export enum IllegalSubReasonEnum {
   AnimalAbuse = 'ANIMAL_ABUSE',
   Extortion = 'EXTORTION',
@@ -1023,6 +1055,7 @@ export type Mutation = {
   deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
+  excludeHashtag: Scalars['Boolean']['output'];
   invite?: Maybe<Scalars['Void']['output']>;
   leaveChatRoom: Scalars['Boolean']['output'];
   mobileConfig: MobileConfig;
@@ -1033,6 +1066,7 @@ export type Mutation = {
   /** Updates the read receipt of a room */
   readReceipt: ChatRoomEdge;
   refreshRssFeed: RssFeed;
+  removeHashtagExclusion: Scalars['Boolean']['output'];
   removeMemberFromChatRoom: Scalars['Boolean']['output'];
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   replyToRoomInviteRequest: Scalars['Boolean']['output'];
@@ -1194,6 +1228,10 @@ export type MutationDismissArgs = {
   key: Scalars['String']['input'];
 };
 
+export type MutationExcludeHashtagArgs = {
+  hashtag: Scalars['String']['input'];
+};
+
 export type MutationInviteArgs = {
   bespokeMessage: Scalars['String']['input'];
   emails: Scalars['String']['input'];
@@ -1228,6 +1266,10 @@ export type MutationReadReceiptArgs = {
 
 export type MutationRefreshRssFeedArgs = {
   feedId: Scalars['String']['input'];
+};
+
+export type MutationRemoveHashtagExclusionArgs = {
+  hashtag: Scalars['String']['input'];
 };
 
 export type MutationRemoveMemberFromChatRoomArgs = {
@@ -1594,9 +1636,13 @@ export type Query = {
   giftCardsBalance: Scalars['Float']['output'];
   /** The available balances of each gift card types */
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
+  /** Get hashtag exclusions. */
+  hashtagExclusions: HashtagExclusionsConnection;
   invite: Invite;
   invites: InviteConnection;
   listPersonalApiKeys: Array<PersonalApiKey>;
+  /** Gets the lowest price site membership for an activity. */
+  lowestPriceSiteMembershipForActivity?: Maybe<SiteMembership>;
   mobileConfig: MobileConfig;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
@@ -1770,6 +1816,11 @@ export type QueryGiftCardsArgs = {
   statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
 };
 
+export type QueryHashtagExclusionsArgs = {
+  after?: InputMaybe<Scalars['Int']['input']>;
+  first: Scalars['Int']['input'];
+};
+
 export type QueryInviteArgs = {
   inviteId: Scalars['Int']['input'];
 };
@@ -1778,6 +1829,11 @@ export type QueryInvitesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first: Scalars['Int']['input'];
   search?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type QueryLowestPriceSiteMembershipForActivityArgs = {
+  activityGuid: Scalars['String']['input'];
+  externalOnly?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type QueryNewsfeedArgs = {
@@ -2297,6 +2353,15 @@ export type AdminUpdateAccountMutationVariables = Exact<{
 export type AdminUpdateAccountMutation = {
   __typename?: 'Mutation';
   updateAccount: Array<string>;
+};
+
+export type ExcludeHashtagMutationVariables = Exact<{
+  hashtag: Scalars['String']['input'];
+}>;
+
+export type ExcludeHashtagMutation = {
+  __typename?: 'Mutation';
+  excludeHashtag: boolean;
 };
 
 export type ModerationSetUserBanStateMutationVariables = Exact<{
@@ -3077,6 +3142,7 @@ export type GetTenantAnalyticsTableQuery = {
         | { __typename?: 'GiftCardNode'; id: string }
         | { __typename?: 'GiftCardTransaction'; id: string }
         | { __typename?: 'GroupNode'; id: string }
+        | { __typename?: 'HashtagExclusionNode'; id: string }
         | { __typename?: 'Invite'; id: string }
         | { __typename?: 'InviteConnection'; id: string }
         | { __typename?: 'NodeImpl'; id: string }
@@ -3164,6 +3230,7 @@ export type GetFeaturedEntitiesQuery = {
         | { __typename?: 'GiftCardNode'; id: string }
         | { __typename?: 'GiftCardTransaction'; id: string }
         | { __typename?: 'GroupNode'; id: string }
+        | { __typename?: 'HashtagExclusionNode'; id: string }
         | { __typename?: 'Invite'; id: string }
         | { __typename?: 'InviteConnection'; id: string }
         | { __typename?: 'NodeImpl'; id: string }
@@ -3278,6 +3345,44 @@ export type SetMobileConfigMutation = {
   };
 };
 
+export type GetExcludedHashtagsQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type GetExcludedHashtagsQuery = {
+  __typename?: 'Query';
+  hashtagExclusions: {
+    __typename?: 'HashtagExclusionsConnection';
+    id: string;
+    edges: Array<{
+      __typename?: 'HashtagExclusionEdge';
+      cursor: string;
+      node?: {
+        __typename?: 'HashtagExclusionNode';
+        id: string;
+        tag?: string | null;
+        createdTimestamp?: number | null;
+      } | null;
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
+};
+
+export type RemoveHashtagExclusionMutationVariables = Exact<{
+  hashtag: Scalars['String']['input'];
+}>;
+
+export type RemoveHashtagExclusionMutation = {
+  __typename?: 'Mutation';
+  removeHashtagExclusion: boolean;
+};
+
 export type CreateNewReportMutationVariables = Exact<{
   entityUrn: Scalars['String']['input'];
   reason: ReportReasonEnum;
@@ -3333,6 +3438,7 @@ export type GetReportsQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'HashtagExclusionNode'; id: string }
             | { __typename?: 'Invite'; id: string }
             | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
@@ -3463,6 +3569,7 @@ export type GetReportsQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'HashtagExclusionNode'; id: string }
             | { __typename?: 'Invite'; id: string }
             | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
@@ -3569,6 +3676,7 @@ export type GetReportsQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'HashtagExclusionNode'; id: string }
             | { __typename?: 'Invite'; id: string }
             | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
@@ -3683,6 +3791,11 @@ export type GetReportsQuery = {
           __typename?: 'GroupEdge';
           cursor: string;
           node: { __typename?: 'GroupNode'; id: string };
+        }
+      | {
+          __typename?: 'HashtagExclusionEdge';
+          cursor: string;
+          node?: { __typename?: 'HashtagExclusionNode'; id: string } | null;
         }
       | {
           __typename?: 'InviteEdge';
@@ -4563,6 +4676,7 @@ export type FetchNewsfeedQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'HashtagExclusionNode'; id: string }
             | { __typename?: 'Invite'; id: string }
             | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
@@ -4625,6 +4739,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -4717,6 +4832,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -4776,6 +4892,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -4836,6 +4953,13 @@ export type FetchNewsfeedQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'HashtagExclusionEdge';
+                      publisherNode?: {
+                        __typename?: 'HashtagExclusionNode';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'InviteEdge';
@@ -4972,6 +5096,7 @@ export type FetchNewsfeedQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'HashtagExclusionNode'; id: string }
             | { __typename?: 'Invite'; id: string }
             | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
@@ -5034,6 +5159,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -5126,6 +5252,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -5185,6 +5312,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -5245,6 +5373,13 @@ export type FetchNewsfeedQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'HashtagExclusionEdge';
+                      publisherNode?: {
+                        __typename?: 'HashtagExclusionNode';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'InviteEdge';
@@ -5351,6 +5486,7 @@ export type FetchNewsfeedQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'HashtagExclusionNode'; id: string }
             | { __typename?: 'Invite'; id: string }
             | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
@@ -5413,6 +5549,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -5505,6 +5642,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -5564,6 +5702,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -5624,6 +5763,13 @@ export type FetchNewsfeedQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'HashtagExclusionEdge';
+                      publisherNode?: {
+                        __typename?: 'HashtagExclusionNode';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'InviteEdge';
@@ -5730,6 +5876,11 @@ export type FetchNewsfeedQuery = {
           node: { __typename?: 'GroupNode'; id: string };
         }
       | {
+          __typename?: 'HashtagExclusionEdge';
+          cursor: string;
+          node?: { __typename?: 'HashtagExclusionNode'; id: string } | null;
+        }
+      | {
           __typename?: 'InviteEdge';
           cursor: string;
           node?: { __typename?: 'Invite'; id: string } | null;
@@ -5773,6 +5924,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'HashtagExclusionNode'; id: string }
                     | { __typename?: 'Invite'; id: string }
                     | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
@@ -5835,6 +5987,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'HashtagExclusionNode'; id: string }
                     | { __typename?: 'Invite'; id: string }
                     | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
@@ -5870,6 +6023,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'HashtagExclusionNode'; id: string }
                     | { __typename?: 'Invite'; id: string }
                     | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
@@ -5917,6 +6071,13 @@ export type FetchNewsfeedQuery = {
                     legacy: string;
                     id: string;
                   };
+                }
+              | {
+                  __typename?: 'HashtagExclusionEdge';
+                  publisherNode?: {
+                    __typename?: 'HashtagExclusionNode';
+                    id: string;
+                  } | null;
                 }
               | {
                   __typename?: 'InviteEdge';
@@ -6149,6 +6310,7 @@ export type FetchSearchQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; legacy: string; id: string }
+            | { __typename?: 'HashtagExclusionNode'; id: string }
             | { __typename?: 'Invite'; id: string }
             | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
@@ -6210,6 +6372,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -6302,6 +6465,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -6361,6 +6525,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -6421,6 +6586,13 @@ export type FetchSearchQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'HashtagExclusionEdge';
+                      publisherNode?: {
+                        __typename?: 'HashtagExclusionNode';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'InviteEdge';
@@ -6538,6 +6710,7 @@ export type FetchSearchQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; legacy: string; id: string }
+            | { __typename?: 'HashtagExclusionNode'; id: string }
             | { __typename?: 'Invite'; id: string }
             | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
@@ -6599,6 +6772,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -6691,6 +6865,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -6750,6 +6925,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -6810,6 +6986,13 @@ export type FetchSearchQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'HashtagExclusionEdge';
+                      publisherNode?: {
+                        __typename?: 'HashtagExclusionNode';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'InviteEdge';
@@ -6897,6 +7080,7 @@ export type FetchSearchQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; legacy: string; id: string }
+            | { __typename?: 'HashtagExclusionNode'; id: string }
             | { __typename?: 'Invite'; id: string }
             | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
@@ -6958,6 +7142,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -7050,6 +7235,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -7109,6 +7295,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'HashtagExclusionNode'; id: string }
                         | { __typename?: 'Invite'; id: string }
                         | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
@@ -7169,6 +7356,13 @@ export type FetchSearchQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'HashtagExclusionEdge';
+                      publisherNode?: {
+                        __typename?: 'HashtagExclusionNode';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'InviteEdge';
@@ -7260,6 +7454,11 @@ export type FetchSearchQuery = {
           node: { __typename?: 'GroupNode'; legacy: string; id: string };
         }
       | {
+          __typename?: 'HashtagExclusionEdge';
+          cursor: string;
+          node?: { __typename?: 'HashtagExclusionNode'; id: string } | null;
+        }
+      | {
           __typename?: 'InviteEdge';
           cursor: string;
           node?: { __typename?: 'Invite'; id: string } | null;
@@ -7302,6 +7501,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'HashtagExclusionNode'; id: string }
                     | { __typename?: 'Invite'; id: string }
                     | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
@@ -7364,6 +7564,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'HashtagExclusionNode'; id: string }
                     | { __typename?: 'Invite'; id: string }
                     | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
@@ -7399,6 +7600,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'HashtagExclusionNode'; id: string }
                     | { __typename?: 'Invite'; id: string }
                     | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
@@ -7446,6 +7648,13 @@ export type FetchSearchQuery = {
                     legacy: string;
                     id: string;
                   };
+                }
+              | {
+                  __typename?: 'HashtagExclusionEdge';
+                  publisherNode?: {
+                    __typename?: 'HashtagExclusionNode';
+                    id: string;
+                  } | null;
                 }
               | {
                   __typename?: 'InviteEdge';
@@ -7856,6 +8065,25 @@ export class AdminUpdateAccountGQL extends Apollo.Mutation<
   AdminUpdateAccountMutationVariables
 > {
   document = AdminUpdateAccountDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ExcludeHashtagDocument = gql`
+  mutation ExcludeHashtag($hashtag: String!) {
+    excludeHashtag(hashtag: $hashtag)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ExcludeHashtagGQL extends Apollo.Mutation<
+  ExcludeHashtagMutation,
+  ExcludeHashtagMutationVariables
+> {
+  document = ExcludeHashtagDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -9244,6 +9472,59 @@ export class SetMobileConfigGQL extends Apollo.Mutation<
   SetMobileConfigMutationVariables
 > {
   document = SetMobileConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetExcludedHashtagsDocument = gql`
+  query GetExcludedHashtags($first: Int!, $after: Int) {
+    hashtagExclusions(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          tag
+          createdTimestamp
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        startCursor
+        endCursor
+      }
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetExcludedHashtagsGQL extends Apollo.Query<
+  GetExcludedHashtagsQuery,
+  GetExcludedHashtagsQueryVariables
+> {
+  document = GetExcludedHashtagsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const RemoveHashtagExclusionDocument = gql`
+  mutation RemoveHashtagExclusion($hashtag: String!) {
+    removeHashtagExclusion(hashtag: $hashtag)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RemoveHashtagExclusionGQL extends Apollo.Mutation<
+  RemoveHashtagExclusionMutation,
+  RemoveHashtagExclusionMutationVariables
+> {
+  document = RemoveHashtagExclusionDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
