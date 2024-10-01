@@ -1,0 +1,34 @@
+<div class="m-bootstrapProgressSplash">
+  <h1 class="m-bootstrapProgress__title" i18n="@@BOOTSTRAP_PROGRESS__TITLE">
+    Get ready, your app is about to go live 🚀
+  </h1>
+  <p
+    class="m-bootstrapProgress__description"
+    i18n="@@BOOTSTRAP_PROGRESS__SUBTITLE"
+  >
+    Our open source robot monkeys are making their finishing touches...
+  </p>
+
+  <m-newTenantWelcomeVideo />
+
+  <ng-container *ngIf="!(completed$ | async); else completedButtonTemplate">
+    <div class="m-bootstrapProgress__loadingBarContainer">
+      <div class="m-bootstrapProgress__loadingBar"></div>
+    </div>
+    <span class="m-bootstrapProgress__lastStepCompletedSpan">{{
+      (currentStepLoadingLabel$ | async) ?? 'Loading...'
+    }}</span>
+  </ng-container>
+</div>
+
+<ng-template #completedButtonTemplate>
+  <m-button
+    class="m-bootstrapProgress__completedButton"
+    color="black-always"
+    size="large"
+    [solid]="true"
+    (onAction)="onNavigateToNetworkClick()"
+    i18n="@@BOOTSTRAP_PROGRESS__LAUNCH_MY_APP"
+    >Launch my app</m-button
+  >
+</ng-template>

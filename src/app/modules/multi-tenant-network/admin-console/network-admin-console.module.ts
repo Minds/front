@@ -204,6 +204,12 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
       NetworkAdminAnalyticsLazyRoutes,
     ],
   },
+  {
+    path: 'bootstrap',
+    component: MultiTenantBootstrapProgressSplashComponent,
+    canActivate: [adminOnlyGuard('/')],
+    data: { preventLayoutReset: true },
+  },
 ];
 
 @NgModule({
