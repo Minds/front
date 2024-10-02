@@ -3,10 +3,7 @@ import { CommonModule } from '@angular/common';
 import { VideoModule } from '../../../../media/components/video/video.module';
 import { VideoSource } from '../../../../media/components/video-player/player.service';
 import { PlyrModule } from 'ngx-plyr-mg';
-import {
-  CDN_ASSETS_URL,
-  STRAPI_URL,
-} from '../../../../../common/injection-tokens/url-injection-tokens';
+import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 
 /**
  * Video shown to welcome a tenant to their network.

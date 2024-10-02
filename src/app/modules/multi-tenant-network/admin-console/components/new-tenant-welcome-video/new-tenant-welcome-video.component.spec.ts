@@ -3,10 +3,7 @@ import { NewTenantWelcomeVideoComponent } from './new-tenant-welcome-video.compo
 import { PlyrModule } from 'ngx-plyr-mg';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from '../../../../../utils/mock';
-import {
-  CDN_ASSETS_URL,
-  STRAPI_URL,
-} from '../../../../../common/injection-tokens/url-injection-tokens';
+import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 
 describe('IntroVideoComponent', () => {
   let comp: NewTenantWelcomeVideoComponent;
