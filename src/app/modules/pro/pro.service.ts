@@ -7,8 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 export class ProService {
   protected cachedResponse: any;
 
-  public readonly ratios = ['16:9', '16:10', '4:3', '1:1'];
-
   proSettings: any = {};
   proSettings$: BehaviorSubject<any> = new BehaviorSubject(this.proSettings);
 
