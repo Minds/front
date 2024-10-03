@@ -256,22 +256,6 @@ export class SettingsV2Component implements OnInit {
         },
         items: [
           {
-            label: $localize`:@@SETTINGS__PRO__GENERAL__LABEL:General`,
-            id: 'general',
-          },
-          {
-            label: $localize`:@@SETTINGS__PRO__THEME__LABEL:Theme`,
-            id: 'theme',
-          },
-          {
-            label: $localize`:@@SETTINGS__PRO__ASSETS__LABEL:Assets`,
-            id: 'assets',
-          },
-          {
-            label: $localize`:@@SETTINGS__PRO__DOMAIN__LABEL:Domain`,
-            id: 'domain',
-          },
-          {
             label: $localize`:@@SETTINGS__PRO__PAYOUTS__LABEL:Payouts`,
             id: 'payouts',
           },
@@ -287,11 +271,6 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__PRO__SUBSCRIPTION__CANCEL__LABEL:Cancel Pro Subscription`,
             id: 'cancel',
-          },
-          {
-            label: $localize`:@@SETTINGS__PRO__VIEW__CHANNEL__LABEL:View Pro Channel`,
-            id: 'view-pro-channel',
-            route: '',
           },
         ],
       },
@@ -456,12 +435,6 @@ export class SettingsV2Component implements OnInit {
     );
 
     proMainMenuItem.id = `pro_canary/${this.user}`;
-
-    const proPreviewMenuItem = this.secondaryMenus.pro_canary
-      .find((item) => item.header.id === 'pro-subscription')
-      .items.find((item) => item.id === 'view-pro-channel');
-
-    proPreviewMenuItem.route = `/pro/${this.user}`;
   }
 
   async loadSettings(): Promise<void> {

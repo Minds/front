@@ -74,7 +74,11 @@ const routes: Routes = [
     redirectTo: '/about/token',
     pathMatch: 'full' as PathMatch,
   },
-  // Note: Pro route handled in pro module.
+  {
+    path: 'pro',
+    redirectTo: '/about/pro',
+    pathMatch: 'full' as PathMatch,
+  },
 ];
 
 @NgModule({

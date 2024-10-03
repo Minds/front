@@ -3,7 +3,7 @@ import { Client } from '../../services/api/client';
 import { Upload } from '../../services/api/upload';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ProService {
   protected cachedResponse: any;
 
@@ -60,24 +60,6 @@ export class ProService {
       { cache: false }
     )) as any;
 
-    if (settings) {
-      if (settings.tag_list) {
-        settings.tag_list = settings.tag_list.map(({ tag, label }) => {
-          const formattedTag = `#${tag}`;
-
-          return { tag: formattedTag, label };
-        });
-      }
-
-      if (!settings.scheme) {
-        settings.scheme = 'light';
-      }
-
-      if (!settings.ratio) {
-        settings.ratio = this.ratios[0];
-      }
-    }
-
     this.proSettings = settings;
 
     if (this.proSettings) {
@@ -99,48 +81,6 @@ export class ProService {
 
     // refresh proSettings$ after changes are made
     this.get(remoteUser);
-
-    return true;
-  }
-
-  async domainCheck(
-    domain: string,
-    remoteUser: string | null = null
-  ): Promise<{ isValid: boolean }> {
-    const endpoint = ['api/v2/pro/settings/domain'];
-
-    if (remoteUser) {
-      endpoint.push(remoteUser);
-    }
-
-    const { isValid } = (await this.client.get(
-      endpoint.join('/'),
-      {
-        domain,
-      },
-      { cache: false }
-    )) as any;
-
-    return { isValid };
-  }
-
-  async upload(type: string, file, remoteUser: string | null = null) {
-    const endpoint = ['api/v2/pro/settings/assets', type];
-
-    if (remoteUser) {
-      endpoint.push(remoteUser);
-    }
-
-    const response = (await this.uploadClient.post(endpoint.join('/'), [
-      file,
-    ])) as any;
-
-    if (!response || response.status !== 'success') {
-      throw new Error(response.message || 'Invalid server response');
-    } else {
-      // refresh proSettings$ after changes are made
-      this.get(remoteUser);
-    }
 
     return true;
   }
