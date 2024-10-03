@@ -145,6 +145,11 @@
         @include m-theme() {
           background: themed($m-black-always);
         }
+
+        m-videoplayer--scrollaware {
+          display: flex;
+          max-height: 100%;
+        }
       }
     }
 
