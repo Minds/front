@@ -141,6 +141,7 @@
         height: 100%;
         display: flex !important;
         align-items: center;
+        overflow-y: hidden;
 
         @include m-theme() {
           background: themed($m-black-always);

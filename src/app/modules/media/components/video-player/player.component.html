@@ -17,10 +17,7 @@
     </ng-container>
     <plyr
       *ngIf="(sources$ | async)?.length"
-      style="display: block; width: 100%"
-      [ngStyle]="{
-        height: ready ? '100%' : '0px'
-      }"
+      style="display: block; width: 100%; height: 100%"
       [plyrDriver]="plyrDriver$ | async"
       [plyrPoster]="service.poster$ | async"
       [plyrPlaysInline]="true"
