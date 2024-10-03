@@ -1,18 +1,14 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { SiteService } from './site.service';
+import { Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { ConfigsService } from './configs.service';
-import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class SsoService {
   constructor(
-    protected site: SiteService,
     protected client: Client,
     protected session: Session,
-    private configs: ConfigsService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private configs: ConfigsService
   ) {
     this.listen();
   }
@@ -23,10 +19,6 @@ export class SsoService {
         this.auth();
       }
     });
-  }
-
-  isRequired(): boolean {
-    return isPlatformBrowser(this.platformId) && this.site.isProDomain;
   }
 
   async connect() {
