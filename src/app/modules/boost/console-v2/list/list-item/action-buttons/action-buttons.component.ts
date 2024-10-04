@@ -1,9 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { Boost, BoostState } from '../../../../boost.types';
+import { Component, Injector, Input } from '@angular/core';
+import { Boost, BoostPaymentMethod, BoostState } from '../../../../boost.types';
 import { BoostConsoleService } from '../../../services/console.service';
 import { BoostRejectionModalService } from '../../../modal/rejection-modal/services/boost-rejection-modal.service';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { BoostCancelModalService } from '../../../services/cancel-modal.service';
+import {
+  ModalRef,
+  ModalService,
+} from '../../../../../../services/ux/modal.service';
+import { ConfirmV2Component } from '../../../../../modals/confirm-v2/confirm.component';
+import { ConfigsService } from '../../../../../../common/services/configs.service';
 
 /**
  * Boost console list item action buttons
@@ -46,7 +52,10 @@ export class BoostConsoleActionButtonsComponent {
   constructor(
     public service: BoostConsoleService,
     private boostRejectionModal: BoostRejectionModalService,
-    private boostCancelModalService: BoostCancelModalService
+    private boostCancelModalService: BoostCancelModalService,
+    private modalService: ModalService,
+    private injector: Injector,
+    private config: ConfigsService
   ) {}
 
   /**
@@ -55,6 +64,15 @@ export class BoostConsoleActionButtonsComponent {
    * @returns { Promise<void> }
    */
   async onApprove(e: MouseEvent): Promise<void> {
+    if (this.boost.payment_method === BoostPaymentMethod.ONCHAIN_TOKENS) {
+      this.withGasPriceWarningModal(() => this.approveBoost());
+      return;
+    }
+
+    this.approveBoost();
+  }
+
+  private async approveBoost(): Promise<void> {
     this.approving = true;
     const promise = this.service.approve(this.boost);
 
@@ -69,6 +87,13 @@ export class BoostConsoleActionButtonsComponent {
    * @returns { void }
    */
   public onReject(e: MouseEvent): void {
+    if (this.boost.payment_method === BoostPaymentMethod.ONCHAIN_TOKENS) {
+      this.withGasPriceWarningModal(() =>
+        this.boostRejectionModal.open(this.boost)
+      );
+      return;
+    }
+
     this.boostRejectionModal.open(this.boost);
   }
 
@@ -98,5 +123,36 @@ export class BoostConsoleActionButtonsComponent {
    */
   public boostIsPending(): boolean {
     return this.boost.boost_status === BoostState.PENDING;
+  }
+
+  /**
+   * Show gas price warning modal before executing a callback function.
+   * @param { Function } successCallbackFn - Function to call after modal confirmation.
+   * @returns { void }
+   */
+  private withGasPriceWarningModal(successCallbackFn: Function): void {
+    const serverGasPrice: string =
+      this.config.get('blockchain')['server_gas_price'] ?? 'Unknown';
+    const modalRef: ModalRef<ConfirmV2Component> = this.modalService.present(
+      ConfirmV2Component,
+      {
+        data: {
+          title: 'Warning!',
+          body: `
+            Check the [current gas price](https://etherscan.io/gastracker).
+            This transaction will be dispatched with a gas price of: **${serverGasPrice}** Gwei
+          `,
+          confirmButtonText: 'Continue',
+          confirmButtonColor: 'blue',
+          confirmButtonSolid: false,
+          showCancelButton: true,
+          onConfirm: () => {
+            modalRef.close();
+            successCallbackFn();
+          },
+        },
+        injector: this.injector,
+      }
+    );
   }
 }
