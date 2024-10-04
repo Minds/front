@@ -7,7 +7,6 @@ import { TextParserService } from '../services/text-parser.service';
 describe('TagPipe', () => {
   const siteServiceMock: any = MockService(SiteService, {
     props: {
-      isProDomain: { get: () => false },
       pro: { get: () => false },
     },
   });

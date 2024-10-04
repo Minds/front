@@ -105,7 +105,6 @@ export interface MindsUser {
   tags?: Array<string>;
   toaster_notifications?: boolean;
   pro?: boolean;
-  pro_published?: boolean;
   pro_settings?: {
     logo_image: string;
     tag_list?: Tag[];
