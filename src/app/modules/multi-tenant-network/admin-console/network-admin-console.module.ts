@@ -58,6 +58,8 @@ import { NetworkAdminConsoleDigestEmailSettingsComponent } from './tabs/general/
 import { NetworkAdminConsoleLandingPageSelectorComponent } from './tabs/navigation/components/landing-page-section/landing-page-selector.component';
 import { NetworkAdminConsoleBillingComponent } from './tabs/billing/billing.component';
 import { NetworkAdminBookAMeetingComponent } from './tabs/general/book-a-meeting/book-a-meeting.component';
+import { MultiTenantBootstrapProgressSplashComponent } from './components/bootstrap-progress-splash/bootstrap-progress-splash.component';
+import { adminOnlyGuard } from '../../../common/guards/admin-only.guard';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -194,6 +196,12 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
       },
       NetworkAdminAnalyticsLazyRoutes,
     ],
+  },
+  {
+    path: 'bootstrap',
+    component: MultiTenantBootstrapProgressSplashComponent,
+    canActivate: [adminOnlyGuard('/')],
+    data: { preventLayoutReset: true },
   },
 ];
 
