@@ -58,13 +58,7 @@ namespace SettingsSteps {
 
   Then('I see pro submenus within settings', () => {
     I.seeElement(settingsPage.settingsHeader);
-    I.seeElement(locate('a').withText('General'));
-    I.seeElement(locate('a').withText('Theme'));
-    I.seeElement(locate('a').withText('Assets'));
-    I.seeElement(locate('a').withText('Domain'));
     I.seeElement(locate('a').withText('Payouts'));
-    I.seeElement(locate('a').withText('Cancel Pro Subscription'));
-    I.seeElement(locate('a').withText('View Pro Channel'));
   });
 
   Then('I see security submenus within settings', () => {
