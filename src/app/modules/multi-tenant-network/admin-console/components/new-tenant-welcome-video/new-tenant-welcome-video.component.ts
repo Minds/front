@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { VideoModule } from '../../../../media/components/video/video.module';
 import { VideoSource } from '../../../../media/components/video-player/player.service';
 import { PlyrModule } from 'ngx-plyr-mg';
-import { CDN_ASSETS_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
+import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 
 /**
  * Video shown to welcome a tenant to their network.
@@ -25,13 +25,13 @@ import { CDN_ASSETS_URL } from '../../../../../common/injection-tokens/url-injec
 export class NewTenantWelcomeVideoComponent {
   protected readonly sources: VideoSource[];
 
-  constructor(@Inject(CDN_ASSETS_URL) private readonly cdnAssetsUrl: string) {
+  constructor(@Inject(STRAPI_URL) private readonly strapiUrl: string) {
     this.sources = [
       {
         id: '',
         type: '',
         size: null,
-        src: `${this.cdnAssetsUrl}assets/videos/new-tenant-welcome/new-tenant-welcome.mp4`,
+        src: `${this.strapiUrl}/uploads/new_tenant_welcome_3efce506ff.mp4`,
       },
     ];
   }

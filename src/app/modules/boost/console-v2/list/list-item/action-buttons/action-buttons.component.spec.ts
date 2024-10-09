@@ -10,7 +10,10 @@ import { MockComponent, MockService } from '../../../../../../utils/mock';
 import { BoostRejectionModalService } from '../../../modal/rejection-modal/services/boost-rejection-modal.service';
 import { BoostCancelModalService } from '../../../services/cancel-modal.service';
 import { BehaviorSubject } from 'rxjs';
-import { Boost, BoostState } from '../../../../boost.types';
+import { Boost, BoostPaymentMethod, BoostState } from '../../../../boost.types';
+import { ConfigsService } from '../../../../../../common/services/configs.service';
+import { ModalService } from '../../../../../../services/ux/modal.service';
+import { Injector } from '@angular/core';
 
 describe('BoostConsoleActionButtonsComponent', () => {
   let comp: BoostConsoleActionButtonsComponent;
@@ -61,6 +64,18 @@ describe('BoostConsoleActionButtonsComponent', () => {
         {
           provide: BoostCancelModalService,
           useValue: MockService(BoostCancelModalService),
+        },
+        {
+          provide: ModalService,
+          useValue: MockService(ModalService),
+        },
+        {
+          provide: Injector,
+          useValue: Injector,
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
         },
       ],
     });
@@ -179,6 +194,49 @@ describe('BoostConsoleActionButtonsComponent', () => {
       expect((comp as any).cancelling).toBeFalse();
       expect(mockBoost.boost_status).toBe(BoostState.CANCELLED);
       expect((comp as any).boostCancelled$.getValue()).toBeTrue();
+    }));
+  });
+
+  describe('onApprove', () => {
+    it('should approve non-onchain boosts', fakeAsync(() => {
+      (comp as any).config.get.withArgs('blockchain').and.returnValue({
+        'server_gas_price': 100,
+      });
+      comp.boost = { ...mockBoost, payment_method: BoostPaymentMethod.CASH };
+      (comp as any).service.approve.and.returnValue(Promise.resolve(true));
+
+      comp.onApprove(new MouseEvent('click'));
+      tick();
+
+      expect(comp.service.approve).toHaveBeenCalledWith(comp.boost);
+      expect(comp.approving).toBeFalse();
+    }));
+
+    it('should approve onchain boosts when modal is confirmed', fakeAsync(() => {
+      (comp as any).config.get.withArgs('blockchain').and.returnValue({
+        'server_gas_price': 100,
+      });
+      (comp as any).modalService.present.and.returnValue({
+        close: () => {},
+      });
+      comp.boost = {
+        ...mockBoost,
+        payment_method: BoostPaymentMethod.ONCHAIN_TOKENS,
+      };
+      (comp as any).service.approve.and.returnValue(Promise.resolve(true));
+
+      comp.onApprove(new MouseEvent('click'));
+      tick();
+
+      expect((comp as any).modalService.present).toHaveBeenCalled();
+
+      (comp as any).modalService.present.calls
+        .mostRecent()
+        .args[1].data.onConfirm();
+      tick();
+
+      expect(comp.service.approve).toHaveBeenCalled();
+      expect(comp.approving).toBeFalse();
     }));
   });
 });
