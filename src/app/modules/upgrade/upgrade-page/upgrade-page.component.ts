@@ -21,6 +21,7 @@ import {
   UpgradePageQuery,
 } from '../../../../graphql/generated.strapi';
 import { ApolloQueryResult } from '@apollo/client';
+import { Session } from '../../../services/session';
 
 export type UpgradePageModalData = {
   isModal: boolean;
@@ -76,7 +77,8 @@ export class UpgradePageComponent implements OnInit {
     private upgradePageGQL: UpgradePageGQL,
     private modalService: ModalService,
     private readonly wirePaymentHandlers: WirePaymentHandlersService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    public session: Session
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.upgradesConfig = configs.get<ProductPageUpgradesConfig>('upgrades');
@@ -287,6 +289,8 @@ export class UpgradePageComponent implements OnInit {
           if (result) {
             modal.close();
             this.onUpgradeComplete();
+
+            if (!this.isModal) window.location.reload();
           }
         },
       },
