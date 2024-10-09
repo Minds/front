@@ -135,6 +135,9 @@
           (onAction)="openWireModal('plus')"
           data-ref="m-upgradePageCard__button--plus"
           size="small"
+          [disabled]="
+            session.getLoggedInUser()?.plus && (toggle$ | async) === 'upgrade'
+          "
           ><ng-container *ngIf="(toggle$ | async) === 'upgrade'"
             >Get</ng-container
           >
@@ -148,6 +151,9 @@
           (onAction)="openWireModal('pro')"
           data-ref="m-upgradePageCard__button--pro"
           size="small"
+          [disabled]="
+            session.getLoggedInUser()?.pro && (toggle$ | async) === 'upgrade'
+          "
           ><ng-container *ngIf="(toggle$ | async) === 'upgrade'"
             >Get</ng-container
           >
