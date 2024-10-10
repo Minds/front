@@ -238,11 +238,11 @@ export class SettingsV2Component implements OnInit {
             label: $localize`:@@SETTINGS__PLUS__VERIFY__LABEL:Verify Your Account`,
             id: 'verify',
           },
-          {
-            shouldShow: this.isNotProUser.bind(this),
-            label: $localize`:@@SETTINGS__PLUS__CANCEL__LABEL:Cancel Minds+ Subscription`,
-            id: 'cancel',
-          },
+          // {
+          //   shouldShow: this.isNotProUser.bind(this),
+          //   label: $localize`:@@SETTINGS__PLUS__CANCEL__LABEL:Cancel Minds+ Subscription`,
+          //   id: 'cancel',
+          // },
         ],
       },
     ],
@@ -261,19 +261,24 @@ export class SettingsV2Component implements OnInit {
           },
         ],
       },
-      {
-        shouldShow: this.isNotTenantSite.bind(this),
-        header: {
-          label: $localize`:@@SETTINGS__PRO__SUBSCRIPTION__HEADER__LABEL:Pro Subscription Management`,
-          id: 'pro-subscription',
-        },
-        items: [
-          {
-            label: $localize`:@@SETTINGS__PRO__SUBSCRIPTION__CANCEL__LABEL:Cancel Pro Subscription`,
-            id: 'cancel',
-          },
-        ],
-      },
+      // {
+      //   shouldShow: this.isNotTenantSite.bind(this),
+      //   header: {
+      //     label: $localize`:@@SETTINGS__PRO__SUBSCRIPTION__HEADER__LABEL:Pro Subscription Management`,
+      //     id: 'pro-subscription',
+      //   },
+      //   items: [
+      //     {
+      //       label: $localize`:@@SETTINGS__PRO__SUBSCRIPTION__CANCEL__LABEL:Cancel Pro Subscription`,
+      //       id: 'cancel',
+      //     },
+      //     {
+      //       label: $localize`:@@SETTINGS__PRO__VIEW__CHANNEL__LABEL:View Pro Channel`,
+      //       id: 'view-pro-channel',
+      //       route: '',
+      //     },
+      //   ],
+      // },
     ],
     other: [
       {
@@ -435,6 +440,15 @@ export class SettingsV2Component implements OnInit {
     );
 
     proMainMenuItem.id = `pro_canary/${this.user}`;
+<<<<<<< HEAD
+=======
+
+    // const proPreviewMenuItem = this.secondaryMenus.pro_canary
+    //   .find((item) => item.header.id === 'pro-subscription')
+    //   .items.find((item) => item.id === 'view-pro-channel');
+
+    // proPreviewMenuItem.route = `/pro/${this.user}`;
+>>>>>>> f48e34924afe41acc3ed0d7983fb957618559653
   }
 
   async loadSettings(): Promise<void> {
