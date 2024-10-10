@@ -440,15 +440,12 @@ export class SettingsV2Component implements OnInit {
     );
 
     proMainMenuItem.id = `pro_canary/${this.user}`;
-<<<<<<< HEAD
-=======
 
     // const proPreviewMenuItem = this.secondaryMenus.pro_canary
     //   .find((item) => item.header.id === 'pro-subscription')
     //   .items.find((item) => item.id === 'view-pro-channel');
 
     // proPreviewMenuItem.route = `/pro/${this.user}`;
->>>>>>> f48e34924afe41acc3ed0d7983fb957618559653
   }
 
   async loadSettings(): Promise<void> {
