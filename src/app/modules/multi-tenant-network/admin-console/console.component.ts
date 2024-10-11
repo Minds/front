@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MultiTenantNetworkConfigService } from '../services/config.service';
-import { Observable, map } from 'rxjs';
+import { Observable, Subscription, map, take } from 'rxjs';
 import { MultiTenantConfig } from '../../../../graphql/generated.engine';
+import { ContentGenerationCompletedSocketService } from './services/content-generation-completed-socket';
+import { ContentGenerationCompletedModalService } from './components/content-generation-completed-modal/content-generation-completed-modal.service';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Multi-tenant network admin console.
@@ -27,12 +30,45 @@ export class NetworkAdminConsoleComponent implements OnInit {
       })
     );
 
+  /** Subscription to content generation completed socket. */
+  private contentGenerationCompletedSubscription: Subscription;
+
   constructor(
-    private multiTenantConfigService: MultiTenantNetworkConfigService
+    private multiTenantConfigService: MultiTenantNetworkConfigService,
+    private contentGenerationCompletedSocketService: ContentGenerationCompletedSocketService,
+    private contentGenerationCompletedModalService: ContentGenerationCompletedModalService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    if (this.route.snapshot.queryParams?.['awaitContentGeneration']) {
+      this.setupContentGenerationCompletedSocketListener();
+    }
     this.multiTenantConfigService.fetchConfig();
+  }
+
+  ngOnDestroy() {
+    if (!this.contentGenerationCompletedSocketService) {
+      return;
+    }
+
+    this.contentGenerationCompletedSubscription?.unsubscribe();
+    this.contentGenerationCompletedSocketService.leave();
+  }
+
+  /**
+   * Setup content generation completed socket listener.
+   * @returns { void }
+   */
+  private setupContentGenerationCompletedSocketListener(): void {
+    this.contentGenerationCompletedSubscription =
+      this.contentGenerationCompletedSocketService.contentGenerationCompleted$
+        .pipe(take(1))
+        .subscribe((value: boolean) => {
+          this.contentGenerationCompletedModalService.open();
+        });
+
+    this.contentGenerationCompletedSocketService.listen();
   }
 
   /**

@@ -31,7 +31,8 @@ export class BootstrapProgressSplashService implements OnDestroy {
   private readonly maxPollingTimeMs: number = 120000;
 
   /** Redirect URL for network admin panel. */
-  private readonly networkAdminRedirectUrl: string = '/network/admin/general';
+  private readonly networkAdminRedirectUrl: string =
+    '/network/admin/general?awaitContentGeneration=true';
 
   /** Current progress. */
   private readonly bootstrapStepProgress$: BehaviorSubject<
