@@ -11,6 +11,7 @@ import { StripeKeysService } from '../../services/stripe-keys.service';
 import { ToasterService } from '../../../../../../../common/services/toaster.service';
 import { BehaviorSubject } from 'rxjs';
 import { StripeKeysType } from '../../../../../../../../graphql/generated.engine';
+import { SiteMembershipService } from '../../../../../../site-memberships/services/site-memberships.service';
 
 describe('NetworkAdminStripeCredentialsComponent', () => {
   let comp: NetworkAdminStripeCredentialsComponent;
@@ -45,6 +46,10 @@ describe('NetworkAdminStripeCredentialsComponent', () => {
               },
             },
           }),
+        },
+        {
+          provide: SiteMembershipService,
+          useValue: MockService(SiteMembershipService),
         },
         { provide: ToasterService, useValue: MockService(ToasterService) },
       ],
@@ -131,6 +136,9 @@ describe('NetworkAdminStripeCredentialsComponent', () => {
       (comp as any).stripeKeysService.saveStripeKeys.and.returnValue(
         Promise.resolve(true)
       );
+      (comp as any).siteMembershipService.fetch.and.returnValue(
+        Promise.resolve([])
+      );
 
       comp.onSubmit();
       tick();
@@ -176,6 +184,51 @@ describe('NetworkAdminStripeCredentialsComponent', () => {
       );
       expect((comp as any).toaster.success).not.toHaveBeenCalled();
       expect((comp as any).submissionInProgress$.getValue()).toBeFalse();
+    }));
+
+    it('should show toast when changing the public key with active site memberships', fakeAsync(() => {
+      const pubKey: string = 'pubKey2';
+      const secKey: string = 'secKey2';
+      (comp as any).formGroup.get('publicKey').setValue(pubKey);
+      (comp as any).formGroup.get('secretKey').setValue(secKey);
+      (comp as any).stripeKeysService.saveStripeKeys.and.returnValue(
+        Promise.resolve(true)
+      );
+      (comp as any).siteMembershipService.fetch.and.returnValue(
+        Promise.resolve([{}])
+      );
+
+      comp.onSubmit();
+      tick();
+
+      expect((comp as any).toaster.error).toHaveBeenCalledWith(
+        'Please archive all membership tiers related to the current Stripe public key before changing it.'
+      );
+    }));
+
+    it('should NOT show toast when NOT changing the public key with active site memberships', fakeAsync(() => {
+      const pubKey: string = 'pubKey2';
+      const secKey: string = 'secKey2';
+      (comp as any).formGroup.get('publicKey').setValue(pubKey);
+      (comp as any).formGroup.get('secretKey').setValue(secKey);
+      (comp as any).stripeKeysService.stripeKeys$.next({
+        pubKey: pubKey,
+        secKey: secKey,
+      });
+      (comp as any).stripeKeysService.saveStripeKeys.and.returnValue(
+        Promise.resolve(true)
+      );
+      (comp as any).siteMembershipService.fetch.and.returnValue(
+        Promise.resolve([{}])
+      );
+
+      comp.onSubmit();
+      tick();
+
+      expect((comp as any).formGroup.pristine).toBeTrue();
+      expect((comp as any).toaster.success).toHaveBeenCalledWith(
+        'Your Stripe credentials have been saved'
+      );
     }));
   });
 });

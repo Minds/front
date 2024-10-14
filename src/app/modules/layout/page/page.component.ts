@@ -59,12 +59,8 @@ export class PageComponent implements OnInit {
     this.messengerService.setupLegacyMessengerVisibility();
   }
 
-  get isProDomain() {
-    return this.site.isProDomain;
-  }
-
   hasMarkersSidebar() {
-    return this.session.isLoggedIn() && !this.isProDomain && false;
+    return this.session.isLoggedIn() && false;
   }
 
   /**

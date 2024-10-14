@@ -40,7 +40,6 @@ import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
 import { HttpClientModule } from '@angular/common/http';
-import { ProModule } from './modules/pro/pro.module';
 //import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
 import { CookieModule } from '@gorniv/ngx-universal';
@@ -81,7 +80,6 @@ import { MindsSentryErrorHandler } from './common/services/diagnostics/sentry-er
     LayoutModule,
     MindsFormsModule,
     CommonModule,
-    ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
     AboutModule,
     AdsModule,
     BoostModule,

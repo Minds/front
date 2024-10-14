@@ -131,7 +131,6 @@ const ENTITY = {
     subscriber: false,
     boost_rating: '1',
     pro: false,
-    pro_published: false,
     rewards: false,
     p2p_media_enabled: false,
     is_admin: false,

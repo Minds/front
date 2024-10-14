@@ -256,22 +256,6 @@ export class SettingsV2Component implements OnInit {
         },
         items: [
           {
-            label: $localize`:@@SETTINGS__PRO__GENERAL__LABEL:General`,
-            id: 'general',
-          },
-          {
-            label: $localize`:@@SETTINGS__PRO__THEME__LABEL:Theme`,
-            id: 'theme',
-          },
-          {
-            label: $localize`:@@SETTINGS__PRO__ASSETS__LABEL:Assets`,
-            id: 'assets',
-          },
-          {
-            label: $localize`:@@SETTINGS__PRO__DOMAIN__LABEL:Domain`,
-            id: 'domain',
-          },
-          {
             label: $localize`:@@SETTINGS__PRO__PAYOUTS__LABEL:Payouts`,
             id: 'payouts',
           },

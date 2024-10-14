@@ -120,7 +120,6 @@ const userMock: any = {
   pro: true,
   plus_method: 'tokens',
   pro_method: 'tokens',
-  pro_published: false,
   rewards: true,
   p2p_media_enabled: false,
   is_admin: true,

@@ -12,9 +12,7 @@ describe('MetaService', () => {
   let service: MetaService;
   let mockDocument: Document = document;
   const cdnAssetsUrl: string = 'https://example.minds.com/';
-  const isProDomain: boolean = false;
   const title: string = 'Site title';
-  const oneLineHeadline: string = 'headline';
   let isTenantNetwork: boolean = false;
 
   beforeEach(() => {
@@ -27,7 +25,6 @@ describe('MetaService', () => {
           provide: SiteService,
           useValue: jasmine.createSpyObj<SiteService>('SiteService', [], {
             title: title,
-            oneLineHeadline: oneLineHeadline,
           }),
         },
         { provide: Location, useValue: MockService(Location) },
@@ -46,10 +43,7 @@ describe('MetaService', () => {
 
     service = TestBed.inject(MetaService);
 
-    (service as any).site.isProDomain = false;
     (service as any).site.title = title;
-    (service as any).site.oneLineHeadline = oneLineHeadline;
-    (service as any).site.isTenantNetwork = isTenantNetwork;
 
     (service as any).configs.get
       .withArgs('cdn_assets_url')
@@ -123,25 +117,15 @@ describe('MetaService', () => {
   });
 
   describe('defaultTitle', () => {
-    it('should get default title when Pro site', () => {
-      (service as any).site.isProDomain = true;
-      (service as any).site.title = title;
-      (service as any).site.oneLineHeadline = oneLineHeadline;
-
-      expect(service.defaultTitle).toBe(`${title} - ${oneLineHeadline}`);
-    });
-
     it('should get default title when on a tenant network', () => {
       const siteName: string = 'Testnet';
-      (service as any).site.isProDomain = false;
       (service as any).isTenantNetwork = true;
       (service as any).configs.get.and.returnValue(siteName);
 
       expect(service.defaultTitle).toBe(siteName);
     });
 
-    it('should get default title when not on a Pro site or tenant network', () => {
-      (service as any).site.isProDomain = false;
+    it('should get default title when not on a tenant network', () => {
       (service as any).isTenantNetwork = false;
 
       expect(service.defaultTitle).toBe('Minds');
