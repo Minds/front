@@ -31,11 +31,6 @@ import { SettingsV2SubscriptionTiersComponent } from './other/subscription-tiers
 import { SettingsV2DeactivateAccountComponent } from './other/deactivate-account/deactivate-account.component';
 import { SettingsV2DeleteAccountComponent } from './other/delete-account/delete-account.component';
 import { WalletV2Service } from '../wallet/components/wallet-v2.service';
-import { ProModule } from '../pro/pro.module';
-import { SettingsV2ProGeneralComponent } from './pro/general/general.component';
-import { SettingsV2ProThemeComponent } from './pro/theme/theme.component';
-import { SettingsV2ProAssetsComponent } from './pro/assets/assets.component';
-import { SettingsV2ProDomainComponent } from './pro/domain/domain.component';
 import { SettingsV2ProPayoutsComponent } from './pro/payouts/payouts.component';
 import { SettingsV2ProCancelComponent } from './pro/cancel/cancel.component';
 import { StrikesComponent } from '../report/strikes/strikes.component';
@@ -275,40 +270,6 @@ const SETTINGS_V2_ROUTES: Routes = [
           description: 'Customize your Pro channel.',
         },
         children: [
-          // CAUTION: adding a description to the data in pro settings
-          // will also add the description under the page header
-          {
-            path: 'general',
-            component: SettingsV2ProGeneralComponent,
-            canDeactivate: [CanDeactivateGuardService],
-            data: {
-              title: 'General Settings',
-            },
-          },
-          {
-            path: 'theme',
-            component: SettingsV2ProThemeComponent,
-            canDeactivate: [CanDeactivateGuardService],
-            data: {
-              title: 'Theme',
-            },
-          },
-          {
-            path: 'assets',
-            component: SettingsV2ProAssetsComponent,
-            canDeactivate: [CanDeactivateGuardService],
-            data: {
-              title: 'Assets',
-            },
-          },
-          {
-            path: 'domain',
-            component: SettingsV2ProDomainComponent,
-            canDeactivate: [CanDeactivateGuardService],
-            data: {
-              title: 'Domain',
-            },
-          },
           {
             path: 'payouts',
             component: SettingsV2ProPayoutsComponent,
@@ -617,7 +578,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     WireModule,
     MindsFormsModule,
     // WalletV2Module,
-    ProModule,
     YoutubeMigrationModule,
     LanguageModule,
     NewsfeedModule,
@@ -644,10 +604,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2SubscriptionTiersComponent,
     SettingsV2DeactivateAccountComponent,
     SettingsV2DeleteAccountComponent,
-    SettingsV2ProGeneralComponent,
-    SettingsV2ProThemeComponent,
-    SettingsV2ProAssetsComponent,
-    SettingsV2ProDomainComponent,
     SettingsV2ProPayoutsComponent,
     SettingsV2ProCancelComponent,
     SettingsV2AutoplayVideosComponent,

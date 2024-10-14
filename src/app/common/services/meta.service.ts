@@ -47,11 +47,9 @@ export class MetaService {
   }
 
   get defaultTitle(): string {
-    return this.site.isProDomain
-      ? this.site.title + ' - ' + this.site.oneLineHeadline
-      : this.isTenantNetwork
-        ? this.configs.get<string>('site_name')
-        : DEFAULT_META_TITLE;
+    return this.isTenantNetwork
+      ? this.configs.get<string>('site_name')
+      : DEFAULT_META_TITLE;
   }
 
   get defaultAuthor(): string {
@@ -77,7 +75,7 @@ export class MetaService {
   public getOgTitle(value: string, join = true): string {
     let ogTitle: string;
 
-    if (this.site.isProDomain || !value) {
+    if (!value) {
       ogTitle = this.defaultTitle;
     } else {
       ogTitle = value.trim();

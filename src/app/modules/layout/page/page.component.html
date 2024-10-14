@@ -2,7 +2,6 @@
   [class.m-body__topbarAlert]="shouldShowTopbarAlert$ | async"
   [class.has-markers-sidebar]="hasMarkersSidebar()"
   [class.has-v3-navbar]="true"
-  [class.is-pro-domain]="isProDomain"
 >
   <div
     [class.m-pageLayout__container]="!(pageLayoutService.isFullWidth$ | async)"
@@ -10,11 +9,9 @@
       pageLayoutService.isFullWidth$ | async
     "
   >
-    <ng-container *ngIf="!isProDomain">
-      <m-sidebar__navigationV2
-        m-pageLayout__pane="left"
-      ></m-sidebar__navigationV2>
-    </ng-container>
+    <m-sidebar__navigationV2
+      m-pageLayout__pane="left"
+    ></m-sidebar__navigationV2>
     <div
       [m-pageLayout__pane]="
         (pageLayoutService.isFullWidth$ | async) ? null : 'main'
@@ -29,9 +26,7 @@
 <ng-container *mIfBrowser>
   <m-messenger
     *ngIf="
-      session.isLoggedIn() &&
-      !isProDomain &&
-      (messengerService.showLegacyMessenger$ | async)
+      session.isLoggedIn() && (messengerService.showLegacyMessenger$ | async)
     "
   ></m-messenger>
 </ng-container>
@@ -42,7 +37,7 @@
 
 <ng-container *mIfBrowser>
   <m-juryDutySession__summons
-    *ngIf="session.isLoggedIn() && !isProDomain"
+    *ngIf="session.isLoggedIn()"
   ></m-juryDutySession__summons>
 
   <m-web3-modal

@@ -25,11 +25,9 @@ import { BlockListService } from './common/services/block-list.service';
 import { ThemeService } from './common/services/theme.service';
 import { BannedService } from './modules/report/banned/banned.service';
 import { DiagnosticsService } from './common/services/diagnostics/diagnostics.service';
-import { SiteService } from './common/services/site.service';
 import { SsoService } from './common/services/sso.service';
 import { Subscription } from 'rxjs';
 import { RouterHistoryService } from './common/services/router-history.service';
-import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
 import { ConfigsService } from './common/services/configs.service';
 import { MetaService } from './common/services/meta.service';
 import { filter, map, mergeMap } from 'rxjs/operators';
@@ -89,7 +87,6 @@ export class Minds implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private diagnostics: DiagnosticsService,
     private routerHistoryService: RouterHistoryService,
-    private site: SiteService,
     private sso: SsoService,
     private metaService: MetaService,
     private configs: ConfigsService,
@@ -107,10 +104,6 @@ export class Minds implements OnInit, OnDestroy {
     private chatExperimentService: ChatExperimentService
   ) {
     this.name = 'Minds';
-
-    if (this.site.isProDomain) {
-      this.router.resetConfig(PRO_DOMAIN_ROUTES);
-    }
   }
 
   async ngOnInit() {
@@ -196,17 +189,13 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   async initialize() {
-    if (this.site.isProDomain) {
-      this.site.listen();
-    } else {
-      this.notificationService.listen();
-      this.notificationService.updateNotificationCount();
-    }
+    this.notificationService.listen();
+    this.notificationService.updateNotificationCount();
 
     this.isChatExperimentActive = this.chatExperimentService.isActive();
 
     this.session.isLoggedIn(async (is) => {
-      if (is && !this.site.isProDomain) {
+      if (is) {
         const user = this.session.getLoggedInUser();
         const language = this.configs.get('language');
 
@@ -298,18 +287,6 @@ export class Minds implements OnInit, OnDestroy {
     if (this.emailConfirmationLoginSubscription) {
       this.emailConfirmationLoginSubscription.unsubscribe();
     }
-  }
-
-  @HostBinding('class') get cssColorSchemeOverride() {
-    if (!this.site.isProDomain || !this.site.pro.scheme) {
-      return '';
-    }
-
-    return `m-theme--wrapper m-theme--wrapper__${this.site.pro.scheme}`;
-  }
-
-  get isProDomain() {
-    return this.site.isProDomain;
   }
 
   private updateMeta(): void {
