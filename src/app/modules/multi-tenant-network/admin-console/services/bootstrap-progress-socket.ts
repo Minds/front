@@ -3,30 +3,40 @@ import { Subject, Subscription } from 'rxjs';
 import { SocketsService } from '../../../../services/sockets';
 import { ConfigsService } from '../../../../common/services/configs.service';
 
+type ParsedBootstrapSocketEvent = {
+  step: string;
+  completed: string;
+};
+
+export type BootstrapSocketEvent = {
+  step: string;
+  completed: boolean;
+};
+
 /**
- * Content generation completed socket service.
+ * Bootstrap progress event socket service.
  */
 @Injectable({ providedIn: 'root' })
-export class ContentGenerationCompletedSocketService implements OnDestroy {
-  /** Subject for content generation completed event. */
-  public readonly contentGenerationCompleted$: Subject<boolean> =
-    new Subject<boolean>();
+export class BootstrapProgressSocketService implements OnDestroy {
+  /** Subject for bootstrap progress events. */
+  public readonly event$: Subject<BootstrapSocketEvent> =
+    new Subject<BootstrapSocketEvent>();
 
-  /** Whether the socket is joined. */
-  private isJoined = false;
+  /** Whether the room is joined. */
+  public isJoined = false;
 
   /** Room name to listen to for socket events. */
   private readonly roomName: string;
 
   // subscriptions.
-  private contentGenerationCompletedSubscription: Subscription;
+  private boootstrapEventSubscription: Subscription;
   private onReadySubscription: Subscription;
 
   constructor(
     private sockets: SocketsService,
     private configs: ConfigsService
   ) {
-    this.roomName = `tenant:bootstrap:content:${this.configs.get('tenant_id')}`;
+    this.roomName = `tenant:bootstrap:${this.configs.get('tenant_id')}`;
   }
 
   ngOnDestroy(): void {
@@ -34,14 +44,11 @@ export class ContentGenerationCompletedSocketService implements OnDestroy {
   }
 
   /**
-   * Listen for content generation completed events.
+   * Listen for bootstrap progress events.
    * @returns { this }
    */
   public async listen(): Promise<this> {
-    if (
-      this.contentGenerationCompletedSubscription ||
-      this.onReadySubscription
-    ) {
+    if (this.boootstrapEventSubscription || this.onReadySubscription) {
       console.error(
         'Already subscribed to content generation completed events'
       );
@@ -53,19 +60,26 @@ export class ContentGenerationCompletedSocketService implements OnDestroy {
       this.isJoined = true;
     });
 
-    this.contentGenerationCompletedSubscription = this.sockets.subscribe(
+    this.boootstrapEventSubscription = this.sockets.subscribe(
       this.roomName,
-      (event: string) => {
-        this.contentGenerationCompleted$.next(true);
-        this.leave();
-        this.destroySubscriptions();
+      (rawEvent: string): void => {
+        try {
+          const parsedEvent: ParsedBootstrapSocketEvent = JSON.parse(rawEvent);
+
+          this.event$.next({
+            step: parsedEvent.step,
+            completed: parsedEvent.completed === 'true' ? true : false,
+          });
+        } catch (error) {
+          console.error('Error parsing bootstrap event:', error, rawEvent);
+        }
       }
     );
     return this;
   }
 
   /**
-   * Leave the content generation completed socket room.
+   * Leave the bootstrap progress socket room.
    * @returns { this }
    */
   public leave(): this {
@@ -82,9 +96,9 @@ export class ContentGenerationCompletedSocketService implements OnDestroy {
    * @returns { this }
    */
   private destroySubscriptions(): this {
-    if (this.contentGenerationCompletedSubscription) {
-      this.contentGenerationCompletedSubscription.unsubscribe();
-      this.contentGenerationCompletedSubscription = null;
+    if (this.boootstrapEventSubscription) {
+      this.boootstrapEventSubscription.unsubscribe();
+      this.boootstrapEventSubscription = null;
     }
     if (this.onReadySubscription) {
       this.onReadySubscription.unsubscribe();

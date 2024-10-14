@@ -1,9 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
-import { ContentGenerationCompletedSocketService } from './content-generation-completed-socket';
+import { BootstrapProgressSocketService } from './bootstrap-progress-socket';
 import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('ContentGenerationCompletedSocketService', () => {
-  let service: ContentGenerationCompletedSocketService;
+  let service: BootstrapProgressSocketService;
 
   let socketsMock = new (function () {
     this.onReady$ = new BehaviorSubject<boolean>(false);
@@ -20,19 +20,11 @@ describe('ContentGenerationCompletedSocketService', () => {
   })();
 
   beforeEach(() => {
-    service = new ContentGenerationCompletedSocketService(
-      socketsMock,
-      configsMock
-    );
+    service = new BootstrapProgressSocketService(socketsMock, configsMock);
   });
 
   afterEach(() => {
-    if ((service as any).contentGenerationCompletedSubscription) {
-      (service as any).contentGenerationCompletedSubscription.unsubscribe();
-    }
-    if ((service as any).metricsSubscription) {
-      (service as any).metricsSubscription.unsubscribe();
-    }
+    (service as any).bootstrapProgressEventSubscription?.unsubscribe();
     (service as any).isJoined = false;
   });
 
@@ -47,11 +39,11 @@ describe('ContentGenerationCompletedSocketService', () => {
     tick();
 
     expect((service as any).sockets.join).toHaveBeenCalledWith(
-      `tenant:bootstrap:content:123`
+      `tenant:bootstrap:123`
     );
     expect((service as any).isJoined).toBeTrue();
     expect((service as any).sockets.subscribe).toHaveBeenCalledWith(
-      `tenant:bootstrap:content:123`,
+      `tenant:bootstrap:123`,
       jasmine.any(Function)
     );
   }));
@@ -62,9 +54,9 @@ describe('ContentGenerationCompletedSocketService', () => {
 
     expect((service as any).isJoined).toBe(false);
     expect((service as any).sockets.leave).toHaveBeenCalledWith(
-      `tenant:bootstrap:content:123`
+      `tenant:bootstrap:123`
     );
-    expect((service as any).metricsSubscription).toBeUndefined();
+    expect((service as any).bootstrapEventSubscription).toBeUndefined();
     expect(
       (service as any).contentGenerationCompletedSubscription
     ).toBeUndefined();

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MultiTenantNetworkConfigService } from '../services/config.service';
-import { Observable, Subscription, map, take } from 'rxjs';
+import { Observable, Subscription, filter, map, take } from 'rxjs';
 import { MultiTenantConfig } from '../../../../graphql/generated.engine';
-import { ContentGenerationCompletedSocketService } from './services/content-generation-completed-socket';
+import {
+  BootstrapProgressSocketService,
+  BootstrapSocketEvent,
+} from './services/bootstrap-progress-socket';
 import { ContentGenerationCompletedModalService } from './components/content-generation-completed-modal/content-generation-completed-modal.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -30,45 +33,48 @@ export class NetworkAdminConsoleComponent implements OnInit {
       })
     );
 
-  /** Subscription to content generation completed socket. */
-  private contentGenerationCompletedSubscription: Subscription;
+  /** Subscription to bootstrap progress socket events. */
+  private bootstrapProgressEventSubscription: Subscription;
 
   constructor(
     private multiTenantConfigService: MultiTenantNetworkConfigService,
-    private contentGenerationCompletedSocketService: ContentGenerationCompletedSocketService,
+    private bootstrapProgressSocketService: BootstrapProgressSocketService,
     private contentGenerationCompletedModalService: ContentGenerationCompletedModalService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.queryParams?.['awaitContentGeneration']) {
-      this.setupContentGenerationCompletedSocketListener();
+      this.setupBootstrapProgressSocketListener();
     }
     this.multiTenantConfigService.fetchConfig();
   }
 
   ngOnDestroy() {
-    if (!this.contentGenerationCompletedSocketService) {
-      return;
+    if (this.bootstrapProgressSocketService.isJoined) {
+      this.teardownBootstrapProgressSocketListener();
     }
-
-    this.contentGenerationCompletedSubscription?.unsubscribe();
-    this.contentGenerationCompletedSocketService.leave();
   }
 
   /**
-   * Setup content generation completed socket listener.
+   * Setup bootstrap progress socket listener.
    * @returns { void }
    */
-  private setupContentGenerationCompletedSocketListener(): void {
-    this.contentGenerationCompletedSubscription =
-      this.contentGenerationCompletedSocketService.contentGenerationCompleted$
-        .pipe(take(1))
-        .subscribe((value: boolean) => {
+  private setupBootstrapProgressSocketListener(): void {
+    this.bootstrapProgressEventSubscription =
+      this.bootstrapProgressSocketService.event$
+        .pipe(
+          filter((event: BootstrapSocketEvent): boolean => {
+            return event.step === 'content' && event.completed;
+          }),
+          take(1)
+        )
+        .subscribe((event: BootstrapSocketEvent): void => {
           this.contentGenerationCompletedModalService.open();
+          this.teardownBootstrapProgressSocketListener();
         });
 
-    this.contentGenerationCompletedSocketService.listen();
+    this.bootstrapProgressSocketService.listen();
   }
 
   /**
@@ -80,5 +86,14 @@ export class NetworkAdminConsoleComponent implements OnInit {
     return siteName.slice(-1) === 's'
       ? `${siteName}' Network`
       : `${siteName}'s Network`;
+  }
+
+  /**
+   * Teardown bootstrap progress socket listener.
+   * @returns { void }
+   */
+  private teardownBootstrapProgressSocketListener(): void {
+    this.bootstrapProgressEventSubscription?.unsubscribe();
+    this.bootstrapProgressSocketService.leave();
   }
 }

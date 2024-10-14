@@ -10,7 +10,10 @@ import { MultiTenantNetworkConfigService } from '../services/config.service';
 import { MultiTenantConfig } from '../../../../graphql/generated.engine';
 import { multiTenantConfigMock } from '../../../mocks/responses/multi-tenant-config.mock';
 import { NetworkAdminConsoleComponent } from './console.component';
-import { ContentGenerationCompletedSocketService } from './services/content-generation-completed-socket';
+import {
+  BootstrapProgressSocketService,
+  BootstrapSocketEvent,
+} from './services/bootstrap-progress-socket';
 import { ContentGenerationCompletedModalService } from './components/content-generation-completed-modal/content-generation-completed-modal.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -44,12 +47,12 @@ describe('NetworkAdminConsoleComponent', () => {
           }),
         },
         {
-          provide: ContentGenerationCompletedSocketService,
-          useValue: MockService(ContentGenerationCompletedSocketService, {
-            has: ['contentGenerationCompleted$'],
+          provide: BootstrapProgressSocketService,
+          useValue: MockService(BootstrapProgressSocketService, {
+            has: ['event$'],
             props: {
-              contentGenerationCompleted$: {
-                get: () => new Subject<boolean>(),
+              event$: {
+                get: () => new Subject<BootstrapSocketEvent>(),
               },
             },
           }),
@@ -122,7 +125,7 @@ describe('NetworkAdminConsoleComponent', () => {
   });
 
   describe('awaitContentGeneration', () => {
-    it('should setup content generation completed socket listener when query param is true and open modal', fakeAsync(() => {
+    it('should setup bootstrap progress socket listener when query param is true and open modal', fakeAsync(() => {
       (comp as any).route.snapshot.queryParams = {
         awaitContentGeneration: true,
       };
@@ -130,19 +133,62 @@ describe('NetworkAdminConsoleComponent', () => {
       comp.ngOnInit();
 
       expect(
-        (comp as any).contentGenerationCompletedSocketService.listen
+        (comp as any).bootstrapProgressSocketService.listen
       ).toHaveBeenCalled();
 
-      (
-        comp as any
-      ).contentGenerationCompletedSocketService.contentGenerationCompleted$.next(
-        true
-      );
+      (comp as any).bootstrapProgressSocketService.event$.next({
+        step: 'content',
+        completed: true,
+      });
       tick();
 
       expect(
         (comp as any).contentGenerationCompletedModalService.open
       ).toHaveBeenCalled();
+    }));
+
+    it('should setup bootstrap progress socket listener when query param is true and not open modal when event is not completed', fakeAsync(() => {
+      (comp as any).route.snapshot.queryParams = {
+        awaitContentGeneration: true,
+      };
+
+      comp.ngOnInit();
+
+      expect(
+        (comp as any).bootstrapProgressSocketService.listen
+      ).toHaveBeenCalled();
+
+      (comp as any).bootstrapProgressSocketService.event$.next({
+        step: 'content',
+        completed: false,
+      });
+      tick();
+
+      expect(
+        (comp as any).contentGenerationCompletedModalService.open
+      ).not.toHaveBeenCalled();
+    }));
+
+    it('should setup bootstrap progress socket listener when query param is true and not open modal when event is for a different step', fakeAsync(() => {
+      (comp as any).route.snapshot.queryParams = {
+        awaitContentGeneration: true,
+      };
+
+      comp.ngOnInit();
+
+      expect(
+        (comp as any).bootstrapProgressSocketService.listen
+      ).toHaveBeenCalled();
+
+      (comp as any).bootstrapProgressSocketService.event$.next({
+        step: 'other',
+        completed: true,
+      });
+      tick();
+
+      expect(
+        (comp as any).contentGenerationCompletedModalService.open
+      ).not.toHaveBeenCalled();
     }));
 
     it('should not setup content generation completed socket listener when query param is false', () => {
@@ -153,7 +199,7 @@ describe('NetworkAdminConsoleComponent', () => {
       comp.ngOnInit();
 
       expect(
-        (comp as any).contentGenerationCompletedSocketService.listen
+        (comp as any).bootstrapProgressSocketService.listen
       ).not.toHaveBeenCalled();
     });
   });
