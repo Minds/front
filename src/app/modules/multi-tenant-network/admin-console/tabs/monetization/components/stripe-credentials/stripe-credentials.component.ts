@@ -1,5 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { StripeKeysType } from '../../../../../../../../graphql/generated.engine';
+import {
+  SiteMembership,
+  StripeKeysType,
+} from '../../../../../../../../graphql/generated.engine';
 import { BehaviorSubject, Subscription, distinctUntilChanged } from 'rxjs';
 import { ToasterService } from '../../../../../../../common/services/toaster.service';
 import {
@@ -9,6 +12,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { StripeKeysService } from '../../services/stripe-keys.service';
+import { SiteMembershipService } from '../../../../../../site-memberships/services/site-memberships.service';
 
 /**
  * Stripe credentials entry component.
@@ -42,6 +46,7 @@ export class NetworkAdminStripeCredentialsComponent
   constructor(
     private formBuilder: FormBuilder,
     private stripeKeysService: StripeKeysService,
+    private siteMembershipService: SiteMembershipService,
     private toaster: ToasterService
   ) {}
 
@@ -86,10 +91,33 @@ export class NetworkAdminStripeCredentialsComponent
   }
 
   /**
-   * Handles the form submission.
+   * On click listener for form submission.
    * @returns { Promise<void }
    */
   public async onSubmit(): Promise<void> {
+    const publicKey: string = this.formGroup.get('publicKey').value;
+    const siteMemberships: SiteMembership[] =
+      (await this.siteMembershipService.fetch(true)) ?? [];
+
+    if (
+      siteMemberships?.length &&
+      publicKey &&
+      publicKey !== this.stripeKeysService.stripeKeys$.getValue()?.pubKey
+    ) {
+      this.toaster.error(
+        'Please archive all membership tiers related to the current Stripe public key before changing it.'
+      );
+      return;
+    }
+
+    this.handleSubmission();
+  }
+
+  /**
+   * Handle new key submission.
+   * @returns { Promise<void> }
+   */
+  private async handleSubmission(): Promise<void> {
     this.submissionInProgress$.next(true);
 
     const publicKey: string = this.formGroup.get('publicKey').value;
