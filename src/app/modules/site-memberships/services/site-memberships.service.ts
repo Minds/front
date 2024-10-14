@@ -60,7 +60,9 @@ export class SiteMembershipService {
    * Batch load site memberships and subscriptions into service state.
    * @param [useNetworkOnly=false] true if you the data changes regularly (e.g. when you are managing memberships) to ignore the cache and always make a network call. False by default
    */
-  public async fetch(useNetworkOnly: boolean = false): Promise<void> {
+  public async fetch(
+    useNetworkOnly: boolean = false
+  ): Promise<SiteMembership[]> {
     try {
       const fetchPolicy: FetchPolicy = useNetworkOnly
         ? 'network-only'
@@ -83,6 +85,8 @@ export class SiteMembershipService {
       this.siteMembershipSubscriptions$.next(
         response.data.siteMembershipSubscriptions ?? []
       );
+
+      return response.data.siteMemberships as SiteMembership[];
     } catch (error) {
       console.error(error);
       this.toaster.error(DEFAULT_ERROR_MESSAGE);
