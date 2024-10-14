@@ -26,7 +26,7 @@ export class ContentGenerationCompletedSocketService implements OnDestroy {
     private sockets: SocketsService,
     private configs: ConfigsService
   ) {
-    this.roomName = `tenant:${this.configs.get('tenant_id')}:bootstrap:content`;
+    this.roomName = `tenant:bootstrap:content:${this.configs.get('tenant_id')}`;
   }
 
   ngOnDestroy(): void {
