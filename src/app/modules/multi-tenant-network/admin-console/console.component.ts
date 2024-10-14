@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { MultiTenantNetworkConfigService } from '../services/config.service';
-import { Observable, Subscription, filter, map, take } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  filter,
+  firstValueFrom,
+  map,
+  take,
+} from 'rxjs';
 import { MultiTenantConfig } from '../../../../graphql/generated.engine';
 import {
   BootstrapProgressSocketService,
   BootstrapSocketEvent,
-} from './services/bootstrap-progress-socket';
+} from './services/bootstrap-progress-socket.service';
 import { ContentGenerationCompletedModalService } from './components/content-generation-completed-modal/content-generation-completed-modal.service';
 import { ActivatedRoute } from '@angular/router';
+import { BootstrapProgressService } from './services/bootstrap-progress.service';
 
 /**
  * Multi-tenant network admin console.
@@ -38,6 +46,7 @@ export class NetworkAdminConsoleComponent implements OnInit {
 
   constructor(
     private multiTenantConfigService: MultiTenantNetworkConfigService,
+    private bootstrapProgressService: BootstrapProgressService,
     private bootstrapProgressSocketService: BootstrapProgressSocketService,
     private contentGenerationCompletedModalService: ContentGenerationCompletedModalService,
     private route: ActivatedRoute
@@ -45,7 +54,7 @@ export class NetworkAdminConsoleComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.route.snapshot.queryParams?.['awaitContentGeneration']) {
-      this.setupBootstrapProgressSocketListener();
+      this.awaitContentGeneration();
     }
     this.multiTenantConfigService.fetchConfig();
   }
@@ -58,23 +67,33 @@ export class NetworkAdminConsoleComponent implements OnInit {
 
   /**
    * Setup bootstrap progress socket listener.
-   * @returns { void }
+   * @returns { Promise<void> }
    */
-  private setupBootstrapProgressSocketListener(): void {
-    this.bootstrapProgressEventSubscription =
-      this.bootstrapProgressSocketService.event$
-        .pipe(
-          filter((event: BootstrapSocketEvent): boolean => {
-            return event.step === 'content' && event.completed;
-          }),
-          take(1)
-        )
-        .subscribe((event: BootstrapSocketEvent): void => {
-          this.contentGenerationCompletedModalService.open();
-          this.teardownBootstrapProgressSocketListener();
-        });
+  private async awaitContentGeneration(): Promise<void> {
+    if (
+      await firstValueFrom(
+        this.bootstrapProgressService.hasAlreadyCompletedStep('CONTENT_STEP')
+      )
+    ) {
+      // already completed - no need to set up socket subscription.
+      this.contentGenerationCompletedModalService.open();
+    } else {
+      // await completion event from socket subscription.
+      this.bootstrapProgressEventSubscription =
+        this.bootstrapProgressSocketService.event$
+          .pipe(
+            filter((event: BootstrapSocketEvent): boolean => {
+              return event.step === 'CONTENT_STEP' && event.completed;
+            }),
+            take(1)
+          )
+          .subscribe((event: BootstrapSocketEvent): void => {
+            this.contentGenerationCompletedModalService.open();
+            this.teardownBootstrapProgressSocketListener();
+          });
 
-    this.bootstrapProgressSocketService.listen();
+      this.bootstrapProgressSocketService.listen();
+    }
   }
 
   /**

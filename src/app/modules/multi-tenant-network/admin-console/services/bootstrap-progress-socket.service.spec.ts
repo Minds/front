@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { BootstrapProgressSocketService } from './bootstrap-progress-socket';
+import { BootstrapProgressSocketService } from './bootstrap-progress-socket.service';
 import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('ContentGenerationCompletedSocketService', () => {

@@ -4,7 +4,7 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing';
-import { BehaviorSubject, Subject, take } from 'rxjs';
+import { BehaviorSubject, of, Subject, take } from 'rxjs';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { MultiTenantNetworkConfigService } from '../services/config.service';
 import { MultiTenantConfig } from '../../../../graphql/generated.engine';
@@ -13,9 +13,10 @@ import { NetworkAdminConsoleComponent } from './console.component';
 import {
   BootstrapProgressSocketService,
   BootstrapSocketEvent,
-} from './services/bootstrap-progress-socket';
+} from './services/bootstrap-progress-socket.service';
 import { ContentGenerationCompletedModalService } from './components/content-generation-completed-modal/content-generation-completed-modal.service';
 import { ActivatedRoute } from '@angular/router';
+import { BootstrapProgressService } from './services/bootstrap-progress.service';
 
 describe('NetworkAdminConsoleComponent', () => {
   let comp: NetworkAdminConsoleComponent;
@@ -45,6 +46,10 @@ describe('NetworkAdminConsoleComponent', () => {
               configLoaded$: { get: () => new BehaviorSubject<boolean>(true) },
             },
           }),
+        },
+        {
+          provide: BootstrapProgressService,
+          useValue: MockService(BootstrapProgressService),
         },
         {
           provide: BootstrapProgressSocketService,
@@ -125,19 +130,52 @@ describe('NetworkAdminConsoleComponent', () => {
   });
 
   describe('awaitContentGeneration', () => {
+    it('should open content gen completed modal when query param is true and it is already completed', fakeAsync(() => {
+      (comp as any).route.snapshot.queryParams = {
+        awaitContentGeneration: true,
+      };
+      (
+        comp as any
+      ).bootstrapProgressService.hasAlreadyCompletedStep.and.returnValue(
+        of(true)
+      );
+
+      comp.ngOnInit();
+      tick();
+
+      expect(
+        (comp as any).bootstrapProgressService.hasAlreadyCompletedStep
+      ).toHaveBeenCalledWith('CONTENT_STEP');
+      expect(
+        (comp as any).contentGenerationCompletedModalService.open
+      ).toHaveBeenCalled();
+      expect(
+        (comp as any).bootstrapProgressSocketService.listen
+      ).not.toHaveBeenCalled();
+    }));
+
     it('should setup bootstrap progress socket listener when query param is true and open modal', fakeAsync(() => {
       (comp as any).route.snapshot.queryParams = {
         awaitContentGeneration: true,
       };
+      (
+        comp as any
+      ).bootstrapProgressService.hasAlreadyCompletedStep.and.returnValue(
+        of(false)
+      );
 
       comp.ngOnInit();
+      tick();
 
+      expect(
+        (comp as any).bootstrapProgressService.hasAlreadyCompletedStep
+      ).toHaveBeenCalledWith('CONTENT_STEP');
       expect(
         (comp as any).bootstrapProgressSocketService.listen
       ).toHaveBeenCalled();
 
       (comp as any).bootstrapProgressSocketService.event$.next({
-        step: 'content',
+        step: 'CONTENT_STEP',
         completed: true,
       });
       tick();
@@ -151,9 +189,18 @@ describe('NetworkAdminConsoleComponent', () => {
       (comp as any).route.snapshot.queryParams = {
         awaitContentGeneration: true,
       };
+      (
+        comp as any
+      ).bootstrapProgressService.hasAlreadyCompletedStep.and.returnValue(
+        of(false)
+      );
 
       comp.ngOnInit();
+      tick();
 
+      expect(
+        (comp as any).bootstrapProgressService.hasAlreadyCompletedStep
+      ).toHaveBeenCalledWith('CONTENT_STEP');
       expect(
         (comp as any).bootstrapProgressSocketService.listen
       ).toHaveBeenCalled();
@@ -173,9 +220,18 @@ describe('NetworkAdminConsoleComponent', () => {
       (comp as any).route.snapshot.queryParams = {
         awaitContentGeneration: true,
       };
+      (
+        comp as any
+      ).bootstrapProgressService.hasAlreadyCompletedStep.and.returnValue(
+        of(false)
+      );
 
       comp.ngOnInit();
+      tick();
 
+      expect(
+        (comp as any).bootstrapProgressService.hasAlreadyCompletedStep
+      ).toHaveBeenCalledWith('CONTENT_STEP');
       expect(
         (comp as any).bootstrapProgressSocketService.listen
       ).toHaveBeenCalled();

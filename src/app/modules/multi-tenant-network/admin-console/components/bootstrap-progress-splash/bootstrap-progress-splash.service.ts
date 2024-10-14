@@ -11,7 +11,7 @@ import { ApiService } from '../../../../../common/api/api.service';
 import { WINDOW } from '../../../../../common/injection-tokens/common-injection-tokens';
 
 /** Bootstrap step progress type. */
-type BootstrapStepProgress = {
+export type BootstrapStepProgress = {
   tenantId: number;
   stepName: string;
   stepLoadingLabel: string;
