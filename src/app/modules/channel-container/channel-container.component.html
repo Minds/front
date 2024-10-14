@@ -1,20 +1,5 @@
 <ng-container *ngIf="error || channel; else loader">
-  <ng-container
-    *ngIf="
-      error ||
-        !proEnabled ||
-        !showPro ||
-        !channel.pro_published ||
-        isOwner ||
-        isAdmin;
-      else isProChannel
-    "
-  >
-    <m-channel-v2 [channel]="channel" #v2ChannelComponent></m-channel-v2>
-  </ng-container>
-  <ng-template #isProChannel>
-    <m-pro--channel #proChannelComponent></m-pro--channel>
-  </ng-template>
+  <m-channel-v2 [channel]="channel" #v2ChannelComponent></m-channel-v2>
 </ng-container>
 <ng-template #loader>
   <div class="m-channel-container--loader" *ngIf="inProgress">

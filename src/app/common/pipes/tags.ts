@@ -62,11 +62,6 @@ export class TagsPipe implements PipeTransform {
     hash: {
       rule: this.regexService.getRegex('hash'),
       replace: (m: TagMatch) => {
-        if (this.siteService.isProDomain) {
-          return `${
-            m.match[1]
-          }<a href="/all;query=${m.match[2].toLowerCase()}">#${m.match[2]}</a>`;
-        }
         return `${
           m.match[1]
         }<a href="/discovery/search?f=top&t=all&q=%23${m.match[2].toLowerCase()}" class="m-legible">#${
@@ -77,11 +72,6 @@ export class TagsPipe implements PipeTransform {
     cash: {
       rule: this.regexService.getRegex('cash'),
       replace: (m: TagMatch) => {
-        if (this.siteService.isProDomain) {
-          return `${
-            m.match[1]
-          }<a href="/all;query=${m.match[2].toUpperCase()}">#${m.match[2]}</a>`;
-        }
         return `${
           m.match[1]
         }<a href="/discovery/search?f=top&t=all&q=%24${m.match[2].toUpperCase()}" class="m-legible">$${

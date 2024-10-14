@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ProModule } from '../pro/pro.module';
 import { ChannelContainerComponent } from './channel-container.component';
 import { CommonModule } from '../../common/common.module';
 import { ChannelsV2Module } from '../channels/v2/channels-v2.module';
@@ -12,7 +11,6 @@ import { ActivityService } from '../../common/services/activity.service';
   imports: [
     NgCommonModule,
     CommonModule,
-    ProModule,
     ChannelsV2Module,
     RouterModule.forChild([
       // Note: The wildcard lazy loads this

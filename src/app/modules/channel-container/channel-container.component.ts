@@ -12,7 +12,6 @@ import { Observable, Subscription, combineLatest, map } from 'rxjs';
 import { Client } from '../../services/api/client';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
-import { ProChannelComponent } from '../pro/channel/channel.component';
 import { Session } from '../../services/session';
 import { SiteService } from '../../common/services/site.service';
 import { ChannelComponent as ChannelV2Component } from '../channels/v2/channel.component';
@@ -36,17 +35,12 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   channel: MindsUser;
 
   protected username: string;
-  protected showPro: boolean;
-
   protected param$: Subscription;
 
   private authSubscription: Subscription;
 
   @ViewChild('v2ChannelComponent')
   v2ChannelComponent: ChannelV2Component;
-
-  @ViewChild('proChannelComponent')
-  proChannelComponent: ProChannelComponent;
 
   constructor(
     protected route: ActivatedRoute,
@@ -63,7 +57,6 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     this.param$ = this.route.params.subscribe((params) => {
       if (params['username']) {
         this.username = params['username'];
-        this.showPro = !params['pro'] || params['pro'] !== '0';
 
         if (
           this.username &&
@@ -98,7 +91,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   }
 
   async load() {
-    if (!this.username || this.showPro === undefined) {
+    if (!this.username) {
       return;
     }
 
@@ -110,22 +103,6 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
       )) as MindsChannelResponse;
 
       this.channel = response.channel;
-
-      // disabled for https://gitlab.com/minds/front/-/issues/4379
-      const shouldRedirectToProHandler = false;
-      // this.showPro &&
-      // !this.site.isProDomain &&
-      // this.channel.pro_published &&
-      // !this.isOwner &&
-      // !this.isAdmin &&
-      // this.proEnabled;
-
-      // NOTE: Temporary workaround until channel component supports children routes
-      if (shouldRedirectToProHandler) {
-        this.router.navigate(['/pro', this.channel.username], {
-          replaceUrl: true,
-        });
-      }
 
       // Note: we don't throw an exception as we do want og:title etc to still work
       if (response.require_login) {
@@ -181,10 +158,5 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
   get isAdmin() {
     return this.session.isAdmin();
-  }
-
-  get proEnabled() {
-    // disabled for https://gitlab.com/minds/front/-/issues/4379
-    return false;
   }
 }

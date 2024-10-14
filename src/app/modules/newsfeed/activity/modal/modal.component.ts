@@ -24,7 +24,6 @@ import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { AnalyticsService } from '../../../../services/analytics';
 import { TranslationService } from '../../../../services/translation';
-import { SiteService } from '../../../../common/services/site.service';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../../common/services/client-meta.service';
 import { AttachmentService } from '../../../../services/attachment';
@@ -109,7 +108,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     public translationService: TranslationService,
     private router: Router,
     private location: Location,
-    private site: SiteService,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
     protected clientMetaService: ClientMetaService,
     public attachment: AttachmentService,
@@ -163,9 +161,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
          */
         let url = `${canonicalUrl}?ismodal=true`;
 
-        if (this.site.isProDomain) {
-          url = `/pro/${this.site.pro.user_guid}${url}`;
-        }
         this.clientMetaService.recordView(this.entity, this.parentClientMeta, {
           source: 'single',
           medium: 'modal',

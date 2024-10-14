@@ -57,14 +57,12 @@
           *ngIf="isSendingGift$ | async; else notGiftProDescriptionTemplate"
           i18n="@@WIRE_CREATOR_MARKETING__PRO_GIFT_DESC"
           >Help a friend take their channel to the next level with even more
-          Boost credits, and access exclusive channel customizations to
-          personalize your presence on Minds.</span
+          Boost credits.</span
         >
         <ng-template #notGiftProDescriptionTemplate>
           <span i18n="@@WIRE_CREATOR_MARKETING__PRO_SELF_DESC"
-            >Take your channel to the next level with even more Boost credits,
-            and access exclusive channel customizations to personalize your
-            presence on Minds.</span
+            >Take your channel to the next level with even more Boost
+            credits.</span
           >
         </ng-template>
       </ng-container>

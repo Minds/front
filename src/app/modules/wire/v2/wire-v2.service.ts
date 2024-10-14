@@ -25,8 +25,6 @@ import {
 import { WireService as WireV1Service, WireStruc } from '../wire.service';
 import { UpgradeOptionInterval } from '../../../common/types/upgrade-options.types';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { PlusService } from '../../plus/plus.service';
-import { ProService } from '../../pro/pro.service';
 import { SupportTier } from './support-tiers.service';
 import { Session } from '../../../services/session';
 import { ToasterService } from '../../../common/services/toaster.service';
@@ -437,8 +435,6 @@ export class WireV2Service implements OnDestroy {
     public wallet: WalletV2Service,
     protected api: ApiService,
     protected v1Wire: WireV1Service,
-    private plusService: PlusService,
-    private proService: ProService,
     private session: Session,
     configs: ConfigsService,
     private toasterService: ToasterService,

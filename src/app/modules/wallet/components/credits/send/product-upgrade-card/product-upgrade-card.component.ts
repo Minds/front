@@ -67,10 +67,6 @@ export class WalletV2CreditsProductUpgradeCardComponent {
         iconName: 'trending_up',
         text: $localize`:@@PRODUCT_UPGRADE_CARD__GET_MORE_FREE_REACH:Get $50 /month (or $480 /year) in free Boost credits`,
       },
-      {
-        iconName: 'palette',
-        text: $localize`:@@PRODUCT_UPGRADE_CARD__CUSTOMIZABLE_WEBSITE:Customizable website`,
-      },
     ],
   };
 
