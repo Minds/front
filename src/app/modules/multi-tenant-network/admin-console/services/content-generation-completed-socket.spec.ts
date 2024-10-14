@@ -47,11 +47,11 @@ describe('ContentGenerationCompletedSocketService', () => {
     tick();
 
     expect((service as any).sockets.join).toHaveBeenCalledWith(
-      `tenant:123:bootstrap:content`
+      `tenant:bootstrap:content:123`
     );
     expect((service as any).isJoined).toBeTrue();
     expect((service as any).sockets.subscribe).toHaveBeenCalledWith(
-      `tenant:123:bootstrap:content`,
+      `tenant:bootstrap:content:123`,
       jasmine.any(Function)
     );
   }));
@@ -62,7 +62,7 @@ describe('ContentGenerationCompletedSocketService', () => {
 
     expect((service as any).isJoined).toBe(false);
     expect((service as any).sockets.leave).toHaveBeenCalledWith(
-      `tenant:123:bootstrap:content`
+      `tenant:bootstrap:content:123`
     );
     expect((service as any).metricsSubscription).toBeUndefined();
     expect(
