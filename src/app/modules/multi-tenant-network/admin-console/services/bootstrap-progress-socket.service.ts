@@ -3,11 +3,6 @@ import { Subject, Subscription } from 'rxjs';
 import { SocketsService } from '../../../../services/sockets';
 import { ConfigsService } from '../../../../common/services/configs.service';
 
-type ParsedBootstrapSocketEvent = {
-  step: string;
-  completed: string;
-};
-
 export type BootstrapSocketEvent = {
   step: string;
   completed: boolean;
@@ -64,12 +59,8 @@ export class BootstrapProgressSocketService implements OnDestroy {
       this.roomName,
       (rawEvent: string): void => {
         try {
-          const parsedEvent: ParsedBootstrapSocketEvent = JSON.parse(rawEvent);
-
-          this.event$.next({
-            step: parsedEvent.step,
-            completed: parsedEvent.completed === 'true' ? true : false,
-          });
+          const parsedEvent: BootstrapSocketEvent = JSON.parse(rawEvent);
+          this.event$.next(parsedEvent);
         } catch (error) {
           console.error('Error parsing bootstrap event:', error, rawEvent);
         }
