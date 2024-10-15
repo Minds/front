@@ -40,6 +40,7 @@ import { LanguageModule } from '../language/language.module';
 import { AdsModule } from '../ads/ads.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DiscoveryEmptyGuestFeedNoticeComponent } from './empty-guest-feed-notice/empty-guest-feed-notice.component';
+import { DiscoveryAdminExcludeButtonComponent } from './tags/admin-exclude-button/admin-exclude-button.component';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import { DiscoveryEmptyGuestFeedNoticeComponent } from './empty-guest-feed-notic
   ],
   declarations: [
     DiscoverySidebarTagsComponent,
+    DiscoveryAdminExcludeButtonComponent,
     DiscoveryTagSettingsComponent,
     DiscoveryFeedsSettingsComponent,
     DiscoveryFeedItemComponent,

@@ -39,4 +39,17 @@ describe('DiscoveryTagsService', () => {
     service.tags$.next([]);
     expect(await service.hasSetTags()).toBeFalse();
   });
+
+  it('should remove a tag from the trending list', () => {
+    service.trending$.next([
+      { value: 'tag1' },
+      { value: 'tag2' },
+      { value: 'tag3' },
+    ]);
+    service.removeTagFromTrending({ value: 'tag2' });
+    expect(service.trending$.value).toEqual([
+      { value: 'tag1' },
+      { value: 'tag3' },
+    ]);
+  });
 });

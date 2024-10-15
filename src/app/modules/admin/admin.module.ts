@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-
 import { AdminFirehoseComponent } from './firehose/firehose.component';
 import { AdminReports } from './reports/reports';
 import { AdminTagcloud } from './tagcloud/tagcloud.component';
@@ -24,6 +23,7 @@ import { AdminPushNotificationsComponent } from './push-notifications/admin-push
 import { BoostModule } from '../boost/boost.module';
 import { AdminAccountsComponent } from './accounts/admin-accounts.component';
 import { AdminAccountsFormComponent } from './accounts/form/admin-accounts-form.component';
+import { NetworkAdminExcludedHashtagsSharedModule } from '../multi-tenant-network/admin-console/tabs/moderation/excluded-hashtags/excluded-hashtags-shared.module';
 
 const routes: Routes = [
   {
@@ -45,6 +45,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     ActivityModule,
     BoostModule,
+    NetworkAdminExcludedHashtagsSharedModule,
   ],
   declarations: [
     AdminComponent,
