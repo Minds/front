@@ -55,6 +55,13 @@
         </a>
         <a
           class="m-topbar--navigation--item"
+          routerLink="/admin/hashtags"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Hidden tags</span>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
           routerLink="/admin/push-notifications"
           routerLinkActive="m-topbar--navigation--item-active"
         >
@@ -92,4 +99,8 @@
     *ngIf="filter == 'boosts'"
     adminContext="true"
   ></m-boostConsole>
+  <m-networkAdminConsole__excludedHashtagsList
+    *ngIf="filter == 'hashtags'"
+    [pageSize]="24"
+  />
 </ng-container>

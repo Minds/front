@@ -1,0 +1,47 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+
+  .m-excludedHashtagList__row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: $spacing6 $spacing16;
+
+    @media screen and (max-width: $min-desktop) {
+      padding: $spacing6 $spacing8;
+    }
+
+    .m-excludedHashtagList__hashtag {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-excludedHashtagList__emptyListContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: $spacing6 $spacing8 !important;
+    box-sizing: border-box;
+    margin-top: $spacing6;
+
+    .m-excludedHashtagList__emptyListText {
+      @include heading4Bold;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}

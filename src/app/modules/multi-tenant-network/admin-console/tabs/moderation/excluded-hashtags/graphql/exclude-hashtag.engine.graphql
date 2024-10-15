@@ -1,0 +1,3 @@
+mutation ExcludeHashtag($hashtag: String!) {
+    excludeHashtag(hashtag: $hashtag)
+}

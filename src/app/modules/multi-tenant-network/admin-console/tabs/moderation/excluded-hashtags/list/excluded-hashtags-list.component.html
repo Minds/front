@@ -1,0 +1,27 @@
+<m-networkAdminConsole__excludedHashtagsListItem
+  *ngFor="let hashtag of excludedHashtagEdges$ | async"
+  class="m-excludedHashtagList__row"
+  [tagEdge]="hashtag"
+  (onRemoved)="removeHashtagExclusion($event)"
+/>
+
+<div
+  *ngIf="!(excludedHashtagEdges$ | async).length && !(inProgress$ | async)"
+  class="m-excludedHashtagList__emptyListContainer"
+>
+  <p
+    class="m-excludedHashtagList__emptyListText"
+    i18n="@@EXCLUDED_HASHTAG__LIST__NO_EXCLUDED_HASHTAGS"
+  >
+    No hidden hashtags
+  </p>
+</div>
+
+<infinite-scroll
+  *ngIf="hasNextPage$ | async as hasNextPage"
+  (load)="fetchMore()"
+  [moreData]="hasNextPage"
+  [inProgress]="inProgress$ | async"
+  [hideManual]="true"
+  [distance]="'25%'"
+/>

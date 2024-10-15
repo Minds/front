@@ -3,6 +3,13 @@
 minds-admin {
   grid-area: content / span 2;
   min-width: 0;
+
+  m-networkAdminConsole__excludedHashtagsList {
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-right: 1px solid themed($m-borderColor--primary);
+    }
+  }
 }
 
 minds-admin-boosts {

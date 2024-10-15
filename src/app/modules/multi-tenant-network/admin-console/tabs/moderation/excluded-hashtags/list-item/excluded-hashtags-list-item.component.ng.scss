@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: $spacing6 $spacing16;
+
+  @media screen and (max-width: $min-desktop) {
+    padding: $spacing6 $spacing8;
+  }
+
+  .m-excludedHashtagList__hashtag {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+}
