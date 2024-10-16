@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import * as xhr2 from 'xhr2';
 
 import * as express from 'express';
-import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { REQUEST } from '../../../express.tokens';
 
 @Injectable()
 export class CookieHttpInterceptorService implements HttpInterceptor {

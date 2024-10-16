@@ -4,7 +4,7 @@ import {
   addIntegration,
   SentryErrorHandler,
 } from '@sentry/angular';
-import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { REQUEST } from '../../../../express.tokens';
 import { SSR_SENTRY_INTEGRATIONS } from '../../injection-tokens/common-injection-tokens';
 import type { Integration } from '@sentry/types';
 import { isPlatformBrowser } from '@angular/common';
