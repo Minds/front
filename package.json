@@ -118,7 +118,7 @@
     "walletlink": "^2.0.2",
     "webtorrent": "^0.103.0",
     "yargs": "^17.0.1",
-    "zone.js": "~0.13.3"
+    "zone.js": "^0.14.10"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.2.14",
