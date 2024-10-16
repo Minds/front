@@ -9,10 +9,9 @@ import { By } from '@angular/platform-browser';
 import { ReplaySubject } from 'rxjs';
 import { TopbarAlertComponent } from './topbar-alert.component';
 import { TopbarAlertService } from './topbar-alert.service';
-import { MockService } from '../../../utils/mock';
+import { MockDirective, MockService } from '../../../utils/mock';
 import { MarkdownModule } from 'ngx-markdown';
 import { AnalyticsService } from '../../../services/analytics';
-import { IsTenantService } from '../../services/is-tenant.service';
 
 describe('TopbarAlertComponent', () => {
   let comp: TopbarAlertComponent;
@@ -21,7 +20,13 @@ describe('TopbarAlertComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [MarkdownModule.forRoot()],
-      declarations: [TopbarAlertComponent],
+      declarations: [
+        TopbarAlertComponent,
+        MockDirective({
+          selector: 'data',
+        }),
+      ],
+
       providers: [
         {
           provide: TopbarAlertService,
@@ -82,7 +87,8 @@ describe('TopbarAlertComponent', () => {
     const messageEl = fixture.debugElement.query(
       By.css('.m-topbarAlert__message')
     ).nativeElement;
-    expect(messageEl.innerHTML).toContain(message);
+
+    expect(messageEl.getAttribute('ng-reflect-data')).toContain(message);
   });
 
   describe('onMarkdownTextClick', () => {
