@@ -50,7 +50,7 @@
     "@apollo/client": "^3.7.14",
     "@bhayward93/ckeditor5-build-minds": "^1.1.8",
     "@ckeditor/ckeditor5-angular": "^5.2.0",
-    "@ctrl/ngx-emoji-mart": "^6.2.0",
+    "@ctrl/ngx-emoji-mart": "^9.2.0",
     "@danielmoncada/angular-datetime-picker": "^17.0.0",
     "@floating-ui/dom": "^1.6.11",
     "@fontsource/inter": "^4.5.15",

@@ -28,7 +28,7 @@ export class EmojiPickerComponent {
   /** Custom icon name. */
   @Input() iconName: string = 'emoji_emotions';
 
-  @Input() popperPlacement: string = 'bottom';
+  @Input() popperPlacement: string = 'top';
   showSelector = false;
 
   @ViewChild('emojiPickerOutlet', { read: ViewContainerRef })

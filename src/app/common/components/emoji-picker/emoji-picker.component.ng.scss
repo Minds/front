@@ -14,9 +14,9 @@
       padding: 0;
       z-index: 5;
 
-      .ngxp__arrow:before {
+      .ngxp__arrow {
         @include m-theme() {
-          background-color: themed($m-borderColor--primary);
+          background-color: themed($m-borderColor--primary) !important;
         }
       }
 

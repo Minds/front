@@ -21,7 +21,7 @@ $menuBorderRadius: 4px;
       }
     }
 
-    .ngxp__arrow:before {
+    .ngxp__arrow {
       @include m-theme() {
         background: themed($m-bgColor--primary);
         border: 1px solid themed($m-borderColor--primary);

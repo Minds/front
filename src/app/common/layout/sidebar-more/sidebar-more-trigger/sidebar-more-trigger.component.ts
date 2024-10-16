@@ -18,7 +18,7 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
   @Output('toggle') onToggle: EventEmitter<Boolean> =
     new EventEmitter<Boolean>();
 
-  popperPlacement: string = 'right';
+  popperPlacement: string = 'auto';
 
   @ViewChild('popper') popper: NgxPopperjsContentComponent;
 
