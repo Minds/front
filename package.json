@@ -52,6 +52,7 @@
     "@ckeditor/ckeditor5-angular": "^5.2.0",
     "@ctrl/ngx-emoji-mart": "^6.2.0",
     "@danielmoncada/angular-datetime-picker": "^17.0.0",
+    "@floating-ui/dom": "^1.6.11",
     "@fontsource/inter": "^4.5.15",
     "@gorniv/ngx-universal": "^2.2.3",
     "@mindsorg/web3modal-angular": "^16.2.12",
