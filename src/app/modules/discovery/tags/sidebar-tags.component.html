@@ -121,7 +121,10 @@
         </div>
       </a>
       <m-discovery__tagButton [tag]="tag" />
-      <m-discovery__adminExcludeButton [tag]="tag" />
+      <m-discovery__adminExcludeButton
+        *ngIf="canModerateContent$ | async"
+        [tag]="tag"
+      />
     </ng-container>
   </ng-template>
 </ng-container>
