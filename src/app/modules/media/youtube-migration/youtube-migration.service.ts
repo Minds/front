@@ -401,7 +401,7 @@ export class YoutubeMigrationService {
    * Format duration for video display template
    */
   formatDuration(duration: string | number): string {
-    const durationFormat = duration >= 3600 ? 'H:mm:ss' : 'mm:ss';
+    const durationFormat = Number(duration) >= 3600 ? 'H:mm:ss' : 'mm:ss';
     return moment
       .utc(moment.duration(Number(duration), 'seconds').asMilliseconds())
       .format(durationFormat);
