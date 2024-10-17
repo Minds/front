@@ -4,7 +4,6 @@ import {
   ErrorHandler,
   NgModule,
 } from '@angular/core';
-// import { TransferHttpCacheModule } from '@angular/ssr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CaptchaModule } from './modules/captcha/captcha.module';
