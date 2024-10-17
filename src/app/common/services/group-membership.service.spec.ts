@@ -25,7 +25,7 @@ describe('GroupMembershipService', () => {
         },
         {
           provide: Router,
-          useValue: MockService(Router),
+          useValue: jasmine.createSpyObj<Router>(['navigateByUrl']),
         },
       ],
     });
@@ -669,6 +669,89 @@ describe('GroupMembershipService', () => {
       expect((service as any).isAwaiting$.getValue()).toBe(true);
       expect((service as any).toaster.error).toHaveBeenCalledOnceWith(
         errorMessage
+      );
+    }));
+  });
+
+  describe('join with navigateOnSuccess', () => {
+    it('should navigate to group page when navigateOnSuccess is true', fakeAsync(() => {
+      const groupGuid = '1234567890123456';
+      (service as any).router.url = '/other';
+
+      service.group$.next({
+        ...groupMock,
+        guid: groupGuid,
+        membership: GroupAccessType.PUBLIC,
+      });
+      (service as any).api.put
+        .withArgs(`api/v1/groups/membership/${groupGuid}`)
+        .and.returnValue(
+          of({
+            status: 'success',
+            done: true,
+          })
+        );
+
+      service.join({ navigateOnSuccess: true });
+      tick();
+
+      expect((service as any).router.navigateByUrl).toHaveBeenCalledWith(
+        `/group/${groupGuid}`
+      );
+    }));
+
+    it('should not navigate when navigateOnSuccess is false', fakeAsync(() => {
+      const groupGuid = '1234567890123456';
+      service.group$.next({
+        ...groupMock,
+        guid: groupGuid,
+        membership: GroupAccessType.PUBLIC,
+      });
+
+      (service as any).api.put
+        .withArgs(`api/v1/groups/membership/${groupGuid}`)
+        .and.returnValue(
+          of({
+            status: 'success',
+            done: true,
+          })
+        );
+
+      service.join({ navigateOnSuccess: false });
+      tick();
+
+      expect((service as any).router.navigateByUrl).not.toHaveBeenCalled();
+    }));
+
+    it('should refresh the page when user is already on the group page', fakeAsync(() => {
+      const groupGuid = '1234567890123456';
+      (service as any).router.url = `/group/${groupGuid}`;
+      (service as any).router.navigateByUrl.and.returnValue(
+        Promise.resolve(true)
+      );
+
+      service.group$.next({
+        ...groupMock,
+        guid: groupGuid,
+        membership: GroupAccessType.PUBLIC,
+      });
+      (service as any).api.put
+        .withArgs(`api/v1/groups/membership/${groupGuid}`)
+        .and.returnValue(
+          of({
+            status: 'success',
+            done: true,
+          })
+        );
+
+      service.join({ navigateOnSuccess: true });
+      tick();
+
+      expect((service as any).router.navigateByUrl).toHaveBeenCalledWith('/', {
+        skipLocationChange: true,
+      });
+      expect((service as any).router.navigateByUrl).toHaveBeenCalledWith(
+        `/group/${groupGuid}`
       );
     }));
   });

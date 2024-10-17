@@ -167,11 +167,18 @@ export class GroupMembershipService implements OnDestroy {
               }
 
               // only navigate if requested, and the user is not already on the page.
-              if (
-                groupJoinOptions?.navigateOnSuccess &&
-                !this.router.url.includes(`/group/${groupGuid}`)
-              ) {
-                this.router.navigateByUrl(`/group/${groupGuid}`);
+              if (groupJoinOptions?.navigateOnSuccess) {
+                if (!this.router.url.includes(`/group/${groupGuid}`)) {
+                  this.router.navigateByUrl(`/group/${groupGuid}`);
+                } else {
+                  // Force a route refresh if the user is already on the page.
+                  const currentUrl: string = this.router.url;
+                  this.router
+                    .navigateByUrl('/', { skipLocationChange: true })
+                    .then(() => {
+                      this.router.navigateByUrl(currentUrl);
+                    });
+                }
               }
               return;
             }
