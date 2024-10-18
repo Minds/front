@@ -314,11 +314,6 @@ export class WireV2Service implements OnDestroy {
     );
 
   /**
-   * Wire upgrade trial observable
-   */
-  readonly upgradeCanHaveTrial$: Observable<boolean>;
-
-  /**
    * Wire token type subject
    */
   readonly tokenType$: BehaviorSubject<WireTokenType> =
@@ -586,37 +581,6 @@ export class WireV2Service implements OnDestroy {
           });
       }
     });
-
-    this.upgradeCanHaveTrial$ = combineLatest([
-      this.upgradeType$,
-      this.upgradeInterval$,
-      this.type$,
-      this.isUpgrade$,
-      this.isSendingGift$,
-      this.isReceivingGift$,
-      this.usdPaymentMethodId$,
-    ]).pipe(
-      map(
-        ([
-          upgradeType,
-          upgradeInterval,
-          paymentType,
-          isUpgrade,
-          isSendingGift,
-          isReceivingGift,
-          usdPaymentMethodId,
-        ]) => {
-          return (
-            !isReceivingGift &&
-            !isSendingGift &&
-            usdPaymentMethodId !== 'gift_card' &&
-            isUpgrade &&
-            this.upgrades[upgradeType][upgradeInterval].can_have_trial &&
-            paymentType === 'usd'
-          );
-        }
-      )
-    );
 
     // Sync balances
     if (this.session.isLoggedIn()) {
