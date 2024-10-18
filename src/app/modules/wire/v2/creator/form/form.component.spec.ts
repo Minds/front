@@ -31,7 +31,6 @@ describe('WireCreatorFormComponent', () => {
               'type$',
               'isSendingGift$',
               'isReceivingGift$',
-              'upgradeCanHaveTrial$',
               'upgradePricingOptions$',
               'amount$',
               'upgradeType$',
@@ -62,9 +61,6 @@ describe('WireCreatorFormComponent', () => {
                 get: () => new BehaviorSubject<boolean>(false),
               },
               isReceivingGift$: {
-                get: () => new BehaviorSubject<boolean>(false),
-              },
-              upgradeCanHaveTrial$: {
                 get: () => new BehaviorSubject<boolean>(false),
               },
               upgradePricingOptions$: {
@@ -117,7 +113,6 @@ describe('WireCreatorFormComponent', () => {
     comp.service.type$.next('usd');
     comp.service.isSendingGift$.next(false);
     comp.service.isReceivingGift$.next(false);
-    (comp as any).service.upgradeCanHaveTrial$.next(false);
     comp.service.upgradePricingOptions$.next({
       monthly: 7,
       yearly: 60,

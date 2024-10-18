@@ -86,19 +86,6 @@
       </div>
     </div>
     <!-- ---------------------------------- -->
-    <!-- HEADER: UPGRADE START TRIAL -->
-    <!-- ---------------------------------- -->
-    <div
-      class="m-wireCreatorForm__fields"
-      *ngIf="service.upgradeCanHaveTrial$ | async"
-    >
-      <div class="m-wireCreatorForm__field">
-        <h4 class="m-wireCreatorForm__upgradeTrialHeader">
-          Start your free trial for 7 days
-        </h4>
-      </div>
-    </div>
-    <!-- ---------------------------------- -->
     <!-- TOGGLE: UPGRADE INTERVAL -->
     <!-- ---------------------------------- -->
     <div class="m-wireCreatorForm__fields" *ngIf="service.isUpgrade$ | async">
