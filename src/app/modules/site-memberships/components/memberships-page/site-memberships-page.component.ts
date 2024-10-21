@@ -76,9 +76,6 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
   /** Whether to show dismiss actions. */
   public showDismissActions: boolean = true;
 
-  /** Title to display in the star-card. */
-  public titleOverride: string = null;
-
   /** True if this is being displayed as a modal */
   @HostBinding('class.m-membershipsPage__modal')
   isModal: boolean = false;
