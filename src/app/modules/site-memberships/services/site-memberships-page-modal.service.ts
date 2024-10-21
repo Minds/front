@@ -13,7 +13,6 @@ import {
 type SiteMembershipsPageModalOpts = {
   showWhenMember?: boolean;
   showDismissActions?: boolean;
-  titleOverride?: string;
 };
 
 /**
@@ -90,7 +89,6 @@ export class SiteMembershipsPageModal {
         },
         skipInitialFetch: true,
         showDismissActions: opts?.showDismissActions ?? true,
-        titleOverride: opts?.titleOverride ?? null,
       },
       injector: this.injector,
       size: 'lg',

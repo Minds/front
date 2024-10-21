@@ -72,7 +72,6 @@ export class SiteMembershipGateService {
       ) {
         this.siteMembershipsPageModal.open({
           showDismissActions: false,
-          titleOverride: $localize`:@@MEMBERSHIPS__A_MEMBERSHIP_IS_REQUIRED_TO_PROCEED:A membership is required to proceed`,
         });
       }
     } catch (e) {

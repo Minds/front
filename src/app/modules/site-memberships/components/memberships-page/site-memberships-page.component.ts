@@ -32,7 +32,6 @@ export type SiteMembershipsPageModalData = {
   isModal: boolean;
   skipInitialFetch: boolean;
   showDismissActions?: boolean;
-  titleOverride?: string;
   onDismissIntent: () => any;
   onJoinClick: () => any;
 };
@@ -109,8 +108,11 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
 
     this.checkForErrorParams();
 
-    if (this.titleOverride) {
-      this.starCardTitleText = this.titleOverride;
+    if (
+      this.isModal &&
+      this.configs.get('tenant')?.['should_show_membership_gate']
+    ) {
+      this.starCardTitleText = $localize`:@@MEMBERSHIPS__A_MEMBERSHIP_IS_REQUIRED_TO_PROCEED:A membership is required to proceed`;
     } else {
       this.subscriptions.push(
         this.route.queryParamMap.subscribe((params) => {
@@ -205,7 +207,6 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
     isModal,
     onDismissIntent,
     onJoinClick,
-    titleOverride,
     skipInitialFetch,
     showDismissActions,
   }: SiteMembershipsPageModalData) {
@@ -214,7 +215,6 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
       this.showPageTitle$.next(false);
     }
     this.showDismissActions = showDismissActions ?? true;
-    this.titleOverride = titleOverride ?? null;
     this.onDismissIntent = onDismissIntent ?? (() => {});
     this.onJoinClick = onJoinClick ?? (() => {});
     this.skipInitialFetch = skipInitialFetch ?? false;
