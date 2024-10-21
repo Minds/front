@@ -105,57 +105,34 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
 
     this.checkForErrorParams();
 
-    if (
-      this.isModal &&
-      this.configs.get('tenant')?.['should_show_membership_gate']
-    ) {
-      this.starCardTitleText = $localize`:@@MEMBERSHIPS__A_MEMBERSHIP_IS_REQUIRED_TO_PROCEED:A membership is required to proceed`;
-    } else {
-      this.subscriptions.push(
-        this.route.queryParamMap.subscribe((params) => {
-          if (params.has('membershipRedirect')) {
-            this.starCardTitleText = $localize`:@@MEMBERSHIPS__THIS_MEMBERSHIP_IS_NO_LONGER_AVAILABLE:This membership is no longer available`;
-          } else {
-            this.starCardTitleText = $localize`:@@MEMBERSHIPS__UNLEASH_THE_FULL_MINDS_EXPERIENCE:Unleash the full ${this.configs.get(
-              'site_name'
-            )} experience`;
-          }
-        })
-      );
-    }
+    this.subscriptions.push(
+      this.route.queryParamMap.subscribe((params) => {
+        if (params.has('membershipRedirect')) {
+          this.starCardTitleText = $localize`:@@MEMBERSHIPS__THIS_MEMBERSHIP_IS_NO_LONGER_AVAILABLE:This membership is no longer available`;
+        } else {
+          this.starCardTitleText = $localize`:@@MEMBERSHIPS__BECOME_A_SUPPORTING_MEMBER:Become a supporting member`;
+        }
+      })
+    );
 
     this.starCardDescriptionText$ = this.route.queryParamMap.pipe(
-      switchMap((params) => {
+      map((params) => {
         const membershipRedirect = params.get('membershipRedirect');
+        const siteName = this.configs.get('site_name');
+
+        if (
+          this.isModal &&
+          this.configs.get('tenant')?.['should_show_membership_gate']
+        ) {
+          return $localize`:@@MEMBERSHIPS__THIS_COMMUNITY_IS_EXCLUSIVELY_FOR_SUPPORTING_MEMBERS_JOIN_TODAY:This community is exclusively for supporting members. Join today.`;
+        }
 
         if (membershipRedirect) {
           this.showPageTitle$.next(false);
-          const siteName = this.configs.get('site_name');
-          return of(
-            $localize`:@@MEMBERSHIPS__OTHER_AVAILABLE_MEMBERSHIPS:Check out these other available memberships from ${siteName}.`
-          );
+          return $localize`:@@MEMBERSHIPS__OTHER_AVAILABLE_MEMBERSHIPS:Check out these other available memberships from ${siteName}:site name:.`;
         }
 
-        return this.siteMembershipsService.siteMemberships$.pipe(
-          map((memberships: SiteMembership[]): string => {
-            if (!memberships?.length) return null;
-
-            const lowestPriceMembership: SiteMembership =
-              this.siteMembershipsService.getLowestPriceMembershipFromArray(
-                memberships
-              );
-            if (!lowestPriceMembership) return null;
-
-            const currencySymbol: string =
-              getCurrencySymbol(
-                lowestPriceMembership.priceCurrency,
-                'narrow'
-              ) ?? '$';
-            return $localize`:@@MEMBERSHIPS__MEMBERSHIPS_START_AT_X_PER_MONTH:Memberships start at ${currencySymbol}${
-              lowestPriceMembership.membershipPriceInCents / 100
-            }`;
-          })
-        );
+        return $localize`:@@MEMBERSHIPS__JOIN_AND_SUPPORT_TO_UNLOCK_MEMBERS_ONLY_ACCESS:Join and support ${siteName}:site name: to unlock members-only access.`;
       })
     );
   }

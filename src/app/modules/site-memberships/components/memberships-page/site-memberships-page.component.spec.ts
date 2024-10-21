@@ -23,7 +23,6 @@ import { SiteMembershipService } from '../../services/site-memberships.service';
 describe('SiteMembershipsPageComponent', () => {
   let comp: SiteMembershipsPageComponent;
   let fixture: ComponentFixture<SiteMembershipsPageComponent>;
-  const queryParamMapSubject = new BehaviorSubject(convertToParamMap({}));
 
   const mockSiteMemberships: SiteMembership[] = [
     {
@@ -135,10 +134,17 @@ describe('SiteMembershipsPageComponent', () => {
         { provide: ToasterService, useValue: MockService(ToasterService) },
         {
           provide: ActivatedRoute,
-          useValue: {
-            queryParamMap: queryParamMapSubject.asObservable(),
-            snapshot: { queryParamMap: queryParamMapSubject.value },
-          },
+          useValue: MockService(ActivatedRoute, {
+            has: ['queryParamMap', 'snapshot'],
+            props: {
+              queryParamMap: {
+                get: () => new BehaviorSubject(convertToParamMap({})),
+              },
+              snapshot: {
+                get: () => ({ queryParamMap: convertToParamMap({}) }),
+              },
+            },
+          }),
         },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
@@ -147,6 +153,9 @@ describe('SiteMembershipsPageComponent', () => {
 
     fixture = TestBed.createComponent(SiteMembershipsPageComponent);
     comp = fixture.componentInstance;
+
+    (comp as any).configs.isModal = false;
+
     spyOn(console, 'error');
 
     fixture.detectChanges();
@@ -199,9 +208,21 @@ describe('SiteMembershipsPageComponent', () => {
     }));
   });
 
-  describe('SiteMembershipsPageComponent with membershipRedirect query param', () => {
+  describe('starCardTitleText', () => {
+    it('should set default starCardTitleText when membershipRedirect query param is not present', fakeAsync(() => {
+      (comp as any).route.queryParamMap.next(convertToParamMap({}));
+
+      fixture.detectChanges();
+      tick();
+
+      expect((comp as any).starCardTitleText).toEqual(
+        'Become a supporting member'
+      );
+      flush();
+    }));
+
     it('should set starCardTitleText correctly when membershipRedirect query param is present', fakeAsync(() => {
-      queryParamMapSubject.next(
+      (comp as any).route.queryParamMap.next(
         convertToParamMap({ membershipRedirect: 'true' })
       );
 
@@ -213,15 +234,54 @@ describe('SiteMembershipsPageComponent', () => {
       );
       flush();
     }));
+  });
 
+  describe('starCardDescriptionText$', () => {
     it('should set starCardDescriptionText$ correctly when membershipRedirect query param is present', (done) => {
-      queryParamMapSubject.next(
+      (comp as any).isModal = false;
+      (comp as any).configs.get.withArgs('tenant').and.returnValue({
+        should_show_membership_gate: true,
+      });
+      (comp as any).configs.get.withArgs('site_name').and.returnValue('test');
+      (comp as any).route.queryParamMap.next(
         convertToParamMap({ membershipRedirect: 'true' })
       );
 
       (comp as any).starCardDescriptionText$.subscribe((description) => {
         expect(description).toContain(
           'Check out these other available memberships'
+        );
+        done();
+      });
+    });
+
+    it('should set starCardDescriptionText$ correctly when membership gate is shown', (done) => {
+      (comp as any).route.queryParamMap.next(convertToParamMap({}));
+      (comp as any).isModal = true;
+      (comp as any).configs.get.withArgs('tenant').and.returnValue({
+        should_show_membership_gate: true,
+      });
+      (comp as any).configs.get.withArgs('site_name').and.returnValue('test');
+
+      (comp as any).starCardDescriptionText$.subscribe((description) => {
+        expect(description).toContain(
+          'This community is exclusively for supporting members. Join today.'
+        );
+        done();
+      });
+    });
+
+    it('should set starCardDescriptionText$ correctly when no membership gate or redirect title should be shown', (done) => {
+      (comp as any).route.queryParamMap.next(convertToParamMap({}));
+      (comp as any).isModal = false;
+      (comp as any).configs.get.withArgs('tenant').and.returnValue({
+        should_show_membership_gate: false,
+      });
+      (comp as any).configs.get.withArgs('site_name').and.returnValue('test');
+
+      (comp as any).starCardDescriptionText$.subscribe((description) => {
+        expect(description).toContain(
+          'Join and support test to unlock members-only access.'
         );
         done();
       });
