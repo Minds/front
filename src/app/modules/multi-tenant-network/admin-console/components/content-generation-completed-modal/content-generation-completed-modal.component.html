@@ -1,0 +1,30 @@
+<div class="m-boostModalV2__container m-modalV2__inner">
+  <div class="m-modalV2__header">
+    <h2 i18n="@@CONTENT_GEN_COMPLETED_MODAL_TITLE">
+      Your newsfeed is ready 🚀
+    </h2>
+  </div>
+  <div class="m-modalV2__body">
+    <p i18n="@@CONTENT_GEN_COMPLETED_MODAL_BODY">
+      We've used your website to automatically create new posts for your
+      community on the Newsfeed. Want to see it?
+    </p>
+  </div>
+  <div class="m-modalV2__footer">
+    <m-button
+      color="primary"
+      solid="false"
+      (onAction)="onLaterClick()"
+      i18n="@@CONTENT_GEN_COMPLETED_MODAL_LATER_BUTTON"
+      >Later</m-button
+    >
+    <m-button
+      color="blue"
+      solid="true"
+      (onAction)="onShowMeClick()"
+      i18n="@@CONTENT_GEN_COMPLETED_MODAL_SHOW_ME_BUTTON"
+      >Show me</m-button
+    >
+  </div>
+</div>
+<m-modalCloseButton />

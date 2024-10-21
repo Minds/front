@@ -131,7 +131,7 @@ describe('BootstrapProgressSplashService', () => {
     it('should update window.location.href', () => {
       service.redirectToNetwork();
       expect((service as any).window.location.href).toBe(
-        '/network/admin/general'
+        '/network/admin/general?awaitContentGeneration=true'
       );
     });
   });
