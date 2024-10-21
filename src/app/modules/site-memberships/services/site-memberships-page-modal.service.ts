@@ -12,7 +12,10 @@ import {
 /** Modal options. */
 type SiteMembershipsPageModalOpts = {
   showWhenMember?: boolean;
+  showDismissActions?: boolean;
+  titleOverride?: string;
 };
+
 /**
  * Service that loads and presents
  * the site memberships page component as a modal
@@ -86,6 +89,8 @@ export class SiteMembershipsPageModal {
           this.dismiss();
         },
         skipInitialFetch: true,
+        showDismissActions: opts?.showDismissActions ?? true,
+        titleOverride: opts?.titleOverride ?? null,
       },
       injector: this.injector,
       size: 'lg',

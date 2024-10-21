@@ -16,6 +16,10 @@
 
   m-starCard {
     margin: $spacing12 0;
+
+    &.m-membershipsPage__starCard--compact {
+      margin: $spacing4 0;
+    }
   }
 
   .m-membershipsPage__membershipCardsContainer {
@@ -44,7 +48,7 @@
       overflow-y: auto;
 
       @media screen and (min-width: $max-mobile + 1) {
-        max-height: 240px;
+        max-height: 100%;
       }
 
       m-siteMembershipCard {

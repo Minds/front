@@ -2,6 +2,7 @@
   <h3 *ngIf="showPageTitle$ | async">Memberships</h3>
 
   <m-starCard
+    [class.m-membershipsPage__starCard--compact]="!showDismissActions"
     [title]="starCardTitleText"
     [description]="starCardDescriptionText$ | async"
     [hideStars]="true"
@@ -26,7 +27,12 @@
 </ng-container>
 
 <div class="m-membershipsPage__modalButtonContainer" *ngIf="isModal">
-  <m-button [stretch]="true" (onAction)="onDismissIntent()">Get later</m-button>
+  <m-button
+    *ngIf="showDismissActions"
+    [stretch]="true"
+    (onAction)="onDismissIntent()"
+    >Get later</m-button
+  >
 </div>
 
 <ng-template #loadingSpinnerTemplate>
@@ -34,7 +40,7 @@
 </ng-template>
 
 <m-modalCloseButton
-  *ngIf="isModal"
+  *ngIf="isModal && showDismissActions"
   class="noAbsolutePosition"
   data-ref="m-siteMemnbershipsPage__button--modalClose"
 ></m-modalCloseButton>

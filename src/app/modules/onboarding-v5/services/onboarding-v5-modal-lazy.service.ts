@@ -15,6 +15,7 @@ import { OnboardingV5MinimalModeService } from './onboarding-v5-minimal-mode.ser
 import { SiteMembershipsPageModal } from '../../site-memberships/services/site-memberships-page-modal.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 /**
  * Service for opening the onboarding v5 modal and lazy loading in needed components..
@@ -38,6 +39,7 @@ export class OnboardingV5ModalLazyService {
     private upgradeModal: UpgradeModalService,
     private siteMembershipsPageModal: SiteMembershipsPageModal,
     private router: Router,
+    private configs: ConfigsService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {
@@ -101,15 +103,26 @@ export class OnboardingV5ModalLazyService {
       if (!this.onboardingMinimalMode.shouldShow()) {
         setTimeout(() => this.upgradeModal.open(), 800);
       } else if (this.isTenantNetwork) {
+        const shouldShowMembershipGate: boolean =
+          this.configs.get('tenant')?.['should_show_membership_gate'] ?? false;
+
         // Don't open the modal if user onboarded from a
         // membership join page
         if (
-          this.urlOnOpen.startsWith('/memberships/join') ||
-          this.membershipCheckoutRedirect
+          !shouldShowMembershipGate &&
+          (this.urlOnOpen.startsWith('/memberships/join') ||
+            this.membershipCheckoutRedirect)
         ) {
           return;
         }
-        setTimeout(() => this.siteMembershipsPageModal.open(), 800);
+
+        setTimeout(
+          () =>
+            this.siteMembershipsPageModal.open({
+              showDismissActions: !shouldShowMembershipGate,
+            }),
+          800
+        );
       }
     }
   }

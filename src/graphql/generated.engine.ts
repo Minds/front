@@ -203,6 +203,8 @@ export type AppReadyMobileConfig = {
   APP_TRACKING_MESSAGE_ENABLED?: Maybe<Scalars['Boolean']['output']>;
   EAS_PROJECT_ID?: Maybe<Scalars['String']['output']>;
   IS_NON_PROFIT?: Maybe<Scalars['Boolean']['output']>;
+  MEMBERS_ONLY_MODE_ENABLED?: Maybe<Scalars['Boolean']['output']>;
+  PRODUCTION_APP_VERSION?: Maybe<Scalars['String']['output']>;
   TENANT_ID: Scalars['Int']['output'];
   THEME: Scalars['String']['output'];
   WELCOME_LOGO: Scalars['String']['output'];
@@ -922,9 +924,11 @@ export type MobileConfig = {
   __typename?: 'MobileConfig';
   appTrackingMessage?: Maybe<Scalars['String']['output']>;
   appTrackingMessageEnabled?: Maybe<Scalars['Boolean']['output']>;
+  appVersion?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   previewQRCode: Scalars['String']['output'];
   previewStatus: MobilePreviewStatusEnum;
+  productionAppVersion?: Maybe<Scalars['String']['output']>;
   splashScreenType: MobileSplashScreenTypeEnum;
   updateTimestamp: Scalars['Int']['output'];
   welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
@@ -954,6 +958,7 @@ export enum MultiTenantColorScheme {
 
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
+  bloomerangApiKey?: Maybe<Scalars['String']['output']>;
   boostEnabled?: Maybe<Scalars['Boolean']['output']>;
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
@@ -966,6 +971,7 @@ export type MultiTenantConfig = {
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   loggedInLandingPageIdMobile?: Maybe<Scalars['String']['output']>;
   loggedInLandingPageIdWeb?: Maybe<Scalars['String']['output']>;
+  membersOnlyModeEnabled?: Maybe<Scalars['Boolean']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   replyEmail?: Maybe<Scalars['String']['output']>;
@@ -986,6 +992,7 @@ export type MultiTenantConfigInput = {
   isNonProfit?: InputMaybe<Scalars['Boolean']['input']>;
   loggedInLandingPageIdMobile?: InputMaybe<Scalars['String']['input']>;
   loggedInLandingPageIdWeb?: InputMaybe<Scalars['String']['input']>;
+  membersOnlyModeEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
@@ -1022,6 +1029,8 @@ export type Mutation = {
   assignUserToRole: Role;
   cancelInvite?: Maybe<Scalars['Void']['output']>;
   claimGiftCard: GiftCardNode;
+  /** Clear the mobile production app version for all tenants. */
+  clearAllMobileAppVersions: Scalars['Boolean']['output'];
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
   /** Creates a new message in a chat room */
@@ -1055,10 +1064,13 @@ export type Mutation = {
   deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
+  /** Exclude a hashtag. */
   excludeHashtag: Scalars['Boolean']['output'];
   invite?: Maybe<Scalars['Void']['output']>;
   leaveChatRoom: Scalars['Boolean']['output'];
   mobileConfig: MobileConfig;
+  /** Set the mobile production app version for a tenant. */
+  mobileProductionAppVersion: Scalars['Boolean']['output'];
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
@@ -1066,6 +1078,7 @@ export type Mutation = {
   /** Updates the read receipt of a room */
   readReceipt: ChatRoomEdge;
   refreshRssFeed: RssFeed;
+  /** Remove a hashtag exclusion. */
   removeHashtagExclusion: Scalars['Boolean']['output'];
   removeMemberFromChatRoom: Scalars['Boolean']['output'];
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
@@ -1249,6 +1262,12 @@ export type MutationMobileConfigArgs = {
   mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
   mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
   mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
+  productionAppVersion?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationMobileProductionAppVersionArgs = {
+  productionAppVersion: Scalars['String']['input'];
+  tenantId: Scalars['Int']['input'];
 };
 
 export type MutationMultiTenantConfigArgs = {
@@ -1665,6 +1684,7 @@ export type Query = {
   rssFeed: RssFeed;
   rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
+  shouldShowMembershipGate: Scalars['Boolean']['output'];
   siteMembership: SiteMembership;
   siteMembershipSubscriptions: Array<SiteMembershipSubscription>;
   siteMemberships: Array<SiteMembership>;
@@ -2353,15 +2373,6 @@ export type AdminUpdateAccountMutationVariables = Exact<{
 export type AdminUpdateAccountMutation = {
   __typename?: 'Mutation';
   updateAccount: Array<string>;
-};
-
-export type ExcludeHashtagMutationVariables = Exact<{
-  hashtag: Scalars['String']['input'];
-}>;
-
-export type ExcludeHashtagMutation = {
-  __typename?: 'Mutation';
-  excludeHashtag: boolean;
 };
 
 export type ModerationSetUserBanStateMutationVariables = Exact<{
@@ -3345,6 +3356,15 @@ export type SetMobileConfigMutation = {
   };
 };
 
+export type ExcludeHashtagMutationVariables = Exact<{
+  hashtag: Scalars['String']['input'];
+}>;
+
+export type ExcludeHashtagMutation = {
+  __typename?: 'Mutation';
+  excludeHashtag: boolean;
+};
+
 export type GetExcludedHashtagsQueryVariables = Exact<{
   first: Scalars['Int']['input'];
   after?: InputMaybe<Scalars['Int']['input']>;
@@ -4282,6 +4302,7 @@ export type GetMultiTenantConfigQuery = {
     digestEmailEnabled?: boolean | null;
     welcomeEmailEnabled?: boolean | null;
     isNonProfit?: boolean | null;
+    membersOnlyModeEnabled?: boolean | null;
   } | null;
 };
 
@@ -4396,6 +4417,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   loggedInLandingPageIdWeb?: InputMaybe<Scalars['String']['input']>;
   loggedInLandingPageIdMobile?: InputMaybe<Scalars['String']['input']>;
   isNonProfit?: InputMaybe<Scalars['Boolean']['input']>;
+  membersOnlyModeEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -7941,6 +7963,15 @@ export type GetSiteMembershipSubscriptionsQuery = {
   }>;
 };
 
+export type ShouldShowMembershipGateQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type ShouldShowMembershipGateQuery = {
+  __typename?: 'Query';
+  shouldShowMembershipGate: boolean;
+};
+
 export const PageInfoFragmentDoc = gql`
   fragment PageInfo on PageInfo {
     hasPreviousPage
@@ -8065,25 +8096,6 @@ export class AdminUpdateAccountGQL extends Apollo.Mutation<
   AdminUpdateAccountMutationVariables
 > {
   document = AdminUpdateAccountDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const ExcludeHashtagDocument = gql`
-  mutation ExcludeHashtag($hashtag: String!) {
-    excludeHashtag(hashtag: $hashtag)
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class ExcludeHashtagGQL extends Apollo.Mutation<
-  ExcludeHashtagMutation,
-  ExcludeHashtagMutationVariables
-> {
-  document = ExcludeHashtagDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -9477,6 +9489,25 @@ export class SetMobileConfigGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const ExcludeHashtagDocument = gql`
+  mutation ExcludeHashtag($hashtag: String!) {
+    excludeHashtag(hashtag: $hashtag)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ExcludeHashtagGQL extends Apollo.Mutation<
+  ExcludeHashtagMutation,
+  ExcludeHashtagMutationVariables
+> {
+  document = ExcludeHashtagDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetExcludedHashtagsDocument = gql`
   query GetExcludedHashtags($first: Int!, $after: Int) {
     hashtagExclusions(first: $first, after: $after) {
@@ -10263,6 +10294,7 @@ export const GetMultiTenantConfigDocument = gql`
       digestEmailEnabled
       welcomeEmailEnabled
       isNonProfit
+      membersOnlyModeEnabled
     }
   }
 `;
@@ -10446,6 +10478,7 @@ export const SetMultiTenantConfigDocument = gql`
     $loggedInLandingPageIdWeb: String
     $loggedInLandingPageIdMobile: String
     $isNonProfit: Boolean
+    $membersOnlyModeEnabled: Boolean
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
@@ -10464,6 +10497,7 @@ export const SetMultiTenantConfigDocument = gql`
         loggedInLandingPageIdWeb: $loggedInLandingPageIdWeb
         loggedInLandingPageIdMobile: $loggedInLandingPageIdMobile
         isNonProfit: $isNonProfit
+        membersOnlyModeEnabled: $membersOnlyModeEnabled
       }
     )
   }
@@ -11506,6 +11540,25 @@ export class GetSiteMembershipSubscriptionsGQL extends Apollo.Query<
   GetSiteMembershipSubscriptionsQueryVariables
 > {
   document = GetSiteMembershipSubscriptionsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ShouldShowMembershipGateDocument = gql`
+  query ShouldShowMembershipGate {
+    shouldShowMembershipGate
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ShouldShowMembershipGateGQL extends Apollo.Query<
+  ShouldShowMembershipGateQuery,
+  ShouldShowMembershipGateQueryVariables
+> {
+  document = ShouldShowMembershipGateDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

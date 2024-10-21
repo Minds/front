@@ -59,6 +59,28 @@
   <m-networkAdminConsole__landingPageDescription></m-networkAdminConsole__landingPageDescription>
   <m-networkAdminConsole__enableLandingPageToggle></m-networkAdminConsole__enableLandingPageToggle>
   <m-networkAdminConsole__enableWalledGardenToggle></m-networkAdminConsole__enableWalledGardenToggle>
+  <m-networkAdminConsole__configSettingsToggle
+    *ngIf="hasSiteMemberships$ | async"
+    title="Members only"
+    toggleText="Members only"
+    fieldName="membersOnlyModeEnabled"
+  >
+    <ng-container description>
+      <span class="m-configSettingsToggle__body">
+        <span
+          i18n="
+            @@NETWORK_ADMIN_CONSOLE_GENERAL__ONLY_PAID_MEMBERS_CAN_ACCESS_NETWORK"
+          >Only paid members can access the network.</span
+        >
+        <span>&nbsp;</span>
+        <a
+          [routerLink]="['/network/admin/monetization/memberships']"
+          i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__MANAGE_MEMBERSHIPS"
+          >Manage memberships</a
+        >.
+      </span>
+    </ng-container>
+  </m-networkAdminConsole__configSettingsToggle>
 
   <m-networkAdminConsole__federationSettings></m-networkAdminConsole__federationSettings>
   <m-networkAdminConsole__digestEmailSettings></m-networkAdminConsole__digestEmailSettings>

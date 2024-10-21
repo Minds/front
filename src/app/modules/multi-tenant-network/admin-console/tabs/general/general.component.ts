@@ -10,14 +10,17 @@ import { MultiTenantNetworkConfigService } from '../../../services/config.servic
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import {
   BehaviorSubject,
+  Observable,
   Subscription,
   filter,
   lastValueFrom,
+  map,
   take,
 } from 'rxjs';
 import { MultiTenantConfig } from '../../../../../../graphql/generated.engine';
 import { MetaService } from '../../../../../common/services/meta.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { SiteMembershipsCountService } from '../../../../site-memberships/services/site-membership-count.service';
 
 /**
  * General settings tab for network admin console.
@@ -47,8 +50,15 @@ export class NetworkAdminConsoleGeneralComponent implements OnInit, OnDestroy {
   // subscriptions.
   private configLoadSubscription: Subscription;
 
+  /** Whether the network has site memberships. */
+  protected readonly hasSiteMemberships$: Observable<boolean> =
+    this.siteMembershipCountService.count$.pipe(
+      map((count: number) => count > 0)
+    );
+
   constructor(
     private multiTenantConfigService: MultiTenantNetworkConfigService,
+    private siteMembershipCountService: SiteMembershipsCountService,
     private formBuilder: FormBuilder,
     private toaster: ToasterService,
     private metaService: MetaService,

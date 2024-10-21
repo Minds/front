@@ -14,6 +14,7 @@ import { NetworkAdminConsoleGeneralComponent } from './general.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { MultiTenantConfig } from '../../../../../../graphql/generated.engine';
+import { SiteMembershipsCountService } from '../../../../site-memberships/services/site-membership-count.service';
 
 describe('NetworkAdminConsoleGeneralComponent', () => {
   let comp: NetworkAdminConsoleGeneralComponent;
@@ -61,6 +62,15 @@ describe('NetworkAdminConsoleGeneralComponent', () => {
                 get: () =>
                   new BehaviorSubject<MultiTenantConfig>(multiTenantConfigMock),
               },
+            },
+          }),
+        },
+        {
+          provide: SiteMembershipsCountService,
+          useValue: MockService(SiteMembershipsCountService, {
+            has: ['count$'],
+            props: {
+              count$: { get: () => new BehaviorSubject<number>(0) },
             },
           }),
         },

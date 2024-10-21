@@ -25,6 +25,22 @@
     margin-bottom: $spacing8;
   }
 
+  .m-configSettingsToggle__body {
+    margin-bottom: $spacing8;
+    margin-right: $spacing2;
+    @include body1Regular;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    a {
+      @include m-theme() {
+        color: themed($m-action);
+      }
+    }
+  }
+
   .m-networkAdminGeneral__copyInviteLinkContainer {
     margin: $spacing8 0 $spacing16 0;
 

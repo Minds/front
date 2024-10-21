@@ -14,5 +14,6 @@ query GetMultiTenantConfig {
     digestEmailEnabled
     welcomeEmailEnabled
     isNonProfit
+    membersOnlyModeEnabled
   }
 }

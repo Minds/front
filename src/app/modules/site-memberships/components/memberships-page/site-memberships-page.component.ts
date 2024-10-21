@@ -31,6 +31,8 @@ export enum SiteMembershipPageErrorMessage {
 export type SiteMembershipsPageModalData = {
   isModal: boolean;
   skipInitialFetch: boolean;
+  showDismissActions?: boolean;
+  titleOverride?: string;
   onDismissIntent: () => any;
   onJoinClick: () => any;
 };
@@ -72,6 +74,12 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
   /** Whether initial fetch should be skipped. */
   private skipInitialFetch: boolean = false;
 
+  /** Whether to show dismiss actions. */
+  public showDismissActions: boolean = true;
+
+  /** Title to display in the star-card. */
+  public titleOverride: string = null;
+
   /** True if this is being displayed as a modal */
   @HostBinding('class.m-membershipsPage__modal')
   isModal: boolean = false;
@@ -101,17 +109,21 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
 
     this.checkForErrorParams();
 
-    this.subscriptions.push(
-      this.route.queryParamMap.subscribe((params) => {
-        if (params.has('membershipRedirect')) {
-          this.starCardTitleText = $localize`:@@MEMBERSHIPS__THIS_MEMBERSHIP_IS_NO_LONGER_AVAILABLE:This membership is no longer available`;
-        } else {
-          this.starCardTitleText = $localize`:@@MEMBERSHIPS__UNLEASH_THE_FULL_MINDS_EXPERIENCE:Unleash the full ${this.configs.get(
-            'site_name'
-          )} experience`;
-        }
-      })
-    );
+    if (this.titleOverride) {
+      this.starCardTitleText = this.titleOverride;
+    } else {
+      this.subscriptions.push(
+        this.route.queryParamMap.subscribe((params) => {
+          if (params.has('membershipRedirect')) {
+            this.starCardTitleText = $localize`:@@MEMBERSHIPS__THIS_MEMBERSHIP_IS_NO_LONGER_AVAILABLE:This membership is no longer available`;
+          } else {
+            this.starCardTitleText = $localize`:@@MEMBERSHIPS__UNLEASH_THE_FULL_MINDS_EXPERIENCE:Unleash the full ${this.configs.get(
+              'site_name'
+            )} experience`;
+          }
+        })
+      );
+    }
 
     this.starCardDescriptionText$ = this.route.queryParamMap.pipe(
       switchMap((params) => {
@@ -193,14 +205,30 @@ export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
     isModal,
     onDismissIntent,
     onJoinClick,
+    titleOverride,
     skipInitialFetch,
+    showDismissActions,
   }: SiteMembershipsPageModalData) {
     this.isModal = isModal;
     if (this.isModal) {
       this.showPageTitle$.next(false);
     }
+    this.showDismissActions = showDismissActions ?? true;
+    this.titleOverride = titleOverride ?? null;
     this.onDismissIntent = onDismissIntent ?? (() => {});
     this.onJoinClick = onJoinClick ?? (() => {});
     this.skipInitialFetch = skipInitialFetch ?? false;
+  }
+
+  /**
+   * Get modal options.
+   * @returns { { canDismiss: () => Promise<boolean> } }
+   */
+  public getModalOptions(): { canDismiss: () => Promise<boolean> } {
+    return {
+      canDismiss: async (): Promise<boolean> => {
+        return !this.configs.get('tenant')?.['should_show_membership_gate'];
+      },
+    };
   }
 }

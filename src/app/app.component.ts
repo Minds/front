@@ -42,6 +42,8 @@ import { OnboardingV5Service } from './modules/onboarding-v5/services/onboarding
 import { ExplainerScreensService } from './modules/explainer-screens/services/explainer-screen.service';
 import { ChatExperimentService } from './modules/experiments/sub-services/chat-experiment.service';
 import { ChatInitService } from './modules/chat/services/chat-init.service';
+import { SiteMembershipGateService } from './modules/site-memberships/services/site-membership-gate.service';
+import { IS_TENANT_NETWORK } from './common/injection-tokens/tenant-injection-tokens';
 
 @Component({
   selector: 'm-app',
@@ -101,7 +103,9 @@ export class Minds implements OnInit, OnDestroy {
     private onboardingV5ModalService: OnboardingV5ModalLazyService,
     private explainerScreenService: ExplainerScreensService,
     private chatInitService: ChatInitService,
-    private chatExperimentService: ChatExperimentService
+    private chatExperimentService: ChatExperimentService,
+    private siteMembershipGateService: SiteMembershipGateService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {
     this.name = 'Minds';
   }
@@ -218,6 +222,11 @@ export class Minds implements OnInit, OnDestroy {
         if (this.isChatExperimentActive) {
           this.chatInitService.reinit();
         }
+
+        if (this.isTenantNetwork) {
+          await this.siteMembershipGateService.refreshLocalState();
+          this.siteMembershipGateService.showIfRequired();
+        }
       } else {
         this.notificationService.unlisten();
 
@@ -249,6 +258,10 @@ export class Minds implements OnInit, OnDestroy {
     this.themeService.setUp();
 
     this.socketsService.setUp();
+
+    if (this.isTenantNetwork) {
+      this.siteMembershipGateService.showIfRequired();
+    }
 
     if (this.isChatExperimentActive && this.session.isLoggedIn()) {
       this.chatInitService.init();
