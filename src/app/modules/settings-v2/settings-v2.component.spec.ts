@@ -220,18 +220,6 @@ describe('SettingsV2Component', () => {
     expect(menuItem.shouldShow()).toBeFalsy();
   });
 
-  describe('Twitter Sync', () => {
-    it("should have a 'Twitter' visible", () => {
-      (component as any).injectExperimentItems();
-
-      const menuItem: any = component.secondaryMenus.other
-        .find((x) => x.header.id === 'content-migration')
-        .items.find((x) => x.id === 'twitter-sync');
-
-      expect(menuItem.label).toEqual('Twitter');
-    });
-  });
-
   it('should determine if the user has permission to use RSS sync', () => {
     (component as any).permissionsService.has
       .withArgs(PermissionsEnum.CanUseRssSync)

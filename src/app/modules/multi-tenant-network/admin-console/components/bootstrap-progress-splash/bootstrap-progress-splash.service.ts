@@ -11,7 +11,7 @@ import { ApiService } from '../../../../../common/api/api.service';
 import { WINDOW } from '../../../../../common/injection-tokens/common-injection-tokens';
 
 /** Bootstrap step progress type. */
-type BootstrapStepProgress = {
+export type BootstrapStepProgress = {
   tenantId: number;
   stepName: string;
   stepLoadingLabel: string;
@@ -31,7 +31,8 @@ export class BootstrapProgressSplashService implements OnDestroy {
   private readonly maxPollingTimeMs: number = 120000;
 
   /** Redirect URL for network admin panel. */
-  private readonly networkAdminRedirectUrl: string = '/network/admin/general';
+  private readonly networkAdminRedirectUrl: string =
+    '/network/admin/general?awaitContentGeneration=true';
 
   /** Current progress. */
   private readonly bootstrapStepProgress$: BehaviorSubject<

@@ -1,0 +1,36 @@
+@import 'defaults.scss';
+
+:host {
+  .m-modalV2__header {
+    h2 {
+      margin: 0;
+      @include heading2Bold;
+    }
+  }
+
+  .m-modalV2__body {
+    max-height: 100%;
+    margin-top: $spacing4;
+    @include body1Regular;
+  }
+
+  .m-modalV2__footer {
+    display: flex;
+    padding: $spacing4 $spacing10;
+    gap: $spacing4;
+    justify-content: end;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column-reverse;
+      margin-bottom: $spacing8;
+
+      m-button {
+        width: 100%;
+
+        ::ng-deep button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
