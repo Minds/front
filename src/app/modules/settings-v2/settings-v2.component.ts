@@ -423,7 +423,6 @@ export class SettingsV2Component implements OnInit {
         this.setSecondaryPane();
       });
 
-    this.injectExperimentItems();
     this.setProRoutes();
     this.setSecondaryPane();
     this.loadSettings();
@@ -561,21 +560,6 @@ export class SettingsV2Component implements OnInit {
    */
   private shouldShowContentMigrationHeader(): boolean {
     return this.hasRssSyncPermission() || this.isNotTenantSite();
-  }
-
-  /**
-   * Inject experiment items.
-   * @returns { void }
-   */
-  private injectExperimentItems(): void {
-    if (!this.isTenant) {
-      this.secondaryMenus.other
-        .find((x) => x.header.id === 'content-migration')
-        .items.push({
-          label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__TWITTER__LABEL:Twitter`,
-          id: 'twitter-sync',
-        });
-    }
   }
 
   get isTenant(): boolean {
