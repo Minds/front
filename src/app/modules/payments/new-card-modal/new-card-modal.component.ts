@@ -23,12 +23,10 @@ export class NewCardModalComponent implements OnInit {
 
   /**
    * Modal options
-   *
-   * @param onComplete
-   * @param onDismissIntent
-   * @param defaults
+   * @param { any } opts - modal options.
+   * @returns { void }
    */
-  setModalData({ onComplete, onDismissIntent }) {
+  setModalData({ onComplete, onDismissIntent }: any): void {
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
   }
