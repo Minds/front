@@ -559,7 +559,7 @@ export class AttachmentService {
         this.attachment.mime = 'video';
 
         this.checkVideoDuration(file)
-          .then((duration) => {
+          .then((duration: number) => {
             let maxVideoLength = this.maxVideoLength;
             if (this.session.getLoggedInUser().plus) {
               maxVideoLength = this.maxVideoLength * 3; // Hacky

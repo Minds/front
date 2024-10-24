@@ -11,7 +11,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TransferState } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
-import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
+import { REQUEST, RESPONSE } from '../../../express.tokens';
 import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
 
 /**

@@ -9,7 +9,7 @@ import { NetworkAdminMonetizationTabsComponent } from './components/tabs/tabs.co
 import { NetworkAdminMonetizationMembershipsComponent } from './components/memberships/memberships.component';
 import { PathMatch } from '../../../../../common/types/angular.types';
 import { NetworkAdminMonetizationMembershipAccordianComponent } from './components/memberships/accordian/accordian.component';
-import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { MarkdownModule, MARKED_OPTIONS } from 'ngx-markdown';
 import { markedOptionsFactory } from '../../../../../helpers/marked-options-factory';
 import { NetworkAdminMonetizationGroupsListComponent } from './components/memberships/groups-list/groups-list.component';
 import { NetworkAdminMonetizationMembershipFormComponent } from './components/memberships/form/form.component';
@@ -59,7 +59,7 @@ const routes: Routes = [
     NetworkAdminConsoleSharedModule,
     MarkdownModule.forRoot({
       markedOptions: {
-        provide: MarkedOptions,
+        provide: MARKED_OPTIONS,
         useFactory: markedOptionsFactory({
           anchorTargets: '_blank',
         }),

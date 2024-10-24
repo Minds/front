@@ -13,7 +13,7 @@ import {
   NgxRequest,
   NgxResponse,
 } from '@gorniv/ngx-universal';
-import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
+import { REQUEST, RESPONSE } from '../../../../express.tokens';
 import { DefaultPlyrDriver } from 'ngx-plyr-mg';
 import { BehaviorSubject, of } from 'rxjs';
 import { clientMock } from '../../../../tests/client-mock.spec';

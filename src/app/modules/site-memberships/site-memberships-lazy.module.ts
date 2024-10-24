@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { RouterModule, Routes } from '@angular/router';
-import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { MarkdownModule, MARKED_OPTIONS } from 'ngx-markdown';
 import { markedOptionsFactory } from '../../helpers/marked-options-factory';
 import { SiteMembershipsPageComponent } from './components/memberships-page/site-memberships-page.component';
 import { StarCardComponent } from '../../common/standalone/star-card/star-card.component';
@@ -32,7 +32,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MarkdownModule.forRoot({
       markedOptions: {
-        provide: MarkedOptions,
+        provide: MARKED_OPTIONS,
         useFactory: markedOptionsFactory({
           anchorTargets: '_blank',
         }),
