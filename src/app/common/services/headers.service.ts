@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { RESPONSE } from '@nguniversal/express-engine/tokens';
+import { RESPONSE } from '../../../express.tokens';
 
 @Injectable()
 export class HeadersService {

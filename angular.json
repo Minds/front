@@ -160,21 +160,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "minds:build"
+            "buildTarget": "minds:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "minds:build:production"
+              "buildTarget": "minds:build:production"
             },
             "dev": {
-              "browserTarget": "minds:build:dev",
               "servePath": "/",
               "sourceMap": true,
-              "deployUrl": "http://localhost:4200/"
+              "deployUrl": "http://localhost:4200/",
+              "buildTarget": "minds:build:dev"
             },
             "hmr": {
               "hmr": true,
-              "browserTarget": "minds:build:hmr"
+              "buildTarget": "minds:build:hmr"
             },
             "dev": {
               "hmr": true,
@@ -183,7 +183,7 @@
           }
         },
         "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
           "options": {
             "browserTarget": "minds:build",
             "serverTarget": "minds:server"
@@ -198,7 +198,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "minds:build"
+            "buildTarget": "minds:build"
           }
         },
         "test": {
@@ -337,15 +337,15 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "minds-embed:build"
+            "buildTarget": "minds-embed:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "minds-embed:build:production"
+              "buildTarget": "minds-embed:build:production"
             },
             "hmr": {
               "hmr": true,
-              "browserTarget": "minds-embed:build:hmr"
+              "buildTarget": "minds-embed:build:hmr"
             }
           }
         }

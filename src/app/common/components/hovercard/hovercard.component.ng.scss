@@ -18,18 +18,16 @@
       }
     }
 
-    .ngxp__arrow,
-    .ngxp__arrow:before {
-      height: 25px !important;
-      width: 25px !important;
-    }
+    .ngxp__arrow {
+      height: 15px !important;
+      width: 15px !important;
 
-    .ngxp__arrow:before {
       @include m-theme() {
         background: themed($m-bgColor--primary);
         border: 1px solid themed($m-borderColor--primary);
       }
     }
+
     .ngxp__inner {
       @include m-theme() {
         background: themed($m-bgColor--primary);

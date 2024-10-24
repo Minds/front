@@ -42,7 +42,7 @@ import { Component, EventEmitter } from '@angular/core';
   `,
 })
 export class Scheduler {
-  days: Number = 3;
+  days: number = 3;
   update: EventEmitter<any> = new EventEmitter(true);
 
   selectedDate = 0;

@@ -8,7 +8,7 @@ import { NetworksCheckoutPlanBuilderComponent } from './components/plan-builder/
 import { NetworksCheckoutSummaryComponent } from './components/summary/summary.component';
 import { NetworksCheckoutSummaryStepperComponent } from './components/summary/stepper/stepper.component';
 import { NetworksCheckoutSummaryTimePeriodSelectorComponent } from './components/summary/time-period-selector/time-period-selector.component';
-import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { MarkdownModule, MARKED_OPTIONS } from 'ngx-markdown';
 import { markedOptionsFactory } from '../../../helpers/marked-options-factory';
 
 const routes: Routes = [
@@ -26,7 +26,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MarkdownModule.forRoot({
       markedOptions: {
-        provide: MarkedOptions,
+        provide: MARKED_OPTIONS,
         useFactory: markedOptionsFactory({
           anchorTargets: '_blank',
         }),
