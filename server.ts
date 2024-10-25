@@ -1,5 +1,5 @@
 import './instrument-sentry';
-import * as Sentry from "@sentry/node";
+import * as Sentry from '@sentry/node';
 import { SSR_SENTRY_INTEGRATIONS } from './src/app/common/injection-tokens/common-injection-tokens';
 
 /***************************************************************************************************
@@ -15,7 +15,6 @@ import * as _url from 'url';
 
 import './server-polyfills';
 
-import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 import { TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
 import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
 import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
@@ -26,6 +25,7 @@ import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 import * as timeout from 'connect-timeout';
+import { REQUEST, RESPONSE } from './src/express.tokens';
 
 const browserDistFolder = join(process.cwd(), 'dist', 'browser');
 const embedDistFolder = join(process.cwd(), 'dist', 'embed');
@@ -121,8 +121,8 @@ export function app() {
             {
               provide: SSR_SENTRY_INTEGRATIONS,
               useValue: [
-                  Sentry.requestDataIntegration(),
-                  Sentry.nodeContextIntegration(),
+                Sentry.requestDataIntegration(),
+                Sentry.nodeContextIntegration(),
               ],
             },
             // { provide: LOCALE_ID, useValue: locale },

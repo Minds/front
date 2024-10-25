@@ -28,7 +28,7 @@ cache:
     - node_modules/
 
 test:
-  image: cypress/browsers:node18.12.0-chrome107
+  image: cypress/browsers:latest
   stage: test and build
   script:
     - npm install -g npm@7
