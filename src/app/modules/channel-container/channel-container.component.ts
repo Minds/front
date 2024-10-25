@@ -133,6 +133,8 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
           break;
         case TRIGGER_EXCEPTION.NOT_FOUND:
           this.channel.not_found = true;
+        case TRIGGER_EXCEPTION.REQUIRE_LOGIN:
+          this.channel.require_login = true;
           break;
         default:
           this.error = e.message;
