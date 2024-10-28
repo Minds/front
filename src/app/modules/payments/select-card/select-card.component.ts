@@ -108,9 +108,15 @@ export class PaymentsSelectCard {
     const modal = this.modalService.present(NewCardModalComponent, {
       data: {
         onComplete: () => {
+          this.paymentMethodId = '';
           this.selected.next('');
           this.loadCards();
-          modal.close();
+          modal?.close();
+        },
+        onDismissIntent: () => {
+          this.paymentMethodId = '';
+          this.selected.next('');
+          modal?.close();
         },
       },
     });
