@@ -116,4 +116,72 @@ describe('PaymentsSelectCard', () => {
     expect(comp.paymentMethodId).toBe('pm_2345');
     expect((comp as any).selected.next).toHaveBeenCalledOnceWith('pm_2345');
   }));
+
+  describe('onAddNewCard', () => {
+    it('should handle new card added', fakeAsync(() => {
+      spyOn(comp.selected, 'next');
+      (comp as any).modalService.present.and.returnValue({
+        close: jasmine.createSpy('close'),
+      });
+      (comp as any).selectCardService.loadCards.and.returnValue(
+        of([
+          { id: 'pm_1234', name: 'Test Card 1', balance: null },
+          { id: 'pm_2345', name: 'Test Card 2', balance: null },
+        ])
+      );
+
+      comp.onAddNewCard();
+      expect((comp as any).modalService.present).toHaveBeenCalledOnceWith(
+        jasmine.anything(),
+        {
+          data: {
+            onComplete: jasmine.any(Function),
+            onDismissIntent: jasmine.any(Function),
+          },
+        }
+      );
+
+      (comp as any).modalService.present.calls
+        .mostRecent()
+        .args[1].data.onComplete();
+      expect(comp.paymentMethodId).toBe('');
+      expect(comp.selected.next).toHaveBeenCalledOnceWith('');
+
+      tick();
+
+      expect(comp.paymentMethodId).toBe('pm_1234');
+      expect(comp.selected.next).toHaveBeenCalledWith('');
+      expect(comp.selected.next).toHaveBeenCalledWith('pm_1234');
+      expect(
+        (comp as any).modalService.present.calls.mostRecent().returnValue.close
+      ).toHaveBeenCalled();
+    }));
+
+    it('should handle no new card added', fakeAsync(() => {
+      spyOn(comp.selected, 'next');
+      (comp as any).modalService.present.and.returnValue({
+        close: jasmine.createSpy('close'),
+      });
+
+      comp.onAddNewCard();
+      expect((comp as any).modalService.present).toHaveBeenCalledOnceWith(
+        jasmine.anything(),
+        {
+          data: {
+            onComplete: jasmine.any(Function),
+            onDismissIntent: jasmine.any(Function),
+          },
+        }
+      );
+
+      (comp as any).modalService.present.calls
+        .mostRecent()
+        .args[1].data.onDismissIntent();
+      expect(comp.paymentMethodId).toBe('');
+      expect(comp.selected.next).toHaveBeenCalledOnceWith('');
+      expect(
+        (comp as any).modalService.present.calls.mostRecent().returnValue.close
+      ).toHaveBeenCalled();
+    }));
+  });
 });
