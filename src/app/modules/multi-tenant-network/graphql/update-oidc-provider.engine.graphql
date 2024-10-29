@@ -1,0 +1,20 @@
+mutation updateOidcProvider(
+  $id: Int!
+  $name: String!
+  $issuer: String!
+  $clientId: String!
+  $clientSecret: String
+) {
+  updateOidcProvider(
+    id: $id
+    name: $name
+    issuer: $issuer
+    clientId: $clientId
+    clientSecret: $clientSecret
+  ) {
+    id
+    name
+    issuer
+    clientId
+  }
+}

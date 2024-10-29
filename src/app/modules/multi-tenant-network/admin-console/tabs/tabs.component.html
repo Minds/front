@@ -82,6 +82,15 @@
   </div>
   <div class="m-tabs__tab" *ngIf="isAdmin">
     <a
+      [routerLink]="['/network/admin/authentication']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-tab-auth"
+      i18n="@@NETWORK_ADMIN_CONSOLE__TAB_AUTH"
+      >Signup / Login</a
+    >
+  </div>
+  <div class="m-tabs__tab" *ngIf="isAdmin">
+    <a
       [routerLink]="['/network/admin/mobile']"
       [routerLinkActive]="'m-tabs__tab--selected'"
       data-ref="network-admin-console-tab-mobile"

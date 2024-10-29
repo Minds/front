@@ -1,0 +1,12 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networkAdminConsoleAuthEdit__title {
+    @include heading3Bold;
+    margin: 0;
+  }
+
+  .m-networkAdminConsoleAuthEdit__footer {
+    text-align: right;
+  }
+}

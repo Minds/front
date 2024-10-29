@@ -1,0 +1,14 @@
+@import 'defaults.scss';
+
+:host {
+  padding: 0 0 1.75rem 0 !important;
+
+  > * {
+    padding-right: $spacing8;
+    padding-left: $spacing8;
+  }
+
+  .m-tabs__container {
+    margin-top: $spacing2;
+  }
+}
