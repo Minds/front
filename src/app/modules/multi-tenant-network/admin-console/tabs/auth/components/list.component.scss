@@ -1,0 +1,29 @@
+@import 'defaults.scss';
+
+:host {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  tr {
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    &:last-of-type {
+      border-bottom: 0 !important;
+    }
+  }
+
+  td {
+    padding: $spacing2 0;
+  }
+
+  .m-networkAdminConsoleListRow__cell--actions {
+    text-align: right;
+    m-button {
+      margin-left: $spacing2;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<table>
+  <tbody>
+    <ng-container *ngFor="let item of list$ | async">
+      <tr
+        class="m-networkAdminConsoleList__row--item m-networkAdminConsoleList__row"
+      >
+        <td>
+          <b>{{ item.name }}</b>
+        </td>
+
+        <td class="m-networkAdminConsoleListRow__cell--actions">
+          <m-button
+            color="grey"
+            solid="true"
+            size="small"
+            (onAction)="onEdit(item)"
+            >Edit</m-button
+          >
+          <m-button
+            color="red"
+            solid="true"
+            size="small"
+            (onAction)="onDelete(item)"
+            >Delete</m-button
+          >
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

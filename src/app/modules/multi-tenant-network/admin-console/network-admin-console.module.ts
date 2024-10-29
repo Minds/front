@@ -62,6 +62,9 @@ import { MultiTenantBootstrapProgressSplashComponent } from './components/bootst
 import { adminOnlyGuard } from '../../../common/guards/admin-only.guard';
 import { NetworkAdminConsoleExcludedHashtagsListComponent } from './tabs/moderation/excluded-hashtags/list/excluded-hashtags-list.component';
 import { NetworkAdminExcludedHashtagsSharedModule } from './tabs/moderation/excluded-hashtags/excluded-hashtags-shared.module';
+import { NetworkAdminConsoleAuthComponent } from './tabs/auth/auth.component';
+import { NetworkAdminConsoleAuthListComponent } from './tabs/auth/components/list.component';
+import { NetworkAdminConsoleAuthEditComponent } from './tabs/auth/components/edit.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -128,6 +131,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
           },
         ],
       },
+      { path: 'authentication', component: NetworkAdminConsoleAuthComponent },
       {
         path: 'mobile',
         loadChildren: async () =>
@@ -267,6 +271,9 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleNavigationListComponent,
     NetworkAdminConsoleNavigationLinkFormComponent,
     NetworkAdminConsoleLandingPageSelectorComponent,
+    NetworkAdminConsoleAuthComponent,
+    NetworkAdminConsoleAuthListComponent,
+    NetworkAdminConsoleAuthEditComponent,
   ],
   providers: [MultiTenantDomainService],
 })
