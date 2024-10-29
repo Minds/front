@@ -203,6 +203,7 @@ export type AppReadyMobileConfig = {
   APP_TRACKING_MESSAGE_ENABLED?: Maybe<Scalars['Boolean']['output']>;
   EAS_PROJECT_ID?: Maybe<Scalars['String']['output']>;
   IS_NON_PROFIT?: Maybe<Scalars['Boolean']['output']>;
+  PRODUCTION_APP_VERSION?: Maybe<Scalars['String']['output']>;
   TENANT_ID: Scalars['Int']['output'];
   THEME: Scalars['String']['output'];
   WELCOME_LOGO: Scalars['String']['output'];
@@ -922,9 +923,11 @@ export type MobileConfig = {
   __typename?: 'MobileConfig';
   appTrackingMessage?: Maybe<Scalars['String']['output']>;
   appTrackingMessageEnabled?: Maybe<Scalars['Boolean']['output']>;
+  appVersion?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   previewQRCode: Scalars['String']['output'];
   previewStatus: MobilePreviewStatusEnum;
+  productionAppVersion?: Maybe<Scalars['String']['output']>;
   splashScreenType: MobileSplashScreenTypeEnum;
   updateTimestamp: Scalars['Int']['output'];
   welcomeScreenLogoType: MobileWelcomeScreenLogoTypeEnum;
@@ -969,6 +972,7 @@ export type MultiTenantConfig = {
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   replyEmail?: Maybe<Scalars['String']['output']>;
+  sendEmail?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
@@ -1015,6 +1019,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Add members to a chat room. */
   addMembersToChatRoom: Scalars['Boolean']['output'];
+  /** Adds an oidc provider */
+  addOidcProvider: OidcProviderPublic;
   /** Cancel all Boosts on a given entity. */
   adminCancelBoosts: Scalars['Boolean']['output'];
   archiveSiteMembership: Scalars['Boolean']['output'];
@@ -1022,6 +1028,8 @@ export type Mutation = {
   assignUserToRole: Role;
   cancelInvite?: Maybe<Scalars['Void']['output']>;
   claimGiftCard: GiftCardNode;
+  /** Clear the mobile production app version for all tenants. */
+  clearAllMobileAppVersions: Scalars['Boolean']['output'];
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
   /** Creates a new message in a chat room */
@@ -1051,14 +1059,19 @@ export type Mutation = {
   deleteFeaturedEntity: Scalars['Boolean']['output'];
   /** Deletes group chat rooms. */
   deleteGroupChatRooms: Scalars['Boolean']['output'];
+  /** Delete Oidc Provider */
+  deleteOidcProvider: Scalars['Boolean']['output'];
   deletePersonalApiKey: Scalars['Boolean']['output'];
   deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
+  /** Exclude a hashtag. */
   excludeHashtag: Scalars['Boolean']['output'];
   invite?: Maybe<Scalars['Void']['output']>;
   leaveChatRoom: Scalars['Boolean']['output'];
   mobileConfig: MobileConfig;
+  /** Set the mobile production app version for a tenant. */
+  mobileProductionAppVersion: Scalars['Boolean']['output'];
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
@@ -1066,6 +1079,7 @@ export type Mutation = {
   /** Updates the read receipt of a room */
   readReceipt: ChatRoomEdge;
   refreshRssFeed: RssFeed;
+  /** Remove a hashtag exclusion. */
   removeHashtagExclusion: Scalars['Boolean']['output'];
   removeMemberFromChatRoom: Scalars['Boolean']['output'];
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
@@ -1097,6 +1111,8 @@ export type Mutation = {
   /** Updates the order of the navigation items */
   updateCustomNavigationItemsOrder: Array<NavigationItem>;
   updateNotificationSettings: Scalars['Boolean']['output'];
+  /** Update an oidc provider */
+  updateOidcProvider: OidcProviderPublic;
   updatePostSubscription: PostSubscription;
   updateSiteMembership: SiteMembership;
   /** Add or update a navigation item */
@@ -1106,6 +1122,13 @@ export type Mutation = {
 export type MutationAddMembersToChatRoomArgs = {
   memberGuids: Array<Scalars['String']['input']>;
   roomGuid: Scalars['String']['input'];
+};
+
+export type MutationAddOidcProviderArgs = {
+  clientId: Scalars['String']['input'];
+  clientSecret: Scalars['String']['input'];
+  issuer: Scalars['String']['input'];
+  name: Scalars['String']['input'];
 };
 
 export type MutationAdminCancelBoostsArgs = {
@@ -1220,6 +1243,10 @@ export type MutationDeleteGroupChatRoomsArgs = {
   groupGuid: Scalars['String']['input'];
 };
 
+export type MutationDeleteOidcProviderArgs = {
+  id: Scalars['Int']['input'];
+};
+
 export type MutationDeletePersonalApiKeyArgs = {
   id: Scalars['String']['input'];
 };
@@ -1249,6 +1276,12 @@ export type MutationMobileConfigArgs = {
   mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
   mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
   mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
+  productionAppVersion?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationMobileProductionAppVersionArgs = {
+  productionAppVersion: Scalars['String']['input'];
+  tenantId: Scalars['Int']['input'];
 };
 
 export type MutationMultiTenantConfigArgs = {
@@ -1364,6 +1397,14 @@ export type MutationUpdateCustomNavigationItemsOrderArgs = {
 export type MutationUpdateNotificationSettingsArgs = {
   notificationStatus: ChatRoomNotificationStatusEnum;
   roomGuid: Scalars['String']['input'];
+};
+
+export type MutationUpdateOidcProviderArgs = {
+  clientId?: InputMaybe<Scalars['String']['input']>;
+  clientSecret?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['Int']['input'];
+  issuer?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationUpdatePostSubscriptionArgs = {
@@ -2339,6 +2380,8 @@ export type FetchOidcProvidersQuery = {
     __typename?: 'OidcProviderPublic';
     id: number;
     name: string;
+    clientId: string;
+    issuer: string;
     loginUrl: string;
   }>;
 };
@@ -2353,15 +2396,6 @@ export type AdminUpdateAccountMutationVariables = Exact<{
 export type AdminUpdateAccountMutation = {
   __typename?: 'Mutation';
   updateAccount: Array<string>;
-};
-
-export type ExcludeHashtagMutationVariables = Exact<{
-  hashtag: Scalars['String']['input'];
-}>;
-
-export type ExcludeHashtagMutation = {
-  __typename?: 'Mutation';
-  excludeHashtag: boolean;
 };
 
 export type ModerationSetUserBanStateMutationVariables = Exact<{
@@ -3345,6 +3379,15 @@ export type SetMobileConfigMutation = {
   };
 };
 
+export type ExcludeHashtagMutationVariables = Exact<{
+  hashtag: Scalars['String']['input'];
+}>;
+
+export type ExcludeHashtagMutation = {
+  __typename?: 'Mutation';
+  excludeHashtag: boolean;
+};
+
 export type GetExcludedHashtagsQueryVariables = Exact<{
   first: Scalars['Int']['input'];
   after?: InputMaybe<Scalars['Int']['input']>;
@@ -4145,6 +4188,24 @@ export type CreateInviteMutation = {
   invite?: any | null;
 };
 
+export type CreateOidcProviderMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  issuer: Scalars['String']['input'];
+  clientId: Scalars['String']['input'];
+  clientSecret: Scalars['String']['input'];
+}>;
+
+export type CreateOidcProviderMutation = {
+  __typename?: 'Mutation';
+  addOidcProvider: {
+    __typename?: 'OidcProviderPublic';
+    id: number;
+    name: string;
+    issuer: string;
+    clientId: string;
+  };
+};
+
 export type DeleteCustomNavigationItemMutationVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -4152,6 +4213,15 @@ export type DeleteCustomNavigationItemMutationVariables = Exact<{
 export type DeleteCustomNavigationItemMutation = {
   __typename?: 'Mutation';
   deleteCustomNavigationItem: boolean;
+};
+
+export type DeleteOidcProviderMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+export type DeleteOidcProviderMutation = {
+  __typename?: 'Mutation';
+  deleteOidcProvider: boolean;
 };
 
 export type GetRolesAndPermissionsQueryVariables = Exact<{
@@ -4462,6 +4532,25 @@ export type UnassignUserFromRoleMutationVariables = Exact<{
 export type UnassignUserFromRoleMutation = {
   __typename?: 'Mutation';
   unassignUserFromRole: boolean;
+};
+
+export type UpdateOidcProviderMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  issuer: Scalars['String']['input'];
+  clientId: Scalars['String']['input'];
+  clientSecret?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type UpdateOidcProviderMutation = {
+  __typename?: 'Mutation';
+  updateOidcProvider: {
+    __typename?: 'OidcProviderPublic';
+    id: number;
+    name: string;
+    issuer: string;
+    clientId: string;
+  };
 };
 
 export type UpsertNavigationItemMutationVariables = Exact<{
@@ -8023,6 +8112,8 @@ export const FetchOidcProvidersDocument = gql`
     oidcProviders {
       id
       name
+      clientId
+      issuer
       loginUrl
     }
   }
@@ -8065,25 +8156,6 @@ export class AdminUpdateAccountGQL extends Apollo.Mutation<
   AdminUpdateAccountMutationVariables
 > {
   document = AdminUpdateAccountDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const ExcludeHashtagDocument = gql`
-  mutation ExcludeHashtag($hashtag: String!) {
-    excludeHashtag(hashtag: $hashtag)
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class ExcludeHashtagGQL extends Apollo.Mutation<
-  ExcludeHashtagMutation,
-  ExcludeHashtagMutationVariables
-> {
-  document = ExcludeHashtagDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -9477,6 +9549,25 @@ export class SetMobileConfigGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const ExcludeHashtagDocument = gql`
+  mutation ExcludeHashtag($hashtag: String!) {
+    excludeHashtag(hashtag: $hashtag)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ExcludeHashtagGQL extends Apollo.Mutation<
+  ExcludeHashtagMutation,
+  ExcludeHashtagMutationVariables
+> {
+  document = ExcludeHashtagDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetExcludedHashtagsDocument = gql`
   query GetExcludedHashtags($first: Int!, $after: Int) {
     hashtagExclusions(first: $first, after: $after) {
@@ -10078,6 +10169,40 @@ export class CreateInviteGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const CreateOidcProviderDocument = gql`
+  mutation createOidcProvider(
+    $name: String!
+    $issuer: String!
+    $clientId: String!
+    $clientSecret: String!
+  ) {
+    addOidcProvider(
+      name: $name
+      issuer: $issuer
+      clientId: $clientId
+      clientSecret: $clientSecret
+    ) {
+      id
+      name
+      issuer
+      clientId
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateOidcProviderGQL extends Apollo.Mutation<
+  CreateOidcProviderMutation,
+  CreateOidcProviderMutationVariables
+> {
+  document = CreateOidcProviderDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const DeleteCustomNavigationItemDocument = gql`
   mutation deleteCustomNavigationItem($id: String!) {
     deleteCustomNavigationItem(id: $id)
@@ -10092,6 +10217,25 @@ export class DeleteCustomNavigationItemGQL extends Apollo.Mutation<
   DeleteCustomNavigationItemMutationVariables
 > {
   document = DeleteCustomNavigationItemDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const DeleteOidcProviderDocument = gql`
+  mutation deleteOidcProvider($id: Int!) {
+    deleteOidcProvider(id: $id)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteOidcProviderGQL extends Apollo.Mutation<
+  DeleteOidcProviderMutation,
+  DeleteOidcProviderMutationVariables
+> {
+  document = DeleteOidcProviderDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -10582,6 +10726,42 @@ export class UnassignUserFromRoleGQL extends Apollo.Mutation<
   UnassignUserFromRoleMutationVariables
 > {
   document = UnassignUserFromRoleDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdateOidcProviderDocument = gql`
+  mutation updateOidcProvider(
+    $id: Int!
+    $name: String!
+    $issuer: String!
+    $clientId: String!
+    $clientSecret: String
+  ) {
+    updateOidcProvider(
+      id: $id
+      name: $name
+      issuer: $issuer
+      clientId: $clientId
+      clientSecret: $clientSecret
+    ) {
+      id
+      name
+      issuer
+      clientId
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdateOidcProviderGQL extends Apollo.Mutation<
+  UpdateOidcProviderMutation,
+  UpdateOidcProviderMutationVariables
+> {
+  document = UpdateOidcProviderDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
