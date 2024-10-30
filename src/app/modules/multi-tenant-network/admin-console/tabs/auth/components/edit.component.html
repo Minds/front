@@ -1,0 +1,61 @@
+<div class="m-modalV2__inner">
+  <header class="m-modalV2__header">
+    <h4 class="m-networkAdminConsoleAuthEdit__title">
+      {{ isEditing ? 'Edit SSO Provider' : 'Create new SSO Provider' }}
+    </h4>
+    <m-modalCloseButton></m-modalCloseButton>
+  </header>
+
+  <form
+    [formGroup]="formGroup"
+    class="m-modalV2__body m-networkAdminConsoleAuthEdit__form m-formWrapper"
+  >
+    <!-- Name input -->
+    <div class="m-form__field--text stretchedField">
+      <label class="m-form__row--label" for="name">Name</label>
+      <div class="m-form__row--input">
+        <input type="text" formControlName="name" placeholder="" />
+      </div>
+    </div>
+
+    <!-- Issuer input -->
+    <div class="m-form__field--text stretchedField">
+      <label class="m-form__row--label" for="issuer">Issuer</label>
+      <div class="m-form__row--input">
+        <input type="text" formControlName="issuer" placeholder="" />
+      </div>
+    </div>
+
+    <!-- Client ID input -->
+    <div class="m-form__field--text stretchedField">
+      <label class="m-form__row--label" for="clientId">Client ID</label>
+      <div class="m-form__row--input">
+        <input type="text" formControlName="clientId" placeholder="" />
+      </div>
+    </div>
+
+    <!-- Client Secret input -->
+    <div class="m-form__field--text stretchedField">
+      <label class="m-form__row--label" for="clientSecret"
+        >Client Secret
+      </label>
+      <div class="m-form__row--input">
+        <input type="password" formControlName="clientSecret" placeholder="" />
+      </div>
+    </div>
+
+    <footer class="m-networkAdminConsoleAuthEdit__footer">
+      <m-button
+        color="blue"
+        size="small"
+        solid="true"
+        (onAction)="onConfirmClick()"
+        (keydown.enter)="onConfirmClick()"
+        tabindex="1"
+        aria-label="Save"
+        data-ref="data-minds-save-oidc-provider-button"
+        >Save</m-button
+      >
+    </footer>
+  </form>
+</div>

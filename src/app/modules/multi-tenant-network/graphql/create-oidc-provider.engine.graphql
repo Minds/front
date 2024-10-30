@@ -1,0 +1,18 @@
+mutation createOidcProvider(
+  $name: String!
+  $issuer: String!
+  $clientId: String!
+  $clientSecret: String!
+) {
+  addOidcProvider(
+    name: $name
+    issuer: $issuer
+    clientId: $clientId
+    clientSecret: $clientSecret
+  ) {
+    id
+    name
+    issuer
+    clientId
+  }
+}

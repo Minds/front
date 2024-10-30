@@ -1,0 +1,3 @@
+mutation deleteOidcProvider($id: Int!) {
+  deleteOidcProvider(id: $id)
+}
