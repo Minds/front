@@ -6,7 +6,7 @@ import { PathMatch } from '../../../common/types/angular.types';
 import { RouterModule, Routes } from '@angular/router';
 import { NetworkAdminConsoleTabsComponent } from './tabs/tabs.component';
 import { NetworkAdminConsoleFederationSettingsComponent } from './tabs/general/federation-settings/federation-settings.component';
-import { NetworkAdminConsoleAppearanceComponent } from './tabs/appearance/appearance.component';
+import { NetworkAdminConsoleCustomizeComponent } from './tabs/customize/customize.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetworkSettingsAuthGuard } from './guards/network-settings-auth.guard';
 import { NetworkAdminConsoleFeaturedComponent } from './tabs/general/featured/featured.component';
@@ -65,6 +65,7 @@ import { NetworkAdminExcludedHashtagsSharedModule } from './tabs/moderation/excl
 import { NetworkAdminConsoleAuthComponent } from './tabs/auth/auth.component';
 import { NetworkAdminConsoleAuthListComponent } from './tabs/auth/components/list.component';
 import { NetworkAdminConsoleAuthEditComponent } from './tabs/auth/components/edit.component';
+import { NetworkAdminCustomScriptComponent } from './tabs/customize/components/custom-script/custom-script.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -74,7 +75,8 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     children: [
       { path: '', redirectTo: 'general', pathMatch: 'full' as PathMatch },
       { path: 'general', component: NetworkAdminConsoleGeneralComponent },
-      { path: 'appearance', component: NetworkAdminConsoleAppearanceComponent },
+      { path: 'customize', component: NetworkAdminConsoleCustomizeComponent },
+      { path: 'appearance', redirectTo: 'customize', pathMatch: 'full' },
       { path: 'domain', component: NetworkAdminConsoleDomainComponent },
       { path: 'billing', component: NetworkAdminConsoleBillingComponent },
       {
@@ -232,12 +234,13 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     SelectableIconComponent,
     NetworkAdminBookAMeetingComponent,
     NetworkAdminConsoleRolesPermissionHandlingComponent,
+    NetworkAdminCustomScriptComponent,
   ],
   declarations: [
     NetworkAdminConsoleComponent,
     NetworkAdminConsoleTabsComponent,
     NetworkAdminConsoleGeneralComponent,
-    NetworkAdminConsoleAppearanceComponent,
+    NetworkAdminConsoleCustomizeComponent,
     NetworkAdminConsoleFeaturedComponent,
     NetworkAdminConsoleFeaturedEntityRowComponent,
     NetworkAdminConsoleDomainComponent,

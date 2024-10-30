@@ -42,6 +42,7 @@ import { OnboardingV5Service } from './modules/onboarding-v5/services/onboarding
 import { ExplainerScreensService } from './modules/explainer-screens/services/explainer-screen.service';
 import { ChatExperimentService } from './modules/experiments/sub-services/chat-experiment.service';
 import { ChatInitService } from './modules/chat/services/chat-init.service';
+import { HeadElementInjectorService } from './common/services/head-element-injector.service';
 
 @Component({
   selector: 'm-app',
@@ -101,7 +102,8 @@ export class Minds implements OnInit, OnDestroy {
     private onboardingV5ModalService: OnboardingV5ModalLazyService,
     private explainerScreenService: ExplainerScreensService,
     private chatInitService: ChatInitService,
-    private chatExperimentService: ChatExperimentService
+    private chatExperimentService: ChatExperimentService,
+    private headElementInjectorService: HeadElementInjectorService
   ) {
     this.name = 'Minds';
   }
@@ -256,6 +258,12 @@ export class Minds implements OnInit, OnDestroy {
     // TODO uncomment this when we want logged out users
     // to complete the social compass questionnaire
     // this.compassHook.listen();
+
+    if (this.configs.get('tenant')?.['custom_script']) {
+      this.headElementInjectorService.injectFromString(
+        this.configs.get('tenant')['custom_script']
+      );
+    }
   }
 
   /**

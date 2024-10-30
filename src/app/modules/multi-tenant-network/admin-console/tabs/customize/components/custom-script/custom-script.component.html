@@ -1,0 +1,37 @@
+<h4
+  class="m-networkAdminConsole__title"
+  i18n="@@NETWORK_ADMIN_CONSOLE_CUSTOM_SCRIPT__CUSTOM_SCRIPT"
+>
+  Custom script
+</h4>
+<p
+  class="m-networkAdminConsole__subtitle"
+  i18n="@@NETWORK_ADMIN_CONSOLE_CUSTOM_SCRIPT__SUBTITLE"
+>
+  Add custom javascript that will execute in the header of all pages on your
+  network. Does not execute in your mobile app.
+</p>
+<form [formGroup]="formGroup">
+  <textarea
+    class="m-networkAdminCustomScript__textarea"
+    formControlName="customScript"
+    autocomplete="off"
+    rows="6"
+  ></textarea>
+  <div class="m-networkAdminCustomScript__errorContainer">
+    @if (formGroup.get('customScript')?.dirty) {
+      <m-formError [errors]="formGroup.get('customScript')?.errors" />
+    }
+  </div>
+</form>
+<m-button
+  color="blue"
+  size="large"
+  [solid]="false"
+  [disabled]="!formGroup.valid || !formGroup.dirty || inProgress()"
+  [saving]="inProgress()"
+  (onAction)="save()"
+  ><ng-container i18n="@@NETWORK_ADMIN_CONSOLE_CUSTOM_SCRIPT__SAVE"
+    >Save</ng-container
+  ></m-button
+>
