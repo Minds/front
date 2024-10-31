@@ -11,7 +11,7 @@ import { ToasterService } from '../../../../../../../common/services/toaster.ser
 import { HeadElementInjectorService } from '../../../../../../../common/services/head-element-injector.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { MockComponent, MockService } from '../../../../../../../utils/mock';
-import * as _ from 'lodash';
+import { MultiTenantCustomScriptInputService } from '../../../../../services/custom-script-input.service';
 
 describe('NetworkAdminCustomScriptComponent', () => {
   let comp: NetworkAdminCustomScriptComponent;
@@ -35,6 +35,10 @@ describe('NetworkAdminCustomScriptComponent', () => {
               },
             },
           }),
+        },
+        {
+          provide: MultiTenantCustomScriptInputService,
+          useValue: MockService(MultiTenantCustomScriptInputService),
         },
         {
           provide: HeadElementInjectorService,
@@ -68,6 +72,9 @@ describe('NetworkAdminCustomScriptComponent', () => {
 
     fixture = TestBed.createComponent(NetworkAdminCustomScriptComponent);
     comp = fixture.componentInstance;
+
+    spyOn(console, 'error'); // mute manual error logs.
+
     fixture.detectChanges();
   });
 
@@ -78,24 +85,13 @@ describe('NetworkAdminCustomScriptComponent', () => {
     );
   });
 
-  it('should show warning toast if form is invalid when saving', fakeAsync(() => {
-    (comp as any).formGroup.get('customScript').setValue('');
-
-    (comp as any).save();
-    tick();
-
-    expect((comp as any).toaster.warn).toHaveBeenCalledWith(
-      'Please enter a valid custom script'
-    );
-  }));
-
   it('should save custom script successfully', fakeAsync(async () => {
     const customScript = '<script></script>';
     (comp as any).formGroup.get('customScript').setValue(customScript);
 
-    (comp as any).tenantConfigService.updateConfig
-      .withArgs({ customScript: _.escape(customScript) })
-      .and.returnValue(of(true));
+    (comp as any).customScriptInputService.updateCustomScript
+      .withArgs(customScript)
+      .and.returnValue(Promise.resolve(true));
 
     (comp as any).save();
     tick();
@@ -112,8 +108,8 @@ describe('NetworkAdminCustomScriptComponent', () => {
     const customScript = '<script></script>';
     (comp as any).formGroup.get('customScript').setValue(customScript);
 
-    (comp as any).tenantConfigService.updateConfig
-      .withArgs({ customScript })
+    (comp as any).customScriptInputService.updateCustomScript
+      .withArgs(customScript)
       .and.throwError('Mock error');
 
     (comp as any).save();
@@ -131,7 +127,7 @@ describe('NetworkAdminCustomScriptComponent', () => {
     tick();
 
     expect(
-      (comp as any).tenantConfigService.updateConfig
+      (comp as any).customScriptInputService.updateCustomScript
     ).not.toHaveBeenCalled();
   }));
 });

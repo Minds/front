@@ -15,11 +15,11 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '../../../../../../../common/common.module';
 import { MultiTenantNetworkConfigService } from '../../../../../services/config.service';
-import { filter, lastValueFrom, Subscription, take } from 'rxjs';
+import { filter, Subscription, take } from 'rxjs';
 import { ToasterService } from '../../../../../../../common/services/toaster.service';
 import { HeadElementInjectorService } from '../../../../../../../common/services/head-element-injector.service';
 import { MultiTenantConfig } from '../../../../../../../../graphql/generated.engine';
-import * as _ from 'lodash';
+import { MultiTenantCustomScriptInputService } from '../../../../../services/custom-script-input.service';
 
 /**
  * Component that allows admins to add custom scripts / other elements
@@ -49,17 +49,14 @@ export class NetworkAdminCustomScriptComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private tenantConfigService: MultiTenantNetworkConfigService,
+    private customScriptInputService: MultiTenantCustomScriptInputService,
     private headElementInjectorService: HeadElementInjectorService,
     private toaster: ToasterService
   ) {}
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
-      customScript: new FormControl('', [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50000),
-      ]),
+      customScript: new FormControl('', [Validators.maxLength(50000)]),
     });
 
     this.load();
@@ -97,7 +94,7 @@ export class NetworkAdminCustomScriptComponent implements OnInit, OnDestroy {
 
     const customScript: string = this.formGroup.value?.customScript;
 
-    if (!this.formGroup.valid || !customScript?.length) {
+    if (!this.formGroup.valid) {
       this.toaster.warn('Please enter a valid custom script');
       return;
     }
@@ -105,11 +102,8 @@ export class NetworkAdminCustomScriptComponent implements OnInit, OnDestroy {
     this.inProgress.set(true);
 
     try {
-      const success: boolean = await lastValueFrom(
-        this.tenantConfigService.updateConfig({
-          customScript: _.escape(customScript),
-        })
-      );
+      const success: boolean =
+        await this.customScriptInputService.updateCustomScript(customScript);
 
       if (!success) {
         throw new Error('Failed to save custom script');
