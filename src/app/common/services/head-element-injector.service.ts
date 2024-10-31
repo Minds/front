@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { DOCUMENT, isPlatformServer } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 /**
  * Injects custom elements into the document head.
@@ -9,7 +9,10 @@ export class HeadElementInjectorService {
   /** The id of the custom injected elements. */
   private readonly customElementId: string = 'customInjectedHeadElement';
 
-  constructor(@Inject(DOCUMENT) private readonly document: Document) {}
+  constructor(
+    @Inject(DOCUMENT) private readonly document: Document,
+    @Inject(PLATFORM_ID) private readonly platformId: Object
+  ) {}
 
   /**
    * Injects custom elements into the document head, from a string of HTML.
@@ -21,6 +24,10 @@ export class HeadElementInjectorService {
     elementsText: string,
     clearExisting: boolean = true
   ): this {
+    if (isPlatformServer(this.platformId)) {
+      return this;
+    }
+
     if (clearExisting) {
       this.removeAll();
     }
@@ -77,12 +84,17 @@ export class HeadElementInjectorService {
    * @returns { this }
    */
   public removeAll(): this {
+    if (isPlatformServer(this.platformId)) {
+      return this;
+    }
+
     const elements: Element[] = Array.from(
       this.document.head.querySelectorAll(`#${this.customElementId}`) ?? []
     );
     for (const element of elements) {
       element?.parentNode?.removeChild(element);
     }
+
     return this;
   }
 }

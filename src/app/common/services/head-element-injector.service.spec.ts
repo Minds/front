@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HeadElementInjectorService } from './head-element-injector.service';
 import { DOCUMENT } from '@angular/common';
+import { PLATFORM_ID } from '@angular/core';
 
 describe('HeadElementInjectorService', () => {
   let service: HeadElementInjectorService;
@@ -17,6 +18,7 @@ describe('HeadElementInjectorService', () => {
       providers: [
         HeadElementInjectorService,
         { provide: DOCUMENT, useValue: documentMock },
+        { provide: PLATFORM_ID, useValue: 'browser' },
       ],
     });
     service = TestBed.inject(HeadElementInjectorService);

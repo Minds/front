@@ -2,7 +2,6 @@ mutation SetMultiTenantConfig(
   $siteName: String
   $colorScheme: MultiTenantColorScheme
   $primaryColor: String
-  $customScript: String
   $federationDisabled: Boolean
   $replyEmail: String
   $nsfwEnabled: Boolean
@@ -21,7 +20,6 @@ mutation SetMultiTenantConfig(
       siteName: $siteName
       colorScheme: $colorScheme
       primaryColor: $primaryColor
-      customScript: $customScript
       federationDisabled: $federationDisabled
       replyEmail: $replyEmail
       nsfwEnabled: $nsfwEnabled

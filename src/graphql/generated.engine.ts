@@ -985,7 +985,6 @@ export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
-  customScript?: InputMaybe<Scalars['String']['input']>;
   digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   isNonProfit?: InputMaybe<Scalars['Boolean']['input']>;
@@ -4456,7 +4455,6 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   siteName?: InputMaybe<Scalars['String']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
-  customScript?: InputMaybe<Scalars['String']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -10582,7 +10580,6 @@ export const SetMultiTenantConfigDocument = gql`
     $siteName: String
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
-    $customScript: String
     $federationDisabled: Boolean
     $replyEmail: String
     $nsfwEnabled: Boolean
@@ -10601,7 +10598,6 @@ export const SetMultiTenantConfigDocument = gql`
         siteName: $siteName
         colorScheme: $colorScheme
         primaryColor: $primaryColor
-        customScript: $customScript
         federationDisabled: $federationDisabled
         replyEmail: $replyEmail
         nsfwEnabled: $nsfwEnabled
