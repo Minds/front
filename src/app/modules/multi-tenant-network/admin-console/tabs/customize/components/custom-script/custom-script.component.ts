@@ -19,6 +19,7 @@ import { filter, lastValueFrom, Subscription, take } from 'rxjs';
 import { ToasterService } from '../../../../../../../common/services/toaster.service';
 import { HeadElementInjectorService } from '../../../../../../../common/services/head-element-injector.service';
 import { MultiTenantConfig } from '../../../../../../../../graphql/generated.engine';
+import * as _ from 'lodash';
 
 /**
  * Component that allows admins to add custom scripts / other elements
@@ -105,7 +106,9 @@ export class NetworkAdminCustomScriptComponent implements OnInit, OnDestroy {
 
     try {
       const success: boolean = await lastValueFrom(
-        this.tenantConfigService.updateConfig({ customScript })
+        this.tenantConfigService.updateConfig({
+          customScript: _.escape(customScript),
+        })
       );
 
       if (!success) {
@@ -113,6 +116,7 @@ export class NetworkAdminCustomScriptComponent implements OnInit, OnDestroy {
       }
 
       this.toaster.success('Custom script saved successfully');
+      this.formGroup.markAsPristine();
       this.headElementInjectorService.injectFromString(customScript);
     } catch (e) {
       console.error('Error saving custom script', e);

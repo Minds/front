@@ -11,6 +11,7 @@ import { ToasterService } from '../../../../../../../common/services/toaster.ser
 import { HeadElementInjectorService } from '../../../../../../../common/services/head-element-injector.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { MockComponent, MockService } from '../../../../../../../utils/mock';
+import * as _ from 'lodash';
 
 describe('NetworkAdminCustomScriptComponent', () => {
   let comp: NetworkAdminCustomScriptComponent;
@@ -93,7 +94,7 @@ describe('NetworkAdminCustomScriptComponent', () => {
     (comp as any).formGroup.get('customScript').setValue(customScript);
 
     (comp as any).tenantConfigService.updateConfig
-      .withArgs({ customScript })
+      .withArgs({ customScript: _.escape(customScript) })
       .and.returnValue(of(true));
 
     (comp as any).save();
