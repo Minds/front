@@ -24,7 +24,7 @@
     [multiple]="true"
     [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (onSelect)="onAttachmentSelect($event)"
-    accept="image/*,video/*,video/mp4,video/x-m4v"
+    accept="image/*,video/*,video/mp4,video/x-m4v,audio/*"
     data-ref="upload-button"
     #fileUploadComponent
   >

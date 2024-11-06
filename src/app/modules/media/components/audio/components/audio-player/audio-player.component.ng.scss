@@ -1,0 +1,224 @@
+@import 'defaults.scss';
+@import '../../../../../../common/layout/layout.scss';
+
+$outerBorderRadius: 8px;
+$thumbnailSize: 128px;
+$maxThumbnailSize: 260px;
+$collapseWidth: $layoutMax2ColFixedWidth;
+
+:host {
+  .m-audioPlayer__container {
+    border-radius: $outerBorderRadius;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-audioPlayer__topContainer {
+      display: flex;
+      flex-flow: row nowrap;
+
+      @media screen and (max-width: $collapseWidth) {
+        flex-flow: column nowrap;
+        align-items: center;
+      }
+
+      .m-audioPlayer__thumbnailContainer {
+        display: flex;
+        position: relative;
+        height: $thumbnailSize;
+        width: $thumbnailSize;
+        min-height: $thumbnailSize;
+        min-width: $thumbnailSize;
+
+        @media screen and (max-width: $collapseWidth) {
+          max-height: $maxThumbnailSize;
+          max-width: $maxThumbnailSize;
+          height: 100%;
+          width: 100%;
+        }
+
+        img {
+          width: 100%;
+          object-fit: cover;
+          border-radius: $outerBorderRadius;
+          @include unselectable;
+
+          &.m-audioPlayer__thumbnail--hovered {
+            opacity: 0.2;
+          }
+        }
+
+        .m-audioPlayer__volumeBarContainer {
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          gap: $spacing2;
+          width: 100%;
+          max-width: 100%;
+          padding: 0 $spacing4 0 $spacing2;
+          box-sizing: border-box;
+
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+
+          &--hidden {
+            display: none;
+          }
+
+          .m-audioPlayer__volumeIcon {
+            cursor: pointer;
+            @include z-index(body);
+            @include unselectable;
+          }
+
+          .m-audioPlayer__volumeBar {
+            width: 100%;
+            min-width: 0 !important;
+
+            --mdc-slider-active-track-height: 8px;
+            --mdc-slider-active-track-shape: 12px;
+
+            --mdc-slider-inactive-track-height: 8px;
+            --mdc-slider-inactive-track-shape: 12px;
+
+            --mdc-slider-handle-shape: 50%;
+            --mdc-slider-handle-width: 16px;
+            --mdc-slider-handle-height: 16px;
+
+            ::ng-deep {
+              .mdc-slider__thumb-knob {
+                @include m-theme() {
+                  background-color: themed($m-textColor--primary);
+                  border-color: themed($m-textColor--primary);
+                }
+              }
+
+              .mdc-slider__track--active_fill {
+                @include m-theme() {
+                  border-color: themed($m-textColor--primary);
+                }
+              }
+
+              .mdc-slider__track--inactive {
+                @include m-theme() {
+                  background-color: themed($m-borderColor--secondary);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .m-audioPlayer__main {
+        flex: 1;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: $spacing2;
+        gap: $spacing2;
+
+        .m-audioPlayer__title {
+          @include body1Bold;
+          margin: 0;
+          text-align: center;
+        }
+
+        .m-audioPlayer__author {
+          @include body2Regular;
+          margin: 0;
+          text-align: center;
+        }
+
+        .m-audioPlayer__toolbar {
+          display: flex;
+          gap: $spacing8;
+
+          .m-audioPlayerToolbar__icon {
+            cursor: pointer;
+            font-size: 40px;
+
+            @include unselectable;
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+
+            &:hover {
+              @include m-theme() {
+                color: themed($m-textColor--secondary);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .m-audioPlayer__bottomContainer {
+      padding: 0 $spacing4;
+      display: flex;
+      align-items: center;
+      gap: $spacing4;
+
+      .m-audioPlayer__timeSpan {
+        // monospace avoids layout shift as digits are added.
+        font-family: Helvetica, monospace;
+
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        @media screen and (max-width: $min-mobile) {
+          display: none;
+        }
+      }
+
+      .m-audioPlayer__seekBar {
+        width: 100%;
+        max-width: 100%;
+
+        --mdc-slider-active-track-height: 8px;
+        --mdc-slider-active-track-shape: 12px;
+
+        --mdc-slider-inactive-track-height: 8px;
+        --mdc-slider-inactive-track-shape: 12px;
+
+        --mdc-slider-handle-shape: 50%;
+        --mdc-slider-handle-width: 16px;
+        --mdc-slider-handle-height: 16px;
+
+        ::ng-deep {
+          .mdc-slider__thumb-knob {
+            @include m-theme() {
+              background-color: themed($m-textColor--primary);
+              border-color: themed($m-textColor--primary);
+            }
+          }
+
+          .mdc-slider__track--active_fill {
+            @include m-theme() {
+              border-color: themed($m-action);
+            }
+          }
+
+          .mdc-slider__track--inactive {
+            @include m-theme() {
+              background-color: themed($m-borderColor--secondary);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep mat-slider,
+  ::ng-deep .mat-mdc-slider,
+  ::ng-deep .mdc-slider {
+    margin: 0 !important;
+    margin-left: unset !important;
+    margin-right: unset !important;
+  }
+}
