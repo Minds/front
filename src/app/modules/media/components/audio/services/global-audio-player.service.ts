@@ -124,6 +124,13 @@ export class GlobalAudioPlayerService implements OnDestroy {
    */
   public play(): void {
     setTimeout(() => {
+      if (this.audioElement?.nativeElement.ended) {
+        this.audioElement.nativeElement.currentTime = 0;
+      } else {
+        this.audioElement.nativeElement.currentTime =
+          this.audioPlayerService?.currentAudioTime$.getValue() ?? 0;
+      }
+
       this.audioElement?.nativeElement.play();
       this.audioPlayerService?.playing$.next(true);
       this.played$.next(this.currentAudioTrack$.getValue());
