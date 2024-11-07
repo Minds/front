@@ -1,0 +1,84 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+
+  .m-composerPreviewAudio_previewContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: $spacing8;
+    padding: $spacing4;
+    border-radius: 8px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: 400px) {
+      justify-content: space-around;
+      width: 100%;
+    }
+
+    .m-composerPreviewAudio_thumbnailContainer {
+      height: 128px;
+      width: 128px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+
+      .m-composerPreviewAudio__thumbnailUploadIcon {
+        font-size: 40px;
+      }
+
+      &--hasImage .m-composerPreviewAudio__thumbnailUploadIcon {
+        display: none;
+      }
+
+      &--hasImage:hover .m-composerPreviewAudio__thumbnailUploadIcon {
+        display: block;
+      }
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      .m-composerPreviewAudio__thumbnailUploadInput {
+        display: none;
+      }
+    }
+
+    .m-composerPreviewAudio__mockControls {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      gap: $spacing4;
+
+      .m-composerPreviewAudio__mockControlIcon {
+        cursor: not-allowed;
+        font-size: 40px;
+
+        @include unselectable;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
+        &.m-composerPreviewAudio__mockControlIcon--back,
+        &.m-composerPreviewAudio__mockControlIcon--forward {
+          @media screen and (max-width: $max-mobile) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+<div class="m-composerPreviewAudio_previewContainer">
+  <div
+    class="m-composerPreviewAudio_thumbnailContainer"
+    (click)="thumbnailUpload.click()"
+    [ngStyle]="{ backgroundImage: thumbnailImageFileUrl$ | async }"
+    [ngClass]="{
+      'm-composerPreviewAudio_thumbnailContainer--hasImage':
+        thumbnailImageFileUrl$ | async
+    }"
+  >
+    <i class="material-icons m-composerPreviewAudio__thumbnailUploadIcon"
+      >upload</i
+    >
+    <input
+      class="m-composerPreviewAudio__thumbnailUploadInput"
+      type="file"
+      accept="image/*"
+      id="audioThumbnailUpload"
+      [multiple]="false"
+      (change)="onThumbnailSelected($event.target.files[0])"
+      #thumbnailUpload
+    />
+  </div>
+  <div class="m-composerPreviewAudio__mockControls">
+    <i
+      class="material-icons m-composerPreviewAudio__mockControlIcon m-composerPreviewAudio__mockControlIcon--back"
+      (click)="showControlDisabledToast()"
+      >replay_10</i
+    >
+    <i
+      class="material-icons m-composerPreviewAudio__mockControlIcon m-composerPreviewAudio__mockControlIcon--play"
+      (click)="showControlDisabledToast()"
+      >play_circle</i
+    >
+    <i
+      class="material-icons m-composerPreviewAudio__mockControlIcon m-composerPreviewAudio__mockControlIcon--forward"
+      (click)="showControlDisabledToast()"
+      >forward_10</i
+    >
+  </div>
+</div>
