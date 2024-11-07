@@ -56,6 +56,12 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   /** Whether the audio is muted. */
   protected muted$: Observable<boolean> = this.audioPlayerService.muted$;
 
+  /**
+   * Duration of the audio track - unlike the input which is used for init, this
+   * value will change if a difference is detected upon loading the audio.
+   */
+  protected duration$: Observable<number> = this.audioPlayerService.duration$;
+
   /** Whether the mouse is over the player. */
   protected isMouseOver: boolean = false;
 

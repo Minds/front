@@ -105,6 +105,14 @@ export class GlobalAudioPlayerService implements OnDestroy {
       'loadedmetadata'
     ).subscribe(() => {
       this.audioPlayerService?.loaded$.next(true);
+
+      const durationSyncedAudioTrack: AudioTrack = {
+        ...this.audioPlayerService.audioTrack$.getValue(),
+        duration: this.audioElement.nativeElement.duration,
+      };
+
+      this.audioPlayerService.audioTrack$.next(durationSyncedAudioTrack);
+      this.currentAudioTrack$.next(durationSyncedAudioTrack);
     });
   }
 

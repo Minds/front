@@ -11,6 +11,7 @@
     flex-flow: row nowrap;
     align-items: center;
     gap: $spacing8;
+    width: 100%;
     padding: $spacing4;
     border-radius: 8px;
 
@@ -31,6 +32,9 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
 
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);
@@ -61,7 +65,9 @@
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
+      justify-content: center;
       gap: $spacing4;
+      flex: 1;
 
       .m-composerPreviewAudio__mockControlIcon {
         cursor: not-allowed;
