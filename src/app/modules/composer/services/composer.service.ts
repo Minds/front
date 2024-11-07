@@ -54,6 +54,7 @@ import {
   TitleSubjectValue,
   PaywallThumbnail,
   RichEmbedTitleSubjectValue,
+  AudioThumbnailSubjectValue,
 } from './composer-data-types';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ClientMetaData } from '../../../common/services/client-meta.service';
@@ -74,6 +75,7 @@ export const DEFAULT_RICH_EMBED_TITLE_VALUE: RichEmbedTitleSubjectValue = null;
 export const DEFAULT_REMIND_VALUE: RemindSubjectValue = null;
 export const DEFAULT_ATTACHMENT_VALUE: AttachmentSubjectValue = null;
 export const DEFAULT_PAYWALL_THUMBNAIL_VALUE: PaywallThumbnail = null;
+export const DEFAULT_AUDIO_THUMBNAIL_VALUE: string = null;
 export const DEFAULT_RICH_EMBED_VALUE: RichEmbedSubjectValue = null;
 export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
 export const DEFAULT_POST_TO_PERMAWEB_VALUE: PostToPermawebSubjectValue = false;
@@ -192,6 +194,13 @@ export class ComposerService implements OnDestroy {
    */
   paywallThumbnail$: BehaviorSubject<PaywallThumbnail> = new BehaviorSubject(
     null
+  );
+
+  /**
+   * Audio thumbnail subject
+   */
+  readonly audioThumbnail$: BehaviorSubject<string> = new BehaviorSubject(
+    DEFAULT_AUDIO_THUMBNAIL_VALUE
   );
 
   /**
@@ -463,6 +472,7 @@ export class ComposerService implements OnDestroy {
         AttachmentsMetadataMappedValue,
         RichEmbedMetadataMappedValue,
         PaywallThumbnail,
+        AudioThumbnailSubjectValue,
         PostToPermawebSubjectValue,
         RemindSubjectValue,
         SupermindRequestSubjectValue,
@@ -558,6 +568,7 @@ export class ComposerService implements OnDestroy {
         // Value will be either a RichEmbed interface object or null
       ),
       this.paywallThumbnail$.pipe(distinctUntilChanged()),
+      this.audioThumbnail$.pipe(distinctUntilChanged()),
       this.postToPermaweb$,
       this.remind$.pipe(distinctUntilChanged()),
       this.supermindRequest$.pipe(distinctUntilChanged()),
@@ -582,6 +593,7 @@ export class ComposerService implements OnDestroy {
           attachmentGuids,
           richEmbed,
           paywallThumbnail,
+          audioThumbnail,
           postToPermaweb,
           remind,
           supermindRequest,
@@ -601,6 +613,7 @@ export class ComposerService implements OnDestroy {
           attachmentGuids,
           richEmbed,
           paywallThumbnail,
+          audioThumbnail,
           postToPermaweb,
           remind,
           supermindRequest,
@@ -700,7 +713,8 @@ export class ComposerService implements OnDestroy {
               data.title !== DEFAULT_TITLE_VALUE ||
               data.paywallThumbnail !== DEFAULT_PAYWALL_THUMBNAIL_VALUE ||
               JSON.stringify(data.siteMembershipGuids) !==
-                JSON.stringify(DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE)
+                JSON.stringify(DEFAULT_SITE_MEMBERSHIP_GUIDS_VALUE) ||
+              data.audioThumbnail !== DEFAULT_AUDIO_THUMBNAIL_VALUE
           );
           return dirty;
         }
@@ -890,6 +904,7 @@ export class ComposerService implements OnDestroy {
     this.attachments$.next(DEFAULT_ATTACHMENT_VALUE);
     this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
     this.paywallThumbnail$.next(DEFAULT_PAYWALL_THUMBNAIL_VALUE);
+    this.audioThumbnail$.next(DEFAULT_AUDIO_THUMBNAIL_VALUE);
     this.remind$.next(DEFAULT_REMIND_VALUE);
 
     // Reset state
@@ -1061,6 +1076,7 @@ export class ComposerService implements OnDestroy {
 
     this.attachments$.next(null);
     this.paywallThumbnail$.next(null);
+    this.audioThumbnail$.next(DEFAULT_AUDIO_THUMBNAIL_VALUE);
     this.title$.next(null);
   }
 
@@ -1113,6 +1129,7 @@ export class ComposerService implements OnDestroy {
    * @param schedule
    * @param richEmbed
    * @param paywallThumbnail
+   * @param audioThumbnail
    * @param postToPermaweb
    * @param remind
    * @param supermindRequest
@@ -1133,6 +1150,7 @@ export class ComposerService implements OnDestroy {
     attachmentGuids,
     richEmbed,
     paywallThumbnail,
+    audioThumbnail,
     postToPermaweb,
     remind,
     supermindRequest,
@@ -1204,6 +1222,10 @@ export class ComposerService implements OnDestroy {
 
     if (paywallThumbnail && paywallThumbnail.fileBase64) {
       this.payload.paywall_thumbnail = paywallThumbnail.fileBase64;
+    }
+
+    if (audioThumbnail) {
+      this.payload.audio_thumbnail = audioThumbnail;
     }
 
     if (siteMembershipGuids) {
