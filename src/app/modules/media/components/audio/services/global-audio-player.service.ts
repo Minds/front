@@ -131,7 +131,7 @@ export class GlobalAudioPlayerService implements OnDestroy {
    * @returns { void }
    */
   public play(): void {
-    setTimeout(() => {
+    setTimeout(async () => {
       if (this.audioElement?.nativeElement.ended) {
         this.audioElement.nativeElement.currentTime = 0;
       } else {
@@ -139,8 +139,19 @@ export class GlobalAudioPlayerService implements OnDestroy {
           this.audioPlayerService?.currentAudioTime$.getValue() ?? 0;
       }
 
-      this.audioElement?.nativeElement.play();
-      this.audioPlayerService?.playing$.next(true);
+      try {
+        this.audioPlayerService?.playing$.next(true);
+        await this.audioElement?.nativeElement.play();
+      } catch (e) {
+        if (e instanceof Error && e.name === 'NotSupportedError') {
+          this.audioPlayerService?.playing$.next(false);
+          this.clearCurrentAudioTrack();
+          this.unregisterActiveAudioPlayerService();
+        }
+        console.error(e);
+        return;
+      }
+
       this.played$.next(this.currentAudioTrack$.getValue());
     }, 0);
   }

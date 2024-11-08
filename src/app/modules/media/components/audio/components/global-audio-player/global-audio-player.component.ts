@@ -6,8 +6,10 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { GlobalAudioPlayerService } from '../../services/global-audio-player.service';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { ToasterService } from '../../../../../../common/services/toaster.service';
+import { AudioTrack } from '../../types/audio-player.types';
 
 /**
  * Global audio player component. This component is used to play audio in
@@ -17,7 +19,13 @@ import { AsyncPipe } from '@angular/common';
  */
 @Component({
   selector: 'm-globalAudioPlayer',
-  template: ` <audio #nativeAudio [src]="currentAudioSrc$ | async"></audio> `,
+  template: `
+    <audio
+      #nativeAudio
+      [src]="currentAudioSrc$ | async"
+      (error)="onError($event)"
+    ></audio>
+  `,
   styles: [
     `
       :host {
@@ -37,10 +45,34 @@ export class GlobalAudioPlayerComponent implements AfterViewInit {
   protected readonly currentAudioSrc$: Observable<string> =
     this.globalAudioPlayerService.currentAudioSrc$;
 
-  constructor(private globalAudioPlayerService: GlobalAudioPlayerService) {}
+  constructor(
+    private globalAudioPlayerService: GlobalAudioPlayerService,
+    private toasterService: ToasterService
+  ) {}
 
   ngAfterViewInit(): void {
     // Register with the global audio player service, and initialise it.
     this.globalAudioPlayerService.setAudioElement(this.audioElement).init();
+  }
+
+  /**
+   * Handle audio error.
+   * @param { any } event - The error event.
+   * @returns { Promise<void> }
+   */
+  protected async onError(event: any): Promise<void> {
+    const currentAudioTrack: AudioTrack = await firstValueFrom(
+      this.globalAudioPlayerService.currentAudioTrack$
+    );
+
+    if (!currentAudioTrack?.src) {
+      return;
+    }
+
+    if (!currentAudioTrack.duration) {
+      this.toasterService.inform('Still processing. Please try again shortly.');
+    } else {
+      this.toasterService.error('There was an error loading this audio file');
+    }
   }
 }
