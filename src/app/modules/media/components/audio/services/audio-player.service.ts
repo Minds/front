@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AudioTrack } from '../types/audio-player.types';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { GlobalAudioPlayerService } from './global-audio-player.service';
 import { AudioPlayerAnalyticsService } from './audio-player-analytics.service';
 import { ContextualizableEntity } from '../../../../../services/analytics';
@@ -18,6 +18,10 @@ export class AudioPlayerService {
 
   /** The current audio time. */
   public readonly currentAudioTime$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
+
+  /** The buffered time. */
+  public readonly bufferedTime$: BehaviorSubject<number> =
     new BehaviorSubject<number>(0);
 
   /** Whether the audio has loaded. */
@@ -40,6 +44,12 @@ export class AudioPlayerService {
   public readonly duration$: Observable<number> = this.audioTrack$.pipe(
     map((track) => track?.duration)
   );
+
+  /** The buffered percentage of the audio. */
+  public readonly bufferedPercentage$: Observable<number> = combineLatest([
+    this.bufferedTime$,
+    this.duration$,
+  ]).pipe(map(([bufferedTime, duration]) => (bufferedTime * 100) / duration));
 
   /** Whether the audio player is active. */
   public isActivePlayer: boolean = false;
@@ -90,6 +100,7 @@ export class AudioPlayerService {
     this.volume$.next(100);
     this.loaded$.next(false);
     this.muted$.next(false);
+    this.bufferedTime$.next(0);
     this.onUnregisterActivePlayer();
   }
 

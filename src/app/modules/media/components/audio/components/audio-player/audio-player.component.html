@@ -82,6 +82,10 @@
       (input)="onSeek($event)"
     >
       <input matSliderThumb [value]="currentAudioTime$ | async" #slider />
+      <div
+        class="m-audioPlayer__bufferedTimeContainer"
+        [style.width]="(bufferedPercentage$ | async) + '%'"
+      ></div>
     </mat-slider>
     @if (duration$ | async) {
       <span class="m-audioPlayer__timeSpan">{{

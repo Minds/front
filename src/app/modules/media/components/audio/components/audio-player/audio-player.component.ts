@@ -47,6 +47,10 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   protected currentAudioTime$: Observable<number> =
     this.audioPlayerService.currentAudioTime$;
 
+  /** Buffered percentage. */
+  protected bufferedPercentage$: Observable<number> =
+    this.audioPlayerService.bufferedPercentage$;
+
   /** Whether the audio is playing. */
   protected playing$: Observable<boolean> = this.audioPlayerService.playing$;
 

@@ -38,11 +38,13 @@ export class GlobalAudioPlayerService implements OnDestroy {
   // Subscriptions.
   private timeUpdatedSubscription: Subscription;
   private loadedMetadataSubscription: Subscription;
+  private progressSubscription: Subscription;
 
   ngOnDestroy(): void {
     this.unregisterActiveAudioPlayerService();
     this.timeUpdatedSubscription?.unsubscribe();
     this.loadedMetadataSubscription?.unsubscribe();
+    this.progressSubscription?.unsubscribe();
   }
 
   /**
@@ -94,6 +96,8 @@ export class GlobalAudioPlayerService implements OnDestroy {
         Math.floor(this.audioElement.nativeElement.currentTime)
       );
 
+      this.syncBufferedTime();
+
       if (this.audioElement?.nativeElement.ended) {
         this.audioElement?.nativeElement.pause();
         this.audioPlayerService?.playing$.next(false);
@@ -113,6 +117,13 @@ export class GlobalAudioPlayerService implements OnDestroy {
 
       this.audioPlayerService.audioTrack$.next(durationSyncedAudioTrack);
       this.currentAudioTrack$.next(durationSyncedAudioTrack);
+    });
+
+    this.progressSubscription = fromEvent(
+      this.audioElement.nativeElement,
+      'progress'
+    ).subscribe((event) => {
+      this.syncBufferedTime();
     });
   }
 
@@ -237,5 +248,17 @@ export class GlobalAudioPlayerService implements OnDestroy {
   public unmute(): void {
     this.audioElement.nativeElement.muted = false;
     this.audioPlayerService?.muted$.next(false);
+  }
+
+  /**
+   * Sync buffered time.
+   * @returns { void }
+   */
+  private syncBufferedTime(): void {
+    this.audioPlayerService?.bufferedTime$.next(
+      this.audioElement?.nativeElement.buffered.end(
+        this.audioElement?.nativeElement.buffered.length - 1
+      )
+    );
   }
 }

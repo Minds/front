@@ -210,6 +210,21 @@ $collapseWidth: $layoutMax2ColFixedWidth;
             }
           }
         }
+
+        .m-audioPlayer__bufferedTimeContainer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 8px;
+          border-radius: 12px;
+          margin: 20px 0;
+          box-sizing: border-box;
+          pointer-events: none;
+
+          @include m-theme() {
+            background: themed($m-borderColor--primary);
+          }
+        }
       }
     }
   }
