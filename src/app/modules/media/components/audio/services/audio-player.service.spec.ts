@@ -3,7 +3,7 @@ import { AudioPlayerService } from './audio-player.service';
 import { GlobalAudioPlayerService } from './global-audio-player.service';
 import { AudioPlayerAnalyticsService } from './audio-player-analytics.service';
 import { MockService } from '../../../../../utils/mock';
-import { AudioTrack } from '../types/audio-player.types';
+import { AudioPlaybackState, AudioTrack } from '../types/audio-player.types';
 import { ContextualizableEntity } from '../../../../../services/analytics';
 
 describe('AudioPlayerService', () => {
@@ -53,6 +53,38 @@ describe('AudioPlayerService', () => {
 
   it('should create', () => {
     expect(service).toBeTruthy();
+  });
+
+  describe('audioPlaybackState$', () => {
+    it('should emit the correct state for paused', (done: DoneFn) => {
+      (service as any).loading$.next(false);
+      (service as any).playing$.next(false);
+
+      service.audioPlaybackState$.subscribe((state) => {
+        expect(state).toBe(AudioPlaybackState.PAUSED);
+        done();
+      });
+    });
+
+    it('should emit the correct state for loading', (done: DoneFn) => {
+      (service as any).loading$.next(true);
+      (service as any).playing$.next(false);
+
+      service.audioPlaybackState$.subscribe((state) => {
+        expect(state).toBe(AudioPlaybackState.LOADING);
+        done();
+      });
+    });
+
+    it('should emit the correct state for playing', (done: DoneFn) => {
+      (service as any).loading$.next(false);
+      (service as any).playing$.next(true);
+
+      service.audioPlaybackState$.subscribe((state) => {
+        expect(state).toBe(AudioPlaybackState.PLAYING);
+        done();
+      });
+    });
   });
 
   describe('registerActivePlayer', () => {

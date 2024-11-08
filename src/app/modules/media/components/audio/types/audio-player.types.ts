@@ -22,3 +22,10 @@ export type AudioPauseAnalyticsEvent = GenericAudioAnalyticsEvent;
 export type AudioSeekAnalyticsEvent = {
   audio_playing: boolean;
 } & GenericAudioAnalyticsEvent;
+
+/** Audio playback state. */
+export enum AudioPlaybackState {
+  LOADING,
+  PLAYING,
+  PAUSED,
+}

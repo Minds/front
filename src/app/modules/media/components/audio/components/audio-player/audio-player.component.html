@@ -48,20 +48,24 @@
           (click)="onSkipBackClick()"
           >replay_10</i
         >
-        @if (loading$ | async) {
-          <i class="material-icons m-audioPlayerToolbar__icon">pending</i>
-        } @else if (playing$ | async) {
-          <i
-            class="material-icons m-audioPlayerToolbar__icon"
-            (click)="onPauseClick()"
-            >pause_circle</i
-          >
-        } @else {
-          <i
-            class="material-icons m-audioPlayerToolbar__icon"
-            (click)="onPlayClick()"
-            >play_circle</i
-          >
+        @switch (audioPlaybackState$ | async) {
+          @case (AudioPlaybackState.LOADING) {
+            <i class="material-icons m-audioPlayerToolbar__icon">pending</i>
+          }
+          @case (AudioPlaybackState.PLAYING) {
+            <i
+              class="material-icons m-audioPlayerToolbar__icon"
+              (click)="onPauseClick()"
+              >pause_circle</i
+            >
+          }
+          @default {
+            <i
+              class="material-icons m-audioPlayerToolbar__icon"
+              (click)="onPlayClick()"
+              >play_circle</i
+            >
+          }
         }
         <i
           class="material-icons m-audioPlayerToolbar__icon"

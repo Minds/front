@@ -6,12 +6,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { AsyncPipe, CommonModule as NgCommonModule } from '@angular/common';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, debounceTime, Observable } from 'rxjs';
 import { MatSliderModule } from '@angular/material/slider';
 import { AudioPlayerService } from '../../services/audio-player.service';
 import { AudioTimePipe } from '../../pipes/audio-time.pipe';
 import { ContextualizableEntity } from '../../../../../../services/analytics';
 import { AudioPlayerAnalyticsService } from '../../services/audio-player-analytics.service';
+import { AudioPlaybackState } from '../../types/audio-player.types';
 
 /**
  * Audio player component.
@@ -25,6 +26,10 @@ import { AudioPlayerAnalyticsService } from '../../services/audio-player-analyti
   standalone: true,
 })
 export class AudioPlayerComponent implements OnInit, OnDestroy {
+  /** Enum for use in template. */
+  protected readonly AudioPlaybackState: typeof AudioPlaybackState =
+    AudioPlaybackState;
+
   /** Audio source. */
   @Input() protected src: string = '';
 
@@ -45,11 +50,18 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   /** Current audio time. */
   protected currentAudioTime$: Observable<number> =
-    this.audioPlayerService.currentAudioTime$;
+    this.audioPlayerService.currentAudioTime$.pipe(
+      // Improve performance when quickly dragging the seek bar.
+      debounceTime(15)
+    );
 
   /** Buffered percentage. */
   protected bufferedPercentage$: Observable<number> =
     this.audioPlayerService.bufferedPercentage$;
+
+  /** The current audio playback state. */
+  protected audioPlaybackState$: Observable<AudioPlaybackState> =
+    this.audioPlayerService.audioPlaybackState$;
 
   /** Whether the audio is playing. */
   protected playing$: Observable<boolean> = this.audioPlayerService.playing$;

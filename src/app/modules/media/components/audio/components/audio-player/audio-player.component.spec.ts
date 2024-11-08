@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AudioTimePipe } from '../../pipes/audio-time.pipe';
 import { MatSliderModule } from '@angular/material/slider';
 import { MockService } from '../../../../../../utils/mock';
+import { AudioPlaybackState } from '../../types/audio-player.types';
 
 describe('AudioPlayerComponent', () => {
   let comp: AudioPlayerComponent;
@@ -31,6 +32,7 @@ describe('AudioPlayerComponent', () => {
             'playing$',
             'volume$',
             'muted$',
+            'audioPlaybackState$',
             'isActivePlayer',
           ],
           props: {
@@ -38,6 +40,9 @@ describe('AudioPlayerComponent', () => {
             playing$: { get: () => new BehaviorSubject(false) },
             volume$: { get: () => new BehaviorSubject(100) },
             muted$: { get: () => new BehaviorSubject(false) },
+            audioPlaybackState$: {
+              get: () => new BehaviorSubject(AudioPlaybackState.PAUSED),
+            },
             isActivePlayer: false,
           },
         }),
