@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ComposerService } from '../../../services/composer.service';
 import { ToasterService } from '../../../../../common/services/toaster.service';
@@ -11,7 +11,7 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
   templateUrl: './attachment-preview-audio.component.html',
   styleUrl: './attachment-preview-audio.component.ng.scss',
 })
-export class AttachmentPreviewAudioComponent {
+export class AttachmentPreviewAudioComponent implements OnInit {
   /** The thumbnail image file URL. */
   protected readonly thumbnailImageFileUrl$: BehaviorSubject<string> =
     new BehaviorSubject<string>(null);
@@ -20,6 +20,15 @@ export class AttachmentPreviewAudioComponent {
     private readonly composerService: ComposerService,
     private readonly toastService: ToasterService
   ) {}
+
+  ngOnInit(): void {
+    const audioThumbnail: string =
+      this.composerService.audioThumbnail$.getValue();
+
+    if (audioThumbnail) {
+      this.thumbnailImageFileUrl$.next(`url(${audioThumbnail})`);
+    }
+  }
 
   /**
    * On thumbnail selected.

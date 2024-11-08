@@ -998,6 +998,14 @@ export class ComposerService implements OnDestroy {
           guid: activity.entity_guid,
         } as Attachment,
       ];
+    } else if (activity.custom_type === 'audio') {
+      attachments = [
+        {
+          type: 'audio',
+          guid: activity.entity_guid,
+        } as Attachment,
+      ];
+      this.audioThumbnail$.next(activity.custom_data?.thumbnail_src ?? null);
     } else if (activity.entity_guid || activity.perma_url) {
       // Rich embeds (blogs included)
       richEmbed = {
