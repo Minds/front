@@ -24,8 +24,8 @@ export class AudioPlayerService {
   public readonly bufferedTime$: BehaviorSubject<number> =
     new BehaviorSubject<number>(0);
 
-  /** Whether the audio has loaded. */
-  public readonly loaded$: BehaviorSubject<boolean> =
+  /** Whether the audio is loading. */
+  public readonly loading$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
   /** Whether the audio is playing. */
@@ -98,7 +98,7 @@ export class AudioPlayerService {
     this.globalAudioPlayerService.clearCurrentAudioTrack();
     this.currentAudioTime$.next(0);
     this.volume$.next(100);
-    this.loaded$.next(false);
+    this.loading$.next(false);
     this.muted$.next(false);
     this.bufferedTime$.next(0);
     this.onUnregisterActivePlayer();

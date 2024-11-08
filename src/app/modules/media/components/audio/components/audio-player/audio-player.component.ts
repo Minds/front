@@ -66,6 +66,9 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
    */
   protected duration$: Observable<number> = this.audioPlayerService.duration$;
 
+  /** Whether the audio is loading. */
+  protected loading$: Observable<boolean> = this.audioPlayerService.loading$;
+
   /** Whether the mouse is over the player. */
   protected isMouseOver: boolean = false;
 

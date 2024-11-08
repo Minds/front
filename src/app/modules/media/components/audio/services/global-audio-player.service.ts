@@ -39,12 +39,16 @@ export class GlobalAudioPlayerService implements OnDestroy {
   private timeUpdatedSubscription: Subscription;
   private loadedMetadataSubscription: Subscription;
   private progressSubscription: Subscription;
+  private waitingSubscription: Subscription;
+  private canplaySubscription: Subscription;
 
   ngOnDestroy(): void {
     this.unregisterActiveAudioPlayerService();
     this.timeUpdatedSubscription?.unsubscribe();
     this.loadedMetadataSubscription?.unsubscribe();
     this.progressSubscription?.unsubscribe();
+    this.waitingSubscription?.unsubscribe();
+    this.canplaySubscription?.unsubscribe();
   }
 
   /**
@@ -108,8 +112,6 @@ export class GlobalAudioPlayerService implements OnDestroy {
       this.audioElement.nativeElement,
       'loadedmetadata'
     ).subscribe(() => {
-      this.audioPlayerService?.loaded$.next(true);
-
       const durationSyncedAudioTrack: AudioTrack = {
         ...this.audioPlayerService.audioTrack$.getValue(),
         duration: this.audioElement.nativeElement.duration,
@@ -124,6 +126,20 @@ export class GlobalAudioPlayerService implements OnDestroy {
       'progress'
     ).subscribe((event) => {
       this.syncBufferedTime();
+    });
+
+    this.waitingSubscription = fromEvent(
+      this.audioElement.nativeElement,
+      'waiting'
+    ).subscribe(() => {
+      this.audioPlayerService?.loading$.next(true);
+    });
+
+    this.canplaySubscription = fromEvent(
+      this.audioElement.nativeElement,
+      'canplay'
+    ).subscribe(() => {
+      this.audioPlayerService?.loading$.next(false);
     });
   }
 
@@ -152,11 +168,15 @@ export class GlobalAudioPlayerService implements OnDestroy {
 
       try {
         this.audioPlayerService?.playing$.next(true);
+        this.audioPlayerService?.loading$.next(false);
+
         await this.audioElement?.nativeElement.play();
       } catch (e) {
         if (e instanceof Error && e.name === 'NotSupportedError') {
           this.audioPlayerService?.playing$.next(false);
+
           this.clearCurrentAudioTrack();
+          this.audioPlayerService?.loading$.next(false);
           this.unregisterActiveAudioPlayerService();
         }
         console.error(e);
