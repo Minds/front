@@ -30,7 +30,7 @@ describe('GlobalAudioPlayerService', () => {
 
     mockAudioPlayerService = {
       playing$: new BehaviorSubject<boolean>(false),
-      loaded$: new BehaviorSubject<boolean>(false),
+      loading$: new BehaviorSubject<boolean>(false),
       volume$: new BehaviorSubject<number>(100),
       muted$: new BehaviorSubject<boolean>(false),
       currentAudioTime$: new BehaviorSubject<number>(0),
@@ -84,11 +84,34 @@ describe('GlobalAudioPlayerService', () => {
   describe('play', () => {
     it('should play audio', fakeAsync(() => {
       (service as any).audioPlayerService.playing$.next(false);
+      (mockAudioElement.nativeElement.play as any).and.returnValue(
+        Promise.resolve()
+      );
       service.play();
       tick();
 
       expect(mockAudioElement.nativeElement.play).toHaveBeenCalled();
       expect(mockAudioPlayerService.playing$.getValue()).toBe(true);
+      expect(mockAudioPlayerService.loading$.getValue()).toBe(false);
+    }));
+
+    it('should play audio from start if played when at the end', fakeAsync(() => {
+      (service as any).audioPlayerService.playing$.next(false);
+      (service as any).audioPlayerService.currentAudioTime$.next(100);
+      Object.defineProperty(mockAudioElement.nativeElement, 'ended', {
+        value: true,
+        writable: true,
+      });
+      (mockAudioElement.nativeElement.play as any).and.returnValue(
+        Promise.resolve()
+      );
+      service.play();
+      tick();
+
+      expect(mockAudioElement.nativeElement.currentTime).toBe(0);
+      expect(mockAudioElement.nativeElement.play).toHaveBeenCalled();
+      expect(mockAudioPlayerService.playing$.getValue()).toBe(true);
+      expect(mockAudioPlayerService.loading$.getValue()).toBe(false);
     }));
   });
 

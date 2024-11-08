@@ -44,7 +44,7 @@ describe('AudioPlayerService', () => {
     service = TestBed.inject(AudioPlayerService);
     (service as any).audioTrack$.next(mockAudioTrack);
     (service as any).currentAudioTime$.next(0);
-    (service as any).loaded$.next(false);
+    (service as any).loading$.next(false);
     (service as any).playing$.next(false);
     (service as any).volume$.next(100);
     (service as any).muted$.next(false);
@@ -101,7 +101,7 @@ describe('AudioPlayerService', () => {
       ).toHaveBeenCalled();
       expect(service.currentAudioTime$.getValue()).toBe(0);
       expect(service.volume$.getValue()).toBe(100);
-      expect(service.loaded$.getValue()).toBe(false);
+      expect(service.loading$.getValue()).toBe(false);
       expect(service.muted$.getValue()).toBe(false);
       expect(service.isActivePlayer).toBe(false);
     });
@@ -112,7 +112,7 @@ describe('AudioPlayerService', () => {
       service.isActivePlayer = false;
       (service as any).audioTrack$.next(mockAudioTrack);
       (service as any).currentAudioTime$.next(5);
-      (service as any).loaded$.next(false);
+      (service as any).loading$.next(false);
       (service as any).playing$.next(false);
       (service as any).volume$.next(50);
       (service as any).muted$.next(true);

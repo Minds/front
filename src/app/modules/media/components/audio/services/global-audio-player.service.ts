@@ -174,7 +174,6 @@ export class GlobalAudioPlayerService implements OnDestroy {
       } catch (e) {
         if (e instanceof Error && e.name === 'NotSupportedError') {
           this.audioPlayerService?.playing$.next(false);
-
           this.clearCurrentAudioTrack();
           this.audioPlayerService?.loading$.next(false);
           this.unregisterActiveAudioPlayerService();
@@ -276,9 +275,11 @@ export class GlobalAudioPlayerService implements OnDestroy {
    */
   private syncBufferedTime(): void {
     this.audioPlayerService?.bufferedTime$.next(
-      this.audioElement?.nativeElement.buffered.end(
-        this.audioElement?.nativeElement.buffered.length - 1
-      )
+      this.audioElement?.nativeElement.buffered?.length
+        ? this.audioElement?.nativeElement.buffered.end(
+            this.audioElement?.nativeElement.buffered?.length - 1
+          )
+        : 0
     );
   }
 }
