@@ -99,6 +99,7 @@ export class AudioPlayerService {
    */
   public onUnregisterActivePlayer(): AudioPlayerService {
     this.pause();
+    this.loading$.next(false);
     this.isActivePlayer = false;
     return this;
   }

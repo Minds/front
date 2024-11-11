@@ -102,6 +102,27 @@ describe('AudioPlayerService', () => {
   describe('onUnregisterActivePlayer', () => {
     it('should unregister as active player', () => {
       service.onUnregisterActivePlayer();
+
+      expect(
+        (service as any).globalAudioPlayerService.pause
+      ).toHaveBeenCalled();
+      expect(
+        (service as any).audioPlayerAnalyticsService.trackPauseEvent
+      ).toHaveBeenCalledWith({
+        audio_time: 0,
+        audio_duration: mockData.duration,
+        audio_volume: 100,
+        audio_muted: false,
+      });
+      expect(service.isActivePlayer).toBe(false);
+    });
+
+    it('should unregister as active player and set loading to false, when true', () => {
+      (service as any).loading$.next(true);
+
+      service.onUnregisterActivePlayer();
+
+      expect((service as any).loading$.getValue()).toBe(false);
       expect(
         (service as any).globalAudioPlayerService.pause
       ).toHaveBeenCalled();
