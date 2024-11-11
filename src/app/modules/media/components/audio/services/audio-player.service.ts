@@ -93,7 +93,7 @@ export class AudioPlayerService {
   }
 
   /**
-   * Unregisters the audio player as the active player with the global service.
+   * Unregisters the audio player as the active player with the global service,
    * and pauses the audio.
    * @returns { AudioPlayerService }
    */
