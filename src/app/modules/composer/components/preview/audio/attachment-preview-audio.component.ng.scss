@@ -54,7 +54,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -71,12 +70,17 @@
         display: none;
       }
 
-      &--hasImage:hover .m-composerPreviewAudio__thumbnailUploadIcon {
-        display: block;
-      }
+      &:not(.m-composerPreviewAudio_thumbnailContainer--disabled) {
+        cursor: pointer;
 
-      &:hover {
-        opacity: 0.7;
+        &:hover {
+          opacity: 0.7;
+        }
+
+        .m-composerPreviewAudio_thumbnailContainer--hasImage:hover
+          .m-composerPreviewAudio__thumbnailUploadIcon {
+          display: block;
+        }
       }
 
       .m-composerPreviewAudio__thumbnailUploadInput {
