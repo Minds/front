@@ -69,6 +69,8 @@ export class GlobalAudioPlayerComponent implements AfterViewInit {
       return;
     }
 
+    console.error(event);
+
     if (!currentAudioTrack.duration) {
       this.toasterService.inform('Still processing. Please try again shortly.');
     } else {
