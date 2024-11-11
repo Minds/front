@@ -74,6 +74,10 @@
     ::ng-deep m-composerPreview--audio .m-composer__progress {
       border-bottom-left-radius: 8px;
       border-bottom-right-radius: 8px;
+
+      .m-composerProgress__fill {
+        border-radius: 8px;
+      }
     }
 
     .m-videoPlayer__placeholder {

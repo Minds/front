@@ -6,7 +6,7 @@
     @if (attachmentPreviews[0]?.sourceType === 'audio') {
       <!-- MEDIA ATTACHMENT (AUDIO) ------------>
       <m-composerPreview--audio>
-        @if (!isEditing$ | async) {
+        @if (!(isEditing$ | async)) {
           <m-composer__progress
             [inProgress]="!attachmentPreviews[0].guid"
             [progress]="attachmentPreviews[0].progress"
