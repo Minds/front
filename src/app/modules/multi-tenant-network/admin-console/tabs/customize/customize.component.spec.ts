@@ -12,8 +12,8 @@ import {
   MultiTenantConfigImageService,
   SQUARE_LOGO_PATH,
 } from '../../../services/config-image.service';
-import { NetworkAdminConsoleAppearanceComponent } from './appearance.component';
-import { MockService } from '../../../../../utils/mock';
+import { NetworkAdminConsoleCustomizeComponent } from './customize.component';
+import { MockComponent, MockService } from '../../../../../utils/mock';
 import { MultiTenantNetworkConfigService } from '../../../services/config.service';
 import { MultiTenantConfigImageRefreshService } from '../../../services/config-image-refresh.service';
 import { ToasterService } from '../../../../../common/services/toaster.service';
@@ -25,9 +25,9 @@ import {
   MultiTenantConfig,
 } from '../../../../../../graphql/generated.engine';
 
-describe('NetworkAdminConsoleAppearanceComponent', () => {
-  let comp: NetworkAdminConsoleAppearanceComponent;
-  let fixture: ComponentFixture<NetworkAdminConsoleAppearanceComponent>;
+describe('NetworkAdminConsoleCustomizeComponent', () => {
+  let comp: NetworkAdminConsoleCustomizeComponent;
+  let fixture: ComponentFixture<NetworkAdminConsoleCustomizeComponent>;
 
   const squareLogoPath$ = new BehaviorSubject<string>(SQUARE_LOGO_PATH);
   const faviconPath$ = new BehaviorSubject<string>(FAVICON_PATH);
@@ -37,7 +37,12 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NetworkAdminConsoleAppearanceComponent],
+      declarations: [
+        NetworkAdminConsoleCustomizeComponent,
+        MockComponent({
+          selector: 'm-networkAdminCustomScript',
+        }),
+      ],
       imports: [ReactiveFormsModule],
       providers: [
         {
@@ -80,7 +85,7 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
       ],
     });
 
-    fixture = TestBed.createComponent(NetworkAdminConsoleAppearanceComponent);
+    fixture = TestBed.createComponent(NetworkAdminConsoleCustomizeComponent);
     comp = fixture.componentInstance;
 
     (comp as any).multiTenantConfigService.config$.next(multiTenantConfigMock);

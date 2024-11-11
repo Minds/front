@@ -33,18 +33,18 @@ import { MultiTenantConfigImageRefreshService } from '../../../services/config-i
 import { MetaService } from '../../../../../common/services/meta.service';
 
 /**
- * Multi-tenant network admin panel's appearance tab. Allows the user
- * to customise site branding and appearance.
+ * Multi-tenant network admin panel's customize tab. Allows the user
+ * to customize site branding and appearance.
  */
 @Component({
-  selector: 'm-networkAdminConsole__appearance',
-  templateUrl: './appearance.component.html',
+  selector: 'm-networkAdminConsole__customize',
+  templateUrl: './customize.component.html',
   styleUrls: [
-    './appearance.component.ng.scss',
+    './customize.component.ng.scss',
     '../../stylesheets/console.component.ng.scss',
   ],
 })
-export class NetworkAdminConsoleAppearanceComponent
+export class NetworkAdminConsoleCustomizeComponent
   implements OnInit, OnDestroy
 {
   /** Whether loading is in progress. */
