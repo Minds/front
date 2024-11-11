@@ -4,10 +4,12 @@ import {
   ElementRef,
   AfterViewInit,
   ChangeDetectionStrategy,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { GlobalAudioPlayerService } from '../../services/global-audio-player.service';
 import { firstValueFrom, Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, isPlatformServer } from '@angular/common';
 import { ToasterService } from '../../../../../../common/services/toaster.service';
 import { AudioTrack } from '../../types/audio-player.types';
 
@@ -47,10 +49,15 @@ export class GlobalAudioPlayerComponent implements AfterViewInit {
 
   constructor(
     private globalAudioPlayerService: GlobalAudioPlayerService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngAfterViewInit(): void {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     // Register with the global audio player service, and initialise it.
     this.globalAudioPlayerService.setAudioElement(this.audioElement).init();
   }

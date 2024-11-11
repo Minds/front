@@ -1,11 +1,17 @@
 import {
   Component,
   HostListener,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
-import { AsyncPipe, CommonModule as NgCommonModule } from '@angular/common';
+import {
+  AsyncPipe,
+  isPlatformServer,
+  CommonModule as NgCommonModule,
+} from '@angular/common';
 import { BehaviorSubject, debounceTime, Observable } from 'rxjs';
 import { MatSliderModule } from '@angular/material/slider';
 import { AudioPlayerService } from '../../services/audio-player.service';
@@ -132,9 +138,16 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private audioPlayerService: AudioPlayerService) {}
+  constructor(
+    private audioPlayerService: AudioPlayerService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     this.audioPlayerService.setAudioTrack({
       src: this.src,
       duration: this.duration,
@@ -143,6 +156,10 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     this.audioPlayerService.reset();
   }
 
