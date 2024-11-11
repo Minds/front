@@ -70,9 +70,20 @@ describe('GlobalAudioPlayerComponent', () => {
       (comp as any).onError(null);
       tick();
 
+      expect((comp as any).toasterService.error).not.toHaveBeenCalled();
       expect((comp as any).toasterService.inform).toHaveBeenCalledWith(
         'Still processing. Please try again shortly.'
       );
+    }));
+
+    it('should handle error by doing nothing, when no track is set', fakeAsync(() => {
+      (comp as any).globalAudioPlayerService.currentAudioTrack$.next(null);
+
+      (comp as any).onError(null);
+      tick();
+
+      expect((comp as any).toasterService.error).not.toHaveBeenCalled();
+      expect((comp as any).toasterService.inform).not.toHaveBeenCalled();
     }));
 
     it('should handle error when track has no src', fakeAsync(() => {
@@ -84,6 +95,9 @@ describe('GlobalAudioPlayerComponent', () => {
       (comp as any).onError(null);
       tick();
 
+      expect((comp as any).toasterService.inform).toHaveBeenCalledOnceWith(
+        'Still processing. Please try again shortly.'
+      );
       expect((comp as any).toasterService.error).not.toHaveBeenCalled();
     }));
 
@@ -96,6 +110,7 @@ describe('GlobalAudioPlayerComponent', () => {
       (comp as any).onError(null);
       tick();
 
+      expect((comp as any).toasterService.inform).not.toHaveBeenCalled();
       expect((comp as any).toasterService.error).toHaveBeenCalledWith(
         'There was an error loading this audio file'
       );
