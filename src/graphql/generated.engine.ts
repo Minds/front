@@ -963,6 +963,7 @@ export type MultiTenantConfig = {
   colorScheme?: Maybe<MultiTenantColorScheme>;
   customHomePageDescription?: Maybe<Scalars['String']['output']>;
   customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
+  customScript?: Maybe<Scalars['String']['output']>;
   digestEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   isNonProfit?: Maybe<Scalars['Boolean']['output']>;
@@ -972,7 +973,6 @@ export type MultiTenantConfig = {
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   replyEmail?: Maybe<Scalars['String']['output']>;
-  sendEmail?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
@@ -4342,6 +4342,7 @@ export type GetMultiTenantConfigQuery = {
     siteEmail?: string | null;
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
+    customScript?: string | null;
     canEnableFederation?: boolean | null;
     federationDisabled?: boolean | null;
     replyEmail?: string | null;
@@ -10397,6 +10398,7 @@ export const GetMultiTenantConfigDocument = gql`
       siteEmail
       colorScheme
       primaryColor
+      customScript
       canEnableFederation
       federationDisabled
       replyEmail

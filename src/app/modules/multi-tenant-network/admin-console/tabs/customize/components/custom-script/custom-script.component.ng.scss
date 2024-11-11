@@ -1,0 +1,42 @@
+@import 'defaults.scss';
+
+:host {
+  padding: unset !important;
+  max-width: 700px;
+
+  .m-networkAdminConsole__title {
+    margin-bottom: unset;
+  }
+
+  .m-networkAdminConsole__subtitle {
+    margin: $spacing1 0 $spacing8 0;
+
+    @include body2Medium;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  form {
+    display: flex;
+    flex-flow: column nowrap;
+
+    textarea {
+      padding: $spacing4;
+      box-sizing: border-box;
+      border-radius: 3px;
+      resize: vertical;
+      outline: none;
+
+      @include body1Regular;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .m-networkAdminCustomScript__errorContainer {
+      margin-top: $spacing2;
+      height: 20px;
+    }
+  }
+}
