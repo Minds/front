@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ComposerService } from '../../../services/composer.service';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 
@@ -15,6 +15,14 @@ export class AttachmentPreviewAudioComponent implements OnInit {
   /** The thumbnail image file URL. */
   protected readonly thumbnailImageFileUrl$: BehaviorSubject<string> =
     new BehaviorSubject<string>(null);
+
+  /** Whether the composer is in edit mode. */
+  protected readonly isEditing$: Observable<boolean> =
+    this.composerService.isEditing$;
+
+  /** Whether the composer is posting. */
+  protected readonly isPosting$: Observable<boolean> =
+    this.composerService.isPosting$;
 
   constructor(
     private readonly composerService: ComposerService,
@@ -56,5 +64,13 @@ export class AttachmentPreviewAudioComponent implements OnInit {
     this.toastService.inform(
       'Playback is only available after a post has been made'
     );
+  }
+
+  /**
+   * Removes an audio attachment.
+   * @returns { void }
+   */
+  protected removeAttachment(): void {
+    this.composerService.removeAudioAttachment();
   }
 }

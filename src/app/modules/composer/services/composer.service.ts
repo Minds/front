@@ -1084,8 +1084,18 @@ export class ComposerService implements OnDestroy {
 
     this.attachments$.next(null);
     this.paywallThumbnail$.next(null);
-    this.audioThumbnail$.next(DEFAULT_AUDIO_THUMBNAIL_VALUE);
     this.title$.next(null);
+  }
+
+  /**
+   * Removes an audio attachment.
+   * @returns { void }
+   */
+  public removeAudioAttachment(): void {
+    this.uploaderService.reset();
+    this.attachmentPreviews$.next([]);
+    this.audioThumbnail$.next(DEFAULT_AUDIO_THUMBNAIL_VALUE);
+    this.removeAttachment();
   }
 
   /**

@@ -1,5 +1,13 @@
 <div class="m-composerPreviewAudio_previewContainer">
   <div
+    class="m-composerPreviewAudio__closeButton"
+    [hidden]="(isPosting$ | async) || (isEditing$ | async)"
+    (click)="removeAttachment()"
+    role="aria-button"
+  >
+    <m-icon iconId="close"></m-icon>
+  </div>
+  <div
     class="m-composerPreviewAudio_thumbnailContainer"
     (click)="thumbnailUpload.click()"
     [ngStyle]="{ backgroundImage: thumbnailImageFileUrl$ | async }"

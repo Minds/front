@@ -21,9 +21,11 @@ describe('AttachmentPreviewAudioComponent', () => {
         {
           provide: ComposerService,
           useValue: MockService(ComposerService, {
-            has: ['audioThumbnail$'],
+            has: ['audioThumbnail$', 'isEditing$', 'isPosting$'],
             props: {
               audioThumbnail$: { get: () => new BehaviorSubject<string>(null) },
+              isEditing$: { get: () => new BehaviorSubject<boolean>(false) },
+              isPosting$: { get: () => new BehaviorSubject<boolean>(false) },
             },
           }),
         },
@@ -76,6 +78,15 @@ describe('AttachmentPreviewAudioComponent', () => {
       expect((comp as any).toastService.inform).toHaveBeenCalledWith(
         'Playback is only available after a post has been made'
       );
+    });
+  });
+
+  describe('removeAttachment', () => {
+    it('should call composerService.removeAudioAttachment', () => {
+      (comp as any).removeAttachment();
+      expect(
+        (comp as any).composerService.removeAudioAttachment
+      ).toHaveBeenCalled();
     });
   });
 });

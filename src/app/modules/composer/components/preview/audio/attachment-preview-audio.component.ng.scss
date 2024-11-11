@@ -24,6 +24,29 @@
       width: 100%;
     }
 
+    .m-composerPreviewAudio__closeButton {
+      position: absolute;
+      top: $spacing4;
+      right: $spacing4;
+      padding: 4px;
+      font-size: 14px;
+      border: 1px solid;
+      border-radius: 50%;
+      cursor: pointer;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        color: themed($m-textColor--secondary);
+        border-color: themed($m-borderColor--primary);
+      }
+
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+        }
+      }
+    }
+
     .m-composerPreviewAudio_thumbnailContainer {
       height: 128px;
       width: 128px;
