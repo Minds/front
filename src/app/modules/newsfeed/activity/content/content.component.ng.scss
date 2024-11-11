@@ -93,6 +93,18 @@
     .m-activityContent__remindDeletedNotice {
       margin-bottom: $spacing4;
     }
+
+    .m-activityContent__audioPlayerThumbnail {
+      max-width: 100%;
+      max-height: 300px;
+      width: 100%;
+    }
+
+    &:not(:has(.m-activityContentText__body)) {
+      .m-activityContent__audioPlayerThumbnail {
+        margin-bottom: $spacing5;
+      }
+    }
   }
 
   // *********************************

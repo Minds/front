@@ -165,15 +165,23 @@ post content to trigger upgrade modal -->
 <!-- AUDIO -->
 <!-- ----------------------------------- -->
 @if (isAudio) {
-  <m-audioPlayer
-    class="m-activityContent__audioPlayer"
-    [src]="entity.custom_data.src"
-    [thumbnailSrc]="entity.custom_data.thumbnail_src"
-    [author]="entity.ownerObj?.name"
-    [title]="entity.title"
-    [duration]="entity.custom_data?.duration_secs"
-    [entity]="entity"
-  />
+  @if (!isMinimalMode) {
+    <m-audioPlayer
+      class="m-activityContent__audioPlayer"
+      [src]="entity.custom_data?.src"
+      [thumbnailSrc]="entity.custom_data?.thumbnail_src"
+      [author]="entity.ownerObj?.name"
+      [title]="entity.title"
+      [duration]="entity.custom_data?.duration_secs"
+      [entity]="entity"
+    />
+  } @else {
+    <img
+      class="m-activityContent__audioPlayerThumbnail"
+      [src]="entity.custom_data?.thumbnail_src"
+      alt="Audio thumbnail"
+    />
+  }
 }
 <!-- ----------------------------------- -->
 <!-- QUOTE -->
