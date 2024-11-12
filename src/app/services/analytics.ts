@@ -119,7 +119,6 @@ export class AnalyticsService implements OnDestroy {
         featureFlags,
       },
     });
-    this.posthog.debug(true);
     this.setUser(this.sessionService.getLoggedInUser());
   }
 
