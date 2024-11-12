@@ -2,7 +2,13 @@
 
 :host {
   display: block;
+
   > div {
     padding-bottom: $spacing6;
+  }
+
+  .m-oidcLoginButtons__providerContainer {
+    display: block;
+    margin-bottom: $spacing4;
   }
 }
