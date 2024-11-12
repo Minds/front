@@ -9,6 +9,7 @@ import {
   Subscription,
 } from 'rxjs';
 import { AudioPlayerService } from './audio-player.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 
 /**
  * Global audio player service. Controls registered global audio player
@@ -41,6 +42,8 @@ export class GlobalAudioPlayerService implements OnDestroy {
   private progressSubscription: Subscription;
   private waitingSubscription: Subscription;
   private canplaySubscription: Subscription;
+
+  constructor(private toasterService: ToasterService) {}
 
   ngOnDestroy(): void {
     this.unregisterActiveAudioPlayerService();
@@ -172,12 +175,21 @@ export class GlobalAudioPlayerService implements OnDestroy {
 
         await this.audioElement?.nativeElement.play();
       } catch (e) {
-        if (e instanceof Error && e.name === 'NotSupportedError') {
-          this.audioPlayerService?.playing$.next(false);
-          this.clearCurrentAudioTrack();
-          this.audioPlayerService?.loading$.next(false);
-          this.unregisterActiveAudioPlayerService();
+        if (!this.currentAudioTrack$.getValue()?.duration) {
+          this.toasterService.inform(
+            'Still processing. Please try again shortly.'
+          );
+        } else {
+          this.toasterService.error(
+            'There was an error playing this audio file'
+          );
         }
+
+        this.audioPlayerService?.playing$.next(false);
+        this.clearCurrentAudioTrack();
+        this.audioPlayerService?.loading$.next(false);
+        this.unregisterActiveAudioPlayerService();
+
         console.error(e);
         return;
       }

@@ -4,6 +4,8 @@ import { GlobalAudioPlayerService } from './global-audio-player.service';
 import { AudioPlayerService } from './audio-player.service';
 import { AudioTrack } from '../types/audio-player.types';
 import { BehaviorSubject } from 'rxjs';
+import { ToasterService } from '../../../../../common/services/toaster.service';
+import { MockService } from '../../../../../utils/mock';
 
 describe('GlobalAudioPlayerService', () => {
   let service: GlobalAudioPlayerService;
@@ -38,7 +40,13 @@ describe('GlobalAudioPlayerService', () => {
     } as any;
 
     TestBed.configureTestingModule({
-      providers: [GlobalAudioPlayerService],
+      providers: [
+        GlobalAudioPlayerService,
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
     });
 
     service = TestBed.inject(GlobalAudioPlayerService);
@@ -112,6 +120,34 @@ describe('GlobalAudioPlayerService', () => {
       expect(mockAudioElement.nativeElement.play).toHaveBeenCalled();
       expect(mockAudioPlayerService.playing$.getValue()).toBe(true);
       expect(mockAudioPlayerService.loading$.getValue()).toBe(false);
+    }));
+
+    it('should show error toast if error playing audio', fakeAsync(() => {
+      (mockAudioElement.nativeElement.play as any).and.throwError('Error');
+      (service as any).currentAudioTrack$.next({
+        src: 'test.mp3',
+        duration: 100,
+      });
+      service.play();
+      tick();
+
+      expect((service as any).toasterService.error).toHaveBeenCalledWith(
+        'There was an error playing this audio file'
+      );
+    }));
+
+    it('should show processing toast if audio is still processing', fakeAsync(() => {
+      (mockAudioElement.nativeElement.play as any).and.throwError('Error');
+      (service as any).currentAudioTrack$.next({
+        src: 'test.mp3',
+        duration: null,
+      });
+      service.play();
+      tick();
+
+      expect((service as any).toasterService.inform).toHaveBeenCalledWith(
+        'Still processing. Please try again shortly.'
+      );
     }));
   });
 

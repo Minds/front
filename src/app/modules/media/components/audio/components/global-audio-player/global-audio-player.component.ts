@@ -10,9 +10,7 @@ import {
 import { GlobalAudioPlayerService } from '../../services/global-audio-player.service';
 import { firstValueFrom, Observable } from 'rxjs';
 import { AsyncPipe, isPlatformServer } from '@angular/common';
-import { ToasterService } from '../../../../../../common/services/toaster.service';
 import { AudioTrack } from '../../types/audio-player.types';
-import { Upload } from '../../../../../../services/api';
 
 /**
  * Global audio player component. This component is used to play audio in
@@ -50,7 +48,6 @@ export class GlobalAudioPlayerComponent implements AfterViewInit {
 
   constructor(
     private globalAudioPlayerService: GlobalAudioPlayerService,
-    private toasterService: ToasterService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -78,11 +75,5 @@ export class GlobalAudioPlayerComponent implements AfterViewInit {
     }
 
     console.error(event);
-
-    if (!currentAudioTrack.duration || !currentAudioTrack.src) {
-      this.toasterService.inform('Still processing. Please try again shortly.');
-    } else {
-      this.toasterService.error('There was an error loading this audio file');
-    }
   }
 }
