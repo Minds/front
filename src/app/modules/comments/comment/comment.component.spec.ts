@@ -25,7 +25,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { CommentComponentV2 } from './comment.component';
 import { MockComponent, MockService } from '../../../utils/mock';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { CodeHighlightPipe } from '../../code-highlight/code-highlight.pipe';
 import { CodeHighlightService } from '../../code-highlight/code-highlight.service';
 import { TagsPipeMock } from '../../../mocks/pipes/tagsPipe.mock';
@@ -37,7 +37,10 @@ import { PermissionsService } from '../../../common/services/permissions.service
 import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-enabled.service';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 import { ModerationActionGqlService } from '../../admin/moderation/services/moderation-action-gql.service';
-import { PermissionsEnum } from '../../../../graphql/generated.engine';
+import {
+  PermissionsEnum,
+  SetCommentPinnedStateGQL,
+} from '../../../../graphql/generated.engine';
 import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
 
 describe('CommentComponentV2', () => {
@@ -195,6 +198,10 @@ describe('CommentComponentV2', () => {
         {
           provide: ModerationActionGqlService,
           useValue: MockService(ModerationActionGqlService),
+        },
+        {
+          provide: SetCommentPinnedStateGQL,
+          useValue: jasmine.createSpyObj<SetCommentPinnedStateGQL>(['mutate']),
         },
         { provide: IS_TENANT_NETWORK, useValue: false },
       ],
@@ -551,4 +558,138 @@ describe('CommentComponentV2', () => {
       (comp as any).parentClientMeta
     );
   }));
+
+  describe('canPin', () => {
+    beforeEach(() => {
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        guid: '123',
+      });
+      (comp as any).entity = {
+        ownerObj: {
+          guid: (comp as any).session.getLoggedInUser().guid,
+        },
+      };
+    });
+
+    it('should return true if the comment is at the root level and the user is the owner', () => {
+      (comp as any).level = 0;
+
+      expect(comp.canPin).toBeTrue();
+    });
+
+    it('should return false if the comment is not at the root level', () => {
+      (comp as any).level = 1;
+
+      expect(comp.canPin).toBeFalse();
+    });
+
+    it('should return false if the user is not the owner', () => {
+      (comp as any).level = 1;
+      (comp as any).entity = {
+        ownerObj: {
+          guid: (comp as any).session.getLoggedInUser().guid + '4',
+        },
+      };
+
+      expect(comp.canPin).toBeFalse();
+    });
+  });
+
+  describe('changePinnedState', () => {
+    it('should call to set the pinned state of the comment to true', fakeAsync(() => {
+      const startingPinnedState = false;
+      (comp as any).comment = {
+        pinned: startingPinnedState,
+        urn: 'urn:comment:123',
+      };
+
+      (comp as any).setCommentPinnedStateGql.mutate.and.returnValue(
+        of({
+          data: {
+            commentPinnedState: true,
+          },
+        })
+      );
+
+      comp.changePinnedState(true);
+      tick();
+
+      expect(
+        (comp as any).setCommentPinnedStateGql.mutate
+      ).toHaveBeenCalledWith({
+        commentGuid: comp.comment.urn,
+        pinned: true,
+      });
+      expect(comp.comment.pinned).toBe(true);
+      expect((comp as any).toasterService.success).toHaveBeenCalledWith(
+        'Comment successfully pinned'
+      );
+    }));
+
+    it('should call to set the pinned state of the comment to false', fakeAsync(() => {
+      const startingPinnedState = true;
+      (comp as any).comment = {
+        pinned: startingPinnedState,
+        urn: 'urn:comment:123',
+      };
+
+      (comp as any).setCommentPinnedStateGql.mutate.and.returnValue(
+        of({
+          data: {
+            commentPinnedState: true,
+          },
+        })
+      );
+
+      comp.changePinnedState(false);
+      tick();
+
+      expect(comp.comment.pinned).toBe(false);
+      expect((comp as any).toasterService.success).toHaveBeenCalledWith(
+        'Comment successfully unpinned'
+      );
+    }));
+
+    it('should handle an error when setting the pinned state', fakeAsync(() => {
+      const startingPinnedState = false;
+      (comp as any).comment = {
+        pinned: startingPinnedState,
+        urn: 'urn:comment:123',
+      };
+      (comp as any).setCommentPinnedStateGql.mutate.and.throwError(
+        new Error('test')
+      );
+
+      comp.changePinnedState(true);
+      tick();
+
+      expect(comp.comment.pinned).toBe(false);
+      expect((comp as any).toasterService.error).toHaveBeenCalledWith(
+        'Failed to change pinned state'
+      );
+    }));
+
+    it('should handle failure when setting the pinned state', fakeAsync(() => {
+      const startingPinnedState = false;
+      (comp as any).comment = {
+        pinned: startingPinnedState,
+        urn: 'urn:comment:123',
+      };
+      (comp as any).setCommentPinnedStateGql.mutate.and.returnValue(
+        of({
+          data: {
+            commentPinnedState: false,
+          },
+        })
+      );
+
+      comp.changePinnedState(true);
+      tick();
+
+      expect(comp.comment.pinned).toBe(false);
+      expect((comp as any).toasterService.error).toHaveBeenCalledWith(
+        'Failed to change pinned state'
+      );
+    }));
+  });
 });

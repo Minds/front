@@ -1030,6 +1030,8 @@ export type Mutation = {
   claimGiftCard: GiftCardNode;
   /** Clear the mobile production app version for all tenants. */
   clearAllMobileAppVersions: Scalars['Boolean']['output'];
+  /** Pins or unpins a comment. */
+  commentPinnedState: Scalars['Boolean']['output'];
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
   /** Creates a new message in a chat room */
@@ -1150,6 +1152,11 @@ export type MutationCancelInviteArgs = {
 
 export type MutationClaimGiftCardArgs = {
   claimCode: Scalars['String']['input'];
+};
+
+export type MutationCommentPinnedStateArgs = {
+  commentGuid: Scalars['String']['input'];
+  pinned: Scalars['Boolean']['input'];
 };
 
 export type MutationCompleteOnboardingStepArgs = {
@@ -2923,6 +2930,16 @@ export type UpdateChatRoomNotificationSettingsMutationVariables = Exact<{
 export type UpdateChatRoomNotificationSettingsMutation = {
   __typename?: 'Mutation';
   updateNotificationSettings: boolean;
+};
+
+export type SetCommentPinnedStateMutationVariables = Exact<{
+  commentGuid: Scalars['String']['input'];
+  pinned: Scalars['Boolean']['input'];
+}>;
+
+export type SetCommentPinnedStateMutation = {
+  __typename?: 'Mutation';
+  commentPinnedState: boolean;
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -8948,6 +8965,25 @@ export class UpdateChatRoomNotificationSettingsGQL extends Apollo.Mutation<
   UpdateChatRoomNotificationSettingsMutationVariables
 > {
   document = UpdateChatRoomNotificationSettingsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetCommentPinnedStateDocument = gql`
+  mutation SetCommentPinnedState($commentGuid: String!, $pinned: Boolean!) {
+    commentPinnedState(commentGuid: $commentGuid, pinned: $pinned)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetCommentPinnedStateGQL extends Apollo.Mutation<
+  SetCommentPinnedStateMutation,
+  SetCommentPinnedStateMutationVariables
+> {
+  document = SetCommentPinnedStateDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

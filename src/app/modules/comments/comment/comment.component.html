@@ -88,6 +88,15 @@
                 >
               </span></ng-container
             >
+            @if (comment.pinned) {
+              <span class="m-commentOwnerRow__dot">·</span>
+              <m-icon
+                iconId="push_pin"
+                class="m-commentOwnerRowItem__pinIcon"
+                [ngStyle]="{ cursor: canPin ? 'pointer' : 'default' }"
+                (click)="canPin ? changePinnedState(false) : null"
+              />
+            }
           </ng-template>
         </div>
       </div>
@@ -569,6 +578,17 @@
                 >&nbsp;{{ comment.ownerObj.username | federation }}
               </span>
             </m-dropdownMenu__item>
+            @if (canPin) {
+              @if (comment.pinned) {
+                <m-dropdownMenu__item (click)="changePinnedState(false)">
+                  <span i18n="verb|@@M__ACTION__UNPIN">Unpin</span>
+                </m-dropdownMenu__item>
+              } @else {
+                <m-dropdownMenu__item (click)="changePinnedState(true)">
+                  <span i18n="verb|@@M__ACTION__PIN">Pin</span>
+                </m-dropdownMenu__item>
+              }
+            }
             <!-- Translate -->
             <m-dropdownMenu__item
               *ngIf="isTranslatable && !editing"

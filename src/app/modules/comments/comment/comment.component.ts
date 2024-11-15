@@ -30,7 +30,7 @@ import { AttachmentService } from '../../../services/attachment';
 import { TranslationService } from '../../../services/translation';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { TimeDiffService } from '../../../services/timediff.service';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { firstValueFrom, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
 import { Router } from '@angular/router';
@@ -47,10 +47,15 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../multi-tenant-network/services/nsfw-enabled.service';
-import { PermissionsEnum } from '../../../../graphql/generated.engine';
+import {
+  PermissionsEnum,
+  SetCommentPinnedStateGQL,
+  SetCommentPinnedStateMutation,
+} from '../../../../graphql/generated.engine';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 import { ModerationActionGqlService } from '../../admin/moderation/services/moderation-action-gql.service';
 import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
+import { MutationResult } from 'apollo-angular';
 
 @Component({
   selector: 'm-comment',
@@ -167,6 +172,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     protected permissionIntentsService: PermissionIntentsService,
     protected nsfwEnabledService: NsfwEnabledService,
     private moderationActionsGql: ModerationActionGqlService,
+    private setCommentPinnedStateGql: SetCommentPinnedStateGQL,
     @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective,
     @Inject(IS_TENANT_NETWORK) private isTenantNetwork: boolean
   ) {
@@ -226,6 +232,17 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   set _editing(value: boolean) {
     this.editing = value;
+  }
+
+  /**
+   * Whether the comment can be pinned.
+   * @returns { boolean } true if the comment can be pinned.
+   */
+  get canPin(): boolean {
+    return (
+      this.level === 0 &&
+      this.entity.ownerObj.guid === this.session.getLoggedInUser()?.guid
+    );
   }
 
   @HostListener('window:resize')
@@ -651,6 +668,37 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
         this.comment.guid,
         this.parentClientMeta
       );
+    }
+  }
+
+  /**
+   * Changes the pinned state of the comment.
+   * @param { boolean } pinned - The new pinned state.
+   * @returns { Promise<void> }
+   */
+  public async changePinnedState(pinned: boolean): Promise<void> {
+    this.comment.pinned = pinned; // Optimistic update.
+
+    try {
+      const response: MutationResult<SetCommentPinnedStateMutation> =
+        await firstValueFrom(
+          this.setCommentPinnedStateGql.mutate({
+            commentGuid: this.comment.urn,
+            pinned,
+          })
+        );
+
+      if (!response?.data?.commentPinnedState) {
+        throw new Error('Failed to change pinned state');
+      }
+
+      this.toasterService.success(
+        `Comment successfully ${pinned ? 'pinned' : 'unpinned'}`
+      );
+    } catch (error) {
+      this.comment.pinned = !pinned; // revert the change.
+      this.toasterService.error('Failed to change pinned state');
+      console.error(error);
     }
   }
 }
