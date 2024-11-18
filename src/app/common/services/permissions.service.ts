@@ -3,13 +3,16 @@ import { ConfigsService } from './configs.service';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
 import { IS_TENANT_NETWORK } from '../injection-tokens/tenant-injection-tokens';
 
-export const VIDEO_PERMISSIONS_ERROR_MESSAGE =
+export const VIDEO_PERMISSIONS_ERROR_MESSAGE: string =
   'Your user role does not allow uploading video.';
 
-export const COMMENT_PERMISSIONS_ERROR_MESSAGE =
+export const AUDIO_PERMISSIONS_ERROR_MESSAGE: string =
+  'Your user role does not allow uploading audio.';
+
+export const COMMENT_PERMISSIONS_ERROR_MESSAGE: string =
   'Your user role does not allow commenting.';
 
-export const INTERACTION_PERMISSIONS_ERROR_MESSAGE =
+export const INTERACTION_PERMISSIONS_ERROR_MESSAGE: string =
   'Your user role does not allow interactions on posts.';
 
 @Injectable({
@@ -67,6 +70,14 @@ export class PermissionsService {
   // Is the user allowed to upload video?
   public canUploadVideo(): boolean {
     return this.has(PermissionsEnum.CanUploadVideo);
+  }
+
+  /**
+   * Is the user allowed to upload audio?
+   * @returns { boolean } whether the user can upload audio.
+   */
+  public canUploadAudio(): boolean {
+    return this.has(PermissionsEnum.CanUploadAudio);
   }
 
   // Is the user allowed to create a group?
