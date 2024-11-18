@@ -221,7 +221,7 @@ class ComposerModalComponent {
    * @return { void }
    */
   public acceptSupermindTerms(): void {
-    I.wait(100);
+    I.wait(1);
     I.click(this.supermindTosCheckboxSelector);
   }
 
@@ -230,7 +230,7 @@ class ComposerModalComponent {
    * @return { void }
    */
   public acceptSupermindRefundPolicy(): void {
-    I.wait(100);
+    I.wait(1);
     I.click(this.supermindRefundPolicyCheckboxSelector);
   }
 
@@ -239,7 +239,7 @@ class ComposerModalComponent {
    * @return { void }
    */
   public clickSupermindSave(): void {
-    I.wait(100);
+    I.waitForElement(this.supermindSaveButtonSelector + ':not([disabled])');
     I.click(this.supermindSaveButtonSelector);
   }
 
