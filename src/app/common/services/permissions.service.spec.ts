@@ -69,6 +69,18 @@ describe('PermissionsService', () => {
     });
   });
 
+  describe('canUploadAudio', () => {
+    it('should determine if the user can upload audio', () => {
+      service.setWhitelist([PermissionsEnum.CanUploadAudio]);
+      expect(service.canUploadAudio()).toBe(true);
+    });
+
+    it('should determine if the user can NOT upload audio', () => {
+      service.setWhitelist([]);
+      expect(service.canUploadAudio()).toBe(false);
+    });
+  });
+
   describe('canBoost', () => {
     it('should determine if the user can boost', () => {
       (service as any).configs.get.withArgs('tenant').and.returnValue({
