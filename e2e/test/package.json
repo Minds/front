@@ -5,7 +5,7 @@
   "scripts": {
     "test:e2e:local": "codeceptjs run --steps -c codecept.conf.ts",
     "test:e2e:local:ui": "codecept-ui run --steps -c codecept.conf.ts",
-    "test:e2e:sandbox": "codeceptjs run --steps -c codecept.sandbox.conf.ts --plugins retryFailedStep",
+    "test:e2e:sandbox": "codeceptjs run --steps -c codecept.sandbox.conf.ts",
     "test:e2e:real": "codeceptjs run-multiple browserStackCombo --steps -c codecept.production.conf.ts",
     "def": "codeceptjs def -c codecept.conf.ts ."
   },
