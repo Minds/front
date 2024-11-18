@@ -123,6 +123,8 @@ export class AttachmentValidatorService {
       }
 
       return payload;
+    } else {
+      return { isValid: true };
     }
   }
 

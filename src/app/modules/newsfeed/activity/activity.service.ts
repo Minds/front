@@ -83,7 +83,7 @@ export type ActivityEntity = {
   message: string;
   title: string;
   blurb: string;
-  custom_type: 'video' | 'batch';
+  custom_type: 'video' | 'batch' | 'audio';
   custom_data: any;
   entity_guid: string | null;
   thumbnail_src: string;

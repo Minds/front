@@ -38,6 +38,11 @@ export type AttachmentSubjectValue = FileUpload[] | Attachment[] | null;
 export type AttachmentsMetadataMappedValue = Attachment[] | null;
 
 /**
+ * Audio thumbnail value type
+ */
+export type AudioThumbnailSubjectValue = string | null;
+
+/**
  * Rich embed value type
  */
 export type RichEmbedSubjectValue = RichEmbed | string | null;
@@ -150,6 +155,7 @@ export interface Data {
   attachmentGuids: AttachmentsMetadataMappedValue;
   richEmbed: RichEmbedMetadataMappedValue;
   paywallThumbnail: PaywallThumbnail;
+  audioThumbnail: AudioThumbnailSubjectValue;
   postToPermaweb: PostToPermawebSubjectValue;
   remind: RemindSubjectValue;
   supermindRequest: SupermindRequestSubjectValue;

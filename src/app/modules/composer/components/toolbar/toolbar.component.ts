@@ -176,6 +176,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   postButtonDisabled: boolean = true;
 
+  /** Reference to uploaded files. */
+  private uploadedFiles: File[] = [];
+
   /**
    * Constructor
    * @param service
@@ -244,6 +247,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.service.postButtonDisabled$.subscribe((disabled) => {
         this.postButtonDisabled = disabled;
         this.detectChanges();
+      }),
+      this.uploaderService.files$.subscribe((files) => {
+        this.uploadedFiles = files.map((file) => file?.file);
       })
     );
   }
@@ -398,6 +404,22 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   onAttachmentSelect($event: FileUploadSelectEvent): void {
     let uploadCount = this.uploadCount;
+
+    if (!Array.isArray($event)) {
+      $event = [$event];
+    }
+
+    // Make array unique.
+    const allFiles: File[] = [...new Set([...this.uploadedFiles, ...$event])];
+
+    // Audio files must be uploaded by themselves.
+    if (
+      allFiles.length > 1 &&
+      allFiles.some((file) => file.type.startsWith('audio/'))
+    ) {
+      this.toaster.error('Audio files must be uploaded individually');
+      return;
+    }
 
     for (let i in $event) {
       if (uploadCount++ >= 4) {

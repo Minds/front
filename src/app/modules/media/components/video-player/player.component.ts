@@ -21,6 +21,7 @@ import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { map, take } from 'rxjs/operators';
 import { HlsjsPlyrDriver } from './hls-driver';
+import { GlobalAudioPlayerService } from '../audio/services/global-audio-player.service';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -149,6 +150,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     public elementRef: ElementRef,
     private service: VideoPlayerService,
     private cd: ChangeDetectorRef,
+    private globalAudioPlayerService: GlobalAudioPlayerService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -166,6 +168,11 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
           isPlatformBrowser(this.platformId) &&
           isPlayable &&
           sources.length > 0;
+      }),
+      this.globalAudioPlayerService.played$.subscribe((_: unknown): void => {
+        if (this.isPlaying()) {
+          this.player.player.pause();
+        }
       })
     );
   }
@@ -349,7 +356,10 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    * Fired on played event trigger.
    * @returns { void }
    */
-  public onPlayed(): void {}
+  public onPlayed(): void {
+    // pause global audio player to prevent audio bleeding.
+    this.globalAudioPlayerService.pause();
+  }
 
   onPlay(): void {
     this.ready = true;

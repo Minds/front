@@ -3,40 +3,52 @@
   class="m-composer__previewWrapper"
 >
   <ng-container *ngIf="attachmentPreviews?.length > 0">
-    <!-- MEDIA ATTACHMENT (IMAGE(S)/VIDEO) ------------>
-    <div style="padding-bottom: 56.25%"></div>
-    <mat-grid-list
-      [cols]="attachmentPreviews?.length > 1 ? 2 : 1"
-      gutterSize="8px"
-      rowHeight="fit"
-    >
-      <mat-grid-tile
-        *ngFor="
-          let attachmentPreview of attachmentPreviews;
-          let i = index;
-          let c = count
-        "
-        [rowspan]="c === 3 && i === 1 ? 2 : 1"
-        class="m-border"
-      >
-        <m-composerPreview--attachment
-          [attachmentPreviewResource]="attachmentPreview"
-          (onPortraitOrientation)="setPortrait($event)"
-        >
-          <div
-            class="m-composerPreview__close"
-            [hidden]="(isPosting$ | async) || (isEditing$ | async)"
-            (click)="removeAttachment(attachmentPreview.file)"
-          >
-            <m-icon iconId="close"></m-icon>
-          </div>
+    @if (attachmentPreviews[0]?.sourceType === 'audio') {
+      <!-- MEDIA ATTACHMENT (AUDIO) ------------>
+      <m-composerPreview--audio>
+        @if (!(isEditing$ | async)) {
           <m-composer__progress
-            [inProgress]="!attachmentPreview.guid"
-            [progress]="attachmentPreview.progress"
+            [inProgress]="!attachmentPreviews[0].guid"
+            [progress]="attachmentPreviews[0].progress"
           ></m-composer__progress>
-        </m-composerPreview--attachment>
-      </mat-grid-tile>
-    </mat-grid-list>
+        }
+      </m-composerPreview--audio>
+    } @else {
+      <!-- MEDIA ATTACHMENT (IMAGE(S)/VIDEO) ------------>
+      <div style="padding-bottom: 56.25%"></div>
+      <mat-grid-list
+        [cols]="attachmentPreviews?.length > 1 ? 2 : 1"
+        gutterSize="8px"
+        rowHeight="fit"
+      >
+        <mat-grid-tile
+          *ngFor="
+            let attachmentPreview of attachmentPreviews;
+            let i = index;
+            let c = count
+          "
+          [rowspan]="c === 3 && i === 1 ? 2 : 1"
+          class="m-border"
+        >
+          <m-composerPreview--attachment
+            [attachmentPreviewResource]="attachmentPreview"
+            (onPortraitOrientation)="setPortrait($event)"
+          >
+            <div
+              class="m-composerPreview__close"
+              [hidden]="(isPosting$ | async) || (isEditing$ | async)"
+              (click)="removeAttachment(attachmentPreview.file)"
+            >
+              <m-icon iconId="close"></m-icon>
+            </div>
+            <m-composer__progress
+              [inProgress]="!attachmentPreview.guid"
+              [progress]="attachmentPreview.progress"
+            ></m-composer__progress>
+          </m-composerPreview--attachment>
+        </mat-grid-tile>
+      </mat-grid-list>
+    }
   </ng-container>
   <!-- RICH EMBED -------------------------------->
   <m-composerPreview--richEmbed
