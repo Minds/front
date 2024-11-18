@@ -178,7 +178,10 @@ class ComposerModalComponent {
    * @return { void }
    */
   public clickSupermindIcon(): void {
-    I.click(locate(this.supermindButton));
+    I.clickAndWaitGqlOperation(
+      locate(this.supermindButton),
+      'FetchPaymentMethods'
+    );
   }
 
   /**
