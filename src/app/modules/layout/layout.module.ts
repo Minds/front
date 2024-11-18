@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, Type } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { TopbarWrapperComponent } from './topbar-wrapper/topbar.component';
 import { PageComponent } from './page/page.component';
@@ -13,6 +13,9 @@ import { MessengerModule } from '../messenger/messenger.module';
 import { RouterModule } from '@angular/router';
 import { ComposerModule } from '../composer/composer.module';
 import { AppPromptModule } from '../app-prompt/app-prompt.module';
+import { GlobalAudioPlayerComponent } from '../media/components/audio/components/global-audio-player/global-audio-player.component';
+
+const STANDALONE_COMPONENTS: Type<unknown>[] = [GlobalAudioPlayerComponent];
 
 @NgModule({
   imports: [
@@ -28,6 +31,7 @@ import { AppPromptModule } from '../app-prompt/app-prompt.module';
     MessengerModule,
     ComposerModule,
     AppPromptModule,
+    ...STANDALONE_COMPONENTS,
   ],
   exports: [TopbarWrapperComponent, PageComponent],
   declarations: [TopbarWrapperComponent, PageComponent],

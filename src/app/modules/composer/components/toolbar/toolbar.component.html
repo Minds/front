@@ -24,14 +24,14 @@
     [multiple]="true"
     [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (onSelect)="onAttachmentSelect($event)"
-    accept="image/*,video/*,video/mp4,video/x-m4v"
+    accept="image/*,video/*,video/mp4,video/x-m4v,audio/*"
     data-ref="upload-button"
     #fileUploadComponent
   >
     <m-icon
       class="m-composerToolbarItem__icon"
       from="md"
-      iconId="photo"
+      iconId="upload"
     ></m-icon>
     <span class="m-composerToolbarItem__label" i18n="@@COMMON__UPLOAD"
       >Upload</span

@@ -174,6 +174,8 @@ export class AttachmentApiService {
         return throwError(new Error(VIDEO_PERMISSIONS_ERROR_MESSAGE));
       }
       return this.uploadToS3(file, metadata);
+    } else if (/audio\/.+/.test(file.type)) {
+      return this.uploadToS3(file, metadata);
     }
 
     return throwError(new Error(`You cannot attach a ${file.type} file`));

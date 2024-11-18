@@ -3,7 +3,8 @@ import { MindsVideoPlayerComponent } from './player.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ChangeDetectorRef, ElementRef, PLATFORM_ID } from '@angular/core';
 import { VideoPlayerService, VideoSource } from './player.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { GlobalAudioPlayerService } from '../audio/services/global-audio-player.service';
 
 describe('MindsVideoPlayerComponent', () => {
   let comp: MindsVideoPlayerComponent;
@@ -49,6 +50,15 @@ describe('MindsVideoPlayerComponent', () => {
         {
           provide: ChangeDetectorRef,
           useValue: MockService(ChangeDetectorRef),
+        },
+        {
+          provide: GlobalAudioPlayerService,
+          useValue: MockService(GlobalAudioPlayerService, {
+            has: ['played$'],
+            props: {
+              played$: { get: () => new Subject<boolean>() },
+            },
+          }),
         },
         {
           provide: PLATFORM_ID,
