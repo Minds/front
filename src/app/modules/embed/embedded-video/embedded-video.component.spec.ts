@@ -43,6 +43,7 @@ import { AnalyticsService } from '../../../services/analytics';
 import { siteServiceMock } from '../../../mocks/services/site-service-mock.spec';
 import { POSTHOG_JS } from '../../../common/services/posthog/posthog-injection-tokens';
 import posthog from 'posthog-js';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 const GUID = '1155576347020644352';
 const OWNER_GUID = '1153095520021913602';
@@ -219,6 +220,10 @@ describe('EmbeddedVideoComponent', () => {
         queryParamMap: new BehaviorSubject(convertToParamMap({ autoplay })),
         paramMap: new BehaviorSubject(convertToParamMap({ guid })),
       },
+    });
+
+    TestBed.overrideProvider(ToasterService, {
+      useValue: MockService(ToasterService),
     });
 
     TestBed.compileComponents();

@@ -23,9 +23,17 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import getFileType from '../../helpers/get-file-type';
-import { VIDEO_PERMISSIONS_ERROR_MESSAGE } from '../services/permissions.service';
+import {
+  AUDIO_PERMISSIONS_ERROR_MESSAGE,
+  PermissionsService,
+  VIDEO_PERMISSIONS_ERROR_MESSAGE,
+} from '../services/permissions.service';
 import { PermissionIntentsService } from '../services/permission-intents.service';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
+import {
+  DEFAULT_ERROR_MESSAGE,
+  ToasterService,
+} from '../services/toaster.service';
 
 /**
  * Upload event type
@@ -144,7 +152,9 @@ export class AttachmentApiService {
   constructor(
     protected api: ApiService,
     protected http: HttpClient,
-    private permissionIntentsService: PermissionIntentsService
+    private permissionsService: PermissionsService,
+    private permissionIntentsService: PermissionIntentsService,
+    private toasterService: ToasterService
   ) {}
 
   /**
@@ -172,6 +182,12 @@ export class AttachmentApiService {
       ) {
         this.videoPermissionsError$.next(true);
         return throwError(new Error(VIDEO_PERMISSIONS_ERROR_MESSAGE));
+      }
+      return this.uploadToS3(file, metadata);
+    } else if (/audio\/.+/.test(file.type)) {
+      if (!this.permissionsService.canUploadAudio()) {
+        this.toasterService.warn(AUDIO_PERMISSIONS_ERROR_MESSAGE);
+        return throwError(new Error(AUDIO_PERMISSIONS_ERROR_MESSAGE));
       }
       return this.uploadToS3(file, metadata);
     }
@@ -236,6 +252,11 @@ export class AttachmentApiService {
 
           // Return an concat (one after another) observable of both follow-up operations
           return of(uploadToPresignedUrl, complete).pipe(concatAll());
+        }),
+        catchError((e) => {
+          console.error(e);
+          this.toasterService.error(e?.error?.message ?? DEFAULT_ERROR_MESSAGE);
+          return of(null);
         }),
 
         // Flatten and merge all HOO

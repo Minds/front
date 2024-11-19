@@ -3,6 +3,9 @@
   [class.m-composer__base--withPreview]="
     (attachmentPreviews$ | async)?.length > 0 || (richEmbedPreview$ | async)
   "
+  [class.m-composer__base--withAudioPreview]="
+    (attachmentPreviews$ | async)?.[0]?.sourceType === 'audio'
+  "
   [class.m-composer__base--membershipPreviewPane]="
     showMembershipPreviewPane$ | async
   "
