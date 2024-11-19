@@ -1544,6 +1544,7 @@ export enum PermissionsEnum {
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
   CanModerateContent = 'CAN_MODERATE_CONTENT',
+  CanUploadAudio = 'CAN_UPLOAD_AUDIO',
   CanUploadChatMedia = 'CAN_UPLOAD_CHAT_MEDIA',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
   CanUseRssSync = 'CAN_USE_RSS_SYNC',

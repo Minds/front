@@ -600,7 +600,7 @@ describe('CommentComponentV2', () => {
       const startingPinnedState = false;
       (comp as any).comment = {
         pinned: startingPinnedState,
-        urn: 'urn:comment:123',
+        guid: '123',
       };
 
       (comp as any).setCommentPinnedStateGql.mutate.and.returnValue(
@@ -617,7 +617,7 @@ describe('CommentComponentV2', () => {
       expect(
         (comp as any).setCommentPinnedStateGql.mutate
       ).toHaveBeenCalledWith({
-        commentGuid: comp.comment.urn,
+        commentGuid: comp.comment.guid,
         pinned: true,
       });
       expect(comp.comment.pinned).toBe(true);
@@ -630,7 +630,7 @@ describe('CommentComponentV2', () => {
       const startingPinnedState = true;
       (comp as any).comment = {
         pinned: startingPinnedState,
-        urn: 'urn:comment:123',
+        guid: '123',
       };
 
       (comp as any).setCommentPinnedStateGql.mutate.and.returnValue(
@@ -654,7 +654,7 @@ describe('CommentComponentV2', () => {
       const startingPinnedState = false;
       (comp as any).comment = {
         pinned: startingPinnedState,
-        urn: 'urn:comment:123',
+        guid: '123',
       };
       (comp as any).setCommentPinnedStateGql.mutate.and.throwError(
         new Error('test')
@@ -673,7 +673,7 @@ describe('CommentComponentV2', () => {
       const startingPinnedState = false;
       (comp as any).comment = {
         pinned: startingPinnedState,
-        urn: 'urn:comment:123',
+        guid: '123',
       };
       (comp as any).setCommentPinnedStateGql.mutate.and.returnValue(
         of({

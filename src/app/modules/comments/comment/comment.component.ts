@@ -683,7 +683,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       const response: MutationResult<SetCommentPinnedStateMutation> =
         await firstValueFrom(
           this.setCommentPinnedStateGql.mutate({
-            commentGuid: this.comment.urn,
+            commentGuid: this.comment.guid,
             pinned,
           })
         );
