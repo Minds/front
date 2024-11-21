@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { Component, DebugElement, Input, PLATFORM_ID } from '@angular/core';
 import { NewsfeedSingleComponent } from './single.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -198,6 +204,46 @@ describe('NewsfeedSingleComponent', () => {
       fixture.debugElement.query(By.css('.minds-list m-activity'))
     ).not.toBeNull();
   });
+
+  it('should open login modal if activity requires login and force reload on login', fakeAsync(() => {
+    (comp as any).entitiesService.single.and.returnValue(
+      new BehaviorSubject(null)
+    );
+    (comp as any).entitiesService.single().error({
+      status: 401,
+      message: 'You must be logged in to view this content',
+    });
+    (comp as any).authModal.open.and.returnValue(
+      Promise.resolve({ guid: '123' })
+    );
+    spyOn((comp as any).router, 'navigate');
+
+    comp.load('123');
+    tick();
+
+    expect((comp as any).authModal.open).toHaveBeenCalled();
+    expect((comp as any).router.navigate).toHaveBeenCalledOnceWith(['./'], {
+      relativeTo: (comp as any).route,
+    });
+  }));
+
+  it('should open login modal if activity requires login and do not force reload when user does not log in', fakeAsync(() => {
+    (comp as any).entitiesService.single.and.returnValue(
+      new BehaviorSubject(null)
+    );
+    (comp as any).entitiesService.single().error({
+      status: 401,
+      message: 'You must be logged in to view this content',
+    });
+    (comp as any).authModal.open.and.returnValue(Promise.resolve(null));
+    spyOn((comp as any).router, 'navigate');
+
+    comp.load('123');
+    tick();
+
+    expect((comp as any).authModal.open).toHaveBeenCalled();
+    expect((comp as any).router.navigate).not.toHaveBeenCalled();
+  }));
 
   it('it should show a spam notice if the activity was marked as spam', () => {
     comp.activity = {
