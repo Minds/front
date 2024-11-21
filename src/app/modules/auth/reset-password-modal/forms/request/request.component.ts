@@ -43,7 +43,8 @@ export class ResetPasswordModalRequestFormComponent
     protected service: ResetPasswordModalService,
     @Inject(SITE_NAME) protected siteName: string
   ) {
-    this.loginToText = $localize`:@@RESET_PASSWORD__EMAIL_SENT_PANEL__LOGIN_LINK__TO_SITE:to ${this.siteName}:site name:`;
+    console.log(this.siteName ?? 'Minds');
+    this.loginToText = $localize`:@@RESET_PASSWORD__EMAIL_SENT_PANEL__LOGIN_LINK__TO_SITE:to ${this.siteName || 'Minds'}:site name:`;
   }
 
   ngOnInit(): void {
