@@ -3,12 +3,10 @@
 :host {
   display: block;
 
-  > div {
-    padding-bottom: $spacing6;
-  }
-
   .m-oidcLoginButtons__providerContainer {
-    display: block;
-    margin-bottom: $spacing4;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: $spacing4;
+    padding-bottom: $spacing6;
   }
 }
