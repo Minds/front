@@ -4,7 +4,7 @@ import { AttachmentApiService } from '../../../common/api/attachment-api.service
 /**
  * Attachment types
  */
-export type AttachmentType = 'image' | 'video';
+export type AttachmentType = 'image' | 'video' | 'audio';
 
 /**
  * Attachments

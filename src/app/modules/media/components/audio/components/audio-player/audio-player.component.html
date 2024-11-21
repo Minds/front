@@ -1,0 +1,102 @@
+<div class="m-audioPlayer__container">
+  <div class="m-audioPlayer__topContainer">
+    <div
+      class="m-audioPlayer__thumbnailContainer"
+      (mouseover)="onMouseOverThumbnailContainer()"
+      (mouseleave)="onMouseLeaveThumbnailContainer()"
+    >
+      <img
+        [src]="thumbnailSrc"
+        [class.m-audioPlayer__thumbnail--hovered]="
+          thumbnailContainerHovered$ | async
+        "
+      />
+      <div
+        class="m-audioPlayer__volumeBarContainer"
+        [class.m-audioPlayer__volumeBarContainer--hidden]="
+          !(thumbnailContainerHovered$ | async)
+        "
+      >
+        <i
+          class="material-icons m-audioPlayer__volumeIcon"
+          (click)="onVolumeIconClick()"
+        >
+          @if (muted$ | async) {
+            volume_off
+          } @else {
+            volume_up
+          }
+        </i>
+        <mat-slider
+          class="m-audioPlayer__volumeBar"
+          [max]="100"
+          [discrete]="false"
+          [showTickMarks]="false"
+          step="0.01"
+          (input)="onVolumeChange($event)"
+        >
+          <input matSliderThumb #slider [value]="volume$ | async" />
+        </mat-slider>
+      </div>
+    </div>
+    <div class="m-audioPlayer__main">
+      <h4 class="m-audioPlayer__author">{{ author }}</h4>
+      <h5 class="m-audioPlayer__title">{{ title }}</h5>
+      <div class="m-audioPlayer__toolbar">
+        <i
+          class="material-icons m-audioPlayerToolbar__icon"
+          (click)="onSkipBackClick()"
+          >replay_10</i
+        >
+        @switch (audioPlaybackState$ | async) {
+          @case (AudioPlaybackState.LOADING) {
+            <i class="material-icons m-audioPlayerToolbar__icon">pending</i>
+          }
+          @case (AudioPlaybackState.PLAYING) {
+            <i
+              class="material-icons m-audioPlayerToolbar__icon"
+              (click)="onPauseClick()"
+              >pause_circle</i
+            >
+          }
+          @default {
+            <i
+              class="material-icons m-audioPlayerToolbar__icon"
+              (click)="onPlayClick()"
+              >play_circle</i
+            >
+          }
+        }
+        <i
+          class="material-icons m-audioPlayerToolbar__icon"
+          (click)="onSkipForwardClick()"
+          >forward_10</i
+        >
+      </div>
+    </div>
+  </div>
+  <div class="m-audioPlayer__bottomContainer">
+    <span class="m-audioPlayer__timeSpan">{{
+      currentAudioTime$ | async | audioTime
+    }}</span>
+    <mat-slider
+      class="m-audioPlayer__seekBar"
+      [max]="duration$ | async"
+      [discrete]="false"
+      [showTickMarks]="false"
+      step="0.01"
+      (input)="onSeek($event)"
+    >
+      <input matSliderThumb [value]="currentAudioTime$ | async" #slider />
+      <div
+        class="m-audioPlayer__bufferedTimeContainer"
+        [style.width]="(bufferedPercentage$ | async) + '%'"
+      ></div>
+    </mat-slider>
+    @if (duration$ | async) {
+      <span class="m-audioPlayer__timeSpan">{{
+        duration$ | async | audioTime
+      }}</span>
+    }
+  </div>
+</div>

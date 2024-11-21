@@ -49,6 +49,7 @@ import { ActivityAvatarComponent } from './avatar/avatar.component';
 import { ActivityDownvoteNoticeComponent } from './downvote-notice/downvote-notice.component';
 import { SiteMembershipBadgeComponent } from '../../../common/components/site-membership-badge/site-membership-badge.component';
 import { ActivitySiteMembershipCtaComponent } from './site-membership-cta/site-membership-cta.component';
+import { AudioPlayerComponent } from '../../media/components/audio/components/audio-player/audio-player.component';
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { ActivitySiteMembershipCtaComponent } from './site-membership-cta/site-m
     SupermindSharedModule,
     ComposerModule,
     SiteMembershipBadgeComponent,
+    AudioPlayerComponent,
   ],
   declarations: [
     ActivityComponent,

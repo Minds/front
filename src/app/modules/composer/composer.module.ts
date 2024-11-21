@@ -44,6 +44,8 @@ import { LiveStreamComponent } from './components/livestream/livestream.componen
 import { ComposerSiteMembershipSelectorComponent } from './components/popup/site-membership-selector/site-membership-selector.component';
 import { ComposerSiteMembershipPostPreview } from './components/site-membership-post-preview/site-membership-post-preview.component';
 import { ComposerBoostToggleComponent } from './components/boost-button/boost-toggle.component';
+import { AttachmentPreviewAudioComponent } from './components/preview/audio/attachment-preview-audio.component';
+
 /**
  * Exported components
  */
@@ -68,6 +70,7 @@ const COMPONENTS = [
 const INTERNAL_COMPONENTS = [
   BaseComponent,
   AttachmentPreviewComponent,
+  AttachmentPreviewAudioComponent,
   RichEmbedPreviewComponent,
   QuotePreviewComponent,
   PreviewWrapperComponent,

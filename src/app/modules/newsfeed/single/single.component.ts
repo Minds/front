@@ -212,6 +212,10 @@ export class NewsfeedSingleComponent {
 
         if (err.status === 0) {
           this.error = 'Sorry, there was a timeout error.';
+        } else if (err.status === 401) {
+          this.error =
+            err.message ?? 'You must be logged in to view this content';
+          this.openLoginModal(true);
         } else {
           this.error = "Sorry, we couldn't load the activity";
           this.headersService.setCode(404);
@@ -228,12 +232,23 @@ export class NewsfeedSingleComponent {
     this.location.back();
   }
 
-  async openLoginModal(): Promise<void> {
+  /**
+   * Opens the login modal.
+   * @param { boolean } reloadOnLogin - Whether to reload the route after successful login.
+   * @returns { Promise<void> }
+   */
+  async openLoginModal(reloadOnLogin: boolean = false): Promise<void> {
     this.error = 'You must be logged in to see this post';
     this.headersService.setCode(401);
+
     const user = await this.authModal.open();
+
     if (user) {
-      (<any>this.activity).require_login = false;
+      if (reloadOnLogin) {
+        this.forceReloadRoute();
+      } else {
+        (<any>this.activity).require_login = false;
+      }
       this.error = null;
     }
   }
@@ -412,5 +427,14 @@ export class NewsfeedSingleComponent {
             .getRegex('livepeerLegacy')
             .test(activity.perma_url)
       : false;
+  }
+
+  /**
+   * Forces a route reload.
+   * @returns { void }
+   */
+  private forceReloadRoute(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.navigate(['./'], { relativeTo: this.route });
   }
 }

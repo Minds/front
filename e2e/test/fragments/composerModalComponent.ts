@@ -178,7 +178,10 @@ class ComposerModalComponent {
    * @return { void }
    */
   public clickSupermindIcon(): void {
-    I.click(locate(this.supermindButton));
+    I.clickAndWaitGqlOperation(
+      locate(this.supermindButton),
+      'FetchPaymentMethods'
+    );
   }
 
   /**
@@ -221,6 +224,7 @@ class ComposerModalComponent {
    * @return { void }
    */
   public acceptSupermindTerms(): void {
+    I.wait(1);
     I.click(this.supermindTosCheckboxSelector);
   }
 
@@ -229,6 +233,7 @@ class ComposerModalComponent {
    * @return { void }
    */
   public acceptSupermindRefundPolicy(): void {
+    I.wait(1);
     I.click(this.supermindRefundPolicyCheckboxSelector);
   }
 
@@ -237,6 +242,7 @@ class ComposerModalComponent {
    * @return { void }
    */
   public clickSupermindSave(): void {
+    I.waitForElement(this.supermindSaveButtonSelector + ':not([disabled])');
     I.click(this.supermindSaveButtonSelector);
   }
 
