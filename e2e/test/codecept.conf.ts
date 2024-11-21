@@ -111,6 +111,7 @@ export const config: CustomMainConfig = {
     pauseOnFail: {},
     retryFailedStep: {
       enabled: true,
+      retries: 10,
     },
     tryTo: {
       enabled: true,
