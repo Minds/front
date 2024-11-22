@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ApiResponse, ApiService } from './api.service';
 import {
   catchError,
@@ -34,6 +34,8 @@ import {
   DEFAULT_ERROR_MESSAGE,
   ToasterService,
 } from '../services/toaster.service';
+import { PlusUpgradeModalService } from '../../modules/wire/v2/plus-upgrade-modal.service';
+import { IS_TENANT_NETWORK } from '../injection-tokens/tenant-injection-tokens';
 
 /**
  * Upload event type
@@ -154,7 +156,9 @@ export class AttachmentApiService {
     protected http: HttpClient,
     private permissionsService: PermissionsService,
     private permissionIntentsService: PermissionIntentsService,
-    private toasterService: ToasterService
+    private plusUpgradeModalService: PlusUpgradeModalService,
+    private toasterService: ToasterService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
   /**
@@ -186,8 +190,7 @@ export class AttachmentApiService {
       return this.uploadToS3(file, metadata);
     } else if (/audio\/.+/.test(file.type)) {
       if (!this.permissionsService.canUploadAudio()) {
-        this.toasterService.warn(AUDIO_PERMISSIONS_ERROR_MESSAGE);
-        return throwError(new Error(AUDIO_PERMISSIONS_ERROR_MESSAGE));
+        return this.handleNoAudioPermissions();
       }
       return this.uploadToS3(file, metadata);
     }
@@ -295,5 +298,20 @@ export class AttachmentApiService {
    */
   remove(guid: string): Observable<boolean> {
     return this.api.delete(`api/v1/media/${guid}`).pipe(mapTo(true));
+  }
+
+  /**
+   * Handles an attempt to upload audio, when the user does not have
+   * the neccesary permission.
+   * @returns { Observable<never }
+   */
+  private handleNoAudioPermissions(): Observable<never> {
+    if (this.isTenantNetwork) {
+      this.toasterService.warn(AUDIO_PERMISSIONS_ERROR_MESSAGE);
+    } else {
+      this.toasterService.warn('Only Plus members can upload audio.');
+      this.plusUpgradeModalService.open();
+    }
+    return throwError(() => new Error(AUDIO_PERMISSIONS_ERROR_MESSAGE));
   }
 }
