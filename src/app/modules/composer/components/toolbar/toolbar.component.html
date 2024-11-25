@@ -4,178 +4,192 @@
   [class.m-composer__toolbar--small]="isCompactMode$ | async"
   #toolbarWrapper
 >
-  <!----------------------------------------------->
-  <!-- EMOJIS  -->
-  <!----------------------------------------------->
-  <m-emojiPicker
-    *ngIf="!isMobile()"
-    (emojiSelect)="onEmoji($event)"
-  ></m-emojiPicker>
-  <!----------------------------------------------->
-  <!-- FILE UPLOAD  -->
-  <!----------------------------------------------->
-  <m-file-upload
-    [wrapperClass]="[
-      'm-composerToolbar__item',
-      (uploadActive$ | async) ? 'm-composerToolbar__item--active' : ''
-    ]"
-    [hidden]="!canEditMetadata"
-    [disabled]="(isPosting$ | async) || (isEditing$ | async)"
-    [multiple]="true"
-    [class.m-composerToolbar__item--small]="isCompactMode$ | async"
-    (onSelect)="onAttachmentSelect($event)"
-    accept="image/*,video/*,video/mp4,video/x-m4v,audio/*"
-    data-ref="upload-button"
-    #fileUploadComponent
-  >
-    <m-icon
-      class="m-composerToolbarItem__icon"
-      from="md"
-      iconId="upload"
-    ></m-icon>
-    <span class="m-composerToolbarItem__label" i18n="@@COMMON__UPLOAD"
-      >Upload</span
-    >
-  </m-file-upload>
-  <!----------------------------------------------->
-  <!-- NSFW -->
-  <!----------------------------------------------->
-  <a
-    *ngIf="nsfwEnabledService.nsfwEnabled$ | async"
-    class="m-composerToolbar__item"
-    [class.m-composerToolbar__item--active]="(nsfw$ | async)?.length"
-    [class.m-composerToolbar__item--disabled]="isPosting$ | async"
-    [class.m-composerToolbar__item--small]="isCompactMode$ | async"
-    (click)="onNsfwClick($event)"
-    data-ref="nsfw-button"
-  >
-    <m-icon class="m-composerToolbarItem__icon" iconId="explicit"></m-icon>
-    <span
-      class="m-composerToolbarItem__label"
-      i18n="@@COMMON__NSFW"
-      [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
-      >NSFW</span
-    >
-  </a>
-  <!----------------------------------------------->
-  <!-- MONETIZE  -->
-  <!----------------------------------------------->
-  <ng-container *mIfTenant="false">
-    <a
-      *ngIf="
-        !legacyPaywallEnabled &&
-        !(remind$ | async) &&
-        !(isGroupPost$ | async) &&
-        !isSupermindRequest
-      "
-      class="m-composerToolbar__item"
-      [class.m-composerToolbar__item--active]="monetization$ | async"
-      [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+  <div class="m-composer__toolbar__left">
+    <!----------------------------------------------->
+    <!-- EMOJIS  -->
+    <!----------------------------------------------->
+    <m-emojiPicker
+      *ngIf="!isMobile()"
+      (emojiSelect)="onEmoji($event)"
+    ></m-emojiPicker>
+    <!----------------------------------------------->
+    <!-- FILE UPLOAD  -->
+    <!----------------------------------------------->
+    <m-file-upload
+      [wrapperClass]="[
+        'm-composerToolbar__item',
+        (uploadActive$ | async) ? 'm-composerToolbar__item--active' : ''
+      ]"
+      [hidden]="!canEditMetadata"
+      [disabled]="(isPosting$ | async) || (isEditing$ | async)"
+      [multiple]="true"
       [class.m-composerToolbar__item--small]="isCompactMode$ | async"
-      (click)="onMonetizeClick($event)"
-      data-ref="monetize-button"
-    >
-      <i
-        class="m-composerToolbarItem__icon m-composerToolbarItem__icon--monetize material-icons"
-        [class.m-animation__shimmer--icon]="showShimmer"
-        >attach_money</i
-      >
-      <span
-        class="m-composerToolbarItem__label"
-        [class.m-animation__shimmer--text]="showShimmer"
-        [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
-        i18n="@@COMMON__MONETIZE"
-        >Monetize</span
-      >
-    </a>
-  </ng-container>
-  <!----------------------------------------------->
-  <!-- SITE MEMBERSHIP POST  -->
-  <!----------------------------------------------->
-  <ng-container *mIfTenant="true">
-    <ng-container
-      *ngIf="
-        permissions.canCreatePaywall() &&
-        (shouldShowSiteMemberships$ | async) &&
-        !(remind$ | async)
-      "
-    >
-      <a
-        class="m-composerToolbar__item"
-        [class.m-composerToolbar__item--active]="
-          (service.siteMembershipGuids$ | async)?.length > 0
-        "
-        [class.m-composerToolbar__item--disabled]="isPosting$ | async"
-        [class.m-composerToolbar__item--small]="isCompactMode$ | async"
-        (click)="onSiteMembershipClick($event)"
-        data-ref="site-membership-button"
-      >
-        <m-icon class="m-composerToolbarItem__icon" iconId="verified"></m-icon>
-        <span
-          class="m-composerToolbarItem__label"
-          [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
-          i18n="@@COMMON__MEMBERSHIP"
-          >Membership</span
-        >
-      </a>
-    </ng-container>
-  </ng-container>
-  <!----------------------------------------------->
-  <!-- TAGS  -->
-  <!----------------------------------------------->
-
-  <a
-    class="m-composerToolbar__item"
-    [class.m-composerToolbar__item--active]="(tags$ | async)?.length"
-    [class.m-composerToolbar__item--disabled]="isPosting$ | async"
-    [class.m-composerToolbar__item--small]="isCompactMode$ | async"
-    (click)="onTagsClick($event)"
-    data-ref="tags-button"
-  >
-    <m-icon
-      class="m-composerToolbarItem__icon"
-      from="text"
-      iconId="#"
-      [sizeFactor]="25"
-    ></m-icon>
-    <span
-      class="m-composerToolbarItem__label"
-      [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
-      i18n="@@COMMON__TAGS"
-      >Tags</span
-    >
-  </a>
-  <!----------------------------------------------->
-  <!-- SUPERMIND  -->
-  <!----------------------------------------------->
-  <ng-container *mIfTenant="false">
-    <a
-      *ngIf="canCreateSupermindRequest$ | async"
-      class="m-composerToolbar__item"
-      [class.m-composerToolbar__item--active]="isSupermindRequest"
-      [class.m-composerToolbar__item--disabled]="isPosting$ | async"
-      [class.m-composerToolbar__item--small]="isCompactMode$ | async"
-      (click)="onSupermindClick($event)"
-      data-ref="supermind-create--button"
+      (onSelect)="onAttachmentSelect($event)"
+      accept="image/*,video/*,video/mp4,video/x-m4v,audio/*"
+      data-ref="upload-button"
+      #fileUploadComponent
     >
       <m-icon
         class="m-composerToolbarItem__icon"
         from="md"
-        iconId="tips_and_updates"
+        iconId="upload"
+      ></m-icon>
+      <span class="m-composerToolbarItem__label" i18n="@@COMMON__UPLOAD"
+        >Upload</span
+      >
+    </m-file-upload>
+    <!----------------------------------------------->
+    <!-- RECORD BUTTON -->
+    <!----------------------------------------------->
+    @if (canUploadAudio) {
+      <m-composer__recordButton
+        (click)="onAudioRecordingClick($event)"
+        (recordingEnded)="onAudioRecordingEnded($event)"
+        data-ref="record-button"
+      />
+    }
+    <!----------------------------------------------->
+    <!-- NSFW -->
+    <!----------------------------------------------->
+    <a
+      *ngIf="nsfwEnabledService.nsfwEnabled$ | async"
+      class="m-composerToolbar__item"
+      [class.m-composerToolbar__item--active]="(nsfw$ | async)?.length"
+      [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+      [class.m-composerToolbar__item--small]="isCompactMode$ | async"
+      (click)="onNsfwClick($event)"
+      data-ref="nsfw-button"
+    >
+      <m-icon class="m-composerToolbarItem__icon" iconId="explicit"></m-icon>
+      <span
+        class="m-composerToolbarItem__label"
+        i18n="@@COMMON__NSFW"
+        [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+        >NSFW</span
+      >
+    </a>
+    <!----------------------------------------------->
+    <!-- MONETIZE  -->
+    <!----------------------------------------------->
+    <ng-container *mIfTenant="false">
+      <a
+        *ngIf="
+          !legacyPaywallEnabled &&
+          !(remind$ | async) &&
+          !(isGroupPost$ | async) &&
+          !isSupermindRequest
+        "
+        class="m-composerToolbar__item"
+        [class.m-composerToolbar__item--active]="monetization$ | async"
+        [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+        [class.m-composerToolbar__item--small]="isCompactMode$ | async"
+        (click)="onMonetizeClick($event)"
+        data-ref="monetize-button"
+      >
+        <i
+          class="m-composerToolbarItem__icon m-composerToolbarItem__icon--monetize material-icons"
+          [class.m-animation__shimmer--icon]="showShimmer"
+          >attach_money</i
+        >
+        <span
+          class="m-composerToolbarItem__label"
+          [class.m-animation__shimmer--text]="showShimmer"
+          [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+          i18n="@@COMMON__MONETIZE"
+          >Monetize</span
+        >
+      </a>
+    </ng-container>
+    <!----------------------------------------------->
+    <!-- SITE MEMBERSHIP POST  -->
+    <!----------------------------------------------->
+    <ng-container *mIfTenant="true">
+      <ng-container
+        *ngIf="
+          permissions.canCreatePaywall() &&
+          (shouldShowSiteMemberships$ | async) &&
+          !(remind$ | async)
+        "
+      >
+        <a
+          class="m-composerToolbar__item"
+          [class.m-composerToolbar__item--active]="
+            (service.siteMembershipGuids$ | async)?.length > 0
+          "
+          [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+          [class.m-composerToolbar__item--small]="isCompactMode$ | async"
+          (click)="onSiteMembershipClick($event)"
+          data-ref="site-membership-button"
+        >
+          <m-icon
+            class="m-composerToolbarItem__icon"
+            iconId="verified"
+          ></m-icon>
+          <span
+            class="m-composerToolbarItem__label"
+            [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+            i18n="@@COMMON__MEMBERSHIP"
+            >Membership</span
+          >
+        </a>
+      </ng-container>
+    </ng-container>
+    <!----------------------------------------------->
+    <!-- TAGS  -->
+    <!----------------------------------------------->
+
+    <a
+      class="m-composerToolbar__item m-composerToolbar__item--fixedWidth"
+      [class.m-composerToolbar__item--active]="(tags$ | async)?.length"
+      [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+      [class.m-composerToolbar__item--small]="isCompactMode$ | async"
+      (click)="onTagsClick($event)"
+      data-ref="tags-button"
+    >
+      <m-icon
+        class="m-composerToolbarItem__icon"
+        from="text"
+        iconId="#"
         [sizeFactor]="25"
       ></m-icon>
       <span
         class="m-composerToolbarItem__label"
         [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
-        i18n="@@COMMON__SUPERMIND"
-        >Supermind</span
+        i18n="@@COMMON__TAGS"
+        >Tags</span
       >
     </a>
-  </ng-container>
+    <!----------------------------------------------->
+    <!-- SUPERMIND  -->
+    <!----------------------------------------------->
+    <ng-container *mIfTenant="false">
+      <a
+        *ngIf="canCreateSupermindRequest$ | async"
+        class="m-composerToolbar__item"
+        [class.m-composerToolbar__item--active]="isSupermindRequest"
+        [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+        [class.m-composerToolbar__item--small]="isCompactMode$ | async"
+        (click)="onSupermindClick($event)"
+        data-ref="supermind-create--button"
+      >
+        <m-icon
+          class="m-composerToolbarItem__icon"
+          from="md"
+          iconId="tips_and_updates"
+          [sizeFactor]="25"
+        ></m-icon>
+        <span
+          class="m-composerToolbarItem__label"
+          [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+          i18n="@@COMMON__SUPERMIND"
+          >Supermind</span
+        >
+      </a>
+    </ng-container>
+  </div>
   <!----------------------------------------------->
   <!-- POST  -->
   <!----------------------------------------------->
-  <span class="m-composerToolbar__itemSpacer"></span>
   <ng-container *ngIf="!(siteMembershipGuids$ | async); else nextButton">
     <m-button
       class="m-composerToolbar__action m-composerToolbar__action--post"
