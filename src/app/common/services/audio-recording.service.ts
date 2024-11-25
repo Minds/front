@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { WINDOW } from '../injection-tokens/common-injection-tokens';
 
 /** Minimum audio length in seconds. */
@@ -8,7 +8,7 @@ const MIN_AUDIO_LENGTH_SECONDS: number = 2;
  * Service for recording audio.
  */
 @Injectable()
-export class AudioRecordingService {
+export class AudioRecordingService implements OnDestroy {
   /** Array of audio chunks. */
   private chunks: Blob[] = [];
 
@@ -16,6 +16,10 @@ export class AudioRecordingService {
   private mediaRecorder: MediaRecorder;
 
   constructor(@Inject(WINDOW) private window: Window) {}
+
+  ngOnDestroy(): void {
+    this.stopMediaRecorder();
+  }
 
   /**
    * Starts recording audio.
@@ -46,7 +50,7 @@ export class AudioRecordingService {
    * @returns { Promise<Blob> } - the recorded audio blob.
    */
   public async stopRecording(): Promise<Blob> {
-    this.mediaRecorder.stop();
+    this.stopMediaRecorder();
 
     // Wait for the media recorder to stop.
     await new Promise((resolve) => (this.mediaRecorder.onstop = resolve));
@@ -134,7 +138,20 @@ export class AudioRecordingService {
    * @returns { void }
    */
   private reset(): void {
+    this.stopMediaRecorder();
     this.mediaRecorder = null;
     this.chunks = [];
+  }
+
+  /**
+   * Stops the media recorder. Used to prevent leaving the microphone open when done.
+   * @returns { void }
+   */
+  private stopMediaRecorder(): void {
+    for (const track of this.mediaRecorder?.stream?.getAudioTracks() ?? []) {
+      track.stop();
+    }
+
+    this.mediaRecorder?.stop();
   }
 }

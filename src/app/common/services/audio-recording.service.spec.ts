@@ -120,13 +120,22 @@ describe('AudioRecordingService', () => {
 
   describe('reset', () => {
     it('should reset the media recorder and chunks', () => {
+      const stopTrackSpy = jasmine.createSpy('stop');
       (service as any).mediaRecorder = {
         stop: jasmine.createSpy('stop'),
+        stream: {
+          getAudioTracks: jasmine.createSpy('getAudioTracks').and.returnValue([
+            {
+              stop: stopTrackSpy,
+            },
+          ]),
+        },
       };
       (service as any).chunks = [new Blob(['test'])];
 
       (service as any).reset();
 
+      expect(stopTrackSpy).toHaveBeenCalled();
       expect((service as any).mediaRecorder).toBeNull();
       expect((service as any).chunks).toEqual([]);
     });

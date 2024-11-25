@@ -35,17 +35,17 @@
   <div class="m-composerPreviewAudio__mockControls">
     <i
       class="material-icons m-composerPreviewAudio__mockControlIcon m-composerPreviewAudio__mockControlIcon--back"
-      (click)="showControlDisabledToast()"
+      (click)="skipBackward()"
       >replay_10</i
     >
     <i
       class="material-icons m-composerPreviewAudio__mockControlIcon m-composerPreviewAudio__mockControlIcon--play"
-      (click)="showControlDisabledToast()"
-      >play_circle</i
+      (click)="toggleAudioPlayback()"
+      >{{ (playing$ | async) ? 'pause_circle' : 'play_circle' }}</i
     >
     <i
       class="material-icons m-composerPreviewAudio__mockControlIcon m-composerPreviewAudio__mockControlIcon--forward"
-      (click)="showControlDisabledToast()"
+      (click)="skipForward()"
       >forward_10</i
     >
   </div>
