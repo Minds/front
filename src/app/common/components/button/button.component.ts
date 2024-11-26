@@ -112,6 +112,11 @@ export class ButtonComponent implements AfterViewChecked {
   @Input() showDropdownMenu = true;
 
   /**
+   * Whether the button text can wrap or not.
+   */
+  @Input() canWrap: boolean = false;
+
+  /**
    * Event emitter when actioning the button
    */
   @Output() onAction: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
