@@ -1,4 +1,8 @@
 <div class="m-twoColumnLayout__contentContainer">
+  @if (loadingOidcProviders) {
+  <m-loadingSpinner [inProgress]="true" />
+  }
+
   <m-oidcLoginButtons
     (hasOidcProviders)="setHasOidcProviders($event)"
     (done)="doneLogin.emit($event)"
@@ -10,7 +14,7 @@
     [formGroup]="form"
     class="m-form m-login-box m-formWrapper"
     [hidden]="hideLogin"
-    *ngIf="!showFbForm"
+    *ngIf="!showFbForm && !loadingOidcProviders"
     (mViewed)="trackView()"
   >
     <div class="m-layout__grid">

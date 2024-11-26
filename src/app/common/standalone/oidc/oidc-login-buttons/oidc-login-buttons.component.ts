@@ -42,11 +42,15 @@ export class OidcLoginButtons {
   ) {}
 
   ngOnInit() {
-    firstValueFrom(this.fetchOidcProviders.fetch()).then((result) => {
-      this.providers = result.data.oidcProviders;
-
-      this.hasOidcProviders.emit(this.providers?.length > 0);
-    });
+    firstValueFrom(this.fetchOidcProviders.fetch())
+      .then((result) => {
+        this.providers = result.data.oidcProviders;
+        this.hasOidcProviders.emit(this.providers?.length > 0);
+      })
+      .catch((e: unknown) => {
+        console.error(e);
+        this.hasOidcProviders.emit(false);
+      });
   }
 
   ngOnDestroy() {
