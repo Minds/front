@@ -51,6 +51,11 @@ export class ComposerRecordButtonComponent {
         await this.audioRecordingService.startRecording();
       } else {
         const blob: Blob = await this.audioRecordingService.stopRecording();
+
+        if (!blob) {
+          throw new Error('Did not recieve any recorded audio');
+        }
+
         this.recordingEndedEmitter.emit(blob);
       }
       this.recording.set(!initialRecordingState);
