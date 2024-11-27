@@ -21,6 +21,11 @@
           padding: 0 $spacing1;
         }
 
+        .m-commentOwnerRowItem__pinIcon {
+          transform: translateY(calc($spacing1 / 2));
+          @include unselectable();
+        }
+
         [class*='m-commentOwnerRowItem__'] {
           @include body2Regular;
           @include m-theme() {
