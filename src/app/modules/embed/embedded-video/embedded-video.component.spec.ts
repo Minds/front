@@ -7,12 +7,6 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import {
-  CookieBackendService,
-  CookieService,
-  NgxRequest,
-  NgxResponse,
-} from '@gorniv/ngx-universal';
 import { REQUEST, RESPONSE } from '../../../../express.tokens';
 import { DefaultPlyrDriver } from 'ngx-plyr-mg';
 import { BehaviorSubject, of } from 'rxjs';
@@ -44,6 +38,7 @@ import { siteServiceMock } from '../../../mocks/services/site-service-mock.spec'
 import { POSTHOG_JS } from '../../../common/services/posthog/posthog-injection-tokens';
 import posthog from 'posthog-js';
 import { ToasterService } from '../../../common/services/toaster.service';
+import { CookieService } from '../../../common/services/cookie.service';
 
 const GUID = '1155576347020644352';
 const OWNER_GUID = '1153095520021913602';
@@ -247,10 +242,7 @@ describe('EmbeddedVideoComponent', () => {
       providers: [
         { provide: DiagnosticsService, useClass: ServerDiagnosticsService },
         { provide: XhrFactory, useClass: ServerXhr },
-        {
-          provide: CookieService,
-          useClass: CookieBackendService,
-        },
+        CookieService,
         {
           provide: RedirectService,
           useClass: ServerRedirectService,
@@ -279,14 +271,6 @@ describe('EmbeddedVideoComponent', () => {
         },
         {
           provide: RESPONSE,
-          useValue: {},
-        },
-        {
-          provide: NgxRequest,
-          useValue: {},
-        },
-        {
-          provide: NgxResponse,
           useValue: {},
         },
         { provide: 'ORIGIN_URL', useValue: location.origin },

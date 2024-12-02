@@ -13,6 +13,7 @@ import {
   ChatRoomTypeEnum,
 } from '../../../../../../../../graphql/generated.engine';
 import { mockChatRoomEdge } from '../../../../../../../mocks/chat.mock';
+import { NgxFloatUiModule } from 'ngx-float-ui';
 
 describe('ChatRoomMessageDropdownComponent', () => {
   let comp: ChatRoomMessageDropdownComponent;
@@ -43,7 +44,7 @@ describe('ChatRoomMessageDropdownComponent', () => {
       set: {
         imports: [
           NgCommonModule,
-          NgxPopperjsModule,
+          NgxFloatUiModule,
           MockDirective({
             selector: 'showOnHover',
             inputs: [
@@ -77,13 +78,13 @@ describe('ChatRoomMessageDropdownComponent', () => {
 
   it('should handle on popper shown', () => {
     (comp as any).dropdownMenuShown = false;
-    (comp as any).onPopperShown();
+    (comp as any).onFloatUiShown();
     expect((comp as any).dropdownMenuShown).toBe(true);
   });
 
   it('should handle on popper hidden', () => {
     (comp as any).dropdownMenuShown = true;
-    (comp as any).onPopperHidden();
+    (comp as any).onFloatUiHidden();
     expect((comp as any).dropdownMenuShown).toBe(false);
   });
 

@@ -17,11 +17,6 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { CookieService } from '../../common/services/cookie.service';
-import {
-  CookieOptionsProvider,
-  COOKIE_OPTIONS,
-  CookieModule,
-} from '@gorniv/ngx-universal';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { LivestreamService } from '../../modules/composer/services/livestream.service';
 import { ComposerBoostService } from './services/boost.service';
@@ -50,7 +45,6 @@ describe('Composer', () => {
           outputs: ['onPost'],
         }),
       ],
-      imports: [CookieModule],
       providers: [
         {
           provide: ComposerModalService,
@@ -91,10 +85,6 @@ describe('Composer', () => {
           useValue: MockService(Router),
         },
         CookieService,
-        {
-          provide: COOKIE_OPTIONS,
-          useValue: CookieOptionsProvider,
-        },
         {
           provide: LivestreamService,
           useValue: MockService(LivestreamService),
