@@ -373,16 +373,16 @@ body.m-theme-in-transition *:after {
 
 // // Fixes a chrome-related bug that broke popper.
 // // See https://github.com/MrFrankel/ngx-popper/issues/180
-// popper-content {
-//   .ngxp__container {
-//     display: block !important;
-//     position: absolute;
-//     left: 0;
-//     top: 0;
-//     opacity: 0;
+float-ui-content {
+  .float-ui-container {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
 
-//     &[aria-hidden='true'] {
-//       visibility: hidden;
-//     }
-//   }
-// }
+    &[aria-hidden='true'] {
+      visibility: hidden;
+    }
+  }
+}

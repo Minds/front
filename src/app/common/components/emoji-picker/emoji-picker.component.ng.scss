@@ -9,12 +9,12 @@
       cursor: pointer !important;
     }
 
-    .ngxp__container {
+    .float-ui-container {
       border: none;
       padding: 0;
       z-index: 5;
 
-      .ngxp__arrow {
+      .float-ui-arrow {
         @include m-theme() {
           background-color: themed($m-borderColor--primary) !important;
         }

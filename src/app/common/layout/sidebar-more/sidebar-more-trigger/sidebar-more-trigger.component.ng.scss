@@ -2,7 +2,7 @@
 
 :host {
   ::ng-deep float-ui-content {
-    .ngxp__container {
+    .float-ui-container {
       border-radius: $m-borderRadius;
       padding: 0;
 
@@ -15,7 +15,7 @@
       }
     }
 
-    .ngxp__arrow {
+    .float-ui-arrow {
       display: none;
     }
 
