@@ -162,7 +162,7 @@ export class ComposerComponent implements OnInit, OnDestroy {
             this.onTriggerClick();
             this.service.message$.next(intentUrl);
           } else {
-            this.cookieService.put('intent-url', intentUrl);
+            this.cookieService.set('intent-url', intentUrl);
           }
         }
 
@@ -227,7 +227,7 @@ export class ComposerComponent implements OnInit, OnDestroy {
     }
 
     if (this.cookieService.get('intent-url')) {
-      this.cookieService.remove('intent-url');
+      this.cookieService.delete('intent-url');
     }
 
     this.detectChanges();

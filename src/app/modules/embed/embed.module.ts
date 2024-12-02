@@ -7,7 +7,7 @@ import {
 import { APP_ID, APP_INITIALIZER, NgModule, PLATFORM_ID } from '@angular/core';
 import { TransferState } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CookieModule, CookieService } from '@gorniv/ngx-universal';
+import { CookieService } from '../../common/services/cookie.service';
 import { MindsHttpClient } from '../../common/api/client.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ConfigsService } from '../../common/services/configs.service';
@@ -30,12 +30,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
   declarations: [EmbedComponent, EmbeddedVideoComponent],
   exports: [EmbedComponent],
   bootstrap: [EmbedComponent],
-  imports: [
-    CommonModule,
-    VideoModule,
-    CookieModule.forRoot(),
-    RouterModule.forRoot(routes, {}),
-  ],
+  imports: [CommonModule, VideoModule, RouterModule.forRoot(routes, {})],
   providers: [
     SiteService,
     {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from '@gorniv/ngx-universal';
+import { CookieService } from '../../common/services/cookie.service';
 import { Subscription } from 'rxjs';
 import {
   CompassService,

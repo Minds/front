@@ -44,7 +44,6 @@ import {
 } from '@angular/common/http';
 //import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
-import { CookieModule } from '@gorniv/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
@@ -71,7 +70,6 @@ import { MindsSentryErrorHandler } from './common/services/diagnostics/sentry-er
   declarations: [Minds, Pages],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
-    CookieModule.forRoot(),
     ApolloModule,
     MarkdownModule.forRoot(),
     // TransferHttpCacheModule,

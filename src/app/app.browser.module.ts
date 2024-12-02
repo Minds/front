@@ -4,7 +4,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';
 
-import { CookieModule } from '@gorniv/ngx-universal';
 import {
   RedirectService,
   BrowserRedirectService,
@@ -31,7 +30,6 @@ import { POSTHOG_JS } from './common/services/posthog/posthog-injection-tokens';
       // or after 2.5 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:2500',
     }),
-    CookieModule,
   ],
   bootstrap: [Minds],
   providers: [

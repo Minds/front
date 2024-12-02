@@ -16,16 +16,16 @@ import * as _url from 'url';
 import './server-polyfills';
 
 import { TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
-import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
 import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
 import { AppServerModule } from './src/main.server';
-
+import { REQUEST as SSR_REQUEST } from 'ngx-cookie-service-ssr';
 import * as express from 'express';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 import * as timeout from 'connect-timeout';
 import { REQUEST, RESPONSE } from './src/express.tokens';
+import { APP_BASE_HREF } from '@angular/common';
 
 const browserDistFolder = join(process.cwd(), 'dist', 'browser');
 const embedDistFolder = join(process.cwd(), 'dist', 'embed');
@@ -94,14 +94,9 @@ export function app() {
               useValue: res,
             },
             // for cookie
-            {
-              provide: NgxRequest,
-              useValue: req,
-            },
-            {
-              provide: NgxResponse,
-              useValue: res,
-            },
+            { provide: APP_BASE_HREF, useValue: req.baseUrl },
+            { provide: SSR_REQUEST, useValue: req },
+            { provide: 'RESPONSE', useValue: res },
             // for absolute path
             {
               provide: 'ORIGIN_URL',
