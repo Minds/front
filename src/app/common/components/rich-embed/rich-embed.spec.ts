@@ -18,11 +18,15 @@ import { ConfigsService } from '../../services/configs.service';
 import { MediaProxyService } from '../../services/media-proxy.service';
 import { SiteService } from '../../services/site.service';
 import { MindsRichEmbed } from './rich-embed';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { LivestreamService } from '../../../modules/composer/services/livestream.service';
 import userMock from '../../../mocks/responses/user.mock';
 import { IsTenantService } from '../../services/is-tenant.service';
 import { IntersectionObserverService } from '../../services/intersection-observer.service';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('MindsRichEmbed', () => {
   let comp: MindsRichEmbed;
@@ -31,9 +35,8 @@ describe('MindsRichEmbed', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
       declarations: [MindsRichEmbed],
-
+      imports: [],
       providers: [
         {
           provide: DomSanitizer,
@@ -82,6 +85,8 @@ describe('MindsRichEmbed', () => {
           provide: IntersectionObserverService,
           useValue: MockService(IntersectionObserverService),
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
     service = TestBed.inject(LivestreamService);

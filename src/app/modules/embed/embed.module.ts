@@ -1,5 +1,9 @@
 import { APP_BASE_HREF, CommonModule, Location } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { APP_ID, APP_INITIALIZER, NgModule, PLATFORM_ID } from '@angular/core';
 import { TransferState } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -25,9 +29,9 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
 @NgModule({
   declarations: [EmbedComponent, EmbeddedVideoComponent],
   exports: [EmbedComponent],
+  bootstrap: [EmbedComponent],
   imports: [
     CommonModule,
-    HttpClientModule,
     VideoModule,
     CookieModule.forRoot(),
     RouterModule.forRoot(routes, {}),
@@ -75,7 +79,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
       deps: [Client, BlockListService],
     },
     { provide: APP_ID, useValue: 'm-app' },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  bootstrap: [EmbedComponent],
 })
 export class EmbedModule {}

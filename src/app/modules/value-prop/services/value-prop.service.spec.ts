@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {
   ApolloTestingController,
   ApolloTestingModule,
@@ -12,6 +12,10 @@ import {
 } from '../../../../graphql/generated.strapi';
 import { take } from 'rxjs';
 import { PresentableValuePropCard } from '../value-prop.types';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('ValuePropService', () => {
   let service: ValuePropService;
@@ -88,13 +92,12 @@ describe('ValuePropService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        ApolloTestingModule.withClients(['strapi']),
-      ],
+      imports: [ApolloTestingModule.withClients(['strapi'])],
       providers: [
         ValuePropService,
         { provide: STRAPI_URL, useValue: strapiUrl },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     });
 

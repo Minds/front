@@ -22,10 +22,14 @@ import {
   COOKIE_OPTIONS,
   CookieModule,
 } from '@gorniv/ngx-universal';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { LivestreamService } from '../../modules/composer/services/livestream.service';
 import { ComposerBoostService } from './services/boost.service';
 import { PermissionIntentsService } from '../../common/services/permission-intents.service';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('Composer', () => {
   let comp: ComposerComponent;
@@ -46,7 +50,7 @@ describe('Composer', () => {
           outputs: ['onPost'],
         }),
       ],
-      imports: [CookieModule, HttpClientTestingModule],
+      imports: [CookieModule],
       providers: [
         {
           provide: ComposerModalService,
@@ -95,6 +99,8 @@ describe('Composer', () => {
           provide: LivestreamService,
           useValue: MockService(LivestreamService),
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
     service = TestBed.inject(LivestreamService);

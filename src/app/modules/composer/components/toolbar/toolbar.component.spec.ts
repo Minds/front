@@ -13,7 +13,7 @@ import { BehaviorSubject, of, Subject } from 'rxjs';
 import { UploaderService } from '../../services/uploader.service';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
@@ -24,6 +24,10 @@ import { IsTenantService } from '../../../../common/services/is-tenant.service';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
 import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -133,8 +137,6 @@ describe('Composer Toolbar', () => {
     ]);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, ApolloTestingModule],
-
       declarations: [
         ToolbarComponent,
         ButtonComponent,
@@ -151,6 +153,7 @@ describe('Composer Toolbar', () => {
           inputs: ['from', 'iconId', 'sizeFactor'],
         }),
       ],
+      imports: [ApolloTestingModule],
       providers: [
         {
           provide: ComposerService,
@@ -219,6 +222,8 @@ describe('Composer Toolbar', () => {
             },
           }),
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

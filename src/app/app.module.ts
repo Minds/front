@@ -38,7 +38,10 @@ import { BlockchainMarketingModule } from './modules/blockchain/marketing/market
 import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 //import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
 import { CookieModule } from '@gorniv/ngx-universal';
@@ -66,6 +69,7 @@ import { MindsSentryErrorHandler } from './common/services/diagnostics/sentry-er
 @NgModule({
   bootstrap: [Minds],
   declarations: [Minds, Pages],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CookieModule.forRoot(),
     ApolloModule,
@@ -74,7 +78,6 @@ import { MindsSentryErrorHandler } from './common/services/diagnostics/sentry-er
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
     CaptchaModule,
     LayoutModule,
     MindsFormsModule,
@@ -132,7 +135,7 @@ import { MindsSentryErrorHandler } from './common/services/diagnostics/sentry-er
       deps: [ConfigsService, Sentry.TraceService],
       multi: true,
     },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MindsModule {}
