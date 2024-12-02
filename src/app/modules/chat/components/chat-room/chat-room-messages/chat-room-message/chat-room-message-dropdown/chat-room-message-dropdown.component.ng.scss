@@ -3,7 +3,7 @@
 $menuBorderRadius: 4px;
 
 :host {
-  ::ng-deep popper-content {
+  ::ng-deep float-ui-content {
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
     }

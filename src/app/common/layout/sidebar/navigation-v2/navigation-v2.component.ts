@@ -314,9 +314,9 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   /**
    *
    * We dynamically change the z-index when the
-   * "sidebar more" popper is opened
+   * "sidebar more" float-ui is opened
    * So that users can still click on the top left logo
-   * when the popper is closed.
+   * when the float-ui is closed.
    * @param $event
    * @returns { void }
    */

@@ -1,22 +1,21 @@
 <div
   *ngIf="publisher"
   class="m-hovercard"
-  [popper]="popper"
-  [popperPlacement]="'top'"
-  [popperTrigger]="'hover'"
-  [popperTimeout]="100"
-  [popperDelay]="250"
-  [popperModifiers]="popperModifiers"
-  (popperOnShown)="popperOnShown()"
-  (popperOnHidden)="popperOnHidden()"
+  [floatUi]="floatUi"
+  [placement]="'top'"
+  [showTrigger]="'hover'"
+  [timeoutAfterShow]="100"
+  [showDelay]="250"
+  (onShown)="floatUiOnShown()"
+  (onHidden)="floatUiOnHidden()"
 >
   <ng-content></ng-content>
-  <popper-content #popper>
+  <float-ui-content #floatUi>
     <m-publisherCard
       *ngIf="shown"
       [publisher]="publisher"
       [isHovercard]="true"
       sizeOverride="small"
     ></m-publisherCard>
-  </popper-content>
+  </float-ui-content>
 </div>

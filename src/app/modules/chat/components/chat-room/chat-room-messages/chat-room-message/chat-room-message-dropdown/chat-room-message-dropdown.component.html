@@ -4,15 +4,15 @@
   [hoverSourceElement]="hoverSourceElement"
   [forceShow]="dropdownMenuShown"
   [reactToForceShowChange]="true"
-  [popper]="dropdownMenuContent"
-  [popperShowOnStart]="false"
-  [popperTrigger]="'click'"
-  [popperHideOnClickOutside]="true"
-  [popperHideOnScroll]="false"
-  [popperPreventOverflow]="false"
-  [popperPlacement]="'bottom'"
-  (popperOnShown)="onPopperShown()"
-  (popperOnHidden)="onPopperHidden()"
+  [floatUi]="dropdownMenuContent"
+  [showOnStart]="false"
+  [showTrigger]="'click'"
+  [hideOnClickOutside]="true"
+  [hideOnScroll]="false"
+  [preventOverflow]="false"
+  [placement]="'bottom'"
+  (onShown)="onFloatUiShown()"
+  (onHidden)="onFloatUiHidden()"
   #dropdownMenu
 >
   <i
@@ -25,7 +25,7 @@
   >
 </div>
 
-<popper-content #dropdownMenuContent>
+<float-ui-content #dropdownMenuContent>
   <ul class="m-chatRoomMessageDropdown__dropdownList">
     <li
       *ngIf="!isMessageOwner"
@@ -50,7 +50,7 @@
       >
     </li>
   </ul>
-</popper-content>
+</float-ui-content>
 
 <ng-template #menuLoadingSpinnerTemplate>
   <m-sizeableLoadingSpinner

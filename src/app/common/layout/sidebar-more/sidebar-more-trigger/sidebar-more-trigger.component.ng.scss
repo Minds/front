@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
 :host {
-  ::ng-deep popper-content {
+  ::ng-deep float-ui-content {
     .ngxp__container {
       border-radius: $m-borderRadius;
       padding: 0;

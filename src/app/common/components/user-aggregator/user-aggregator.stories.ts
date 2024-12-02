@@ -1,11 +1,11 @@
 import { RouterTestingModule } from '@angular/router/testing';
 import { Meta, StoryFn, moduleMetadata } from '@storybook/angular';
-import { NgxPopperjsModule } from 'ngx-popperjs';
 import { sampleUsers } from '../../../../tests/samples/sample-users';
 import { Session } from '../../../services/session';
 import { CommonModule } from '../../common.module';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAggregatorComponent } from './user-aggregator.component';
+import { NgxFloatUiModule } from 'ngx-float-ui';
 
 export default {
   title: 'Composite Components / User Aggregator',
@@ -38,7 +38,7 @@ export default {
   args: {},
   decorators: [
     moduleMetadata({
-      imports: [RouterTestingModule, NgxPopperjsModule],
+      imports: [RouterTestingModule, NgxFloatUiModule],
       providers: [
         {
           provide: ConfigsService,

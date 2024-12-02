@@ -3,7 +3,7 @@
 $menuBorderRadius: 4px;
 
 :host {
-  ::ng-deep popper-content {
+  ::ng-deep float-ui-content {
     position: unset;
 
     @include m-theme() {
