@@ -1,1 +1,1 @@
-export { CookieService } from 'ngx-cookie-service';
+export { SsrCookieService as CookieService } from 'ngx-cookie-service-ssr';
