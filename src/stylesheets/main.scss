@@ -371,8 +371,8 @@ body.m-theme-in-transition *:after {
   white-space: nowrap;
 }
 
-// // Fixes a chrome-related bug that broke popper.
-// // See https://github.com/MrFrankel/ngx-popper/issues/180
+// Fixes a chrome-related bug that broke popper / float-ui.
+// See https://github.com/MrFrankel/ngx-popper/issues/180
 float-ui-content {
   .float-ui-container {
     display: block !important;

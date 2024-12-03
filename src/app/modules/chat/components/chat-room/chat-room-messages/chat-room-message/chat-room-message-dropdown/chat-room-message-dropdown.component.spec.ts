@@ -4,7 +4,6 @@ import { MockDirective, MockService } from '../../../../../../../utils/mock';
 import { ChatMessagesService } from '../../../../../services/chat-messages.service';
 import { ModalService } from '../../../../../../../services/ux/modal.service';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { NgxPopperjsModule } from 'ngx-popperjs';
 import { ReportCreatorComponent } from '../../../../../../report/creator/creator.component';
 import { SingleChatRoomService } from '../../../../../services/single-chat-room.service';
 import { BehaviorSubject } from 'rxjs';
@@ -76,13 +75,13 @@ describe('ChatRoomMessageDropdownComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should handle on popper shown', () => {
+  it('should handle on float-ui shown', () => {
     (comp as any).dropdownMenuShown = false;
     (comp as any).onFloatUiShown();
     expect((comp as any).dropdownMenuShown).toBe(true);
   });
 
-  it('should handle on popper hidden', () => {
+  it('should handle on float-ui hidden', () => {
     (comp as any).dropdownMenuShown = true;
     (comp as any).onFloatUiHidden();
     expect((comp as any).dropdownMenuShown).toBe(false);

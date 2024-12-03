@@ -56,7 +56,6 @@
     "@floating-ui/dom": "^1.6.12",
     "@fontsource/inter": "^4.5.15",
     "@ng-bootstrap/ng-bootstrap": "^17.0.1",
-    "@popperjs/core": "^2.9.3",
     "@sentry/angular": "^8.26.0",
     "@sentry/node": "^8.26.0",
     "@tweenjs/tween.js": "^18.6.4",
