@@ -18,7 +18,6 @@ import './server-polyfills';
 import { TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
 import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
 import { AppServerModule } from './src/main.server';
-import { REQUEST as SSR_REQUEST } from 'ngx-cookie-service-ssr';
 import * as express from 'express';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
@@ -93,10 +92,6 @@ export function app() {
               provide: RESPONSE,
               useValue: res,
             },
-            // for cookie
-            { provide: APP_BASE_HREF, useValue: req.baseUrl },
-            { provide: SSR_REQUEST, useValue: req },
-            { provide: 'RESPONSE', useValue: res },
             // for absolute path
             {
               provide: 'ORIGIN_URL',
