@@ -24,7 +24,6 @@ import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 import * as timeout from 'connect-timeout';
 import { REQUEST, RESPONSE } from './src/express.tokens';
-import { APP_BASE_HREF } from '@angular/common';
 
 const browserDistFolder = join(process.cwd(), 'dist', 'browser');
 const embedDistFolder = join(process.cwd(), 'dist', 'embed');
