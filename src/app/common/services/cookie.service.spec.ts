@@ -199,6 +199,17 @@ describe('CookieService', () => {
       ]);
     });
 
+    it('should return all cookies, with falsy values too', () => {
+      document.cookie = 'test1=value1';
+      document.cookie = 'test2=';
+      document.cookie = 'test3=0';
+      expect(service.getAll()).toEqual([
+        { name: 'test1', value: 'value1' },
+        { name: 'test2', value: '' },
+        { name: 'test3', value: '0' },
+      ]);
+    });
+
     it('should return empty object if no cookies exist', () => {
       document.cookie = '';
       expect(service.getAll()).toEqual([]);
