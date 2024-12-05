@@ -188,7 +188,7 @@ export class CookieService {
         if (name) {
           cookies.push({
             name,
-            value: value ? decodeURIComponent(value) : null,
+            value: value ? decodeURIComponent(value) : value,
           });
         }
       }
