@@ -42,6 +42,7 @@ export class CookieService {
    */
   public get(name: string): string | null {
     if (!this.canAccessDocument) {
+      console.warn(NO_DOCUMENT_ACCESS_WARNING);
       return null;
     }
 
