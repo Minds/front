@@ -96,7 +96,7 @@ describe('CookieService', () => {
         ],
       });
       service = TestBed.inject(CookieService);
-      expect(service.get('test')).toBeNull();
+      expect(service.check('test')).toBeFalse();
     });
 
     it('should return true if cookie exists', () => {
@@ -129,6 +129,19 @@ describe('CookieService', () => {
       document.cookie = 'test=value';
       service.delete('test');
       expect(service.get('test')).toBeNull();
+    });
+
+    it('should delete an individual cookie', () => {
+      document.cookie = 'test1=value1';
+      document.cookie = 'test2=value2';
+      document.cookie = 'test3=value3';
+
+      service.delete('test2');
+
+      expect(service.check('test2')).toBeFalse();
+      expect(service.check('test1')).toBeTrue();
+      expect(service.check('test3')).toBeTrue();
+      expect(document.cookie).toBe('test1=value1; test3=value3');
     });
   });
 
