@@ -42,14 +42,19 @@ export class CookieService {
       return null;
     }
 
-    return (
-      this.document.cookie
+    try {
+      const value = this.document.cookie
         .split('; ')
         .find((cookieValue: string): boolean =>
           cookieValue.startsWith(`${name}=`)
         )
-        ?.split('=')[1] ?? null
-    );
+        ?.split('=')[1];
+
+      return value ? decodeURIComponent(value) : null;
+    } catch (e: unknown) {
+      console.error(e);
+      return null;
+    }
   }
 
   /**
@@ -62,13 +67,18 @@ export class CookieService {
       return false;
     }
 
-    return (
-      this.document.cookie
-        .split(';')
-        .some((cookieValue: string): boolean =>
-          cookieValue.trim().startsWith(`${name}=`)
-        ) ?? false
-    );
+    try {
+      return (
+        this.document.cookie
+          .split(';')
+          .some((cookieValue: string): boolean =>
+            cookieValue.trim().startsWith(`${name}=`)
+          ) ?? false
+      );
+    } catch (e: unknown) {
+      console.error(e);
+      return false;
+    }
   }
 
   /**
@@ -83,33 +93,37 @@ export class CookieService {
       return;
     }
 
-    let cookieValue: string = `${name}=${value}`;
+    try {
+      let cookieValue: string = `${name}=${encodeURIComponent(value)}`;
 
-    if (options?.expires) {
-      cookieValue += `; expires=${options.expires.toUTCString()}`;
+      if (options?.expires) {
+        cookieValue += `; expires=${options.expires.toUTCString()}`;
+      }
+
+      if (options?.path) {
+        cookieValue += `; path=${options.path}`;
+      }
+
+      if (options?.domain) {
+        cookieValue += `; domain=${options.domain}`;
+      }
+
+      if (options?.secure) {
+        cookieValue += '; secure';
+      }
+
+      if (options?.sameSite) {
+        cookieValue += `; SameSite=${options.sameSite}`;
+      }
+
+      if (options?.partitioned) {
+        cookieValue += '; Partitioned';
+      }
+
+      this.document.cookie = cookieValue;
+    } catch (e: unknown) {
+      console.error(e);
     }
-
-    if (options?.path) {
-      cookieValue += `; path=${options.path}`;
-    }
-
-    if (options?.domain) {
-      cookieValue += `; domain=${options.domain}`;
-    }
-
-    if (options?.secure) {
-      cookieValue += '; secure';
-    }
-
-    if (options?.sameSite) {
-      cookieValue += `; SameSite=${options.sameSite}`;
-    }
-
-    if (options?.partitioned) {
-      cookieValue += '; Partitioned';
-    }
-
-    this.document.cookie = cookieValue;
   }
 
   /**
@@ -156,17 +170,24 @@ export class CookieService {
     if (!this.canAccessDocument) {
       return [];
     }
+    try {
+      const cookies: Cookie[] = [];
+      const cookieArray = this.document.cookie.split(';');
 
-    const cookies: Cookie[] = [];
-    const cookieArray = this.document.cookie.split(';');
-
-    for (const cookie of cookieArray) {
-      const [name, value] = cookie.trim().split('=');
-      if (name && value) {
-        cookies.push({ name, value });
+      for (const cookie of cookieArray) {
+        const [name, value] = cookie.trim().split('=');
+        if (name && value) {
+          cookies.push({
+            name,
+            value: decodeURIComponent(value),
+          });
+        }
       }
-    }
 
-    return cookies;
+      return cookies;
+    } catch (e: unknown) {
+      console.error(e);
+      return [];
+    }
   }
 }

@@ -23,6 +23,11 @@ describe('CookieService', () => {
       document.cookie =
         cookie.split('=')[0] + '=;expires=Thu, 21 Sep 1979 00:00:01 UTC;';
     }
+
+    // Tick so that cookies actually expire.
+    jasmine.clock().install();
+    jasmine.clock().tick(100);
+    jasmine.clock().uninstall();
   });
 
   it('should be created', () => {
@@ -72,6 +77,12 @@ describe('CookieService', () => {
       service.set('test', 'value');
       expect(document.cookie).toContain('test=value');
     });
+
+    it('should set multiple cookies', () => {
+      service.set('test1', 'value1');
+      service.set('test2', 'value2');
+      expect(document.cookie).toBe('test1=value1; test2=value2');
+    });
   });
 
   describe('check', () => {
@@ -117,7 +128,7 @@ describe('CookieService', () => {
     it('should delete cookie', () => {
       document.cookie = 'test=value';
       service.delete('test');
-      expect(document.cookie).toBe('');
+      expect(service.get('test')).toBeNull();
     });
   });
 
@@ -139,13 +150,15 @@ describe('CookieService', () => {
       document.cookie = 'test2=value2';
 
       service.deleteAll();
-      expect(document.cookie).toBe('test1=value1; test2=value2');
+      expect(service.get('test1')).toBeNull();
+      expect(service.get('test2')).toBeNull();
     });
 
     it('should delete all cookies', () => {
       document.cookie = 'test1=value1; test2=value2';
       service.deleteAll();
-      expect(document.cookie).toBe('');
+      expect(service.get('test1')).toBeNull();
+      expect(service.get('test2')).toBeNull();
     });
   });
 
