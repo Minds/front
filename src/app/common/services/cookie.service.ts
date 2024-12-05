@@ -185,10 +185,10 @@ export class CookieService {
 
       for (const cookie of cookieArray) {
         const [name, value] = cookie.trim().split('=');
-        if (name && value) {
+        if (name) {
           cookies.push({
             name,
-            value: decodeURIComponent(value),
+            value: value ? decodeURIComponent(value) : null,
           });
         }
       }
