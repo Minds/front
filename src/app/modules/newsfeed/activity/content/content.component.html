@@ -176,11 +176,17 @@ post content to trigger upgrade modal -->
       [entity]="entity"
     />
   } @else {
-    <img
-      class="m-activityContent__audioPlayerThumbnail"
-      [src]="entity.custom_data?.thumbnail_src"
-      alt="Audio thumbnail"
-    />
+    <a [routerLink]="'/newsfeed/' + entity.guid" aria-label="View audio post">
+      <img
+        class="m-activityContent__audioPlayerThumbnail"
+        [src]="entity.custom_data?.thumbnail_src"
+        [ngClass]="{
+          'm-activityContent__audioPlayerThumbnail--withOnlyPermalink':
+            !bodyText?.length && !titleText?.length && showPermalink
+        }"
+        alt="Audio thumbnail"
+      />
+    </a>
   }
 }
 <!-- ----------------------------------- -->

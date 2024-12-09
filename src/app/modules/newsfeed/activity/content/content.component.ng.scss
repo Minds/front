@@ -98,10 +98,8 @@
       max-width: 100%;
       max-height: 300px;
       width: 100%;
-    }
 
-    &:not(:has(.m-activityContentText__body)) {
-      .m-activityContent__audioPlayerThumbnail {
+      &.m-activityContent__audioPlayerThumbnail--withOnlyPermalink {
         margin-bottom: $spacing5;
       }
     }
