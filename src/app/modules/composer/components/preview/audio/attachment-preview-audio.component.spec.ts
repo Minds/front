@@ -7,8 +7,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { AttachmentPreviewAudioComponent } from './attachment-preview-audio.component';
 import { ComposerService } from '../../../services/composer.service';
-import { ToasterService } from '../../../../../common/services/toaster.service';
-import { MockService } from '../../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../../utils/mock';
 
 describe('AttachmentPreviewAudioComponent', () => {
   let comp: AttachmentPreviewAudioComponent;
@@ -16,7 +15,13 @@ describe('AttachmentPreviewAudioComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AttachmentPreviewAudioComponent],
+      declarations: [
+        AttachmentPreviewAudioComponent,
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['iconId'],
+        }),
+      ],
       providers: [
         {
           provide: ComposerService,
@@ -29,7 +34,6 @@ describe('AttachmentPreviewAudioComponent', () => {
             },
           }),
         },
-        { provide: ToasterService, useValue: MockService(ToasterService) },
       ],
     }).compileComponents();
 
@@ -72,21 +76,124 @@ describe('AttachmentPreviewAudioComponent', () => {
     }));
   });
 
-  describe('showControlDisabledToast', () => {
-    it('should call toastService.inform with correct message', () => {
-      (comp as any).showControlDisabledToast();
-      expect((comp as any).toastService.inform).toHaveBeenCalledWith(
-        'Playback is only available after a post has been made'
-      );
-    });
-  });
-
   describe('removeAttachment', () => {
     it('should call composerService.removeAudioAttachment', () => {
       (comp as any).removeAttachment();
       expect(
         (comp as any).composerService.removeAudioAttachment
       ).toHaveBeenCalled();
+    });
+  });
+
+  describe('src change', () => {
+    it('should set the audio player', () => {
+      (comp as any).onPreviewSrcUrlChange(
+        'https://example.minds.com/audio.mp3'
+      );
+      expect((comp as any).audioPlayer).toBeDefined();
+    });
+
+    it('should not destroy the existing audio player when playing', () => {
+      spyOn(comp as any, 'destroyCurrentPlayer');
+      (comp as any).playing$.next(true);
+
+      (comp as any).onPreviewSrcUrlChange(
+        'https://example.minds.com/audio.mp3'
+      );
+
+      expect((comp as any).destroyCurrentPlayer).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('destroyCurrentPlayer', () => {
+    it('should destroy the audio player', () => {
+      const pauseSpy = jasmine.createSpy('pause');
+
+      (comp as any).audioPlayer = {
+        pause: pauseSpy,
+      };
+
+      (comp as any).destroyCurrentPlayer();
+
+      expect(pauseSpy).toHaveBeenCalled();
+      expect((comp as any).audioPlayer).toBeUndefined();
+    });
+  });
+
+  describe('playAudio', () => {
+    it('should play the audio', () => {
+      (comp as any).audioPlayer = {
+        play: jasmine.createSpy('play'),
+        pause: jasmine.createSpy('pause'),
+      };
+
+      (comp as any).playAudio();
+      expect((comp as any).audioPlayer.play).toHaveBeenCalled();
+    });
+  });
+
+  describe('pauseAudio', () => {
+    it('should pause the audio', () => {
+      (comp as any).audioPlayer = {
+        pause: jasmine.createSpy('pause'),
+      };
+
+      (comp as any).pauseAudio();
+      expect((comp as any).audioPlayer.pause).toHaveBeenCalled();
+    });
+  });
+
+  describe('toggleAudioPlayback', () => {
+    it('should toggle the audio playback to play', () => {
+      (comp as any).audioPlayer = {
+        pause: jasmine.createSpy('pause'),
+        play: jasmine.createSpy('play'),
+      };
+      (comp as any).playing$.next(false);
+
+      (comp as any).toggleAudioPlayback();
+
+      expect((comp as any).playing$.getValue()).toBe(true);
+      expect((comp as any).audioPlayer.play).toHaveBeenCalled();
+      expect((comp as any).audioPlayer.pause).not.toHaveBeenCalled();
+    });
+
+    it('should toggle the audio playback to pause', () => {
+      (comp as any).audioPlayer = {
+        pause: jasmine.createSpy('pause'),
+        play: jasmine.createSpy('play'),
+      };
+      (comp as any).playing$.next(true);
+
+      (comp as any).toggleAudioPlayback();
+
+      expect((comp as any).playing$.getValue()).toBe(false);
+      expect((comp as any).audioPlayer.pause).toHaveBeenCalled();
+      expect((comp as any).audioPlayer.play).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('skipBackward', () => {
+    it('should skip the audio backward', () => {
+      (comp as any).audioPlayer = {
+        currentTime: 10,
+        pause: jasmine.createSpy('pause'),
+      };
+
+      (comp as any).skipBackward();
+      expect((comp as any).audioPlayer.currentTime).toBe(0);
+    });
+  });
+
+  describe('skipForward', () => {
+    it('should skip the audio forward', () => {
+      (comp as any).audioPlayer = {
+        currentTime: 10,
+        pause: jasmine.createSpy('pause'),
+      };
+
+      (comp as any).skipForward();
+      expect((comp as any).audioPlayer.currentTime).toBe(20);
     });
   });
 });

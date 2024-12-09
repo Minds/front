@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+
+  .m-composer__recordButton {
+    font-size: 20px;
+
+    &--recording {
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
+  }
+}

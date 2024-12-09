@@ -88,7 +88,7 @@
       }
     }
 
-    .m-composerPreviewAudio__mockControls {
+    .m-composerPreviewAudio__controls {
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
@@ -96,8 +96,8 @@
       gap: $spacing4;
       flex: 1;
 
-      .m-composerPreviewAudio__mockControlIcon {
-        cursor: not-allowed;
+      .m-composerPreviewAudio__controlIcon {
+        cursor: pointer;
         font-size: 40px;
 
         @include unselectable;
@@ -105,8 +105,8 @@
           color: themed($m-textColor--primary);
         }
 
-        &.m-composerPreviewAudio__mockControlIcon--back,
-        &.m-composerPreviewAudio__mockControlIcon--forward {
+        &.m-composerPreviewAudio__controlIcon--back,
+        &.m-composerPreviewAudio__controlIcon--forward {
           @media screen and (max-width: $max-mobile) {
             display: none;
           }
