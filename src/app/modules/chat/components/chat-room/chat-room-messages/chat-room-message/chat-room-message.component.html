@@ -23,25 +23,40 @@
     class="m-chatRoomMessage__bubble"
     [ngClass]="{
       'm-chatRoomMessage__bubble--clickable': isNextMessageFromSameSender,
-      'm-chatRoomMessage__bubble--hasRichEmbed': richEmbed
+      'm-chatRoomMessage__bubble--hasRichEmbed': richEmbed,
+      'm-chatRoomMessage__bubble--hasImage': !!image?.url
     }"
     throttledClick
     (throttledClick)="handleMessageClick()"
   >
-    <span
-      *ngIf="plainText"
-      class="m-chatRoomMessage__text"
-      tabindex="0"
-      (click)="handleMessageTextClick($event)"
-      [innerHtml]="plainText | tags"
-    ></span>
-    <m-chatRoomMessage__richEmbed
-      *ngIf="richEmbed"
-      [thumbnailSrc]="richEmbed.thumbnailSrc"
-      [title]="richEmbed.title"
-      [url]="richEmbed.canonicalUrl ?? richEmbed.url"
-      data-ref="data-minds-chat-room-message-rich-embed"
-    ></m-chatRoomMessage__richEmbed>
+    @if (image?.url) {
+      <div
+        class="m-chatRoomMessage__imageContainer"
+        (click)="handleImageClick()"
+      >
+        <img
+          [src]="image.url"
+          class="m-chatRoomMessage__image"
+          [ngStyle]="{ aspectRatio: image.width / image.height }"
+          [m-blurhash]="image.blurhash"
+        />
+      </div>
+    } @else {
+      <span
+        *ngIf="plainText"
+        class="m-chatRoomMessage__text"
+        tabindex="0"
+        (click)="handleMessageTextClick($event)"
+        [innerHtml]="plainText | tags"
+      ></span>
+      <m-chatRoomMessage__richEmbed
+        *ngIf="richEmbed"
+        [thumbnailSrc]="richEmbed.thumbnailSrc"
+        [title]="richEmbed.title"
+        [url]="richEmbed.canonicalUrl ?? richEmbed.url"
+        data-ref="data-minds-chat-room-message-rich-embed"
+      ></m-chatRoomMessage__richEmbed>
+    }
   </div>
   <ng-container *ngIf="!isFromLoggedInUser && messageEdge">
     <ng-container *ngTemplateOutlet="dropdownEllipsisTemplate"></ng-container>
