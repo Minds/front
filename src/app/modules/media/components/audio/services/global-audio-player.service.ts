@@ -100,7 +100,7 @@ export class GlobalAudioPlayerService implements OnDestroy {
     ).subscribe(() => {
       // sync current audio time.
       this.audioPlayerService?.currentAudioTime$.next(
-        Math.floor(this.audioElement.nativeElement.currentTime)
+        this.audioElement.nativeElement.currentTime
       );
 
       this.syncBufferedTime();

@@ -179,6 +179,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /** Reference to uploaded files. */
   private uploadedFiles: File[] = [];
 
+  /** Whether the user can upload audio. */
+  protected readonly canUploadAudio: boolean = false;
+
   /**
    * Constructor
    * @param service
@@ -203,8 +206,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private injector: Injector,
     protected permissions: PermissionsService,
     protected nsfwEnabledService: NsfwEnabledService,
-    protected siteMembershipsCountService: SiteMembershipsCountService
-  ) {}
+    protected siteMembershipsCountService: SiteMembershipsCountService,
+    private permissionService: PermissionsService
+  ) {
+    this.canUploadAudio = this.permissionService.canUploadAudio();
+  }
 
   /**
    * Handles Init event
@@ -619,6 +625,26 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   onClickNext(): void {
     this.service.showSiteMembershipPostPreview$.next(true);
+  }
+
+  /**
+   * Handles the end of an audio recording
+   * @param { FileUploadSelectEvent } $event - The event.
+   * @returns { Promise<void> }
+   */
+  protected async onAudioRecordingEnded(
+    $event: FileUploadSelectEvent
+  ): Promise<void> {
+    if (this.uploadCount > 0) {
+      if (
+        !confirm('You are about to replace existing uploads. Are you sure?')
+      ) {
+        return;
+      }
+      await this.uploaderService.reset();
+    }
+
+    this.onAttachmentSelect($event);
   }
 
   /**

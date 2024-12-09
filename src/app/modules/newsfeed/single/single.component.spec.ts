@@ -553,6 +553,80 @@ describe('NewsfeedSingleComponent', () => {
     expect((comp as any).metaService.setRobots).toHaveBeenCalledWith('noindex');
   });
 
+  it('should update meta for audio', () => {
+    (comp as any).metaService.setTitle.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setDescription.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setOgImage.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setThumbnail.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setCanonicalUrl.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setRobots.and.returnValue(
+      (comp as any).metaService
+    );
+
+    const title = 'title';
+    const message = 'message';
+    const blurb = 'blurb';
+    const thumbnailSrc = null;
+    const customType = 'audio';
+    const customData = {
+      thumbnail_src: '/image.jpg',
+    };
+    const guid = '123';
+    const thumbsUpCount = 1;
+    const ownerUsername = 'ownerUsername';
+    const subtype = 'activity';
+
+    comp.activity = {
+      guid: guid,
+      title: title,
+      message: message,
+      ownerObj: {
+        username: ownerUsername,
+      },
+      nsfw: [],
+      subtype: subtype,
+      custom_type: customType,
+      custom_data: customData,
+      content_type: 'contentType',
+      thumbnail_src: thumbnailSrc,
+      blurb: blurb,
+      'thumbs:up:count': thumbsUpCount,
+    };
+
+    (comp as any).updateMeta();
+
+    expect((comp as any).metaService.setTitle).toHaveBeenCalledWith(
+      title,
+      true
+    );
+    expect((comp as any).metaService.setDescription).toHaveBeenCalledWith(
+      `${blurb}. Subscribe to @${ownerUsername} on Minds`
+    );
+    expect((comp as any).metaService.setOgImage).toHaveBeenCalledWith(
+      customData.thumbnail_src,
+      { width: 2000, height: 1000 }
+    );
+
+    expect((comp as any).metaService.setThumbnail).toHaveBeenCalledWith(
+      customData.thumbnail_src
+    );
+
+    expect((comp as any).metaService.setCanonicalUrl).toHaveBeenCalledWith(
+      `/newsfeed/${guid}`
+    );
+    expect((comp as any).metaService.setRobots).toHaveBeenCalledWith('noindex');
+  });
+
   it('should determine when to show sidebar boosts', () => {
     (comp as any).session.isLoggedIn.and.returnValue(true);
     (comp as any).session.getLoggedInUser.and.returnValue({ guid: '123' });
