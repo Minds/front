@@ -32,20 +32,20 @@
       #thumbnailUpload
     />
   </div>
-  <div class="m-composerPreviewAudio__mockControls">
+  <div class="m-composerPreviewAudio__controls">
     <i
-      class="material-icons m-composerPreviewAudio__mockControlIcon m-composerPreviewAudio__mockControlIcon--back"
-      (click)="showControlDisabledToast()"
+      class="material-icons m-composerPreviewAudio__controlIcon m-composerPreviewAudio__controlIcon--back"
+      (click)="skipBackward()"
       >replay_10</i
     >
     <i
-      class="material-icons m-composerPreviewAudio__mockControlIcon m-composerPreviewAudio__mockControlIcon--play"
-      (click)="showControlDisabledToast()"
-      >play_circle</i
+      class="material-icons m-composerPreviewAudio__controlIcon m-composerPreviewAudio__controlIcon--play"
+      (click)="toggleAudioPlayback()"
+      >{{ (playing$ | async) ? 'pause_circle' : 'play_circle' }}</i
     >
     <i
-      class="material-icons m-composerPreviewAudio__mockControlIcon m-composerPreviewAudio__mockControlIcon--forward"
-      (click)="showControlDisabledToast()"
+      class="material-icons m-composerPreviewAudio__controlIcon m-composerPreviewAudio__controlIcon--forward"
+      (click)="skipForward()"
       >forward_10</i
     >
   </div>
