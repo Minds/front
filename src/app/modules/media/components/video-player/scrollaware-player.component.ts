@@ -61,7 +61,7 @@ export class ScrollAwareVideoPlayerComponent
   }
 
   ngOnDestroy() {
-    this.scrollSubscription.unsubscribe();
+    this.scrollSubscription?.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -92,7 +92,7 @@ export class ScrollAwareVideoPlayerComponent
       !user.disable_autoplay_videos
     ) {
       this.player.play({
-        muted: true,
+        muted: !this.isModal,
         hideControls: true,
       });
       this.detectChanges();
