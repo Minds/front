@@ -36,6 +36,7 @@ export class DiscoveryFeedsSettingsComponent implements Modal<any> {
     { id: 'blogs', label: 'Blogs' },
     { id: 'images', label: 'Images' },
     { id: 'videos', label: 'Videos' },
+    { id: 'audio', label: 'Audio' },
   ];
 
   readonly nsfwOptions: {
