@@ -65,6 +65,7 @@ import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-
 import { ComposerSiteMembershipSelectorComponent } from '../popup/site-membership-selector/site-membership-selector.component';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Composer toolbar. Displays important actions
@@ -207,7 +208,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected permissions: PermissionsService,
     protected nsfwEnabledService: NsfwEnabledService,
     protected siteMembershipsCountService: SiteMembershipsCountService,
-    private permissionService: PermissionsService
+    private permissionService: PermissionsService,
+    @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
     this.canUploadAudio = this.permissionService.canUploadAudio();
   }

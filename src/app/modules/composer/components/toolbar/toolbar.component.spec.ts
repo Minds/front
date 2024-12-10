@@ -24,6 +24,7 @@ import { IsTenantService } from '../../../../common/services/is-tenant.service';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
 import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -157,6 +158,7 @@ describe('Composer Toolbar', () => {
         MockComponent({
           selector: 'm-composer__recordButton',
           outputs: ['recordingEnded'],
+          template: `<div id="record-button"></div>`,
         }),
         MockComponent({
           selector: 'm-emojiPicker',
@@ -235,6 +237,10 @@ describe('Composer Toolbar', () => {
         {
           provide: PermissionsService,
           useValue: MockService(PermissionsService),
+        },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: false,
         },
       ],
     }).compileComponents();
