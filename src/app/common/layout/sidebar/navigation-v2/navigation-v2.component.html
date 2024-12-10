@@ -90,6 +90,27 @@
           </a>
         </li>
 
+        <!-- Explore -->
+        <li
+          *ngIf="!isTenantNetwork"
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        >
+          <a
+            routerLink="/search"
+            [queryParams]="{ q: '', f: 'latest', t: 'audio' }"
+            (click)="toggle()"
+            data-ref="sidenav-audio"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">headphones</i>
+              <span class="m-sidebarNavigationItem__text m-legible">
+                <ng-container i18n="@@COMMON__EXPLORE">Audio</ng-container>
+              </span>
+            </div>
+          </a>
+        </li>
+
         <!-- Boost -->
         <li
           class="m-sidebarNavigation__item m-sidebarNavigation__item--boost"
@@ -172,27 +193,6 @@
                 class="m-sidebarNavigationItem__text m-legible"
                 i18n="@@COMMON__WALLET"
                 >Wallet</span
-              >
-            </div>
-          </a>
-        </li>
-
-        <!-- Affiliate -->
-        <li
-          class="m-sidebarNavigation__item"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        >
-          <a
-            [routerLink]="['/settings/affiliates-program']"
-            (click)="toggle()"
-            data-ref="sidenav-affiliates"
-          >
-            <div class="m-sidebarNavigationItem__hoverArea">
-              <i class="material-icons">volunteer_activism</i>
-              <span
-                class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__AFFILIATE"
-                >Affiliate</span
               >
             </div>
           </a>

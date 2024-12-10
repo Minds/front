@@ -20,6 +20,24 @@
         *ngIf="getCurrentUser()"
         (click)="toggleSidebar()"
       >
+        <a
+          [routerLink]="['/settings/affiliates-program']"
+          data-ref="sidebarmore-affiliate-modal"
+        >
+          <i class="material-icons">volunteer_activism</i>
+          <span class="m-sidebarNavigationItem__text" 18n="@@COMMON__AFFILIATE"
+            >Affiliate</span
+          >
+        </a>
+      </li>
+    </ng-container>
+    <!-- ------------------------------------------------------------ -->
+    <ng-container *mIfTenant="false">
+      <li
+        class="m-sidebarMoreDropdown__item"
+        *ngIf="getCurrentUser()"
+        (click)="toggleSidebar()"
+      >
         <a [routerLink]="'/analytics'" data-ref="sidebarmore-analytics">
           <i class="material-icons">insights</i>
           <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
