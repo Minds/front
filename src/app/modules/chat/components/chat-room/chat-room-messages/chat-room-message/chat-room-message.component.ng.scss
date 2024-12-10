@@ -152,8 +152,12 @@
           overflow: hidden;
           cursor: pointer;
 
-          @include m-theme() {
-            background-color: themed($m-black-always);
+          @include m-on-theme(light) {
+            background: color-by-theme($m-black-always, 'light');
+          }
+
+          @include m-on-theme(dark) {
+            background: $grey-800;
           }
 
           .m-chatRoomMessage__image {
