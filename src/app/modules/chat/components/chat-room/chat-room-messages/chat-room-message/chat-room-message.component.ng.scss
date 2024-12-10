@@ -154,7 +154,6 @@
 
           @include m-theme() {
             background-color: themed($m-black-always);
-            border: 1px solid themed($m-borderColor--primary);
           }
 
           .m-chatRoomMessage__image {
