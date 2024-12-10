@@ -524,6 +524,8 @@ export class SearchComponent {
         return SearchMediaTypeEnum.Video;
       case 'images':
         return SearchMediaTypeEnum.Image;
+      case 'audio':
+        return SearchMediaTypeEnum.Audio;
       default:
         throw 'Invalid filter provided';
     }

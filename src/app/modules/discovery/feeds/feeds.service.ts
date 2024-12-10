@@ -13,7 +13,12 @@ export type DiscoveryFeedsPeriod =
   | '1y'
   | 'relevant';
 
-export type DiscoveryFeedsContentType = 'all' | 'images' | 'videos' | 'blogs';
+export type DiscoveryFeedsContentType =
+  | 'all'
+  | 'images'
+  | 'videos'
+  | 'blogs'
+  | 'audio';
 export type DiscoveryFeedsContentFilter =
   | 'top'
   | 'latest'
