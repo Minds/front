@@ -41,7 +41,7 @@
     <!----------------------------------------------->
     <!-- RECORD BUTTON -->
     <!----------------------------------------------->
-    @if (canUploadAudio) {
+    @if (!isTenantNetwork || canUploadAudio) {
       <m-composer__recordButton
         (click)="onAudioRecordingClick($event)"
         (recordingEnded)="onAudioRecordingEnded($event)"
