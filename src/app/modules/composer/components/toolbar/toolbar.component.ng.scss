@@ -138,14 +138,6 @@
       animation-delay: 0.6s;
     }
   }
-  .m-composerToolbar__item,
-  ::ng-deep m-file-upload {
-    margin-right: $spacing6;
-
-    @media screen and (max-width: 400px) {
-      margin-right: 0;
-    }
-  }
 
   .m-composerToolbarItem__label {
     display: none;
@@ -156,8 +148,6 @@
   }
 
   ::ng-deep m-emojiPicker {
-    margin-right: $spacing6;
-
     .m-emojiPicker__icon {
       font-size: 20px;
     }
@@ -167,6 +157,31 @@
     .m-button__text--saving {
       height: 100%;
       width: 100%;
+    }
+  }
+
+  .m-composer__toolbar__left {
+    display: flex;
+    align-items: center;
+    gap: $spacing6;
+    flex: 1;
+    height: 30px;
+    overflow-x: auto;
+    margin-right: $spacing4;
+
+    @media screen and (max-width: 400px) {
+      gap: $spacing3;
+      margin-right: $spacing2;
+    }
+
+    ::ng-deep m-emojiPicker popper-content {
+      position: absolute;
+    }
+
+    .m-composerToolbar__item--fixedWidth {
+      display: block;
+      text-align: center;
+      width: 20px;
     }
   }
 }

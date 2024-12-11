@@ -2101,6 +2101,7 @@ export enum SearchFilterEnum {
 
 export enum SearchMediaTypeEnum {
   All = 'ALL',
+  Audio = 'AUDIO',
   Blog = 'BLOG',
   Image = 'IMAGE',
   Video = 'VIDEO',
