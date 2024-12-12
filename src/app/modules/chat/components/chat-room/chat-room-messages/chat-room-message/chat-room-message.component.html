@@ -37,7 +37,10 @@
         <img
           [src]="image.url"
           class="m-chatRoomMessage__image"
-          [ngStyle]="{ aspectRatio: image.width / image.height }"
+          [ngStyle]="{
+            aspectRatio:
+              image?.height && image?.width ? image.width / image.height : 1
+          }"
           [m-blurhash]="image.blurhash"
         />
       </div>
