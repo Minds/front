@@ -241,7 +241,8 @@
   // ** QUOTE **
   // *********************************
 
-  .m-activityContent__media + .m-activityContent__quote {
+  .m-activityContent__media + .m-activityContent__quote,
+  .m-activityContent__audioPlayer + .m-activityContent__quote {
     margin-top: $spacing4;
   }
 
