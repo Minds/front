@@ -256,13 +256,16 @@ export type BoostsConnection = ConnectionInterface & {
 
 export type ChatImageNode = NodeInterface & {
   __typename?: 'ChatImageNode';
-  blurhash: Scalars['String']['output'];
+  /** The blurhash of the image. */
+  blurhash?: Maybe<Scalars['String']['output']>;
   /** The created timestamp of the image in ISO 8601 format. */
   createdTimestampISO8601?: Maybe<Scalars['String']['output']>;
   /** The created timestamp of the image in Unix format. */
   createdTimestampUnix?: Maybe<Scalars['String']['output']>;
+  /** The guid of the image. */
   guid: Scalars['String']['output'];
-  height: Scalars['Int']['output'];
+  /** The height of the image. */
+  height?: Maybe<Scalars['Int']['output']>;
   /** The unique ID of the image for GraphQL. */
   id: Scalars['ID']['output'];
   /** The updated timestamp of the image in ISO 8601 format. */
@@ -271,7 +274,8 @@ export type ChatImageNode = NodeInterface & {
   updatedTimestampUnix?: Maybe<Scalars['String']['output']>;
   /** The URL of the image. */
   url: Scalars['String']['output'];
-  width: Scalars['Int']['output'];
+  /** The width of the image. */
+  width?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ChatMessageEdge = EdgeInterface & {
@@ -286,6 +290,7 @@ export type ChatMessageNode = NodeInterface & {
   /** The unique guid of the message */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  /** Gets image node if the message has an image. */
   image?: Maybe<ChatImageNode>;
   /** The type of message. */
   messageType: ChatMessageTypeEnum;
@@ -2122,6 +2127,7 @@ export enum SearchFilterEnum {
 
 export enum SearchMediaTypeEnum {
   All = 'ALL',
+  Audio = 'AUDIO',
   Blog = 'BLOG',
   Image = 'IMAGE',
   Video = 'VIDEO',
@@ -2538,9 +2544,9 @@ export type CreateChatMessageMutation = {
         id: string;
         guid: string;
         url: string;
-        height: number;
-        width: number;
-        blurhash: string;
+        height?: number | null;
+        width?: number | null;
+        blurhash?: string | null;
       } | null;
     };
   };
@@ -2678,9 +2684,9 @@ export type GetChatMessagesQuery = {
           id: string;
           guid: string;
           url: string;
-          height: number;
-          width: number;
-          blurhash: string;
+          height?: number | null;
+          width?: number | null;
+          blurhash?: string | null;
         } | null;
       };
     }>;
