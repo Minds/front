@@ -6,11 +6,6 @@ import { ToasterService } from '../../common/services/toaster.service';
 import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { CookieService } from '../../common/services/cookie.service';
-import {
-  CookieOptionsProvider,
-  COOKIE_OPTIONS,
-  CookieModule,
-} from '@gorniv/ngx-universal';
 import { clientMock } from '../../../tests/client-mock.spec';
 import { Client } from '../../services/api';
 
@@ -19,7 +14,6 @@ describe('CompassService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CookieModule],
       providers: [
         {
           provide: CompassService,
@@ -38,10 +32,6 @@ describe('CompassService', () => {
           useValue: sessionMock,
         },
         CookieService,
-        {
-          provide: COOKIE_OPTIONS,
-          useValue: CookieOptionsProvider,
-        },
       ],
     });
     service = TestBed.inject(CompassService);

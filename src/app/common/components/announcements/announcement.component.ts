@@ -36,7 +36,7 @@ export class AnnouncementComponent implements OnInit {
 
   close() {
     if (this.remember) {
-      this.cookieService.put('hide-announcement:' + this.id, '1');
+      this.cookieService.set('hide-announcement:' + this.id, '1');
     }
 
     this.hidden = true;

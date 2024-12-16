@@ -13,7 +13,7 @@ import { BehaviorSubject, of, Subject } from 'rxjs';
 import { UploaderService } from '../../services/uploader.service';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { PermissionsService } from '../../../../common/services/permissions.service';
 import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-enabled.service';
@@ -24,6 +24,11 @@ import { IsTenantService } from '../../../../common/services/is-tenant.service';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
 import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -118,7 +123,9 @@ describe('Composer Toolbar', () => {
   beforeEach(waitForAsync(() => {
     uploaderServiceMock = jasmine.createSpyObj<UploaderService>(
       'UploaderService',
-      {},
+      {
+        reset: jasmine.createSpy('reset') as any,
+      },
       {
         file$$: new Subject(),
         files$: of([]),
@@ -130,18 +137,18 @@ describe('Composer Toolbar', () => {
 
     permissionsServiceMock = jasmine.createSpyObj('PermissionsService', [
       'canCreatePaywall',
+      'canUploadAudio',
     ]);
+    permissionsServiceMock.canUploadAudio.and.returnValue(true);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, ApolloTestingModule],
-
       declarations: [
         ToolbarComponent,
         ButtonComponent,
         MockComponent(
           {
             selector: 'm-file-upload',
-            inputs: ['wrapperClass', 'disabled'],
+            inputs: ['wrapperClass', 'disabled', 'multiple'],
             outputs: ['onSelect'],
           },
           ['reset']
@@ -150,7 +157,18 @@ describe('Composer Toolbar', () => {
           selector: 'm-icon',
           inputs: ['from', 'iconId', 'sizeFactor'],
         }),
+        MockComponent({
+          selector: 'm-composer__recordButton',
+          outputs: ['recordingEnded'],
+          template: `<div id="record-button"></div>`,
+        }),
+        MockComponent({
+          selector: 'm-emojiPicker',
+          outputs: ['emojiSelect'],
+        }),
+        IfTenantDirective,
       ],
+      imports: [ApolloTestingModule],
       providers: [
         {
           provide: ComposerService,
@@ -218,6 +236,16 @@ describe('Composer Toolbar', () => {
               },
             },
           }),
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: false,
         },
       ],
     }).compileComponents();
@@ -376,5 +404,47 @@ describe('Composer Toolbar', () => {
     );
 
     expect(membershipButton).toBeFalsy();
+  });
+  describe('onAudioRecordingEnded', () => {
+    it('should not ask user to confirm when there are no existing uploads', async () => {
+      (comp as any).uploadCount = 0;
+      spyOn(window, 'confirm');
+      spyOn(comp, 'onAttachmentSelect');
+
+      await (comp as any).onAudioRecordingEnded([]);
+
+      expect(comp.onAttachmentSelect).toHaveBeenCalled();
+      expect(window.confirm).not.toHaveBeenCalled();
+      expect(uploaderServiceMock.reset).not.toHaveBeenCalled();
+    });
+
+    it('should ask user to confirm when there are existing uploads, and replace any existing uploads', async () => {
+      (comp as any).uploadCount = 1;
+      (comp as any).uploaderService.reset.and.returnValue(Promise.resolve());
+      spyOn(comp, 'onAttachmentSelect');
+      spyOn(window, 'confirm').and.returnValue(true);
+
+      await (comp as any).onAudioRecordingEnded([]);
+
+      expect(window.confirm).toHaveBeenCalledWith(
+        'You are about to replace existing uploads. Are you sure?'
+      );
+      expect(uploaderServiceMock.reset).toHaveBeenCalled();
+      expect(comp.onAttachmentSelect).toHaveBeenCalled();
+    });
+
+    it('should not replace existing uploads when user cancels', async () => {
+      (comp as any).uploadCount = 1;
+      spyOn(window, 'confirm').and.returnValue(false);
+      spyOn(comp, 'onAttachmentSelect');
+
+      await (comp as any).onAudioRecordingEnded([]);
+
+      expect(window.confirm).toHaveBeenCalledWith(
+        'You are about to replace existing uploads. Are you sure?'
+      );
+      expect(comp.onAttachmentSelect).not.toHaveBeenCalled();
+      expect(uploaderServiceMock.reset).not.toHaveBeenCalled();
+    });
   });
 });

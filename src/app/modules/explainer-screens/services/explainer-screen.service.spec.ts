@@ -3,7 +3,7 @@ import {
   ApolloTestingController,
   ApolloTestingModule,
 } from 'apollo-angular/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ExplainerScreensService } from './explainer-screen.service';
 import {
   ExplainerScreenWeb,
@@ -14,6 +14,10 @@ import { ExplainerScreenModalService } from './explainer-screen-lazy-modal.servi
 import { DismissalV2Service } from '../../../common/services/dismissal-v2.service';
 import { MockService } from '../../../utils/mock';
 import { Session } from '../../../services/session';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('ExplainerScreensService', () => {
   let service: ExplainerScreensService;
@@ -189,10 +193,7 @@ describe('ExplainerScreensService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        ApolloTestingModule.withClients(['strapi']),
-      ],
+      imports: [ApolloTestingModule.withClients(['strapi'])],
       providers: [
         ExplainerScreensService,
         {
@@ -207,6 +208,8 @@ describe('ExplainerScreensService', () => {
           provide: Session,
           useValue: MockService(Session),
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     });
 

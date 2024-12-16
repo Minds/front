@@ -36,6 +36,47 @@ class CommonHelper extends Helper {
   }
 
   /**
+   * Click an element and wait for a response with a specific GraphQL operation name.
+   * @param { CodeceptJS.LocatorOrString } locator - locator to click.
+   * @param { string } operationName - GQL operation name to listen for.
+   * @param { number } status - expected response status.
+   * @returns { Promise<Response> } response object.
+   */
+  public async clickAndWaitGqlOperation(
+    locator: CodeceptJS.LocatorOrString,
+    operationName: string,
+    status: number = 200
+  ): Promise<Response> {
+    const { Playwright } = this.helpers;
+    const [response] = await Promise.all([
+      Playwright.waitForResponse(async (resp) => {
+        const request = await resp.request();
+
+        if (!request.url().includes('/api/graphql')) {
+          return false;
+        }
+
+        if (resp.status() !== status) {
+          return false;
+        }
+
+        try {
+          const postData: Object = JSON.parse(await request.postData());
+          return (
+            Boolean(postData['operationName']) &&
+            postData['operationName'] === operationName
+          );
+        } catch (e: unknown) {
+          console.error(e);
+          return false;
+        }
+      }),
+      Playwright.click(locator),
+    ]);
+    return response;
+  }
+
+  /**
    * Set the value of a range input.
    * Note this MAY NOT WORK LOCALLY - in some browsers it will set the slider position
    * NOT the actual value held by the slider.

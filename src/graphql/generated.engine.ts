@@ -965,6 +965,7 @@ export type MultiTenantConfig = {
   colorScheme?: Maybe<MultiTenantColorScheme>;
   customHomePageDescription?: Maybe<Scalars['String']['output']>;
   customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
+  customScript?: Maybe<Scalars['String']['output']>;
   digestEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   isNonProfit?: Maybe<Scalars['Boolean']['output']>;
@@ -1033,6 +1034,8 @@ export type Mutation = {
   claimGiftCard: GiftCardNode;
   /** Clear the mobile production app version for all tenants. */
   clearAllMobileAppVersions: Scalars['Boolean']['output'];
+  /** Pins or unpins a comment. */
+  commentPinnedState: Scalars['Boolean']['output'];
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
   /** Creates a new message in a chat room */
@@ -1153,6 +1156,11 @@ export type MutationCancelInviteArgs = {
 
 export type MutationClaimGiftCardArgs = {
   claimCode: Scalars['String']['input'];
+};
+
+export type MutationCommentPinnedStateArgs = {
+  commentGuid: Scalars['String']['input'];
+  pinned: Scalars['Boolean']['input'];
 };
 
 export type MutationCompleteOnboardingStepArgs = {
@@ -1540,6 +1548,7 @@ export enum PermissionsEnum {
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
   CanModerateContent = 'CAN_MODERATE_CONTENT',
+  CanUploadAudio = 'CAN_UPLOAD_AUDIO',
   CanUploadChatMedia = 'CAN_UPLOAD_CHAT_MEDIA',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
   CanUseRssSync = 'CAN_USE_RSS_SYNC',
@@ -2098,6 +2107,7 @@ export enum SearchFilterEnum {
 
 export enum SearchMediaTypeEnum {
   All = 'ALL',
+  Audio = 'AUDIO',
   Blog = 'BLOG',
   Image = 'IMAGE',
   Video = 'VIDEO',
@@ -2928,6 +2938,16 @@ export type UpdateChatRoomNotificationSettingsMutationVariables = Exact<{
 export type UpdateChatRoomNotificationSettingsMutation = {
   __typename?: 'Mutation';
   updateNotificationSettings: boolean;
+};
+
+export type SetCommentPinnedStateMutationVariables = Exact<{
+  commentGuid: Scalars['String']['input'];
+  pinned: Scalars['Boolean']['input'];
+}>;
+
+export type SetCommentPinnedStateMutation = {
+  __typename?: 'Mutation';
+  commentPinnedState: boolean;
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -4347,6 +4367,7 @@ export type GetMultiTenantConfigQuery = {
     siteEmail?: string | null;
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
+    customScript?: string | null;
     canEnableFederation?: boolean | null;
     federationDisabled?: boolean | null;
     replyEmail?: string | null;
@@ -8968,6 +8989,25 @@ export class UpdateChatRoomNotificationSettingsGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const SetCommentPinnedStateDocument = gql`
+  mutation SetCommentPinnedState($commentGuid: String!, $pinned: Boolean!) {
+    commentPinnedState(commentGuid: $commentGuid, pinned: $pinned)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetCommentPinnedStateGQL extends Apollo.Mutation<
+  SetCommentPinnedStateMutation,
+  SetCommentPinnedStateMutationVariables
+> {
+  document = SetCommentPinnedStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const ClaimGiftCardDocument = gql`
   mutation ClaimGiftCard($claimCode: String!) {
     claimGiftCard(claimCode: $claimCode) {
@@ -10413,6 +10453,7 @@ export const GetMultiTenantConfigDocument = gql`
       siteEmail
       colorScheme
       primaryColor
+      customScript
       canEnableFederation
       federationDisabled
       replyEmail

@@ -267,6 +267,7 @@ export class MultiTenantRolesService implements OnDestroy {
       PermissionsEnum.CanInteract,
       PermissionsEnum.CanCreateGroup,
       PermissionsEnum.CanUploadVideo,
+      PermissionsEnum.CanUploadAudio,
       PermissionsEnum.CanUseRssSync,
       PermissionsEnum.CanModerateContent,
       PermissionsEnum.CanCreatePaywall,
@@ -286,6 +287,8 @@ export class MultiTenantRolesService implements OnDestroy {
         return 'Create post';
       case PermissionsEnum.CanUploadVideo:
         return 'Upload video';
+      case PermissionsEnum.CanUploadAudio:
+        return 'Upload audio';
       case PermissionsEnum.CanComment:
         return 'Write comment';
       case PermissionsEnum.CanCreateGroup:

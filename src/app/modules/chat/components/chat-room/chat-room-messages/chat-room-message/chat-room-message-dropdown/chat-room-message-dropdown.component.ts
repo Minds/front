@@ -7,7 +7,6 @@ import {
   Input,
   ViewChild,
 } from '@angular/core';
-import { NgxPopperjsContentComponent } from 'ngx-popperjs';
 import {
   ChatMessageEdge,
   ChatRoomEdge,
@@ -18,6 +17,7 @@ import { ReportCreatorComponent } from '../../../../../../report/creator/creator
 import { ChatMessagesService } from '../../../../../services/chat-messages.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { SingleChatRoomService } from '../../../../../services/single-chat-room.service';
+import { NgxFloatUiContentComponent } from 'ngx-float-ui';
 
 /**
  * Message component dropdown for the chat room. Allows a user to perform actions
@@ -43,7 +43,7 @@ export class ChatRoomMessageDropdownComponent {
 
   /** Viewchild of dropdown menu. */
   @ViewChild('dropdownMenuContent')
-  dropdownMenuContent: NgxPopperjsContentComponent;
+  dropdownMenuContent: NgxFloatUiContentComponent;
 
   /** Whether deletion is in progress. */
   protected deleteInProgress$: BehaviorSubject<boolean> =
@@ -74,18 +74,18 @@ export class ChatRoomMessageDropdownComponent {
   ) {}
 
   /**
-   * Handle on popper shown event.
+   * Handle on float-ui shown event.
    * @returns { void }
    */
-  protected onPopperShown(): void {
+  protected onFloatUiShown(): void {
     this.dropdownMenuShown = true;
   }
 
   /**
-   * Handle on popper hidden event.
+   * Handle on float-ui hidden event.
    * @returns { void }
    */
-  protected onPopperHidden(): void {
+  protected onFloatUiHidden(): void {
     this.dropdownMenuShown = false;
   }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ApiResponse, ApiService } from './api.service';
 import {
   catchError,
@@ -23,9 +23,19 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import getFileType from '../../helpers/get-file-type';
-import { VIDEO_PERMISSIONS_ERROR_MESSAGE } from '../services/permissions.service';
+import {
+  AUDIO_PERMISSIONS_ERROR_MESSAGE,
+  PermissionsService,
+  VIDEO_PERMISSIONS_ERROR_MESSAGE,
+} from '../services/permissions.service';
 import { PermissionIntentsService } from '../services/permission-intents.service';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
+import {
+  DEFAULT_ERROR_MESSAGE,
+  ToasterService,
+} from '../services/toaster.service';
+import { PlusUpgradeModalService } from '../../modules/wire/v2/plus-upgrade-modal.service';
+import { IS_TENANT_NETWORK } from '../injection-tokens/tenant-injection-tokens';
 
 /**
  * Upload event type
@@ -144,7 +154,11 @@ export class AttachmentApiService {
   constructor(
     protected api: ApiService,
     protected http: HttpClient,
-    private permissionIntentsService: PermissionIntentsService
+    private permissionsService: PermissionsService,
+    private permissionIntentsService: PermissionIntentsService,
+    private plusUpgradeModalService: PlusUpgradeModalService,
+    private toasterService: ToasterService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
   /**
@@ -172,6 +186,11 @@ export class AttachmentApiService {
       ) {
         this.videoPermissionsError$.next(true);
         return throwError(new Error(VIDEO_PERMISSIONS_ERROR_MESSAGE));
+      }
+      return this.uploadToS3(file, metadata);
+    } else if (/audio\/.+/.test(file.type)) {
+      if (!this.permissionsService.canUploadAudio()) {
+        return this.handleNoAudioPermissions();
       }
       return this.uploadToS3(file, metadata);
     }
@@ -237,6 +256,11 @@ export class AttachmentApiService {
           // Return an concat (one after another) observable of both follow-up operations
           return of(uploadToPresignedUrl, complete).pipe(concatAll());
         }),
+        catchError((e) => {
+          console.error(e);
+          this.toasterService.error(e?.error?.message ?? DEFAULT_ERROR_MESSAGE);
+          return of(null);
+        }),
 
         // Flatten and merge all HOO
         mergeAll()
@@ -274,5 +298,20 @@ export class AttachmentApiService {
    */
   remove(guid: string): Observable<boolean> {
     return this.api.delete(`api/v1/media/${guid}`).pipe(mapTo(true));
+  }
+
+  /**
+   * Handles an attempt to upload audio, when the user does not have
+   * the neccesary permission.
+   * @returns { Observable<never }
+   */
+  private handleNoAudioPermissions(): Observable<never> {
+    if (this.isTenantNetwork) {
+      this.toasterService.warn(AUDIO_PERMISSIONS_ERROR_MESSAGE);
+    } else {
+      this.toasterService.warn('Only Plus members can upload audio.');
+      this.plusUpgradeModalService.open();
+    }
+    return throwError(() => new Error(AUDIO_PERMISSIONS_ERROR_MESSAGE));
   }
 }

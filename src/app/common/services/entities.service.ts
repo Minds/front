@@ -183,7 +183,11 @@ export class EntitiesService {
 
       if (!response.entities.length) {
         for (const urn of urns) {
-          this.addNotFoundEntity(urn);
+          if (response.require_login) {
+            this.addLoginRequiredEntity(urn);
+          } else {
+            this.addNotFoundEntity(urn);
+          }
         }
       }
 
@@ -223,6 +227,22 @@ export class EntitiesService {
       this.entities.set(urn, new BehaviorSubject(null));
     }
     this.entities.get(urn).error('Not found');
+  }
+
+  /**
+   * Register a urn as requiring login.
+   * @param { string } urn - entity urn.
+   * @return { void }
+   */
+  private addLoginRequiredEntity(urn: string): void {
+    if (!this.entities.has(urn)) {
+      this.entities.set(urn, new BehaviorSubject(null));
+    }
+
+    this.entities.get(urn).error({
+      status: 401,
+      message: 'You must be logged in to view this content',
+    });
   }
 
   static _(client: Client, blockListService: BlockListService) {

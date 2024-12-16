@@ -162,6 +162,34 @@ post content to trigger upgrade modal -->
   ></m-activityContent__multiImage>
 </ng-container>
 <!-- ----------------------------------- -->
+<!-- AUDIO -->
+<!-- ----------------------------------- -->
+@if (isAudio) {
+  @if (!isMinimalMode) {
+    <m-audioPlayer
+      class="m-activityContent__audioPlayer"
+      [src]="entity.custom_data?.src"
+      [thumbnailSrc]="entity.custom_data?.thumbnail_src"
+      [author]="entity.ownerObj?.name"
+      [title]="entity.title"
+      [duration]="entity.custom_data?.duration_secs"
+      [entity]="entity"
+    />
+  } @else {
+    <a [routerLink]="'/newsfeed/' + entity.guid" aria-label="View audio post">
+      <img
+        class="m-activityContent__audioPlayerThumbnail"
+        [src]="entity.custom_data?.thumbnail_src"
+        [ngClass]="{
+          'm-activityContent__audioPlayerThumbnail--withOnlyPermalink':
+            !bodyText?.length && showPermalink
+        }"
+        alt="Audio thumbnail"
+      />
+    </a>
+  }
+}
+<!-- ----------------------------------- -->
 <!-- QUOTE -->
 <!-- ----------------------------------- -->
 <ng-container *ngIf="!hideMedia && !isModal">
@@ -244,7 +272,7 @@ post content to trigger upgrade modal -->
     >
       <div class="m-activityContentText__innerWrapper">
         <p
-          *ngIf="titleText"
+          *ngIf="titleText && !isAudio"
           [innerHtml]="titleText | tags"
           class="m-activityContentText__title"
           [class.m-activityContentText__title--hasDescription]="bodyText"

@@ -10,10 +10,14 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { AnalyticsService } from '../../../services/analytics';
 import {
-  HttpClientTestingModule,
   HttpTestingController,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { PLATFORM_ID } from '@angular/core';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('NewsfeedService', () => {
   let service: NewsfeedService;
@@ -27,7 +31,7 @@ describe('NewsfeedService', () => {
     jasmine.clock().install();
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [],
       providers: [
         {
           provide: Client,
@@ -50,6 +54,8 @@ describe('NewsfeedService', () => {
           provide: PLATFORM_ID,
           useValue: 'server',
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     });
 

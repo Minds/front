@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from '@gorniv/ngx-universal';
+import { CookieService } from '../../common/services/cookie.service';
 import { BehaviorSubject } from 'rxjs';
 import { ToasterService } from '../../common/services/toaster.service';
 import { Client } from '../../services/api';
@@ -110,7 +110,7 @@ export class CompassService {
    * For logged out users, save to cookies
    */
   storeEphemeralAnswers(): boolean {
-    this.cookieService.put(
+    this.cookieService.set(
       SOCIAL_COMPASS_ANSWERS_KEY,
       JSON.stringify(this.answers$.getValue())
     );
@@ -123,6 +123,6 @@ export class CompassService {
    * Remove answers from cookies when they're saved to the database
    * */
   clearEphemeralAnswers(): void {
-    this.cookieService.remove(SOCIAL_COMPASS_ANSWERS_KEY);
+    this.cookieService.delete(SOCIAL_COMPASS_ANSWERS_KEY);
   }
 }

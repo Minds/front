@@ -9,6 +9,7 @@ import {
 } from '../../reset-password-modal.service';
 import { FormBuilder } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { SITE_NAME } from '../../../../../common/injection-tokens/common-injection-tokens';
 
 describe('ResetPasswordModalRequestFormComponent', () => {
   let component: ResetPasswordModalRequestFormComponent;
@@ -40,6 +41,10 @@ describe('ResetPasswordModalRequestFormComponent', () => {
             },
           }),
         },
+        {
+          provide: SITE_NAME,
+          useValue: 'Minds',
+        },
       ],
     }).compileComponents();
 
@@ -50,5 +55,9 @@ describe('ResetPasswordModalRequestFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have correct loginToText', () => {
+    expect((component as any).loginToText).toBe('to Minds');
   });
 });

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WidgetInstance } from 'friendly-challenge';
-import { CookieService } from '@gorniv/ngx-universal';
+import { CookieService } from '../../../common/services/cookie.service';
 
 export type FriendlyCaptchaStartMode = 'auto' | 'focus' | 'none' | undefined;
 

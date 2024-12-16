@@ -1,6 +1,6 @@
 import { ChangeDetectorRef } from '@angular/core';
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -19,7 +19,7 @@ describe('DeactivateAccountComponent', () => {
   let component: SettingsV2DeactivateAccountComponent;
   let fixture: ComponentFixture<SettingsV2DeactivateAccountComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [

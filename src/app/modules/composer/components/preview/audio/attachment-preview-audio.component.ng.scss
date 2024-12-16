@@ -1,0 +1,117 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+
+  .m-composerPreviewAudio_previewContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: $spacing8;
+    width: 100%;
+    padding: $spacing4;
+    border-radius: 8px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: 400px) {
+      justify-content: space-around;
+      width: 100%;
+    }
+
+    .m-composerPreviewAudio__closeButton {
+      position: absolute;
+      top: $spacing4;
+      right: $spacing4;
+      padding: 4px;
+      font-size: 14px;
+      border: 1px solid;
+      border-radius: 50%;
+      cursor: pointer;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        color: themed($m-textColor--secondary);
+        border-color: themed($m-borderColor--primary);
+      }
+
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+        }
+      }
+    }
+
+    .m-composerPreviewAudio_thumbnailContainer {
+      height: 128px;
+      width: 128px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+
+      .m-composerPreviewAudio__thumbnailUploadIcon {
+        font-size: 40px;
+      }
+
+      &--hasImage .m-composerPreviewAudio__thumbnailUploadIcon {
+        display: none;
+      }
+
+      &:not(.m-composerPreviewAudio_thumbnailContainer--disabled) {
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.7;
+        }
+
+        .m-composerPreviewAudio_thumbnailContainer--hasImage:hover
+          .m-composerPreviewAudio__thumbnailUploadIcon {
+          display: block;
+        }
+      }
+
+      .m-composerPreviewAudio__thumbnailUploadInput {
+        display: none;
+      }
+    }
+
+    .m-composerPreviewAudio__controls {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: center;
+      gap: $spacing4;
+      flex: 1;
+
+      .m-composerPreviewAudio__controlIcon {
+        cursor: pointer;
+        font-size: 40px;
+
+        @include unselectable;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
+        &.m-composerPreviewAudio__controlIcon--back,
+        &.m-composerPreviewAudio__controlIcon--forward {
+          @media screen and (max-width: $max-mobile) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

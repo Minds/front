@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { Component, DebugElement, Input, PLATFORM_ID } from '@angular/core';
 import { NewsfeedSingleComponent } from './single.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -198,6 +204,46 @@ describe('NewsfeedSingleComponent', () => {
       fixture.debugElement.query(By.css('.minds-list m-activity'))
     ).not.toBeNull();
   });
+
+  it('should open login modal if activity requires login and force reload on login', fakeAsync(() => {
+    (comp as any).entitiesService.single.and.returnValue(
+      new BehaviorSubject(null)
+    );
+    (comp as any).entitiesService.single().error({
+      status: 401,
+      message: 'You must be logged in to view this content',
+    });
+    (comp as any).authModal.open.and.returnValue(
+      Promise.resolve({ guid: '123' })
+    );
+    spyOn((comp as any).router, 'navigate');
+
+    comp.load('123');
+    tick();
+
+    expect((comp as any).authModal.open).toHaveBeenCalled();
+    expect((comp as any).router.navigate).toHaveBeenCalledOnceWith(['./'], {
+      relativeTo: (comp as any).route,
+    });
+  }));
+
+  it('should open login modal if activity requires login and do not force reload when user does not log in', fakeAsync(() => {
+    (comp as any).entitiesService.single.and.returnValue(
+      new BehaviorSubject(null)
+    );
+    (comp as any).entitiesService.single().error({
+      status: 401,
+      message: 'You must be logged in to view this content',
+    });
+    (comp as any).authModal.open.and.returnValue(Promise.resolve(null));
+    spyOn((comp as any).router, 'navigate');
+
+    comp.load('123');
+    tick();
+
+    expect((comp as any).authModal.open).toHaveBeenCalled();
+    expect((comp as any).router.navigate).not.toHaveBeenCalled();
+  }));
 
   it('it should show a spam notice if the activity was marked as spam', () => {
     comp.activity = {
@@ -501,6 +547,80 @@ describe('NewsfeedSingleComponent', () => {
       height: 1000,
     });
     expect((comp as any).metaService.setThumbnail).toHaveBeenCalledWith('');
+    expect((comp as any).metaService.setCanonicalUrl).toHaveBeenCalledWith(
+      `/newsfeed/${guid}`
+    );
+    expect((comp as any).metaService.setRobots).toHaveBeenCalledWith('noindex');
+  });
+
+  it('should update meta for audio', () => {
+    (comp as any).metaService.setTitle.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setDescription.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setOgImage.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setThumbnail.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setCanonicalUrl.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setRobots.and.returnValue(
+      (comp as any).metaService
+    );
+
+    const title = 'title';
+    const message = 'message';
+    const blurb = 'blurb';
+    const thumbnailSrc = null;
+    const customType = 'audio';
+    const customData = {
+      thumbnail_src: '/image.jpg',
+    };
+    const guid = '123';
+    const thumbsUpCount = 1;
+    const ownerUsername = 'ownerUsername';
+    const subtype = 'activity';
+
+    comp.activity = {
+      guid: guid,
+      title: title,
+      message: message,
+      ownerObj: {
+        username: ownerUsername,
+      },
+      nsfw: [],
+      subtype: subtype,
+      custom_type: customType,
+      custom_data: customData,
+      content_type: 'contentType',
+      thumbnail_src: thumbnailSrc,
+      blurb: blurb,
+      'thumbs:up:count': thumbsUpCount,
+    };
+
+    (comp as any).updateMeta();
+
+    expect((comp as any).metaService.setTitle).toHaveBeenCalledWith(
+      title,
+      true
+    );
+    expect((comp as any).metaService.setDescription).toHaveBeenCalledWith(
+      `${blurb}. Subscribe to @${ownerUsername} on Minds`
+    );
+    expect((comp as any).metaService.setOgImage).toHaveBeenCalledWith(
+      customData.thumbnail_src,
+      { width: 2000, height: 1000 }
+    );
+
+    expect((comp as any).metaService.setThumbnail).toHaveBeenCalledWith(
+      customData.thumbnail_src
+    );
+
     expect((comp as any).metaService.setCanonicalUrl).toHaveBeenCalledWith(
       `/newsfeed/${guid}`
     );

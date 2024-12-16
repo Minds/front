@@ -1,8 +1,12 @@
 import { AttachmentService } from './attachment';
-import { HttpClient } from '@angular/common/http';
 import {
-  HttpClientTestingModule,
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import {
   HttpTestingController,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
 
 import { Inject } from '@angular/core';
@@ -42,8 +46,7 @@ describe('Service: Attachment Service', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      //declarations: [ AttachmentService ],
+      imports: [],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Upload, useValue: uploadMock },
@@ -58,6 +61,8 @@ describe('Service: Attachment Service', () => {
           provide: ToasterService,
           useValue: MockService(ToasterService),
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     });
     clientMock.response = {};

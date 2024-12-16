@@ -1,0 +1,9 @@
+mutation SetCommentPinnedState(
+  $commentGuid: String!
+  $pinned: Boolean!
+) {
+  commentPinnedState(
+    commentGuid: $commentGuid,
+    pinned: $pinned
+  )
+}

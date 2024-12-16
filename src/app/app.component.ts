@@ -44,6 +44,7 @@ import { ChatExperimentService } from './modules/experiments/sub-services/chat-e
 import { ChatInitService } from './modules/chat/services/chat-init.service';
 import { SiteMembershipGateService } from './modules/site-memberships/services/site-membership-gate.service';
 import { IS_TENANT_NETWORK } from './common/injection-tokens/tenant-injection-tokens';
+import { HeadElementInjectorService } from './common/services/head-element-injector.service';
 
 @Component({
   selector: 'm-app',
@@ -105,6 +106,7 @@ export class Minds implements OnInit, OnDestroy {
     private chatInitService: ChatInitService,
     private chatExperimentService: ChatExperimentService,
     private siteMembershipGateService: SiteMembershipGateService,
+    private headElementInjectorService: HeadElementInjectorService,
     @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {
     this.name = 'Minds';
@@ -269,6 +271,12 @@ export class Minds implements OnInit, OnDestroy {
     // TODO uncomment this when we want logged out users
     // to complete the social compass questionnaire
     // this.compassHook.listen();
+
+    if (this.configs.get('tenant')?.['custom_script']) {
+      this.headElementInjectorService.injectFromString(
+        this.configs.get('tenant')['custom_script']
+      );
+    }
   }
 
   /**

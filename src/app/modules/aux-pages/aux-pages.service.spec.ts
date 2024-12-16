@@ -4,12 +4,16 @@ import {
   AuxPageData,
   AuxPagesService,
 } from './aux-pages.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {
   ApolloTestingController,
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import { Apollo } from 'apollo-angular';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('AuxPagesService', () => {
   let service: AuxPagesService;
@@ -51,11 +55,13 @@ describe('AuxPagesService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        ApolloTestingModule.withClients(['strapi']),
+      imports: [ApolloTestingModule.withClients(['strapi'])],
+      providers: [
+        AuxPagesService,
+        Apollo,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
-      providers: [AuxPagesService, Apollo],
     });
 
     service = TestBed.inject(AuxPagesService);

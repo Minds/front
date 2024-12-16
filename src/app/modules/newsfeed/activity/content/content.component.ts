@@ -161,6 +161,11 @@ export class ActivityContentComponent
     return this.entity.custom_type == 'video';
   }
 
+  @HostBinding('class.m-activityContent--audio')
+  get isAudio(): boolean {
+    return this.entity.custom_type == 'audio';
+  }
+
   /**
    * It's an image as long as it's a non-multi image batch
    * OR it has a thumbnail but isn't a video or rich-embed

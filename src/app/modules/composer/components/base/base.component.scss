@@ -16,6 +16,10 @@ m-composer__base {
     height: 548px;
   }
 
+  &.m-composer__base--withAudioPreview {
+    height: 440px;
+  }
+
   &.m-composer__base--membershipPreviewPane {
     height: auto;
   }
@@ -84,6 +88,10 @@ m-composer__base {
 
     &.m-composer__base--withPreview {
       height: 680px;
+    }
+
+    &.m-composer__base--withAudioPreview {
+      height: 440px;
     }
 
     m-composer__titleBar {

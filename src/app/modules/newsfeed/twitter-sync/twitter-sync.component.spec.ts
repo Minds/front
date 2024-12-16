@@ -5,7 +5,7 @@ import {
   tick,
 } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
@@ -15,6 +15,10 @@ import { SITE_URL } from '../../../common/injection-tokens/url-injection-tokens'
 import { TwitterSyncComponent } from './twitter-sync.component';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { of, throwError } from 'rxjs';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('TwitterSyncComponent', () => {
   let comp: TwitterSyncComponent;
@@ -27,7 +31,6 @@ describe('TwitterSyncComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule],
       declarations: [
         TwitterSyncComponent,
         MockComponent({
@@ -36,6 +39,7 @@ describe('TwitterSyncComponent', () => {
           outputs: ['onAction'],
         }),
       ],
+      imports: [FormsModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: MockService(Session) },
         { provide: ConfigsService, useValue: configsMock },
@@ -49,6 +53,8 @@ describe('TwitterSyncComponent', () => {
           useValue: twitterSyncTweetMessageGqlMock,
         },
         { provide: SITE_URL, useValue: 'https://example.minds.com/' },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
 

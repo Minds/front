@@ -65,6 +65,7 @@ import { NsfwEnabledService } from '../../../multi-tenant-network/services/nsfw-
 import { ComposerSiteMembershipSelectorComponent } from '../popup/site-membership-selector/site-membership-selector.component';
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Composer toolbar. Displays important actions
@@ -176,6 +177,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   postButtonDisabled: boolean = true;
 
+  /** Reference to uploaded files. */
+  private uploadedFiles: File[] = [];
+
+  /** Whether the user can upload audio. */
+  protected readonly canUploadAudio: boolean = false;
+
   /**
    * Constructor
    * @param service
@@ -200,8 +207,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private injector: Injector,
     protected permissions: PermissionsService,
     protected nsfwEnabledService: NsfwEnabledService,
-    protected siteMembershipsCountService: SiteMembershipsCountService
-  ) {}
+    protected siteMembershipsCountService: SiteMembershipsCountService,
+    private permissionService: PermissionsService,
+    @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
+  ) {
+    this.canUploadAudio = this.permissionService.canUploadAudio();
+  }
 
   /**
    * Handles Init event
@@ -244,6 +255,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.service.postButtonDisabled$.subscribe((disabled) => {
         this.postButtonDisabled = disabled;
         this.detectChanges();
+      }),
+      this.uploaderService.files$.subscribe((files) => {
+        this.uploadedFiles = files.map((file) => file?.file);
       })
     );
   }
@@ -398,6 +412,22 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   onAttachmentSelect($event: FileUploadSelectEvent): void {
     let uploadCount = this.uploadCount;
+
+    if (!Array.isArray($event)) {
+      $event = [$event];
+    }
+
+    // Make array unique.
+    const allFiles: File[] = [...new Set([...this.uploadedFiles, ...$event])];
+
+    // Audio files must be uploaded by themselves.
+    if (
+      allFiles.length > 1 &&
+      allFiles.some((file) => file.type.startsWith('audio/'))
+    ) {
+      this.toaster.error('Audio files must be uploaded individually');
+      return;
+    }
 
     for (let i in $event) {
       if (uploadCount++ >= 4) {
@@ -597,6 +627,26 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   onClickNext(): void {
     this.service.showSiteMembershipPostPreview$.next(true);
+  }
+
+  /**
+   * Handles the end of an audio recording
+   * @param { FileUploadSelectEvent } $event - The event.
+   * @returns { Promise<void> }
+   */
+  protected async onAudioRecordingEnded(
+    $event: FileUploadSelectEvent
+  ): Promise<void> {
+    if (this.uploadCount > 0) {
+      if (
+        !confirm('You are about to replace existing uploads. Are you sure?')
+      ) {
+        return;
+      }
+      await this.uploaderService.reset();
+    }
+
+    this.onAttachmentSelect($event);
   }
 
   /**

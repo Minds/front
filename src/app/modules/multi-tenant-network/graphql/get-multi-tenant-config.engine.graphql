@@ -4,6 +4,7 @@ query GetMultiTenantConfig {
     siteEmail
     colorScheme
     primaryColor
+    customScript
     canEnableFederation
     federationDisabled
     replyEmail
