@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockService } from '../../../../../utils/mock';
 import { WalletOnchainTransfersSummaryComponent } from './onchain-transfers.component';
 import { WalletOnchainTransfersSummaryService } from './onchain-transfers.service';
@@ -7,7 +7,7 @@ describe('WalletOnchainTransfersSummaryComponent', () => {
   let comp: WalletOnchainTransfersSummaryComponent;
   let fixture: ComponentFixture<WalletOnchainTransfersSummaryComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [WalletOnchainTransfersSummaryComponent],
       providers: [

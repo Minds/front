@@ -1,6 +1,6 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   fakeAsync,
@@ -19,7 +19,7 @@ describe('NotificationsFlyoutComponent', () => {
   let comp: NotificationsFlyoutComponent;
   let fixture: ComponentFixture<NotificationsFlyoutComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         MockDirective({

@@ -2,12 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockService } from '../../../utils/mock';
 import { Session } from '../../../services/session';
 import { EnvironmentFlagComponent } from './environment-flag.component';
-import {
-  CookieModule,
-  CookieOptionsProvider,
-  CookieService,
-  COOKIE_OPTIONS,
-} from '@gorniv/ngx-universal';
+import { CookieService } from '../../services/cookie.service';
 
 describe('EnvironmentFlagComponent', () => {
   let comp: EnvironmentFlagComponent;
@@ -16,11 +11,9 @@ describe('EnvironmentFlagComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [EnvironmentFlagComponent],
-      imports: [CookieModule],
       providers: [
         { provide: Session, useValue: MockService(Session) },
         CookieService,
-        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
       ],
     }).compileComponents();
   }));
@@ -28,7 +21,7 @@ describe('EnvironmentFlagComponent', () => {
   beforeEach((done) => {
     fixture = TestBed.createComponent(EnvironmentFlagComponent);
     comp = fixture.componentInstance;
-    (comp as any).cookies.removeAll();
+    (comp as any).cookies.deleteAll();
 
     fixture.detectChanges();
 
@@ -55,12 +48,12 @@ describe('EnvironmentFlagComponent', () => {
   });
 
   it('should return to show the staging flag when staging is enabled and canary is not', () => {
-    (comp as any).cookies.put('staging', '1');
+    (comp as any).cookies.set('staging', '1');
     expect(comp.getActiveFlag()).toBe('Staging');
   });
 
   it('should show the staging flag when staging and canary are enabled', () => {
-    (comp as any).cookies.put('staging', '1');
+    (comp as any).cookies.set('staging', '1');
     (comp as any).session.getLoggedInUser.and.returnValue({ canary: true });
     expect(comp.getActiveFlag()).toBe('Staging');
   });

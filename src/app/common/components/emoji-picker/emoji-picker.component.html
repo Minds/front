@@ -1,9 +1,9 @@
 <div
-  [popper]="popper"
-  [popperPlacement]="popperPlacement"
-  [popperTrigger]="'click'"
-  (popperOnShown)="onShowSelector()"
-  (popperOnHidden)="onHideSelector()"
+  [floatUi]="floatUi"
+  [placement]="floatUiPlacement"
+  [showTrigger]="'click'"
+  (onShown)="onShowSelector()"
+  (onHidden)="onHideSelector()"
   (mouseenter)="onMouseEnter()"
 >
   <i class="m-emojiPicker__icon material-icons">{{
@@ -11,8 +11,8 @@
   }}</i>
 </div>
 
-<popper-content #popper>
+<float-ui-content #floatUi>
   <div class="m-emojiPicker__placeholder">
     <ng-template #emojiPickerOutlet></ng-template>
   </div>
-</popper-content>
+</float-ui-content>

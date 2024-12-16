@@ -3,8 +3,8 @@ import { EnvironmentSelectorService } from './environment-selector.service';
 
 export let cookieServiceMock = new (function () {
   this.get = jasmine.createSpy('get');
-  this.put = jasmine.createSpy('put');
-  this.remove = jasmine.createSpy('remove');
+  this.set = jasmine.createSpy('set');
+  this.delete = jasmine.createSpy('delete');
 })();
 
 export let sessionMock = new (function () {
@@ -44,8 +44,8 @@ describe('EnvironmentSelectorService', () => {
     (service as any).api.delete.calls.reset();
 
     (service as any).cookies.get.calls.reset();
-    (service as any).cookies.put.calls.reset();
-    (service as any).cookies.remove.calls.reset();
+    (service as any).cookies.set.calls.reset();
+    (service as any).cookies.delete.calls.reset();
   });
 
   afterEach(() => {
@@ -90,7 +90,7 @@ describe('EnvironmentSelectorService', () => {
     await service.switchToEnvironment('production');
 
     expect((service as any).api.delete).toHaveBeenCalledWith('api/v2/canary');
-    expect((service as any).cookies.remove).toHaveBeenCalledWith('staging');
+    expect((service as any).cookies.delete).toHaveBeenCalledWith('staging');
   });
 
   it('should switch environment to production and disable canary if it is enabled when user is NOT logged in', async () => {
@@ -103,8 +103,8 @@ describe('EnvironmentSelectorService', () => {
     expect((service as any).api.delete).not.toHaveBeenCalledWith(
       'api/v2/canary'
     );
-    expect((service as any).cookies.remove).toHaveBeenCalledWith('staging');
-    expect((service as any).cookies.put).toHaveBeenCalledWith('canary', '0', {
+    expect((service as any).cookies.delete).toHaveBeenCalledWith('staging');
+    expect((service as any).cookies.set).toHaveBeenCalledWith('canary', '0', {
       path: '/',
     });
   });
@@ -117,8 +117,8 @@ describe('EnvironmentSelectorService', () => {
     expect((service as any).api.delete).not.toHaveBeenCalledWith(
       'api/v2/canary'
     );
-    expect((service as any).cookies.remove).toHaveBeenCalledWith('staging');
-    expect((service as any).cookies.put).not.toHaveBeenCalledWith(
+    expect((service as any).cookies.delete).toHaveBeenCalledWith('staging');
+    expect((service as any).cookies.set).not.toHaveBeenCalledWith(
       'canary',
       '0',
       { path: '/' }
@@ -136,9 +136,9 @@ describe('EnvironmentSelectorService', () => {
     expect((service as any).api.delete).not.toHaveBeenCalledWith(
       'api/v2/canary'
     );
-    expect((service as any).cookies.remove).toHaveBeenCalledWith('staging');
+    expect((service as any).cookies.delete).toHaveBeenCalledWith('staging');
     expect((service as any).api.put).toHaveBeenCalledWith('api/v2/canary');
-    expect((service as any).cookies.put).not.toHaveBeenCalledWith(
+    expect((service as any).cookies.set).not.toHaveBeenCalledWith(
       'canary',
       '0',
       { path: '/' }
@@ -154,8 +154,8 @@ describe('EnvironmentSelectorService', () => {
     await service.switchToEnvironment('staging');
 
     expect((service as any).api.delete).toHaveBeenCalledWith('api/v2/canary');
-    expect((service as any).cookies.remove).toHaveBeenCalledWith('staging');
-    expect((service as any).cookies.put).toHaveBeenCalledWith('staging', '1', {
+    expect((service as any).cookies.delete).toHaveBeenCalledWith('staging');
+    expect((service as any).cookies.set).toHaveBeenCalledWith('staging', '1', {
       path: '/',
     });
   });

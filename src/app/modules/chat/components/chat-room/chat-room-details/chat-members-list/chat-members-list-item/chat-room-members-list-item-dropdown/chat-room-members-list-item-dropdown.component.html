@@ -1,13 +1,13 @@
 <div
-  [popper]="dropdownMenuContent"
-  [popperShowOnStart]="false"
-  [popperTrigger]="'click'"
-  [popperHideOnClickOutside]="true"
-  [popperHideOnScroll]="false"
-  [popperPreventOverflow]="true"
-  [popperPlacement]="'left'"
-  (popperOnShown)="onPopperShown()"
-  (popperOnHidden)="onPopperHidden()"
+  [floatUi]="dropdownMenuContent"
+  [showOnStart]="false"
+  [showTrigger]="'click'"
+  [hideOnClickOutside]="true"
+  [hideOnScroll]="false"
+  [preventOverflow]="true"
+  [placement]="'left'"
+  (onShown)="onFloatUiShown()"
+  (onHidden)="onFloatUiHidden()"
   #dropdownMenu
 >
   <i
@@ -20,7 +20,7 @@
   >
 </div>
 
-<popper-content #dropdownMenuContent>
+<float-ui-content #dropdownMenuContent>
   <ul class="m-chatRoomMemberDropdown__dropdownList">
     <li
       class="m-chatRoomMemberDropdown__dropdownListItem"
@@ -42,7 +42,7 @@
       >
     </li>
   </ul>
-</popper-content>
+</float-ui-content>
 
 <ng-template #menuLoadingSpinnerTemplate>
   <m-sizeableLoadingSpinner

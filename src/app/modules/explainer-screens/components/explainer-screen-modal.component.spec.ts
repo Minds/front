@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ExplainerScreenModalComponent } from './explainer-screen-modal.component';
 import { MarkdownService } from 'ngx-markdown';
@@ -10,6 +10,10 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Session } from '../../../services/session';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 const mockScreenData: ExplainerScreenWeb = {
   __typename: 'ExplainerScreenWeb',
@@ -50,7 +54,6 @@ describe('ExplainerScreenModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule],
       declarations: [
         ExplainerScreenModalComponent,
         MockComponent({
@@ -61,6 +64,7 @@ describe('ExplainerScreenModalComponent', () => {
         MockComponent({ selector: 'markdown' }),
         MockComponent({ selector: 'm-modalCloseButton' }),
       ],
+      imports: [FormsModule, ReactiveFormsModule],
       providers: [
         {
           provide: MarkdownService,
@@ -75,6 +79,8 @@ describe('ExplainerScreenModalComponent', () => {
         },
         { provide: Session, useValue: MockService(Session) },
         { provide: AuthModalService, useValue: MockService(AuthModalService) },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   });

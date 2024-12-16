@@ -51,7 +51,7 @@
       m-sidebarMore__trigger {
         display: block;
 
-        popper-content {
+        float-ui-content {
           position: static;
         }
       }
@@ -301,7 +301,7 @@
     ::ng-deep m-sidebarMore__trigger {
       display: block;
 
-      popper-content {
+      float-ui-content {
         position: static;
       }
 

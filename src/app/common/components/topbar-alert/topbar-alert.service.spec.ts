@@ -6,7 +6,7 @@ import {
 } from './topbar-alert.service';
 import { Session } from '../../../services/session';
 import { ObjectLocalStorageService } from '../../services/object-local-storage.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, skip, take } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
@@ -19,6 +19,10 @@ import userMock from '../../../mocks/responses/user.mock';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
 import { PushNotificationService } from '../../services/push-notification.service';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('TopbarAlertService', () => {
   let service: TopbarAlertService;
@@ -32,10 +36,7 @@ describe('TopbarAlertService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        ApolloTestingModule.withClients(['strapi']),
-      ],
+      imports: [ApolloTestingModule.withClients(['strapi'])],
       providers: [
         TopbarAlertService,
         { provide: Session, useValue: sessionMock },
@@ -63,6 +64,8 @@ describe('TopbarAlertService', () => {
           provide: IS_TENANT_NETWORK,
           useValue: false,
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     });
 

@@ -134,7 +134,7 @@ export class LanguageService {
           })
           .toPromise();
       } else {
-        this.cookie.put('hl', language);
+        this.cookie.set('hl', language);
       }
 
       return true;
