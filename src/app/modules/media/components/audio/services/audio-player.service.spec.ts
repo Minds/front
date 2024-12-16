@@ -101,6 +101,9 @@ describe('AudioPlayerService', () => {
 
   describe('onUnregisterActivePlayer', () => {
     it('should unregister as active player', () => {
+      (service as any).isActivePlayer = true;
+      (service as any).playing$.next(true);
+
       service.onUnregisterActivePlayer();
 
       expect(
@@ -119,6 +122,8 @@ describe('AudioPlayerService', () => {
 
     it('should unregister as active player and set loading to false, when true', () => {
       (service as any).loading$.next(true);
+      (service as any).isActivePlayer = true;
+      (service as any).playing$.next(true);
 
       service.onUnregisterActivePlayer();
 
@@ -221,6 +226,9 @@ describe('AudioPlayerService', () => {
 
   describe('pause', () => {
     it('should pause', () => {
+      (service as any).isActivePlayer = true;
+      (service as any).playing$.next(true);
+
       service.pause();
 
       expect(
@@ -229,6 +237,44 @@ describe('AudioPlayerService', () => {
       expect(
         (service as any).audioPlayerAnalyticsService.trackPauseEvent
       ).toHaveBeenCalledWith({
+        audio_time: 0,
+        audio_duration: mockData.duration,
+        audio_volume: 100,
+        audio_muted: false,
+      });
+    });
+
+    it('should not pause when not active player', () => {
+      (service as any).isActivePlayer = false;
+      (service as any).playing$.next(true);
+
+      service.pause();
+
+      expect(
+        (service as any).globalAudioPlayerService.pause
+      ).not.toHaveBeenCalled();
+      expect(
+        (service as any).audioPlayerAnalyticsService.trackPauseEvent
+      ).not.toHaveBeenCalledWith({
+        audio_time: 0,
+        audio_duration: mockData.duration,
+        audio_volume: 100,
+        audio_muted: false,
+      });
+    });
+
+    it('should not pause when not playing', () => {
+      (service as any).isActivePlayer = true;
+      (service as any).playing$.next(false);
+
+      service.pause();
+
+      expect(
+        (service as any).globalAudioPlayerService.pause
+      ).not.toHaveBeenCalled();
+      expect(
+        (service as any).audioPlayerAnalyticsService.trackPauseEvent
+      ).not.toHaveBeenCalledWith({
         audio_time: 0,
         audio_duration: mockData.duration,
         audio_volume: 100,
