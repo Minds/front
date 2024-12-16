@@ -3,14 +3,14 @@
 $menuBorderRadius: 4px;
 
 :host {
-  ::ng-deep popper-content {
+  ::ng-deep float-ui-content {
     position: unset;
 
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
     }
 
-    .ngxp__container {
+    .float-ui-container {
       border-radius: $menuBorderRadius;
       padding: 0;
 
@@ -23,7 +23,7 @@ $menuBorderRadius: 4px;
       }
     }
 
-    .ngxp__arrow {
+    .float-ui-arrow {
       @include m-theme() {
         background: themed($m-bgColor--primary);
         border: 1px solid themed($m-borderColor--primary);

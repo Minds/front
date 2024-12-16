@@ -218,13 +218,13 @@ describe('ChatRoomMembersListItemDropdownComponent', () => {
 
   it('should set dropdownMenuShown to true', () => {
     (comp as any).dropdownMenuShown = false;
-    (comp as any).onPopperShown();
+    (comp as any).onFloatUiShown();
     expect((comp as any).dropdownMenuShown).toBeTrue();
   });
 
   it('should set dropdownMenuShown to false', () => {
     (comp as any).dropdownMenuShown = true;
-    (comp as any).onPopperHidden();
+    (comp as any).onFloatUiHidden();
     expect((comp as any).dropdownMenuShown).toBeFalse();
   });
 

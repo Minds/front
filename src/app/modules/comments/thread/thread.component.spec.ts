@@ -11,8 +11,11 @@ import { CommentsScrollDirective } from '../scroll';
 import { CommentsService } from '../comments.service';
 import { BlockListService } from '../../../common/services/block-list.service';
 import { RouterModule } from '@angular/router';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
@@ -63,11 +66,7 @@ describe('CommentsThreadComponent', () => {
         CommentsScrollDirective,
         LoadingSpinnerComponent,
       ],
-      imports: [
-        RouterModule.forRoot([], {}),
-        HttpClientTestingModule,
-        HttpClientModule,
-      ],
+      imports: [RouterModule.forRoot([], {})],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
@@ -82,6 +81,8 @@ describe('CommentsThreadComponent', () => {
           provide: PermissionIntentsService,
           useValue: MockService(PermissionIntentsService),
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

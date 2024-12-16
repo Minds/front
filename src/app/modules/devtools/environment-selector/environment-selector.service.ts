@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from '@gorniv/ngx-universal';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
+import { CookieService } from '../../../common/services/cookie.service';
 
 // Different environments.
 export type Environment = 'production' | 'canary' | 'staging';
@@ -105,7 +105,7 @@ export class EnvironmentSelectorService {
       await this.api.put('api/v2/canary').toPromise();
       return;
     }
-    this.cookies.put('canary', '1', { path: '/' });
+    this.cookies.set('canary', '1', { path: '/' });
   }
 
   /**
@@ -117,7 +117,7 @@ export class EnvironmentSelectorService {
       await this.api.delete('api/v2/canary').toPromise();
       return;
     }
-    this.cookies.put('canary', '0', { path: '/' });
+    this.cookies.set('canary', '0', { path: '/' });
   }
 
   /**
@@ -125,7 +125,7 @@ export class EnvironmentSelectorService {
    * @returns { void }
    */
   private addStagingCookie(): void {
-    this.cookies.put('staging', '1', { path: '/' });
+    this.cookies.set('staging', '1', { path: '/' });
   }
 
   /**
@@ -133,7 +133,7 @@ export class EnvironmentSelectorService {
    * @returns { void }
    */
   private removeStagingCookie(): void {
-    this.cookies.remove('staging');
+    this.cookies.delete('staging');
   }
 
   /**

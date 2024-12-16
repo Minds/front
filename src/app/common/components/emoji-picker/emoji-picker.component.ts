@@ -8,14 +8,14 @@ import {
   ViewContainerRef,
   Input,
 } from '@angular/core';
-import { NgxPopperjsContentComponent } from 'ngx-popperjs';
+import { NgxFloatUiContentComponent } from 'ngx-float-ui';
 import { Subscription } from 'rxjs';
 
 /**
  * Emoji picker icon trigger and popup component
  * Used to insert emojis
  *
- * Uses emoji mart and popper plugins
+ * Uses emoji mart and float-ui plugins
  *
  * See it in the composer toolbar
  */
@@ -28,7 +28,7 @@ export class EmojiPickerComponent {
   /** Custom icon name. */
   @Input() iconName: string = 'emoji_emotions';
 
-  @Input() popperPlacement: string = 'top';
+  @Input() floatUiPlacement: string = 'top';
   showSelector = false;
 
   @ViewChild('emojiPickerOutlet', { read: ViewContainerRef })
@@ -39,8 +39,8 @@ export class EmojiPickerComponent {
    */
   @Output('emojiSelect') emojiSelectEmitter: EventEmitter<any> =
     new EventEmitter();
-  popperModifiers: Array<any> = [];
-  @ViewChild('popper') popper: NgxPopperjsContentComponent;
+
+  @ViewChild('floatUi') floatUi: NgxFloatUiContentComponent;
 
   onSelectSubscription: Subscription;
 
@@ -51,7 +51,7 @@ export class EmojiPickerComponent {
 
   emojiSelect($event) {
     this.emojiSelectEmitter.emit($event.emoji);
-    this.popper?.hide();
+    this.floatUi?.hide();
   }
 
   onShowSelector() {

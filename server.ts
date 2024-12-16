@@ -16,10 +16,8 @@ import * as _url from 'url';
 import './server-polyfills';
 
 import { TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
-import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
 import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
 import { AppServerModule } from './src/main.server';
-
 import * as express from 'express';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
@@ -91,15 +89,6 @@ export function app() {
             },
             {
               provide: RESPONSE,
-              useValue: res,
-            },
-            // for cookie
-            {
-              provide: NgxRequest,
-              useValue: req,
-            },
-            {
-              provide: NgxResponse,
               useValue: res,
             },
             // for absolute path

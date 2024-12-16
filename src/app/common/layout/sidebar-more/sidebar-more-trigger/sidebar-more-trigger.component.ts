@@ -5,9 +5,9 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { NgxPopperjsContentComponent } from 'ngx-popperjs';
 import { Session } from '../../../../services/session';
 import { IsTenantService } from '../../../services/is-tenant.service';
+import { NgxFloatUiContentComponent } from 'ngx-float-ui';
 
 @Component({
   selector: 'm-sidebarMore__trigger',
@@ -18,9 +18,9 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
   @Output('toggle') onToggle: EventEmitter<Boolean> =
     new EventEmitter<Boolean>();
 
-  popperPlacement: string = 'auto';
+  floatUiPlacement: string = 'auto';
 
-  @ViewChild('popper') popper: NgxPopperjsContentComponent;
+  @ViewChild('floatUi') floatUi: NgxFloatUiContentComponent;
 
   shown: boolean = false;
 
@@ -31,19 +31,19 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {}
 
-  popperOnShown($event): void {
+  floatUiOnShown($event): void {
     this.show(true);
   }
-  popperOnHide($event): void {
+  floatUiOnHide($event): void {
     this.show(false);
   }
 
-  clickPopperContent($event) {
-    // Don't hide popper if clicking 'more'/'less' footer links toggle
+  clickFloatUiContent($event) {
+    // Don't hide float-ui if clicking 'more'/'less' footer links toggle
     if (
       $event.srcElement.classList[0] !== 'm-sidebarMoreDropdownFooter__toggle'
     ) {
-      this.popper.hide();
+      this.floatUi.hide();
       this.shown = false;
     }
   }

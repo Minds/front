@@ -1,13 +1,11 @@
 import { Injectable, NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
-import { ServerTransferStateModule } from '@angular/platform-server';
 import { XhrFactory } from '@angular/common';
 import * as xhr2 from 'xhr2';
 
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';
 import { PlotlyModule } from 'angular-plotly.js';
-import { CookieService, CookieBackendService } from '@gorniv/ngx-universal';
 import {
   ServerRedirectService,
   RedirectService,
@@ -45,10 +43,6 @@ export const SERVER_PROVIDERS = [
   { provide: DiagnosticsService, useClass: ServerDiagnosticsService },
   { provide: XhrFactory, useClass: ServerXhr },
   {
-    provide: CookieService,
-    useClass: CookieBackendService,
-  },
-  {
     provide: RedirectService,
     useClass: ServerRedirectService,
   },
@@ -70,7 +64,6 @@ export const SERVER_PROVIDERS = [
   imports: [
     MindsModule,
     ServerModule,
-    ServerTransferStateModule,
     PlotlyModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {
       enabled: false,

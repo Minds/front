@@ -10,10 +10,14 @@ import {
   ApolloTestingController,
   ApolloTestingModule,
 } from 'apollo-angular/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Session } from '../../services/session';
 import { MockService } from '../../utils/mock';
 import userMock from '../../mocks/responses/user.mock';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('DismissalV2Service', () => {
   let service: DismissalV2Service;
@@ -34,13 +38,12 @@ describe('DismissalV2Service', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        ApolloTestingModule.withClients(['strapi']),
-      ],
+      imports: [ApolloTestingModule.withClients(['strapi'])],
       providers: [
         DismissalV2Service,
         { provide: Session, useValue: MockService(Session) },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     });
 

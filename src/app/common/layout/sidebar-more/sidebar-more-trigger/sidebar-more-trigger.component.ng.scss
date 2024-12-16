@@ -1,8 +1,8 @@
 @import 'defaults.scss';
 
 :host {
-  ::ng-deep popper-content {
-    .ngxp__container {
+  ::ng-deep float-ui-content {
+    .float-ui-container {
       border-radius: $m-borderRadius;
       padding: 0;
 
@@ -15,7 +15,7 @@
       }
     }
 
-    .ngxp__arrow {
+    .float-ui-arrow {
       display: none;
     }
 

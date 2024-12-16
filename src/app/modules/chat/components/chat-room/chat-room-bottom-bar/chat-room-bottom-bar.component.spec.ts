@@ -41,7 +41,7 @@ describe('ChatRoomBottomBarComponent', () => {
       declarations: [
         MockComponent({
           selector: 'm-emojiPicker',
-          inputs: ['iconName', 'popperPlacement'],
+          inputs: ['iconName', 'floatUiPlacement'],
           outputs: ['emojiSelect'],
         }),
         MockComponent({

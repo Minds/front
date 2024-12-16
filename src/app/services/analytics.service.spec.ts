@@ -1,11 +1,5 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  CookieModule,
-  CookieOptionsProvider,
-  CookieService,
-  COOKIE_OPTIONS,
-} from '@gorniv/ngx-universal';
 import { clientMock } from '../../tests/client-mock.spec';
 import { sessionMock } from '../../tests/session-mock.spec';
 import { SiteService } from '../common/services/site.service';
@@ -38,7 +32,7 @@ describe('AnalyticsService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, CookieModule],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: POSTHOG_JS,
@@ -46,10 +40,6 @@ describe('AnalyticsService', () => {
         },
         { provide: Client, useValue: clientMock },
         { provide: SiteService, useValue: siteServiceMock },
-        {
-          provide: COOKIE_OPTIONS,
-          useValue: CookieOptionsProvider,
-        },
         AnalyticsService,
         { provide: Session, useValue: sessionMock },
         {

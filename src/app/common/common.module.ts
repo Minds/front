@@ -131,7 +131,7 @@ import { PublisherSearchModalComponent } from './components/publisher-search-mod
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
 import { DateRangeModalComponent } from './components/date-range-modal/date-range-modal.component';
 import { DateRangeModalService } from './components/date-range-modal/date-range-modal.service';
-import { NgxPopperjsModule } from 'ngx-popperjs';
+import { NgxFloatUiModule } from 'ngx-float-ui';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { JsonLdService } from './services/jsonld.service';
@@ -366,7 +366,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    NgxPopperjsModule,
+    NgxFloatUiModule,
     QRCodeModule,
     RouterModule.forChild(routes),
     MarkdownModule.forChild(),
@@ -382,7 +382,7 @@ const routes: Routes = [
     MINDS_DIRECTIVES,
     MINDS_PIPES,
     MDL_DIRECTIVES,
-    NgxPopperjsModule,
+    NgxFloatUiModule,
   ],
   providers: [
     SiteService,

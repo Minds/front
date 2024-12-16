@@ -7,7 +7,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { NgxPopperjsContentComponent } from 'ngx-popperjs';
 import {
   BehaviorSubject,
   Observable,
@@ -28,6 +27,7 @@ import { Session } from '../../../../../../../../services/session';
 import { ChatRoomUserActionsService } from '../../../../../../services/chat-room-user-actions.service';
 import { ChatRoomMembersService } from '../../../../../../services/chat-room-members.service';
 import { TotalChatRoomMembersService } from '../../../../../../services/total-chat-room-members.service';
+import { NgxFloatUiContentComponent } from 'ngx-float-ui';
 
 /**
  * Dropdown menu for chat members list item. Options vary depending on role
@@ -50,7 +50,7 @@ export class ChatRoomMembersListItemDropdownComponent implements OnInit {
 
   /** Viewchild of dropdown menu. */
   @ViewChild('dropdownMenuContent')
-  dropdownMenuContent: NgxPopperjsContentComponent;
+  dropdownMenuContent: NgxFloatUiContentComponent;
 
   /** Member edge that dropdown is acting upon. */
   @Input() protected memberEdge: ChatRoomMemberEdge;
@@ -100,18 +100,18 @@ export class ChatRoomMembersListItemDropdownComponent implements OnInit {
   }
 
   /**
-   * Handle on popper shown event.
+   * Handle on float-ui shown event.
    * @returns { void }
    */
-  protected onPopperShown(): void {
+  protected onFloatUiShown(): void {
     this.dropdownMenuShown = true;
   }
 
   /**
-   * Handle on popper hidden event.
+   * Handle on float-ui hidden event.
    * @returns { void }
    */
-  protected onPopperHidden(): void {
+  protected onFloatUiHidden(): void {
     this.dropdownMenuShown = false;
   }
 
