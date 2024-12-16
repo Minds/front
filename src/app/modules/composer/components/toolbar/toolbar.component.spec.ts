@@ -28,6 +28,7 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -159,6 +160,7 @@ describe('Composer Toolbar', () => {
         MockComponent({
           selector: 'm-composer__recordButton',
           outputs: ['recordingEnded'],
+          template: `<div id="record-button"></div>`,
         }),
         MockComponent({
           selector: 'm-emojiPicker',
@@ -240,6 +242,10 @@ describe('Composer Toolbar', () => {
         {
           provide: PermissionsService,
           useValue: MockService(PermissionsService),
+        },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: false,
         },
       ],
     }).compileComponents();
