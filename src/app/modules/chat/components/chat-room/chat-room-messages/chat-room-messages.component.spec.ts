@@ -86,6 +86,7 @@ describe('ChatRoomMessagesComponent', () => {
               'isMessageOwner',
               'messageEdge',
               'richEmbed',
+              'image',
               'isNextMessageFromSameSender',
               'isPreviousMessageFromSameSender',
             ],

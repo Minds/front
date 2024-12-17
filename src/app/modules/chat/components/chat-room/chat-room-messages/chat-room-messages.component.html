@@ -13,6 +13,7 @@
   [isMessageOwner]="messageEdge.node?.sender.node.guid === loggedInUserGuid"
   [messageEdge]="messageEdge"
   [richEmbed]="messageEdge.node?.richEmbed"
+  [image]="messageEdge.node?.image"
   [isNextMessageFromSameSender]="
     messages[i + 1]?.node.sender.node.guid === messageEdge.node.sender.node.guid
   "

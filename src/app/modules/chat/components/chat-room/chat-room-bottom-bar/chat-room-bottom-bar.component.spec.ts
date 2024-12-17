@@ -22,10 +22,12 @@ import {
   PAGE_SIZE,
 } from '../../../services/chat-messages.service';
 import { ThemeService } from '../../../../../common/services/theme.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { mockChatMessageEdge } from '../../../../../mocks/chat.mock';
 import { Session } from '../../../../../services/session';
 import userMock from '../../../../../mocks/responses/user.mock';
+import { PermissionsService } from '../../../../../common/services/permissions.service';
+import { ChatImageUploadService } from '../../../services/chat-image-upload.service';
 
 describe('ChatRoomBottomBarComponent', () => {
   let comp: ChatRoomBottomBarComponent;
@@ -48,6 +50,17 @@ describe('ChatRoomBottomBarComponent', () => {
           selector: 'm-sizableLoadingSpinner',
           inputs: ['spinnerWidth', 'spinnerHeight', 'inProgress'],
         }),
+        MockComponent({
+          selector: 'm-file-upload',
+          inputs: ['accept', 'multiple', 'disabled'],
+          outputs: ['onSelect'],
+          template: `<div id="fileUpload"><ng-content></ng-content></div>`,
+        }),
+        MockComponent({
+          selector: 'm-icon',
+          inputs: ['iconName', 'sizeFactor'],
+          template: `<div id="uploadIcon"></div>`,
+        }),
       ],
       providers: [
         { provide: ToasterService, useValue: MockService(ToasterService) },
@@ -60,6 +73,14 @@ describe('ChatRoomBottomBarComponent', () => {
           useValue: MockService(ChatMessagesService),
         },
         { provide: ThemeService, useValue: MockService(ThemeService) },
+        {
+          provide: ChatImageUploadService,
+          useValue: MockService(ChatImageUploadService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
         {
           provide: Session,
           useValue: MockService(Session),
@@ -149,6 +170,7 @@ describe('ChatRoomBottomBarComponent', () => {
                 timeCreatedUnix: jasmine.any(String),
                 timeCreatedISO8601: jasmine.any(String),
                 richEmbed: null,
+                image: null,
               },
             },
           },
@@ -221,6 +243,7 @@ describe('ChatRoomBottomBarComponent', () => {
                 timeCreatedUnix: jasmine.any(String),
                 timeCreatedISO8601: jasmine.any(String),
                 richEmbed: null,
+                image: null,
               },
             },
           },
@@ -288,6 +311,7 @@ describe('ChatRoomBottomBarComponent', () => {
                 timeCreatedUnix: jasmine.any(String),
                 timeCreatedISO8601: jasmine.any(String),
                 richEmbed: null,
+                image: null,
               },
             },
           },
@@ -358,5 +382,59 @@ describe('ChatRoomBottomBarComponent', () => {
         (comp as any).chatMessageService.requestScrollToBottom
       ).toHaveBeenCalled();
     });
+  });
+
+  describe('canUploadChatMedia', () => {
+    it('should return true if the user can upload chat media', () => {
+      (comp as any).permissionService.canUploadChatMedia.and.returnValue(true);
+      expect((comp as any).canUploadChatMedia).toBeTrue();
+    });
+
+    it('should return false if the user cannot upload chat media', () => {
+      (comp as any).permissionService.canUploadChatMedia.and.returnValue(false);
+      expect((comp as any).canUploadChatMedia).toBeFalse();
+    });
+  });
+
+  describe('onFileSelect', () => {
+    it('should handle file select', fakeAsync(() => {
+      const file: File = new File(['test'], 'test.png', { type: 'image/png' });
+      (comp as any).chatImageUploadService.upload.and.returnValue(of({}));
+
+      (comp as any).onFileSelect(file);
+      tick();
+
+      expect((comp as any).uploadInProgress$.getValue()).toBeFalse();
+      expect((comp as any).chatImageUploadService.upload).toHaveBeenCalledWith(
+        file,
+        (comp as any).roomGuid
+      );
+    }));
+
+    it('should handle file select with non-image file', fakeAsync(() => {
+      const file: File = new File(['test'], 'test.txt', { type: 'text' });
+
+      (comp as any).onFileSelect(file);
+      tick();
+
+      expect((comp as any).toaster.warn).toHaveBeenCalledWith(
+        'Only images are currently supported'
+      );
+    }));
+
+    it('should handle file select with error', fakeAsync(() => {
+      const file: File = new File(['test'], 'test.png', { type: 'image/png' });
+      (comp as any).chatImageUploadService.upload.and.returnValue(
+        throwError(() => new Error('test'))
+      );
+
+      (comp as any).onFileSelect(file);
+      tick();
+
+      expect((comp as any).toaster.error).toHaveBeenCalledWith(
+        'Failed to upload image'
+      );
+      expect((comp as any).uploadInProgress$.getValue()).toBeFalse();
+    }));
   });
 });

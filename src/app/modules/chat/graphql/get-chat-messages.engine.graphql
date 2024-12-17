@@ -33,6 +33,14 @@ query GetChatMessages(
                     title
                     thumbnailSrc
                 }
+                image {
+                    id,
+                    guid,
+                    url,
+                    height,
+                    width,
+                    blurhash
+                }
             }
         }
         pageInfo {

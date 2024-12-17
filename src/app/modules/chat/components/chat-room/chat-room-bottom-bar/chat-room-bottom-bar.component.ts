@@ -38,6 +38,8 @@ import { InMemoryCache } from '@apollo/client';
 import { cloneDeep } from '@apollo/client/utilities';
 import { Session } from '../../../../../services/session';
 import { MindsUser } from '../../../../../interfaces/entities';
+import { PermissionsService } from '../../../../../common/services/permissions.service';
+import { ChatImageUploadService } from '../../../services/chat-image-upload.service';
 
 /** Placeholder for message fields that cannot be optimistically predicted. */
 export const OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER: string = 'optimistic';
@@ -65,6 +67,10 @@ export class ChatRoomBottomBarComponent implements OnInit {
   protected readonly sendInProgress$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
+  /** Whether the image upload is in progress. */
+  protected readonly uploadInProgress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   @Input() protected roomGuid: string;
 
   @Output() protected messageSent: EventEmitter<ChatMessageEdge> =
@@ -78,6 +84,8 @@ export class ChatRoomBottomBarComponent implements OnInit {
     private toaster: ToasterService,
     private createMessageGQL: CreateChatMessageGQL,
     private chatMessageService: ChatMessagesService,
+    private chatImageUploadService: ChatImageUploadService,
+    private permissionService: PermissionsService,
     private session: Session
   ) {}
 
@@ -85,6 +93,14 @@ export class ChatRoomBottomBarComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       message: new FormControl('', [Validators.required]),
     });
+  }
+
+  /**
+   * Whether the user can upload chat media.
+   * @returns { boolean } True if the user can upload chat media.
+   */
+  get canUploadChatMedia(): boolean {
+    return this.permissionService.canUploadChatMedia();
   }
 
   /**
@@ -109,6 +125,32 @@ export class ChatRoomBottomBarComponent implements OnInit {
     if (!$event?.shiftKey) {
       $event.preventDefault();
       this.onSubmit();
+    }
+  }
+
+  /**
+   * Handles file selection for chat media.
+   * @param { File } file - The file to upload.
+   * @returns { Promise<void> }
+   */
+  protected async onFileSelect(file: File): Promise<void> {
+    if (!file?.type?.startsWith('image/')) {
+      this.toaster.warn('Only images are currently supported');
+      return;
+    }
+
+    this.uploadInProgress$.next(true);
+
+    try {
+      await lastValueFrom(
+        this.chatImageUploadService.upload(file, this.roomGuid)
+      );
+      this.chatMessageService.hasNewMessage$.next();
+    } catch (e) {
+      this.toaster.error('Failed to upload image');
+      console.error('Failed to upload image:', e);
+    } finally {
+      this.uploadInProgress$.next(false);
     }
   }
 
@@ -245,6 +287,7 @@ export class ChatRoomBottomBarComponent implements OnInit {
           timeCreatedUnix: (optimisticSendDate.valueOf() / 1000).toString(),
           timeCreatedISO8601: optimisticSendDate.toISOString(),
           richEmbed: null, // we could stub a rich embed response here in future to ease jump-in.
+          image: null,
         },
       },
     };

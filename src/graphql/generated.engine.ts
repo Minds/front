@@ -254,6 +254,30 @@ export type BoostsConnection = ConnectionInterface & {
   pageInfo: PageInfo;
 };
 
+export type ChatImageNode = NodeInterface & {
+  __typename?: 'ChatImageNode';
+  /** The blurhash of the image. */
+  blurhash?: Maybe<Scalars['String']['output']>;
+  /** The created timestamp of the image in ISO 8601 format. */
+  createdTimestampISO8601?: Maybe<Scalars['String']['output']>;
+  /** The created timestamp of the image in Unix format. */
+  createdTimestampUnix?: Maybe<Scalars['String']['output']>;
+  /** The guid of the image. */
+  guid: Scalars['String']['output'];
+  /** The height of the image. */
+  height?: Maybe<Scalars['Int']['output']>;
+  /** The unique ID of the image for GraphQL. */
+  id: Scalars['ID']['output'];
+  /** The updated timestamp of the image in ISO 8601 format. */
+  updatedTimestampISO8601?: Maybe<Scalars['String']['output']>;
+  /** The updated timestamp of the image in Unix format. */
+  updatedTimestampUnix?: Maybe<Scalars['String']['output']>;
+  /** The URL of the image. */
+  url: Scalars['String']['output'];
+  /** The width of the image. */
+  width?: Maybe<Scalars['Int']['output']>;
+};
+
 export type ChatMessageEdge = EdgeInterface & {
   __typename?: 'ChatMessageEdge';
   cursor: Scalars['String']['output'];
@@ -266,6 +290,8 @@ export type ChatMessageNode = NodeInterface & {
   /** The unique guid of the message */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  /** Gets image node if the message has an image. */
+  image?: Maybe<ChatImageNode>;
   /** The type of message. */
   messageType: ChatMessageTypeEnum;
   /** The plaintext (non-encrypted) message */
@@ -2513,6 +2539,15 @@ export type CreateChatMessageMutation = {
         title?: string | null;
         thumbnailSrc?: string | null;
       } | null;
+      image?: {
+        __typename?: 'ChatImageNode';
+        id: string;
+        guid: string;
+        url: string;
+        height?: number | null;
+        width?: number | null;
+        blurhash?: string | null;
+      } | null;
     };
   };
 };
@@ -2643,6 +2678,15 @@ export type GetChatMessagesQuery = {
           canonicalUrl: string;
           title?: string | null;
           thumbnailSrc?: string | null;
+        } | null;
+        image?: {
+          __typename?: 'ChatImageNode';
+          id: string;
+          guid: string;
+          url: string;
+          height?: number | null;
+          width?: number | null;
+          blurhash?: string | null;
         } | null;
       };
     }>;
@@ -3179,6 +3223,7 @@ export type GetTenantAnalyticsTableQuery = {
             user: { __typename?: 'UserNode'; guid: string; username: string };
           }
         | { __typename?: 'BoostNode'; id: string }
+        | { __typename?: 'ChatImageNode'; id: string }
         | { __typename?: 'ChatMessageNode'; id: string }
         | { __typename?: 'ChatRichEmbedNode'; id: string }
         | { __typename?: 'ChatRoomNode'; id: string }
@@ -3250,6 +3295,7 @@ export type GetFeaturedEntitiesQuery = {
         | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
         | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
         | { __typename?: 'BoostNode'; id: string }
+        | { __typename?: 'ChatImageNode'; id: string }
         | { __typename?: 'ChatMessageNode'; id: string }
         | { __typename?: 'ChatRichEmbedNode'; id: string }
         | { __typename?: 'ChatRoomNode'; id: string }
@@ -3484,6 +3530,7 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
+            | { __typename?: 'ChatImageNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
             | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
@@ -3615,6 +3662,7 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
+            | { __typename?: 'ChatImageNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
             | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
@@ -3722,6 +3770,7 @@ export type GetReportsQuery = {
             | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
             | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
             | { __typename?: 'BoostNode'; id: string }
+            | { __typename?: 'ChatImageNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
             | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
@@ -4745,6 +4794,7 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatImageNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
             | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
@@ -4822,6 +4872,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -4915,6 +4966,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -4975,6 +5027,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -5165,6 +5218,7 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatImageNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
             | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
@@ -5242,6 +5296,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -5335,6 +5390,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -5395,6 +5451,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -5555,6 +5612,7 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatImageNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
             | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
@@ -5632,6 +5690,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -5725,6 +5784,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -5785,6 +5845,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -6017,6 +6078,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatImageNode'; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
                     | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
@@ -6080,6 +6142,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatImageNode'; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
                     | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
@@ -6116,6 +6179,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatImageNode'; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
                     | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
@@ -6398,6 +6462,7 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatImageNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
             | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
@@ -6455,6 +6520,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -6548,6 +6614,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -6608,6 +6675,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -6798,6 +6866,7 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatImageNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
             | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
@@ -6855,6 +6924,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -6948,6 +7018,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -7008,6 +7079,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -7168,6 +7240,7 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'ChatImageNode'; id: string }
             | { __typename?: 'ChatMessageNode'; id: string }
             | { __typename?: 'ChatRichEmbedNode'; id: string }
             | { __typename?: 'ChatRoomNode'; id: string }
@@ -7225,6 +7298,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -7318,6 +7392,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -7378,6 +7453,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'ChatImageNode'; id: string }
                         | { __typename?: 'ChatMessageNode'; id: string }
                         | { __typename?: 'ChatRichEmbedNode'; id: string }
                         | { __typename?: 'ChatRoomNode'; id: string }
@@ -7594,6 +7670,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatImageNode'; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
                     | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
@@ -7657,6 +7734,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatImageNode'; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
                     | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
@@ -7693,6 +7771,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'ChatImageNode'; id: string }
                     | { __typename?: 'ChatMessageNode'; id: string }
                     | { __typename?: 'ChatRichEmbedNode'; id: string }
                     | { __typename?: 'ChatRoomNode'; id: string }
@@ -8333,6 +8412,14 @@ export const CreateChatMessageDocument = gql`
           title
           thumbnailSrc
         }
+        image {
+          id
+          guid
+          url
+          height
+          width
+          blurhash
+        }
       }
     }
   }
@@ -8533,6 +8620,14 @@ export const GetChatMessagesDocument = gql`
             canonicalUrl
             title
             thumbnailSrc
+          }
+          image {
+            id
+            guid
+            url
+            height
+            width
+            blurhash
           }
         }
       }

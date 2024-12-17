@@ -17,20 +17,35 @@
     (keydown.enter)="onEnterPress($event)"
     data-ref="data-minds-chat-message-input"
   ></textarea>
-  <i
-    *ngIf="!(sendInProgress$ | async); else messageInProgressSpinnerTemplate"
-    class="material-icons m-chatRoomBottom__sendButton"
-    (click)="onSubmit()"
-    data-ref="data-minds-chat-send-message-button"
-    >send</i
-  >
-</form>
 
-<ng-template #messageInProgressSpinnerTemplate>
-  <m-sizeableLoadingSpinner
-    [spinnerWidth]="'1.5rem'"
-    [spinnerHeight]="'1.5rem'"
-    [inProgress]="true"
-  >
-  </m-sizeableLoadingSpinner>
-</ng-template>
+  @if (canUploadChatMedia) {
+    <m-file-upload
+      accept="image/*"
+      [multiple]="false"
+      (onSelect)="onFileSelect($event)"
+      [disabled]="uploadInProgress$ | async"
+    >
+      <m-icon
+        class="m-composerToolbarItem__icon"
+        from="md"
+        iconId="upload"
+        [sizeFactor]="48"
+      ></m-icon>
+    </m-file-upload>
+  }
+
+  @if (!(sendInProgress$ | async) && !(uploadInProgress$ | async)) {
+    <i
+      class="material-icons m-chatRoomBottom__sendButton"
+      (click)="onSubmit()"
+      data-ref="data-minds-chat-send-message-button"
+      >send</i
+    >
+  } @else {
+    <m-sizeableLoadingSpinner
+      [spinnerWidth]="'1.5rem'"
+      [spinnerHeight]="'1.5rem'"
+      [inProgress]="true"
+    />
+  }
+</form>
