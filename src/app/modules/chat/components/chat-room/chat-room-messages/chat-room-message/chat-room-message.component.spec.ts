@@ -94,6 +94,7 @@ describe('ChatRoomMessageComponent', () => {
     it('should handle message click', () => {
       (comp as any).isNextMessageFromSameSender = true;
       (comp as any).isManuallyExpanded = true;
+      (comp as any).image = null;
 
       (comp as any).handleMessageClick();
       expect((comp as any).isManuallyExpanded).toBe(false);
@@ -103,6 +104,18 @@ describe('ChatRoomMessageComponent', () => {
 
     it('should not handle message click if next message is not from same sender', () => {
       (comp as any).isNextMessageFromSameSender = false;
+      (comp as any).isManuallyExpanded = true;
+      (comp as any).image = null;
+
+      (comp as any).handleMessageClick();
+      expect((comp as any).isManuallyExpanded).toBe(true);
+    });
+
+    it('should not handle message click if image is set', () => {
+      (comp as any).image = {
+        url: 'https://example.minds.com/image.png',
+      };
+      (comp as any).isNextMessageFromSameSender = true;
       (comp as any).isManuallyExpanded = true;
 
       (comp as any).handleMessageClick();
@@ -281,6 +294,19 @@ describe('ChatRoomMessageComponent', () => {
       (comp as any).handleMessageTextClick(event);
 
       expect(event.stopPropagation).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('handle image click', () => {
+    it('should open image in a new tab', () => {
+      (comp as any).image = {
+        url: 'https://example.minds.com/image.png',
+      };
+      (comp as any).handleImageClick();
+      expect((comp as any).window.open).toHaveBeenCalledWith(
+        'https://example.minds.com/image.png',
+        '_blank'
+      );
     });
   });
 });

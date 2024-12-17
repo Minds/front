@@ -26,6 +26,8 @@
       border: none;
       resize: none;
       max-height: 180px;
+      min-width: 0;
+      width: 100%;
 
       @include body2Regular;
       @include vertical-scroll;

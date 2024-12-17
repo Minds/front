@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '../../../../../../common/common.module';
 import {
+  ChatImageNode,
   ChatMessageEdge,
   ChatRichEmbedNode,
 } from '../../../../../../../graphql/generated.engine';
@@ -83,6 +84,9 @@ export class ChatRoomMessageComponent {
   /** Optional rich embed node for chat message. */
   @Input() protected richEmbed: ChatRichEmbedNode;
 
+  /** Optional image node for chat message. */
+  @Input() protected image: ChatImageNode;
+
   /** Whether the message is from another chat participant. */
   @Input() protected set isMessageOwner(isFromLoggedInUser: boolean) {
     this._isFromLoggedInUser = isFromLoggedInUser;
@@ -109,7 +113,7 @@ export class ChatRoomMessageComponent {
    * @returns { void }
    */
   protected handleMessageClick(): void {
-    if (!this.isNextMessageFromSameSender) return;
+    if (!this.isNextMessageFromSameSender || this.image) return;
     this.isManuallyExpanded = !this.isManuallyExpanded;
   }
 
@@ -130,5 +134,14 @@ export class ChatRoomMessageComponent {
    */
   protected openSenderChannelInNewTab(): void {
     this.window.open(`/${this.senderUsername}`, '_blank');
+  }
+
+  /**
+   * Handles image click by opening the image in a new tab.
+   * In future, we may want to display these in a modal.
+   * @returns { void }
+   */
+  protected handleImageClick(): void {
+    this.window.open(this.image.url, '_blank');
   }
 }

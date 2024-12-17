@@ -27,6 +27,14 @@ mutation CreateChatMessage($plainText: String!, $roomGuid: String!) {
                 title
                 thumbnailSrc
             }
+            image {
+                id,
+                guid,
+                url,
+                height,
+                width,
+                blurhash
+            }
         }
     }
 }

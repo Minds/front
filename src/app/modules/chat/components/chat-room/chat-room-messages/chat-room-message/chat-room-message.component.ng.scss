@@ -133,6 +133,43 @@
         padding-bottom: unset;
       }
 
+      &--hasImage {
+        width: 344px;
+        max-width: 100%;
+        padding-top: unset;
+        padding-bottom: unset;
+
+        .m-chatRoomMessage__imageContainer {
+          position: relative;
+          width: 100%;
+          max-width: 100%;
+          min-height: 200px;
+          max-height: 800px;
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          cursor: pointer;
+
+          @include m-on-theme(light) {
+            background: color-by-theme($m-black-always, 'light');
+          }
+
+          @include m-on-theme(dark) {
+            background: $grey-800;
+          }
+
+          .m-chatRoomMessage__image {
+            object-fit: contain;
+            object-position: center;
+            max-width: 100%;
+            height: 100%;
+            border-radius: 16px;
+          }
+        }
+      }
+
       .m-chatRoomMessage__text {
         padding: 0 $spacing3;
         word-break: break-word;
