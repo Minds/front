@@ -1,4 +1,7 @@
-<div *ngIf="providers?.length > 0">
+<div
+  *ngIf="providers?.length > 0"
+  class="m-oidcLoginButtons__providerContainer"
+>
   <ng-container *ngFor="let provider of providers">
     <a
       [href]="provider.loginUrl"

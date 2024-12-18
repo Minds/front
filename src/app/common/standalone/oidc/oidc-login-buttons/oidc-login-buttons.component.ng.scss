@@ -2,7 +2,11 @@
 
 :host {
   display: block;
-  > div {
+
+  .m-oidcLoginButtons__providerContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: $spacing4;
     padding-bottom: $spacing6;
   }
 }
