@@ -1,6 +1,7 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ChatReceiptService } from './chat-receipt.service';
 import {
+  ChatMessageNode,
   GetChatRoomsListDocument,
   InitChatDocument,
   SetReadReceiptGQL,
@@ -80,7 +81,17 @@ describe('ChatReceiptService', () => {
         of({ data: { readReceipt: true } })
       );
 
-      const result = await service.update('roomGuid', 'messageGuid');
+      (service as any).session.getLoggedInUser.and.returnValue({ guid: '123' });
+
+      const result = await service.update({
+        roomGuid: 'roomGuid',
+        guid: 'messageGuid',
+        sender: {
+          node: {
+            guid: '456',
+          },
+        },
+      } as ChatMessageNode);
 
       expect(result).toBe(true);
       expect((service as any).setReadReceiptGql.mutate).toHaveBeenCalledWith({

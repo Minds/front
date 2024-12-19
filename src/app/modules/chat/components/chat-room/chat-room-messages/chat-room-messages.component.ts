@@ -169,13 +169,9 @@ export class ChatRoomMessagesComponent
    */
   protected updateReadReceipt() {
     const lastMsg = this.messages?.[this.messages.length - 1];
-    if (
-      !lastMsg ||
-      lastMsg.node.sender.node.guid === this.session.getLoggedInUser().guid
-    ) {
-      return; // Do not send for our own, or when there are no messages.
+    if (lastMsg) {
+      this.chatReceiptService.update(lastMsg.node);
     }
-    this.chatReceiptService.update(lastMsg.node.roomGuid, lastMsg.node.guid);
   }
 
   /**

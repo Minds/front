@@ -150,21 +150,8 @@ describe('ChatRoomMessagesComponent', () => {
       (comp as any).scrollToBottom();
 
       expect((comp as any).chatReceiptService.update).toHaveBeenCalledWith(
-        mockChatMessageEdge.node.roomGuid,
-        mockChatMessageEdge.node.guid
+        mockChatMessageEdge.node
       );
-    });
-
-    it('should NOT update read receipt when the sender is the logged in user', () => {
-      (comp as any).chatReceiptService.update.calls.reset();
-      (comp as any).messages = [mockChatMessageEdge];
-      (comp as any).session.getLoggedInUser.and.returnValue({
-        guid: mockChatMessageEdge.node.sender.node.guid,
-      });
-
-      (comp as any).updateReadReceipt();
-
-      expect((comp as any).chatReceiptService.update).not.toHaveBeenCalled();
     });
 
     it('should NOT update read receipt when there are no messages', () => {

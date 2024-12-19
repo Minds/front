@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, Subscription, lastValueFrom } from 'rxjs';
 import {
+  ChatMessageNode,
   GetChatRoomsListDocument,
   GetChatRoomsListQuery,
   InitChatDocument,
@@ -49,17 +50,27 @@ export class ChatReceiptService implements OnDestroy {
    * This mutation will then update the cache of the read list.
    * @returns { Promise<boolean> } - the result of the mutation.
    */
-  async update(roomGuid: string, messageGuid: string): Promise<boolean> {
-    const result = await lastValueFrom(
-      this.setReadReceiptGql.mutate({
-        roomGuid: roomGuid,
-        messageGuid: messageGuid,
-      })
-    );
+  async update(message: ChatMessageNode): Promise<boolean> {
+    let success = true;
+
+    if (message.sender.node.guid !== this.session.getLoggedInUser().guid) {
+      const result = await lastValueFrom(
+        this.setReadReceiptGql.mutate({
+          roomGuid: message.roomGuid,
+          messageGuid: message.guid,
+        })
+      );
+      success = !!result.data.readReceipt;
+    }
 
     this.chatInitService.refetch();
+    this.incrementRoomUnreadCountCache(
+      message.roomGuid,
+      0,
+      parseInt(message.timeCreatedUnix)
+    );
 
-    return !!result.data.readReceipt;
+    return success;
   }
 
   /**
@@ -68,7 +79,8 @@ export class ChatReceiptService implements OnDestroy {
    */
   private incrementRoomUnreadCountCache(
     roomGuid: string,
-    incrementBy: number = 1
+    incrementBy: number = 1,
+    lastMessageCreatedTimestamp: number = undefined
   ): void {
     let newValue: GetChatRoomsListQuery = cloneDeep(
       this.apollo.client.readQuery<GetChatRoomsListQuery>({
@@ -84,8 +96,15 @@ export class ChatReceiptService implements OnDestroy {
     newValue.chatRoomList.edges.map((edge) => {
       if (edge.node.guid === roomGuid) {
         edge.unreadMessagesCount += incrementBy;
+        if (lastMessageCreatedTimestamp) {
+          edge.lastMessageCreatedTimestamp = lastMessageCreatedTimestamp;
+        }
       }
     });
+
+    newValue.chatRoomList.edges = newValue.chatRoomList.edges.sort(
+      (a, b) => b.lastMessageCreatedTimestamp - a.lastMessageCreatedTimestamp
+    );
 
     this.apollo.client.writeQuery({
       query: GetChatRoomsListDocument,
