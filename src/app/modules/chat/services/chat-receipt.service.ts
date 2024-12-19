@@ -152,7 +152,9 @@ export class ChatReceiptService implements OnDestroy {
             return;
           }
 
-          const senderGuid: number = event.data?.['metadata']?.['senderGuid'];
+          const senderGuid: number = Number(
+            event.data?.['metadata']?.['senderGuid']
+          );
           const loggedInUserGuid: number = Number(
             this.session.getLoggedInUser()?.guid
           );
