@@ -34,6 +34,7 @@ import { AccessId } from '../../../common/enums/access-id.enum';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { ActivityHasRemindedResponse } from './activity.types';
 import { ToasterService } from '../../../common/services/toaster.service';
+import buildCanonicalUrl from './utils/build-canonical-url';
 
 export interface Supermind {
   request_guid: string;
@@ -550,13 +551,7 @@ export class ActivityService implements OnDestroy {
   }
 
   buildCanonicalUrl(entity: ActivityEntity, full: boolean): string {
-    let guid = entity.entity_guid || entity.guid;
-    // use the entity guid for media quotes
-    if (entity.remind_object && entity.entity_guid) {
-      guid = entity.guid;
-    }
-    const prefix = full ? this.siteUrl : '/';
-    return `${prefix}newsfeed/${guid}`;
+    return buildCanonicalUrl(this.siteUrl, entity, full);
   }
 
   private patchForeignEntity(entity): ActivityEntity {

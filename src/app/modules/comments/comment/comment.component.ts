@@ -56,6 +56,7 @@ import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injec
 import { ModerationActionGqlService } from '../../admin/moderation/services/moderation-action-gql.service';
 import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
 import { MutationResult } from 'apollo-angular';
+import buildCanonicalUrl from '../../newsfeed/activity/utils/build-canonical-url';
 
 @Component({
   selector: 'm-comment',
@@ -71,6 +72,7 @@ import { MutationResult } from 'apollo-angular';
 export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   comment: any;
   editing: boolean = false;
+  readonly siteUrl: string;
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
   content: string = '';
@@ -176,6 +178,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective,
     @Inject(IS_TENANT_NETWORK) private isTenantNetwork: boolean
   ) {
+    this.siteUrl = configs.get('site_url');
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -642,7 +645,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   async openShareModal(): Promise<void> {
     return this.modalService.present(ShareModalComponent, {
       data: {
-        url: this.entity.url,
+        url: buildCanonicalUrl(this.siteUrl, this.entity, true),
         commentUrn: this.comment.urn,
       },
       modalDialogClass: 'm-overlayModal__share',
