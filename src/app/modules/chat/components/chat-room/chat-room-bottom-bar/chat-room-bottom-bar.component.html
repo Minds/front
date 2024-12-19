@@ -34,7 +34,7 @@
     </m-file-upload>
   }
 
-  @if (!(sendInProgress$ | async) && !(uploadInProgress$ | async)) {
+  @if (!(uploadInProgress$ | async)) {
     <i
       class="material-icons m-chatRoomBottom__sendButton"
       (click)="onSubmit()"

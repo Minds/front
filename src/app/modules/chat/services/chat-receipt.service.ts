@@ -53,6 +53,12 @@ export class ChatReceiptService implements OnDestroy {
   async update(message: ChatMessageNode): Promise<boolean> {
     let success = true;
 
+    this.incrementRoomUnreadCountCache(
+      message.roomGuid,
+      0,
+      parseInt(message.timeCreatedUnix)
+    );
+
     if (message.sender.node.guid !== this.session.getLoggedInUser().guid) {
       const result = await lastValueFrom(
         this.setReadReceiptGql.mutate({
@@ -64,11 +70,6 @@ export class ChatReceiptService implements OnDestroy {
     }
 
     this.chatInitService.refetch();
-    this.incrementRoomUnreadCountCache(
-      message.roomGuid,
-      0,
-      parseInt(message.timeCreatedUnix)
-    );
 
     return success;
   }

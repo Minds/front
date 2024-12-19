@@ -159,10 +159,6 @@ export class ChatRoomBottomBarComponent implements OnInit {
    * @returns { Promise<void> }
    */
   protected async onSubmit(): Promise<void> {
-    if (this.sendInProgress$.getValue()) {
-      return;
-    }
-
     this.sendInProgress$.next(true);
 
     // This prevents mobile keyboards from closing on submit.
@@ -266,7 +262,7 @@ export class ChatRoomBottomBarComponent implements OnInit {
       __typename: 'Mutation',
       createChatMessage: {
         __typename: 'ChatMessageEdge',
-        id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+        id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER + Date.now(),
         cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
         node: {
           id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,

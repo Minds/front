@@ -149,7 +149,7 @@ describe('ChatRoomBottomBarComponent', () => {
             __typename: 'Mutation',
             createChatMessage: {
               __typename: 'ChatMessageEdge',
-              id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+              id: jasmine.anything(),
               cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
               node: {
                 id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
@@ -222,7 +222,7 @@ describe('ChatRoomBottomBarComponent', () => {
             __typename: 'Mutation',
             createChatMessage: {
               __typename: 'ChatMessageEdge',
-              id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+              id: jasmine.anything(),
               cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
               node: {
                 id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
@@ -290,7 +290,7 @@ describe('ChatRoomBottomBarComponent', () => {
             __typename: 'Mutation',
             createChatMessage: {
               __typename: 'ChatMessageEdge',
-              id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
+              id: jasmine.anything(),
               cursor: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
               node: {
                 id: OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER,
