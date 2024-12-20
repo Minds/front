@@ -11,6 +11,7 @@ query GetChatRoomInviteRequests($first: Int, $after: String) {
             node {
                 id
                 guid
+                name
                 roomType
                 timeCreatedISO8601
                 timeCreatedUnix

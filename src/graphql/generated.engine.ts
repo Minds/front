@@ -2732,6 +2732,7 @@ export type GetChatRoomInviteRequestsQuery = {
         __typename?: 'ChatRoomNode';
         id: string;
         guid: string;
+        name: string;
         roomType: ChatRoomTypeEnum;
         timeCreatedISO8601: string;
         timeCreatedUnix: string;
@@ -8687,6 +8688,7 @@ export const GetChatRoomInviteRequestsDocument = gql`
         node {
           id
           guid
+          name
           roomType
           timeCreatedISO8601
           timeCreatedUnix
