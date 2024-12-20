@@ -31,6 +31,7 @@
   >
     @if (image?.url) {
       <div
+        #imageContainer
         class="m-chatRoomMessage__imageContainer"
         (click)="handleImageClick()"
       >
@@ -42,6 +43,8 @@
               image?.height && image?.width ? image.width / image.height : 1
           }"
           [m-blurhash]="image.blurhash"
+          [style.height.px]="imageHeight"
+          [style.width.px]="imageWidth"
         />
       </div>
     } @else {

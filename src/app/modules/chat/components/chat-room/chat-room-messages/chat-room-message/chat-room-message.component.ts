@@ -7,6 +7,7 @@ import {
   HostBinding,
   Inject,
   Input,
+  ViewChild,
 } from '@angular/core';
 import { CommonModule } from '../../../../../../common/common.module';
 import {
@@ -60,6 +61,10 @@ export class ChatRoomMessageComponent {
   @Input()
   protected isNextMessageFromSameSender: boolean = false;
 
+  /** The image container */
+  @ViewChild('imageContainer', { read: ElementRef })
+  imageContainerEl: ElementRef;
+
   /** Whether preceding message in a sequence is from the same sender. */
   @Input() protected isPreviousMessageFromSameSender: boolean = false;
 
@@ -102,11 +107,37 @@ export class ChatRoomMessageComponent {
   /** Whether the message is manually expanded. */
   protected isManuallyExpanded: boolean = false;
 
+  imageHeight: number;
+  imageWidth: number;
+
   constructor(
     public cd: ChangeDetectorRef,
     @Inject(WINDOW) private window: Window,
     protected elementRef: ElementRef
   ) {}
+
+  ngOnInit() {
+    this.calculateImageDimensions();
+  }
+
+  protected calculateImageDimensions(): void {
+    if (!this.image) {
+      return;
+    }
+
+    const imageAspectRatio =
+      this.image.height && this.image.width
+        ? this.image.height / this.image.width
+        : 1;
+
+    this.imageWidth = Math.min(344, this.image.width || 344);
+    this.imageHeight = this.imageWidth * imageAspectRatio;
+
+    if (this.imageHeight > 800) {
+      this.imageHeight = 800;
+      this.imageWidth = this.imageHeight / imageAspectRatio;
+    }
+  }
 
   /**
    * Handle message click.
