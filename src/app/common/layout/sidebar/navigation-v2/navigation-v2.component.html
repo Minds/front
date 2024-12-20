@@ -79,9 +79,9 @@
             data-ref="sidenav-discovery"
           >
             <div class="m-sidebarNavigationItem__hoverArea">
-              <m-sidebarNavigation__newContentDot
+              <!-- <m-sidebarNavigation__newContentDot
                 [discoveryLinkClicked]="discoveryLinkClicked"
-              ></m-sidebarNavigation__newContentDot>
+              ></m-sidebarNavigation__newContentDot> -->
               <i class="material-icons m-sidebarNavigation__hashIcon">#</i>
               <span class="m-sidebarNavigationItem__text m-legible">
                 <ng-container i18n="@@COMMON__EXPLORE">Explore</ng-container>
@@ -110,6 +110,32 @@
             </div>
           </a>
         </li>
+
+        <!-- Chat -->
+        <ng-container *ngIf="chatExperimentIsActive && !!user">
+          <li
+            class="m-sidebarNavigation__item m-sidebarNavigation__item--chat"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              [routerLink]="['/chat']"
+              (click)="toggle()"
+              data-ref="sidenav-chat"
+            >
+              <div class="m-sidebarNavigationItem__hoverArea">
+                <i class="material-icons" [class.showDot]="chatUnreadCount > 0"
+                  >chat_bubble_outline</i
+                >
+                <span
+                  class="m-sidebarNavigationItem__text m-legible"
+                  i18n="@@COMMON__CHAT"
+                  >Chat</span
+                >
+              </div>
+            </a>
+          </li>
+        </ng-container>
 
         <!-- Boost -->
         <li
@@ -216,32 +242,6 @@
                   class="m-sidebarNavigationItem__text m-legible"
                   i18n="@@COMMON__GROUPS"
                   >Groups</span
-                >
-              </div>
-            </a>
-          </li>
-        </ng-container>
-
-        <!-- Chat -->
-        <ng-container *ngIf="chatExperimentIsActive && !!user">
-          <li
-            class="m-sidebarNavigation__item m-sidebarNavigation__item--chat"
-            [routerLinkActive]="'m-sidebarNavigation__item--active'"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              [routerLink]="['/chat']"
-              (click)="toggle()"
-              data-ref="sidenav-chat"
-            >
-              <div class="m-sidebarNavigationItem__hoverArea">
-                <i class="material-icons" [class.showDot]="chatUnreadCount > 0"
-                  >chat_bubble</i
-                >
-                <span
-                  class="m-sidebarNavigationItem__text m-legible"
-                  i18n="@@COMMON__CHAT"
-                  >Chat</span
                 >
               </div>
             </a>

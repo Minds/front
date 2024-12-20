@@ -193,12 +193,12 @@
             &::after {
               content: '';
               display: block;
-              width: 5px;
-              height: 5px;
+              width: 10px;
+              height: 10px;
               position: absolute;
               border-radius: 50%;
-              top: 0;
-              right: 0;
+              top: -2px;
+              right: -2px;
               @include m-theme() {
                 background-color: themed($m-blue);
               }
