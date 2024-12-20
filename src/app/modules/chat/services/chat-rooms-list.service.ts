@@ -195,26 +195,26 @@ export class ChatRoomsListService extends AbstractSubscriberComponent {
           } catch (e) {
             this.handleError(e);
           }
-        })
-      // this.globalChatSocketService.globalEvents$.subscribe(
-      //   (event: ChatRoomEvent): void => {
-      //     if (
-      //       !event.data ||
-      //       ![
-      //         ChatRoomEventType.NewMessage,
-      //         ChatRoomEventType.MessageDeleted,
-      //       ].includes(event.data['type']) ||
-      //       !event.roomGuid ||
-      //       !this.session.isLoggedIn() ||
-      //       !this.isViewingChatRoomsList
-      //     ) {
-      //       return;
-      //     }
+        }),
+      this.globalChatSocketService.globalEvents$.subscribe(
+        (event: ChatRoomEvent): void => {
+          if (
+            !event.data ||
+            ![
+              ChatRoomEventType.NewMessage,
+              ChatRoomEventType.MessageDeleted,
+            ].includes(event.data['type']) ||
+            !event.roomGuid ||
+            !this.session.isLoggedIn() ||
+            !this.isViewingChatRoomsList
+          ) {
+            return;
+          }
 
-      //     // reload the room asynchronously and update cached value.
-      //     this.reloadSingleRoom(event.roomGuid);
-      //   }
-      // )
+          // reload the room asynchronously and update cached value.
+          this.reloadSingleRoom(event.roomGuid);
+        }
+      )
     );
   }
 
