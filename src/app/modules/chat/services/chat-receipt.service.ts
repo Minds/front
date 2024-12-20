@@ -165,7 +165,11 @@ export class ChatReceiptService implements OnDestroy {
 
           if (senderGuid !== loggedInUserGuid) {
             this.incrementGlobalUnreadCountCache();
-            this.incrementRoomUnreadCountCache(event.roomGuid);
+            this.incrementRoomUnreadCountCache(
+              event.roomGuid,
+              1,
+              Math.round(Date.now() / 1000)
+            );
           }
         }
       );
