@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -29,10 +30,10 @@ import { CommonModule } from '../../../../common/common.module';
 import { ChatActionCardComponent } from '../action-cards/action-card.component';
 import {
   ActivatedRoute,
-  Event,
   NavigationEnd,
   Router,
   RouterEvent,
+  Event as NavEvent,
 } from '@angular/router';
 import { TotalChatRoomInviteRequestsService } from '../../services/total-chat-room-invite-requests.service';
 import { PermissionIntentsService } from '../../../../common/services/permission-intents.service';
@@ -117,7 +118,7 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
     );
     this.routerEventsSubscription = this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
-      .subscribe((event: Event | RouterEvent) => {
+      .subscribe((event: NavEvent | RouterEvent) => {
         this.currentRoomId$.next(
           this.route.snapshot.firstChild.params['roomId']
         );
@@ -127,6 +128,15 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.chatRoomsListService.setIsViewingChatRoomList(false);
     this.routerEventsSubscription?.unsubscribe();
+  }
+
+  /**
+   * When a user comes back to the tab, reload the chat room list
+   */
+  @HostListener('window:visibilitychange', ['$event'])
+  onWindowFocus(e: Event) {
+    if ((e.target as Document).hidden) return;
+    this.chatRoomsListService.refetch(true);
   }
 
   /**
