@@ -374,6 +374,8 @@ body.m-theme-in-transition *:after {
 // Fixes a chrome-related bug that broke popper / float-ui.
 // See https://github.com/MrFrankel/ngx-popper/issues/180
 float-ui-content {
+  display: contents !important;
+
   .float-ui-container {
     display: block !important;
     position: absolute;
