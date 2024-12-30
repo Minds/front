@@ -89,6 +89,9 @@ export class RegisterForm implements OnInit, OnDestroy {
   @ViewChild(FriendlyCaptchaComponent)
   friendlyCaptchaEl: FriendlyCaptchaComponent;
 
+  /** Whether the register form is loading. */
+  protected loadingOidcProviders: boolean = true;
+
   private passwordInputHasFocus: boolean = false;
 
   // subscriptions.
@@ -335,5 +338,6 @@ export class RegisterForm implements OnInit, OnDestroy {
 
   public setHasOidcProviders(has: boolean): void {
     this.hideLogin = !!has;
+    this.loadingOidcProviders = false;
   }
 }

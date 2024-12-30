@@ -6,10 +6,14 @@
       >
       <h2>
         <ng-container *ngIf="formDisplay === 'login'"
-          >Login to {{ site.title }}</ng-container
+          >Login to&nbsp;<span class="m-auth__title--inline">{{
+            site.title
+          }}</span></ng-container
         >
         <ng-container *ngIf="formDisplay === 'register'"
-          >Join {{ site.title }}</ng-container
+          >Join&nbsp;<span class="m-auth__title--inline">{{
+            site.title
+          }}</span></ng-container
         >
       </h2>
     </div>

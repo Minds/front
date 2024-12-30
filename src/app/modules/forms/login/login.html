@@ -1,4 +1,8 @@
 <div class="m-twoColumnLayout__contentContainer">
+  @if (loadingOidcProviders) {
+  <m-loadingSpinner [inProgress]="true" />
+  }
+
   <!-- -------------------------------->
   <!-- OIDC BUTTON & TOGGLE -->
   <!-- -------------------------------->
@@ -19,6 +23,7 @@
   <!-- LOGIN FORM -->
   <!-- -------------------------------->
   <form
+    *ngIf="!loadingOidcProviders"
     (submit)="$event.preventDefault()"
     [formGroup]="form"
     class="m-form m-login-box m-formWrapper"

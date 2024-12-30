@@ -14,6 +14,10 @@
     background-clip: padding-box;
     white-space: nowrap;
 
+    &--canWrap {
+      white-space: initial;
+    }
+
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary);
       background-color: rgba(themed($m-black-always), 0);

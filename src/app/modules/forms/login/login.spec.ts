@@ -15,7 +15,7 @@ import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { MockDirective, MockService } from '../../../utils/mock';
+import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { ButtonComponent } from '../../../common/components/button/button.component';
@@ -102,6 +102,10 @@ describe('LoginForm', () => {
     TestBed.configureTestingModule({
       declarations: [
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        MockComponent({
+          selector: 'm-oidcLoginButtons',
+          inputs: ['hasOidcProviders', 'done'],
+        }),
         LoginForm,
         ButtonComponent,
       ], // declare the test component
@@ -151,6 +155,7 @@ describe('LoginForm', () => {
     fixture = TestBed.createComponent(LoginForm);
 
     comp = fixture.componentInstance; // LoginForm test instance
+    (comp as any).loadingOidcProviders = false;
 
     fixture.detectChanges();
 
@@ -309,5 +314,21 @@ describe('LoginForm', () => {
     spyOn(comp.done, 'emit');
     comp.onForgotPasswordClick();
     expect(comp.done.emit).toHaveBeenCalledWith(true);
+  });
+
+  describe('loading state / oidc buttons', () => {
+    it('should set hasOidcProviders', () => {
+      comp.setHasOidcProviders(true);
+      expect(comp.hasOidcProviders).toBeTruthy();
+      expect(comp.hideLogin).toBeTrue();
+      expect((comp as any).loadingOidcProviders).toBeFalse();
+    });
+
+    it('should set hasOidcProviders to false', () => {
+      comp.setHasOidcProviders(false);
+      expect(comp.hasOidcProviders).toBeFalsy();
+      expect(comp.hideLogin).toBeFalse();
+      expect((comp as any).loadingOidcProviders).toBeFalse();
+    });
   });
 });

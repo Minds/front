@@ -171,6 +171,7 @@ describe('RegisterForm', () => {
     fixture = TestBed.createComponent(RegisterForm);
     comp = fixture.componentInstance;
 
+    (comp as any).loadingOidcProviders = false;
     (comp as any).experiments.hasVariation.and.returnValue(true);
     (comp as any).passwordInputHasFocus = true;
     (comp as any).usernameValidator.existingUsernameValidator.and.returnValue(
@@ -430,5 +431,19 @@ describe('RegisterForm', () => {
     oidcLoginButtons.componentInstance.done.emit();
 
     expect(comp.doneLogin.emit).toHaveBeenCalled();
+  });
+
+  describe('loading state / oidc buttons', () => {
+    it('should set hasOidcProviders', () => {
+      comp.setHasOidcProviders(true);
+      expect(comp.hideLogin).toBeTrue();
+      expect((comp as any).loadingOidcProviders).toBeFalse();
+    });
+
+    it('should set hasOidcProviders to false', () => {
+      comp.setHasOidcProviders(false);
+      expect(comp.hideLogin).toBeFalse();
+      expect((comp as any).loadingOidcProviders).toBeFalse();
+    });
   });
 });
