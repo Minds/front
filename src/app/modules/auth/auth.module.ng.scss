@@ -54,6 +54,10 @@
       margin: 0;
       @include heading3Bold;
     }
+
+    .m-auth__title--inline {
+      display: inline-block;
+    }
   }
 
   .m-form__row--label label,

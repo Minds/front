@@ -21,4 +21,24 @@ describe('ButtonComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('canWrap', () => {
+    it('should handle canWrap being set', () => {
+      component.canWrap = true;
+      fixture.detectChanges();
+
+      expect(
+        fixture.nativeElement.querySelector('.m-button--canWrap')
+      ).toBeTruthy();
+    });
+
+    it('should handle canWrap being unset', () => {
+      component.canWrap = false;
+      fixture.detectChanges();
+
+      expect(
+        fixture.nativeElement.querySelector('.m-button--canWrap')
+      ).toBeFalsy();
+    });
+  });
 });

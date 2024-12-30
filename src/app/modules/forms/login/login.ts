@@ -63,6 +63,9 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
 
   form: UntypedFormGroup;
 
+  /** Whether the login form is loading. */
+  protected loadingOidcProviders: boolean = true;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -202,5 +205,6 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
   public setHasOidcProviders(has: boolean): void {
     this.hideLogin = !!has;
     this.hasOidcProviders = has;
+    this.loadingOidcProviders = false;
   }
 }
