@@ -341,6 +341,12 @@ m-comments__entityOutlet,
     padding: $minds-padding 0;
   }
 
+  .m-attachmentPreviewWrapper .m-rich-embed {
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
   .m-comment-attachment,
   .m-comments-composer,
   .m-editable-attachment-container,
@@ -356,7 +362,6 @@ m-comments__entityOutlet,
 
       @include m-theme() {
         background-color: themed($m-bgColor--primary);
-        border: 1px solid themed($m-borderColor--primary);
       }
 
       m-richEmbed .m-rich-embed-src,
@@ -370,6 +375,7 @@ m-comments__entityOutlet,
         box-sizing: border-box;
 
         &.m-has-inline-embed {
+          flex-direction: column !important;
           flex-flow: column nowrap;
           height: unset;
         }
@@ -398,18 +404,18 @@ m-comments__entityOutlet,
 
           &.m-inline-embed {
             width: 100%;
-            max-height: 200px;
+            max-height: 300px;
             display: block;
             float: none;
             position: initial;
 
             .m-rich-embed-video-iframe {
-              padding-bottom: 200px;
+              padding-bottom: 260px;
             }
           }
 
           .m-rich-embed-video-iframe > iframe {
-            height: 200px;
+            height: 260px;
           }
         }
 

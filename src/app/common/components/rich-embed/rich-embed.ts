@@ -302,7 +302,8 @@ export class MindsRichEmbed implements OnDestroy {
     }
 
     // Vimeo
-    let vimeo = /^(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(\d+)/i;
+    let vimeo =
+      /^(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(\d+)(?:\/([\da-f]+))?(?:\?.*|$)/i;
 
     if ((matches = vimeo.exec(url)) !== null) {
       if (matches[1]) {
@@ -312,9 +313,9 @@ export class MindsRichEmbed implements OnDestroy {
           className:
             'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-vimeo',
           html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
-          src="https://player.vimeo.com/video/${matches[1]}?title=0&byline=0&portrait=0"
+          src="https://player.vimeo.com/video/${matches[1]}?h=${matches[2]}&title=0&byline=0&portrait=0&autoplay=1"
           frameborder="0"
-          webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>`),
+          webkitallowfullscreen mozallowfullscreen allowfullscreen allow="autoplay; fullscreen"></iframe>`),
           playable: true,
         };
       }
