@@ -9,6 +9,13 @@
     Warning: This is not reversible and will result in permanent loss of your
     channel and all of your data. Your channel will not be recoverable.
   </div>
+
+  <div class="m-settingsV2__desc" *ngIf="isTenant">
+    Please note that this action only deletes/deactivates your account on this
+    specific app. If you wish to take further action, such as canceling an
+    external paid subscription, please contact the network administrator for
+    assistance.
+  </div>
 </m-settingsV2__header>
 
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonLeft">

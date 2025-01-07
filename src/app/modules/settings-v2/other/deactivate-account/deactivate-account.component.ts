@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   OnInit,
 } from '@angular/core';
 import {
@@ -14,6 +15,7 @@ import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Settings form with a button for deactivating account
@@ -33,7 +35,8 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
     public client: Client,
     public router: Router,
     protected toasterService: ToasterService,
-    private session: Session
+    private session: Session,
+    @Inject(IS_TENANT_NETWORK) public isTenant: boolean
   ) {}
 
   ngOnInit() {

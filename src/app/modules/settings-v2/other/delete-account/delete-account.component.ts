@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   OnInit,
 } from '@angular/core';
 import {
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
 import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/modal.component';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Settings page with shareable referral links
@@ -34,7 +36,8 @@ export class SettingsV2DeleteAccountComponent implements OnInit {
     public client: Client,
     public router: Router,
     protected modalService: ModalService,
-    protected toasterService: ToasterService
+    protected toasterService: ToasterService,
+    @Inject(IS_TENANT_NETWORK) public isTenant: boolean
   ) {}
 
   ngOnInit() {
