@@ -46,6 +46,7 @@ import { WalletV2CreditsTransactionHistoryComponent } from './components/credits
 import { WalletV2CreditsSendComponent } from './components/credits/send/send.component';
 import { WalletV2CreditsProductUpgradeCardComponent } from './components/credits/send/product-upgrade-card/product-upgrade-card.component';
 import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
+import { WalletBridgeComponent } from './components/tokens/bridge/bridge.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' as PathMatch },
@@ -99,6 +100,10 @@ export const WALLET_ROUTES: Routes = [
           {
             path: 'transfers',
             component: WalletOnchainTransfersSummaryComponent,
+          },
+          {
+            path: 'bridge',
+            component: WalletBridgeComponent,
           },
         ],
       },
@@ -191,6 +196,7 @@ export const WALLET_ROUTES: Routes = [
     WalletCashOnboardingExtrasComponent,
     WalletCashBankFormComponent,
     WalletOnchainTransfersSummaryComponent,
+    WalletBridgeComponent,
     // MH fixed:
     WalletV2TokensComponent,
     WalletV2CashComponent,
