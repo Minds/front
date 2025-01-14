@@ -5,16 +5,18 @@
   <div
     class="m-settingsV2__desc"
     i18n="@@SETTINGS__OTHER__LEAVE__DELETE__DESCRIPTION"
+    *ngIf="!customDisclaimer"
   >
     Warning: This is not reversible and will result in permanent loss of your
     channel and all of your data. Your channel will not be recoverable.
   </div>
 
-  <div class="m-settingsV2__desc" *ngIf="isTenant">
-    Please note that this action only deletes/deactivates your account on this
-    specific app. If you wish to take further action, such as canceling an
-    external paid subscription, please contact the network administrator for
-    assistance.
+  <div
+    class="m-settingsV2__desc"
+    style="white-space: pre-line"
+    *ngIf="customDisclaimer"
+  >
+    {{ customDisclaimer }}
   </div>
 </m-settingsV2__header>
 

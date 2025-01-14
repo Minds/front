@@ -15,7 +15,7 @@ import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
-import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 /**
  * Settings form with a button for deactivating account
@@ -30,13 +30,15 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
   inProgress: boolean = false;
   form;
 
+  customDisclaimer: string;
+
   constructor(
     protected cd: ChangeDetectorRef,
     public client: Client,
     public router: Router,
     protected toasterService: ToasterService,
     private session: Session,
-    @Inject(IS_TENANT_NETWORK) public isTenant: boolean
+    private config: ConfigsService
   ) {}
 
   ngOnInit() {
@@ -45,6 +47,11 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
         validators: [Validators.requiredTrue],
       }),
     });
+
+    if (this.config.get('tenant')?.delete_account_disclaimer) {
+      this.customDisclaimer =
+        this.config.get('tenant')?.disable_account_disclaimer;
+    }
 
     this.detectChanges();
   }

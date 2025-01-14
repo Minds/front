@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/modal.component';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { ModalService } from '../../../../services/ux/modal.service';
-import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 /**
  * Settings page with shareable referral links
@@ -31,13 +31,15 @@ export class SettingsV2DeleteAccountComponent implements OnInit {
   inProgress: boolean = false;
   form;
 
+  customDisclaimer: string;
+
   constructor(
     protected cd: ChangeDetectorRef,
     public client: Client,
     public router: Router,
     protected modalService: ModalService,
     protected toasterService: ToasterService,
-    @Inject(IS_TENANT_NETWORK) public isTenant: boolean
+    private config: ConfigsService
   ) {}
 
   ngOnInit() {
@@ -46,6 +48,11 @@ export class SettingsV2DeleteAccountComponent implements OnInit {
         validators: [Validators.requiredTrue],
       }),
     });
+
+    if (this.config.get('tenant')?.delete_account_disclaimer) {
+      this.customDisclaimer =
+        this.config.get('tenant')?.delete_account_disclaimer;
+    }
 
     this.detectChanges();
   }

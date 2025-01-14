@@ -6,6 +6,7 @@
   </div>
   <div
     class="m-settingsV2__desc"
+    *ngIf="!customDisclaimer"
     i18n="@@SETTINGS__OTHER__LEAVE__DEACTIVATE__DESC"
   >
     Deactivating your account will make your profile invisible. You will also
@@ -13,11 +14,12 @@
     you wish to return.
   </div>
 
-  <div class="m-settingsV2__desc" *ngIf="isTenant">
-    Please note that this action only deletes/deactivates your account on this
-    specific app. If you wish to take further action, such as canceling an
-    external paid subscription, please contact the network administrator for
-    assistance.
+  <div
+    class="m-settingsV2__desc"
+    style="white-space: pre-line"
+    *ngIf="customDisclaimer"
+  >
+    {{ customDisclaimer }}
   </div>
 </m-settingsV2__header>
 
