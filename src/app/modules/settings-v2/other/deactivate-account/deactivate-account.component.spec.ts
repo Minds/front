@@ -15,6 +15,7 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { SettingsV2DeactivateAccountComponent } from './deactivate-account.component';
 import { Session } from '../../../../services/session';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 describe('DeactivateAccountComponent', () => {
   let component: SettingsV2DeactivateAccountComponent;
@@ -50,7 +51,7 @@ describe('DeactivateAccountComponent', () => {
         { provide: Router, useValue: MockService(Router) },
         { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: Session, useValue: MockService(Session) },
-        { provide: IS_TENANT_NETWORK, useValue: false },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents();
   }));
