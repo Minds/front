@@ -136,7 +136,7 @@
         </div>
         <m-button
           class="m-walletOnchainTransfer__transferButton"
-          [disabled]="!isFormValid() || loading || ethBalance === 0"
+          [disabled]="!isFormValid() || loading"
           [saving]="transferring"
           (onAction)="submitError ? load() : onSubmit()"
           color="blue"
