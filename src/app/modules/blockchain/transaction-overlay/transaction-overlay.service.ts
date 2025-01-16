@@ -73,6 +73,7 @@ export class TransactionOverlayService {
 
     try {
       result = await fn();
+      await result.wait();
     } catch (e) {
       if (
         e.value &&
