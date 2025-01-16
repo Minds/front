@@ -24,6 +24,6 @@ export const createWeb3ModalConfig = () => {
         },
       },
     },
-    network: '',
+    network: '8453',
   };
 };

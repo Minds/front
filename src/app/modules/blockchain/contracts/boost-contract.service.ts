@@ -62,26 +62,24 @@ export class BoostContractService {
   ) {
     const checksumInt = BigNumber.from('0x' + checksum).toString();
 
-    return await this.web3Wallet.sendSignedContractMethod(
+    // Increase the approval
+
+    await this.web3Wallet.sendSignedContractMethod(
       await this.tokenContract.token(),
-      'approveAndCall',
+      'approve',
+      [this.instance.address, this.tokenContract.tokenToUnit(amount)]
+    );
+
+    // Send the transaction
+
+    return await this.web3Wallet.sendSignedContractMethod(
+      this.instance,
+      'boost',
       [
-        this.instance.address,
+        guid,
+        this.web3Wallet.config.boost_wallet_address,
         this.tokenContract.tokenToUnit(amount),
-        this.tokenContract.encodeParams([
-          {
-            type: 'address',
-            value: this.web3Wallet.config.boost_wallet_address,
-          },
-          {
-            type: 'uint256',
-            value: guid,
-          },
-          {
-            type: 'uint256',
-            value: checksumInt,
-          },
-        ]),
+        checksumInt,
       ],
       `Network Boost for ${amount} Tokens. ${message}`.trim()
     );

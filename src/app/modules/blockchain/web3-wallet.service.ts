@@ -36,8 +36,20 @@ export class Web3WalletService {
       if (!this.checkDeviceIsSupported()) {
         return null;
       }
-      const provider = await this.web3modalService.open();
+      const provider = (await this.web3modalService.open()) as ExternalProvider;
       this.setProvider(provider);
+
+      // Make sure we are on the correct network
+      try {
+        await provider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [
+            {
+              chainId: BigNumber.from(this.config.chain_id).toHexString(),
+            },
+          ],
+        });
+      } catch (err) {}
     }
 
     return this.provider;
@@ -61,7 +73,7 @@ export class Web3WalletService {
   }
 
   setProvider(provider: ExternalProvider) {
-    this.provider = new Web3Provider(provider);
+    this.provider = new Web3Provider(provider, 8453);
   }
 
   async getWallets() {
@@ -129,7 +141,7 @@ export class Web3WalletService {
       chainId = network.chainId;
     }
 
-    return (chainId || 1) == this.config.client_network;
+    return (chainId || 1) == this.config.client_id;
   }
 
   // Bootstrap

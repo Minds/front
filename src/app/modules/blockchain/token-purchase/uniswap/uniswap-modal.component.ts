@@ -17,7 +17,7 @@ import { UniswapAction } from './uniswap-modal.service';
   styleUrls: ['./uniswap-modal.component.ng.scss'],
 })
 export class UniswapModalComponent {
-  private baseUrl = 'https://app.uniswap.org/#';
+  private baseUrl = 'https://app.uniswap.org';
   public action: UniswapAction;
   public iframeUrl: string;
 
@@ -35,11 +35,7 @@ export class UniswapModalComponent {
         this.iframeUrl += '&use=v2';
       }
     } else {
-      if (useV2) {
-        this.iframeUrl = `${this.baseUrl}/${this.action}/v2/ETH/${mindsTokenAddress}`;
-      } else {
-        this.iframeUrl = `${this.baseUrl}/${this.action}/ETH/${mindsTokenAddress}`;
-      }
+      this.iframeUrl = `${this.baseUrl}/positions`;
     }
   }
 

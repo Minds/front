@@ -197,7 +197,7 @@ export class WalletTokenRewardsComponent implements OnInit {
       return;
     }
 
-    const uniswapUrl = 'https://v2.info.uniswap.org/account/';
+    const uniswapUrl = 'https://app.uniswap.org/positions/';
     return uniswapUrl + address;
   }
 
