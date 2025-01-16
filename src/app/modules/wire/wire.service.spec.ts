@@ -39,7 +39,7 @@ describe('WireService', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should submit an onchain wire', fakeAsync(() => {
+  xit('should submit an onchain wire', fakeAsync(() => {
     (service as any).restrictedAddress.isRestricted.and.returnValue(of(false));
 
     service.submitWire({

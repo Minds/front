@@ -66,13 +66,13 @@ export class WireService {
         }
 
         try {
-          if (wire.recurring) {
-            await this.tokenContract.increaseApproval(
-              (await this.wireContract.wire()).address,
-              wire.amount * 11,
-              `We need you to pre-approve Minds Wire wallet for the recurring wire transactions.`
-            );
-          }
+          // if (wire.recurring) {
+          //   await this.tokenContract.increaseApproval(
+          //     (await this.wireContract.wire()).address,
+          //     wire.amount * 11,
+          //     `We need you to pre-approve Minds Wire wallet for the recurring wire transactions.`
+          //   );
+          // }
 
           const address = await this.web3Wallet.getCurrentWallet(true);
 
@@ -89,10 +89,13 @@ export class WireService {
           }
 
           payload.address = address;
-          payload.txHash = await this.wireContract.create(
+          payload.txHash = await (
+            await this.tokenContract.token()
+          ).transfer(
             payload.receiver,
-            wire.amount
+            this.tokenContract.tokenToUnit(wire.amount)
           );
+
           payload.method = 'onchain';
         } catch (e) {
           console.error('[Wire/Token]', e);
