@@ -62,10 +62,12 @@ export class TokenContractService {
 
   // Direct Minds payments
 
-  async payment(amount: number) {
-    return (await this.token()).transfer(
-      this.web3Wallet.config.wallet_address,
-      this.tokenToUnit(amount)
+  async transfer(to: string, amount: number) {
+    return await this.web3Wallet.sendSignedContractMethod(
+      await this.token(),
+      'transfer',
+      [to, this.tokenToUnit(amount)],
+      `Send ${amount} Tokens to ${to}`.trim()
     );
   }
 

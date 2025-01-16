@@ -89,11 +89,9 @@ export class WireService {
           }
 
           payload.address = address;
-          payload.txHash = await (
-            await this.tokenContract.token()
-          ).transfer(
+          payload.txHash = await this.tokenContract.transfer(
             payload.receiver,
-            this.tokenContract.tokenToUnit(wire.amount)
+            wire.amount
           );
 
           payload.method = 'onchain';
