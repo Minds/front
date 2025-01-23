@@ -20,17 +20,6 @@ export type Address = {
         [src]="this.cdnAssetsUrl + 'assets/icons/etherscan.svg'"
         class="m-txExplorers__icon"
       />
-      <img
-        (click)="onClick('bloxy')"
-        [src]="this.cdnAssetsUrl + 'assets/icons/bloxy.svg'"
-        class="m-txExplorers__icon"
-      />
-      <img
-        *ngIf="address?.type === 'txid'"
-        (click)="onClick('tenderly')"
-        [src]="this.cdnAssetsUrl + 'assets/icons/tenderly.png'"
-        class="m-txExplorers__icon"
-      />
     </div>
   `,
   styleUrls: ['./transaction-explorers.component.ng.scss'],
@@ -54,18 +43,9 @@ export class AdminTransactionExplorersComponent {
 
     switch (type) {
       case 'etherscan':
-        url = `https://etherscan.io/${
+        url = `https://basescan.org/${
           this.address.type === 'txid' ? 'tx' : 'address'
         }/${this.address.id}`;
-        break;
-      case 'bloxy':
-        url = `https://bloxy.info/${
-          this.address.type === 'txid' ? 'tx' : 'address'
-        }/${this.address.id}`;
-        break;
-      case 'tenderly':
-        // does not show if not a tx
-        url = `https://dashboard.tenderly.co/tx/main/${this.address.id}`;
         break;
     }
 
