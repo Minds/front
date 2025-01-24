@@ -66,6 +66,8 @@ import { ComposerSiteMembershipSelectorComponent } from '../popup/site-membershi
 import { SiteMembershipsCountService } from '../../../site-memberships/services/site-membership-count.service';
 import { ComposerBoostService } from '../../services/boost.service';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
+import { PlusUpgradeModalService } from '../../../wire/v2/plus-upgrade-modal.service';
+import { Session } from '../../../../services/session';
 
 /**
  * Composer toolbar. Displays important actions
@@ -209,6 +211,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected nsfwEnabledService: NsfwEnabledService,
     protected siteMembershipsCountService: SiteMembershipsCountService,
     private permissionService: PermissionsService,
+    private plusUpgradeModalService: PlusUpgradeModalService,
+    private session: Session,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
     this.canUploadAudio = this.permissionService.canUploadAudio();
@@ -509,6 +513,15 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   async onSchedulerClick($event?: MouseEvent): Promise<void> {
+    if (!this.isTenantNetwork && !this.session.getLoggedInUser()?.plus) {
+      this.toaster.warn('Only Plus members can schedule posts.');
+      await this.plusUpgradeModalService.open({
+        onPurchaseComplete(result) {
+          this.popup.create(ScheduleComponent).present().toPromise();
+        },
+      });
+      return;
+    }
     await this.popup
       .create(ScheduleComponent)
       .present()
