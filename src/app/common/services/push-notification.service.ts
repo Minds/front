@@ -53,7 +53,11 @@ export class PushNotificationService implements OnDestroy {
       return of(false);
     }
 
-    return of(this.swPush.isEnabled && !!this.serviceWorker.getController());
+    return of(
+      this.swPush.isEnabled &&
+        !!this.serviceWorker.getController() &&
+        !!window.PushManager
+    );
   }
 
   /**
