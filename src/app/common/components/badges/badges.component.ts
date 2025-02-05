@@ -98,6 +98,10 @@ export class ChannelBadgesComponent {
     return this.user.pro && this.badges.indexOf('pro') > -1;
   }
 
+  showBotBadge(): boolean {
+    return this.user.bot;
+  }
+
   showFounderBadge(): boolean {
     return (
       !this.isTenantNetwork &&

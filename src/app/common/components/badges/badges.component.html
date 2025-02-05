@@ -25,6 +25,14 @@
     </m-tooltip>
   </li>
   <!-- ---------------- -->
+  <!-- Bot -->
+  <!-- ---------------- -->
+  <li *ngIf="showBotBadge()">
+    <m-tooltip icon="smart_toy" iconClass="selected">
+      Bot / Automated Channel
+    </m-tooltip>
+  </li>
+  <!-- ---------------- -->
   <!-- PLUS -->
   <!-- ---------------- -->
   <li *ngIf="showPlusBadge()" routerLink="/plus">
