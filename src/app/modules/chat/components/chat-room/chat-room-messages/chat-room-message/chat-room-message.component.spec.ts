@@ -48,6 +48,12 @@ describe('ChatRoomMessageComponent', () => {
             standalone: true,
             template: `<ng-content></ng-content>`,
           }),
+          MockComponent({
+            selector: 'markdown',
+            inputs: ['data'],
+            standalone: true,
+            template: `{{ data }}`,
+          }),
         ],
       },
     });

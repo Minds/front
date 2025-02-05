@@ -178,6 +178,26 @@
           }
         }
       }
+
+      .m-chatRoomMessage__text ::ng-deep {
+        p {
+          display: inline-block;
+          word-break: break-word;
+          white-space: pre-line;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+        ol,
+        ul {
+          margin: 0;
+          li {
+            margin: 0;
+            padding: 0;
+          }
+        }
+      }
     }
   }
 

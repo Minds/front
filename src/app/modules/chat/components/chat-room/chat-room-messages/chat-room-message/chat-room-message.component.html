@@ -48,13 +48,15 @@
         />
       </div>
     } @else {
-      <span
+      <markdown
         *ngIf="plainText"
         class="m-chatRoomMessage__text"
         tabindex="0"
+        ngPreserveWhitespaces
         (click)="handleMessageTextClick($event)"
-        [innerHtml]="plainText | tags"
-      ></span>
+        [data]="plainText | tags"
+      ></markdown>
+
       <m-chatRoomMessage__richEmbed
         *ngIf="richEmbed"
         [thumbnailSrc]="richEmbed.thumbnailSrc"

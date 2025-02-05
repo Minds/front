@@ -21,6 +21,7 @@ import { GrowShrinkFastNoMarginShift } from '../../../../../../animations';
 import { WINDOW } from '../../../../../../common/injection-tokens/common-injection-tokens';
 import { ChatRoomMessageDropdownComponent } from './chat-room-message-dropdown/chat-room-message-dropdown.component';
 import { ChatRoomMessageRichEmbedComponent } from './chat-room-message-rich-embed/chat-room-message-rich-embed.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 /**
  * Message component for the chat room.
@@ -41,6 +42,7 @@ import { ChatRoomMessageRichEmbedComponent } from './chat-room-message-rich-embe
     ChatDatePipe,
     ChatRoomMessageDropdownComponent,
     ChatRoomMessageRichEmbedComponent,
+    MarkdownModule,
   ],
   standalone: true,
 })
