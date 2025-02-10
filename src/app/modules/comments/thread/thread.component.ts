@@ -19,6 +19,7 @@ import { BlockListService } from '../../../common/services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { PermissionIntentsService } from '../../../common/services/permission-intents.service';
 import { PermissionsEnum } from '../../../../graphql/generated.engine';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-comments__thread',
@@ -65,7 +66,7 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
   morePrevious: boolean = true;
 
   socketRoomName: string;
-  socketSubscriptions: any = {
+  socketSubscriptions: { comment: Subscription } = {
     comment: null,
   };
   direction: 'asc' | 'desc' = 'desc';
@@ -93,6 +94,13 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
       PermissionsEnum.CanComment
     );
     this.load(true);
+
+    // Listen to live comments
+    this.listen();
+  }
+
+  ngOnDestroy() {
+    this.socketSubscriptions.comment?.unsubscribe();
   }
 
   ngAfterViewInit(): void {
