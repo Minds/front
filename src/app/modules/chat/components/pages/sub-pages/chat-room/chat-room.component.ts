@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  Input,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -89,6 +90,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.chatMessagesService.initialized$;
 
   /** GUID of the room.  */
+  @Input()
   protected roomGuid: string;
 
   /** Whether the chat room is in request mode. */
@@ -115,16 +117,16 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const roomId: string = this.route.snapshot.paramMap.get('roomId') ?? null;
 
-    if (!roomId) {
+    if (!roomId && !this.roomGuid) {
       this.toaster.warn('Chat room not found');
       this.router.navigateByUrl('/chat/rooms');
       return;
     }
 
-    this.roomGuid = roomId;
-    this.singleChatRoomService.init(roomId);
-    this.totalChatRoomMembersService.setRoomGuid(roomId);
-    this.chatMessagesService.init(roomId);
+    this.roomGuid = roomId || this.roomGuid;
+    this.singleChatRoomService.init(this.roomGuid);
+    this.totalChatRoomMembersService.setRoomGuid(this.roomGuid);
+    this.chatMessagesService.init(this.roomGuid);
 
     this.requestMode = this.route.snapshot.data.requestMode ?? false;
 

@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+@import '../../../../../common/layout/layout.scss';
+
+$baseChatLayoutHeight: calc(100vh - $topbarHeight);
+
+m-chat__ai {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  height: calc(100vh - $topbarHeight);
+
+  @include m-theme() {
+    border-right: 1px solid themed($m-borderColor--primary);
+  }
+}
+
+/**
+ * This is a hacky workaround for an issue with ALL page layouts that at the time of writing
+ * that causes all pages to have an additional empty scrollable area due to the core
+ * site body being positioned with a margin-top (to prevent topbar underflow). For chat,
+ * we NEED the message input to be at the bottom of the visible page, and the visible page
+ * should not be scrollable - just the messages. So if we do not do this then a user will have
+ * to scroll down to see the chat bottom bar and have multiple scrollable areas.
+ */
+html:has(m-chat__ai) {
+  height: calc(100% - $topbarHeight);
+
+  &:has(.m-body__topbarAlert) {
+    height: calc(100% - calc($topbarHeight + $topbarAlertHeight--desktop));
+
+    @media screen and (max-width: $max-mobile) {
+      height: calc(100% - calc($topbarHeight + $topbarAlertHeight--mobile));
+    }
+  }
+
+  .has-v3-navbar {
+    padding-bottom: unset;
+  }
+}

@@ -13,6 +13,7 @@ import { ChatRequestsInfoSubPageComponent } from './components/pages/sub-pages/c
 import { ChatRoomComponent } from './components/pages/sub-pages/chat-room/chat-room.component';
 import { loggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
 import { ChatReceiptService } from './services/chat-receipt.service';
+import { AiChatComponent } from './components/pages/ai/ai-chat.component';
 
 const CHAT_ROUTES: Routes = [
   {
@@ -39,6 +40,13 @@ const CHAT_ROUTES: Routes = [
         data: { reloadOnParamChange: true },
       },
     ],
+  },
+  {
+    path: 'ai',
+    component: AiChatComponent,
+    data: {
+      fullWidthOnly: true,
+    },
   },
   {
     path: 'requests',

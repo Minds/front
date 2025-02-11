@@ -2,6 +2,22 @@
   <ul class="m-sidebarMore__dropdown">
     <!-- ------------------------------------------------------------ -->
     <ng-container *mIfTenant="false">
+      <li class="m-sidebarMoreDropdown__item" (click)="toggleSidebar()">
+        <a
+          [routerLink]="getCurrentUser() ? ['/networks'] : ['/about/networks']"
+          data-ref="sidenav-networks-list"
+        >
+          <i class="material-icons">dashboard</i>
+          <span
+            class="m-sidebarNavigationItem__text m-legible"
+            i18n="@@COMMON__NETWORKS"
+            >Networks</span
+          >
+        </a>
+      </li>
+    </ng-container>
+    <!-- ------------------------------------------------------------ -->
+    <ng-container *mIfTenant="false">
       <li
         class="m-sidebarMoreDropdown__item"
         *ngIf="getCurrentUser()"

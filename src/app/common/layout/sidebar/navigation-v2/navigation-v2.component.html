@@ -111,15 +111,38 @@
           </a>
         </li>
 
+        <!-- AI -->
+        <ng-container *ngIf="!!user">
+          <li
+            class="m-sidebarNavigation__item m-sidebarNavigation__item--ai"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              [routerLink]="['/chat/ai']"
+              (click)="toggle()"
+              data-ref="sidenav-ai"
+            >
+              <div class="m-sidebarNavigationItem__hoverArea">
+                <i class="material-icons">smart_toy</i>
+                <span
+                  class="m-sidebarNavigationItem__text m-legible"
+                  i18n="@@COMMON__CHAT"
+                  >AI</span
+                >
+              </div>
+            </a>
+          </li>
+        </ng-container>
+
         <!-- Chat -->
         <ng-container *ngIf="chatExperimentIsActive && !!user">
           <li
             class="m-sidebarNavigation__item m-sidebarNavigation__item--chat"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
-            [routerLinkActiveOptions]="{ exact: true }"
           >
             <a
-              [routerLink]="['/chat']"
+              [routerLink]="['/chat/rooms']"
               (click)="toggle()"
               data-ref="sidenav-chat"
             >
@@ -247,28 +270,6 @@
             </a>
           </li>
         </ng-container>
-
-        <!-- Networks -->
-        <li
-          class="m-sidebarNavigation__item m-sidebarNavigation__item--networks"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a
-            [routerLink]="isLoggedIn() ? ['/networks'] : ['/about/networks']"
-            (click)="toggle()"
-            data-ref="sidenav-networks-list"
-          >
-            <div class="m-sidebarNavigationItem__hoverArea">
-              <i class="material-icons">dashboard</i>
-              <span
-                class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__NETWORKS"
-                >Networks</span
-              >
-            </div>
-          </a>
-        </li>
 
         <!-- Upgrade -->
         <li
