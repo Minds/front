@@ -33,11 +33,10 @@ import { UserAvatarService } from '../../../common/services/user-avatar.service'
 import userMock from '../../../mocks/responses/user.mock';
 
 @Component({
-  selector: 'm-friendlyCaptcha',
+  selector: 'm-captcha',
   template: `
     <input ([ngModel])="(value)" (ngModelChange)="onChange($event)" />
   `,
-  inputs: ['puzzleOrigin'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

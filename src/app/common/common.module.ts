@@ -155,7 +155,6 @@ import { SeeLatestPostsButtonComponent } from './components/see-latest-posts-but
 import { ReportService } from './services/report.service';
 import { UserAggregatorComponent } from './components/user-aggregator/user-aggregator.component';
 import { ViewedDirective } from './directives/viewed.directive';
-import { FriendlyCaptchaComponent } from '../modules/captcha/friendly-catpcha/friendly-captcha.component';
 import { BoostButton } from './components/boost-button/boost';
 import { FeedHeaderComponent } from './components/feed-header/feed-header.component';
 import { AutocompleteUserInputComponent } from './components/forms/autocomplete-user-input/autocomplete-user-input.component';
@@ -238,7 +237,6 @@ const MINDS_COMMON_COMPONENTS = [
   FormInputCheckboxComponent,
   FormInputSliderComponent,
   FormInputSliderV2Component,
-  FriendlyCaptchaComponent,
   GroupMembershipButtonComponent,
   HovercardComponent,
   IconComponent,

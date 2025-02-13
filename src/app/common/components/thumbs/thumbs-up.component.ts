@@ -14,7 +14,6 @@ import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
-import { FriendlyCaptchaComponent } from '../../../modules/captcha/friendly-catpcha/friendly-captcha.component';
 import { ToasterService } from '../../services/toaster.service';
 import { CounterChangeFadeIn } from '../../../animations';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
@@ -39,11 +38,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
   };
 
   /**
-   * Will display the friendly captcha component and complete puzzle if true
-   */
-  public showFriendlyCaptcha = false;
-
-  /**
    * In progress state, eg. captcha working or api saving
    */
   @Input() inProgress = false;
@@ -60,9 +54,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    */
   @Output('thumbsUpChange') thumbsUpChange$: EventEmitter<void> =
     new EventEmitter();
-
-  @ViewChild(FriendlyCaptchaComponent)
-  friendlyCaptchaEl: FriendlyCaptchaComponent;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
@@ -96,19 +87,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
 
     this.inProgress = true;
 
-    if (this.isFriendlyCaptchaFeatureEnabled() && !this.has()) {
-      this.showFriendlyCaptcha = true;
-    } else {
-      this.submit();
-    }
-  }
-
-  /**
-   * Called when friendly captcha returns value
-   * @param solution
-   */
-  onFriendlyCaptchaComplete(solution: string): void {
-    this.submit(solution);
+    this.submit();
   }
 
   /**
@@ -140,10 +119,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       }),
     };
 
-    if (this.isFriendlyCaptchaFeatureEnabled()) {
-      data['puzzle_solution'] = solution;
-    }
-
     try {
       let response = await this.client.put(
         'api/v1/thumbs/' + this.object.guid + '/up',
@@ -153,7 +128,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       this.toast.error(e?.message ?? 'An unknown error has occurred');
     }
 
-    this.showFriendlyCaptcha = false;
     this.inProgress = false;
 
     if (!this.has()) {
@@ -187,13 +161,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       if (guid === this.session.getLoggedInUser().guid) return true;
     }
     return false;
-  }
-
-  public isFriendlyCaptchaFeatureEnabled(): boolean {
-    return this.experiments.hasVariation(
-      'minds-3119-captcha-for-engagement',
-      true
-    );
   }
 
   ngOnChanges(changes) {}

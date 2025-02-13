@@ -39,10 +39,3 @@
     >See more of this</span
   >
 </m-button>
-<!-- --------------------------------------------- -->
-<ng-container *ngIf="showFriendlyCaptcha">
-  <m-friendlyCaptcha
-    (done)="onFriendlyCaptchaComplete($event)"
-    [puzzleOrigin]="'vote_up'"
-  ></m-friendlyCaptcha>
-</ng-container>

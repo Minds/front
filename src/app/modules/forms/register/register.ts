@@ -23,7 +23,6 @@ import { PopoverComponent } from '../popover-validation/popover.component';
 import { CaptchaComponent } from '../../captcha/captcha.component';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
-import { FriendlyCaptchaComponent } from '../../captcha/friendly-catpcha/friendly-captcha.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { PasswordRiskValidator } from '../password-risk.validator';
 import { AnalyticsService } from './../../../services/analytics';
@@ -86,8 +85,6 @@ export class RegisterForm implements OnInit, OnDestroy {
 
   @ViewChild('popover') popover: PopoverComponent;
   @ViewChild(CaptchaComponent) captchaEl: CaptchaComponent;
-  @ViewChild(FriendlyCaptchaComponent)
-  friendlyCaptchaEl: FriendlyCaptchaComponent;
 
   /** Whether the register form is loading. */
   protected loadingOidcProviders: boolean = true;
@@ -268,7 +265,7 @@ export class RegisterForm implements OnInit, OnDestroy {
         this.inProgress = false;
 
         // refresh CAPTCHA.
-        this.friendlyCaptchaEl.reset();
+        this.captchaEl.refresh();
 
         if (e.status === 'failed') {
           // incorrect login details

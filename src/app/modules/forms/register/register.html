@@ -199,10 +199,7 @@
       <!-- ------------------------------- -->
       <div class="m-form__field--text stretchedField m-registerForm__captcha">
         <div class="m-form__row--input">
-          <m-friendlyCaptcha
-            formControlName="captcha"
-            [puzzleOrigin]="'registration'"
-          ></m-friendlyCaptcha>
+          <m-captcha formControlName="captcha"></m-captcha>
         </div>
       </div>
     </div>
