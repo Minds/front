@@ -14,7 +14,7 @@ export class ScrollService {
 
   constructor() {
     this.view = document.getElementsByTagName('body')[0];
-    this.view.scrollTop = 0;
+    // this.view.scrollTop = 0;
     this.scroll = fromEvent(window, 'scroll');
   }
 
