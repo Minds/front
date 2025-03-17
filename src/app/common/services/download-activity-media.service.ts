@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Client } from '../../services/api';
 import { ConfigsService } from './configs.service';
 import { ToasterService } from './toaster.service';
+import { blobDownload } from '../../utils/blob-download';
 
 @Injectable()
 export class DownloadActivityMediaService {
@@ -33,7 +34,16 @@ export class DownloadActivityMediaService {
      * TODO: enable videos
      */
     if (this.entity.content_type === 'video') {
+      this.toasterService.inform('Downloading video, please wait...');
       src = `${this.siteUrl}api/v3/media/video/download/${this.entity.entity_guid}`;
+      try {
+        const blob = await fetch(src);
+        blobDownload(await blob.blob(), {}, entity.guid + '.mp4');
+      } catch (err) {
+        console.error(err);
+        this.toasterService.error('There was an error download the video.');
+      }
+      return;
     } else if (
       this.entity.content_type === 'image' &&
       this.entity.custom_data &&
