@@ -276,7 +276,7 @@ export class ActivityService implements OnDestroy {
       if (entity.activity_type && entity.activity_type === 'quote') {
         contentType = getActivityContentType(entity.remind_object, true, true);
       }
-      return contentType === 'image';
+      return contentType === 'image' || contentType === 'video';
     })
   );
 
