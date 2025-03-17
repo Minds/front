@@ -37,8 +37,16 @@ export class DownloadActivityMediaService {
       this.toasterService.inform('Downloading video, please wait...');
       src = `${this.siteUrl}api/v3/media/video/download/${this.entity.entity_guid}`;
       try {
-        const blob = await fetch(src);
-        blobDownload(await blob.blob(), {}, entity.guid + '.mp4');
+        const link = document.createElement('a');
+        // Browsers that support HTML5 download attribute
+        if (link.download !== undefined) {
+          link.setAttribute('href', src);
+          link.setAttribute('download', entity.guid + '.mp4');
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
       } catch (err) {
         console.error(err);
         this.toasterService.error('There was an error download the video.');
