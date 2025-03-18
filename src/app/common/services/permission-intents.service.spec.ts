@@ -12,6 +12,7 @@ import {
   PermissionsEnum,
 } from '../../../graphql/generated.engine';
 import { ExportedPermissionIntent } from '../../modules/multi-tenant-network/admin-console/tabs/roles/tabs/permission-handling/permission-handling.component';
+import { PlusUpgradeModalService } from '../../modules/wire/v2/plus-upgrade-modal.service';
 
 describe('PermissionIntentsService', () => {
   let service: PermissionIntentsService;
@@ -30,6 +31,10 @@ describe('PermissionIntentsService', () => {
         {
           provide: SingleSiteMembershipModalService,
           useValue: MockService(SingleSiteMembershipModalService),
+        },
+        {
+          provide: PlusUpgradeModalService,
+          useValue: MockService(PlusUpgradeModalService),
         },
         { provide: IS_TENANT_NETWORK, useValue: true },
         { provide: SITE_NAME, useValue: siteName },

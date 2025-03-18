@@ -11,6 +11,7 @@ import { IS_TENANT_NETWORK } from '../injection-tokens/tenant-injection-tokens';
 import { ExportedPermissionIntent } from '../../modules/multi-tenant-network/admin-console/tabs/roles/tabs/permission-handling/permission-handling.component';
 import { SingleSiteMembershipModalService } from '../../modules/site-memberships/services/single-site-membership-modal.service';
 import { SITE_NAME } from '../injection-tokens/common-injection-tokens';
+import { PlusUpgradeModalService } from '../../modules/wire/v2/plus-upgrade-modal.service';
 
 /**
  * Service to handle permission intents. This service is used to check whether
@@ -24,6 +25,7 @@ export class PermissionIntentsService {
     private permissionsService: PermissionsService,
     private toasterService: ToasterService,
     private singleSiteMembershipModal: SingleSiteMembershipModalService,
+    private plusUpgradeModalService: PlusUpgradeModalService,
     @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean,
     @Inject(SITE_NAME) private readonly siteName: string
   ) {}
@@ -117,7 +119,17 @@ export class PermissionIntentsService {
         this.toasterService.warn("You don't have permission to vote or remind");
         break;
       case PermissionsEnum.CanUploadVideo:
-        this.toasterService.warn("You don't have permission to upload videos");
+        if (this.isTenantNetwork) {
+          this.toasterService.warn(
+            "You don't have permission to upload videos"
+          );
+        } else {
+          this.plusUpgradeModalService.open({
+            onPurchaseComplete(result) {
+              window.location.reload();
+            },
+          });
+        }
         break;
       case PermissionsEnum.CanCreateChatRoom:
         this.toasterService.warn(
