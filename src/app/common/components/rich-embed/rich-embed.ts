@@ -449,7 +449,7 @@ export class MindsRichEmbed implements OnDestroy {
           html: this.sanitizer.bypassSecurityTrustHtml(
             '<iframe class="rumble" width="640" height="360" src="' +
               matches[0] +
-              '?pub=4" frameborder="0" allowfullscreen></iframe>'
+              '?pub=7a20&autoplay=1" frameborder="0" allowfullscreen></iframe>'
           ),
           playable: true,
         };
@@ -503,7 +503,8 @@ export class MindsRichEmbed implements OnDestroy {
     return (
       this.mediaSource === 'youtube' ||
       this.mediaSource === 'minds' ||
-      this.mediaSource === 'scribd'
+      this.mediaSource === 'scribd' ||
+      this.mediaSource === 'rumble'
     );
   }
 
