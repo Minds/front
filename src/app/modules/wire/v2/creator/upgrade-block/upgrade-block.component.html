@@ -13,7 +13,7 @@
         <span
           *ngIf="!(isSendingGift$ | async); else plusGiftTitleTemplate"
           i18n="@@WIRE_CREATOR_MARKETING__GET_PLUS_EXPERIENCE"
-          >Get the complete Minds+ experience</span
+          >Unlock Premium Features with Minds+ 🚀</span
         >
         <ng-template #plusGiftTitleTemplate
           ><span i18n="@@WIRE_CREATOR_MARKETING__GIFT_PLUS_EXPERIENCE"
@@ -40,15 +40,19 @@
         <span
           *ngIf="isSendingGift$ | async; else notGiftPlusDescriptionTemplate"
           i18n="@@WIRE_CREATOR_MARKETING__PLUS_SELF_DESC"
-          >Minds+ is the upgrade designed for creators. Help your friends get
-          more reach, earning opportunities, and additional perks for supporting
-          Minds and its community.</span
+          >Minds is committed to protecting your Internet freedom, but
+          sustaining the rising infrastructure costs requires community support.
+          Upgrade to Minds+ today to unlock premium features, support open
+          source social media and contribute to the future growth of Minds
+          🤝</span
         >
         <ng-template #notGiftPlusDescriptionTemplate>
           <span i18n="@@WIRE_CREATOR_MARKETING__PLUS_GIFT_DESC"
-            >Minds+ is the upgrade designed for creators. Get more reach,
-            earning opportunities, and additional perks for supporting Minds and
-            its community.</span
+            >Minds is committed to protecting your Internet freedom, but
+            sustaining the rising infrastructure costs requires community
+            support. Upgrade to Minds+ today to unlock premium features, support
+            open source social media and contribute to the future growth of
+            Minds 🤝</span
           >
         </ng-template>
       </ng-container>
@@ -56,13 +60,19 @@
         <span
           *ngIf="isSendingGift$ | async; else notGiftProDescriptionTemplate"
           i18n="@@WIRE_CREATOR_MARKETING__PRO_GIFT_DESC"
-          >Help a friend take their channel to the next level with even more
-          Boost credits.</span
+          >Minds is committed to protecting your Internet freedom, but
+          sustaining the rising infrastructure costs requires community support.
+          Upgrade to Minds Pro today to unlock premium features, support open
+          source social media and contribute to the future growth of Minds
+          🤝</span
         >
         <ng-template #notGiftProDescriptionTemplate>
           <span i18n="@@WIRE_CREATOR_MARKETING__PRO_SELF_DESC"
-            >Take your channel to the next level with even more Boost
-            credits.</span
+            >Minds is committed to protecting your Internet freedom, but
+            sustaining the rising infrastructure costs requires community
+            support. Upgrade to Minds Pro today to unlock premium features,
+            support open source social media and contribute to the future growth
+            of Minds 🤝</span
           >
         </ng-template>
       </ng-container>
