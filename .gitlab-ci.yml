@@ -136,6 +136,7 @@ qa:e2e:
   except:
     refs:
       - /^master$/
+      - seco
       - feat/1732-block-refactor
     variables:
       - $CI_NIGHTLY_TESTS == "true"
