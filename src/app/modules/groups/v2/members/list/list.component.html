@@ -22,7 +22,7 @@
     <m-publisherCard
       *ngFor="let member of list$ | async"
       [publisher]="member"
-      [showDescription]="false"
+      [showDescription]="true"
       sizeOverride="medium"
       [showSubscribeButton]="member.guid !== session.getLoggedInUser().guid"
       ><m-group__memberActions
