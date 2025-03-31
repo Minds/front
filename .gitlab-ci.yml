@@ -191,6 +191,7 @@ build:review:
   except:
     refs:
       - master
+      - seco
       # - test/gitlab-ci
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -216,6 +217,7 @@ build:production:bundles:
   only:
     refs:
       - master
+      - seco
       - test/gitlab-ci
   except:
     variables:
@@ -253,6 +255,7 @@ prepare:review:
   except:
     refs:
       - master
+      - seco
       # - test/gitlab-ci
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -264,6 +267,7 @@ prepare:review:sentry:
   except:
     refs:
       - master
+      - seco
       # - test/gitlab-ci
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -283,6 +287,7 @@ prepare:production:
   only:
     refs:
       - master
+      - seco
       - test/gitlab-ci
   except:
     variables:
@@ -297,6 +302,7 @@ prepare:production:sentry:
   only:
     refs:
       - master
+      - seco
       - test/gitlab-ci
   except:
     variables:
@@ -347,6 +353,7 @@ dependency_scanning:
   except:
     refs:
       - master
+      - seco
       # - test/gitlab-ci
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -390,6 +397,7 @@ review:start:
   except:
     refs:
       - master
+      - seco
       # - test/gitlab-ci
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -401,6 +409,7 @@ review:stop:
   except:
     refs:
       - master
+      - seco
     variables:
       - $CI_NIGHTLY_TESTS == "true"
 
@@ -437,6 +446,7 @@ staging:fpm:
   only:
     refs:
       - master
+      - seco
       - test/gitlab-ci
   except:
     variables:
@@ -455,6 +465,7 @@ deploy:canary:
   only:
     refs:
       - master
+      - seco
       - test/gitlab-ci
   except:
     variables:
@@ -472,6 +483,7 @@ deploy:production:
   only:
     refs:
       - master
+      - seco
       - test/gitlab-ci
   except:
     variables:
@@ -488,5 +500,6 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
+      - seco
     variables:
       - $CI_NIGHTLY_TESTS == "true"
