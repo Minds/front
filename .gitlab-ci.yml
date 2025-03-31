@@ -489,8 +489,8 @@ deploy:production:
 deploy:seco:
   <<: *deploy
   after_script:
-    - crane tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID latest
-  stage: deploy:staging
+    - crane tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID seco
+  stage: deploy:seco
   variables:
     IMAGE_LABEL: 'seco'
   environment:
