@@ -1,4 +1,5 @@
 @import 'defaults.scss';
+@import '../../../../common/layout/layout.scss';
 
 :host {
   display: flex;
@@ -75,6 +76,10 @@
     align-items: center;
     padding: $spacing4;
     border-radius: 1rem;
+
+    @media screen and (min-width: ($layoutMax3ColWidth + 1)) {
+      margin-left: 100px;
+    }
 
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary);
