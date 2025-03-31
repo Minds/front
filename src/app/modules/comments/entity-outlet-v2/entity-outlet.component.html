@@ -47,7 +47,15 @@
     *ngIf="count > 0 && activityService.displayOptions.isFeed && !hideToggle"
     (click)="openFullComments()"
   >
-    View {{ count }} comment{{ count > 1 ? 's' : '' }}
+    <i class="material-icons">chat_bubble_outline</i> {{ count }} &middot;
+    {{ entity.time_created | friendlydatediff: '' : true }}
+    <div style="flex: 1"></div>
+    <span
+      >View
+      <i class="material-icons" style="vertical-align: middle"
+        >arrow_forward</i
+      ></span
+    >
   </div>
 
   <!-- -------------------- -->

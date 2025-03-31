@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { GroupEditService } from './edit.service';
+import { ApiService } from '../../../../common/api/api.service';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 /**
  * Edit component - modal
@@ -13,6 +20,9 @@ import { GroupEditService } from './edit.service';
   providers: [GroupEditService],
 })
 export class GroupEditComponent {
+  @ViewChild('aiThreads')
+  protected aiThreadsInput: ElementRef<HTMLInputElement>;
+
   /**
    * Modal save handler
    */
@@ -27,7 +37,10 @@ export class GroupEditComponent {
    * Constructor
    * @param service
    */
-  constructor(public service: GroupEditService) {}
+  constructor(
+    public service: GroupEditService,
+    private apiService: ApiService
+  ) {}
 
   /**
    * Modal options
@@ -46,6 +59,28 @@ export class GroupEditComponent {
    * Saves the updated group info
    */
   async onSubmit(): Promise<void> {
+    if (this.aiThreadsInput.nativeElement.files.length) {
+      const data = new FormData();
+      data.append('file', this.aiThreadsInput.nativeElement.files[0]);
+
+      try {
+        await lastValueFrom(
+          this.apiService.upload(
+            'api/v3/seco/import-threads/' + this.service.group$.value.guid,
+            {
+              file: this.aiThreadsInput.nativeElement.files[0],
+            },
+            {}
+          )
+        );
+
+        this.onDismissIntent();
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+    }
+
     const group = await this.service.save();
 
     if (group) {

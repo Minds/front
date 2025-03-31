@@ -19,6 +19,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 import { MindsGroup } from './group.model';
 import { DEFAULT_GROUP_VIEW } from './group.types';
+import { GroupAskAiComponent } from './ai/ask-ai.component';
 
 /**
  * Base container for all groupV2 page components

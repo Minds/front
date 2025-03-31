@@ -82,8 +82,13 @@
     cursor: pointer;
     padding-left: 0 !important;
     padding-right: 0 !important;
+
+    align-items: center;
+    display: flex;
+    gap: 8px;
+
     @include m-theme() {
-      color: themed($m-action);
+      color: themed($m-textColor--secondary);
     }
   }
 

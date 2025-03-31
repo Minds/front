@@ -36,6 +36,7 @@ import { GroupMembersListService } from './members/list/list.service';
 import { GroupEditButton } from './edit-button/edit-button.component';
 import { GroupFeedService } from './feed/feed.service';
 import { GroupChatButton } from './chat-button/chat-button.component';
+import { GroupAskAiComponent } from './ai/ask-ai.component';
 
 const routes: Routes = [
   {
@@ -101,6 +102,7 @@ const INTERNAL_COMPONENTS = [
     SuggestionsModule,
     GroupsModule,
     ComposerModule,
+    GroupAskAiComponent,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

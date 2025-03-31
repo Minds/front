@@ -1,0 +1,107 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  height: calc(100% - 570px);
+  flex-flow: column nowrap;
+  padding: $spacing4;
+
+  .s-chatMessages__list {
+    flex: 1;
+    gap: $spacing4;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 100px;
+  }
+
+  .s-chatBubble {
+    padding: $spacing4;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-borderColor--primary);
+    }
+    border-radius: 1rem;
+
+    width: 80%;
+    align-self: flex-end;
+
+    &.s-chatBubble--assistant {
+      align-self: flex-start;
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+      }
+    }
+
+    .s-chatBubble__author {
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .s-chatBubble__message ::ng-deep {
+      display: block;
+      p {
+        display: inline-block;
+        word-break: break-word;
+        white-space: pre-line;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+      ol,
+      ul {
+        margin: 0;
+        li {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
+
+    m-loadingEllipsis {
+      display: block;
+      margin-top: $spacing4;
+      text-align: left;
+    }
+  }
+
+  .s-chatMessages__send {
+    position: fixed;
+    bottom: $spacing4;
+    width: 50vw;
+    left: 25vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: $spacing4;
+    border-radius: 1rem;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--primary);
+    }
+
+    textarea {
+      flex: 1;
+      outline: 0;
+
+      border: none;
+      resize: none;
+      max-height: 180px;
+      min-width: 0;
+      width: 100%;
+
+      @include body2Regular;
+      @include vertical-scroll;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    i {
+      cursor: pointer;
+      @include unselectable;
+    }
+  }
+}

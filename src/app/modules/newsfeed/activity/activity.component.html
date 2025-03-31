@@ -35,8 +35,8 @@
         <m-activity__flag
           *ngIf="service.showFlagRow$ | async"
         ></m-activity__flag>
-        <m-activity__ownerBlock *ngIf="service.displayOptions.showOwnerBlock">
-        </m-activity__ownerBlock>
+        <!-- <m-activity__ownerBlock *ngIf="service.displayOptions.showOwnerBlock">
+        </m-activity__ownerBlock> -->
         <m-activity__content
           *ngIf="service.shouldShowContent$ | async"
         ></m-activity__content>
@@ -45,10 +45,11 @@
       </div>
     </div>
 
-    <m-activity__toolbar
+    <!-- <m-activity__toolbar
       *ngIf="service.displayOptions.showToolbar"
       (onDownvote)="onDownvote()"
-    ></m-activity__toolbar>
+    ></m-activity__toolbar> -->
+    <br />
 
     <m-activity__supermindReplyLink
       *ngIf="

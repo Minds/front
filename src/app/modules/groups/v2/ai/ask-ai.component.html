@@ -1,0 +1,40 @@
+<div class="s-chatMessages__list">
+  <!-- Messages -->
+  <div
+    *ngFor="let message of messages"
+    class="s-chatBubble"
+    [class.s-chatBubble--assistant]="message.role === 'ASSISTANT'"
+  >
+    <span class="s-chatBubble__author" *ngIf="message.role === 'USER'"
+      >You</span
+    >
+    <span class="s-chatBubble__author" *ngIf="message.role === 'ASSISTANT'"
+      >SECO AI</span
+    >
+
+    <markdown
+      class="s-chatBubble__message"
+      tabindex="0"
+      ngPreserveWhitespaces
+      [data]="message.content"
+    ></markdown>
+  </div>
+
+  <!-- Awaiting response block -->
+  <div class="s-chatBubble s-chatBubble--assistant" *ngIf="isAwaitingResponse">
+    <span class="s-chatBubble__author">SECO AI</span>
+    <m-loadingEllipsis></m-loadingEllipsis>
+  </div>
+</div>
+
+<!-- Send message input -->
+<div class="s-chatMessages__send">
+  <textarea
+    #chatInput
+    (keydown.enter)="onEnterPress($event)"
+    rows="1"
+    [autoGrow]
+    placeholder="Ask SECO AI anything..."
+  ></textarea>
+  <i class="material-icons" (click)="onSubmit()">send</i>
+</div>

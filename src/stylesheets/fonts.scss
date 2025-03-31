@@ -7,8 +7,10 @@
 @import '~@fontsource/inter/700.css';
 @import '~@fontsource/inter/900.css';
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Jost:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 body {
-  font-family: 'Inter', Helvetica, sans-serif;
+  font-family: 'Jost', 'Inter', Helvetica, sans-serif;
 }
 
 @font-face {

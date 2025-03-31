@@ -24,6 +24,15 @@
 
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
+
+      <m-accordion__pane
+        headerTitle="SECO AI"
+        i18n-headerTitle="@@GROUP_EDIT__PROFILE"
+      >
+        <input type="file" accept="application/json" #aiThreads />
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
     </m-accordion>
 
     <ng-template #saveButton>

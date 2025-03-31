@@ -7,7 +7,7 @@
       <!-- ----------------------------------------- -->
       <!-- TOOLBAR -->
       <!-- ----------------------------------------- -->
-      <div class="m-groupFeed__toolbar">
+      <div class="m-groupFeed__toolbar" hidden>
         <m-sort-selector
           class="m-groupFeed__sortSelector"
           [allowedAlgorithms]="false"
@@ -56,11 +56,11 @@
         <!-- ----------------------------------------- -->
         <!-- COMPOSER  -->
         <!-- ----------------------------------------- -->
-        <m-composer
+        <!-- <m-composer
           *ngIf="service.isMember$ | async"
           [container]="group"
           #composer
-        ></m-composer>
+        ></m-composer> -->
         <!-- ----------------------------------------- -->
         <!-- POSTS  -->
         <!-- ----------------------------------------- -->
