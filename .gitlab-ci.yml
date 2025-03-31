@@ -446,7 +446,6 @@ staging:fpm:
   only:
     refs:
       - master
-      - seco
       - test/gitlab-ci
   except:
     variables:
@@ -465,7 +464,6 @@ deploy:canary:
   only:
     refs:
       - master
-      - seco
       - test/gitlab-ci
   except:
     variables:
@@ -483,8 +481,24 @@ deploy:production:
   only:
     refs:
       - master
-      - seco
       - test/gitlab-ci
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
+
+deploy:seco:
+  <<: *deploy
+  after_script:
+    - crane tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID latest
+  stage: deploy:staging
+  variables:
+    IMAGE_LABEL: 'seco'
+  environment:
+    name: seco
+    url: https://app.seco.life 
+  only:
+    refs:
+      - seco
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
