@@ -189,7 +189,7 @@ m-marketing {
   h1,
   h3,
   h2 {
-    font-family: 'Inter', Helvetica, sans-serif;
+    font-family: 'Jost', Helvetica, sans-serif;
     margin: 0;
     @include m-theme() {
       color: themed($m-white);

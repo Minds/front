@@ -3,7 +3,7 @@
 :host {
   .m-moderationAppeal__header {
     padding: $spacing4;
-    font-family: 'Inter', Helvetica, sans-serif;
+    font-family: 'Jost', Helvetica, sans-serif;
     border-top-right-radius: $m-borderRadius;
     border-top-left-radius: $m-borderRadius;
 
@@ -41,7 +41,7 @@
       .m-moderationAppeal__commentNote {
         padding: 16px;
         text-align: center;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Jost', sans-serif;
         font-size: 12px;
         font-weight: 300;
 
@@ -76,7 +76,7 @@
         width: 100%;
         resize: none;
         font-weight: 300;
-        font-family: 'Inter', Helvetica, sans-serif;
+        font-family: 'Jost', Helvetica, sans-serif;
         padding: 16px;
         font-size: 13px;
         letter-spacing: -0.001em;
@@ -102,7 +102,7 @@
 
       p {
         margin: 0;
-        font-family: 'Inter', Helvetica, sans-serif;
+        font-family: 'Jost', Helvetica, sans-serif;
         font-size: 14px;
         letter-spacing: -0.001em;
       }

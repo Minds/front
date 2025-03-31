@@ -11,7 +11,7 @@
     position: relative;
     cursor: pointer;
     user-select: none;
-    font-family: 'Inter', Helvetica, sans-serif;
+    font-family: 'Jost', Helvetica, sans-serif;
     @include m-theme() {
       color: themed($m-grey-300);
     }

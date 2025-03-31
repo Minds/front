@@ -48,7 +48,7 @@
       padding: $spacing3 $spacing6;
       align-items: center;
       cursor: pointer;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
 
       @include m-theme() {
         background: themed($m-borderColor--primary);

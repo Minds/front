@@ -114,7 +114,7 @@
       vertical-align: middle;
       padding: 8px;
       line-height: 1em;
-      font-family: minds_emoji, 'Inter', Helvetica, sans-serif;
+      font-family: minds_emoji, 'Jost', Helvetica, sans-serif;
       @include m-theme() {
         background-color: themed($m-bgColor--primaryAlt);
       }

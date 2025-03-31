@@ -119,6 +119,7 @@
     span {
       white-space: nowrap;
       overflow-x: hidden;
+      overflow-y: hidden;
       text-overflow: ellipsis;
 
       @media screen and (min-width: $layoutMin3ColWidth) {

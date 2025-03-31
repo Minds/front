@@ -28,14 +28,14 @@
     a {
       display: block;
       text-decoration: none;
-      font-family: 'Inter', Helvetica, sans-serif;
+      font-family: 'Jost', Helvetica, sans-serif;
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
     }
     span {
       font-size: 11px;
-      font-family: 'Inter', Helvetica, sans-serif;
+      font-family: 'Jost', Helvetica, sans-serif;
       cursor: default;
       padding-left: 10px;
       @include m-theme() {
@@ -103,7 +103,7 @@
     }
 
     h1.m-blog--title {
-      font-family: 'Inter', Helvetica, sans-serif;
+      font-family: 'Jost', Helvetica, sans-serif;
       font-weight: 600;
       font-size: 26px;
       line-height: 1.3em;
@@ -311,7 +311,7 @@ minds-blog-edit {
     font-weight: 600;
     font-size: 42px;
     letter-spacing: 1.5px;
-    font-family: 'Inter', Helvetica, sans-serif;
+    font-family: 'Jost', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     line-height: 1.2em;
@@ -323,7 +323,7 @@ minds-blog-edit {
   h4 {
     font-weight: 600;
     letter-spacing: 1.5px;
-    font-family: 'Inter', Helvetica, sans-serif;
+    font-family: 'Jost', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -335,7 +335,7 @@ minds-blog-edit {
     font-size: 21px;
     line-height: 1.58;
     letter-spacing: -0.008em;
-    font-family: 'Inter', Helvetica, sans-serif;
+    font-family: 'Jost', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

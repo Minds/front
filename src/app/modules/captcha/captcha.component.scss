@@ -9,7 +9,7 @@
     @include m-theme() {
       background-color: themed($m-bgColor--primary) !important;
     }
-    font-family: 'Inter', Helvetica, sans-serif;
+    font-family: 'Jost', Helvetica, sans-serif;
     font-weight: 300;
 
     ::placeholder {

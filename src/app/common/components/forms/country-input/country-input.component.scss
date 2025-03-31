@@ -27,7 +27,7 @@ minds-country-input {
     appearance: none;
     display: block;
     width: 100%;
-    font-family: 'Inter', Helvetica, sans-serif;
+    font-family: 'Jost', Helvetica, sans-serif;
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary);
     }

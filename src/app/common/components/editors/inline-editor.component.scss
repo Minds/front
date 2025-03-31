@@ -112,7 +112,7 @@ m-inlineEditor {
 }
 
 .medium-editor-anchor-preview {
-  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-family: 'Jost', Helvetica, Arial, sans-serif;
   font-size: 16px;
   left: 0;
   line-height: 1.4;
@@ -207,7 +207,7 @@ m-inlineEditor {
 }
 
 .medium-editor-toolbar {
-  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-family: 'Jost', Helvetica, Arial, sans-serif;
   font-size: 16px;
   left: 0;
   position: absolute;
@@ -230,7 +230,7 @@ m-inlineEditor {
 }
 
 .medium-editor-toolbar li button {
-  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-family: 'Jost', Helvetica, Arial, sans-serif;
   box-sizing: border-box;
   cursor: pointer;
   display: block;
@@ -288,7 +288,7 @@ m-inlineEditor {
 
 .medium-editor-toolbar-form input,
 .medium-editor-toolbar-form a {
-  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-family: 'Jost', Helvetica, Arial, sans-serif;
 }
 
 .medium-editor-toolbar-form .medium-editor-toolbar-form-row {
@@ -529,7 +529,7 @@ m-inlineEditor {
     .medium-insert-link-input {
       border-radius: 3px;
       font-size: 12px;
-      font-family: 'Inter', Helvetica, sans-serif;
+      font-family: 'Jost', Helvetica, sans-serif;
       padding: 8px;
       flex-grow: 1;
       @include m-theme() {
