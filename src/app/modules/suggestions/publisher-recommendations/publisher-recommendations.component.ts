@@ -3,11 +3,13 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import {
   Component,
   EventEmitter,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
   Optional,
   Output,
+  PLATFORM_ID,
   SkipSelf,
 } from '@angular/core';
 import { BehaviorSubject, Subscription, map, take } from 'rxjs';
@@ -29,6 +31,7 @@ import {
   UserNode,
 } from '../../../../graphql/generated.engine';
 import { ParseJson } from '../../../common/pipes/parse-json';
+import { isPlatformServer } from '@angular/common';
 
 const listAnimation = trigger('listAnimation', [
   transition(':enter', [
@@ -157,7 +160,8 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
     private analyticsService: AnalyticsService,
     private newsfeedService: NewsfeedService,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
-    private parseJson: ParseJson
+    private parseJson: ParseJson,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
@@ -193,6 +197,10 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
       );
 
       return; // Don't load data via api
+    }
+
+    if (isPlatformServer(this.platformId)) {
+      return; // Don't load anything is server side
     }
 
     if (this.publisherType === 'group') {
