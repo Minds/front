@@ -5,6 +5,9 @@ FROM node:20-alpine
 
 RUN apk update && apk upgrade --no-cache
 
+ARG MINDS_VERSION="Unknown" 
+ENV MINDS_VERSION=${MINDS_VERSION}
+
 ENV PM2_MAX_MEMORY=512M
 ENV PM2_INSTANCES=2
 

@@ -280,6 +280,7 @@ prepare:production:
       --context "${CI_PROJECT_DIR}/dist"
       --dockerfile "${CI_PROJECT_DIR}/containers/server/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE}/server:$CI_PIPELINE_ID"
+      --build-arg MINDS_VERSION=$CI_PIPELINE_ID
   only:
     refs:
       - master
