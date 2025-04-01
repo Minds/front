@@ -366,7 +366,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.subscriptions.push(
-      this.feedQuery.valueChanges.subscribe((result) => {
+      this.feedQuery?.valueChanges.subscribe((result) => {
         this.inProgress = result.loading;
       })
     );
