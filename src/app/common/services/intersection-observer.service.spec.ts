@@ -1,4 +1,4 @@
-import { ElementRef } from '@angular/core';
+import { ElementRef, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IntersectionObserverService } from './intersection-observer.service';
 
@@ -6,7 +6,7 @@ describe('IntersectionObserverService', () => {
   let service: IntersectionObserverService;
 
   beforeEach(() => {
-    service = new IntersectionObserverService();
+    service = new IntersectionObserverService(PLATFORM_ID);
   });
 
   it('should be created', () => {

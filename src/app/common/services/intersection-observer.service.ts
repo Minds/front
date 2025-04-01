@@ -1,4 +1,6 @@
-import { ElementRef, Injectable } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { ElementRef, Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { platform } from 'os';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
 
@@ -10,6 +12,8 @@ import { distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class IntersectionObserverService {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   /**
    * Create interception observer and observe it.
    * @param { ElementRef } element - element to observe
@@ -20,6 +24,9 @@ export class IntersectionObserverService {
     opts: IntersectionObserverInit = {}
   ): Observable<boolean> {
     return new Observable((observer) => {
+      if (isPlatformServer(this.platformId)) {
+        return () => {};
+      }
       const intersectionObserver = new IntersectionObserver((entries) => {
         observer.next(entries);
       }, opts);
