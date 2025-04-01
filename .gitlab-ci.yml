@@ -234,7 +234,7 @@ build:production:bundles:
     - echo "Create a new release $CI_PIPELINE_ID"
     - sentry-cli releases new $CI_PIPELINE_ID
     - sentry-cli releases set-commits --auto $CI_PIPELINE_ID
-    - sentry-cli releases files $CI_PIPELINE_ID upload-sourcemaps $CI_PROJECT_DIR/dist/browser -x .js -x .map --validate --url-prefix $SOURCEMAP_PREFIX
+    - sentry-cli releases files $CI_PIPELINE_ID upload-sourcemaps $CI_PROJECT_DIR/dist/server -x .js -x .map --validate --url-prefix $SOURCEMAP_PREFIX
     - sentry-cli releases finalize $CI_PIPELINE_ID
     - echo "Finalized release for $CI_PIPELINE_ID"
 
