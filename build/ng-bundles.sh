@@ -5,8 +5,8 @@ EMBED_PATH=${1:-dist/embed}
 SERVER_PATH=${3:-dist/server}
 STORYBOOK_PATH=${3:-dist/storybook}
 
-# Allow Node.js to use up to 4G
-export NODE_OPTIONS="--max_old_space_size=4096"
+# Allow Node.js to use up to 6G
+export NODE_OPTIONS="--max_old_space_size=6442"
 
 # Build global CSS
 npx gulp build.sass --deploy-url="/static/en/"
