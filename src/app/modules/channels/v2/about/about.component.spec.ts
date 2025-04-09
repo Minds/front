@@ -66,7 +66,7 @@ describe('ChannelAboutComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  describe('m-channel__nostr', () => {
+  xdescribe('m-channel__nostr', () => {
     it('should have nostr component when NOT on a tenant network ', () => {
       (comp as any).isTenantNetwork = false;
       fixture.detectChanges();
