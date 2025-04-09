@@ -408,7 +408,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const pageInfo: PageInfo = await firstValueFrom(this.pageInfo$);
 
-    const result = await this.feedQuery.fetchMore({
+    const result = await this.feedQuery?.fetchMore({
       variables: {
         cursor: pageInfo.endCursor,
         inFeedNoticesDelivered: await firstValueFrom(
@@ -469,7 +469,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pageSize$.next(PAGE_SIZE);
 
     // Fetch new data
-    this.feedQuery.refetch({
+    this.feedQuery?.refetch({
       limit: PAGE_SIZE,
       algorithm: algo,
     });
