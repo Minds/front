@@ -8,5 +8,6 @@ export const SENTRY_IGNORED_ERRORS: Array<string | RegExp> = [
   /NotAllowedError: play\(\) can only be initiated by a user gesture./i,
   /Recognizer.noMatchError/i,
   /500 Internal Server Error|401 Unauthorized|403 Forbidden|404 Not Found|502 Bad Gateway|503 Service Unavailable/im,
+  /Uncaught ReferenceError: P is not defined/i,
   'RangeError',
 ];
