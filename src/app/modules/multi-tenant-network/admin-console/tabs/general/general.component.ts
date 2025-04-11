@@ -47,6 +47,8 @@ export class NetworkAdminConsoleGeneralComponent implements OnInit, OnDestroy {
   // subscriptions.
   private configLoadSubscription: Subscription;
 
+  public tenantId: number;
+
   constructor(
     private multiTenantConfigService: MultiTenantNetworkConfigService,
     private formBuilder: FormBuilder,
@@ -61,6 +63,7 @@ export class NetworkAdminConsoleGeneralComponent implements OnInit, OnDestroy {
         Validators.maxLength(50),
       ]),
     });
+    this.tenantId = this.configs.get('tenant_id');
   }
 
   ngOnInit(): void {
