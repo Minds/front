@@ -241,6 +241,7 @@ export class AnalyticsService implements OnDestroy {
     entity: ActivityEntity | MindsUser,
     clientMeta: Partial<ClientMetaData> = {}
   ): void {
+    if (!clientMeta.campaign) return; // Only log boost views
     this.capture(`${entity.type}_view`, {
       entity_guid: entity.guid,
       entity_owner_guid: entity.type === 'activity' ? entity.owner_guid : 0,
@@ -294,21 +295,19 @@ export class AnalyticsService implements OnDestroy {
     eventRef: string,
     contexts: SnowplowContext[] = []
   ): void {
-    const properties = {};
-
-    for (let context of contexts) {
-      if (context.schema === 'iglu:com.minds/entity_context/jsonschema/1-0-0') {
-        properties['entity_guid'] = context.data.entity_guid;
-        properties['entity_type'] = context.data.entity_type;
-        properties['entity_subtype'] = context.data.entity_subtype;
-        properties['entity_owner_guid'] = context.data.entity_owner_guid;
-      }
-    }
-
-    this.capture(`dataref_${eventType}`, {
-      ref: eventRef,
-      ...properties,
-    });
+    // const properties = {};
+    // for (let context of contexts) {
+    //   if (context.schema === 'iglu:com.minds/entity_context/jsonschema/1-0-0') {
+    //     properties['entity_guid'] = context.data.entity_guid;
+    //     properties['entity_type'] = context.data.entity_type;
+    //     properties['entity_subtype'] = context.data.entity_subtype;
+    //     properties['entity_owner_guid'] = context.data.entity_owner_guid;
+    //   }
+    // }
+    // this.capture(`dataref_${eventType}`, {
+    //   ref: eventRef,
+    //   ...properties,
+    // });
   }
 
   /**
