@@ -17,7 +17,7 @@
             [displayOptions]="{
               showOnlyCommentsInput: true,
               isFeed: true,
-              canShowLargeCta: isFeedBoostCtaExperimentActive
+              canShowLargeCta: true
             }"
             (deleted)="delete(preActivity)"
           ></m-activity>
@@ -78,7 +78,7 @@
                 isFeed: true,
                 showExplicitVoteButtons: edge.explicitVotes && !isTenant.is(),
                 hideTopBorder: edges?.[i - 1]?.__typename === 'FeedHeaderEdge',
-                canShowLargeCta: isFeedBoostCtaExperimentActive
+                canShowLargeCta: true
               }"
               [slot]="i + 1"
               (deleted)="delete(edge.node)"

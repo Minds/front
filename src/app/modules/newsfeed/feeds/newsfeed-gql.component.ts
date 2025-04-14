@@ -51,7 +51,6 @@ import { PermissionsService } from '../../../common/services/permissions.service
 import { IsTenantService } from '../../../common/services/is-tenant.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
-import { FeedBoostCtaExperimentService } from '../../experiments/sub-services/feed-boost-cta-experiment.service';
 
 const PAGE_SIZE = 12;
 
@@ -165,9 +164,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
 
   siteUrl: string;
 
-  /** Whether feed boost cta experiment is active. */
-  protected isFeedBoostCtaExperimentActive: boolean = false;
-
   constructor(
     public navigation: NavigationService,
     public router: Router,
@@ -184,7 +180,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     private fetchNewsfeed: FetchNewsfeedGQL,
     protected boostFeedService: BoostFeedService,
     protected experimentsService: ExperimentsService,
-    private feedBoostCtaExperimentService: FeedBoostCtaExperimentService,
     protected permissions: PermissionsService,
     protected isTenant: IsTenantService,
     protected session: Session,
@@ -321,9 +316,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.boostFeedService.init(); // Kick off the loading
-
-    this.isFeedBoostCtaExperimentActive =
-      this.feedBoostCtaExperimentService.isActive();
 
     this.subscriptions = [
       /**
