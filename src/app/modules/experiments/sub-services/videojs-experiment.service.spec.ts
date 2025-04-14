@@ -22,21 +22,21 @@ describe('VideoJsExperimentService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return true if experiment is active', () => {
-    (service as any).experiments.hasVariation.and.returnValue(true);
-    expect(service.isActive()).toBeTruthy();
-    expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'front-5408-videojs',
-      true
-    );
-  });
+  // it('should return true if experiment is active', () => {
+  //   (service as any).experiments.hasVariation.and.returnValue(true);
+  //   expect(service.isActive()).toBeTruthy();
+  //   expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
+  //     'front-5408-videojs',
+  //     true
+  //   );
+  // });
 
   it('should return false if experiment is NOT active', () => {
-    (service as any).experiments.hasVariation.and.returnValue(false);
+    // (service as any).experiments.hasVariation.and.returnValue(false);
     expect(service.isActive()).toBeFalsy();
-    expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'front-5408-videojs',
-      true
-    );
+    // expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
+    //   'front-5408-videojs',
+    //   true
+    // );
   });
 });

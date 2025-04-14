@@ -14,6 +14,7 @@ export class VideoJsExperimentService {
    * @returns { boolean } whether default front-5408-videojs experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('front-5408-videojs', true);
+    // return this.experiments.hasVariation('front-5408-videojs', true);
+    return false;
   }
 }
