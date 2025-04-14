@@ -36,7 +36,6 @@ export type NavigationItemExtended = NavigationItem & {
   mustBeLoggedIn?: boolean;
   routerLinkActiveExact?: boolean;
 };
-import { ChatExperimentService } from '../../../../modules/experiments/sub-services/chat-experiment.service';
 import { ChatReceiptService } from '../../../../modules/chat/services/chat-receipt.service';
 import { PermissionIntentsService } from '../../../services/permission-intents.service';
 
@@ -91,8 +90,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   // Used to determine whether to show 'new content dot'
   discoveryLinkClicked: boolean = false;
 
-  protected chatExperimentIsActive: boolean = false;
-
   /** Unread message count */
   public chatUnreadCount = 0;
 
@@ -139,7 +136,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private tenantConfigImageService: MultiTenantConfigImageService,
     protected permissions: PermissionsService,
     protected permissionIntentsService: PermissionIntentsService,
-    private chatExperimentService: ChatExperimentService,
     private chatReceiptService: ChatReceiptService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
@@ -156,8 +152,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     }
 
     this.settingsLink = '/settings';
-
-    this.chatExperimentIsActive = this.chatExperimentService.isActive();
 
     this.hasBoostPermission = this.permissions.canBoost();
 
@@ -193,21 +187,19 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
         })
     );
 
-    if (this.chatExperimentIsActive) {
-      this.subscriptions.push(
-        this.session.loggedinEmitter.subscribe((isLoggedIn: boolean) => {
-          if (isLoggedIn) {
-            this.initUnreadChatCountSubscription();
-          } else {
-            this.unreadChatCountSubscription?.unsubscribe();
-            this.unreadChatCountSubscription = null;
-          }
-        })
-      );
+    this.subscriptions.push(
+      this.session.loggedinEmitter.subscribe((isLoggedIn: boolean) => {
+        if (isLoggedIn) {
+          this.initUnreadChatCountSubscription();
+        } else {
+          this.unreadChatCountSubscription?.unsubscribe();
+          this.unreadChatCountSubscription = null;
+        }
+      })
+    );
 
-      if (isPlatformBrowser(this.platformId) && this.isLoggedIn()) {
-        this.initUnreadChatCountSubscription();
-      }
+    if (isPlatformBrowser(this.platformId) && this.isLoggedIn()) {
+      this.initUnreadChatCountSubscription();
     }
   }
 
@@ -216,7 +208,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
       this.groupSelectedSubscription.unsubscribe();
     }
 
-    if (this.chatExperimentIsActive && this.unreadChatCountSubscription) {
+    if (this.unreadChatCountSubscription) {
       this.unreadChatCountSubscription?.unsubscribe();
       this.unreadChatCountSubscription = null;
     }

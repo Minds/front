@@ -24,10 +24,7 @@ const CHAT_ROUTES: Routes = [
   {
     path: 'rooms',
     component: ChatRoomsListPageComponent,
-    canActivate: [
-      experimentVariationGuard('epic-358-chat'),
-      loggedInRedirectGuard('/'),
-    ],
+    canActivate: [loggedInRedirectGuard('/')],
     children: [
       {
         path: '',
@@ -51,10 +48,7 @@ const CHAT_ROUTES: Routes = [
   {
     path: 'requests',
     component: ChatRequestsPageComponent,
-    canActivate: [
-      experimentVariationGuard('epic-358-chat'),
-      loggedInRedirectGuard('/'),
-    ],
+    canActivate: [loggedInRedirectGuard('/')],
     children: [
       {
         path: '',

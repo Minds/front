@@ -40,7 +40,6 @@ import { OnboardingV4Service } from './modules/onboarding-v4/onboarding-v4.servi
 import { OnboardingV5ModalLazyService } from './modules/onboarding-v5/services/onboarding-v5-modal-lazy.service';
 import { OnboardingV5Service } from './modules/onboarding-v5/services/onboarding-v5.service';
 import { ExplainerScreensService } from './modules/explainer-screens/services/explainer-screen.service';
-import { ChatExperimentService } from './modules/experiments/sub-services/chat-experiment.service';
 import { ChatInitService } from './modules/chat/services/chat-init.service';
 import { HeadElementInjectorService } from './common/services/head-element-injector.service';
 
@@ -64,9 +63,6 @@ export class Minds implements OnInit, OnDestroy {
 
   private multiFactorSuccessSubscription: Subscription;
   private emailConfirmationLoginSubscription: Subscription;
-
-  /* Whether chat experiment is active */
-  private isChatExperimentActive: boolean = false;
 
   constructor(
     public session: Session,
@@ -102,7 +98,6 @@ export class Minds implements OnInit, OnDestroy {
     private onboardingV5ModalService: OnboardingV5ModalLazyService,
     private explainerScreenService: ExplainerScreensService,
     private chatInitService: ChatInitService,
-    private chatExperimentService: ChatExperimentService,
     private headElementInjectorService: HeadElementInjectorService
   ) {
     this.name = 'Minds';
@@ -194,8 +189,6 @@ export class Minds implements OnInit, OnDestroy {
     this.notificationService.listen();
     this.notificationService.updateNotificationCount();
 
-    this.isChatExperimentActive = this.chatExperimentService.isActive();
-
     this.session.isLoggedIn(async (is) => {
       if (is) {
         const user = this.session.getLoggedInUser();
@@ -217,15 +210,11 @@ export class Minds implements OnInit, OnDestroy {
         this.notificationService.listen();
         this.notificationService.updateNotificationCount();
 
-        if (this.isChatExperimentActive) {
-          this.chatInitService.reinit();
-        }
+        this.chatInitService.reinit();
       } else {
         this.notificationService.unlisten();
 
-        if (this.isChatExperimentActive) {
-          this.chatInitService.destroy();
-        }
+        this.chatInitService.destroy();
       }
     });
 
@@ -252,7 +241,7 @@ export class Minds implements OnInit, OnDestroy {
 
     this.socketsService.setUp();
 
-    if (this.isChatExperimentActive && this.session.isLoggedIn()) {
+    if (this.session.isLoggedIn()) {
       this.chatInitService.init();
     }
     // TODO uncomment this when we want logged out users

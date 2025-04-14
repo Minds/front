@@ -12,7 +12,6 @@ import { ApiService } from '../../../../common/api/api.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import { ChatExperimentService } from '../../../experiments/sub-services/chat-experiment.service';
 import { CreateChatRoomService } from '../../../chat/services/create-chat-room.service';
 import { Router } from '@angular/router';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
@@ -70,10 +69,6 @@ describe('ChannelActionsMessageComponent', () => {
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
         { provide: ToasterService, useValue: MockService(ToasterService) },
         {
-          provide: ChatExperimentService,
-          useValue: MockService(ChatExperimentService),
-        },
-        {
           provide: CreateChatRoomService,
           useValue: MockService(CreateChatRoomService),
         },
@@ -90,8 +85,6 @@ describe('ChannelActionsMessageComponent', () => {
     fixture = TestBed.createComponent(ChannelActionsMessageComponent);
     comp = fixture.componentInstance;
     spyOn(window, 'open');
-
-    (comp as any).isChatExperimentActive = false;
 
     Object.defineProperty(comp, 'isTenantNetwork', {
       value: true,
@@ -116,7 +109,6 @@ describe('ChannelActionsMessageComponent', () => {
   describe('shouldShow', () => {
     it('should determine button should show because not on tenant network and user has permission', () => {
       (comp as any).permissionIntentsService.shouldHide.and.returnValue(false);
-      (comp as any).isChatExperimentActive = false;
       Object.defineProperty(comp, 'isTenantNetwork', {
         value: false,
         writable: true,
@@ -130,7 +122,6 @@ describe('ChannelActionsMessageComponent', () => {
 
     it('should determine button should show because on tenant network and chat experiment is active with permission', () => {
       (comp as any).permissionIntentsService.shouldHide.and.returnValue(false);
-      (comp as any).isChatExperimentActive = true;
       Object.defineProperty(comp, 'isTenantNetwork', {
         value: true,
         writable: true,
@@ -143,7 +134,6 @@ describe('ChannelActionsMessageComponent', () => {
 
     it('should determine button should NOT show because not on tenant network, but the user has no permission', () => {
       (comp as any).permissionIntentsService.shouldHide.and.returnValue(true);
-      (comp as any).isChatExperimentActive = true;
       Object.defineProperty(comp, 'isTenantNetwork', {
         value: false,
         writable: true,
@@ -161,7 +151,6 @@ describe('ChannelActionsMessageComponent', () => {
       (comp as any).permissionIntentsService.checkAndHandleAction
         .withArgs(PermissionsEnum.CanCreateChatRoom)
         .and.returnValue(true);
-      (comp as any).isChatExperimentActive = true;
       (comp as any).createChatRoom.createChatRoom.and.returnValue(
         Promise.resolve(chatRoomId)
       );
@@ -180,7 +169,6 @@ describe('ChannelActionsMessageComponent', () => {
       (comp as any).permissionIntentsService.checkAndHandleAction
         .withArgs(PermissionsEnum.CanCreateChatRoom)
         .and.returnValue(true);
-      (comp as any).isChatExperimentActive = true;
       (comp as any).createChatRoom.createChatRoom.and.returnValue(
         Promise.resolve(chatRoomId)
       );
@@ -193,7 +181,6 @@ describe('ChannelActionsMessageComponent', () => {
     }));
 
     it('should handle minds internal chat requests and not navigate when there is an error', fakeAsync(() => {
-      (comp as any).isChatExperimentActive = true;
       (comp as any).permissionIntentsService.checkAndHandleAction
         .withArgs(PermissionsEnum.CanCreateChatRoom)
         .and.returnValue(true);
@@ -209,7 +196,6 @@ describe('ChannelActionsMessageComponent', () => {
     }));
 
     it('should NOT handle minds internal chat requests and not navigate when the user does not have permission', fakeAsync(() => {
-      (comp as any).isChatExperimentActive = true;
       (comp as any).permissionIntentsService.checkAndHandleAction
         .withArgs(PermissionsEnum.CanCreateChatRoom)
         .and.returnValue(false);
@@ -221,27 +207,6 @@ describe('ChannelActionsMessageComponent', () => {
         (comp as any).createChatRoom.createChatRoom
       ).not.toHaveBeenCalled();
       expect((comp as any).router.navigateByUrl).not.toHaveBeenCalled();
-    }));
-  });
-
-  describe('matrix chat requests', () => {
-    it('should handle minds matrix chat requests', fakeAsync(() => {
-      (comp as any).isChatExperimentActive = false;
-      (comp as any).api.put.and.returnValue(of({ room: { id: '12345' } }));
-      (comp as any).configs.get
-        .withArgs('matrix')
-        .and.returnValue({ chat_url: 'https://example.minds.com' });
-
-      comp.message();
-      tick();
-
-      expect((comp as any).api.put).toHaveBeenCalledWith(
-        'api/v3/matrix/room/' + userMock.guid
-      );
-      expect(window.open).toHaveBeenCalledWith(
-        'https://example.minds.com/#/room/12345',
-        'chat'
-      );
     }));
   });
 });
