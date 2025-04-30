@@ -262,7 +262,9 @@ export class ActivityContentComponent
       return false; // Plus videos always available
     }
 
-    if (this.entity.time_created * 1000 < Date.now() - 86400 * 30) {
+    const unixTx = Date.now() / 1000;
+    const expiresSec = 86400 * 30;
+    if (this.entity.time_created < unixTx - expiresSec) {
       return true; // Posts older than 30 days will show in this state
     }
     return false;
@@ -274,7 +276,7 @@ export class ActivityContentComponent
    */
   get shouldShowVideoExpiringWarning(): boolean {
     if (this.entity.owner_guid !== this.session.getLoggedInUser().guid) {
-      return false; // Not the oChatBotwner
+      return false; // Not the owner
     }
     if (this.entity.ownerObj.plus) {
       return false; // Don't show if plus
