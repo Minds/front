@@ -248,6 +248,44 @@ export class ActivityContentComponent
     );
   }
 
+  /**
+   * Hide the video player if the video is expired
+   */
+  get isVideoExpired(): boolean {
+    if (!this.isVideo) {
+      return false; // Only video can be in a video expired state
+    }
+    if (this.isTenantNetwork) {
+      return false; // Tenants will not show the expired state
+    }
+    if (this.entity.ownerObj.plus) {
+      return false; // Plus videos always available
+    }
+
+    if (this.entity.time_created * 1000 < Date.now() - 86400 * 30) {
+      return true; // Posts older than 30 days will show in this state
+    }
+    return false;
+  }
+
+  /**
+   * If the user is not plus and their video is not yet expired, show a warning
+   * if they own the post
+   */
+  get shouldShowVideoExpiringWarning(): boolean {
+    if (this.entity.owner_guid !== this.session.getLoggedInUser().guid) {
+      return false; // Not the oChatBotwner
+    }
+    if (this.entity.ownerObj.plus) {
+      return false; // Don't show if plus
+    }
+    if (this.isVideoExpired) {
+      return false; // Don't show if already expired
+    }
+
+    return true;
+  }
+
   constructor(
     public service: ActivityService,
     private modalService: ModalService,

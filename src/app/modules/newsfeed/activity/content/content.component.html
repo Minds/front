@@ -60,7 +60,7 @@ post content to trigger upgrade modal -->
   <!-- ----------------------------------- -->
   <div
     class="m-activityContent__media--video m-activityContent__media"
-    *ngIf="isVideo && !hasSiteMembershipPayallThumbnail"
+    *ngIf="isVideo && !hasSiteMembershipPayallThumbnail && !isVideoExpired"
     [ngClass]="{
       isPaywall: service.shouldShowPaywall$ | async,
       'm-activityContent__media--video--modal': isModal
@@ -86,6 +86,21 @@ post content to trigger upgrade modal -->
         [ngTemplateOutletContext]="{ hideText: sidebarMode }"
       ></ng-container>
     </m-videoPlayer--scrollaware>
+  </div>
+  <div class="m-activityContent__remindDeletedNotice" *ngIf="isVideoExpired">
+    <i class="material-icons">info</i>
+    <span>This video is no longer available.</span>
+  </div>
+  <div
+    class="m-activityContent__remindDeletedNotice"
+    *ngIf="shouldShowVideoExpiringWarning"
+  >
+    <i class="material-icons">info</i>
+    <span
+      >This video will be automatically deleted in 30 days.
+      <a routerLink="/upgrade">Upgrade to plus</a> to keep your videos
+      forever.</span
+    >
   </div>
   <!-- ----------------------------------- -->
   <!-- IMAGE -->
