@@ -276,6 +276,9 @@ export class ActivityContentComponent
    * if they own the post
    */
   get shouldShowVideoExpiringWarning(): boolean {
+    if (!this.isVideo) {
+      return false; // Only show to video posts
+    }
     if (this.entity.owner_guid !== this.session.getLoggedInUser().guid) {
       return false; // Not the owner
     }
