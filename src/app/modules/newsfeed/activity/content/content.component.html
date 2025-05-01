@@ -96,8 +96,12 @@ post content to trigger upgrade modal -->
     *ngIf="shouldShowVideoExpiringWarning"
   >
     <i class="material-icons">info</i>
-    <span
-      >This video will be automatically deleted in 30 days.
+    <span>
+      This video will be automatically deleted
+      <ng-container *ngIf="expiresInDays > 1; else altExpiresTxt">
+        in {{ expiresInDays }} days.
+      </ng-container>
+      <ng-template #altExpiresTxt> today. </ng-template>
       <a routerLink="/upgrade">Upgrade to plus</a> to keep your videos
       forever.</span
     >

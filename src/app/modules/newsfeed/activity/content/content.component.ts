@@ -34,6 +34,7 @@ import { PersistentFeedExperimentService } from '../../../experiments/sub-servic
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
 import getMetaAutoCaption from '../../../../helpers/meta-auto-caption';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
+import * as moment from 'moment';
 
 /**
  * The content of the activity and the paywall, if applicable.
@@ -286,6 +287,12 @@ export class ActivityContentComponent
     }
 
     return true;
+  }
+
+  get expiresInDays(): number {
+    const now = moment();
+    const expiresAt = moment(this.entity.time_created * 1000).add(30, 'days');
+    return expiresAt.diff(now, 'days');
   }
 
   constructor(
