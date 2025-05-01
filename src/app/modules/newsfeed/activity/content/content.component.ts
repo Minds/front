@@ -291,7 +291,7 @@ export class ActivityContentComponent
 
   get expiresInDays(): number {
     const now = moment();
-    const expiresAt = moment(this.entity.time_created * 1000).add(30, 'days');
+    const expiresAt = moment(this.entity.time_created * 1000).add(31, 'days');
     return expiresAt.diff(now, 'days');
   }
 
