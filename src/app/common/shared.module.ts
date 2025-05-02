@@ -12,6 +12,7 @@ import { PermissionsService } from './services/permissions.service';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { TopbarService } from './layout/topbar.service';
 import { IS_TENANT_NETWORK } from './injection-tokens/tenant-injection-tokens';
+import { isPlatformBrowser } from '@angular/common';
 
 @NgModule({
   imports: [Web3ModalModule],
@@ -22,11 +23,14 @@ import { IS_TENANT_NETWORK } from './injection-tokens/tenant-injection-tokens';
     ResetPasswordModalService,
     {
       provide: Web3ModalService,
-      useFactory: () => {
-        const config = createWeb3ModalConfig();
+      useFactory: (platformId: Object) => {
+        if (isPlatformBrowser(platformId)) {
+          const config = createWeb3ModalConfig();
 
-        return new Web3ModalService(config);
+          return new Web3ModalService(config);
+        }
       },
+      deps: [PLATFORM_ID],
     },
     {
       provide: Web3WalletService,

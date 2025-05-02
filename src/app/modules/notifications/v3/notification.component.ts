@@ -13,7 +13,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { utils } from 'ethers';
+import { formatEther } from 'ethers';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
@@ -654,7 +654,7 @@ export class NotificationsV3NotificationComponent
    * Convert big number to a readable token amount
    */
   formatTokenAmount(tokens: string | number): string {
-    const readableTokens = utils.formatEther(tokens);
+    const readableTokens = formatEther(tokens);
     const method = readableTokens === '1' ? ' token' : ' tokens';
 
     return readableTokens + method;

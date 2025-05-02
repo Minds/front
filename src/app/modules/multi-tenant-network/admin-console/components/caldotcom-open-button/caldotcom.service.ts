@@ -16,6 +16,7 @@ export class CalDotComService {
    * @returns { void }
    */
   public loadScript(): void {
+    return;
     if (this.loaded) {
       console.info('Did not reload cal.com script - it is already loaded');
       return;

@@ -6,7 +6,7 @@ import {
 } from '@sentry/angular';
 import { REQUEST } from '../../../../express.tokens';
 import { SSR_SENTRY_INTEGRATIONS } from '../../injection-tokens/common-injection-tokens';
-import type { Integration } from '@sentry/types';
+import type { Integration } from '@sentry/core';
 import { isPlatformBrowser } from '@angular/common';
 export { DiagnosticsService } from './diagnostics.service';
 

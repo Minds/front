@@ -51,12 +51,13 @@ export class ConnectWalletModalComponent {
         unix_ts: Math.round(Date.now() / 1000),
       });
 
-      const signer = this.web3Wallet.getSigner();
+      const provider = this.web3Wallet.provider;
+      const signer = await this.web3Wallet.getSigner();
       const address = await signer.getAddress();
-      const msgHashBytes = ethers.utils.toUtf8Bytes(msg);
+      const msgHashBytes = ethers.toUtf8Bytes(msg);
 
-      const signature = await signer.provider.send('personal_sign', [
-        ethers.utils.hexlify(msgHashBytes),
+      const signature = await provider.send('personal_sign', [
+        ethers.hexlify(msgHashBytes),
         address.toLowerCase(),
       ]);
 
