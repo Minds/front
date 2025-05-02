@@ -1,19 +1,19 @@
-import * as gulp from 'gulp';
-import autoprefixer from 'gulp-autoprefixer';
-import gulpSass from 'gulp-sass';
-import * as dartSass from 'sass';
-import sassGlob from 'gulp-sass-glob';
-import template from 'gulp-template';
+const gulp = require('gulp');
+const autoprefixer = require('gulp-autoprefixer');
+const gulpSass = require('gulp-sass');
+const dartSass = require('sass');
+const sassGlob = require('gulp-sass-glob');
+const template = require('gulp-template');
 
-import { join } from 'path';
-import yargs from 'yargs';
-import { hideBin } from 'yargs/helpers';
+const { join } = require('path');
+const yargs = require('yargs');
+const { hideBin } = require('yargs/helpers');
 
 const argv = yargs(hideBin(process.argv)).argv;
 
 const sass = gulpSass(dartSass);
 
-const __dirname = './';
+// const __dirname = './';
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 11',
