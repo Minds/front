@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BigNumber } from 'ethers';
+import { parseUnits } from 'ethers';
 
 import { Web3WalletService } from '../web3-wallet.service';
 
@@ -50,14 +50,13 @@ export class WithdrawContractService {
   async request(guid: string | number, amount: string, message: string = '') {
     await this.contract(); //wait for instance to get correct info
 
-    const tokens = this.web3Wallet.fromWei(BigNumber.from(amount), 'ether');
+    const tokens = this.web3Wallet.fromWei(amount);
 
-    const gasLimit = 67839; //TODO: make this dynamic
-    const gas = BigNumber.from(this.instance.defaultTxObject.gasPrice).mul(
-      BigNumber.from(gasLimit)
-    );
+    const gasLimit = 67839n; //TODO: make this dynamic
+    const gasPrice = BigInt(this.instance.defaultTxObject.gasPrice);
+    const gas = gasPrice * gasLimit;
 
-    const gasEther = this.web3Wallet.fromWei(gas, 'ether');
+    const gasEther = this.web3Wallet.fromWei(gas);
 
     let tx = await this.web3Wallet.sendSignedContractMethodWithValue(
       await this.contract(),

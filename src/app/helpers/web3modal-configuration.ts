@@ -1,4 +1,4 @@
-import WalletConnectProvider from '@walletconnect/web3-provider';
+import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import WalletLink from 'walletlink';
 
 export const createWeb3ModalConfig = () => {

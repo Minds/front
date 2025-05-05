@@ -54,7 +54,7 @@ export class WireContractService {
       await this.tokenContract.token(),
       'approveAndCall',
       [
-        this.instance.address,
+        this.instance.target,
         this.tokenContract.tokenToUnit(amount),
         this.tokenContract.encodeParams([
           {

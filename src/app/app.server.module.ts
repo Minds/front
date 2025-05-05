@@ -22,6 +22,7 @@ import {
 } from './common/services/diagnostics/server-diagnostics.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { POSTHOG_JS } from './common/services/posthog/posthog-injection-tokens';
+import { Web3ModalService } from '@mindsorg/web3modal-angular';
 
 PlotlyModule.plotlyjs = {
   react: () => {},
@@ -57,6 +58,10 @@ export const SERVER_PROVIDERS = [
   {
     provide: POSTHOG_JS,
     useValue: {},
+  },
+  {
+    provide: Web3ModalService,
+    useValue: undefined,
   },
 ];
 

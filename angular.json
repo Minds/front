@@ -91,7 +91,6 @@
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
-              "src/shims/jitsi-api.min.js",
               "node_modules/marked/marked.min.js"
             ],
             "stylePreprocessorOptions": {
@@ -209,8 +208,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
-              "node_modules/medium-editor/dist/js/medium-editor.min.js",
-              "src/shims/jitsi-api.min.js"
+              "node_modules/medium-editor/dist/js/medium-editor.min.js"
             ],
             "assets": ["src/assets", "src/favicon.ico"],
             "polyfills": "src/polyfills.ts",
