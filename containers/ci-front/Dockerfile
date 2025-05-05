@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:22-alpine
 
 # We need git and libsass 
 
@@ -8,7 +8,7 @@ RUN apk add --no-cache \
 
 # Update NPM
 
-RUN npm install -g npm@9.4.0
+RUN npm install -g npm@10.9.2
 
 # Ensure we have typescript and angular
 

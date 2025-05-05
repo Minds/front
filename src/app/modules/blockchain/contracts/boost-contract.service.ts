@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenContractService } from './token-contract.service';
 import { isPlatformBrowser } from '@angular/common';
-import { BigNumber } from 'ethers';
+import { toBeHex } from 'ethers';
 
 @Injectable()
 export class BoostContractService {
@@ -60,14 +60,14 @@ export class BoostContractService {
     checksum: string,
     message: string = ''
   ) {
-    const checksumInt = BigNumber.from('0x' + checksum).toString();
+    const checksumInt = toBeHex('0x' + checksum);
 
     // Increase the approval
 
     await this.web3Wallet.sendSignedContractMethod(
       await this.tokenContract.token(),
       'approve',
-      [this.instance.address, this.tokenContract.tokenToUnit(amount)]
+      [this.instance.target, this.tokenContract.tokenToUnit(amount)]
     );
 
     // Send the transaction
@@ -96,7 +96,7 @@ export class BoostContractService {
       await this.tokenContract.token(),
       'approveAndCall',
       [
-        this.instance.address,
+        this.instance.target,
         this.tokenContract.tokenToUnit(amount),
         this.tokenContract.encodeParams([
           {

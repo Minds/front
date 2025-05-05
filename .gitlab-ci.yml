@@ -14,10 +14,10 @@ stages:
   - cleanup
 
 variables:
-  CYPRESS_INSTALL_BINARY: "0" # Speeds up the install process
+  CYPRESS_INSTALL_BINARY: '0' # Speeds up the install process
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
-  FF_USE_FASTZIP: "1"
+  FF_USE_FASTZIP: '1'
 
 cache:
   key:
@@ -41,7 +41,7 @@ test:
 
 lint:
   stage: test and build
-  image: minds/ci-front:18
+  image: minds/ci-front:22
   script:
     - npm i -g prettier@"~3.2.5"
     - prettier --check "src/**/*.ts"
@@ -58,7 +58,7 @@ lint:
   image: cypress/browsers:node18.12.0-chrome107
   stage: qa
   variables:
-    CYPRESS_INSTALL_BINARY: "7.4.0"
+    CYPRESS_INSTALL_BINARY: '7.4.0'
   script:
     - >
       if [ "$CI_BUILD_REF_NAME" == "master" ]; then
@@ -75,8 +75,8 @@ lint:
     - BRANCH_EXISTS=$(git ls-remote --heads https://www.gitlab.com/minds/cypress-tests $CI_BUILD_REF_NAME | wc -l)
     - cd ./cypress-tests
     - if [ $BRANCH_EXISTS == "1" ] ; then
-    -    echo "Matching branch exists, checking out $CI_BUILD_REF_NAME..."
-    -    git checkout $CI_BUILD_REF_NAME 2>/dev/null
+    - echo "Matching branch exists, checking out $CI_BUILD_REF_NAME..."
+    - git checkout $CI_BUILD_REF_NAME 2>/dev/null
     - fi;
     - npm i
     - echo "Running Cypress"
@@ -177,7 +177,7 @@ qa:nightly:
 
 build:review:
   stage: test and build
-  image: minds/ci-front:18
+  image: minds/ci-front:22
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
@@ -199,7 +199,7 @@ build:review:
 
 build:production:bundles:
   stage: test and build
-  image: minds/ci-front:18
+  image: minds/ci-front:22
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
@@ -242,7 +242,7 @@ prepare:review:
   stage: prepare
   image:
     name: gcr.io/kaniko-project/executor:v1.14.0-debug
-    entrypoint: [""]
+    entrypoint: ['']
   script:
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}/dist"
@@ -274,7 +274,7 @@ prepare:production:
   stage: prepare
   image:
     name: gcr.io/kaniko-project/executor:v1.14.0-debug
-    entrypoint: [""]
+    entrypoint: ['']
   script:
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}/dist"
@@ -326,7 +326,7 @@ dependency_scanning:
   - cp $OCI_CONFIG ~/.oci/config
   - cp $OCI_KEY /tmp/oci-key.pem
   - export OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING=True
-  - | 
+  - |
     oci ce cluster create-kubeconfig \
       --cluster-id $OKE_CLUSTER_ID \
       --file $KUBECONFIG \
@@ -363,8 +363,8 @@ review:start:
     - BRANCH_EXISTS=$(git ls-remote --heads $HELM_GIT_REPO $CI_BUILD_REF_NAME | wc -l)
     - cd ./helm-charts
     - if [ $BRANCH_EXISTS == "1" ] ; then
-    -    echo "Matching branch exists, checking out $CI_BUILD_REF_NAME..."
-    -    git checkout $CI_BUILD_REF_NAME 2>/dev/null
+    - echo "Matching branch exists, checking out $CI_BUILD_REF_NAME..."
+    - git checkout $CI_BUILD_REF_NAME 2>/dev/null
     - fi;
     #
     - "helm upgrade \

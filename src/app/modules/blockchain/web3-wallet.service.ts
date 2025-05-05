@@ -1,11 +1,23 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
-import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
+import {
+  AbiCoder,
+  Interface,
+  BigNumberish,
+  Contract,
+  Wallet,
+  ParamType,
+  SigningKey,
+  formatUnits,
+  parseUnits,
+  toBeHex,
+  BrowserProvider,
+  Eip1193Provider,
+  Signer,
+} from 'ethers';
 import { Web3ModalService } from '@mindsorg/web3modal-angular';
 import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
-import { defaultAbiCoder, Interface } from 'ethers/lib/utils';
 import { ToasterService } from '../../common/services/toaster.service';
 import isMobileOrTablet from '../../helpers/is-mobile-or-tablet';
 import { isSafari } from '../../helpers/is-safari';
@@ -15,7 +27,7 @@ type Address = string;
 @Injectable()
 export class Web3WalletService {
   public config; // TODO add types
-  public provider: Web3Provider | null = null;
+  public provider: BrowserProvider | null = null;
   protected unavailable: boolean = false;
   protected local: boolean = false;
   protected _ready: Promise<any>;
@@ -36,7 +48,7 @@ export class Web3WalletService {
       if (!this.checkDeviceIsSupported()) {
         return null;
       }
-      const provider = (await this.web3modalService.open()) as ExternalProvider;
+      const provider = (await this.web3modalService.open()) as Eip1193Provider;
       this.setProvider(provider);
 
       // Make sure we are on the correct network
@@ -45,7 +57,7 @@ export class Web3WalletService {
           method: 'wallet_switchEthereumChain',
           params: [
             {
-              chainId: BigNumber.from(this.config.chain_id).toHexString(),
+              chainId: toBeHex(this.config.chain_id),
             },
           ],
         });
@@ -55,9 +67,9 @@ export class Web3WalletService {
     return this.provider;
   }
 
-  getSigner() {
+  async getSigner(): Promise<Signer> {
     if (this.provider) {
-      return this.provider.getSigner();
+      return await this.provider.getSigner();
     }
 
     return null;
@@ -72,8 +84,8 @@ export class Web3WalletService {
     return new Interface(abi);
   }
 
-  setProvider(provider: ExternalProvider) {
-    this.provider = new Web3Provider(provider, 8453);
+  setProvider(provider: Eip1193Provider) {
+    this.provider = new BrowserProvider(provider, 8453);
   }
 
   async getWallets() {
@@ -93,7 +105,7 @@ export class Web3WalletService {
       await this.initializeProvider();
     }
 
-    const signer = this.getSigner();
+    const signer = await this.getSigner();
 
     if (!signer) {
       return false;
@@ -103,13 +115,14 @@ export class Web3WalletService {
   }
 
   async getBalance(): Promise<string | false> {
-    const signer = this.getSigner();
+    const signer = await this.getSigner();
 
     if (!signer) {
       return false;
     }
 
-    const balance = await signer.getBalance();
+    const address = await signer.getAddress();
+    const balance = await this.provider.getBalance(address);
 
     return balance.toString();
   }
@@ -163,17 +176,17 @@ export class Web3WalletService {
     value: number | string,
     message: string = ''
   ): Promise<string> {
-    const connectedContract = contract.connect(this.getSigner());
+    const connectedContract = contract.connect(await this.getSigner());
 
     let gasLimit: string;
 
     try {
-      gasLimit = (
-        await connectedContract.estimateGas[method](...params, { value })
-      ).toHexString();
+      gasLimit = await connectedContract[method].estimateGas(...params, {
+        value,
+      });
     } catch (e) {
       this.handleEstimateGasError(e);
-      gasLimit = BigNumber.from(15000000).toHexString();
+      gasLimit = toBeHex(15000000);
     }
 
     /**
@@ -220,10 +233,11 @@ export class Web3WalletService {
     originalTxObject: any,
     message: string = ''
   ): Promise<string> {
+    const signer = await this.getSigner();
     if (!originalTxObject.gasLimit) {
       try {
-        const gasLimit = await this.getSigner().estimateGas(originalTxObject);
-        originalTxObject.gasLimit = gasLimit.toHexString();
+        const gasLimit = await signer.estimateGas(originalTxObject);
+        originalTxObject.gasLimit = toBeHex(gasLimit);
       } catch (e) {
         console.log(e);
         originalTxObject.gasLimit = 15000000;
@@ -231,7 +245,7 @@ export class Web3WalletService {
     }
 
     const txHash = await this.transactionOverlay.waitForExternalTx(
-      () => this.getSigner().sendTransaction(originalTxObject),
+      () => signer.sendTransaction(originalTxObject),
       message
     );
 
@@ -245,19 +259,20 @@ export class Web3WalletService {
   }
 
   toWei(amount: number | string, unit?: BigNumberish) {
-    const weiAmount = utils.parseUnits(amount.toString(), unit).toString();
-    return BigNumber.from(weiAmount).toHexString();
+    const weiAmount = parseUnits(amount.toString(), unit).toString();
+    return toBeHex(weiAmount);
   }
 
-  fromWei(amount: BigNumber, unit?: BigNumberish) {
-    return utils.formatUnits(amount.toString(), unit).toString();
+  fromWei(amount: BigNumberish, unit?: BigNumberish) {
+    return formatUnits(amount.toString(), unit).toString();
   }
 
-  encodeParams(types: (string | utils.ParamType)[], values: any[]) {
-    return defaultAbiCoder.encode(types, values);
+  encodeParams(types: (string | ParamType)[], values: any[]) {
+    const abiCoder = new AbiCoder();
+    return abiCoder.encode(types, values);
   }
 
-  privateKeyToAccount(privateKey: string | utils.Bytes | utils.SigningKey) {
+  privateKeyToAccount(privateKey: string | SigningKey) {
     if (typeof privateKey === 'string') {
       if (privateKey.indexOf('0x') !== 0) {
         return new Wallet('0x' + privateKey).address;

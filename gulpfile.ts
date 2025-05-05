@@ -1,15 +1,19 @@
-import * as gulp from 'gulp';
-import * as autoprefixer from 'gulp-autoprefixer';
-import * as gulpSass from 'gulp-sass';
-import * as dartSass from 'sass';
-import * as sassGlob from 'gulp-sass-glob';
-import * as template from 'gulp-template';
-import * as jsonModify from 'gulp-json-modify';
+const gulp = require('gulp');
+const autoprefixer = require('gulp-autoprefixer');
+const gulpSass = require('gulp-sass');
+const dartSass = require('sass');
+const sassGlob = require('gulp-sass-glob');
+const template = require('gulp-template');
 
-import { join } from 'path';
-import { argv } from 'yargs';
+const { join } = require('path');
+const yargs = require('yargs');
+const { hideBin } = require('yargs/helpers');
+
+const argv = yargs(hideBin(process.argv)).argv;
 
 const sass = gulpSass(dartSass);
+
+// const __dirname = './';
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 11',
@@ -58,24 +62,12 @@ gulp.task('build.sass', (done) => {
 // --------------
 // i18n
 
-gulp.task('generate-ngsw-appData', () => {
-  return gulp
-    .src(join(__dirname, 'ngsw-config.json'))
-    .pipe(
-      jsonModify({
-        key: 'appData.commit',
-        value: `${process.env.CI_COMMIT_REF_NAME}-${process.env.CI_COMMIT_SHORT_SHA}`,
-      })
-    )
-    .pipe(gulp.dest('./'));
+gulp.task('extract.i18n', async function () {
+  const mod = await import(join(__dirname, 'tasks', 'extract.i18n.xlf'));
+  return mod.default(gulp);
 });
 
-gulp.task(
-  'extract.i18n',
-  require(join(__dirname, 'tasks', 'extract.i18n.xlf'))(gulp)
-);
-
-gulp.task(
-  'import.i18n',
-  require(join(__dirname, 'tasks', 'import.i18n.xlf'))(gulp)
-);
+gulp.task('import.i18n', async function () {
+  const mod = await import(join(__dirname, 'tasks', 'import.i18n.xlf'));
+  return mod.default(gulp);
+});

@@ -7,9 +7,24 @@ const distFolder = join(process.cwd(), 'dist/browser/en');
 const template = readFileSync(join(distFolder, 'index.html')).toString();
 const win = domino.createWindow(template);
 
+function defineGlobalProperty(key: string, value: any) {
+  try {
+    Object.defineProperty(global, key, {
+      value,
+      configurable: true,
+      writable: true,
+    });
+  } catch (e) {
+    console.warn(`Cannot redefine global property: ${key}`);
+  }
+}
+
 global['window'] = win;
 global['Node'] = win.Node;
-global['navigator'] = win.navigator;
+
+// global['navigator'] = win.navigator;
+defineGlobalProperty('navigator', win.navigator);
+
 global['screen'] = {
   width: 0,
   height: 0,
