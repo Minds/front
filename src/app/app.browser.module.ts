@@ -20,6 +20,8 @@ import { environment } from './../environments/environment';
 
 import posthog from 'posthog-js';
 import { POSTHOG_JS } from './common/services/posthog/posthog-injection-tokens';
+import { Web3ModalService } from '@mindsorg/web3modal-angular';
+import { createWeb3ModalConfig } from './helpers/web3modal-configuration';
 
 @NgModule({
   imports: [
@@ -47,6 +49,13 @@ import { POSTHOG_JS } from './common/services/posthog/posthog-injection-tokens';
     {
       provide: POSTHOG_JS,
       useValue: posthog,
+    },
+    {
+      provide: Web3ModalService,
+      useFactory: () => {
+        const config = createWeb3ModalConfig();
+        return new Web3ModalService(config);
+      },
     },
   ],
 })
