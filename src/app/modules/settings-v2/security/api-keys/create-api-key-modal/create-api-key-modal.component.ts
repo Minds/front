@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { CommonModule as NgCommonModule } from '@angular/common';
@@ -9,6 +14,8 @@ import {
   CreatePersonalApiKeyMutationVariables,
   PersonalApiKey,
 } from '../../../../../../graphql/generated.engine';
+import { IS_TENANT_NETWORK } from '../../../../../common/injection-tokens/tenant-injection-tokens';
+import { Session } from '../../../../../services/session';
 
 /** Enum for expiry time periods */
 enum ExpireTimePeriodEnum {
@@ -40,20 +47,52 @@ export class CreateApiKeyModalComponent implements OnInit {
   /** Form group for the modal. */
   protected formGroup: FormGroup;
 
+  scopes: { label: string; key: ApiScopeEnum }[] = [
+    {
+      label: 'All',
+      key: ApiScopeEnum.All,
+    },
+  ];
+
   /** Callback for when the modal is completed. */
   onCompleted: (personalApiKey: PersonalApiKey) => void;
 
   constructor(
     private personalApiKeysService: PersonalApiKeysService,
     private formBuilder: FormBuilder,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private session: Session,
+    @Inject(IS_TENANT_NETWORK) private isTenant: boolean
   ) {}
 
   ngOnInit(): void {
+    if (this.isTenant) {
+      if (this.session.isAdmin()) {
+        this.scopes.push({
+          label: 'Site membership write',
+          key: ApiScopeEnum.SiteMembershipWrite,
+        });
+        this.scopes.push({
+          label: 'Manage OIDC Users',
+          key: ApiScopeEnum.OidcManageUsers,
+        });
+        this.scopes.push({
+          label: 'Read Audit Logs',
+          key: ApiScopeEnum.AuditRead,
+        });
+      }
+    }
+
     this.formGroup = this.formBuilder.group({
       name: 'My Api Key',
-      allScope: false,
-      siteMembershipWriteScope: false,
+
+      scopes: this.formBuilder.group(
+        this.scopes.reduce((acc, { key, label }) => {
+          acc[key] = false;
+          return acc;
+        }, {})
+      ),
+
       expireInDays: ExpireTimePeriodEnum.Never,
     });
   }
@@ -108,24 +147,25 @@ export class CreateApiKeyModalComponent implements OnInit {
       console.warn('Invalid days till expiration');
       throw new Error('Invalid days till expiration');
     }
+    console.log(this.formGroup.value);
 
-    const allScope: boolean = this.formGroup.get('allScope').value;
-    const siteMembershipWriteScope: boolean = this.formGroup.get(
-      'siteMembershipWriteScope'
-    ).value;
+    const allScope: boolean = this.formGroup
+      .get('scopes')
+      .get(ApiScopeEnum.All).value;
+    let scopes: ApiScopeEnum[] = Object.entries(
+      this.formGroup.get('scopes').value
+    )
+      .filter(([_, value]) => value === true)
+      .map(([key]) => key as ApiScopeEnum)
+      .filter((key) => key !== ApiScopeEnum.All);
 
-    if (!allScope && !siteMembershipWriteScope) {
+    if (!allScope && scopes.length <= 0) {
       throw new Error('At least one scope is required');
     }
 
-    let scopes: ApiScopeEnum[] = [];
-
     if (allScope) {
+      scopes = [];
       scopes.push(ApiScopeEnum.All);
-    }
-
-    if (siteMembershipWriteScope && !allScope) {
-      scopes.push(ApiScopeEnum.SiteMembershipWrite);
     }
 
     return {

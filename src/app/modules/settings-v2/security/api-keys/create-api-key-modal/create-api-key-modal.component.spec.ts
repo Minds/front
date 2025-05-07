@@ -14,6 +14,8 @@ import {
   ApiScopeEnum,
   PersonalApiKey,
 } from '../../../../../../graphql/generated.engine';
+import { Session } from '../../../../../services/session';
+import { IS_TENANT_NETWORK } from '../../../../../common/injection-tokens/tenant-injection-tokens';
 
 describe('CreateApiKeyModalComponent', () => {
   let comp: CreateApiKeyModalComponent;
@@ -74,7 +76,16 @@ describe('CreateApiKeyModalComponent', () => {
             provide: PersonalApiKeysService,
             useValue: MockService(PersonalApiKeysService),
           },
+          {
+            provide: Session,
+            useValue: {
+              isAdmin: () => {
+                return true;
+              },
+            },
+          },
           { provide: ToasterService, useValue: MockService(ToasterService) },
+          { provide: IS_TENANT_NETWORK, useValue: true },
         ],
       },
     });
@@ -115,8 +126,12 @@ describe('CreateApiKeyModalComponent', () => {
       );
       (comp as any).formGroup.setValue({
         name: 'My Api Key',
-        allScope: true,
-        siteMembershipWriteScope: false,
+        scopes: {
+          ALL: true,
+          SITE_MEMBERSHIP_WRITE: false,
+          OIDC_MANAGE_USERS: false,
+          AUDIT_READ: false,
+        },
         expireInDays: 30,
       });
 
@@ -140,8 +155,12 @@ describe('CreateApiKeyModalComponent', () => {
       );
       (comp as any).formGroup.setValue({
         name: null,
-        allScope: true,
-        siteMembershipWriteScope: false,
+        scopes: {
+          ALL: true,
+          SITE_MEMBERSHIP_WRITE: false,
+          OIDC_MANAGE_USERS: false,
+          AUDIT_READ: false,
+        },
         expireInDays: 30,
       });
 
@@ -164,8 +183,12 @@ describe('CreateApiKeyModalComponent', () => {
       );
       (comp as any).formGroup.setValue({
         name: 'name',
-        allScope: true,
-        siteMembershipWriteScope: false,
+        scopes: {
+          ALL: true,
+          SITE_MEMBERSHIP_WRITE: false,
+          OIDC_MANAGE_USERS: false,
+          AUDIT_READ: false,
+        },
         expireInDays: 0,
       });
 
@@ -188,8 +211,12 @@ describe('CreateApiKeyModalComponent', () => {
       );
       (comp as any).formGroup.setValue({
         name: 'My Api Key',
-        allScope: false,
-        siteMembershipWriteScope: true,
+        scopes: {
+          ALL: false,
+          SITE_MEMBERSHIP_WRITE: true,
+          OIDC_MANAGE_USERS: false,
+          AUDIT_READ: false,
+        },
         expireInDays: null,
       });
 
@@ -213,8 +240,12 @@ describe('CreateApiKeyModalComponent', () => {
       );
       (comp as any).formGroup.setValue({
         name: 'name',
-        allScope: false,
-        siteMembershipWriteScope: false,
+        scopes: {
+          ALL: false,
+          SITE_MEMBERSHIP_WRITE: false,
+          OIDC_MANAGE_USERS: false,
+          AUDIT_READ: false,
+        },
         expireInDays: 30,
       });
 
@@ -237,8 +268,12 @@ describe('CreateApiKeyModalComponent', () => {
       );
       (comp as any).formGroup.setValue({
         name: 'My Api Key',
-        allScope: true,
-        siteMembershipWriteScope: true,
+        scopes: {
+          ALL: true,
+          SITE_MEMBERSHIP_WRITE: true,
+          OIDC_MANAGE_USERS: false,
+          AUDIT_READ: false,
+        },
         expireInDays: 30,
       });
 
@@ -262,8 +297,12 @@ describe('CreateApiKeyModalComponent', () => {
       );
       (comp as any).formGroup.setValue({
         name: 'My Api Key',
-        allScope: false,
-        siteMembershipWriteScope: true,
+        scopes: {
+          ALL: false,
+          SITE_MEMBERSHIP_WRITE: true,
+          OIDC_MANAGE_USERS: false,
+          AUDIT_READ: false,
+        },
         expireInDays: 30,
       });
 

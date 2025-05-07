@@ -25,21 +25,19 @@
     </div>
 
     <div class="m-form__field--custom">
-      <label class="m-form__row--label" for="allScope">Scope</label>
-
-      <!-- Checkbox for all scope -->
-      <m-formInput__checkbox formControlName="allScope" name="allScope">
-        <label for="allScope">All</label>
-      </m-formInput__checkbox>
-
-      <!-- Checkbox for site membership write scope -->
-      <m-formInput__checkbox
-        formControlName="siteMembershipWriteScope"
-        name="siteMembershipWriteScope"
-        *ngIf="!formGroup.get('allScope').value"
-      >
-        <label for="siteMembershipWriteScope">Site membership write</label>
-      </m-formInput__checkbox>
+      <ng-container formGroupName="scopes">
+        <ng-container *ngFor="let scope of scopes">
+          <m-formInput__checkbox
+            [name]="scope.key"
+            [formControlName]="scope.key"
+            *ngIf="
+              !formGroup.get('scopes').get('ALL').value || scope.key === 'ALL'
+            "
+          >
+            <label [for]="scope.key">{{ scope.label }}</label>
+          </m-formInput__checkbox>
+        </ng-container>
+      </ng-container>
     </div>
   </form>
 </div>

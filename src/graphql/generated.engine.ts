@@ -183,6 +183,8 @@ export type AnalyticsTableRowUserNode = AnalyticsTableRowNodeInterface &
 
 export enum ApiScopeEnum {
   All = 'ALL',
+  AuditRead = 'AUDIT_READ',
+  OidcManageUsers = 'OIDC_MANAGE_USERS',
   SiteMembershipWrite = 'SITE_MEMBERSHIP_WRITE',
   TenantCreateTrial = 'TENANT_CREATE_TRIAL',
 }
@@ -990,7 +992,9 @@ export type MultiTenantConfig = {
   customHomePageDescription?: Maybe<Scalars['String']['output']>;
   customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
   customScript?: Maybe<Scalars['String']['output']>;
+  deleteAccountDisclaimer?: Maybe<Scalars['String']['output']>;
   digestEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
+  disableAccountDisclaimer?: Maybe<Scalars['String']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   isNonProfit?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
