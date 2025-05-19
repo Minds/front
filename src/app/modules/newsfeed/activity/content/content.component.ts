@@ -279,6 +279,9 @@ export class ActivityContentComponent
     if (!this.isVideo) {
       return false; // Only show to video posts
     }
+    if (this.isTenantNetwork) {
+      return false; // Tenants will not show the notice
+    }
     if (this.entity.owner_guid !== this.session.getLoggedInUser().guid) {
       return false; // Not the owner
     }
