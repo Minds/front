@@ -22,16 +22,14 @@
     </m-channelActions__menu>
 
     <ng-container *ngIf="service.canInteract$ | async">
-      <ng-container *ngIf="service.isSubscribed$ | async">
+      <ng-container *ngIf="(service.isSubscribed$ | async) || isGlobalMode">
         <m-channelActions__postSubscriptions></m-channelActions__postSubscriptions>
       </ng-container>
 
       <m-channelActions__wire *mIfTenant="false"></m-channelActions__wire>
 
-      <div class="m-hideOnMobile">
-        <m-channelActions__message
-          *ngIf="service.isSubscribed$ | async"
-        ></m-channelActions__message>
+      <div class="m-hideOnMobile" *ngIf="service.isSubscribed$ | async">
+        <m-channelActions__message></m-channelActions__message>
       </div>
 
       <m-channelActions__subscribe
