@@ -3,6 +3,7 @@ include:
   - template: Security/Container-Scanning.gitlab-ci.yml
 
 stages:
+  - setup
   - test and build
   - prepare
   - scan
@@ -18,6 +19,7 @@ variables:
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
   FF_USE_FASTZIP: '1'
+  default_image: minds/ci-front:22
 
 cache:
   key:
@@ -27,12 +29,23 @@ cache:
   paths:
     - node_modules/
 
+setup:node_modules:
+  stage: setup
+  image: '$default_image'
+  script:
+    - npm i
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
+  artifacts:
+    name: '$CI_COMMIT_REF_SLUG'
+    paths:
+      - node_modules
+
 test:
   image: cypress/browsers:latest
   stage: test and build
   script:
-    - npm install -g npm@7
-    - npm i
     - NODE_OPTIONS=--max_old_space_size=4096
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
   except:
@@ -41,7 +54,7 @@ test:
 
 lint:
   stage: test and build
-  image: minds/ci-front:22
+  image: '$default_image'
   script:
     - npm i -g prettier@"~3.2.5"
     - prettier --check "src/**/*.ts"
@@ -54,50 +67,6 @@ lint:
 ############
 # QA Stage #
 ############
-.cypress_tests: &cypress_tests
-  image: cypress/browsers:node18.12.0-chrome107
-  stage: qa
-  variables:
-    CYPRESS_INSTALL_BINARY: '7.4.0'
-  script:
-    - >
-      if [ "$CI_BUILD_REF_NAME" == "master" ]; then
-        export E2E_DOMAIN=https://www.minds.com
-        export PRODUCTION=true
-      else
-        export E2E_DOMAIN=https://$CI_COMMIT_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
-        export PRODUCTION=false
-      fi
-    - export CYPRESS_baseUrl=$E2E_DOMAIN
-    - echo "Preparing E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
-    - git clone --branch=master https://$CI_REGISTRY_USER:${CI_REGISTRY_PASSWORD}@gitlab.com/minds/cypress-tests.git
-    - echo "Checking if branch exists..."
-    - BRANCH_EXISTS=$(git ls-remote --heads https://www.gitlab.com/minds/cypress-tests $CI_BUILD_REF_NAME | wc -l)
-    - cd ./cypress-tests
-    - if [ $BRANCH_EXISTS == "1" ] ; then
-    - echo "Matching branch exists, checking out $CI_BUILD_REF_NAME..."
-    - git checkout $CI_BUILD_REF_NAME 2>/dev/null
-    - fi;
-    - npm i
-    - echo "Running Cypress"
-    - >
-      ./node_modules/.bin/cypress run --browser chrome
-      --parallel
-      --record
-      --ci-build-id $CI_PIPELINE_ID
-      --group "minds-e2e"
-      --key $CYPRESS_RECORD_ID
-      --config baseUrl=$E2E_DOMAIN
-      --env shared_key=$CYPRESS_bypass_key,production=$PRODUCTION
-  artifacts:
-    when: always
-    paths:
-      - cypress/screenshots
-      - cypress/videos
-  cache:
-    paths:
-      - .npm
-      - cache/Cypress
 
 # qa:sandbox:
 #   parallel: 2
@@ -135,10 +104,12 @@ qa:e2e:
   except:
     refs:
       - /^master$/
-      - feat/1732-block-refactor
     variables:
+      - $CI_COMMIT_REF_PROTECTED == "true"
       - $CI_NIGHTLY_TESTS == "true"
   <<: *playwright_tests
+  needs:
+    - review:start
 
 qa:nightly:
   allow_failure: true
@@ -146,6 +117,7 @@ qa:nightly:
     refs:
       - /^master$/
     variables:
+      - $CI_COMMIT_REF_PROTECTED == "true"
       - $CI_NIGHTLY_TESTS == "true"
   <<: *playwright_tests
 
@@ -175,35 +147,13 @@ qa:nightly:
 # Build Stage #
 ###############
 
-build:review:
+build:bundles:
   stage: test and build
-  image: minds/ci-front:22
+  image: '$default_image'
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
-    - npm i && npm install -g gulp-cli
-    - sh build/ng-bundles.sh
-    - sh build/ng-remove-locale-assets.sh # Remove assets from locales
-  artifacts:
-    name: '$CI_COMMIT_REF_SLUG'
-    paths:
-      - dist
-  except:
-    refs:
-      - master
-      # - test/gitlab-ci
-    variables:
-      - $CI_NIGHTLY_TESTS == "true"
-  tags:
-    - angular
-
-build:production:bundles:
-  stage: test and build
-  image: minds/ci-front:22
-  before_script:
-    - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
-  script:
-    - npm i && npm install -g gulp-cli
+    - npm install -g gulp-cli
     - sh build/ng-bundles.sh
     - sh build/ng-remove-locale-assets.sh # Remove assets from locales
   artifacts:
@@ -213,10 +163,10 @@ build:production:bundles:
       - dist/server
       - dist/embed
       - dist/storybook
-  only:
-    refs:
-      - master
-      - test/gitlab-ci
+  dependencies:
+    - setup:node_modules
+  needs:
+    - setup:node_modules
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -238,39 +188,7 @@ build:production:bundles:
     - sentry-cli releases finalize $CI_PIPELINE_ID
     - echo "Finalized release for $CI_PIPELINE_ID"
 
-prepare:review:
-  stage: prepare
-  image:
-    name: gcr.io/kaniko-project/executor:v1.14.0-debug
-    entrypoint: ['']
-  script:
-    - /kaniko/executor
-      --context "${CI_PROJECT_DIR}/dist"
-      --dockerfile "${CI_PROJECT_DIR}/containers/server/Dockerfile"
-      --destination "${CI_REGISTRY_IMAGE}/server:$CI_PIPELINE_ID"
-  dependencies:
-    - build:review
-  except:
-    refs:
-      - master
-      # - test/gitlab-ci
-    variables:
-      - $CI_NIGHTLY_TESTS == "true"
-
-prepare:review:sentry:
-  <<: *sentry_prepare
-  variables:
-    SOURCEMAP_PREFIX: '~/browser'
-  except:
-    refs:
-      - master
-      # - test/gitlab-ci
-    variables:
-      - $CI_NIGHTLY_TESTS == "true"
-  dependencies:
-    - build:review
-
-prepare:production:
+prepare:container:
   stage: prepare
   image:
     name: gcr.io/kaniko-project/executor:v1.14.0-debug
@@ -281,29 +199,25 @@ prepare:production:
       --dockerfile "${CI_PROJECT_DIR}/containers/server/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE}/server:$CI_PIPELINE_ID"
       --build-arg MINDS_VERSION=$CI_PIPELINE_ID
-  only:
-    refs:
-      - master
-      - test/gitlab-ci
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
   dependencies:
-    - build:production:bundles
+    - build:bundles
+  needs:
+    - build:bundles
 
-prepare:production:sentry:
+prepare:sentry:
   <<: *sentry_prepare
   variables:
     SOURCEMAP_PREFIX: '~/front/dist/browser'
-  only:
-    refs:
-      - master
-      - test/gitlab-ci
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
   dependencies:
-    - build:production:bundles
+    - build:bundles
+  needs:
+    - build:bundles
 
 ##############
 # Scan Stage #
@@ -313,9 +227,15 @@ container_scanning:
   stage: scan
   variables:
     CS_IMAGE: $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
+  needs:
+    - prepare:container
 
 dependency_scanning:
   stage: scan
+  dependencies:
+    - setup:node_modules
+  needs:
+    - setup:node_modules
 
 ################
 # Review Stage #
@@ -348,8 +268,8 @@ dependency_scanning:
   except:
     refs:
       - master
-      # - test/gitlab-ci
     variables:
+      - $CI_COMMIT_REF_PROTECTED == "true"
       - $CI_NIGHTLY_TESTS == "true"
 
 review:start:
@@ -391,9 +311,11 @@ review:start:
   except:
     refs:
       - master
-      # - test/gitlab-ci
     variables:
+      - $CI_COMMIT_REF_PROTECTED == "true"
       - $CI_NIGHTLY_TESTS == "true"
+  needs:
+    - prepare:container
 
 review:stop:
   <<: *cleanup_review
@@ -403,7 +325,10 @@ review:stop:
     refs:
       - master
     variables:
+      - $CI_COMMIT_REF_PROTECTED == "true"
       - $CI_NIGHTLY_TESTS == "true"
+  needs:
+    - review:start
 
 ################
 # Deploy Stage #
@@ -423,9 +348,12 @@ review:stop:
     ## Update sentry
     - sentry-cli releases deploys $CI_PIPELINE_ID new -e $IMAGE_LABEL
   dependencies:
-    - build:production:bundles
+    - build:bundles
+  needs:
+    - prepare:container
+    - build:bundles
 
-staging:fpm:
+deploy:staging:
   <<: *deploy
   after_script:
     - crane tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID latest
@@ -435,13 +363,16 @@ staging:fpm:
   environment:
     name: staging
     url: https://www.minds.com # requires staging cookie
-  only:
-    refs:
-      - master
-      - test/gitlab-ci
-  except:
-    variables:
-      - $CI_NIGHTLY_TESTS == "true"
+  rules:
+    - if: '$CI_NIGHTLY_TESTS == "true"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: on_success
+    - if: '$CI_COMMIT_REF_PROTECTED == "true"'
+      when: manual
+      allow_failure: false
+    - when: never
+  allow_failure: true
 
 deploy:canary:
   <<: *deploy
@@ -456,7 +387,8 @@ deploy:canary:
   only:
     refs:
       - master
-      - test/gitlab-ci
+    variables:
+      - $CI_COMMIT_REF_PROTECTED == "true"
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -473,7 +405,8 @@ deploy:production:
   only:
     refs:
       - master
-      - test/gitlab-ci
+    variables:
+      - $CI_COMMIT_REF_PROTECTED == "true"
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
@@ -490,4 +423,7 @@ cleanup:review: # We stop the review site after the e2e tests have run
     refs:
       - master
     variables:
+      - $CI_COMMIT_REF_PROTECTED == "true"
       - $CI_NIGHTLY_TESTS == "true"
+  needs:
+    - review:start
