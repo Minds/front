@@ -1,72 +1,71 @@
 @import 'defaults.scss';
 
-::ng-deep {
-  :root {
-    --ck-border-radius: 5px !important;
+@import '../../../../../../../node_modules/@mindsorg/minds-ckeditor-bundle/dist/minds-ckeditor-bundle.css';
+
+:root {
+  --ck-border-radius: 5px !important;
+}
+
+.ck-button {
+  color: #7d7d82 !important; // m-theme() out of :host not working
+}
+.ck-balloon-panel button {
+  box-shadow: unset !important;
+}
+
+.ck-balloon-panel {
+  // show over nav
+  z-index: 1000000 !important;
+}
+
+.ck-toolbar__items {
+  // override to make toolbar buttons mobile responsive.
+  flex-wrap: wrap !important;
+}
+
+.ck-button.ck-block-toolbar-button {
+  // show over nav and balloon panel.
+  z-index: 1000001 !important;
+
+  // overrides ck-hidden for this element.
+  // display: flex !important;
+
+  // @include m-theme() {
+  //   background-color: themed($m-bgColor--primary);
+  // }
+}
+
+.ck-tooltip__text {
+  // show over block toolbar and nav.
+  z-index: 1000002 !important;
+}
+
+m-blog__editor {
+  // ::ng-deep {
+  position: relative;
+  z-index: 1;
+
+  .ck-editor__editable {
+    h1 {
+      margin: 0;
+    }
+    h2,
+    h3 {
+      margin: 24px 0;
+    }
+  }
+  .ck-editor__editable_inline > :first-child {
+    margin-top: 0 !important;
   }
 
   .ck-button {
-    color: #7d7d82 !important; // m-theme() out of :host not working
-  }
-  .ck-balloon-panel button {
-    box-shadow: unset !important;
-  }
-
-  .ck-balloon-panel {
-    // show over nav
-    z-index: 1000000 !important;
-  }
-
-  .ck-toolbar__items {
-    // override to make toolbar buttons mobile responsive.
-    flex-wrap: wrap !important;
-  }
-
-  .ck-button.ck-block-toolbar-button {
-    // show over nav and balloon panel.
-    z-index: 1000001 !important;
-
-    // overrides ck-hidden for this element.
-    // display: flex !important;
-
-    // @include m-theme() {
-    //   background-color: themed($m-bgColor--primary);
-    // }
-  }
-
-  .ck-tooltip__text {
-    // show over block toolbar and nav.
-    z-index: 1000002 !important;
-  }
-}
-
-:host {
-  ::ng-deep {
-    position: relative;
-    z-index: 1;
-
-    .ck-editor__editable {
-      h1 {
-        margin: 0;
-      }
-      h2,
-      h3 {
-        margin: 24px 0;
-      }
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
     }
-    .ck-editor__editable_inline > :first-child {
-      margin-top: 0 !important;
-    }
+  }
 
-    .ck-button {
-      @include m-theme() {
-        color: themed($m-textColor--tertiary);
-      }
-    }
-
-    .ck-content {
-      padding: 0 !important;
-      border: unset !important;
-    }
+  .ck-content {
+    padding: 0 !important;
+    border: unset !important;
   }
 }

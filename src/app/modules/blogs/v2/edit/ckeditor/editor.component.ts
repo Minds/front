@@ -10,13 +10,12 @@ import {
   EventEmitter,
   Inject,
   PLATFORM_ID,
+  ViewEncapsulation,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AttachmentService } from '../../../../../services/attachment';
 import { SiteService } from '../../../../../common/services/site.service';
 import { ThemeService } from '../../../../../common/services/theme.service';
-
-declare var require: any;
 
 /**
  * Editor for blog content (i.e. not banner or title).
@@ -29,6 +28,7 @@ declare var require: any;
   },
   templateUrl: 'editor.component.html',
   styleUrls: ['./editor.component.ng.scss', '../../../view/view.ng.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class BlogEditorComponent {
   /**
@@ -52,18 +52,26 @@ export class BlogEditorComponent {
 
   ngOnInit() {
     this.themeService.emitThemePreference();
+
     // Render on browser side.
     if (isPlatformBrowser(this.platformId)) {
       // Must be required here for client-side loading.
-      const MindsEditor = require('@bhayward93/ckeditor5-build-minds');
-      this.Editor = MindsEditor;
-      this.Editor.config = {
-        uploadHandler: async (file) => {
-          const response = this.attachment.upload(await file);
-          return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
-        },
-        isDark$: this.themeService.isDark$,
-      };
+      try {
+        const MindsEditor = require('@mindsorg/minds-ckeditor-bundle').default;
+        console.log('editor');
+        console.log(MindsEditor);
+
+        this.Editor = MindsEditor;
+        this.Editor.config = {
+          uploadHandler: async (file) => {
+            const response = this.attachment.upload(await file);
+            return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
+          },
+          isDark$: this.themeService.isDark$,
+        };
+      } catch (err) {
+        console.error(err.stack);
+      }
     }
   }
 
