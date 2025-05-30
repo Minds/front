@@ -54,7 +54,7 @@
     "@danielmoncada/angular-datetime-picker": "^18.0.0",
     "@floating-ui/dom": "^1.6.12",
     "@fontsource/inter": "^4.5.15",
-    "@mindsorg/minds-ckeditor-bundle": "^1.0.0",
+    "@mindsorg/minds-ckeditor-bundle": "^1.1.0",
     "@mindsorg/web3modal-angular": "^18.2.13",
     "@ng-bootstrap/ng-bootstrap": "^17.0.1",
     "@sentry/angular": "^8.26.0",
