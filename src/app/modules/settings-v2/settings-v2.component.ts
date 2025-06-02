@@ -96,6 +96,7 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__ACCOUNT__LANGUAGE__LABEL:Language`,
             id: 'language',
+            shouldShow: this.isNotTenantSite.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__ACCOUNT__PASSWORD__LABEL:Password`,
