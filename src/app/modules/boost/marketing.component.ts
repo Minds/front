@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ConfigsService } from '../../common/services/configs.service';
 import { Subscription } from 'rxjs';
-import { GraphQLError } from 'graphql';
+import { GraphQLFormattedError } from 'graphql';
 import { BoostMarketingService } from './marketing.service';
 import { StrapiMetaService } from '../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
@@ -33,7 +33,7 @@ import {
 export class BoostMarketingComponent implements OnInit, OnDestroy {
   public data: ProductMarketingAttributes;
   public loading: boolean = true;
-  public errors: readonly GraphQLError[];
+  public errors: readonly GraphQLFormattedError[];
   readonly cdnAssetsUrl: string;
 
   @ViewChild('topAnchor')

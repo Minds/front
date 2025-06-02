@@ -117,8 +117,7 @@ qa:nightly:
     refs:
       - /^master$/
     variables:
-      - $CI_COMMIT_REF_PROTECTED == "true"
-      - $CI_NIGHTLY_TESTS == "true"
+      - $CI_COMMIT_REF_PROTECTED == "true" && $CI_NIGHTLY_TESTS == "true"
   <<: *playwright_tests
 
 # qa:production:

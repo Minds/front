@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { Button } from 'protractor';
 import { ButtonComponent } from '../../../../../../common/components/button/button.component';
 import { SettingsTwoFactorCodePopupComponent } from './code-popup.component';
 
