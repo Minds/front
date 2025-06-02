@@ -15,7 +15,6 @@ import { Apollo, gql } from 'apollo-angular';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
 import { PushNotificationService } from '../../services/push-notification.service';
-import { PUSH_NOTIFICATION_BANNER_KEY } from '../topbar-enable-push-notifications-banner/topbar-enable-push-notifications-banner.component';
 
 /** Alert key type */
 export type AlertKey = string;
@@ -61,9 +60,6 @@ export class TopbarAlertService {
   /** Logic for dictating if the alert should display */
   shouldShow$: Observable<boolean>;
 
-  /** Logic for dictating if the push notification alert should display */
-  shouldShowPushNotificationAlert$: Observable<boolean>;
-
   /** Logic for dictating if the CMS driven alert should display */
   shouldShowCmsAlert$: Observable<boolean>;
 
@@ -108,22 +104,6 @@ export class TopbarAlertService {
       map((copyData) => Date.parse(copyData?.attributes?.onlyDisplayAfter))
     );
 
-    this.shouldShowPushNotificationAlert$ = isPlatformServer(this.platformId)
-      ? of(null)
-      : combineLatest([
-          this.pushNotificationService.enabled$,
-          this.pushNotificationService.supported$,
-          this.dismissedAlerts$,
-        ]).pipe(
-          map(
-            ([enabled, supported, dismissedAlerts]) =>
-              this.session.isLoggedIn() &&
-              supported &&
-              !enabled &&
-              dismissedAlerts.indexOf(PUSH_NOTIFICATION_BANNER_KEY) === -1
-          )
-        );
-
     this.shouldShowCmsAlert$ = isPlatformServer(this.platformId)
       ? of(null)
       : combineLatest([
@@ -161,19 +141,13 @@ export class TopbarAlertService {
       : combineLatest([
           this.shouldShowCmsAlert$,
           this.shouldShowTenantTrialAlert$,
-          this.shouldShowPushNotificationAlert$,
         ]).pipe(
           map(
-            ([
-              shouldShowCmsAlert,
-              shouldShowTenantTrialAlert,
-              shouldShowPushNotificationAlert,
-            ]: [boolean, boolean, boolean]) => {
-              return (
-                shouldShowTenantTrialAlert ||
-                shouldShowPushNotificationAlert ||
-                shouldShowCmsAlert
-              );
+            ([shouldShowCmsAlert, shouldShowTenantTrialAlert]: [
+              boolean,
+              boolean,
+            ]) => {
+              return shouldShowTenantTrialAlert || shouldShowCmsAlert;
             }
           )
         );

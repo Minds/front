@@ -321,60 +321,6 @@ describe('TopbarAlertService', () => {
     expect(await firstValueFrom(service.shouldShow$)).toBe(true);
   });
 
-  describe('shouldShowPushNotificationAlert$', () => {
-    it('should emit true for shouldShow$ when a push notification banner should be shown', (done: DoneFn) => {
-      (service as any).session.isLoggedIn.and.returnValue(true);
-      (service as any).pushNotificationService.enabled$.next(false);
-      (service as any).pushNotificationService.supported$.next(true);
-
-      service.shouldShowPushNotificationAlert$
-        .pipe(take(1))
-        .subscribe((shouldShow) => {
-          expect(shouldShow).toBe(true);
-          done();
-        });
-    });
-
-    it('should emit false for shouldShow$ when a push notification banner should NOT be shown because the user is not logged in', (done: DoneFn) => {
-      (service as any).session.isLoggedIn.and.returnValue(false);
-      (service as any).pushNotificationService.enabled$.next(false);
-      (service as any).pushNotificationService.supported$.next(true);
-
-      service.shouldShowPushNotificationAlert$
-        .pipe(take(1))
-        .subscribe((shouldShow) => {
-          expect(shouldShow).toBe(false);
-          done();
-        });
-    });
-
-    it('should emit false for shouldShow$ when a push notification banner should NOT be shown because push notifications are enabled', (done: DoneFn) => {
-      (service as any).session.isLoggedIn.and.returnValue(true);
-      (service as any).pushNotificationService.enabled$.next(true);
-      (service as any).pushNotificationService.supported$.next(true);
-
-      service.shouldShowPushNotificationAlert$
-        .pipe(take(1))
-        .subscribe((shouldShow) => {
-          expect(shouldShow).toBe(false);
-          done();
-        });
-    });
-
-    it('should emit false for shouldShow$ when a push notification banner should NOT be shown because push notifications are not supported', (done: DoneFn) => {
-      (service as any).session.isLoggedIn.and.returnValue(true);
-      (service as any).pushNotificationService.enabled$.next(false);
-      (service as any).pushNotificationService.supported$.next(false);
-
-      service.shouldShowPushNotificationAlert$
-        .pipe(take(1))
-        .subscribe((shouldShow) => {
-          expect(shouldShow).toBe(false);
-          done();
-        });
-    });
-  });
-
   describe('shouldShowTenantTrialAlert', () => {
     it('should determine when a trial banner should be shown', () => {
       Object.defineProperty(service, 'isTenantNetwork', {

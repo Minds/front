@@ -67,10 +67,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
   public readonly isMinimalMode$: BehaviorSubject<boolean> =
     this.topbarService.isMinimalMode$;
 
-  /** Whether push notification alert should be shown. */
-  protected readonly shouldShowPushNotificationAlert$: Observable<boolean> =
-    this.topbarAlertService.shouldShowPushNotificationAlert$;
-
   /** Whether CMS driven alert should be shown. */
   protected shouldShowCmsAlert$: Observable<boolean> =
     this.topbarAlertService.shouldShowCmsAlert$;
