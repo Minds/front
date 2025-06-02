@@ -14,7 +14,7 @@ import {
   ProductMarketingAttributes,
   ProductMarketingResponse,
 } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
-import { GraphQLError } from 'graphql';
+import { GraphQLFormattedError } from 'graphql';
 import { Subscription } from 'rxjs';
 import { YoutubeMigrationMarketingService } from './marketing.service';
 import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
@@ -34,7 +34,7 @@ import {
 export class YoutubeMigrationMarketingComponent implements OnInit, OnDestroy {
   public data: ProductMarketingAttributes;
   public loading: boolean = true;
-  public errors: readonly GraphQLError[];
+  public errors: readonly GraphQLFormattedError[];
 
   readonly cdnAssetsUrl: string;
   readonly youtubeSettingsUrl: string = '/settings/other/youtube-migration';

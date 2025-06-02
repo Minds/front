@@ -7,7 +7,7 @@ module.exports = {
     '@storybook/addon-interactions',
     'storybook-addon-themes',
     'storybook-addon-angular-router',
-    '@chromatic-com/storybook'
+    '@chromatic-com/storybook',
   ],
 
   framework: '@storybook/angular',
@@ -28,6 +28,6 @@ module.exports = {
   },
 
   docs: {
-    autodocs: true
-  }
+    autodocs: true,
+  },
 };

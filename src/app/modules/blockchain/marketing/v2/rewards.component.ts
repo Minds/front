@@ -11,7 +11,7 @@ import {
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
-import { GraphQLError } from 'graphql';
+import { GraphQLFormattedError } from 'graphql';
 import { RewardsMarketingService } from './rewards.service';
 import { Subscription } from 'rxjs';
 import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
@@ -43,7 +43,7 @@ export class BlockchainMarketingRewardsV2Component
 {
   public data: ProductMarketingAttributes;
   public loading: boolean = true;
-  public errors: readonly GraphQLError[];
+  public errors: readonly GraphQLFormattedError[];
 
   readonly cdnAssetsUrl: string;
 
