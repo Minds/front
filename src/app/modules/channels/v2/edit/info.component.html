@@ -16,52 +16,54 @@
   </div>
 </div>
 
-<div class="m-form__fieldsContainer">
-  <div class="m-form__row--label">
-    <label i18n="@@COMMON__LOCATION">Location</label>
-  </div>
+<ng-container *mIfTenant="false">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__row--label">
+      <label i18n="@@COMMON__LOCATION">Location</label>
+    </div>
 
-  <div class="m-form__row--input">
-    <m-channel__locationTypeahead
-      [location]="service.location$ | async"
-      (locationChange)="onLocation($event)"
-      data-ref="data-minds-channel-location"
-    ></m-channel__locationTypeahead>
-  </div>
-</div>
-
-<div class="m-form__fieldsContainer">
-  <div class="m-form__row--label">
-    <label i18n="@@CHANNEL_EDIT_INFO__DATE_OF_BIRTH">Date of birth</label>
-  </div>
-
-  <div class="m-form__row--input">
-    <m-date__dropdowns
-      [selectedDate]="service.dob$ | async"
-      (selectedDateChange)="service.dob$.next($event)"
-    ></m-date__dropdowns>
-
-    <div class="m-channelEdit__innerField">
-      <label
-        for="channel-v2-edit-public-dob"
-        class="m-form__customInputWrapper__checkbox"
-      >
-        <input
-          type="checkbox"
-          id="channel-v2-edit-public-dob"
-          class="form-control"
-          name="publicDob"
-          [ngModel]="service.publicDob$ | async"
-          (ngModelChange)="service.publicDob$.next($event)"
-          data-ref="data-minds-channel-public-dob-checkbox"
-        />
-
-        <span class="m-form__customInput__checkbox"></span>
-
-        <ng-container i18n="@@CHANNEL_EDIT_INFO__MAKE_DOB_PUBLIC">
-          Make my date of birth public
-        </ng-container>
-      </label>
+    <div class="m-form__row--input">
+      <m-channel__locationTypeahead
+        [location]="service.location$ | async"
+        (locationChange)="onLocation($event)"
+        data-ref="data-minds-channel-location"
+      ></m-channel__locationTypeahead>
     </div>
   </div>
-</div>
+
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__row--label">
+      <label i18n="@@CHANNEL_EDIT_INFO__DATE_OF_BIRTH">Date of birth</label>
+    </div>
+
+    <div class="m-form__row--input">
+      <m-date__dropdowns
+        [selectedDate]="service.dob$ | async"
+        (selectedDateChange)="service.dob$.next($event)"
+      ></m-date__dropdowns>
+
+      <div class="m-channelEdit__innerField">
+        <label
+          for="channel-v2-edit-public-dob"
+          class="m-form__customInputWrapper__checkbox"
+        >
+          <input
+            type="checkbox"
+            id="channel-v2-edit-public-dob"
+            class="form-control"
+            name="publicDob"
+            [ngModel]="service.publicDob$ | async"
+            (ngModelChange)="service.publicDob$.next($event)"
+            data-ref="data-minds-channel-public-dob-checkbox"
+          />
+
+          <span class="m-form__customInput__checkbox"></span>
+
+          <ng-container i18n="@@CHANNEL_EDIT_INFO__MAKE_DOB_PUBLIC">
+            Make my date of birth public
+          </ng-container>
+        </label>
+      </div>
+    </div>
+  </div>
+</ng-container>
