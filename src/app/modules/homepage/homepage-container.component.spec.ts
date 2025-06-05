@@ -25,6 +25,7 @@ import { IfTenantDirective } from '../../common/directives/if-tenant.directive';
 import { ConfigsService } from '../../common/services/configs.service';
 import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
+import { AuthModalService } from '../auth/modal/auth-modal.service';
 
 describe('HomepageContainerComponent', () => {
   let component: HomepageContainerComponent;
@@ -107,6 +108,12 @@ describe('HomepageContainerComponent', () => {
         {
           provide: AuthRedirectService,
           useValue: MockService(AuthRedirectService),
+        },
+        {
+          provide: AuthModalService,
+          useValue: MockService(AuthModalService, {
+            open: () => new Promise(null),
+          }),
         },
         {
           provide: ConfigsService,
