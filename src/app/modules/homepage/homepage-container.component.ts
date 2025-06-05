@@ -8,6 +8,7 @@ import { Session } from '../../services/session';
 import { ConfigsService } from '../../common/services/configs.service';
 import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
+import { AuthModalService } from '../auth/modal/auth-modal.service';
 
 /**
  * Routes users to a "homepage" depending on active experiments.
@@ -27,6 +28,7 @@ export class HomepageContainerComponent implements OnInit {
     private router: Router,
     private resetPasswordModal: ResetPasswordModalService,
     private authRedirectService: AuthRedirectService,
+    private authModal: AuthModalService,
     private site: SiteService,
     private isTenant: IsTenantService,
     private session: Session,
@@ -59,6 +61,10 @@ export class HomepageContainerComponent implements OnInit {
       this.config.get('tenant')['custom_home_page_enabled']
     ) {
       this.isTenantCustomHomepage = true;
+    } else if (!this.session.isLoggedIn()) {
+      this.authModal
+        .open({ formDisplay: 'login' })
+        .then(() => this.authRedirectService.redirect());
     }
 
     this.route.queryParams.subscribe((params) => {
