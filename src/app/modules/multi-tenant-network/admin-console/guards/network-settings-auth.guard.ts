@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
@@ -14,7 +16,7 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
  * and the user IS an admin. (Or if we can moderate, if going to a moderation route)
  */
 @Injectable({ providedIn: 'root' })
-export class NetworkSettingsAuthGuard {
+export class NetworkSettingsAuthGuard implements CanActivate, CanActivateChild {
   constructor(
     protected configs: ConfigsService,
     private session: Session,
@@ -64,5 +66,12 @@ export class NetworkSettingsAuthGuard {
     this.toaster.warn('You do not have permission to access this route.');
     this.router.navigate(['/']);
     return false;
+  }
+
+  public canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    return this.canActivate(route, state);
   }
 }

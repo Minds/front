@@ -71,10 +71,13 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
     path: '',
     component: NetworkAdminConsoleComponent,
-    canActivate: [NetworkSettingsAuthGuard],
+    canActivateChild: [NetworkSettingsAuthGuard],
     children: [
       { path: '', redirectTo: 'general', pathMatch: 'full' as PathMatch },
-      { path: 'general', component: NetworkAdminConsoleGeneralComponent },
+      {
+        path: 'general',
+        component: NetworkAdminConsoleGeneralComponent,
+      },
       { path: 'customize', component: NetworkAdminConsoleCustomizeComponent },
       { path: 'appearance', redirectTo: 'customize', pathMatch: 'full' },
       { path: 'domain', component: NetworkAdminConsoleDomainComponent },
