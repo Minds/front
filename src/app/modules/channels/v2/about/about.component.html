@@ -41,7 +41,7 @@
       </ng-template>
 
       <div
-        *ngIf="channel?.did"
+        *ngIf="channel?.did && !isTenantNetwork"
         class="m-channelAbout__field m-channelAbout__field--fullWidth"
       >
         <div class="m-channelAboutField__label" i18n="@@CHANNEL_ABOUT__DID">
