@@ -151,8 +151,8 @@ build:bundles:
   image: '$default_image'
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
-    - sed -ri "s|'COMMITREF'|'$CI_COMMIT_SHA'|" ngsw-config.json
-    - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" ngsw-config.json
+    - sed -ri "s|COMMITREF|$CI_COMMIT_SHA|" ngsw-config.json
+    - sed -ri "s|VERSION|$CI_PIPELINE_ID|" ngsw-config.json
   script:
     - npm install -g gulp-cli
     - sh build/ng-bundles.sh
