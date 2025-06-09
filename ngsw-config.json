@@ -20,9 +20,7 @@
       "installMode": "lazy",
       "updateMode": "lazy",
       "resources": {
-        "files": [
-          "/assets/**"
-        ]
+        "files": ["/assets/**"]
       }
     }
   ],
@@ -56,6 +54,7 @@
     "!/icon/**"
   ],
   "appData": {
-    "commit": "undefined-undefined"
+    "commit": "COMMITREF",
+    "pipeline": "VERSION"
   }
 }
