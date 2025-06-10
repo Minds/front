@@ -30,7 +30,7 @@ export class AuthModalService {
       standalonePage?: boolean;
       inviteToken?: string;
     } = {
-      formDisplay: 'register',
+      formDisplay: 'login',
       standalonePage: false,
       inviteToken: null,
     }

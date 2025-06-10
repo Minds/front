@@ -75,6 +75,7 @@ import {
   WINDOW,
 } from '../common/injection-tokens/common-injection-tokens';
 import { DOCUMENT } from '@angular/common';
+import { AuthModalHttpInterceptorService } from '../modules/auth/modal/auth-modal-http-interceptor';
 
 export const MINDS_PROVIDERS: any[] = [
   { provide: APP_ID, useValue: 'm-app' },
@@ -125,6 +126,11 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: HTTP_INTERCEPTORS,
     useClass: MultiFactorHttpInterceptorService,
+    multi: true,
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthModalHttpInterceptorService,
     multi: true,
   },
   {
