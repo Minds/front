@@ -36,8 +36,10 @@
               class="form-control"
               [disabled]="inProgress"
               readonly
-              onfocus="this.removeAttribute('readonly');"
-              (focus)="onPasswordFocus()"
+              #passwordInput
+              (focus)="
+                passwordInput.removeAttribute('readonly'); onPasswordFocus()
+              "
               (blur)="onPasswordBlur()"
             />
           </div>
@@ -68,7 +70,8 @@
             class="form-control"
             [disabled]="inProgress"
             readonly
-            onfocus="this.removeAttribute('readonly');"
+            #password2Input
+            (focus)="password2Input.removeAttribute('readonly')"
           />
         </div>
       </div>

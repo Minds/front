@@ -64,8 +64,9 @@
             id="username"
             formControlName="username"
             readonly
-            onfocus="this.removeAttribute('readonly');"
-            ontouchstart="this.removeAttribute('readonly');"
+            #usernameInput
+            (focus)="usernameInput.removeAttribute('readonly');"
+            (touchstart)="usernameInput.removeAttribute('readonly');"
             [pattern]="alphanumericPattern"
             data-ref="data-minds-register-username-input"
           />
@@ -141,9 +142,9 @@
               id="password"
               formControlName="password"
               readonly
-              onfocus="this.removeAttribute('readonly');"
-              ontouchstart="this.removeAttribute('readonly');"
-              (focus)="onPasswordFocus()"
+              #passwordInput
+              (touchstart)="passwordInput.removeAttribute('readonly');"
+              (focus)="passwordInput.removeAttribute('readonly'); onPasswordFocus()"
               (blur)="onPasswordBlur()"
               data-ref="data-minds-register-password-input-1"
             />
@@ -186,8 +187,9 @@
             formControlName="password2"
             (keydown.enter)="register($event)"
             readonly
-            onfocus="this.removeAttribute('readonly');"
-            ontouchstart="this.removeAttribute('readonly');"
+            #password2Input
+            (focus)="password2Input.removeAttribute('readonly');"
+            (touchstart)="password2Input.removeAttribute('readonly');"
             data-ref="data-minds-register-password-input-2"
             [class.ng-invalid]="this.form.errors?.passwordsMatch"
           />
