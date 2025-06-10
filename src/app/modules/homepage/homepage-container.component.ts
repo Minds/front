@@ -61,7 +61,11 @@ export class HomepageContainerComponent implements OnInit {
       this.config.get('tenant')['custom_home_page_enabled']
     ) {
       this.isTenantCustomHomepage = true;
-    } else if (!this.session.isLoggedIn()) {
+    } else if (
+      !this.session.isLoggedIn() &&
+      this.isTenantNetwork &&
+      this.config.get('tenant')['walled_garden_enabled']
+    ) {
       this.authModal
         .open({ formDisplay: 'login' })
         .then(() => this.authRedirectService.redirect());
