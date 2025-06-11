@@ -21,9 +21,17 @@ export class AuthModalHttpInterceptorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<any> {
-    // If receive a 401, reload the app.
     if (err.status === 401) {
-      window.location.reload();
+      if (
+        [
+          'Minds::Core::Security::TwoFactor::TwoFactorRequiredException',
+          'Minds::Core::Security::TwoFactor::TwoFactorInvalidCodeException',
+          'Minds::Core::Authentication::InvalidCredentialsException',
+        ].indexOf(err?.error?.errorId) < 0
+      ) {
+        // Reload the app
+        window.location.reload();
+      }
     }
 
     return throwError(() => err);
