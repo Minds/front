@@ -51,7 +51,8 @@
     "!/storybook",
     "!/storybook/**",
     "!/fs/**",
-    "!/icon/**"
+    "!/icon/**",
+    "!/plugins/**"
   ],
   "appData": {
     "commit": "COMMITREF",
