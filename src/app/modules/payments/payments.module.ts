@@ -11,6 +11,7 @@ import { BTCService } from './btc/btc.service';
 import { BTCComponent } from './btc/btc.component';
 import { BTCSettingsComponent } from './btc/settings.component';
 import { NewCardModalComponent } from './new-card-modal/new-card-modal.component';
+import { QRCodeComponent } from '../../common/components/qr-code/qr-code.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { NewCardModalComponent } from './new-card-modal/new-card-modal.component
     ReactiveFormsModule,
     CommonModule,
     ModalsModule,
+    QRCodeComponent,
   ],
   declarations: [
     PaymentsNewCard,

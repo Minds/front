@@ -78,6 +78,7 @@ import { PermissionsEnum } from '../../../graphql/generated.engine';
 import { SettingsV2UserDataComponent } from './account/user-data/user-data.component';
 import { SettingsV2ApiKeysComponent } from './security/api-keys/api-keys.component';
 import { adminOnlyGuard } from '../../common/guards/admin-only.guard';
+import { QRCodeComponent } from '../../common/components/qr-code/qr-code.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -571,6 +572,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     NewsfeedModule,
     MessengerModule,
     AffiliatesModule,
+    QRCodeComponent,
   ],
   declarations: [
     SettingsV2Component,

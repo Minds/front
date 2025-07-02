@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { QRCodeComponent as AngularQRCodeComponent } from 'angularx-qrcode';
 
 /**
  * Displays a QR code with associated data
@@ -14,7 +15,8 @@ import { Component, Input } from '@angular/core';
       [errorCorrectionLevel]="'M'"
     ></qrcode>
   `,
-  standalone: false,
+  standalone: true,
+  imports: [AngularQRCodeComponent],
 })
 export class QRCodeComponent {
   @Input() data: string = '';

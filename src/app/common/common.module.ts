@@ -22,7 +22,6 @@ import {
 import { Scheduler } from './components/scheduler/scheduler';
 import { Modal } from './components/modal/modal.component';
 import { MindsRichEmbed } from './components/rich-embed/rich-embed';
-import { QRCodeComponent } from './components/qr-code/qr-code.component';
 import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from './directives/autogrow';
 import { InlineAutoGrow } from './directives/inline-autogrow';
@@ -133,7 +132,6 @@ import { DateRangeModalComponent } from './components/date-range-modal/date-rang
 import { DateRangeModalService } from './components/date-range-modal/date-range-modal.service';
 import { NgxFloatUiModule } from 'ngx-float-ui';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
-import { QRCodeModule } from 'angularx-qrcode';
 import { JsonLdService } from './services/jsonld.service';
 import { FormInputSliderComponent } from './components/slider/slider.component';
 import { FormInputSliderV2Component } from './components/slider/v2/slider.component';
@@ -262,7 +260,6 @@ const MINDS_COMMON_COMPONENTS = [
   PublisherCardComponent,
   PublisherListComponent,
   PublisherSearchModalComponent,
-  QRCodeComponent,
   QualityScoreComponent,
   ReadMoreButtonComponent,
   RelativeTimeSpanComponent,
@@ -363,7 +360,6 @@ const routes: Routes = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxFloatUiModule,
-    QRCodeModule,
     RouterModule.forChild(routes),
     MarkdownModule.forChild(),
   ],

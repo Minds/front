@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../../common/common.module';
 import { VerifyUniquenessModalComponent } from './verify-uniqueness-modal.component';
+import { QRCodeComponent } from '../../../common/components/qr-code/qr-code.component';
 
 @NgModule({
-  imports: [NgCommonModule, CommonModule],
+  imports: [NgCommonModule, CommonModule, QRCodeComponent],
   declarations: [VerifyUniquenessModalComponent],
   exports: [VerifyUniquenessModalComponent],
   providers: [],
