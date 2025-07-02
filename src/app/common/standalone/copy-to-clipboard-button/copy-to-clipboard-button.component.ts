@@ -12,7 +12,6 @@ import { CommonModule } from '../../common.module';
   imports: [CommonModule, NgCommonModule],
   templateUrl: './copy-to-clipboard-button.component.html',
   styleUrls: ['./copy-to-clipboard-button.component.ng.scss'],
-  standalone: true,
 })
 export class CopyToClipboardButtonComponent {
   @Input() contentToCopy: string = '';

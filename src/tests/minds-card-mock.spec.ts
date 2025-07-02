@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'minds-card',
   template: '',
+  standalone: false,
 })
 export class MindsCardMock {
   @Input() object;

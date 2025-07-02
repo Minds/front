@@ -8,6 +8,7 @@ import {
   selector: 'm-btc',
   templateUrl: 'btc.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class BTCComponent {
   address: string = '1DWPuJjcZWzsRPCwss4gYqgeUpkj5AD1yu';

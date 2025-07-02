@@ -17,6 +17,7 @@ import { MindsUser } from '../../../../interfaces/entities';
   selector: 'm-settingsV2__profile',
   templateUrl: './profile.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2ProfileComponent implements OnInit {
   user: MindsUser;

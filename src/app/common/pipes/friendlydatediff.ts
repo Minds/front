@@ -1,8 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Pipe({
   name: 'friendlydatediff',
+  standalone: false,
 })
 export class FriendlyDateDiffPipe implements PipeTransform {
   transform(

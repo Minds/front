@@ -24,6 +24,7 @@ const noOp = () => {};
   selector: 'm-composer__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'modal.component.html',
+  standalone: false,
 })
 export class ModalComponent implements OnInit {
   resizeEvent;

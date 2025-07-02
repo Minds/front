@@ -18,6 +18,7 @@ import { GenericToggleValue } from '../../../../../../common/components/toggle/t
   templateUrl: './enable-walled-garden-toggle.component.html',
   styleUrls: ['./enable-walled-garden-toggle.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NetworkAdminConsoleEnableWalledGardenToggleComponent
   implements OnInit, OnDestroy

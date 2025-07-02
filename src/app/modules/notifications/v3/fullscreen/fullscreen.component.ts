@@ -11,6 +11,7 @@ import { NotificationsV3Service } from '../notifications-v3.service';
   templateUrl: 'fullscreen.component.html',
   styleUrls: ['./fullscreen.component.ng.scss'],
   providers: [NotificationsV3Service],
+  standalone: false,
 })
 export class NotificationsV3ListFullscreenComponent {
   constructor(public session: Session) {}

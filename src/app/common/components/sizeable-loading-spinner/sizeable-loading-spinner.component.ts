@@ -9,6 +9,7 @@ import { FastFadeAnimation } from '../../../animations';
   templateUrl: 'sizeable-loading-spinner.component.html',
   styleUrls: ['./sizeable-loading-spinner.component.scss'],
   animations: [FastFadeAnimation],
+  standalone: false,
 })
 export class SizeableLoadingSpinnerComponent {
   /**

@@ -4,6 +4,7 @@ import { Material as MaterialService } from '../../../services/ui';
 @Directive({
   selector: '[mdlSlider]',
   inputs: ['mdlSlider', 'ngModel', 'value'],
+  standalone: false,
 })
 export class MaterialSlider implements AfterViewInit {
   element: any;

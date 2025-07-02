@@ -16,6 +16,7 @@ import {
   templateUrl: './interactions-modal.component.html',
   styleUrls: ['./interactions-modal.component.ng.scss'],
   providers: [InteractionsModalDataService],
+  standalone: false,
 })
 export class InteractionsModalComponent {
   type: InteractionType;

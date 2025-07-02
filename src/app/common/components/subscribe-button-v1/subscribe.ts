@@ -14,6 +14,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 @Component({
   selector: 'minds-button-subscribe',
   templateUrl: './subscribe.html',
+  standalone: false,
 })
 export class SubscribeButton {
   _user: any = {

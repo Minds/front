@@ -29,6 +29,7 @@ import { ThemeService } from '../../../../../common/services/theme.service';
   templateUrl: 'editor.component.html',
   styleUrls: ['./editor.component.ng.scss', '../../../view/view.ng.scss'],
   encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class BlogEditorComponent {
   /**

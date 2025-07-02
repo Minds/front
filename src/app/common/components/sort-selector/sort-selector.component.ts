@@ -18,6 +18,7 @@ import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component'
   selector: 'm-sort-selector',
   templateUrl: './sort-selector.component.html',
   styleUrls: ['./sort-selector.component.ng.scss'],
+  standalone: false,
 })
 export class SortSelectorComponent implements OnInit {
   algorithms = [

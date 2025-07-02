@@ -21,6 +21,7 @@ import { BoostConsoleService } from '../../services/console.service';
   selector: 'm-boostConsole__filterBar',
   templateUrl: './filter-bar.component.html',
   styleUrls: ['./filter-bar.component.ng.scss'],
+  standalone: false,
 })
 export class BoostConsoleFilterBarComponent implements OnInit {
   // state filter type values.

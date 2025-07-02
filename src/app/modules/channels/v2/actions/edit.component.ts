@@ -10,6 +10,7 @@ import { ChannelEditIntentService } from '../services/edit-intent.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'edit.component.html',
   providers: [ChannelEditIntentService],
+  standalone: false,
 })
 export class ChannelActionsEditComponent {
   /**

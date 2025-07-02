@@ -8,6 +8,7 @@ import {
 @Directive({
   selector: '[points]',
   inputs: ['_points: points'],
+  standalone: false,
 })
 export class GraphPoints {
   element: any;

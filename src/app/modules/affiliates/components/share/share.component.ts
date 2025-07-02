@@ -13,6 +13,7 @@ import { ThemeService } from '../../../../common/services/theme.service';
   selector: 'm-affiliates__share',
   templateUrl: 'share.component.html',
   styleUrls: ['share.component.ng.scss'],
+  standalone: false,
 })
 export class AffiliatesShareComponent {
   /**

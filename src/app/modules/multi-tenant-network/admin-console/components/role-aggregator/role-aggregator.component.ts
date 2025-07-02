@@ -12,6 +12,7 @@ import { Role } from '../../../../../../graphql/generated.engine';
   selector: 'm-role__aggregator',
   templateUrl: './role-aggregator.component.html',
   styleUrls: ['./role-aggregator.component.ng.scss'],
+  standalone: false,
 })
 export class RoleAggregatorComponent implements OnInit {
   @Input() roles: Role[];

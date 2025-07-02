@@ -18,6 +18,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
   selector: 'm-settingsV2__blockedChannels',
   templateUrl: './blocked-channels.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2BlockedChannelsComponent implements OnInit {
   channels;

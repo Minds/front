@@ -13,6 +13,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
   selector: 'm-channelEdit__bio',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'bio.component.html',
+  standalone: false,
 })
 export class ChannelEditBioComponent {
   /**

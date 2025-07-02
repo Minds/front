@@ -21,6 +21,7 @@ import { Storage } from '../../../../services/storage';
   templateUrl: './boosted-content.component.html',
   styleUrls: ['./boosted-content.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2BoostedContentComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

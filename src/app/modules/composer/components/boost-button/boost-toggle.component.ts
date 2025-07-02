@@ -22,6 +22,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
       <span i18n="@@COMPOSER_BOOST_TOGGLE_BUTTON__BOOST_ACTION">Boost</span>
     </button>
   `,
+  standalone: false,
 })
 export class ComposerBoostToggleComponent {
   /** Whether composer is in Boost mode. */

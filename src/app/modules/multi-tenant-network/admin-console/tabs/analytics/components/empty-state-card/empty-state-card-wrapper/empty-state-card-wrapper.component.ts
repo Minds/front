@@ -43,6 +43,7 @@ import { ToasterService } from '../../../../../../../../common/services/toaster.
     </ng-container>
   `,
   providers: [ComposerModalService, ComposerService],
+  standalone: false,
 })
 export class NetworkAdminAnalyticsEmptyStateCardWrapperComponent {
   /** Enum for use in a template. */

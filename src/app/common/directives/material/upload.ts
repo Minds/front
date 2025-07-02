@@ -4,6 +4,7 @@ import { Material as MaterialService } from '../../../services/ui';
 @Directive({
   selector: '[mdlUpload]',
   inputs: ['mdlUpload', 'progress'],
+  standalone: false,
 })
 export class MaterialUpload {
   mdlUpload: any;

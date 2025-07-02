@@ -5,6 +5,7 @@ import { WireV2Service } from '../../wire-v2.service';
   selector: 'm-wireCreator__terms',
   templateUrl: './terms.component.html',
   styleUrls: ['./terms.component.ng.scss'],
+  standalone: false,
 })
 export class WireCreatorTermsComponent implements OnInit {
   refundPolicyAgreed: boolean = false;

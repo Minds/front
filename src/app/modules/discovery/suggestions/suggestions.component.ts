@@ -22,6 +22,7 @@ import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injec
   templateUrl: './suggestions.component.html',
   styleUrls: ['./suggestions.component.ng.scss'],
   providers: [SuggestionsService],
+  standalone: false,
 })
 export class DiscoverySuggestionsComponent
   extends AbstractSubscriberComponent

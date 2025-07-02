@@ -12,6 +12,7 @@ import { ModalService } from '../../../services/ux/modal.service';
 @Component({
   selector: 'm-confirm-password--modal',
   templateUrl: 'modal.component.html',
+  standalone: false,
 })
 export class ConfirmPasswordModalComponent {
   success: boolean = false;

@@ -17,6 +17,7 @@ export enum PlanCardPriceTimePeriodEnum {
   selector: 'm-planCard',
   templateUrl: 'plan-card.component.html',
   styleUrls: ['./plan-card.component.ng.scss'],
+  standalone: false,
 })
 export class PlanCardComponent {
   /** Enum for use in template. */

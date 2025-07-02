@@ -16,6 +16,7 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | 'monetize' | '';
   selector: 'm-blogEditor__bottomBar',
   templateUrl: './bottom-bar.component.html',
   styleUrls: ['./bottom-bar.component.ng.scss'],
+  standalone: false,
 })
 export class BlogEditorBottomBarComponent {
   /**

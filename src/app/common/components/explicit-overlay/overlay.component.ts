@@ -19,6 +19,7 @@ import { MindsUser } from '../../../interfaces/entities';
   selector: 'm-explicit-overlay',
   templateUrl: 'overlay.component.html',
   styleUrls: ['./overlay.component.ng.scss'],
+  standalone: false,
 })
 export class ExplicitOverlayComponent implements OnInit, OnDestroy {
   public hidden = true;

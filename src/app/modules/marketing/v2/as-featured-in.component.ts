@@ -9,6 +9,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'as-featured-in.component.html',
   styleUrls: ['as-featured-in.component.ng.scss'],
+  standalone: false,
 })
 export class MarketingAsFeaturedInV2Component {
   @Input() inThePress: boolean = false;

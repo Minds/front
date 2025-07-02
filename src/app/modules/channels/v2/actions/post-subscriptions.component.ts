@@ -18,6 +18,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'post-subscriptions.component.html',
   styleUrls: ['post-subscriptions.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelActionsPostSubscriptionsComponent {
   channelGuid: string;

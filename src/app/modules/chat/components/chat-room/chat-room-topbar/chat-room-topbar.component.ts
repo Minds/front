@@ -38,7 +38,6 @@ import { MutationResult } from 'apollo-angular';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './chat-room-topbar.component.html',
   imports: [NgCommonModule, CommonModule, RouterModule],
-  standalone: true,
 })
 export class ChatRoomTopComponent {
   /** Chat room edge. */

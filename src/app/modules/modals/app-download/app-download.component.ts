@@ -8,6 +8,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   selector: 'm-appDownloadModal',
   templateUrl: './app-download.component.html',
   styleUrls: ['./app-download.component.ng.scss'],
+  standalone: false,
 })
 export class AppDownloadModalComponent {
   private readonly siteUrl: string;

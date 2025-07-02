@@ -28,6 +28,7 @@ enum Views {
   selector: 'm-token--onboarding--onchain',
   templateUrl: 'onchain.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TokenOnChainOnboardingComponent {
   readonly cdnAssetsUrl: string;

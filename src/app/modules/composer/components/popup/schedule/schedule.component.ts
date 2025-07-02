@@ -19,6 +19,7 @@ import { isSafari } from '../../../../../helpers/is-safari';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'schedule.component.html',
   styleUrls: ['schedule.component.ng.scss'],
+  standalone: false,
 })
 export class ScheduleComponent {
   /**

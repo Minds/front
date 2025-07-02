@@ -17,6 +17,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
   },
   outputs: ['on'],
   templateUrl: 'encryption.component.html',
+  standalone: false,
 })
 export class MessengerEncryption implements OnInit {
   minds: Minds;

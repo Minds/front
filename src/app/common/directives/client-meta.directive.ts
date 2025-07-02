@@ -6,6 +6,7 @@ import {
 
 @Directive({
   selector: '[m-clientMeta]',
+  standalone: false,
 })
 export class ClientMetaDirective {
   /**

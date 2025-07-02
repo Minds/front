@@ -18,7 +18,6 @@ import { ToasterService } from '../../../../../../../common/services/toaster.ser
   selector: 'm-networkAdminConsole__boostConfiguration',
   styleUrls: ['./boost-configuration.component.ng.scss'],
   templateUrl: './boost-configuration.component.html',
-  standalone: true,
   imports: [
     BoostEmbedBuilderComponent,
     NetworkAdminEnableBoostToggleComponent,

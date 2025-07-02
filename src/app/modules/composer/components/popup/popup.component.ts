@@ -26,6 +26,7 @@ interface DismissIntentAbleComponent {
   selector: 'm-composer__popup',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'popup.component.html',
+  standalone: false,
 })
 export class PopupComponent {
   /**

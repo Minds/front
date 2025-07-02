@@ -13,6 +13,7 @@ import { ExperimentsService } from '../../experiments/experiments.service';
   inputs: ['_blog : object'],
   templateUrl: 'card.html',
   styleUrls: ['card.ng.scss'],
+  standalone: false,
 })
 export class BlogCard {
   minds;

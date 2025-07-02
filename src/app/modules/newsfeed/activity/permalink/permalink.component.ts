@@ -12,7 +12,7 @@ import {
   ActivityEntity,
   ActivityService,
 } from '../../activity/activity.service';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * Displays the date/time the post was made. When clicked, it navigates to the post's single activity page.
@@ -25,6 +25,7 @@ import * as moment from 'moment';
   selector: 'm-activity__permalink',
   templateUrl: './permalink.component.html',
   styleUrls: ['./permalink.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityPermalinkComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[];

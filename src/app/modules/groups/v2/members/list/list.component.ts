@@ -32,6 +32,7 @@ import { Session } from '../../../../../services/session';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.ng.scss'],
   providers: [GroupMembersListService],
+  standalone: false,
 })
 export class GroupMembersListComponent implements OnInit, OnDestroy {
   // Whether request is in progress.

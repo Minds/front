@@ -13,6 +13,7 @@ import { MindsUser } from '../../../../interfaces/entities';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'extra-info.component.html',
   styleUrls: ['extra-info.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelAboutExtraInfoComponent {
   /**

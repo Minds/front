@@ -18,6 +18,7 @@ import { ButtonComponent } from '../button/button.component';
   selector: 'm-addBankPrompt',
   templateUrl: './add-bank-prompt.component.html',
   styleUrls: ['add-bank-prompt.component.ng.scss'],
+  standalone: false,
 })
 export class AddBankPromptComponent {
   /** @inheritDoc */

@@ -26,6 +26,7 @@ import {
   templateUrl: 'list.component.html',
   styleUrls: ['./list.component.ng.scss'],
   providers: [NotificationsV3Service],
+  standalone: false,
 })
 export class NotificationsV3ListComponent implements OnInit, OnDestroy {
   filter$ = this.service.filter$;

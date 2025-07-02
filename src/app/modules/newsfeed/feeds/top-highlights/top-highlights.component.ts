@@ -17,6 +17,7 @@ import { TopFeedService } from '../../../../common/services/top-feeds.service';
   selector: 'm-topHighlights',
   templateUrl: './top-highlights.component.html',
   styleUrls: ['./top-highlights.component.ng.scss'],
+  standalone: false,
 })
 export class TopHighlightsComponent {
   @Output()

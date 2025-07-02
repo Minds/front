@@ -11,6 +11,7 @@ import { GroupAccessType } from '../group.types';
   selector: 'm-group__about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.ng.scss'],
+  standalone: false,
 })
 export class GroupAboutComponent {
   constructor(protected service: GroupService) {}

@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
   selector: 'm-composer__siteMembershipSelector',
   templateUrl: 'site-membership-selector.component.html',
   styleUrls: ['site-membership-selector.component.ng.scss'],
+  standalone: false,
 })
 export class ComposerSiteMembershipSelectorComponent
   implements OnInit, OnDestroy

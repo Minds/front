@@ -11,6 +11,7 @@ import { ConfigsService } from '../../../services/configs.service';
 @Component({
   selector: 'm-post-autocomplete-item-renderer',
   templateUrl: 'posts-autocomplete.component.html',
+  standalone: false,
 })
 export class PostsAutocompleteItemRendererComponent {
   @Input() choice;

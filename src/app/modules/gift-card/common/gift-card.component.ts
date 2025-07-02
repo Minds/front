@@ -13,6 +13,7 @@ import {
   selector: 'm-giftCard',
   templateUrl: 'gift-card.component.html',
   styleUrls: ['./gift-card.component.ng.scss'],
+  standalone: false,
 })
 export class GiftCardComponent {
   /** Product id enum for use in template. */

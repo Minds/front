@@ -20,6 +20,7 @@ import { CustomPageService } from '../../multi-tenant-network/services/custom-pa
   selector: 'm-customPage',
   templateUrl: './custom-page.component.html',
   styleUrls: ['./custom-page.component.ng.scss'],
+  standalone: false,
 })
 export class CustomPageComponent implements OnInit, OnDestroy {
   /**

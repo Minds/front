@@ -26,6 +26,7 @@ import { CustomPageFormContentPreviewModalComponent } from './content-preview-mo
   selector: 'm-customPage__form',
   templateUrl: './custom-page-form.component.html',
   styleUrls: ['./custom-page-form.component.ng.scss'],
+  standalone: false,
 })
 export class CustomPageFormComponent implements OnInit, OnDestroy {
   @Input() pageType: CustomPageType;

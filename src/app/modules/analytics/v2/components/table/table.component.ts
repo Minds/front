@@ -16,6 +16,7 @@ import { Visualisation } from '../../../../../interfaces/dashboard';
   selector: 'm-analytics__table',
   templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AnalyticsTableComponent implements OnInit, OnDestroy {
   metricSubscription: Subscription;

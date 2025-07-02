@@ -10,6 +10,7 @@ import { ChannelEditService } from './edit.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'social-links.component.html',
   styleUrls: ['social-links.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelEditSocialLinksComponent {
   /**

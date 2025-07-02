@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'm-analytics__benchmark',
   templateUrl: './benchmark.component.html',
+  standalone: false,
 })
 export class AnalyticsBenchmarkComponent implements OnInit {
   @Input() label: string;

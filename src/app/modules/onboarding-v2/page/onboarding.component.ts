@@ -13,6 +13,7 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'm-onboarding',
   templateUrl: 'onboarding.component.html',
+  standalone: false,
 })
 export class OnboardingComponent implements OnInit, OnDestroy {
   showTitle: boolean = false;

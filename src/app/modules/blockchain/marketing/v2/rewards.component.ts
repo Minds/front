@@ -37,6 +37,7 @@ import {
     './rewards.component.ng.scss',
     '../../../marketing/styles/markdown-style.ng.scss',
   ],
+  standalone: false,
 })
 export class BlockchainMarketingRewardsV2Component
   implements OnInit, OnDestroy

@@ -42,6 +42,7 @@ export type SiteMembershipsPageModalData = {
   selector: 'm-siteMembershipsPage',
   templateUrl: 'site-memberships-page.component.html',
   styleUrls: ['./site-memberships-page.component.ng.scss'],
+  standalone: false,
 })
 export class SiteMembershipsPageComponent implements OnInit, OnDestroy {
   /** Whether component can be consider as initialized. */

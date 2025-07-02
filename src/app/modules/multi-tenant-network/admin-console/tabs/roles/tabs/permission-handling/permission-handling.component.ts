@@ -56,7 +56,6 @@ export type ExportedPermissionIntent = {
   selector: 'm-networkAdminConsoleRoles__permissionHandling',
   templateUrl: './permission-handling.component.html',
   styleUrls: ['./permission-handling.component.ng.scss'],
-  standalone: true,
   imports: [
     AsyncPipe,
     NgFor,

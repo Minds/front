@@ -7,6 +7,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   selector: 'm-verify_uniqueness_modal',
   templateUrl: './verify-uniqueness-modal.component.html',
   styleUrls: ['verify-uniqueness-modal.component.ng.scss'],
+  standalone: false,
 })
 export class VerifyUniquenessModalComponent implements OnInit, OnDestroy {
   constructor() {}

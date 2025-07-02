@@ -16,7 +16,7 @@ import {
   StripeDetails,
 } from '../../wallet-v2.service';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * List of cash-related transactions.
@@ -27,6 +27,7 @@ import * as moment from 'moment';
   selector: 'm-walletTransactions--cash',
   templateUrl: './transactions-cash.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class WalletTransactionsCashComponent implements OnInit {
   init: boolean = false;

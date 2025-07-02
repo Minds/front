@@ -11,6 +11,7 @@ import { ConfigsService } from '../../services/configs.service';
   selector: 'm-paywallBadge',
   templateUrl: './paywall-badge.component.html',
   styleUrls: ['./paywall-badge.component.ng.scss'],
+  standalone: false,
 })
 export class PaywallBadgeComponent implements OnInit {
   private _entity: any;

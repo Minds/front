@@ -15,6 +15,7 @@ import { JurySessionService } from '../juryduty/session/session.service';
 @Component({
   selector: 'm-moderation__strikes',
   templateUrl: 'strikes.component.html',
+  standalone: false,
 })
 export class StrikesComponent implements OnInit {
   strikes: any[] = [];

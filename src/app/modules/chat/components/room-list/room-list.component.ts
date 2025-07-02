@@ -54,7 +54,6 @@ import { PermissionIntentsService } from '../../../../common/services/permission
     ChatRoomListItemComponent,
     ChatActionCardComponent,
   ],
-  standalone: true,
 })
 export class ChatRoomListComponent implements OnInit, OnDestroy {
   /** Whether a request is in progress to load / load more. */

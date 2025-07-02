@@ -22,6 +22,7 @@ import { horizontallyScrollElementIntoView } from '../../../helpers/scrollable-c
   selector: 'm-carousel',
   templateUrl: './carousel.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class CarouselComponent implements AfterViewInit {
   @Input() itemActivated;

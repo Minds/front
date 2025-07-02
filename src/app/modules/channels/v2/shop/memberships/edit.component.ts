@@ -21,6 +21,7 @@ import { WalletV2Service } from '../../../../wallet/components/wallet-v2.service
   templateUrl: 'edit.component.html',
   styleUrls: ['edit.component.ng.scss'],
   providers: [ChannelShopMembershipsEditService, WalletV2Service],
+  standalone: false,
 })
 export class ChannelShopMembershipsEditComponent implements OnInit, OnDestroy {
   public readonly tokenExchangeRate: number;

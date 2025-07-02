@@ -1,6 +1,6 @@
 import { AnalyticsMetricEnum } from '../../../../../../../graphql/generated.engine';
 import { MetricValueParserPipe } from './metric-value-parser.pipe';
-import * as moment from 'moment';
+import moment from 'moment';
 
 describe('MetricValueParserPipe', () => {
   const pipe: MetricValueParserPipe = new MetricValueParserPipe();

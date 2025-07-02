@@ -11,6 +11,7 @@ export type IconSource = 'md' | 'ion' | 'assets-file' | 'text' | 'custom';
   selector: 'm-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'icon.component.html',
+  standalone: false,
 })
 export class IconComponent {
   /**

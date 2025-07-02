@@ -12,6 +12,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 @Component({
   selector: 'm-feedNotice--inviteFriends',
   templateUrl: 'invite-friends-notice.component.html',
+  standalone: false,
 })
 export class InviteFriendsNoticeComponent extends AbstractSubscriberComponent {
   @Input() public dismissible: boolean = true;

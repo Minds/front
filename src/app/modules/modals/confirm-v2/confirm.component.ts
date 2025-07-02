@@ -11,6 +11,7 @@ const DEFAULT_BODY = 'Are you sure?';
   selector: 'm-confirmationModal',
   templateUrl: 'confirm.component.html',
   styleUrls: ['./confirm.component.ng.scss'],
+  standalone: false,
 })
 export class ConfirmV2Component {
   /**

@@ -57,6 +57,7 @@ const PAGE_SIZE = 12;
 @Component({
   selector: 'm-newsfeed__gql',
   templateUrl: 'newsfeed-gql.component.html',
+  standalone: false,
 })
 export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   /**

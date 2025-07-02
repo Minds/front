@@ -14,6 +14,7 @@ import { GiftCardProductIdEnum } from '../../../../../../graphql/generated.engin
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'form.component.html',
   styleUrls: ['form.component.ng.scss'],
+  standalone: false,
 })
 export class WireCreatorFormComponent {
   /**

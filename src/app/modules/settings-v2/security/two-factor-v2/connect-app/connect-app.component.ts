@@ -16,6 +16,7 @@ import { ModalService } from '../../../../../services/ux/modal.service';
   selector: 'm-twoFactor__connectApp',
   templateUrl: './connect-app.component.html',
   styleUrls: ['./connect-app.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsTwoFactorConnectAppComponent
   extends AbstractSubscriberComponent

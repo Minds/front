@@ -25,6 +25,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       multi: true,
     },
   ],
+  standalone: false,
 })
 export class FormInputSliderV2Component implements ControlValueAccessor {
   // max value selectable with slider.

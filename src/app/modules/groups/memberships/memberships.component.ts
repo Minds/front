@@ -10,6 +10,7 @@ import { GroupMembershipLevel } from '../v2/group.types';
   selector: 'm-groupsMemberships',
   templateUrl: './memberships.component.html',
   styleUrls: ['./memberships.component.ng.scss'],
+  standalone: false,
 })
 export class GroupsMembershipsComponent {
   /**

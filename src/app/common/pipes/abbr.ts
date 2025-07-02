@@ -2,6 +2,7 @@ import { Pipe } from '@angular/core';
 
 @Pipe({
   name: 'abbr',
+  standalone: false,
 })
 export class AbbrPipe {
   numberAbbrev = ['k', 'm', 'b', 't'];

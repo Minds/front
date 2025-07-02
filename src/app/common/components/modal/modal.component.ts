@@ -25,6 +25,7 @@ import { Component, EventEmitter } from '@angular/core';
     </div>
   `,
   styleUrls: ['modal.component.ng.scss'],
+  standalone: false,
 })
 export class Modal {
   allowClose: boolean = true;

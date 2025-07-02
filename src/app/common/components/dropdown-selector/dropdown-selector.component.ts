@@ -16,6 +16,7 @@ export type DropdownSelectorSelection = {
 @Component({
   selector: 'm-dropdownSelector',
   templateUrl: './dropdown-selector.component.html',
+  standalone: false,
 })
 export class DropdownSelectorComponent implements OnInit {
   @Input() filter: Filter;

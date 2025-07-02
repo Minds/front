@@ -11,6 +11,7 @@ import { CompassService } from '../compass.service';
   selector: 'm-compassForm',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.ng.scss'],
+  standalone: false,
 })
 export class CompassFormComponent implements OnInit {
   private subscriptions: Subscription[] = [];

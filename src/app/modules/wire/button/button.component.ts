@@ -16,6 +16,7 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
   selector: 'm-wire-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.ng.scss'],
+  standalone: false,
 })
 export class WireButtonComponent {
   @Input() object: any;

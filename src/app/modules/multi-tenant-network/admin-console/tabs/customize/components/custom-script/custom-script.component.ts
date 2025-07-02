@@ -33,7 +33,6 @@ import { MultiTenantCustomScriptInputService } from '../../../../../services/cus
   ],
   templateUrl: './custom-script.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
 })
 export class NetworkAdminCustomScriptComponent implements OnInit, OnDestroy {

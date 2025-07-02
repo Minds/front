@@ -11,6 +11,7 @@ import { GroupEditService } from './edit.service';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.ng.scss'],
   providers: [GroupEditService],
+  standalone: false,
 })
 export class GroupEditComponent {
   /**

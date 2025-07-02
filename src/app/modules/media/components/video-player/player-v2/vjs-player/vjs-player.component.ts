@@ -36,6 +36,7 @@ import {
   `,
   styleUrls: ['./vjs-player.component.ng.scss'],
   encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class VjsPlayerComponent implements AfterViewInit, OnDestroy {
   @ViewChild('target') target: ElementRef;

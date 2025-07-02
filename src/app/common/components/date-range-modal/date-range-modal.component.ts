@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FeedService } from '../../../modules/channels/v2/feed/feed.service';
 import { FeedFilterDateRange } from '../feed-filter/feed-filter.component';
-import * as moment from 'moment';
+import moment from 'moment';
 
 export type DateRange = {};
 /**
@@ -18,6 +18,7 @@ const noOp = () => {};
   selector: 'm-dateRangeModal',
   templateUrl: './date-range-modal.component.html',
   styleUrls: ['./date-range-modal.component.ng.scss'],
+  standalone: false,
 })
 export class DateRangeModalComponent implements OnInit, OnDestroy {
   defaultToDate;

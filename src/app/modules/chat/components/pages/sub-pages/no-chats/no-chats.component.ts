@@ -13,7 +13,6 @@ import { PermissionsEnum } from '../../../../../../../graphql/generated.engine';
   styleUrls: ['./no-chats.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ChatActionCardComponent],
-  standalone: true,
   template: `
     <m-chat__actionCard
       headerText="Your chats"

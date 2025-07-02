@@ -23,6 +23,7 @@ export type MonetizationTabType = 'plus' | 'membership' | 'custom';
   selector: 'm-composer__monetizeV2',
   templateUrl: 'monetize.component.html',
   providers: [SupportTiersService, ComposerMonetizeV2Service],
+  standalone: false,
 })
 export class ComposerMonetizeV2Component implements OnInit {
   type: MonetizationTabType = 'plus';

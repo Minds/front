@@ -15,6 +15,7 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
   selector: 'm-composer__nsfw',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'nsfw.component.html',
+  standalone: false,
 })
 export class NsfwComponent {
   /**

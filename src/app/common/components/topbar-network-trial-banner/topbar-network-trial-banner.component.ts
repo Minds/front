@@ -5,7 +5,7 @@ import {
   HostBinding,
 } from '@angular/core';
 import { ConfigsService } from '../../services/configs.service';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * Topbar network trial banner component - display logic is seperated
@@ -20,6 +20,7 @@ import * as moment from 'moment';
   templateUrl: 'topbar-network-trial-banner.component.html',
   styleUrls: ['./topbar-network-trial-banner.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TopbarNetworkTrialBannerComponent {
   /** Whether the trial is in an expired state. */

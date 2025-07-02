@@ -24,6 +24,7 @@ import { UploaderService } from '../../services/uploader.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'preview-wrapper.component.html',
   styleUrls: ['./preview-wrapper.component.ng.scss'],
+  standalone: false,
 })
 export class PreviewWrapperComponent implements OnInit, OnDestroy {
   /**

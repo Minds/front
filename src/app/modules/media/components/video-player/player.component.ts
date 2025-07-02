@@ -28,6 +28,7 @@ import { GlobalAudioPlayerService } from '../audio/services/global-audio-player.
   templateUrl: 'player.component.html',
   animations: PLAYER_ANIMATIONS,
   providers: [VideoPlayerService, Session],
+  standalone: false,
 })
 export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   /**

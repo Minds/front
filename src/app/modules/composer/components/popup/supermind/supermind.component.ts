@@ -49,6 +49,7 @@ import { ExplainerScreensService } from '../../../../explainer-screens/services/
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'supermind.component.html',
   styleUrls: ['./supermind.component.ng.scss'],
+  standalone: false,
 })
 export class ComposerSupermindComponent implements OnInit, OnDestroy {
   /**

@@ -27,6 +27,7 @@ export interface LocationTypeaheadResponse {
   selector: 'm-channel__locationTypeahead',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'location-typeahead.component.html',
+  standalone: false,
 })
 export class ChannelLocationTypeaheadComponent implements OnInit, OnDestroy {
   /**

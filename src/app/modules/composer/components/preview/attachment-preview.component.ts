@@ -23,6 +23,7 @@ import { VideoPoster } from '../../services/video-poster.service';
   selector: 'm-composerPreview--attachment',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'attachment-preview.component.html',
+  standalone: false,
 })
 export class AttachmentPreviewComponent implements OnChanges {
   /**

@@ -28,6 +28,7 @@ import { PermissionsEnum } from '../../../../graphql/generated.engine';
   templateUrl: 'thumbs-up.component.html',
   styleUrls: [`thumbs-up.component.ng.scss`],
   animations: [CounterChangeFadeIn],
+  standalone: false,
 })
 export class ThumbsUpButton implements DoCheck, OnChanges {
   changesDetected: boolean = false;

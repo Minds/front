@@ -11,6 +11,7 @@ export type ChannelAboutBriefLocation = 'main' | 'sidebar';
   selector: 'm-channelAbout__brief',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'brief.component.html',
+  standalone: false,
 })
 export class ChannelAboutBriefComponent {
   @Input() location: ChannelAboutBriefLocation = 'main';

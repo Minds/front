@@ -20,6 +20,7 @@ import { IS_TENANT_NETWORK } from '../../../../../common/injection-tokens/tenant
   selector: 'm-boostModalV2__review',
   templateUrl: './review.component.html',
   styleUrls: ['review.component.ng.scss'],
+  standalone: false,
 })
 export class BoostModalV2ReviewComponent {
   // enums.

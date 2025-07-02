@@ -9,6 +9,7 @@ import { StripeKeysService } from '../../services/stripe-keys.service';
   selector: 'm-networkAdminMonetization__tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminMonetizationTabsComponent {
   /** True when Stripe keys have been set. */

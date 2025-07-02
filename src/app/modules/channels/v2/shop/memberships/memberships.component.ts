@@ -26,6 +26,7 @@ import { ModalService } from '../../../../../services/ux/modal.service';
     ChannelShopMembershipsService,
     ChannelShopMembershipsEditModalService,
   ],
+  standalone: false,
 })
 export class ChannelShopMembershipsComponent implements OnDestroy {
   /**

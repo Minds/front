@@ -9,6 +9,7 @@ import { Observable, map } from 'rxjs';
     './nsfw-toggle.component.ng.scss',
     '../../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleNsfwToggleComponent {
   public nsfwToggleVal$: Observable<string> = this.service.nsfwEnabled$.pipe(

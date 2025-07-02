@@ -5,6 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 're-captcha',
   template: '',
+  standalone: false,
 })
 export class ReCaptchaComponentMock {
   @Output('captchaResponse') response: EventEmitter<any> =

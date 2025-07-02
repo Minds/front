@@ -12,6 +12,7 @@ const noOp = () => {};
 @Component({
   selector: 'm-languageModal',
   templateUrl: 'language-modal.component.html',
+  standalone: false,
 })
 export class LanguageModalComponent {
   /**

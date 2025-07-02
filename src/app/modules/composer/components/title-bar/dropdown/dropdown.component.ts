@@ -23,6 +23,7 @@ import { PopupService } from '../../popup/popup.service';
 @Component({
   selector: 'm-composerTitleBar__dropdown',
   templateUrl: './dropdown.component.html',
+  standalone: false,
 })
 export class ComposerTitleBarDropdownComponent implements OnDestroy {
   @Input() displayAsButton: boolean = false;

@@ -24,6 +24,7 @@ import { AwaitablePanelComponent } from '../../modal/onboarding-modal.component'
   templateUrl: './channel.component.html',
   styleUrls: ['./channel.component.ng.scss'],
   providers: [ChannelEditService],
+  standalone: false,
 })
 export class OnboardingV3ChannelComponent
   implements OnInit, OnDestroy, AwaitablePanelComponent

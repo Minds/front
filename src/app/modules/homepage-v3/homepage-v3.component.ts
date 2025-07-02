@@ -35,6 +35,7 @@ import { ThemeService } from '../../common/services/theme.service';
   selector: 'm-homepage__v3',
   templateUrl: 'homepage-v3.component.html',
   styleUrls: ['homepage-v3.component.ng.scss'],
+  standalone: false,
 })
 export class HomepageV3Component implements OnInit {
   @ViewChild('registerForm') registerForm: RegisterForm;

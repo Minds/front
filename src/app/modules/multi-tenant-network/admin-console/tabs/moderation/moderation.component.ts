@@ -14,6 +14,7 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
     './moderation.component.ng.scss',
     '../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleModerationComponent {
   /** Whether boosting is enabled. */

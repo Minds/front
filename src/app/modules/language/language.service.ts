@@ -5,7 +5,7 @@ import { CookieService } from '../../common/services/cookie.service';
 import { ApiService } from '../../common/api/api.service';
 import { Session } from '../../services/session';
 import { ConfigsService } from '../../common/services/configs.service';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * Language list entry structure

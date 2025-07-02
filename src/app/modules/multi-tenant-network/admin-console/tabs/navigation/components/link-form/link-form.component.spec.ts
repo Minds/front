@@ -29,6 +29,7 @@ describe('NetworkAdminConsoleNavigationLinkFormComponent', () => {
 
   @Component({
     template: '',
+    standalone: false,
   })
   class DummyListComponent {}
 

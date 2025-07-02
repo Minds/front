@@ -10,6 +10,7 @@ import { ModalService } from '../../../../services/ux/modal.service';
 @Component({
   selector: 'm-discovery__noTagsPrompt',
   templateUrl: './notags-prompt.component.html',
+  standalone: false,
 })
 export class DiscoveryNoTagsPromptComponent {
   @Output() completed: EventEmitter<true> = new EventEmitter();

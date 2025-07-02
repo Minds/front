@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'my-test-component',
   template: ` <div m-stickySidbar>Contents</div> `,
+  standalone: false,
 })
 class TestStickySidebarDirectiveComponent {}
 

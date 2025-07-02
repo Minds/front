@@ -17,6 +17,7 @@ import { ToasterService } from '../../../../../../common/services/toaster.servic
 @Component({
   selector: 'm-walletCashBankForm',
   templateUrl: './cash-bank-form.component.html',
+  standalone: false,
 })
 export class WalletCashBankFormComponent implements OnInit {
   @Input() allowedCountries: string[];

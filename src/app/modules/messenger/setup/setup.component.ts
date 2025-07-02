@@ -11,6 +11,7 @@ import { animations } from '../animations';
   selector: 'm-messenger--setup',
   templateUrl: 'setup.component.html',
   animations: animations,
+  standalone: false,
 })
 export class MessengerSetupChat {
   open: boolean = false;

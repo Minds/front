@@ -30,6 +30,7 @@ import { MindsUser } from '../../../../interfaces/entities';
   selector: 'm-sidebar__customNavigationItems',
   templateUrl: 'custom-navigation-items.component.html',
   styleUrls: ['../navigation-v2/navigation-v2.component.ng.scss'],
+  standalone: false,
 })
 export class CustomNavigationItemsComponent implements OnInit, OnDestroy {
   readonly cdnUrl: string;

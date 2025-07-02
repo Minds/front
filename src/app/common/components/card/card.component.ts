@@ -35,6 +35,7 @@ import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.c
   template: ` <ng-template dynamic-host></ng-template> `,
   styleUrls: ['./card.component.ng.scss'],
   providers: [ActivityService],
+  standalone: false,
 })
 export class MindsCard implements AfterViewInit {
   @Input() forceShowSubscribe = false;

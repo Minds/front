@@ -29,6 +29,7 @@ export class ResizedEvent {
  */
 @Directive({
   selector: '[mResized]',
+  standalone: false,
 })
 export class ResizedDirective implements OnInit, OnDestroy {
   private observer: ResizeObserver;

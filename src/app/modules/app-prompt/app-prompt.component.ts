@@ -97,6 +97,7 @@ import { BehaviorSubject } from 'rxjs';
       ]),
     ]),
   ],
+  standalone: false,
 })
 export class AppPromptComponent {
   readonly cdnAssetsUrl: string;

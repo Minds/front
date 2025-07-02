@@ -21,6 +21,7 @@ export interface AwaitablePanelComponent {
   selector: 'm-onboardingProgress',
   templateUrl: './onboarding-modal.component.html',
   styleUrls: ['./onboarding-modal.component.ng.scss'],
+  standalone: false,
 })
 export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];

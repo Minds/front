@@ -10,5 +10,6 @@ import { Component } from '@angular/core';
     './edit-appearance.component.ng.scss',
     '../../stylesheets/network-admin-mobile.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleMobileEditAppearanceComponent {}

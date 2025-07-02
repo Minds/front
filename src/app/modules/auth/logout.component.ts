@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
  */
 @Component({
   template: ``,
+  standalone: false,
 })
 export class LogoutComponent implements OnInit {
   constructor(

@@ -19,6 +19,7 @@ import { CookieService } from '../../../common/services/cookie.service';
     </div>
   `,
   styleUrls: ['announcement.component.ng.scss'],
+  standalone: false,
 })
 export class AnnouncementComponent implements OnInit {
   @Input() id: string = 'default';

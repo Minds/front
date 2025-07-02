@@ -16,6 +16,7 @@ import { CountryCode } from './countries';
 @Component({
   selector: 'm-phone-input--country',
   templateUrl: 'country.component.html',
+  standalone: false,
 })
 export class PhoneInputCountryComponent implements OnInit {
   @Output('country') selectedCountryEvt = new EventEmitter();

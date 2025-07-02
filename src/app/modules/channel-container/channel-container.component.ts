@@ -27,6 +27,7 @@ import { isPlatformServer } from '@angular/common';
   selector: 'm-channel-container',
   templateUrl: 'channel-container.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
+  standalone: false,
 })
 export class ChannelContainerComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;

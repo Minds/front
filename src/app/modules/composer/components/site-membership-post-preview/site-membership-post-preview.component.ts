@@ -33,6 +33,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
   selector: 'm-composer__siteMembershipPostPreview',
   templateUrl: 'site-membership-post-preview.component.html',
   styleUrls: ['./site-membership-post-preview.component.ng.scss'],
+  standalone: false,
 })
 export class ComposerSiteMembershipPostPreview implements OnInit, OnDestroy {
   @Input() isModal: boolean;

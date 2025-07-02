@@ -10,6 +10,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 @Component({
   selector: 'm-feedNotice--plusUpgrade',
   templateUrl: 'plus-upgrade-notice.component.html',
+  standalone: false,
 })
 export class PlusUpgradeNoticeComponent {
   @Input() public dismissible: boolean = true;

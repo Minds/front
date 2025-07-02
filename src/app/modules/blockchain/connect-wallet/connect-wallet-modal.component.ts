@@ -16,6 +16,7 @@ import { BehaviorSubject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'connect-wallet-modal.component.html',
   styleUrls: ['./connect-wallet-modal.component.ng.scss'],
+  standalone: false,
 })
 export class ConnectWalletModalComponent {
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);

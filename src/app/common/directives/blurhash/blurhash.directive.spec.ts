@@ -69,6 +69,7 @@ import { BlurhashDirective } from './blurhash.directive';
       height="100px"
     />
   `,
+  standalone: false,
 })
 class BlurhashFakeImageComponent {}
 

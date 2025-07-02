@@ -17,6 +17,7 @@ import { NsfwEnabledService } from '../../../../multi-tenant-network/services/ns
   },
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.ng.scss'],
+  standalone: false,
 })
 export class BlogEditorDropdownComponent {
   /**

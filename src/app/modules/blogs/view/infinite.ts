@@ -21,6 +21,7 @@ import { RedirectService } from '../../../common/services/redirect.service';
 @Component({
   selector: 'm-blog-view-infinite',
   templateUrl: 'infinite.html',
+  standalone: false,
 })
 export class BlogViewInfinite {
   readonly cdnAssetsUrl: string;

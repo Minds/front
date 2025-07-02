@@ -27,6 +27,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       >
     </div>
   `,
+  standalone: false,
 })
 export class NetworkAdminAnalyticsEmptyStateCardComponent {
   /** Title of card. */

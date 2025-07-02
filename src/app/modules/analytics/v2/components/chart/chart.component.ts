@@ -13,6 +13,7 @@ import { AnalyticsDashboardService } from '../../dashboard.service';
   selector: 'm-analytics__chart',
   templateUrl: 'chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AnalyticsChartComponent implements OnDestroy, OnInit {
   metricSubscription: Subscription;

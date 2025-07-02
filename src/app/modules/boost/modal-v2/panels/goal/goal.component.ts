@@ -19,6 +19,7 @@ import { BoostModalPanel } from '../../boost-modal-v2.types';
   selector: 'm-boostModalV2__goalSelector',
   templateUrl: './goal.component.html',
   styleUrls: ['goal.component.ng.scss'],
+  standalone: false,
 })
 export class BoostModalV2GoalSelectorComponent implements OnInit, OnDestroy {
   public BoostGoal: typeof BoostGoal = BoostGoal;

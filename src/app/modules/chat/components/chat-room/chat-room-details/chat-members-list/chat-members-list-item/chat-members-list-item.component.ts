@@ -19,7 +19,6 @@ import { ChatRoomMemberEdge } from '../../../../../../../../graphql/generated.en
     RouterModule,
     ChatRoomMembersListItemDropdownComponent,
   ],
-  standalone: true,
 })
 export class ChatMembersListItemComponent {
   /** Member edge to display. */

@@ -24,6 +24,7 @@ import { Menu } from '../../../interfaces/menu';
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [AnalyticsDashboardService],
+  standalone: false,
 })
 export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   menu: Menu;

@@ -22,6 +22,7 @@ import { AuthModalService } from '../../../auth/modal/auth-modal.service';
   templateUrl: 'wire-creator.component.html',
   styleUrls: ['wire-creator.component.ng.scss'],
   providers: [WireService, WireV2Service, WalletV2Service, SupportTiersService],
+  standalone: false,
 })
 export class WireCreatorComponent implements OnDestroy {
   /**

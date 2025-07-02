@@ -7,6 +7,7 @@ import { ActivityService } from '../../activity/activity.service';
   selector: 'm-activity__supermindReplyLink',
   templateUrl: './supermind-reply-link.component.html',
   styleUrls: ['./supermind-reply-link.component.ng.scss'],
+  standalone: false,
 })
 export class ActivitySupermindReplyLinkComponent
   extends AbstractSubscriberComponent

@@ -14,6 +14,7 @@ import { Storage } from '../../../../services/storage';
   selector: 'm-sidebarNavigation__newContentDot',
   templateUrl: './new-content-dot.component.html',
   styleUrls: ['./new-content-dot.component.ng.scss'],
+  standalone: false,
 })
 export class SidebarNavigationNewContentDotComponent implements OnInit {
   constructor(

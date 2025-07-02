@@ -18,6 +18,5 @@ import { ChatPageLayoutComponent } from '../../layout/layout.component';
     ChatRoomListComponent,
     ChatPageLayoutComponent,
   ],
-  standalone: true,
 })
 export class ChatRoomsListPageComponent {}

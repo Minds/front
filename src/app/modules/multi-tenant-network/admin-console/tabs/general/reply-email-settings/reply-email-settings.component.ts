@@ -27,6 +27,7 @@ import { MultiTenantConfig } from '../../../../../../../graphql/generated.engine
     './reply-email-settings.component.ng.scss',
     '../../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleReplyEmailSettingsComponent
   implements OnInit, OnDestroy

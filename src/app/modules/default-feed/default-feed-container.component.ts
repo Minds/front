@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   selector: 'm-defaultFeed__container',
   templateUrl: 'default-feed-container.component.html',
   styleUrls: ['./default-feed-container.component.ng.scss'],
+  standalone: false,
 })
 export class DefaultFeedContainerComponent {}

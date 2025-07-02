@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
   selector: 'm-valueProp__card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.ng.scss'],
+  standalone: false,
 })
 export class ValuePropCardComponent {
   /** Title of card. */

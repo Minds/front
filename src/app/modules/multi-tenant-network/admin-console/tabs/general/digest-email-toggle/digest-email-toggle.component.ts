@@ -12,6 +12,7 @@ import { GenericToggleValue } from '../../../../../../common/components/toggle/t
   selector: 'm-networkAdminConsole__digestEmailSettings',
   templateUrl: './digest-email-toggle.component.html',
   styleUrls: ['./digest-email-toggle.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleDigestEmailSettingsComponent
   implements OnInit, OnDestroy

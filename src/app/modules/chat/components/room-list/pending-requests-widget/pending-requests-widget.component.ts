@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./pending-requests-widget.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgCommonModule, RouterModule],
-  standalone: true,
   template: `
     <div
       *ngIf="totalRequests$ | async as totalRequests"

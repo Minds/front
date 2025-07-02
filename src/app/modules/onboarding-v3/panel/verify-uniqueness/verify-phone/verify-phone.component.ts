@@ -14,6 +14,7 @@ import {
   selector: 'm-onboardingV3__phone',
   templateUrl: './verify-phone.component.html',
   styleUrls: ['./verify-phone.component.ng.scss'],
+  standalone: false,
 })
 export class OnboardingV3VerifyPhoneComponent {
   /**

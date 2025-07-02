@@ -59,6 +59,7 @@ type ChannelView =
     SeoService,
     MutualSubscriptionsService, // Create new instance of MutualSubscriptionsService per channel to avoid cancelled replays
   ],
+  standalone: false,
 })
 export class ChannelComponent implements OnInit, OnDestroy {
   /**

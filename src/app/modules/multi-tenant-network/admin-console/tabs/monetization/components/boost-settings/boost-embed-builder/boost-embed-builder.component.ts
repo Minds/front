@@ -28,7 +28,6 @@ const DEFAULT_HEIGHT: number = 250;
   selector: 'm-boostEmbedBuilder',
   styleUrls: ['./boost-embed-builder.component.ng.scss'],
   templateUrl: './boost-embed-builder.component.html',
-  standalone: true,
   imports: [ReactiveFormsModule, CommonModule, AsyncPipe, NgIf],
 })
 export class BoostEmbedBuilderComponent implements OnInit {

@@ -19,6 +19,7 @@ import { isPlatformBrowser } from '@angular/common';
   selector: 'm-networksCheckout__checkoutPage',
   styleUrls: ['./checkout-page.component.ng.scss'],
   template: ` <m-networksCheckout__base></m-networksCheckout__base> `,
+  standalone: false,
 })
 export class NetworksCheckoutPageComponent implements OnInit, OnDestroy {
   /** Force light-mode. */

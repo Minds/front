@@ -25,6 +25,7 @@ type ActionableActivity = {
   templateUrl: 'review.component.html',
   styleUrls: ['./review.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class GroupsProfileReviewComponent implements OnInit {
   group: any;

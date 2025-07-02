@@ -15,6 +15,7 @@ type AnchorPosition = 'top' | 'bottom' | 'right' | 'left';
 @Component({
   selector: 'm-tooltipHint',
   templateUrl: './tooltip-hint.component.html',
+  standalone: false,
 })
 export class TooltipHintComponent implements OnInit {
   // prefix for storage key. identifier for a hint.

@@ -38,7 +38,6 @@ import { ChatRoomListItemComponent } from '../room-list/room-list-item/room-list
     ChatRoomListItemComponent,
     RouterModule,
   ],
-  standalone: true,
 })
 export class ChatRequestListComponent {
   /** Whether a request is in progress to load / load more. */

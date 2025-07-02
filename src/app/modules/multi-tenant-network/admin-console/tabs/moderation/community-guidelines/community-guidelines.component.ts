@@ -8,6 +8,7 @@ import { CustomPageType } from '../../../../../custom-pages/custom-pages.types';
   selector: 'm-networkAdminConsole__communityGuidelines',
   templateUrl: './community-guidelines.component.html',
   styleUrls: ['../../../stylesheets/console.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleCommunityGuidelinesComponent {
   /**

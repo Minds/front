@@ -17,6 +17,7 @@ import { horizontallyScrollElementIntoView } from '../../../helpers/scrollable-c
   selector: 'm-dataTabsHeader',
   templateUrl: './data-tabs-header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class DataTabsHeaderComponent implements AfterViewInit {
   @Input() isScrollable: boolean = true;

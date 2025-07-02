@@ -14,6 +14,7 @@ import { PermissionsEnum } from '../../../../../graphql/generated.engine';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'actions.component.html',
   styleUrls: ['actions.component.ng.scss'],
+  standalone: false,
 })
 export class GroupActionsComponent {
   subscriptions: Subscription[];

@@ -14,6 +14,7 @@ import { debounceTime } from 'rxjs/operators';
 
 @Directive({
   selector: '[mPreventDoubleClick]',
+  standalone: false,
 })
 export class PreventDoubleClickDirective implements OnInit, OnDestroy {
   @Input()

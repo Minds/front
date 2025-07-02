@@ -7,6 +7,7 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
   selector: 'm-onboarding__channelList',
   templateUrl: 'list.component.html',
   providers: [FeedsService],
+  standalone: false,
 })
 export class ChannelListComponent implements OnInit {
   readonly cdnUrl: string;

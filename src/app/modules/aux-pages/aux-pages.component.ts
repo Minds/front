@@ -16,6 +16,7 @@ import {
   selector: 'm-aux',
   templateUrl: './aux-pages.component.html',
   styleUrls: ['./aux-pages.component.ng.scss'],
+  standalone: false,
 })
 export class AuxComponent implements OnInit, OnDestroy {
   // copy for the header.

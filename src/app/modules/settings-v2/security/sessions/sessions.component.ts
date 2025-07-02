@@ -21,6 +21,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
   templateUrl: './sessions.component.html',
   styleUrls: ['./sessions.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
   openSessions: number = 1;

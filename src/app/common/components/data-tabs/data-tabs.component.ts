@@ -14,6 +14,7 @@ import { DataTab } from '../../../interfaces/dashboard';
   selector: 'm-dataTabs',
   styleUrls: ['./data-tabs.component.ng.scss'],
   templateUrl: './data-tabs.component.html',
+  standalone: false,
 })
 export class DataTabsComponent implements AfterViewInit {
   @Input() tabs: DataTab[];

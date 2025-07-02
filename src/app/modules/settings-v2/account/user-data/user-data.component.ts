@@ -32,6 +32,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
   templateUrl: './user-data.component.html',
   styleUrls: ['./user-data.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2UserDataComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

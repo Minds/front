@@ -18,6 +18,7 @@ import { ModalService } from '../../../services/ux/modal.service';
   selector: 'minds-admin-firehose',
   templateUrl: 'firehose.component.html',
   styleUrls: ['./firehose.component.ng.scss'],
+  standalone: false,
 })
 export class AdminFirehoseComponent implements OnInit, OnDestroy {
   entities: Array<any> = [];

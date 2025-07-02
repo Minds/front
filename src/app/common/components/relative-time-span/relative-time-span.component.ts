@@ -40,6 +40,7 @@ export type TimestampedEntity = {
     </span>
   `,
   providers: [FriendlyDateDiffPipe],
+  standalone: false,
 })
 export class RelativeTimeSpanComponent {
   // activity entity to get time from.

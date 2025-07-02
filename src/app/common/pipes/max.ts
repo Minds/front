@@ -7,6 +7,7 @@ import maxNum from '../../helpers/max';
  */
 @Pipe({
   name: 'max',
+  standalone: false,
 })
 export class MaxPipe {
   transform(num: number, limit: number) {

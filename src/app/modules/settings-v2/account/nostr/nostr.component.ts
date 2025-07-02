@@ -38,6 +38,7 @@ import { first, take } from 'rxjs/operators';
   templateUrl: './nostr.component.html',
   styleUrls: ['./nostr.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2NostrComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

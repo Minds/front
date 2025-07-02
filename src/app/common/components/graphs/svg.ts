@@ -8,6 +8,7 @@ import {
 @Directive({
   selector: '[svgHack]',
   inputs: ['svgHack', 'height', 'width', 'viewBox'],
+  standalone: false,
 })
 export class GraphSVG {
   element: any;

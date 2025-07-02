@@ -12,6 +12,7 @@ export type SupermindBannerType = 'repliesFromCreators';
   selector: 'm-supermind__banner',
   templateUrl: './supermind-banner.component.html',
   styleUrls: ['./supermind-banner.component.ng.scss'],
+  standalone: false,
 })
 export class SupermindBannerComponent implements OnInit {
   /**

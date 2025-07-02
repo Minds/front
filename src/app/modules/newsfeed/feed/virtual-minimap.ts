@@ -38,6 +38,7 @@ import { IFeedItem, FeedItemType } from './feed.component';
       ></div>
     </div>
   `,
+  standalone: false,
 })
 export class VirtualMinimapComponent {
   getBackgroundColor(feedItem: IFeedItem, viewportItems: IFeedItem[]) {

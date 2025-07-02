@@ -16,6 +16,7 @@ import { Observable, map } from 'rxjs';
   selector: 'm-affiliates__earnings',
   templateUrl: 'earnings.component.html',
   styleUrls: ['earnings.component.ng.scss'],
+  standalone: false,
 })
 export class AffiliatesEarningsComponent {
   /** Amount user has earned through affiliate program */

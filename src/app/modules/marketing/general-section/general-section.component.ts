@@ -12,6 +12,7 @@ import {
   selector: 'm-marketing__generalSection',
   templateUrl: 'general-section.component.html',
   styleUrls: ['./general-section.component.ng.scss'],
+  standalone: false,
 })
 export class MarketingGeneralSectionComponent {
   @Input() title: string; // title for section.

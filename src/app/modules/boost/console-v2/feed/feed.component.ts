@@ -26,6 +26,7 @@ export type DisplayableBoost = {
   selector: 'm-boostConsole__feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.ng.scss'],
+  standalone: false,
 })
 export class BoostConsoleFeedComponent implements OnInit, OnDestroy {
   /** Page size */

@@ -15,6 +15,7 @@ import { ModalService } from '../../../services/ux/modal.service';
   selector: 'm-settings--two-factor',
   inputs: ['object'],
   templateUrl: 'two-factor.component.html',
+  standalone: false,
 })
 export class SettingsTwoFactorComponent {
   telno: string;

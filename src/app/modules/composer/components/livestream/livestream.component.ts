@@ -14,6 +14,7 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: 'livestream.component.html',
   styleUrls: ['livestream.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class LiveStreamComponent implements OnDestroy {
   streamUrl: string;

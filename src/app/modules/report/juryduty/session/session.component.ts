@@ -6,6 +6,7 @@ import { Session } from '../../../../services/session';
   selector: 'm-juryduty__session',
   templateUrl: 'session.component.html',
   styleUrls: ['session.component.scss'],
+  standalone: false,
 })
 export class JuryDutySessionComponent implements AfterViewInit {
   paramsSubscription;

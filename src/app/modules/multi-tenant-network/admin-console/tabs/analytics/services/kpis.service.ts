@@ -20,7 +20,7 @@ import {
   DEFAULT_ERROR_MESSAGE,
   ToasterService,
 } from '../../../../../../common/services/toaster.service';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /** Default analytics chart and KPIs query parameters. */
 const DEFAULT_PARAMS: GetAdminAnalyticsChartAndKpisQueryVariables = {

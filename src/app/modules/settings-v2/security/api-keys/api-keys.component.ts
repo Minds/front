@@ -18,6 +18,7 @@ import { CopyToClipboardService } from '../../../../common/services/copy-to-clip
   templateUrl: './api-keys.component.html',
   styleUrls: ['./api-keys.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2ApiKeysComponent {
   /** Existing API key details. */

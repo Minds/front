@@ -5,5 +5,6 @@ import { Directive } from '@angular/core';
 @Directive({
   selector: '[mdl]',
   inputs: ['mdl'],
+  standalone: false,
 })
 export class MaterialMock {}

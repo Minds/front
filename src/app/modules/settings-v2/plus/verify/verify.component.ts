@@ -22,6 +22,7 @@ import { PlusVerifyModalLazyService } from '../../../plus/verify-modal/verify-mo
   templateUrl: './verify.component.html',
   styleUrls: ['./verify.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2PlusVerifyComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

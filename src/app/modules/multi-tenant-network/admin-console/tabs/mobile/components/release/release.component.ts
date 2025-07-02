@@ -11,6 +11,7 @@ import { ConfigsService } from '../../../../../../../common/services/configs.ser
     '././release.component.ng.scss',
     '../../stylesheets/network-admin-mobile.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleMobileReleaseComponent {
   /** URL to contact support. */

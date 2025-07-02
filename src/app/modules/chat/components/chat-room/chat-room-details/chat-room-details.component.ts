@@ -44,7 +44,6 @@ import { EditChatRoomModalService } from '../edit-chat-room-modal/edit-chat-room
     ChatMembersListComponent,
     ChatRoomNotificationSettingsComponent,
   ],
-  standalone: true,
 })
 export class ChatRoomDetailsComponent implements OnInit {
   // Enums for use in template.

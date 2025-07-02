@@ -9,6 +9,7 @@ import { Client } from '../../../services/api';
 @Component({
   selector: 'm-admin--verify',
   templateUrl: 'verify.component.html',
+  standalone: false,
 })
 export class AdminVerify {
   requests: any[] = [];

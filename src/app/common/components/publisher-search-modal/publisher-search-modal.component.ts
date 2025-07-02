@@ -25,6 +25,7 @@ const noOp = () => {};
   selector: 'm-publisherSearchModal',
   templateUrl: './publisher-search-modal.component.html',
   styleUrls: ['./publisher-search-modal.component.ng.scss'],
+  standalone: false,
 })
 export class PublisherSearchModalComponent implements OnInit {
   /**

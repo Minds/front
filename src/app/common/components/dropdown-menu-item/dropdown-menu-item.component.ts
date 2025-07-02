@@ -12,6 +12,7 @@ import { Component, Input } from '@angular/core';
   selector: 'm-dropdownMenu__item',
   templateUrl: './dropdown-menu-item.component.html',
   styleUrls: ['./dropdown-menu-item.component.ng.scss'],
+  standalone: false,
 })
 export class DropdownMenuItemComponent {
   // See storybook for docs

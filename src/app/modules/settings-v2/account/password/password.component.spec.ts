@@ -20,6 +20,7 @@ import userMock from '../../../../mocks/responses/user.mock';
 @Component({
   selector: 'm-popover',
   template: ` <ng-content></ng-content> `,
+  standalone: false,
 })
 class PopoverComponentMock {
   @Input() password;

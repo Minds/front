@@ -27,6 +27,7 @@ export type UpsellModalData = {
   selector: 'm-upsellModal',
   templateUrl: './upsell-modal.component.html',
   styleUrls: ['./upsell-modal.component.ng.scss'],
+  standalone: false,
 })
 export class UpsellModalComponent {
   constructor(

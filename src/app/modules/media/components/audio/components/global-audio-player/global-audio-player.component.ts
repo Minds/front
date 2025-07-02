@@ -36,7 +36,6 @@ import { AudioTrack } from '../../types/audio-player.types';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AsyncPipe],
-  standalone: true,
 })
 export class GlobalAudioPlayerComponent implements AfterViewInit {
   /** Reference to the audio element. */

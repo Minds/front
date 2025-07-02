@@ -16,6 +16,7 @@ import { GiftCardProductIdEnum } from '../../../../../../../graphql/generated.en
   host: {
     '(click)': 'onRecipientInputClick()',
   },
+  standalone: false,
 })
 export class WireCreatorGiftRecipientInputComponent
   implements OnInit, OnDestroy

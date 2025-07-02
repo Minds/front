@@ -8,6 +8,7 @@ import { MindsUser } from '../../../interfaces/entities';
   selector: 'm-admin__liquidityProviders',
   templateUrl: 'liquidity-providers.component.html',
   styleUrls: ['./liquidity-providers.component.ng.scss'],
+  standalone: false,
 })
 export class AdminLiquidityProvidersComponent {
   users: MindsUser[] = [];

@@ -30,6 +30,7 @@ import { MindsGroup } from '../../../../../../groups/v2/group.model';
     './send.component.ng.scss',
     '../../../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleInviteSendComponent {
   /** Whether loading is in progress. */

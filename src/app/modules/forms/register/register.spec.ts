@@ -44,6 +44,7 @@ import userMock from '../../../mocks/responses/user.mock';
       multi: true,
     },
   ],
+  standalone: false,
 })
 class FriendlyCaptchaComponentMock implements ControlValueAccessor {
   value: any;
@@ -70,6 +71,7 @@ class FriendlyCaptchaComponentMock implements ControlValueAccessor {
 @Component({
   selector: 'm-popover',
   template: ` <ng-content></ng-content> `,
+  standalone: false,
 })
 class PopoverComponentMock {
   @Input() password;

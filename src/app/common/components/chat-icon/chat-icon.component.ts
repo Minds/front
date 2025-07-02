@@ -14,6 +14,7 @@ import { ChatIconService } from './chat-icon.service';
   selector: 'm-chatIcon',
   templateUrl: './chat-icon.component.html',
   styleUrls: ['./chat-icon.component.ng.scss'],
+  standalone: false,
 })
 export class ChatIconComponent implements OnInit {
   readonly chatUrl: string;

@@ -16,6 +16,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'admin-confirmation.component.html',
   styleUrls: ['admin-confirmation.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelAdminConfirmationComponent extends AbstractSubscriberComponent {
   // holds period we we are permitting.

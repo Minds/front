@@ -73,7 +73,6 @@ const SlideInFromRightAnimation: AnimationTriggerMetadata = trigger(
     ChatRoomRequestBottomBarComponent,
     ChatRoomDetailsComponent,
   ],
-  standalone: true,
   animations: [SlideInFromRightAnimation],
 })
 export class ChatRoomComponent implements OnInit, OnDestroy {

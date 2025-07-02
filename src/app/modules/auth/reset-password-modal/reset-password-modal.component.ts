@@ -12,6 +12,7 @@ import { ResetPasswordModalService } from './reset-password-modal.service';
   selector: 'm-resetPasswordModal',
   templateUrl: 'reset-password-modal.component.html',
   styleUrls: ['reset-password-modal.component.ng.scss'],
+  standalone: false,
 })
 export class ResetPasswordModalComponent {
   /**

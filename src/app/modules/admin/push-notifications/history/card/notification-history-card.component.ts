@@ -5,6 +5,7 @@ import { NotificationDetails } from '../../admin-push-notifications.component';
   selector: 'm-notificationHistoryCard',
   styleUrls: ['notification-history-card.component.ng.scss'],
   templateUrl: 'notification-history-card.component.html',
+  standalone: false,
 })
 export class NotificationHistoryCardComponent {
   @Input()

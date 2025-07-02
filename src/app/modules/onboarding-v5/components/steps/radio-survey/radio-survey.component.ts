@@ -23,6 +23,7 @@ import { OnboardingStepContentInterface } from '../step-content.interface';
     'radio-survey.component.ng.scss',
     '../../../stylesheets/onboarding-v5-common.ng.scss',
   ],
+  standalone: false,
 })
 export class OnboardingV5RadioSurveyContentComponent
   implements OnInit, OnboardingStepContentInterface

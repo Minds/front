@@ -39,6 +39,7 @@ import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
     </form>
   `,
   styleUrls: ['./confirm-password.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsTwoFactorPasswordComponent
   extends AbstractSubscriberComponent

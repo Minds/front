@@ -20,6 +20,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   selector: 'm--blockchain--transaction-overlay',
   templateUrl: 'transaction-overlay.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TransactionOverlayComponent implements OnInit {
   @HostBinding('hidden') _isHidden: boolean = true;

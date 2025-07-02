@@ -15,6 +15,7 @@ import {
   selector: 'm-supermind__listItem',
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.ng.scss'],
+  standalone: false,
 })
 export class SupermindConsoleListItemComponent {
   /** @var { Supermind } supermind - Supermind object */

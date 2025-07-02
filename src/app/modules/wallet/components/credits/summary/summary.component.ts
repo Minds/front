@@ -20,6 +20,7 @@ export const PRODUCT_DISPLAY_ORDER: GiftCardProductIdEnum[] = [
   selector: 'm-walletV2__creditsSummary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.ng.scss'],
+  standalone: false,
 })
 export class WalletV2CreditsSummaryComponent implements OnInit, OnDestroy {
   /** Balances of various gift cards. */

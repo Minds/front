@@ -11,6 +11,7 @@ import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-in
   selector: 'm-channel__about',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'about.component.html',
+  standalone: false,
 })
 export class ChannelAboutComponent {
   /**

@@ -30,6 +30,7 @@ import {
   templateUrl: './marketing.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['../../../marketing/styles/markdown-style.ng.scss'],
+  standalone: false,
 })
 export class YoutubeMigrationMarketingComponent implements OnInit, OnDestroy {
   public data: ProductMarketingAttributes;

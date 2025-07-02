@@ -12,6 +12,7 @@ import { AbstractMFAFormComponent } from '../abstract/abstract-mfa-form.componen
   selector: 'm-multiFactorAuth__totpRecovery',
   templateUrl: './recovery-code.component.html',
   styleUrls: ['../mfa-panel.component.ng.scss'],
+  standalone: false,
 })
 export class MultiFactorAuthTOTPRecoveryComponent extends AbstractMFAFormComponent {
   constructor(public service: MultiFactorAuthService) {

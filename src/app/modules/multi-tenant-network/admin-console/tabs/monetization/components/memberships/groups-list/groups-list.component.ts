@@ -9,6 +9,7 @@ import { GroupNode } from '../../../../../../../../../graphql/generated.engine';
   selector: 'm-networkAdminMonetization__groupsList',
   templateUrl: './groups-list.component.html',
   styleUrls: ['./groups-list.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminMonetizationGroupsListComponent {
   /** Groups to be displayed. */

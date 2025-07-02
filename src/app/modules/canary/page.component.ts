@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api';
-import { storageMock } from '../../../tests/storage-mock.spec';
 import { Storage } from '../../services/storage';
 import { ToasterService } from '../../common/services/toaster.service';
 
@@ -16,6 +15,7 @@ import { ToasterService } from '../../common/services/toaster.service';
     './page.component.ng.scss',
     '../aux-pages/aux-pages.component.ng.scss',
   ],
+  standalone: false,
 })
 export class CanaryPageComponent {
   user;

@@ -13,6 +13,7 @@ import { Session } from '../../../services/session';
   templateUrl: 'claim.component.html',
   styleUrls: ['./claim.component.ng.scss'],
   host: { class: 'm-pageLayout__container' },
+  standalone: false,
 })
 export class GiftCardClaimComponent implements OnInit {
   /** Enum as class variable for use in template. */

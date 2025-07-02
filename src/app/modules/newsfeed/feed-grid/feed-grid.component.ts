@@ -31,6 +31,7 @@ import * as Macy from 'macy';
 @Component({
   selector: 'm-feedGrid',
   templateUrl: './feed-grid.component.html',
+  standalone: false,
 })
 export class FeedGridComponent
   implements OnInit, AfterViewInit, OnChanges, OnDestroy

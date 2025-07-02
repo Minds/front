@@ -18,6 +18,7 @@ import { DiscoveryService } from '../discovery.service';
   selector: 'm-discovery__feeds',
   templateUrl: './feeds.component.html',
   providers: [DiscoveryFeedsService, FeedsService],
+  standalone: false,
 })
 export class DiscoveryFeedsComponent implements OnInit, OnDestroy {
   filter: DiscoveryFeedsContentFilter;

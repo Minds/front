@@ -34,6 +34,7 @@ import { ActivityEntity } from '../../../activity/activity.service';
     </span>
   `,
   providers: [FriendlyDateDiffPipe],
+  standalone: false,
 })
 export class ActivityRelativeTimeSpanComponent {
   // activity entity to get time from.

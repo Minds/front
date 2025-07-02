@@ -5,7 +5,7 @@ import {
   BoostState,
   RejectionReason,
 } from '../../../../boost.types';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ConfigsService } from '../../../../../../common/services/configs.service';
 import { BoostModalV2LazyService } from '../../../../modal-v2/boost-modal-v2-lazy.service';
 import { Observable, map } from 'rxjs';
@@ -32,6 +32,7 @@ const STRIPE_TOS_LINK: string =
   selector: 'm-boostConsole__statsBar',
   templateUrl: './stats-bar.component.html',
   styleUrls: ['./stats-bar.component.ng.scss'],
+  standalone: false,
 })
 export class BoostConsoleStatsBarComponent implements OnInit {
   /** @var { Boost } boost - Boost object */

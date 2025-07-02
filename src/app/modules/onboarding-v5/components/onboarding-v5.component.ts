@@ -26,6 +26,7 @@ import { OnboardingV5MinimalModeService } from '../services/onboarding-v5-minima
     'onboarding-v5.component.ng.scss',
     '../../../../stylesheets/two-column-layout.ng.scss',
   ],
+  standalone: false,
 })
 export class OnboardingV5Component implements OnInit, OnDestroy {
   /** Whether fetching of steps is in progress. */

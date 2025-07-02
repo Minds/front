@@ -61,6 +61,7 @@ const CHANNELS_AND_GROUPS_PAGE_SIZE = 36;
     FeedsService, // The settings modal relies on this
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SearchComponent {
   query: string = '';

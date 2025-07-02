@@ -6,6 +6,7 @@ import { Session } from '../../../../../services/session';
 @Component({
   selector: 'm-analytics__layout--summary',
   templateUrl: './layout-summary.component.html',
+  standalone: false,
 })
 export class AnalyticsLayoutSummaryComponent implements OnInit {
   loading = true;

@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Pipe({
   name: 'safe',
+  standalone: false,
 })
 export class SafePipe {
   constructor(private sanitizer: DomSanitizer) {}
@@ -16,6 +17,7 @@ export class SafePipe {
 
 @Pipe({
   name: 'safeUrl',
+  standalone: false,
 })
 export class SafeUrlPipe {
   constructor(private sanitizer: DomSanitizer) {}
@@ -29,6 +31,7 @@ export class SafeUrlPipe {
 
 @Pipe({
   name: 'safeStyle',
+  standalone: false,
 })
 export class SafeStylePipe {
   constructor(private sanitizer: DomSanitizer) {}

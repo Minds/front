@@ -17,6 +17,7 @@ import { Client, Upload } from '../../../../../../services/api';
 @Component({
   selector: 'm-walletCashOnboardingExtras',
   templateUrl: './cash-onboarding-extras.component.html',
+  standalone: false,
 })
 export class WalletCashOnboardingExtrasComponent {
   @Input() account;

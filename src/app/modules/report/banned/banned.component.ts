@@ -19,6 +19,7 @@ import { Session } from '../../../services/session';
   selector: 'm-reports__banned',
   templateUrl: 'banned.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class BannedComponent {
   appeals = [];

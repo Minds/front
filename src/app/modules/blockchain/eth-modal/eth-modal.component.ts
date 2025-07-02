@@ -23,6 +23,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
   selector: 'm-blockchain__eth-modal',
   templateUrl: 'eth-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class BlockchainEthModalComponent implements OnInit {
   @Input() rate = 1;

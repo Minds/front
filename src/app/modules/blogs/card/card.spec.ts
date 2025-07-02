@@ -18,6 +18,7 @@ import { TruncatePipe } from '../../../common/pipes/truncate.pipe';
 @Component({
   selector: 'minds-button-thumbs-up',
   template: '',
+  standalone: false,
 })
 class ThumbsUpMock {
   @Input() object: any;
@@ -26,6 +27,7 @@ class ThumbsUpMock {
 @Component({
   selector: 'minds-button-thumbs-down',
   template: '',
+  standalone: false,
 })
 class ThumbsDownMock {
   @Input() object: any;
@@ -34,6 +36,7 @@ class ThumbsDownMock {
 @Component({
   selector: 'minds-button-comment',
   template: '',
+  standalone: false,
 })
 class CommentsMock {
   @Input() object: any;

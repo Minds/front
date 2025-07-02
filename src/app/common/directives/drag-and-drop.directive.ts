@@ -20,6 +20,7 @@ import {
  */
 @Directive({
   selector: '[m-dragAndDrop]',
+  standalone: false,
 })
 export class DragAndDropDirective {
   /**

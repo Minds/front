@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   selector: 'm-exploreTagFeedItem',
   templateUrl: './explore-tag-feed-item.component.html',
   styleUrls: ['./explore-tag-feed-item.component.ng.scss'],
+  standalone: false,
 })
 export class ExploreTagFeedItemComponent {
   /** Tag that a user can explore. */

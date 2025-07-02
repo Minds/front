@@ -31,6 +31,7 @@ export interface ProToggleResponse {
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'menu.component.html',
   providers: [PostMenuService, ActivityService],
+  standalone: false,
 })
 export class ChannelActionsMenuComponent
   extends AbstractSubscriberComponent

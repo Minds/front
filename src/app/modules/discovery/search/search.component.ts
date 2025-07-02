@@ -26,6 +26,7 @@ import { SiteService } from '../../../common/services/site.service';
   styleUrls: ['search.component.ng.scss'],
   providers: [DiscoveryFeedsService, FeedsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class DiscoverySearchComponent {
   q: string;

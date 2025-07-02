@@ -12,6 +12,7 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
   selector: 'm-explainScreenModal',
   templateUrl: './explainer-screen-modal.component.html',
   styleUrls: ['./explainer-screen-modal.component.ng.scss'],
+  standalone: false,
 })
 export class ExplainerScreenModalComponent {
   // data from CMS.
@@ -34,12 +35,12 @@ export class ExplainerScreenModalComponent {
   public formatMarkdown(): void {
     const linkRenderer = this.markdownService.renderer.link;
     // modify the renderer so that links have their target set to _blank.
-    this.markdownService.renderer.link = (href, title, text) => {
+    this.markdownService.renderer.link = ({ href, title, tokens }) => {
       const html = linkRenderer.call(
         this.markdownService.renderer,
         href,
         title,
-        text
+        tokens
       );
       return html.replace(/^<a /, '<a target="_blank"');
     };

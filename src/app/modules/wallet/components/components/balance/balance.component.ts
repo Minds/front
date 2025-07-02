@@ -12,6 +12,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
     '(mouseover)': 'showExpanded($event)',
     '(mouseleave)': 'hideExpanded($event)',
   },
+  standalone: false,
 })
 export class WalletBalanceComponent {
   /** Expanded value */

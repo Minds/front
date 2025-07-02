@@ -13,6 +13,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 @Component({
   selector: 'm-feedNotice--createBoost',
   templateUrl: 'create-boost-notice.component.html',
+  standalone: false,
 })
 export class CreateBoostNoticeComponent implements OnDestroy {
   // subscription to latest posts.

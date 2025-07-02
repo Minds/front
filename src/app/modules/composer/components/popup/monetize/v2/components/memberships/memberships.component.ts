@@ -27,6 +27,7 @@ import { ComposerMonetizeV2Service } from '../monetize.service';
   selector: 'm-composer__monetizeV2__memberships',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './memberships.component.html',
+  standalone: false,
 })
 export class ComposerMonetizeV2MembershipsComponent
   implements OnInit, OnDestroy

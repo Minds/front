@@ -20,6 +20,7 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
   selector: 'm-token--onboarding--rewards',
   templateUrl: 'rewards.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TokenRewardsOnboardingComponent {
   @Input() skippable: boolean = true;

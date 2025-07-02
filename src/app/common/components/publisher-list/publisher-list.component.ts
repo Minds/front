@@ -13,6 +13,7 @@ type MindsPublisher = MindsUser | MindsGroup;
   selector: 'm-publisherList',
   templateUrl: './publisher-list.component.html',
   styleUrls: ['./publisher-list.component.ng.scss'],
+  standalone: false,
 })
 export class PublisherListComponent {
   @Input() publishers: MindsPublisher[] = [];

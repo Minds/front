@@ -8,6 +8,7 @@ import { AbstractSubscriberComponent } from '../../../../common/components/abstr
 @Component({
   selector: 'm-jurydutySession__list',
   templateUrl: 'list.component.html',
+  standalone: false,
 })
 export class JuryDutySessionListComponent extends AbstractSubscriberComponent {
   @Input() juryType = 'appeal';

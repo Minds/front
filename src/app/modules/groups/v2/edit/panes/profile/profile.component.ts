@@ -14,6 +14,7 @@ import entityToBannerUrl from '../../../../../../helpers/entity-to-banner-url';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'profile.component.html',
   styleUrls: ['profile.component.ng.scss'],
+  standalone: false,
 })
 export class GroupEditProfileComponent {
   public maxNameLength: number;

@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
   selector: 'm-topbarwrapper',
   templateUrl: 'topbar.component.html',
   styleUrls: ['topbar.component.ng.scss'],
+  standalone: false,
 })
 export class TopbarWrapperComponent {
   /** Whether topbar is being displayed in minimal light mode. */

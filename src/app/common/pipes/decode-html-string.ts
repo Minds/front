@@ -4,7 +4,10 @@ import { Pipe, PipeTransform } from '@angular/core';
  * Decodes a string with HTML entities.
  * Idea taken from https://stackoverflow.com/a/34064434
  */
-@Pipe({ name: 'decodeHtmlString' })
+@Pipe({
+  name: 'decodeHtmlString',
+  standalone: false,
+})
 export class DecodeHtmlStringPipe implements PipeTransform {
   /**
    * Transforms a string such that HTML entities are decoded.

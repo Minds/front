@@ -13,6 +13,7 @@ export type RolePermissionToggleValue = 'off' | 'on';
   selector: 'm-networkAdminConsoleRoles__permissions',
   templateUrl: './permissions.component.html',
   styleUrls: ['./permissions.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleRolesPermissionsComponent implements OnInit {
   /**

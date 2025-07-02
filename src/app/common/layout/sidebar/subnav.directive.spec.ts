@@ -21,6 +21,7 @@ import { By } from '@angular/platform-browser';
       </ul>
     </li>
   `,
+  standalone: false,
 })
 class TestNavigationItemComponent {
   @Input() active = false;

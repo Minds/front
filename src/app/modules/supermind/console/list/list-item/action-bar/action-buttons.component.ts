@@ -18,6 +18,7 @@ import { SupermindConsoleExpirationService } from '../../../services/supermind-e
   templateUrl: './action-buttons.component.html',
   styleUrls: ['./action-buttons.component.ng.scss'],
   providers: [SupermindReplyService],
+  standalone: false,
 })
 export class SupermindConsoleActionButtonsComponent {
   /** @var { Supermind } supermind - Supermind object */

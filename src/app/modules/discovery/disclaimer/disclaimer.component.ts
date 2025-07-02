@@ -14,6 +14,7 @@ const LOGGED_IN_DISMISSIBLE_ID = 'discovery-disclaimer-2020';
   selector: 'm-discovery__disclaimer',
   templateUrl: './disclaimer.component.html',
   styleUrls: ['./disclaimer.component.ng.scss'],
+  standalone: false,
 })
 export class DiscoveryDisclaimerComponent implements OnInit, OnDestroy {
   protected dismissibleId: string | null = null;

@@ -18,6 +18,7 @@ import { CodeHighlightService } from './code-highlight.service';
  */
 @Directive({
   selector: '[m-code-highlight]',
+  standalone: false,
 })
 export class CodeHighlightDirective implements AfterViewInit {
   constructor(

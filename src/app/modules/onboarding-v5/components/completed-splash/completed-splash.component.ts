@@ -32,6 +32,7 @@ import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-to
     </div>
   `,
   styleUrls: ['completed-splash.component.ng.scss'],
+  standalone: false,
 })
 export class OnboardingV5CompletedSplashComponent implements OnInit, OnDestroy {
   /** Message to show on completion. */

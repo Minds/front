@@ -42,7 +42,6 @@ type UserRow = {
     ReactiveFormsModule,
     EntityTypeaheadComponent,
   ],
-  standalone: true,
 })
 export class UserSelectionModalComponent
   extends AbstractSubscriberComponent

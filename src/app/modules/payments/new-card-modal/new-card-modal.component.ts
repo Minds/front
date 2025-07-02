@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'm-payments__newCardModal',
   templateUrl: './new-card-modal.component.html',
   styleUrls: ['./new-card-modal.component.scss'],
+  standalone: false,
 })
 export class NewCardModalComponent implements OnInit {
   /**

@@ -14,6 +14,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'groups.component.html',
   providers: [FeedsService],
+  standalone: false,
 })
 export class ChannelListGroupsComponent implements OnDestroy {
   /**

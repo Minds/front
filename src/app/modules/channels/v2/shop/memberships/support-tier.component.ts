@@ -16,6 +16,7 @@ import { Currency } from '../../../../../helpers/currency';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'support-tier.component.html',
   styleUrls: ['support-tier.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelShopMembershipsSupportTierComponent {
   @Input() supportTier: SupportTier;

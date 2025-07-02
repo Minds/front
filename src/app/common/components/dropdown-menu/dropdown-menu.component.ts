@@ -33,6 +33,7 @@ export interface AnchorPosition {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['dropdown-menu.component.ng.scss'],
   templateUrl: 'dropdown-menu.component.html',
+  standalone: false,
 })
 export class DropdownMenuComponent implements OnInit, OnDestroy {
   @Input() menu: TemplateRef<any>;

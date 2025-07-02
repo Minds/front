@@ -32,6 +32,7 @@ export type WrapperClass =
   selector: 'm-file-upload',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'file-upload.component.html',
+  standalone: false,
 })
 export class FileUploadComponent {
   /**

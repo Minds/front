@@ -9,6 +9,7 @@ import { ComposerService } from '../../../services/composer.service';
   selector: 'm-composerPreview--audio',
   templateUrl: './attachment-preview-audio.component.html',
   styleUrl: './attachment-preview-audio.component.ng.scss',
+  standalone: false,
 })
 export class AttachmentPreviewAudioComponent implements OnInit {
   /** The audio preview source URL. */

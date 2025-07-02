@@ -14,6 +14,7 @@ import {
 @Component({
   selector: 'm-channelShop__lazy',
   template: ` <ng-template #anchor></ng-template> `,
+  standalone: false,
 })
 export class ChannelShopLazyComponent {
   @Input() component: string;

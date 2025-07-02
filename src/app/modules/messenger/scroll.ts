@@ -6,6 +6,7 @@ import { debounceTime } from 'rxjs/operators';
   selector: '[minds-messenger-scroll]',
   inputs: ['emitter', 'moreData'],
   outputs: ['previous', 'next'],
+  standalone: false,
 })
 export class MessengerScrollDirective {
   previous = new EventEmitter();

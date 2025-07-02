@@ -9,6 +9,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 @Component({
   selector: 'm-feedNotice--verifyEmail',
   templateUrl: 'verify-email-notice.component.html',
+  standalone: false,
 })
 export class VerifyEmailNoticeComponent {
   @Input() public dismissible: boolean = false;

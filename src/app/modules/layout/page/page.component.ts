@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
   selector: 'm-page',
   templateUrl: 'page.component.html',
   styleUrls: ['page.component.ng.scss'],
+  standalone: false,
 })
 export class PageComponent implements OnInit {
   showOnboarding: boolean = false;

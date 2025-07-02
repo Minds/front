@@ -18,6 +18,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 @Component({
   selector: 'm-messenger--userlist',
   templateUrl: 'userlist.component.html',
+  standalone: false,
 })
 export class MessengerUserlist {
   readonly cdnUrl: string;

@@ -24,6 +24,7 @@ import { TenantCustomHomepageService } from '../../services/tenant-custom-homepa
   selector: 'm-tenant__featuredGroupCards',
   templateUrl: 'featured-group-cards.component.html',
   styleUrls: ['featured-group-cards.component.ng.scss'],
+  standalone: false,
 })
 export class TenantFeaturedGroupCardsComponent implements OnInit, OnDestroy {
   // subscription for initialization.

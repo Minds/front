@@ -48,6 +48,7 @@ import { BoostModalV2Service } from '../services/boost-modal-v2.service';
     </div>
   `,
   styleUrls: ['header.component.ng.scss'],
+  standalone: false,
 })
 export class BoostModalV2HeaderComponent {
   // enums.

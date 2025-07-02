@@ -27,6 +27,7 @@ import { Storage } from '../../../../services/storage';
     >
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TokenOnboardingVideoComponent {
   @ViewChild('video', { static: true }) videoEl;

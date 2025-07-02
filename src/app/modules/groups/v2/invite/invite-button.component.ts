@@ -16,6 +16,7 @@ import { MindsGroup } from '../group.model';
       >Invite</m-button
     >
   `,
+  standalone: false,
 })
 export class GroupInviteButtonComponent {
   @Input() group: MindsGroup;

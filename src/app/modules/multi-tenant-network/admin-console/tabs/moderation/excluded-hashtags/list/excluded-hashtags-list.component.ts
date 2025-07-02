@@ -26,6 +26,7 @@ import {
   templateUrl: './excluded-hashtags-list.component.html',
   styleUrls: ['./excluded-hashtags-list.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NetworkAdminConsoleExcludedHashtagsListComponent
   implements OnInit, OnDestroy

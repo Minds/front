@@ -25,6 +25,7 @@ import { BootstrapProgressService } from './services/bootstrap-progress.service'
   selector: 'm-networkAdminConsole',
   templateUrl: './console.component.html',
   styleUrls: ['./console.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleComponent implements OnInit {
   /** Whether config has been loaded. */

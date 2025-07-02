@@ -15,6 +15,7 @@ import { ProductPagePricingService } from '../../services/product-page-pricing.s
   selector: 'm-productPage__pricingCards',
   templateUrl: 'pricing-cards.component.html',
   styleUrls: ['pricing-cards.component.ng.scss'],
+  standalone: false,
 })
 export class ProductPagePricingCardsComponent {
   /** Savings amount text (e.g. Save 25% annually). */

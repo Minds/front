@@ -20,6 +20,7 @@ import { SupermindConsoleService } from '../../services/console.service';
   selector: 'm-supermind__filterBar',
   templateUrl: './filter-bar.component.html',
   styleUrls: ['./filter-bar.component.ng.scss'],
+  standalone: false,
 })
 export class SupermindConsoleFilterBarComponent implements OnInit, OnDestroy {
   // filter type values.

@@ -15,6 +15,7 @@ import { ActivityService } from '../../../common/services/activity.service';
   inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: 'comment.html',
+  standalone: false,
 })
 export class CommentButton implements OnInit, OnDestroy {
   object;

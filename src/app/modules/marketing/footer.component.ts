@@ -26,6 +26,7 @@ import { STRAPI_FOOTER_STUB_DATA } from './consts/tenant-footer-stub';
   selector: 'm-marketing__footer',
   templateUrl: 'footer.component.html',
   styleUrls: ['footer.component.ng.scss'],
+  standalone: false,
 })
 export class MarketingFooterComponent implements OnInit, OnDestroy {
   /** Whether data is loaded / ready */

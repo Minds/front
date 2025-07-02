@@ -21,6 +21,7 @@ import { MindsUser } from '../../../interfaces/entities';
   selector: 'm-messenger--channel-button',
   templateUrl: 'channel-button.component.html',
   inputs: ['user'],
+  standalone: false,
 })
 export class MessengerChannelButton {
   user: MindsUser;

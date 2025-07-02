@@ -6,6 +6,7 @@ import { PageLayoutService } from '../../../common/layout/page-layout.service';
 @Component({
   selector: 'm-forgot-password',
   template: ` <!--No template - this component redirects --> `,
+  standalone: false,
 })
 export class ForgotPasswordComponent {
   username: string = '';

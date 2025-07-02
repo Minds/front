@@ -22,6 +22,7 @@ import { ComposerService } from '../../services/composer.service';
     '(click)': 'onClick($event)',
     'data-ref': 'composer-audience-selector-button',
   },
+  standalone: false,
 })
 export class ComposerAudienceSelectorButtonComponent
   implements OnInit, OnDestroy

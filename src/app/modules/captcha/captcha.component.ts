@@ -29,6 +29,7 @@ export class Captcha {
   templateUrl: 'captcha.component.html',
   styleUrls: ['captcha.component.scss'],
   providers: [CAPTCHA_VALUE_ACCESSOR],
+  standalone: false,
 })
 export class CaptchaComponent implements ControlValueAccessor, OnInit {
   captcha = new Captcha();

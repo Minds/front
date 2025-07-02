@@ -26,6 +26,7 @@ export const NOTIFICATION_SOUNDS_STORAGE_KEY = 'play_notification_sounds';
   selector: 'm-settingsV2__pushNotifications',
   templateUrl: './push-notifications.component.html',
   styleUrls: ['../notifications-settings-v3.ng.scss'],
+  standalone: false,
 })
 export class SettingsV2PushNotificationsV3Component
   extends AbstractSubscriberComponent

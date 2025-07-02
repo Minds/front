@@ -24,6 +24,7 @@ import { AnalyticsService } from '../../../services/analytics';
   selector: 'm-feedNotice',
   templateUrl: 'feed-notice.component.html',
   styleUrls: ['feed-notice.component.ng.scss'],
+  standalone: false,
 })
 export class FeedNoticeComponent implements OnInit, OnDestroy {
   // emits on feed notice entering and leaving the viewport.

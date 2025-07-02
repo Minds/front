@@ -28,6 +28,7 @@ import { PermissionsEnum } from '../../../../../graphql/generated.engine';
   selector: 'm-channelActions__message',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'message.component.html',
+  standalone: false,
 })
 export class ChannelActionsMessageComponent implements OnInit {
   inProgress = false;

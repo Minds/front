@@ -42,6 +42,7 @@ import { PermissionsEnum } from '../../../../graphql/generated.engine';
   providers: [AttachmentService],
   styleUrls: ['poster.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class CommentPosterComponent implements OnInit, OnDestroy {
   @Input() guid;

@@ -22,6 +22,7 @@ import { AutoCompleteEntityTypeEnum } from '../../../../../../../common/componen
   selector: 'm-networkAdminConsole__addFeaturedEntityModal',
   templateUrl: './add-featured-entity-modal.component.html',
   styleUrls: ['./add-featured-entity-modal.component.ng.scss'],
+  standalone: false,
 })
 export class AddFeaturedEntityModalComponent {
   /** Form group. */

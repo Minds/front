@@ -18,6 +18,7 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
   selector: 'm-token--onboarding--introduction',
   templateUrl: 'introduction.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TokenIntroductionOnboardingComponent {
   readonly cdnAssetsUrl: string;

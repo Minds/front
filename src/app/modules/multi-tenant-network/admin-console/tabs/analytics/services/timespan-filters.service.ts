@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Filter, Option } from '../../../../../../interfaces/dashboard';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /** Default timespan filter ID. */
 export const DEFAULT_TIMESPAN_FILTER_ID: string = '30d';

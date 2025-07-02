@@ -7,6 +7,7 @@ import { CustomPageType } from '../../../../../custom-pages/custom-pages.types';
   selector: 'm-networkAdminConsole__termsOfService',
   templateUrl: './terms-of-service.component.html',
   styleUrls: ['../../../stylesheets/console.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleTermsOfServiceComponent {
   /**

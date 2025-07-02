@@ -25,6 +25,7 @@ enum FeaturedEntityRowOption {
   selector: 'm-networkAdminConsole__featuredEntityRow',
   templateUrl: './row.component.html',
   styleUrls: ['./row.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleFeaturedEntityRowComponent {
   /** Featured entity to be displayed in row. */

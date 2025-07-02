@@ -29,7 +29,6 @@ import { NgxFloatUiContentComponent } from 'ngx-float-ui';
   templateUrl: './chat-room-message-dropdown.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgCommonModule, CommonModule],
-  standalone: true,
 })
 export class ChatRoomMessageDropdownComponent {
   /** Whether the dropdown displayed is to be for the owner of the message. */

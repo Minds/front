@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   selector: 'm-chipBadge',
   template: '<ng-content></ng-content>',
   styleUrls: ['./chip-badge.component.ng.scss'],
+  standalone: false,
 })
 export class ChipBadgeComponent {}

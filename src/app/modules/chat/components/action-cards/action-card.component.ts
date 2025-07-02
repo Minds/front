@@ -16,7 +16,6 @@ import { CommonModule } from '../../../../common/common.module';
   styleUrls: ['./action-card.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, NgCommonModule],
-  standalone: true,
   template: `
     <h3
       class="m-chatActionCard__title"

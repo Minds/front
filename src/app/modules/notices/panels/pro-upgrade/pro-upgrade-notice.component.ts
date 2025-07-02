@@ -10,6 +10,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 @Component({
   selector: 'm-feedNotice--proUpgrade',
   templateUrl: 'pro-upgrade-notice.component.html',
+  standalone: false,
 })
 export class ProUpgradeNoticeComponent implements OnInit {
   @Input() public dismissible: boolean = true;

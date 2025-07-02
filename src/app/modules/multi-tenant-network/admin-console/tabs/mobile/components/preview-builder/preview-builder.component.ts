@@ -12,6 +12,7 @@ import { MobileAppPreviewService } from '../../services/mobile-app-preview.servi
   selector: 'm-networkAdminConsole__previewBuilder',
   templateUrl: './preview-builder.component.html',
   styleUrls: ['./preview-builder.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleMobilePreviewBuilderComponent {
   // enum for use in template.

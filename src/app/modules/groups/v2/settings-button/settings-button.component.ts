@@ -21,6 +21,7 @@ import { PermissionsEnum } from '../../../../../graphql/generated.engine';
   selector: 'm-group__settingsButton',
   templateUrl: './settings-button.component.html',
   styleUrls: ['./settings-button.component.ng.scss'],
+  standalone: false,
 })
 export class GroupSettingsButton implements OnInit, OnDestroy {
   group;

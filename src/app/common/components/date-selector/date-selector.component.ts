@@ -16,6 +16,7 @@ import {
 @Component({
   selector: 'm-date-selector',
   templateUrl: './date-selector.component.html',
+  standalone: false,
 })
 export class DateSelectorComponent {
   @Output() dateChange: EventEmitter<any> = new EventEmitter<any>();

@@ -11,6 +11,7 @@ import { Session } from '../../../services/session';
   selector: 'm-discovery__tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.ng.scss'],
+  standalone: false,
 })
 export class DiscoveryTabsComponent {
   /**

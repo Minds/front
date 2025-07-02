@@ -6,6 +6,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 @Component({
   selector: 'minds-admin-tagcloud',
   templateUrl: 'tagcloud.component.html',
+  standalone: false,
 })
 export class AdminTagcloud implements OnInit {
   tags: string[] = [];

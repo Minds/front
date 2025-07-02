@@ -28,6 +28,7 @@ import { ApolloQueryResult } from '@apollo/client';
     '../../../stylesheets/console.component.ng.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NetworkAdminConsoleReportsListComponent
   implements OnInit, OnDestroy

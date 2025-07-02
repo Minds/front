@@ -17,6 +17,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
   selector: 'm-moderation__appeal',
   templateUrl: 'appeal.component.html',
   styleUrls: ['appeal.component.ng.scss'],
+  standalone: false,
 })
 export class ModerationAppealComponent {
   @Input() appeal;

@@ -37,6 +37,7 @@ import { Session } from '../../../services/session';
   templateUrl: './trends.component.html',
   animations: [FastFadeAnimation],
   providers: [DiscoveryFeedsService, FeedsService],
+  standalone: false,
 })
 export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
   isPlusPage$ = this.discoveryService.isPlusPage$;

@@ -29,6 +29,7 @@ import { SITE_URL } from '../../../common/injection-tokens/url-injection-tokens'
   selector: 'm-twitterSync',
   templateUrl: './twitter-sync.component.html',
   styleUrls: ['./twitter-sync.component.ng.scss'],
+  standalone: false,
 })
 export class TwitterSyncComponent implements OnInit, OnDestroy {
   // The setup form

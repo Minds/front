@@ -17,6 +17,7 @@ export type NotificationDetails = {
   selector: 'm-admin--pushNotifications',
   styleUrls: ['admin-push-notifications.component.ng.scss'],
   templateUrl: './admin-push-notifications.component.html',
+  standalone: false,
 })
 export class AdminPushNotificationsComponent {
   constructor() {}

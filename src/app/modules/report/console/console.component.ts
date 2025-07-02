@@ -16,6 +16,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 @Component({
   selector: 'm-report-console',
   templateUrl: 'console.component.html',
+  standalone: false,
 })
 export class ReportConsoleComponent implements OnInit {
   filter: string = 'review';

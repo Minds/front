@@ -14,6 +14,7 @@ import { firstValueFrom } from 'rxjs';
     './auth.component.ng.scss',
     '../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleAuthComponent implements OnInit {
   constructor(

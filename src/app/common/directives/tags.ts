@@ -3,6 +3,7 @@ import { Directive, Inject, ElementRef } from '@angular/core';
 @Directive({
   selector: '[tags]',
   inputs: ['tags'],
+  standalone: false,
 })
 export class TagsLinks {
   element: any;

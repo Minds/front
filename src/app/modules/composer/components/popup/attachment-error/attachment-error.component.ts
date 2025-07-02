@@ -9,6 +9,7 @@ import { AttachmentValidationPayload } from '../../../services/attachment-valida
   selector: 'm-composer__attachmentError',
   templateUrl: './attachment-error.component.html',
   styleUrls: ['./attachment-error.component.ng.scss'],
+  standalone: false,
 })
 export class AttachmentErrorComponent {
   // array of error codes.

@@ -45,6 +45,7 @@ export interface OptType {
 
     <m-modalCloseButton></m-modalCloseButton>
   `,
+  standalone: false,
 })
 export class CaptchaModalComponent {
   public _opts: OptType;

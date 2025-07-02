@@ -20,6 +20,7 @@ import { FeedNoticeDismissalService } from '../services/feed-notice-dismissal.se
   templateUrl: './feed-notice-switch.component.html',
   styleUrls: ['./feed-notice-outlet.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class FeedNoticeSwitchComponent implements OnInit, OnDestroy {
   // The key of the notice to load

@@ -4,6 +4,7 @@ import { DismissalService } from '../../../../common/services/dismissal.service'
 @Component({
   selector: 'm-defaultFeedHeader',
   templateUrl: './default-feed-header.component.html',
+  standalone: false,
 })
 export class DefaultFeedHeaderComponent {
   constructor(private dismissal: DismissalService) {}

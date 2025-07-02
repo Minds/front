@@ -34,6 +34,7 @@ import { UpgradeOptionInterval } from '../../../../../common/types/upgrade-optio
   selector: 'm-giftCardClaimPanel__success',
   templateUrl: 'success-panel.component.html',
   styleUrls: ['./success-panel.component.ng.scss'],
+  standalone: false,
 })
 export class GiftCardClaimSuccessPanelComponent implements OnInit, OnDestroy {
   /** Updated user balance for product specified in panel service. */

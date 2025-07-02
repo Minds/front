@@ -37,7 +37,6 @@ enum ExpireTimePeriodEnum {
   styleUrls: ['./create-api-key-modal.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgCommonModule, CommonModule, ReactiveFormsModule],
-  standalone: true,
 })
 export class CreateApiKeyModalComponent implements OnInit {
   /** Enum for expiry time periods. */

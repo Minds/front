@@ -31,6 +31,7 @@ import { ApiResponse } from '../../../../common/api/api.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.ng.scss'],
   providers: [GroupsMembershipsListService],
+  standalone: false,
 })
 export class GroupsMembershipsListComponent implements OnInit, OnDestroy {
   /**

@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
   selector: 'm-onboardingV5__footer',
   templateUrl: './footer.component.html',
   styleUrls: ['../../stylesheets/onboarding-v5-common.ng.scss'],
+  standalone: false,
 })
 export class OnboardingV5FooterComponent {
   /** Data for action button. */

@@ -5,6 +5,7 @@ import { ExperimentsService } from '../../../modules/experiments/experiments.ser
   selector: 'm-feedHeader',
   templateUrl: './feed-header.component.html',
   styleUrls: ['./feed-header.component.ng.scss'],
+  standalone: false,
 })
 export class FeedHeaderComponent {
   constructor(public experiments: ExperimentsService) {}

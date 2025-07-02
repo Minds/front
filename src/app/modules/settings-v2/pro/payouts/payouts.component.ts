@@ -25,6 +25,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
   selector: 'm-settingsV2Pro__payouts',
   templateUrl: './payouts.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2ProPayoutsComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

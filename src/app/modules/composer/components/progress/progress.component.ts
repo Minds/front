@@ -7,6 +7,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   selector: 'm-composer__progress',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'progress.component.html',
+  standalone: false,
 })
 export class ProgressComponent {
   @Input() inProgress: boolean = false;

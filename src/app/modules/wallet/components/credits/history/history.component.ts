@@ -32,6 +32,7 @@ type StatusFilterOptions = {
   selector: 'm-walletV2__historySummary',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.ng.scss'],
+  standalone: false,
 })
 export class WalletV2CreditsHistoryComponent implements OnInit, OnDestroy {
   public readonly GiftCardProductIdEnum: typeof GiftCardProductIdEnum =

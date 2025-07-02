@@ -23,6 +23,7 @@ import { Subscription } from 'rxjs';
   selector: 'm-emojiPicker',
   templateUrl: './emoji-picker.component.html',
   styleUrls: ['emoji-picker.component.ng.scss'],
+  standalone: false,
 })
 export class EmojiPickerComponent {
   /** Custom icon name. */

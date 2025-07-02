@@ -11,6 +11,7 @@ import { PageLayoutService } from './page-layout.service';
 
 @Directive({
   selector: '[m-pageLayout__container]',
+  standalone: false,
 })
 export class PageLayoutContainerDirective {
   constructor(private service: PageLayoutService) {}
@@ -18,6 +19,7 @@ export class PageLayoutContainerDirective {
 
 @Directive({
   selector: '[m-pageLayout__pane]',
+  standalone: false,
 })
 export class PageLayoutPaneDirective implements OnInit, OnDestroy {
   @Input('m-pageLayout__pane')

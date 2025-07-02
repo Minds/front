@@ -3,6 +3,7 @@ import { Directive, ElementRef } from '@angular/core';
 @Directive({
   selector: '[mdlSwitch]',
   inputs: ['mdlSwitch', 'toggled'],
+  standalone: false,
 })
 export class MaterialSwitchMock {
   mdlSwitch: any;

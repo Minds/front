@@ -35,6 +35,7 @@ import { PermissionsEnum } from '../../../../../graphql/generated.engine';
   templateUrl: 'toolbar.component.html',
   styleUrls: ['./toolbar.component.ng.scss'],
   animations: [CounterChangeFadeIn],
+  standalone: false,
 })
 export class ActivityToolbarComponent {
   private entitySubscription: Subscription;

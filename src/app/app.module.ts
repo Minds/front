@@ -1,8 +1,9 @@
 import {
-  APP_INITIALIZER,
   CUSTOM_ELEMENTS_SCHEMA,
   ErrorHandler,
   NgModule,
+  inject,
+  provideAppInitializer,
 } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -127,12 +128,13 @@ import { MindsSentryErrorHandler } from './common/services/diagnostics/sentry-er
       provide: Sentry.TraceService,
       deps: [Router],
     },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (configs) => () => configs.loadFromRemote(),
-      deps: [ConfigsService, Sentry.TraceService],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const initializerFn = (
+        (configs) => () =>
+          configs.loadFromRemote()
+      )(inject(ConfigsService));
+      return initializerFn();
+    }),
     provideHttpClient(withInterceptorsFromDi()),
   ],
 })

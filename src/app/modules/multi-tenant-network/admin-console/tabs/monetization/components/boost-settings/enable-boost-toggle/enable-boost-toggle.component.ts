@@ -7,7 +7,6 @@ import { MultiTenantNetworkConfigService } from '../../../../../../services/conf
 import { ConfigsService } from '../../../../../../../../common/services/configs.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../../../../../../../common/common.module';
-import { AsyncPipe } from '@angular/common';
 
 /**
  * Enable boost toggle component. Allows for network wide toggling of boost functionality.
@@ -16,8 +15,7 @@ import { AsyncPipe } from '@angular/common';
   selector: 'm-networkAdminConsole__enableBoostToggle',
   styleUrls: ['./enable-boost-toggle.component.ng.scss'],
   templateUrl: './enable-boost-toggle.component.html',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, AsyncPipe],
+  imports: [ReactiveFormsModule, CommonModule],
 })
 export class NetworkAdminEnableBoostToggleComponent
   implements OnInit, OnDestroy

@@ -18,6 +18,7 @@ export type SelectableMonetization = SupportTier | 'plus';
   selector: 'm-selectableEntityCard',
   templateUrl: 'selectable-entity-card.component.html',
   styleUrls: ['selectable-entity-card.component.ng.scss'],
+  standalone: false,
 })
 export class SelectableEntityCardComponent implements OnInit {
   /** entity to create card for */

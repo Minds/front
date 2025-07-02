@@ -3,6 +3,7 @@ import { Directive, ElementRef } from '@angular/core';
 @Directive({
   selector: '[mdlSlider]',
   inputs: ['mdlSlider', 'ngModel', 'value'],
+  standalone: false,
 })
 export class MaterialSliderMock {
   mdlSlider: any;

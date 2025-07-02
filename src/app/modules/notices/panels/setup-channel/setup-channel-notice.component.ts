@@ -12,6 +12,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 @Component({
   selector: 'm-feedNotice--setupChannel',
   templateUrl: 'setup-channel-notice.component.html',
+  standalone: false,
 })
 export class SetupChannelNoticeComponent
   extends AbstractSubscriberComponent

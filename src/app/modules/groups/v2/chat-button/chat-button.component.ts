@@ -31,6 +31,7 @@ import { GroupService } from '../group.service';
       ></m-icon>
     </m-button>
   `,
+  standalone: false,
 })
 export class GroupChatButton {
   /** GUID of the group. */

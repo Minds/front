@@ -47,6 +47,7 @@ type Option =
   styleUrls: ['menu.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [PostMenuService],
+  standalone: false,
 })
 export class PostMenuV2Component implements OnInit {
   @Input() entity: any;

@@ -27,6 +27,7 @@ import { FeedNoticeService } from '../../../notices/services/feed-notice.service
   selector: 'm-settingsV2__emailAddress',
   templateUrl: './email-address.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

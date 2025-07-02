@@ -23,6 +23,7 @@ import { ExperimentsService } from '../../experiments/experiments.service';
   selector: 'm-networks__list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.ng.scss'],
+  standalone: false,
 })
 export class NetworksListComponent implements OnInit, OnDestroy {
   // Whether request is in progress.

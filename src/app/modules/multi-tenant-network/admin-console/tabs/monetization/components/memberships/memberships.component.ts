@@ -21,6 +21,7 @@ import { StripeKeysService } from '../../services/stripe-keys.service';
   selector: 'm-networkAdminMonetization__memberships',
   templateUrl: './memberships.component.html',
   styleUrls: ['./memberships.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminMonetizationMembershipsComponent implements OnInit {
   /** Whether loading of memberships is in progress. */

@@ -5,6 +5,7 @@ import { Metric } from '../global-tokens.service';
   selector: 'm-analyticsGlobalTokens__metricItem',
   templateUrl: './metric-item.component.html',
   styleUrls: ['./metric-item.component.ng.scss'],
+  standalone: false,
 })
 export class AnalyticsGlobalTokensMetricItemComponent {
   @Input() metric: Metric;

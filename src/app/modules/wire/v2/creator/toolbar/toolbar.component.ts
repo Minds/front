@@ -17,6 +17,7 @@ import { map, last, first } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'toolbar.component.html',
   styleUrls: ['toolbar.component.ng.scss'],
+  standalone: false,
 })
 export class WireCreatorToolbarComponent {
   readonly cdnAssetsUrl: string;

@@ -37,6 +37,7 @@ import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens
 @Directive({
   selector: '[mdlRadio]',
   inputs: ['mdlRadio', 'checked', 'mdlRadioValue'],
+  standalone: false,
 })
 export class MdlRadioMock {}
 

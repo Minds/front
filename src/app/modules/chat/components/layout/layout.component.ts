@@ -31,7 +31,6 @@ const NARROW_VIEWPORT_WIDTH: string = '1040px'; // $layoutMin3ColWidth
   styleUrls: ['./layout.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgCommonModule],
-  standalone: true,
   template: `
     <ng-container *ngIf="initialized$ | async">
       <!-- Full width viewport -->

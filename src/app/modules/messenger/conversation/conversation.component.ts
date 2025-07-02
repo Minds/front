@@ -29,6 +29,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   },
   inputs: ['conversation'],
   templateUrl: 'conversation.component.html',
+  standalone: false,
 })
 export class MessengerConversation implements OnInit, OnDestroy {
   readonly cdnUrl: string;

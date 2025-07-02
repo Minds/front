@@ -59,6 +59,7 @@ const TOPBAR_HEIGHT: number = 75;
     '[class.m-activity--minimalMode]':
       'this.service.displayOptions.minimalMode',
   },
+  standalone: false,
 })
 export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   entity$: Observable<ActivityEntity> = this.service.entity$;

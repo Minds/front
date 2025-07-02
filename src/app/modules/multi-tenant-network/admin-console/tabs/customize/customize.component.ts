@@ -43,6 +43,7 @@ import { MetaService } from '../../../../../common/services/meta.service';
     './customize.component.ng.scss',
     '../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleCustomizeComponent
   implements OnInit, OnDestroy

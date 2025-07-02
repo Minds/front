@@ -7,24 +7,28 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
     "target": "ES2022",
     "emitDecoratorMetadata": true,
     "typeRoots": ["node_modules/@types"],
-    "lib": ["es2020", "dom"],
-    "module": "commonjs",
+    "lib": ["ES2022", "dom"],
+    "module": "ES2022",
     "baseUrl": "./",
     "paths": {
       "fs": ["./shims/noop"],
       "bn.js": ["../node_modules/bn.js/lib/bn.js"],
       "ngx-plyr": ["../node_modules/ngx-plyr/dist/ngx-plyr"],
-      "stream": ["../node_modules/stream-browserify"],
+      "stream": [
+        "../node_modules/stream-browserify",
+        "./node_modules/stream-browserify"
+      ],
       "os": ["../node_modules/os-browserify"],
       "http": ["../node_modules/stream-http"],
       "https": ["../node_modules/https-browserify"],
       "crypto": ["../node_modules/crypto-browserify"],
       "util": ["../node_modules/util"],
-      "assert": ["../node_modules/assert"],
+      "assert": ["../node_modules/assert"]
     },
-    "useDefineForClassFields": false,
-  },
+    "useDefineForClassFields": false
+  }
 }

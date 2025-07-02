@@ -6,6 +6,7 @@ import { ThemeService } from '../../../../../common/services/theme.service';
   selector: 'm-wallet__bridge',
   templateUrl: './bridge.component.html',
   styleUrl: './bridge.component.ng.scss',
+  standalone: false,
 })
 export class WalletBridgeComponent implements OnInit {
   public src: SafeUrl;

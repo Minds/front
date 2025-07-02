@@ -16,6 +16,7 @@ export type GenericToggleValue = 'off' | 'on';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'toggle.component.html',
   styleUrls: ['toggle.component.ng.scss'],
+  standalone: false,
 })
 export class ToggleComponent {
   @Input('leftValue') leftValue: any;

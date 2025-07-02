@@ -5,6 +5,7 @@ import { TokenRewardsOnboardingComponent } from '../../wallet/tokens/onboarding/
 @Component({
   selector: 'm-blockchain--marketing--onboard',
   template: ` <ng-template dynamic-host></ng-template> `,
+  standalone: false,
 })
 export class BlockchainMarketingOnboardComponent implements OnInit {
   @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;

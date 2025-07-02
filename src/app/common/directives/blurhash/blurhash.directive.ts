@@ -20,6 +20,7 @@ import { ActivityEntity } from '../../../modules/newsfeed/activity/activity.serv
  */
 @Directive({
   selector: 'img[m-blurhash]',
+  standalone: false,
 })
 export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
   private RESOLUTION = 128;

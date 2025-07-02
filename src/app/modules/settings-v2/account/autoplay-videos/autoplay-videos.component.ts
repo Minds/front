@@ -22,6 +22,7 @@ import { SettingsV2Service } from '../../settings-v2.service';
   selector: 'm-settingsV2__autoplayVideos',
   templateUrl: './autoplay-videos.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2AutoplayVideosComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

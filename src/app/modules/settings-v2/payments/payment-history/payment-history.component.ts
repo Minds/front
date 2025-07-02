@@ -12,6 +12,7 @@ import { Payment } from './payment-history.types';
   templateUrl: './payment-history.component.html',
   styleUrls: ['./payment-history.component.ng.scss'],
   providers: [SettingsV2PaymentHistoryService],
+  standalone: false,
 })
 export class SettingsV2PaymentHistoryComponent {
   // whether there is more data to be requested.

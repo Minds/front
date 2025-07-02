@@ -46,6 +46,7 @@ import { HeadElementInjectorService } from './common/services/head-element-injec
 @Component({
   selector: 'm-app',
   templateUrl: 'app.component.html',
+  standalone: false,
 })
 export class Minds implements OnInit, OnDestroy {
   name: string;

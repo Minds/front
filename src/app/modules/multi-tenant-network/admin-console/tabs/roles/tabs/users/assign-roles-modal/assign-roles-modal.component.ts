@@ -27,6 +27,7 @@ export type AssignRolesModalInputParams = {
     './assign-roles-modal.component.ng.scss',
     '../../../../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class AssignRolesModalComponent implements OnInit, OnDestroy {
   public userWithRoles: UserRoleEdge;

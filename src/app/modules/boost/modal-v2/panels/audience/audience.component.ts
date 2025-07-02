@@ -19,6 +19,7 @@ import { BoostTargetExperimentService } from '../../../../experiments/sub-servic
   selector: 'm-boostModalV2__audienceSelector',
   templateUrl: './audience.component.html',
   styleUrls: ['audience.component.ng.scss'],
+  standalone: false,
 })
 export class BoostModalV2AudienceSelectorComponent
   implements OnInit, OnDestroy

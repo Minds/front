@@ -8,6 +8,7 @@ import { OnboardingV2Service } from '../../service/onboarding.service';
 @Component({
   selector: 'm-onboarding--avatarStep',
   templateUrl: 'avatar.component.html',
+  standalone: false,
 })
 export class AvatarStepComponent {
   readonly cdnAssetsUrl: string;

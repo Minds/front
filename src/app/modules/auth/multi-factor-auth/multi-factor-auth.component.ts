@@ -19,6 +19,7 @@ import {
   },
   templateUrl: './multi-factor-auth.component.html',
   styleUrls: ['./multi-factor-auth.component.ng.scss'],
+  standalone: false,
 })
 export class MultiFactorAuthBaseComponent {
   public readonly cdnAssetsUrl: string;

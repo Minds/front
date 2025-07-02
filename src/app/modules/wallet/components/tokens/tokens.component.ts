@@ -12,6 +12,7 @@ import { Session } from '../../../../services/session';
 @Component({
   selector: 'm-walletV2__tokens',
   templateUrl: './tokens.component.html',
+  standalone: false,
 })
 export class WalletV2TokensComponent {
   @ViewChild('dashboardViews') dashboardView: ElementRef;

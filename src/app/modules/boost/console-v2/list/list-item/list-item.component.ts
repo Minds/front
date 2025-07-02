@@ -11,6 +11,7 @@ import { Session } from '../../../../../services/session';
   selector: 'm-boostConsole__listItem',
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.ng.scss'],
+  standalone: false,
 })
 export class BoostConsoleListItemComponent {
   readonly siteUrl: string;

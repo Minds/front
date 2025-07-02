@@ -8,6 +8,7 @@ import { AnchorPosition } from '../../services/ux/anchor-position';
     '(mouseenter)': 'show()',
     '(mouseleave)': 'hide()',
   },
+  standalone: false,
 })
 export class Tooltip {
   shown: boolean = false;

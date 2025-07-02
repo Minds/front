@@ -8,6 +8,7 @@ import { Directive, ElementRef, EventEmitter } from '@angular/core';
     '(mouseenter)': 'lock()',
     '(mouseleave)': 'unlock()',
   },
+  standalone: false,
 })
 export class ScrollLock {
   strictScrollLock: boolean = false;

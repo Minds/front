@@ -3,7 +3,7 @@ import {
   ContributionMetric,
   WalletTokenRewardsService,
 } from './rewards.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { Observable, Subscription, timer } from 'rxjs';
 import { UniswapModalService } from '../../../../blockchain/token-purchase/uniswap/uniswap-modal.service';
 import { map, shareReplay } from 'rxjs/operators';
@@ -31,6 +31,7 @@ import { InAppVerificationExperimentService } from '../../../../experiments/sub-
     '../../components/accordion/accordion.component.ng.scss',
   ],
   providers: [WalletTokenRewardsService],
+  standalone: false,
 })
 export class WalletTokenRewardsComponent implements OnInit {
   /**

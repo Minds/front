@@ -39,6 +39,7 @@ declare var tinymce;
     >
   `,
   exportAs: 'Textarea',
+  standalone: false,
 })
 export class Textarea implements OnChanges {
   @ViewChild('editor', { static: true }) editorControl: ElementRef;

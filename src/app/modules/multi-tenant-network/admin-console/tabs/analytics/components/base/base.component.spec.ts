@@ -11,7 +11,7 @@ import {
 } from '../../../../../../../../graphql/generated.engine';
 import { BehaviorSubject } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import * as moment from 'moment';
+import moment from 'moment';
 
 const mockInstantiationTimestamp: moment.Moment = moment();
 

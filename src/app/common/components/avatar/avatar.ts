@@ -32,6 +32,7 @@ export type MindsAvatarObject = {
   outputs: ['added'],
   templateUrl: 'avatar.html',
   styleUrls: ['avatar.ng.scss'],
+  standalone: false,
 })
 export class MindsAvatar {
   readonly cdnAssetsUrl: string;

@@ -58,6 +58,7 @@ import { FeedsService } from '../../services/feeds.service';
       ]),
     ]),
   ],
+  standalone: false,
 })
 export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
   /**

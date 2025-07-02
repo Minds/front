@@ -20,6 +20,7 @@ import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 @Component({
   selector: 'm-discovery__settingsButton',
   templateUrl: './settings-button.component.html',
+  standalone: false,
 })
 export class DiscoverySettingsButtonComponent implements OnInit {
   @Input() modalType: 'feed' | 'tags' | 'content-settings';

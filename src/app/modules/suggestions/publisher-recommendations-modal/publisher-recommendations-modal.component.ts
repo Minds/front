@@ -13,6 +13,7 @@ import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
   selector: 'm-publisherRecommendationsModal',
   templateUrl: './publisher-recommendations-modal.component.html',
   styleUrls: ['./publisher-recommendations-modal.component.ng.scss'],
+  standalone: false,
 })
 export class PublisherRecommendationsModalComponent {
   protected subscriptionCount = 0;

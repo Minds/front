@@ -27,6 +27,7 @@ import { WINDOW } from '../../../common/injection-tokens/common-injection-tokens
   selector: 'm-report--creator',
   templateUrl: 'creator.component.html',
   styleUrls: ['./creator.component.ng.scss'],
+  standalone: false,
 })
 export class ReportCreatorComponent implements AfterViewInit {
   subject = {

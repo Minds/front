@@ -27,6 +27,7 @@ import { TokenPricesService } from './components/currency-value/token-prices.ser
   selector: 'm-walletDashboard',
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class WalletDashboardComponent implements OnInit, OnDestroy {
   @ViewChild('dashboardViews')

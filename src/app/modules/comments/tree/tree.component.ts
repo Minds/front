@@ -40,6 +40,7 @@ import { CommentsService } from '../comments.service';
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class CommentsTreeComponent {
   entity;

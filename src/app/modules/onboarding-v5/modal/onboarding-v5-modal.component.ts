@@ -16,6 +16,7 @@ export type OnboardingModalData = {
   selector: 'm-onboardingV5Modal',
   template: ` <m-onboardingV5></m-onboardingV5> `,
   styleUrls: ['onboarding-v5-modal.component.ng.scss'],
+  standalone: false,
 })
 export class OnboardingV5ModalComponent implements OnInit, OnDestroy {
   /** subscription to onboarding completion. */

@@ -23,6 +23,7 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
   templateUrl: 'popover.component.html',
   styleUrls: ['popover.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class PopoverComponent {
   @ViewChild('content', { static: true }) content: ElementRef;

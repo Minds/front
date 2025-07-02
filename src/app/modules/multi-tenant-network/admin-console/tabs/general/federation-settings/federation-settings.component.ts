@@ -13,6 +13,7 @@ import { GenericToggleValue } from '../../../../../../common/components/toggle/t
   selector: 'm-networkAdminConsole__federationSettings',
   templateUrl: './federation-settings.component.html',
   styleUrls: ['./federation-settings.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleFederationSettingsComponent
   implements OnInit, OnDestroy

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '../../../common.module';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PermissionsService } from '../../../services/permissions.service';
 import {
   FetchOidcProvidersGQL,
@@ -20,9 +19,8 @@ import { MindsUser } from '../../../../interfaces/entities';
  * top of the list of the groups that you've joined
  */
 @Component({
-  standalone: true,
   selector: 'm-oidcLoginButtons',
-  imports: [CommonModule, NgCommonModule, RouterLink],
+  imports: [CommonModule, NgCommonModule],
   templateUrl: './oidc-login-buttons.component.html',
   styleUrls: ['./oidc-login-buttons.component.ng.scss'],
 })

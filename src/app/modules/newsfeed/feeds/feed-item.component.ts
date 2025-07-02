@@ -18,6 +18,7 @@ import { IFeedItem } from '../feed/feed.component';
       <ng-content></ng-content>
     </div>
   `,
+  standalone: false,
 })
 export class NewsfeedFeedItemComponent implements OnInit, OnDestroy {
   @Input()

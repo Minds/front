@@ -22,6 +22,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'social-links.component.html',
   styleUrls: ['social-links.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelSocialLinksComponent implements OnInit {
   /**

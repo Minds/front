@@ -36,6 +36,7 @@ import { PasswordRiskValidator } from '../../../forms/password-risk.validator';
   templateUrl: './password.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./password.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsV2PasswordComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

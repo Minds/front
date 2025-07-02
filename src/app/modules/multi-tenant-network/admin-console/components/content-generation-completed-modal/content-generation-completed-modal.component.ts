@@ -11,7 +11,6 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
   selector: 'm-contentGenerationCompletedModal',
   templateUrl: './content-generation-completed-modal.component.html',
   styleUrls: ['./content-generation-completed-modal.component.ng.scss'],
-  standalone: true,
   imports: [CommonModule],
 })
 export class ContentGenerationCompletedModalComponent

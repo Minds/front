@@ -11,6 +11,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
   selector: 'm-channelEdit__info',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'info.component.html',
+  standalone: false,
 })
 export class ChannelEditInfoComponent {
   public maxNameLength: number;

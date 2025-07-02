@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { NetworkAdminAnalyticsTimespanFiltersService } from './timespan-filters.service';
-import * as moment from 'moment';
+import moment from 'moment';
 
 describe('NetworkAdminAnalyticsTimespanFiltersService', () => {
   let service: NetworkAdminAnalyticsTimespanFiltersService;

@@ -13,6 +13,7 @@ import { Client } from '../../../../services/api/client';
   templateUrl: 'table.component.html',
   styleUrls: ['table.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class InteractionsTableComponent implements OnInit {
   @Input() metric: { title: string; metric: string };

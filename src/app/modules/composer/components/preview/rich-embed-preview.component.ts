@@ -10,6 +10,7 @@ import { MediaProxyService } from '../../../../common/services/media-proxy.servi
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'rich-embed-preview.component.html',
   styleUrls: ['rich-embed-preview.component.ng.scss'],
+  standalone: false,
 })
 export class RichEmbedPreviewComponent {
   /**

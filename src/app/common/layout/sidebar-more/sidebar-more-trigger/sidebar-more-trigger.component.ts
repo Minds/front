@@ -13,6 +13,7 @@ import { NgxFloatUiContentComponent } from 'ngx-float-ui';
   selector: 'm-sidebarMore__trigger',
   templateUrl: './sidebar-more-trigger.component.html',
   styleUrls: ['./sidebar-more-trigger.component.ng.scss'],
+  standalone: false,
 })
 export class SidebarMoreTriggerComponent implements AfterViewInit {
   @Output('toggle') onToggle: EventEmitter<Boolean> =

@@ -12,6 +12,7 @@ import { GroupsService } from '../groups.service';
   selector: 'm-groups__kick-modal',
   templateUrl: 'kick-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class GroupsKickModalComponent {
   user: any;

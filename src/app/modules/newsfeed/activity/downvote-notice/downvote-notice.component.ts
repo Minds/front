@@ -19,6 +19,7 @@ import { Observable, Subscription, catchError, take, EMPTY } from 'rxjs';
   selector: 'm-activity__downvoteNotice',
   templateUrl: './downvote-notice.component.html',
   styleUrls: ['./downvote-notice.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityDownvoteNoticeComponent implements OnDestroy {
   constructor(

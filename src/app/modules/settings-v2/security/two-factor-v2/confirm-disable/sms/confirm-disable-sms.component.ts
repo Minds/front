@@ -22,6 +22,7 @@ import { SettingsTwoFactorV2Service } from '../../two-factor-v2.service';
     ></m-settings--two-factor>
   `,
   styleUrls: ['../confirm-disable.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsTwoFactorDisableSMSComponent {
   constructor(

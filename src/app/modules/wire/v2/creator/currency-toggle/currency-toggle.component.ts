@@ -16,6 +16,7 @@ import { WireV2Service } from '../../wire-v2.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'currency-toggle.component.html',
   styleUrls: ['currency-toggle.component.ng.scss'],
+  standalone: false,
 })
 export class WireCreatorCurrencyToggleComponent {
   /**

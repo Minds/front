@@ -14,6 +14,7 @@ import { DiscoveryTag, DiscoveryTagsService } from '../tags.service';
   selector: 'm-discovery__tagWidget',
   templateUrl: './tag-widget.component.html',
   styleUrls: ['./tag-widget.component.ng.scss'],
+  standalone: false,
 })
 export class DiscoveryTagWidgetComponent implements OnInit, OnDestroy {
   querySubscription: Subscription;

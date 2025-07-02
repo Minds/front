@@ -25,6 +25,7 @@ import { PopoverComponent } from '../../../../forms/popover-validation/popover.c
   selector: 'm-resetPasswordModal__form--reset',
   templateUrl: './reset.component.html',
   styleUrls: ['../../reset-password-modal.component.ng.scss'],
+  standalone: false,
 })
 export class ResetPasswordModalResetFormComponent implements OnInit, OnDestroy {
   // The username of the user who is resetting their password

@@ -66,6 +66,7 @@ import { interval, Subscription } from 'rxjs';
       ]),
     ]),
   ],
+  standalone: false,
 })
 export class SeeLatestButtonComponent implements OnInit, OnDestroy {
   /**

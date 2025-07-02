@@ -11,7 +11,6 @@ import convertSnakeCaseToTitleCase from '../../../helpers/convert-snake-case-to-
   imports: [NgCommonModule],
   templateUrl: './selectable-icon.component.html',
   styleUrls: ['./selectable-icon.component.ng.scss'],
-  standalone: true,
 })
 export class SelectableIconComponent {
   /** The material-icon id of the icon to be presented */

@@ -16,6 +16,7 @@ import {
     './splash-config.component.ng.scss',
     '../../stylesheets/network-admin-mobile.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleMobileSplashConfigComponent {
   // enums for use in template.

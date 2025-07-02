@@ -12,6 +12,7 @@ import { MultiTenantConfig } from '../../../../../../graphql/generated.engine';
   selector: 'm-networkAdminConsole__configSettingsToggle',
   templateUrl: './config-settings-toggle.component.html',
   styleUrls: ['./config-settings-toggle.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleConfigSettingsToggleComponent
   implements OnInit, OnDestroy

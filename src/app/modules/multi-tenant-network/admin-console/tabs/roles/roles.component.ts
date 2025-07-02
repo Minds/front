@@ -14,6 +14,7 @@ import { MultiTenantRolesService } from '../../../services/roles.service';
     './roles.component.ng.scss',
     '../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleRolesComponent implements OnInit {
   /**

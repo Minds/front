@@ -40,6 +40,7 @@ import { PermissionsService } from '../../../common/services/permissions.service
   selector: 'm-newsfeed--single',
   templateUrl: 'single.component.html',
   styleUrls: ['single.component.ng.scss'],
+  standalone: false,
 })
 export class NewsfeedSingleComponent {
   readonly cdnAssetsUrl: string;

@@ -16,6 +16,7 @@ import { ToasterService } from '../../common/services/toaster.service';
   outputs: ['onTranslateInit', 'onTranslate', 'onTranslateError'],
   exportAs: 'translate',
   templateUrl: 'translate.html',
+  standalone: false,
 })
 export class Translate {
   onTranslateInit: EventEmitter<any> = new EventEmitter();

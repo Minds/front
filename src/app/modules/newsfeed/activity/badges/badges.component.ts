@@ -14,6 +14,7 @@ import {
   selector: 'm-activity__badges',
   templateUrl: './badges.component.html',
   styleUrls: ['./badges.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityBadgesComponent {
   entity$: Observable<ActivityEntity> = this.service.entity$;

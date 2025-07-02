@@ -29,6 +29,7 @@ import { AddFeaturedEntityModalEntityType } from './add-user-modal/add-featured-
     '../../../stylesheets/console.component.ng.scss',
   ],
   host: { class: 'm-networkAdminConsole__container--noHorizontalPadding' },
+  standalone: false,
 })
 export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
   /** Whether loading is in progress. */

@@ -13,6 +13,7 @@ import { MessengerConversationDockpanesService } from './dockpanes.service';
 @Component({
   selector: 'm-messenger--conversation-dockpanes',
   templateUrl: 'dockpanes.component.html',
+  standalone: false,
 })
 export class MessengerConversationDockpanes {
   conversations: Array<any> = this.dockpanes.conversations;

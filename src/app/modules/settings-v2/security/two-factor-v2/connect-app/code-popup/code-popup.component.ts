@@ -14,6 +14,7 @@ import { Component } from '@angular/core';
     <span class="m-twoFactorSecret__code">{{ code }}</span>
   `,
   styleUrls: ['./code-popup.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsTwoFactorCodePopupComponent {
   public code: string = '';

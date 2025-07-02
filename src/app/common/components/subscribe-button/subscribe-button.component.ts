@@ -21,6 +21,7 @@ export type SubscribeButtonLabelType = 'action' | 'pastTense';
   templateUrl: './subscribe-button.component.html',
   styleUrls: ['./subscribe-button.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SubscribeButtonComponent implements OnInit {
   _user: Partial<MindsUser> = {

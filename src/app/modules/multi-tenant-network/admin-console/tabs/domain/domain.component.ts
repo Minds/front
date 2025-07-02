@@ -20,6 +20,7 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
     './domain.component.ng.scss',
     '../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleDomainComponent implements OnInit, OnDestroy {
   /**

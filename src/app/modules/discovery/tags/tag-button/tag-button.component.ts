@@ -7,6 +7,7 @@ import { DiscoveryTag, DiscoveryTagsService } from '../tags.service';
   selector: 'm-discovery__tagButton',
   templateUrl: './tag-button.component.html',
   styleUrls: ['./tag-button.component.ng.scss'],
+  standalone: false,
 })
 export class DiscoveryTagButtonComponent implements OnDestroy {
   @Input() tag: DiscoveryTag;

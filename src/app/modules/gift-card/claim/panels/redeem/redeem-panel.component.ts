@@ -27,6 +27,7 @@ import { GiftRecipientGiftDuration } from '../../../../wire/v2/creator/form/gift
   selector: 'm-giftCardClaimPanel__redeem',
   templateUrl: 'redeem-panel.component.html',
   styleUrls: ['./redeem-panel.component.ng.scss'],
+  standalone: false,
 })
 export class GiftCardClaimRedeemPanelComponent implements OnInit, OnDestroy {
   /** The claim code from the URL. */

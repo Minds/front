@@ -26,6 +26,7 @@ import { isPlatformBrowser } from '@angular/common';
   selector: 'm-newsfeed',
   templateUrl: 'newsfeed.component.html',
   styleUrls: ['newsfeed.component.ng.scss'],
+  standalone: false,
 })
 export class NewsfeedComponent implements OnInit, OnDestroy {
   newsfeed: Array<Object>;

@@ -32,7 +32,6 @@ const MULTI_USER_AVATARS_TO_SHOW: number = 2;
   styleUrls: ['./room-list-item.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, NgCommonModule, ChatDatePipe, RouterModule],
-  standalone: true,
   host: {
     '(click)': 'navigateToChat()',
   },

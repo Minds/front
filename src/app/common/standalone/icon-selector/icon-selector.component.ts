@@ -36,7 +36,6 @@ type IconSelectorModalConfigs = {
   ],
   templateUrl: './icon-selector.component.html',
   styleUrls: ['./icon-selector.component.ng.scss'],
-  standalone: true,
 })
 export class IconSelectorComponent implements OnInit {
   /**

@@ -14,6 +14,7 @@ import { Subscription, fromEvent } from 'rxjs';
  */
 @Directive({
   selector: '[showOnHover]',
+  standalone: false,
 })
 export class ShowOnHoverDirective implements OnDestroy, OnInit, OnChanges {
   /** Element that when hovered, shows the directives root element ref.  */

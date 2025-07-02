@@ -10,6 +10,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'm-dashboardLayout',
   templateUrl: './dashboard-layout.component.html',
+  standalone: false,
 })
 export class DashboardLayoutComponent {
   constructor() {}

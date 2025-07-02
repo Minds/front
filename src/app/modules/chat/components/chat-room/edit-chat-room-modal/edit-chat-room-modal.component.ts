@@ -27,7 +27,6 @@ export type EditChatRoomModalData = {
   styleUrls: ['./edit-chat-room-modal.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgCommonModule, CommonModule, ReactiveFormsModule],
-  standalone: true,
 })
 export class EditChatRoomModalComponent implements OnInit {
   /** Form group. */

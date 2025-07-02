@@ -24,6 +24,7 @@ import * as _ from 'lodash';
     './invitations.component.ng.scss',
     '../../../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleInviteInvitationsComponent
   implements OnInit, OnDestroy

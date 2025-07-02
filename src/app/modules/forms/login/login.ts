@@ -42,6 +42,7 @@ export type Source = 'auth-modal' | 'other' | null;
     '../../../../stylesheets/two-column-layout.ng.scss',
     '../../../modules/auth/auth.module.ng.scss',
   ],
+  standalone: false,
 })
 export class LoginForm extends AbstractSubscriberComponent implements OnInit {
   @Input() source: Source = null;

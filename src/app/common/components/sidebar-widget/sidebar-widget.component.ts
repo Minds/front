@@ -8,6 +8,7 @@ export type SidebarWidgetBorderColor = 'default' | 'primary' | 'none';
   selector: 'm-sidebarWidget',
   styleUrls: ['./sidebar-widget.component.ng.scss'],
   templateUrl: './sidebar-widget.component.html',
+  standalone: false,
 })
 export class SidebarWidgetComponent {
   @Input() titleText: string;

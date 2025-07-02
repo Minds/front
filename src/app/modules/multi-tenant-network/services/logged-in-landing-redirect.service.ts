@@ -43,8 +43,9 @@ export class TenantLoggedInLandingRedirectService {
       case NavigationItemTypeEnum.Core:
         if (landingPage?.id === 'channel') {
           this.router.navigateByUrl(
-            '/' + this.session.getLoggedInUser()?.username ??
-              FALLBACK_LANDING_PAGE_PATH
+            '/' +
+              (this.session.getLoggedInUser()?.username ??
+                FALLBACK_LANDING_PAGE_PATH)
           );
         } else {
           this.router.navigateByUrl(

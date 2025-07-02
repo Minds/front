@@ -9,6 +9,7 @@ import { BoostModalV2Service } from '../../../../services/boost-modal-v2.service
   selector: 'm-boostModalV2__budgetTabBar',
   templateUrl: './tab-bar.component.html',
   styleUrls: ['tab-bar.component.ng.scss'],
+  standalone: false,
 })
 export class BoostModalV2BudgetTabBarComponent {
   // enums.

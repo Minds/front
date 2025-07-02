@@ -22,6 +22,7 @@ import {
   selector: 'm-settingsV2__supermind',
   templateUrl: './supermind.component.html',
   styleUrls: ['./supermind.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsV2SupermindComponent implements OnInit, OnDestroy {
   // Form group.

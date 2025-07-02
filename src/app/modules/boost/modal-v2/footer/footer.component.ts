@@ -14,6 +14,7 @@ import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-in
   selector: 'm-boostModalV2__footer',
   templateUrl: './footer.component.html',
   styleUrls: ['footer.component.ng.scss'],
+  standalone: false,
 })
 export class BoostModalV2FooterComponent implements OnDestroy {
   // enums.

@@ -43,6 +43,7 @@ import { TreeNode } from './tree-node.model';
       </ng-container>
     </ng-container>
   `,
+  standalone: false,
 })
 export class TreeComponent {
   @Input() treeModel: TreeModel = new TreeModel();

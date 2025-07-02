@@ -13,6 +13,7 @@ import { Subscription, filter } from 'rxjs';
   selector: 'm-giftCardClaimPanel__loggedOut',
   templateUrl: 'logged-out-panel.component.html',
   styleUrls: ['./logged-out-panel.component.ng.scss'],
+  standalone: false,
 })
 export class GiftCardClaimLoggedOutPanelComponent implements OnInit, OnDestroy {
   // subscription to a user logging in / registering.

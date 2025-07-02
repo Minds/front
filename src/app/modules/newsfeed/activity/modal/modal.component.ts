@@ -66,6 +66,7 @@ export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
     ComposerService,
     ActivityServiceCommentsLegacySupport,
   ],
+  standalone: false,
 })
 export class ActivityModalComponent implements OnInit, OnDestroy {
   entity: any;

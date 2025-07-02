@@ -34,6 +34,7 @@ export type UpgradePageModalData = {
   selector: 'm-upgradePage',
   templateUrl: './upgrade-page.component.html',
   styleUrls: ['./upgrade-page.component.ng.scss'],
+  standalone: false,
 })
 export class UpgradePageComponent implements OnInit {
   protected upgradeCards: UpgradePageCard[] = [];

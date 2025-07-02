@@ -10,7 +10,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
   imports: [NgCommonModule],
   templateUrl: './star-card.component.html',
   styleUrls: ['./star-card.component.ng.scss'],
-  standalone: true,
 })
 export class StarCardComponent {
   /** Title of the card. */

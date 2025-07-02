@@ -45,6 +45,7 @@ import { PermissionsService } from '../../../common/services/permissions.service
   templateUrl: 'view.html',
   styleUrls: ['./view.ng.scss'],
   providers: [ActivityService, ActivityServiceCommentsLegacySupport],
+  standalone: false,
 })
 export class BlogView implements OnInit, OnDestroy {
   readonly cdnUrl: string;

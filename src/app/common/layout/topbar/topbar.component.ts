@@ -33,6 +33,7 @@ import { MultiTenantConfigImageService } from '../../../modules/multi-tenant-net
 @Component({
   selector: 'm-topbar',
   templateUrl: 'topbar.component.html',
+  standalone: false,
 })
 export class TopbarComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string;

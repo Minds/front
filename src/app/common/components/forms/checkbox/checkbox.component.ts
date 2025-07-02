@@ -22,6 +22,7 @@ export const FORM_INPUT_CHECKBOX_VALUE_ACCESSOR: any = {
   templateUrl: 'checkbox.component.html',
   styleUrls: ['./checkbox.component.ng.scss'],
   providers: [FORM_INPUT_CHECKBOX_VALUE_ACCESSOR],
+  standalone: false,
 })
 export class FormInputCheckboxComponent implements ControlValueAccessor {
   @Input() customId: string;

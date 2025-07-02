@@ -27,6 +27,7 @@ import { Router } from '@angular/router';
     './list.component.ng.scss',
     '../../../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleNavigationListComponent implements OnInit {
   /**

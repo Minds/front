@@ -14,6 +14,7 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
   selector: 'm-boost_rejection_modal',
   templateUrl: './boost-rejection-modal.component.html',
   styleUrls: ['boost-rejection-modal.component.ng.scss'],
+  standalone: false,
 })
 export class BoostRejectionModalComponent implements OnInit, OnDestroy {
   public boost: Boost;

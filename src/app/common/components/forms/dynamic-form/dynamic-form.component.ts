@@ -17,6 +17,7 @@ import {
   selector: 'm-dynamic-form',
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss'],
+  standalone: false,
 })
 export class DynamicFormComponent
   implements OnInit, AfterViewChecked, OnChanges

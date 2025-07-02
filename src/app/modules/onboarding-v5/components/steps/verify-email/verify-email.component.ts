@@ -51,6 +51,7 @@ export enum EmailSendSuccessMessage {
     'verify-email.component.ng.scss',
     '../../../stylesheets/onboarding-v5-common.ng.scss',
   ],
+  standalone: false,
 })
 export class OnboardingV5VerifyEmailContentComponent
   implements OnInit, OnDestroy, AfterViewInit, OnboardingStepContentInterface

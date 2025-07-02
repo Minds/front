@@ -21,6 +21,7 @@ import {
   templateUrl: './read-more.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./read-more.component.ng.scss'],
+  standalone: false,
 })
 export class ReadMoreComponent {
   /**

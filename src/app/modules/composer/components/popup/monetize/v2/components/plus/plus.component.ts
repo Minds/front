@@ -25,6 +25,7 @@ export type PlusPostExpiry = number | null;
   selector: 'm-composer__monetizeV2__plus',
   templateUrl: './plus.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ComposerMonetizeV2PlusComponent implements OnInit {
   readonly plusSupportTierUrn: string;

@@ -26,6 +26,7 @@ import { MutationResult } from 'apollo-angular';
       <i class="material-icons">close</i>
     </m-button>
   `,
+  standalone: false,
 })
 export class DiscoveryAdminExcludeButtonComponent {
   /** The tag to exclude. */

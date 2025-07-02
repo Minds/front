@@ -11,6 +11,7 @@ import { CheckoutPageKeyEnum } from '../../../../../../../graphql/generated.engi
   selector: 'm-networksCheckout__summaryStepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.ng.scss'],
+  standalone: false,
 })
 export class NetworksCheckoutSummaryStepperComponent {
   /** Enum for use in template. */

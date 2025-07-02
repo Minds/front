@@ -24,6 +24,7 @@ import { BoostModalV2Service } from '../../../../services/boost-modal-v2.service
   selector: 'm-boostModalV2__budgetTab',
   templateUrl: './tab.component.html',
   styleUrls: ['tab.component.ng.scss'],
+  standalone: false,
 })
 export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
   // enums.

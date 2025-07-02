@@ -11,6 +11,7 @@ import {
   selector: 'm-onboarding__progressbar',
   templateUrl: 'progressbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ProgressbarComponent implements OnInit {
   @Input() steps: Array<{ name: string; selected: boolean }> = [];

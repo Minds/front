@@ -43,6 +43,7 @@ function isPending<T>(value: T, pendingIf: T | Partial<T>): boolean {
  */
 @Pipe({
   name: 'asyncState',
+  standalone: false,
 })
 export class AsyncStatePipe implements PipeTransform {
   transform<T>(

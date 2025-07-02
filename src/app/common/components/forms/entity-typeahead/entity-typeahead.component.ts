@@ -46,7 +46,6 @@ import { Session } from '../../../../services/session';
       multi: true,
     },
   ],
-  standalone: true,
   template: `
     <form [formGroup]="formGroup">
       <input

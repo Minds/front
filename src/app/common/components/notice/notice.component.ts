@@ -10,6 +10,7 @@ import { Component, Input } from '@angular/core';
   selector: 'm-notice',
   templateUrl: './notice.component.html',
   styleUrls: ['./notice.component.ng.scss'],
+  standalone: false,
 })
 export class NoticeComponent {
   /**

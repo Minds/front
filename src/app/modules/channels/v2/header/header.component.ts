@@ -14,6 +14,7 @@ import { Session } from '../../../../services/session';
   selector: 'm-channel__header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'header.component.html',
+  standalone: false,
 })
 export class ChannelHeaderComponent {
   /**

@@ -32,6 +32,7 @@ import {
   selector: 'm-settingsV2__embeddedComments',
   templateUrl: 'embedded-comments.component.html',
   styleUrls: ['embedded-comments.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsV2EmbeddedCommentsComponent implements OnInit, OnDestroy {
   // user form.

@@ -19,6 +19,7 @@ import { ConfigsService } from '../../../../../../common/services/configs.servic
   selector: 'm-boostConsole__actionButtons',
   templateUrl: './action-buttons.component.html',
   styleUrls: ['./action-buttons.component.ng.scss'],
+  standalone: false,
 })
 export class BoostConsoleActionButtonsComponent {
   /** @var { Boost } boost - Boost object */

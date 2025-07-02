@@ -3,7 +3,7 @@ import { Client } from '../../../../../services/api';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Filter, Option } from '../../../../../interfaces/dashboard';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 
 const SUM_AMOUNT = (arr, currencyType): number => {
@@ -22,6 +22,7 @@ const SUM_AMOUNT = (arr, currencyType): number => {
   selector: 'm-wallet__earnings',
   templateUrl: './earnings.component.html',
   styleUrls: ['../accordion/accordion.component.ng.scss'],
+  standalone: false,
 })
 export class WalletEarningsComponent {
   earnings$: BehaviorSubject<any> = new BehaviorSubject(null);

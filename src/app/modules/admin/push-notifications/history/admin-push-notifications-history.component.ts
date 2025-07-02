@@ -9,6 +9,7 @@ import { ApiResponse } from '../../../../common/api/api.service';
   selector: 'm-admin__pushNotifications--history',
   styleUrls: ['admin-push-notifications-history.component.ng.scss'],
   templateUrl: './admin-push-notifications-history.component.html',
+  standalone: false,
 })
 export class AdminPushNotificationsHistoryComponent
   implements OnInit, OnDestroy

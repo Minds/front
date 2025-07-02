@@ -12,6 +12,7 @@ import { WireModalService } from '../../../wire/wire-modal.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'wire.component.html',
   styleUrls: ['wire.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelActionsWireComponent {
   /**

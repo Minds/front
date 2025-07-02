@@ -19,6 +19,7 @@ import { PermissionsEnum } from '../../../../graphql/generated.engine';
   templateUrl: 'thumbs-down.component.html',
   styleUrls: [`thumbs-up.component.ng.scss`],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ThumbsDownButton {
   changesDetected: boolean = false;

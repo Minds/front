@@ -7,6 +7,7 @@ import { PagesService } from '../../services/pages.service';
 @Component({
   selector: 'm-footer',
   templateUrl: 'footer.component.html',
+  standalone: false,
 })
 export class FooterComponent {
   constructor(

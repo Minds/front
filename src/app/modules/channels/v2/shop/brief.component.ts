@@ -18,6 +18,7 @@ import { MindsUser } from '../../../../interfaces/entities';
   templateUrl: 'brief.component.html',
   styleUrls: ['brief.component.ng.scss'],
   providers: [SupportTiersService],
+  standalone: false,
 })
 export class ChannelShopBriefComponent implements OnDestroy {
   /**

@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'm-settings--reported-content',
   templateUrl: 'reported-content.component.html',
+  standalone: false,
 })
 export class SettingsReportedContentComponent {}

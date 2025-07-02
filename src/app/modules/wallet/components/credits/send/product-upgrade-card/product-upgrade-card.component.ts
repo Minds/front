@@ -22,6 +22,7 @@ import { MindsUser } from '../../../../../../interfaces/entities';
   selector: 'm-walletV2__creditsProductUpgradeCard',
   templateUrl: './product-upgrade-card.component.html',
   styleUrls: ['./product-upgrade-card.component.ng.scss'],
+  standalone: false,
 })
 export class WalletV2CreditsProductUpgradeCardComponent {
   /** Product id enum for access in template */

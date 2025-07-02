@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'minds-notification',
   templateUrl: 'notification.component.html',
+  standalone: false,
 })
 export class NotificationComponent {
   readonly cdnUrl: string;

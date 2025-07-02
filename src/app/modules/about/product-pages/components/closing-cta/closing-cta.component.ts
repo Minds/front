@@ -16,6 +16,7 @@ import {
   selector: 'm-productPage__closingCta',
   templateUrl: 'closing-cta.component.html',
   styleUrls: ['closing-cta.component.ng.scss'],
+  standalone: false,
 })
 export class ProductPageClosingCtaComponent {
   /** Title of the component. */

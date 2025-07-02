@@ -8,6 +8,7 @@ import { FeedAlgorithm } from '../../../../common/services/feeds.service';
   selector: 'm-newsfeed__tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.ng.scss'],
+  standalone: false,
 })
 export class NewsfeedTabsComponent {
   /** Feed algorithm enum. */

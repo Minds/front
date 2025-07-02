@@ -15,6 +15,7 @@ import entityToBannerUrl from '../../../../../helpers/entity-to-banner-url';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'owner-block.component.html',
   styleUrls: ['owner-block.component.ng.scss'],
+  standalone: false,
 })
 export class WireCreatorOwnerBlock {
   /**

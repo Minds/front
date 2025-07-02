@@ -26,6 +26,7 @@ import { TenantCustomHomepageService } from '../../services/tenant-custom-homepa
   selector: 'm-customTenantHomepage__memberships',
   templateUrl: 'memberships.component.html',
   styleUrls: ['memberships.component.ng.scss'],
+  standalone: false,
 })
 export class TenantCustomHomepageMembershipsComponent
   extends AbstractSubscriberComponent

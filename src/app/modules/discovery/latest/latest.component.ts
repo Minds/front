@@ -13,6 +13,7 @@ import { DiscoveryFeedsService } from '../feeds/feeds.service';
   selector: 'm-discovery__latestFeed',
   templateUrl: './latest.component.html',
   providers: [DiscoveryFeedsService, FeedsService],
+  standalone: false,
 })
 export class DiscoveryLatestFeedComponent implements OnInit {
   constructor(

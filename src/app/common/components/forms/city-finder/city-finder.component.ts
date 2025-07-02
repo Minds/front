@@ -7,6 +7,7 @@ import { Session } from '../../../../services/session';
   selector: 'minds-form-city-finder',
   outputs: ['done'],
   templateUrl: 'city-finder.component.html',
+  standalone: false,
 })
 export class CityFinderComponent {
   error: string = '';

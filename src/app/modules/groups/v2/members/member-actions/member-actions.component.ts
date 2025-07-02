@@ -15,6 +15,7 @@ import { Session } from '../../../../../services/session';
   inputs: ['group', 'user'],
   templateUrl: './member-actions.component.html',
   styleUrls: ['./member-actions.component.ng.scss'],
+  standalone: false,
 })
 export class GroupMemberActionsComponent {
   @Input() group: any = {};

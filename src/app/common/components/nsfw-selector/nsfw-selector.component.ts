@@ -11,6 +11,7 @@ import { ifError } from 'assert';
   selector: 'm-nsfwSelector',
   templateUrl: 'nsfw-selector.component.html',
   providers: [NSFWSelectorEditingService],
+  standalone: false,
 })
 export class NSFWSelectorComponent {
   @Input('service') serviceRef: string = 'consumer';

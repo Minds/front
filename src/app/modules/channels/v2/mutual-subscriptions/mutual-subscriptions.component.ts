@@ -20,6 +20,7 @@ import { MutualSubscriptionsService } from './mutual-subscriptions.service';
   styleUrls: ['./mutual-subscriptions.component.ng.scss'],
   animations: [SlowFadeAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class MutualSubscriptionsComponent {
   /**

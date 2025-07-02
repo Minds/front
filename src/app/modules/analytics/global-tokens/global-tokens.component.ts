@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AnalyticsGlobalTokensService, Metric } from './global-tokens.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { Session } from '../../../services/session';
 
 type TabId = 'supply' | 'transactions' | 'liquidity' | 'rewards';
@@ -11,6 +11,7 @@ type TabId = 'supply' | 'transactions' | 'liquidity' | 'rewards';
   selector: 'm-analytics__globalTokens',
   templateUrl: './global-tokens.component.html',
   styleUrls: ['./global-tokens.component.ng.scss'],
+  standalone: false,
 })
 export class AnalyticsGlobalTokensComponent {
   /**

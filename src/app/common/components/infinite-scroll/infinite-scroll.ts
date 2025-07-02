@@ -48,6 +48,7 @@ import { AnalyticsService } from './../../../services/analytics';
     </ng-container>
   `,
   styleUrls: ['./infinite-scroll.ng.scss'],
+  standalone: false,
 })
 export class InfiniteScroll {
   @Input() enabled: boolean = true;

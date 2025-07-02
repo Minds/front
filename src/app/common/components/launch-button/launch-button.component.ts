@@ -12,6 +12,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
     </div>
   `,
   styleUrls: ['./launch-button.component.ng.scss'],
+  standalone: false,
 })
 export class LaunchButtonComponent {
   /**

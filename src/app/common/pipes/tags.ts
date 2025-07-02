@@ -28,6 +28,7 @@ export type TagHelpers = {
  */
 @Pipe({
   name: 'tags',
+  standalone: false,
 })
 export class TagsPipe implements PipeTransform {
   results = [];

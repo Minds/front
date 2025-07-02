@@ -26,6 +26,7 @@ import { TopbarAlertService } from '../../../common/components/topbar-alert/topb
   selector: 'm-feedNotice__outlet',
   templateUrl: './feed-notice-outlet.component.html',
   styleUrls: ['./feed-notice-outlet.component.ng.scss'],
+  standalone: false,
 })
 export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
   // location of component - where should it show 'top' or 'inline' in the feed.

@@ -41,6 +41,7 @@ interface InlineEmbed {
   inputs: ['_src: src', '_preview: preview', 'maxheight', 'cropImage'],
   templateUrl: 'rich-embed.html',
   styleUrls: ['rich-embed.ng.scss'],
+  standalone: false,
 })
 export class MindsRichEmbed implements OnDestroy {
   @Input() displayAsColumn: boolean = false;

@@ -42,6 +42,7 @@ import {
   styleUrls: ['./member-previews.component.ng.scss'],
   animations: [SlowFadeAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class GroupMemberPreviewsComponent implements OnInit, OnDestroy {
   group: MindsGroup;

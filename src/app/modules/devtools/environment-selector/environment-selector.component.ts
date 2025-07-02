@@ -9,6 +9,7 @@ import { EnvironmentSelectorService } from './environment-selector.service';
   selector: 'm-devTools__environmentSelector',
   templateUrl: 'environment-selector.component.html',
   styleUrls: ['environment-selector.component.ng.scss'],
+  standalone: false,
 })
 export class EnvironmentSelectorComponent implements OnInit {
   /** @type { boolean } - whether a switch is in progress */

@@ -14,6 +14,7 @@ import {
   selector: 'm-accordion__pane',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'accordion-pane.component.html',
+  standalone: false,
 })
 export class AccordionPaneComponent {
   /**

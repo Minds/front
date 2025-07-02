@@ -11,6 +11,7 @@ import { SITE_NAME } from '../../../../../common/injection-tokens/common-injecti
   selector: 'm-customTenantHomepage__advertise',
   templateUrl: 'advertise.component.html',
   styleUrls: ['advertise.component.ng.scss'],
+  standalone: false,
 })
 export class TenantCustomHomepageAdvertiseComponent {
   /** Section title (localized). */

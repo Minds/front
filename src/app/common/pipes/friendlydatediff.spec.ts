@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { DatePipe, JsonPipe } from '@angular/common';
 import { FriendlyDateDiffPipe } from './friendlydatediff';
-import * as moment from 'moment';
+import moment from 'moment';
 
 describe('FriendlyDateDiff', () => {
   beforeEach(() => {

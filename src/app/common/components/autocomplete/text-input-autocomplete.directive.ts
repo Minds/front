@@ -27,6 +27,7 @@ export interface ChoiceSelectedEvent {
 @Directive({
   selector:
     'minds-textarea[mTextInputAutocomplete],textarea[mTextInputAutocomplete],input[type="text"][mTextInputAutocomplete]',
+  standalone: false,
 })
 export class TextInputAutocompleteDirective implements OnDestroy {
   triggerCharacter: string;

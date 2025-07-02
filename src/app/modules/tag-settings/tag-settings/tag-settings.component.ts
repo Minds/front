@@ -14,6 +14,7 @@ import { TagSettingsService } from '../tag-settings.service';
   selector: 'm-tagSettings',
   templateUrl: './tag-settings.component.html',
   styleUrls: ['./tag-settings.component.ng.scss'],
+  standalone: false,
 })
 export class TagSettingsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];

@@ -17,6 +17,7 @@ import { ThemeService } from '../../../common/services/theme.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'as-featured-in-blockchain.component.html',
   styleUrls: ['./as-featured-in-blockchain.component.ng.scss'],
+  standalone: false,
 })
 export class MarketingAsFeaturedInBlockchainComponent extends AbstractSubscriberComponent {
   @Input() inThePress: boolean = false;

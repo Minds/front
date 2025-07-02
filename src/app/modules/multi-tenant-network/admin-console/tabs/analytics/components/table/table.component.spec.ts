@@ -10,7 +10,7 @@ import {
   AnalyticsTableEnum,
   PageInfo,
 } from '../../../../../../../../graphql/generated.engine';
-import * as moment from 'moment';
+import moment from 'moment';
 
 describe('NetworkAdminAnalyticsTableComponent', () => {
   let comp: NetworkAdminAnalyticsTableComponent;

@@ -18,6 +18,7 @@ export type EnvironmentFlag = 'Canary' | 'Staging' | '';
     >
   `,
   styleUrls: ['./environment-flag.component.ng.scss'],
+  standalone: false,
 })
 export class EnvironmentFlagComponent {
   constructor(

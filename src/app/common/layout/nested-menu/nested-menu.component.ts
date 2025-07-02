@@ -23,6 +23,7 @@ export interface NestedMenu {
   selector: 'm-nestedMenu',
   templateUrl: './nested-menu.component.html',
   styleUrls: ['./nested-menu.component.ng.scss'],
+  standalone: false,
 })
 export class NestedMenuComponent implements OnInit {
   @Input() isNested: boolean = false; // Determines whether to display the back button

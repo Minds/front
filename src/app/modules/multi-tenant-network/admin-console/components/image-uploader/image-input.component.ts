@@ -16,7 +16,6 @@ export enum ImageInputOrientationEnum {
   templateUrl: './image-input.component.html',
   styleUrls: ['./image-input.component.ng.scss'],
   imports: [NgCommonModule, CommonModule],
-  standalone: true,
 })
 export class NetworkAdminConsoleImageInputComponent {
   /** Enum for use in template */

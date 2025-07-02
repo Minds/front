@@ -35,6 +35,7 @@ import { ApolloError } from '@apollo/client';
   selector: 'm-settingsV2__rss-sync',
   templateUrl: 'rss-sync.component.html',
   styleUrls: ['rss-sync.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsV2RssSyncComponent implements OnInit, OnDestroy {
   // user form.

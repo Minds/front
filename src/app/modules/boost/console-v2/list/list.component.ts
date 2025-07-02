@@ -26,6 +26,7 @@ import { BoostConsoleService } from '../services/console.service';
   selector: 'm-boostConsole__list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.ng.scss'],
+  standalone: false,
 })
 export class BoostConsoleListComponent
   extends AbstractSubscriberComponent

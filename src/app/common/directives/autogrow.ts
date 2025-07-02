@@ -9,6 +9,7 @@ import { Directive, EventEmitter, ElementRef } from '@angular/core';
     '(change)': 'grow()',
     '(ngModelChange)': 'grow()',
   },
+  standalone: false,
 })
 export class AutoGrow {
   _element: any;

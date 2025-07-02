@@ -2,6 +2,7 @@ import { Pipe } from '@angular/core';
 
 @Pipe({
   name: 'sanitize',
+  standalone: false,
 })
 export class SanitizePipe {
   map = {

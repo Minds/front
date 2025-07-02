@@ -19,6 +19,7 @@ import { ComponentCommonActionButton } from '../../../../../../graphql/generated
     'hero.component.ng.scss',
     '../../stylesheets/product.pages.ng.scss',
   ],
+  standalone: false,
 })
 export class ProductPageHeroComponent {
   /** Markdown text for hero. */

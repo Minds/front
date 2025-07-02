@@ -20,6 +20,7 @@ import {
   selector: 'm-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'calendar.component.html',
+  standalone: false,
 })
 export class CalendarComponent {
   /**

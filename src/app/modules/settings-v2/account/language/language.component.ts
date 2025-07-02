@@ -26,6 +26,7 @@ import { LanguageService } from '../../../language/language.service';
   selector: 'm-settingsV2__displayLanguage',
   templateUrl: './language.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2LanguageComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

@@ -78,6 +78,7 @@ import { Session } from '../../../../services/session';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'toolbar.component.html',
   styleUrls: ['toolbar.component.ng.scss'],
+  standalone: false,
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   private subscriptions: Subscription[] = [];

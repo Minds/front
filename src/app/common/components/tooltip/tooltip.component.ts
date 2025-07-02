@@ -19,6 +19,7 @@ import { NgStyleValue } from '../../types/angular.types';
     '(mouseover)': 'setHidden(false)',
     '(mouseout)': 'setHidden(true)',
   },
+  standalone: false,
 })
 export class TooltipComponent implements AfterContentInit {
   @Input() icon; // icon name.

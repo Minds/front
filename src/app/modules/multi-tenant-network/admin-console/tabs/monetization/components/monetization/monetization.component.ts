@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   selector: 'm-networkAdminConsole__monetization',
   templateUrl: './monetization.component.html',
   styleUrls: ['./monetization.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminMonetizationComponent {}

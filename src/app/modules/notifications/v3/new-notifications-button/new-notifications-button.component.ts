@@ -7,6 +7,7 @@ import { NotificationsV3Service } from '../notifications-v3.service';
   selector: 'm-newNotificationsButton',
   templateUrl: './new-notifications-button.component.html',
   styleUrls: ['./new-notifications-button.component.ng.scss'],
+  standalone: false,
 })
 export class NewNotificationsButtonComponent {
   count = 0;

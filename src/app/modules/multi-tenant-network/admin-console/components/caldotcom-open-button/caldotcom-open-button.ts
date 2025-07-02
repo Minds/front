@@ -18,7 +18,6 @@ import { CalDotComService } from './caldotcom.service';
       >{{ text }}</m-button
     >
   `,
-  standalone: true,
   imports: [NgCommonModule, CommonModule],
 })
 export class CalDotComOpenButtonComponent implements OnInit {

@@ -40,6 +40,7 @@ import { Component, EventEmitter } from '@angular/core';
       </option>
     </select>
   `,
+  standalone: false,
 })
 export class Scheduler {
   days: number = 3;

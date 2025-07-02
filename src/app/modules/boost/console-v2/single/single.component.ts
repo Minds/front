@@ -10,6 +10,7 @@ import { BoostConsoleService } from '../services/console.service';
   selector: 'm-boostConsole__single',
   templateUrl: './single.component.html',
   styleUrls: ['./single.component.ng.scss'],
+  standalone: false,
 })
 export class BoostConsoleSingleComponent implements OnInit, OnDestroy {
   inProgress: boolean;

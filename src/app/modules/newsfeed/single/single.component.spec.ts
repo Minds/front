@@ -38,6 +38,7 @@ import { PermissionsService } from '../../../common/services/permissions.service
 @Component({
   selector: 'minds-activity',
   template: '',
+  standalone: false,
 })
 class MindsActivityMock {
   @Input() focusedCommentGuid: string;

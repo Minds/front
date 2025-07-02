@@ -15,6 +15,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'm-text-input--autocomplete-menu',
   templateUrl: 'text-input-autocomplete-menu.component.html',
+  standalone: false,
 })
 export class TextInputAutocompleteMenuComponent implements OnInit {
   @ViewChild('dropdownMenu', { static: true })

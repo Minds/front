@@ -22,6 +22,7 @@ import { Storage } from '../../services/storage';
   selector: 'm-notifications--topbar-toggle',
   templateUrl: 'toggle.component.html',
   styleUrls: ['toggle.component.ng.scss'],
+  standalone: false,
 })
 export class NotificationsTopbarToggleComponent implements OnInit, OnDestroy {
   toggled: boolean = false;

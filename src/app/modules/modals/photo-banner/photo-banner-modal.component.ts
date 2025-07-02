@@ -5,6 +5,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'photo-banner-modal.component.html',
   styleUrls: ['./photo-banner-modal.component.ng.scss'],
+  standalone: false,
 })
 export class PhotoBannerModalComponent {
   @Input() title: string;

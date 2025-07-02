@@ -10,6 +10,7 @@ import { BoostConsoleService } from '../../../services/console.service';
   selector: 'm-boostConsole__stateLabel',
   templateUrl: './state-label.component.html',
   styleUrls: ['./state-label.component.ng.scss'],
+  standalone: false,
 })
 export class BoostConsoleStateLabelComponent {
   /** @var { Boost } boost - Boost object */

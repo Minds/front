@@ -57,6 +57,7 @@ import { Router } from '@angular/router';
     </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ReadMoreButtonComponent {
   @Input() v2 = false;

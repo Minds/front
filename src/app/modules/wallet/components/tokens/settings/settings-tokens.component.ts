@@ -44,6 +44,7 @@ enum Views {
   templateUrl: './settings-tokens.component.html',
   styleUrls: ['./settings-tokens.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class WalletSettingsTokensComponent
   implements OnInit, OnDestroy, AfterViewInit

@@ -11,6 +11,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
   selector: '[mIfBrowser]',
+  standalone: false,
 })
 export class IfBrowserDirective {
   private _elseTemplateRef: TemplateRef<any>;

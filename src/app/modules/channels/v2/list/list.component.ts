@@ -16,6 +16,7 @@ import { FeedsService } from '../../../../common/services/feeds.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'list.component.html',
   styleUrls: ['list.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelListComponent {
   /**

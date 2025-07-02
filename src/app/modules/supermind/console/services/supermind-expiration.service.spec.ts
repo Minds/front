@@ -1,6 +1,6 @@
 import { SupermindConsoleExpirationService } from './supermind-expiration.service';
 import { Supermind } from '../../supermind.types';
-import * as moment from 'moment';
+import moment from 'moment';
 
 describe('SupermindConsoleExpirationService', () => {
   let service: SupermindConsoleExpirationService;

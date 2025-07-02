@@ -48,6 +48,7 @@ export type Source = 'auth-modal' | 'other' | null;
     '../../../../stylesheets/two-column-layout.ng.scss',
     '../../../modules/auth/auth.module.ng.scss',
   ],
+  standalone: false,
 })
 export class RegisterForm implements OnInit, OnDestroy {
   @Input() referrer: string;

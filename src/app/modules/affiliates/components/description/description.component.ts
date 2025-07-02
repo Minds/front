@@ -9,6 +9,7 @@ import { AffiliatesEarnMethod } from '../../types/affiliates.types';
   selector: 'm-affiliates__description',
   templateUrl: 'description.component.html',
   styleUrls: ['description.component.ng.scss'],
+  standalone: false,
 })
 export class AffiliatesDescriptionComponent {
   /**

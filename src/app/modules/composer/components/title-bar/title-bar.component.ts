@@ -22,6 +22,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'title-bar.component.html',
   styleUrls: ['./title-bar.component.ng.scss'],
+  standalone: false,
 })
 export class TitleBarComponent {
   /**

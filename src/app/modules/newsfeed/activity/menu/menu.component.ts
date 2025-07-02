@@ -39,6 +39,7 @@ import { BoostAdminActionsService } from '../../../boost/console-v2/services/adm
   selector: 'm-activity__menu',
   templateUrl: 'menu.component.html',
   styleUrls: ['menu.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityMenuComponent implements OnInit, OnDestroy {
   @Output() translate: EventEmitter<any> = new EventEmitter<any>();

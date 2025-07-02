@@ -14,6 +14,7 @@ import { Withdrawal } from './onchain-transfers.types';
   selector: 'm-walletTransactions--onchainTransfers',
   templateUrl: 'onchain-transfers.component.html',
   styleUrls: ['./onchain-transfers.component.ng.scss'],
+  standalone: false,
 })
 export class WalletOnchainTransfersSummaryComponent implements OnInit {
   // withdrawals subject

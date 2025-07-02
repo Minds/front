@@ -19,6 +19,7 @@ import isMobileOrTablet from '../../../../helpers/is-mobile-or-tablet';
   selector: 'm-chartV2',
   templateUrl: './chart-v2.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ChartV2Component implements OnInit, OnDestroy {
   @ViewChild('hoverInfoDiv', { static: true }) hoverInfoDivEl: ElementRef;

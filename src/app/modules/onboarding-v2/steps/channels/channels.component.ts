@@ -4,6 +4,7 @@ import { OnboardingV2Service } from '../../service/onboarding.service';
 @Component({
   selector: 'm-onboarding__channelsStep',
   templateUrl: 'channels.component.html',
+  standalone: false,
 })
 export class ChannelsStepComponent {
   pendingItems: string[];

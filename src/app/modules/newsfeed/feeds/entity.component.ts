@@ -16,6 +16,7 @@ import { DynamicHostDirective } from '../../../common/directives/dynamic-host.di
 @Component({
   selector: 'm-newsfeed__entity',
   templateUrl: 'entity.component.html',
+  standalone: false,
 })
 export class NewsfeedEntityComponent {
   @Output() deleted = new EventEmitter<any>();

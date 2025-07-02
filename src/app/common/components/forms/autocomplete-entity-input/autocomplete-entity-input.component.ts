@@ -52,6 +52,7 @@ export type AutoCompleteEntity = {
   templateUrl: './autocomplete-entity-input.component.html',
   styleUrls: ['./autocomplete-entity-input.component.ng.scss'],
   animations: [FastFadeAnimation],
+  standalone: false,
 })
 export class AutocompleteEntityInputComponent implements ControlValueAccessor {
   /** Enum of auto-complete entity types for use in template. */

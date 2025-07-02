@@ -23,6 +23,7 @@ export type Address = {
     </div>
   `,
   styleUrls: ['./transaction-explorers.component.ng.scss'],
+  standalone: false,
 })
 export class AdminTransactionExplorersComponent {
   @Input() address: Address = null;

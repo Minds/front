@@ -5,6 +5,7 @@ import { ConfigsService } from '../../common/services/configs.service';
   selector: 'm-marketing__asFeaturedIn',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'as-featured-in.component.html',
+  standalone: false,
 })
 export class MarketingAsFeaturedInComponent {
   @Input() inThePress: boolean = false;

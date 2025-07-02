@@ -18,6 +18,7 @@ import { throttleTime } from 'rxjs/operators';
  */
 @Directive({
   selector: '[throttledClick]',
+  standalone: false,
 })
 export class ThrottledClickDirective implements OnInit {
   /** Time to throttle. */

@@ -3,11 +3,10 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "module": "es2020",
     "types": ["node"],
     "sourceMap": false
   },
-  "files": ["main.ts", "polyfills.ts"],
+  "files": ["main.ts", "main.server.ts", "../server.ts", "polyfills.ts"],
   "include": ["**/*.d.ts"],
   "exclude": [
     "test.ts",

@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'm-group__editButton',
   templateUrl: './edit-button.component.html',
+  standalone: false,
 })
 export class GroupEditButton implements OnInit, OnDestroy {
   group;

@@ -29,6 +29,7 @@ import { PermissionsEnum } from '../../../../../graphql/generated.engine';
   templateUrl: 'remind-button.component.html',
   styleUrls: ['./remind-button.component.ng.scss'],
   providers: [ComposerService],
+  standalone: false,
 })
 export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   count$: Observable<number> = this.service.entity$.pipe(

@@ -72,6 +72,7 @@ import { Client } from '../../../services/api';
       <input type="file" id="file" (change)="add($event)" [hidden]="file" />
     </div>
   `,
+  standalone: false,
 })
 export class MindsBanner {
   object;

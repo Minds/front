@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
     './mobile.component.ng.scss',
     '../../stylesheets/network-admin-mobile.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleMobileComponent implements OnInit {
   /** Whether init is in progress. */

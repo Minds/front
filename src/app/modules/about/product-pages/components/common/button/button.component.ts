@@ -32,6 +32,7 @@ import { ProductPagePricingService } from '../../../services/product-page-pricin
     </button>
   `,
   styleUrls: ['./button.component.ng.scss'],
+  standalone: false,
 })
 export class ProductPageButtonComponent {
   /** Button data */

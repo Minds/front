@@ -19,7 +19,7 @@ import { verticallyScrollElementIntoView } from '../../../helpers/scrollable-con
 
 import { Country } from './country';
 import { CountryCode } from './countries';
-import * as moment from 'moment';
+import moment from 'moment';
 
 export type CountrySelectedEvent = {
   number: Country;
@@ -29,6 +29,7 @@ export type CountrySelectedEvent = {
 @Component({
   selector: 'm-phoneInput__country',
   templateUrl: 'country.component.html',
+  standalone: false,
 })
 export class PhoneInputCountryV2Component
   implements OnInit, AfterViewInit, OnDestroy

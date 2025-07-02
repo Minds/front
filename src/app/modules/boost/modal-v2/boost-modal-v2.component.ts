@@ -16,6 +16,7 @@ import { BoostModalV2Service } from './services/boost-modal-v2.service';
   templateUrl: './boost-modal-v2.component.html',
   styleUrls: ['boost-modal-v2.component.ng.scss'],
   providers: [BoostModalV2Service],
+  standalone: false,
 })
 export class BoostModalV2Component implements OnInit, OnDestroy {
   // enums.

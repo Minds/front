@@ -10,6 +10,7 @@ import { CheckoutTimePeriodEnum } from '../../../../../../../graphql/generated.e
   selector: 'm-networksCheckout__timePeriodSelector',
   templateUrl: './time-period-selector.component.html',
   styleUrls: ['./time-period-selector.component.ng.scss'],
+  standalone: false,
 })
 export class NetworksCheckoutSummaryTimePeriodSelectorComponent {
   /** Enum for use in template. */

@@ -12,6 +12,7 @@ const noOp = () => {};
 @Component({
   selector: 'm-discovery__tagSettings',
   templateUrl: './settings.component.html',
+  standalone: false,
 })
 export class DiscoveryTagSettingsComponent {
   tags$: Observable<DiscoveryTag[]> = this.service.tags$;

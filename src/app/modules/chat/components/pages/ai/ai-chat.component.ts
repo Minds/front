@@ -9,7 +9,6 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
   selector: 'm-chat__ai',
   templateUrl: './ai-chat.component.html',
   styleUrl: './ai-chat.component.ng.scss',
-  standalone: true,
   imports: [ChatRoomComponent, CommonModule],
   encapsulation: ViewEncapsulation.None,
 })

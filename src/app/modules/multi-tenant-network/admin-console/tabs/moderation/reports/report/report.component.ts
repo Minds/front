@@ -29,6 +29,7 @@ import { AbstractSubscriberComponent } from '../../../../../../../common/compone
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.ng.scss'],
   providers: [ActivityService],
+  standalone: false,
 })
 export class NetworkAdminConsoleReportComponent extends AbstractSubscriberComponent {
   /** Report egde to display. */

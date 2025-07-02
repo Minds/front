@@ -13,6 +13,7 @@ import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection
     'feature-showcase.component.ng.scss',
     '../../stylesheets/product.pages.ng.scss',
   ],
+  standalone: false,
 })
 export class ProductPageFeatureShowcaseComponent {
   /** Input containing data for feature showcase. */

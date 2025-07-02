@@ -24,6 +24,7 @@ import { GrowShrinkFast } from '../../../animations';
   `,
   styleUrls: ['./form-error.component.ng.scss'],
   animations: [GrowShrinkFast],
+  standalone: false,
 })
 export class FormErrorComponent {
   /** String of concatenated, parsed errors. */

@@ -13,6 +13,7 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
   selector: 'm-marketing',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'marketing.component.html',
+  standalone: false,
 })
 export class MarketingComponent implements OnInit, OnDestroy {
   @Input() pageTitle: string = '';

@@ -34,7 +34,7 @@ import { PersistentFeedExperimentService } from '../../../experiments/sub-servic
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
 import getMetaAutoCaption from '../../../../helpers/meta-auto-caption';
 import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * The content of the activity and the paywall, if applicable.
@@ -63,6 +63,7 @@ import * as moment from 'moment';
     ]),
   ],
   styleUrls: ['./content.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityContentComponent
   implements OnInit, AfterViewInit, OnDestroy

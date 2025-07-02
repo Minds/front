@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
   selector: 'm-networksCheckout__planBuilder',
   templateUrl: './plan-builder.component.html',
   styleUrls: ['./plan-builder.component.ng.scss'],
+  standalone: false,
 })
 export class NetworksCheckoutPlanBuilderComponent {
   /** Enum for use in template. */

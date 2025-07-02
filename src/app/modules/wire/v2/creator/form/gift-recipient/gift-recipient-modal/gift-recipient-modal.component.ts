@@ -20,6 +20,7 @@ import { ToasterService } from '../../../../../../../common/services/toaster.ser
   host: {
     '(keyup.enter)': 'onConfirmRecipientClick()',
   },
+  standalone: false,
 })
 export class GiftRecipientModalComponent {
   /** Product modal is for. */

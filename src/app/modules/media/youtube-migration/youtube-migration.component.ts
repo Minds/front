@@ -20,6 +20,7 @@ import { HostListener } from '@angular/core';
   templateUrl: './youtube-migration.component.html',
   styleUrls: ['youtube-migration.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class YoutubeMigrationComponent implements OnInit, OnDestroy {
   init: boolean = false;

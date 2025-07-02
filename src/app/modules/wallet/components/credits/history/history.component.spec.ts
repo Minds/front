@@ -19,7 +19,7 @@ import {
 import { ThemeService } from '../../../../../common/services/theme.service';
 import { MockGiftCardNodeArray } from '../../../../../mocks/responses/gift-card.mock';
 import { WalletV2CreditsHistoryComponent } from './history.component';
-import * as moment from 'moment';
+import moment from 'moment';
 import { DropdownSelectorSelection } from '../../../../../common/components/dropdown-selector/dropdown-selector.component';
 
 describe('WalletV2CreditsHistoryComponent', () => {

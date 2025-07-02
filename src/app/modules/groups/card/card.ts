@@ -14,6 +14,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   selector: 'minds-card-group',
   inputs: ['group'],
   templateUrl: 'card.html',
+  standalone: false,
 })
 export class GroupsCard {
   readonly cdnUrl: string;

@@ -20,6 +20,7 @@ import { Session } from '../../../../services/session';
 @Component({
   selector: 'm-feedNotice--boostLatestPost',
   templateUrl: 'boost-latest-post-notice.component.html',
+  standalone: false,
 })
 export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
   @Input() public dismissible: boolean = true;

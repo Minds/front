@@ -14,6 +14,7 @@ import { ProductPageFeatTableMobileTab } from '../../product-pages.types';
     'feature-table.component.ng.scss',
     '../../stylesheets/product.pages.ng.scss',
   ],
+  standalone: false,
 })
 export class ProductPageFeatureTableComponent implements OnInit {
   /** Title of component. */

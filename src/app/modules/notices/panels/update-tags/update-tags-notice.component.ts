@@ -10,6 +10,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 @Component({
   selector: 'm-feedNotice--updateTags',
   templateUrl: 'update-tags-notice.component.html',
+  standalone: false,
 })
 export class UpdateTagsNoticeComponent extends AbstractSubscriberComponent {
   @Input() public dismissible: boolean = true;

@@ -11,6 +11,7 @@ import { Session } from '../../../../../../services/session';
   selector: 'm-blogEditor__metadata',
   templateUrl: './meta.component.html',
   styleUrls: ['./meta.component.ng.scss'],
+  standalone: false,
 })
 export class BlogEditorMetaComponent {
   constructor(

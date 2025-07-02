@@ -6,6 +6,7 @@ import maxNum from '../../helpers/max';
  */
 @Pipe({
   name: 'parseJson',
+  standalone: false,
 })
 export class ParseJson {
   transform(input: string | Object): Object {

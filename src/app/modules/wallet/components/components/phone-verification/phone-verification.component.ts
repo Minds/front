@@ -21,6 +21,7 @@ import { Session } from '../../../../../services/session';
   templateUrl: './phone-verification.component.html',
   styleUrls: ['./phone-verification.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class WalletPhoneVerificationComponent implements OnInit {
   /**

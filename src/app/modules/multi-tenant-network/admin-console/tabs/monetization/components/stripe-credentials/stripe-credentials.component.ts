@@ -21,6 +21,7 @@ import { SiteMembershipService } from '../../../../../../site-memberships/servic
   selector: 'm-networkAdminConsole__stripeCredentials',
   templateUrl: './stripe-credentials.component.html',
   styleUrls: ['./stripe-credentials.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminStripeCredentialsComponent
   implements OnInit, OnDestroy

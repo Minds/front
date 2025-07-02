@@ -11,6 +11,7 @@ import { TopbarAlertService } from '../../../../../common/components/topbar-aler
   selector: 'm-customTenantHomepage__hero',
   templateUrl: 'hero.component.html',
   styleUrls: ['hero.component.ng.scss'],
+  standalone: false,
 })
 export class TenantCustomHomepageHeroComponent implements OnInit, OnDestroy {
   /** Path of the logo to be shown. */

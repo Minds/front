@@ -7,6 +7,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
   selector: 'm-admin-withdrawals',
   templateUrl: 'withdrawals.component.html',
   styleUrls: ['./withdrawals.component.ng.scss'],
+  standalone: false,
 })
 export class AdminWithdrawals {
   withdrawals: any[] = [];

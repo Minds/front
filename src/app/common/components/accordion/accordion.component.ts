@@ -20,6 +20,7 @@ import { AccordionPaneComponent } from './accordion-pane.component';
   selector: 'm-accordion',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ` <ng-content></ng-content> `,
+  standalone: false,
 })
 export class AccordionComponent implements AfterContentInit, OnDestroy {
   /**

@@ -12,6 +12,7 @@ import { OnboardingV3TagsService, Tag } from './tags.service';
   host: {
     '[class.m-onboardingV3__tags--fullWidth]': 'defaultTagsV2ExperimentActive',
   },
+  standalone: false,
 })
 export class OnboardingV3TagsComponent implements OnInit {
   constructor(private service: OnboardingV3TagsService) {}

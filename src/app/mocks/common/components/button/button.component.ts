@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'm-button',
+  standalone: false,
 })
 export class ButtonComponentMock {
   @Input() saving: boolean;

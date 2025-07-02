@@ -25,6 +25,7 @@ export type CheckoutPageQueryParams = {
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.ng.scss'],
   providers: [NetworksCheckoutService],
+  standalone: false,
 })
 export class NetworksCheckoutBaseComponent implements OnInit, OnDestroy {
   /** Enum for use in template. */

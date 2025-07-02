@@ -22,7 +22,6 @@ import { Subscription } from 'rxjs';
   templateUrl: 'radio-box.component.html',
   styleUrls: ['./radio-box.component.ng.scss'],
   host: { '(click)': 'onClick()' },
-  standalone: true,
   imports: [NgCommonModule, CommonModule],
 })
 export class NetworkAdminConsoleRadioBoxComponent<T>

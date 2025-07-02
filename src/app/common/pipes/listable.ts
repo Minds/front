@@ -3,6 +3,7 @@ import { Pipe } from '@angular/core';
 @Pipe({
   name: 'listable',
   pure: false,
+  standalone: false,
 })
 export class ListablePipe {
   transform(value: any) {

@@ -13,6 +13,7 @@ import { Client } from '../../../services/api/client';
   selector: 'm-embedded-video',
   templateUrl: 'embedded-video.component.html',
   styleUrls: ['embedded-video.component.ng.scss'],
+  standalone: false,
 })
 export class EmbeddedVideoComponent implements OnInit {
   guid: string;

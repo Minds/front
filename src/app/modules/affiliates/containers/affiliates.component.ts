@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'm-affiliates',
   templateUrl: 'affiliates.component.html',
+  standalone: false,
 })
 export class AffiliatesComponent {
   /**

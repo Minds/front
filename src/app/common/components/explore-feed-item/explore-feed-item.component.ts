@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
   selector: 'm-exploreFeedItem',
   templateUrl: './explore-feed-item.component.html',
   styleUrls: ['./explore-feed-item.component.ng.scss'],
+  standalone: false,
 })
 export class ExploreFeedItemComponent {
   /**

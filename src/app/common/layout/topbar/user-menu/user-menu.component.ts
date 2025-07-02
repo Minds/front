@@ -24,6 +24,7 @@ import { PermissionsService } from '../../../services/permissions.service';
   templateUrl: 'user-menu.component.html',
   styleUrls: ['user-menu.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class UserMenuComponent implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;

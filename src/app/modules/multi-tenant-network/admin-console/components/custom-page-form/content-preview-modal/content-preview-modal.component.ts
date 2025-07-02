@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
   selector: 'm-customPageForm__contentPreviewModal',
   templateUrl: './content-preview-modal.component.html',
   styleUrls: ['./content-preview-modal.component.ng.scss'],
+  standalone: false,
 })
 export class CustomPageFormContentPreviewModalComponent {
   protected content: string = '';

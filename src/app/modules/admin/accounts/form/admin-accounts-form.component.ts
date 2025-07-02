@@ -30,6 +30,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
   selector: 'm-admin__accounts--form',
   styleUrls: ['admin-accounts-form.component.ng.scss'],
   templateUrl: './admin-accounts-form.component.html',
+  standalone: false,
 })
 export class AdminAccountsFormComponent implements OnInit, OnDestroy {
   public accountsForm: UntypedFormGroup = this.formBuilder.group({

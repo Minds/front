@@ -26,6 +26,7 @@ export type DiscoverySidebarTagsSource = 'trending' | 'activityRelated';
   selector: 'm-discovery__sidebarTags',
   templateUrl: './sidebar-tags.component.html',
   styleUrls: ['./sidebar-tags.component.ng.scss'],
+  standalone: false,
 })
 export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   @Input() set context(value: DiscoverySidebarTagsContext) {

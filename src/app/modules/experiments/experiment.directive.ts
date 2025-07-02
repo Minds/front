@@ -11,6 +11,7 @@ import { ExperimentsService } from './experiments.service';
 
 @Directive({
   selector: '[mExperiment]',
+  standalone: false,
 })
 export class ExperimentDirective {
   @Input('mExperiment') experimentId: string;

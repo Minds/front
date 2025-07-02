@@ -17,6 +17,7 @@ import { MindsUser } from '../../../interfaces/entities';
   templateUrl: 'quality-score.component.html',
   styleUrls: ['./quality-score.component.scss'],
   providers: [QualityScoreService],
+  standalone: false,
 })
 export class QualityScoreComponent implements OnInit {
   /**

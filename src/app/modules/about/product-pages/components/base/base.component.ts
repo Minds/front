@@ -30,6 +30,7 @@ import { isPlatformBrowser } from '@angular/common';
   selector: 'm-productPage__base',
   templateUrl: 'base.component.html',
   styleUrls: ['base.component.ng.scss'],
+  standalone: false,
 })
 export class ProductPageBaseComponent implements OnInit, OnDestroy {
   @Input() slugOverride: string;

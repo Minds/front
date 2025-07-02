@@ -23,6 +23,7 @@ import { Client } from '../../../../../../services/api';
 @Component({
   selector: 'm-walletCashOnboarding',
   templateUrl: './cash-onboarding.component.html',
+  standalone: false,
 })
 export class WalletCashOnboardingComponent implements OnInit {
   @Input() allowedCountries: string[];

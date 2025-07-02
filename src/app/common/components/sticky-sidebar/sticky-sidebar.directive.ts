@@ -15,6 +15,7 @@ const TOPBAR_HEIGHT_PX = 75;
 
 @Directive({
   selector: '[m-stickySidebar]',
+  standalone: false,
 })
 export class StickySidebarDirective implements OnInit, AfterViewInit {
   @HostBinding('style.position')

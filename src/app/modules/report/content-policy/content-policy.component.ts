@@ -17,6 +17,7 @@ import { ReportService } from '../../../common/services/report.service';
     './content-policy.component.ng.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ReportsContentPolicyComponent {
   user;

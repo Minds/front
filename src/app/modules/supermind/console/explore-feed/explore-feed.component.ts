@@ -19,6 +19,7 @@ import { SupermindState } from '../../supermind.types';
   styleUrls: ['explore-feed.component.ng.scss'],
   templateUrl: './explore-feed.component.html',
   providers: [FeedsService],
+  standalone: false,
 })
 export class SupermindConsoleExploreFeedComponent implements OnInit, OnDestroy {
   /** Whether pending supermind notice should be shown. */

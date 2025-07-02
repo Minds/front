@@ -14,6 +14,7 @@ import { Component, Input } from '@angular/core';
       [errorCorrectionLevel]="'M'"
     ></qrcode>
   `,
+  standalone: false,
 })
 export class QRCodeComponent {
   @Input() data: string = '';

@@ -4,7 +4,13 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { APP_ID, APP_INITIALIZER, NgModule, PLATFORM_ID } from '@angular/core';
+import {
+  APP_ID,
+  NgModule,
+  PLATFORM_ID,
+  inject,
+  provideAppInitializer,
+} from '@angular/core';
 import { TransferState } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CookieService } from '../../common/services/cookie.service';
@@ -50,12 +56,13 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
         'ORIGIN_URL',
       ],
     },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (configs) => () => configs.loadFromRemote(),
-      deps: [ConfigsService],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const initializerFn = (
+        (configs) => () =>
+          configs.loadFromRemote()
+      )(inject(ConfigsService));
+      return initializerFn();
+    }),
     { provide: APP_BASE_HREF, useValue: '/' },
     ModalService,
     RelatedContentService,

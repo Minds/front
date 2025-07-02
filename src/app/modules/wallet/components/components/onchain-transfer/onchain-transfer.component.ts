@@ -36,6 +36,7 @@ import { EmailConfirmationService } from '../../../../../common/components/email
   templateUrl: './onchain-transfer.component.html',
   styleUrls: ['./onchain-transfer.component.ng.scss'],
   providers: [PhoneVerificationService],
+  standalone: false,
 })
 export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   form;

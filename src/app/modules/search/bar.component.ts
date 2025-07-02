@@ -36,6 +36,7 @@ import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injectio
 @Component({
   selector: 'm-search--bar',
   templateUrl: 'bar.component.html',
+  standalone: false,
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   @Input() showCleanIcon: boolean = false;

@@ -74,6 +74,7 @@ import {
       ]),
     ]),
   ],
+  standalone: false,
 })
 export class ToasterComponent implements OnInit, OnDestroy {
   subscription: Subscription;

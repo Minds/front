@@ -18,6 +18,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'm-walletModal',
   templateUrl: './modal.component.html',
+  standalone: false,
 })
 export class WalletModalComponent implements OnDestroy {
   showModalTimeout: any = null;

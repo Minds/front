@@ -33,6 +33,7 @@ import { PermissionIntentsService } from '../../common/services/permission-inten
   selector: 'm-composer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'composer.component.html',
+  standalone: false,
 })
 export class ComposerComponent implements OnInit, OnDestroy {
   /** Enum for use in template. */

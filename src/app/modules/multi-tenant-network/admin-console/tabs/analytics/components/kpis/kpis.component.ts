@@ -18,6 +18,7 @@ import {
       [metric]="kpi.metric"
     ></m-networkAdminAnalytics__kpiCard>
   `,
+  standalone: false,
 })
 export class NetworkAdminAnalyticsKpisComponent {
   /** KPI data to be displayed. */

@@ -25,6 +25,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
   selector: 'm-settingsV2__deactivateAccount',
   templateUrl: './deactivate-account.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2DeactivateAccountComponent implements OnInit {
   inProgress: boolean = false;

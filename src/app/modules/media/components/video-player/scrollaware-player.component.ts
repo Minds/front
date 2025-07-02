@@ -25,6 +25,7 @@ import { VideoJsExperimentService } from '../../../experiments/sub-services/vide
 @Component({
   selector: 'm-videoPlayer--scrollaware',
   templateUrl: './scrollaware-player.component.html',
+  standalone: false,
 })
 export class ScrollAwareVideoPlayerComponent
   implements OnInit, OnDestroy, AfterViewInit

@@ -26,6 +26,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
   selector: 'm-settingsV2__deleteAccount',
   templateUrl: './delete-account.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2DeleteAccountComponent implements OnInit {
   inProgress: boolean = false;

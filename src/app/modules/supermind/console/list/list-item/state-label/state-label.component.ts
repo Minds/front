@@ -14,6 +14,7 @@ import { SupermindConsoleExpirationService } from '../../../services/supermind-e
   selector: 'm-supermind__stateLabel',
   templateUrl: './state-label.component.html',
   styleUrls: ['./state-label.component.ng.scss'],
+  standalone: false,
 })
 export class SupermindConsoleStateLabelComponent {
   /** @var { Supermind } supermind - Supermind object */

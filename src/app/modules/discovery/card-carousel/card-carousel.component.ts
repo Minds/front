@@ -20,6 +20,7 @@ export type DiscoveryCardCarouselContentType = 'suggestions' | 'search';
   templateUrl: './card-carousel.component.html',
   styleUrls: ['./card-carousel.component.ng.scss'],
   providers: [DiscoveryFeedsService, FeedsService, SuggestionsService],
+  standalone: false,
 })
 export class DiscoveryCardCarouselComponent implements OnInit, OnDestroy {
   cards: Array<any>;

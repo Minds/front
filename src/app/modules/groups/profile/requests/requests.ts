@@ -11,6 +11,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
   selector: 'minds-groups-profile-requests',
   inputs: ['_group : group'],
   templateUrl: 'requests.html',
+  standalone: false,
 })
 export class GroupsProfileRequests {
   readonly cdnUrl: string;

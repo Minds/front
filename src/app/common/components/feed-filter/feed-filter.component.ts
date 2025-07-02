@@ -57,6 +57,7 @@ export interface FeedFilterDateRange {
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'feed-filter.component.html',
   styleUrls: ['feed-filter.component.ng.scss'],
+  standalone: false,
 })
 export class FeedFilterComponent implements OnInit {
   subscriptions: Array<Subscription>;

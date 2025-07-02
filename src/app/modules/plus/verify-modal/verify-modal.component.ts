@@ -21,6 +21,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
   templateUrl: 'verify-modal.component.html',
   styleUrls: ['verify-modal.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class PlusVerifyModalComponent {
   form: UntypedFormGroup;

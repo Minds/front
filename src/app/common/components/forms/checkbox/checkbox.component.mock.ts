@@ -14,6 +14,7 @@ import { DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     },
   ],
   template: '',
+  standalone: false,
 })
 export class MockFormInputCheckboxComponent extends DefaultValueAccessor {
   @Input() customId: string;

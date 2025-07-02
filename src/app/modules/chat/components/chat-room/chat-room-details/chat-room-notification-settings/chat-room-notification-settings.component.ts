@@ -30,7 +30,6 @@ import { MutationResult } from 'apollo-angular';
   templateUrl: './chat-room-notification-settings.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgCommonModule, CommonModule],
-  standalone: true,
 })
 export class ChatRoomNotificationSettingsComponent implements OnInit {
   /** Enum for use in template. */

@@ -8,7 +8,7 @@ import {
   GetTenantAnalyticsTableGQL,
   GetTenantAnalyticsTableQuery,
 } from '../../../../../../../graphql/generated.engine';
-import * as moment from 'moment';
+import moment from 'moment';
 import { of } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client';
 

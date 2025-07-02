@@ -13,6 +13,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   templateUrl: './plus-upgrade.component.html',
   styleUrls: ['./plus-upgrade.component.ng.scss'],
   providers: [ComposerService],
+  standalone: false,
 })
 export class DiscoveryPlusUpgradeComponent implements OnInit {
   isPlus: boolean = false;

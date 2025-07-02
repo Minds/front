@@ -18,6 +18,7 @@ import { UniqueId } from '../../../../../helpers/unique-id.helper';
   selector: 'm-composer__tags',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'tags.component.html',
+  standalone: false,
 })
 export class TagsComponent {
   /**

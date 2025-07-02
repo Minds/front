@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../../../common/api/client.service';
 import { PaymentsNewCard } from '../../../payments/new-card/new-card.component';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ModalService } from '../../../../services/ux/modal.service';
 
 /**
@@ -11,6 +11,7 @@ import { ModalService } from '../../../../services/ux/modal.service';
 @Component({
   selector: 'm-settingsV2__paymentMethods',
   templateUrl: './payment-methods.component.html',
+  standalone: false,
 })
 export class SettingsV2PaymentMethodsComponent {
   init: boolean = false;

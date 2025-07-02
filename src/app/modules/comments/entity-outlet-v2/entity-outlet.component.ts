@@ -31,6 +31,7 @@ import { PersistentFeedExperimentService } from '../../experiments/sub-services/
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class CommentsEntityOutletV2Component {
   entity;

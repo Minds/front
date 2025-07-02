@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
   selector: 'm-youtubeMigration__config',
   templateUrl: './config.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
   init: boolean = false;

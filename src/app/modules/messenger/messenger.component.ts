@@ -19,6 +19,7 @@ import { MessengerSetupChat } from './setup/setup.component';
 @Component({
   selector: 'm-messenger',
   templateUrl: 'messenger.component.html',
+  standalone: false,
 })
 export class Messenger {
   @ViewChild('userList', { static: true }) userList: MessengerUserlist;

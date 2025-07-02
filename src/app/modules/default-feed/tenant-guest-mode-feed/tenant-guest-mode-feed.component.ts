@@ -26,6 +26,7 @@ const PAGE_SIZE = 12;
   selector: 'm-tenantGuestModeFeed',
   templateUrl: 'tenant-guest-mode-feed.component.html',
   styleUrls: ['./tenant-guest-mode-feed.component.ng.scss'],
+  standalone: false,
 })
 export class TenantGuestModeFeedComponent implements OnInit {
   private isFirstRun = true;

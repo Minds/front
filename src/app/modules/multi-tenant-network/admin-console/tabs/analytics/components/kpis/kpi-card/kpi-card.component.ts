@@ -14,6 +14,7 @@ import { AnalyticsMetricEnum } from '../../../../../../../../../graphql/generate
     }}</span>
     <span class="m-kpiCard__metric">{{ metric | metricNameParser }}</span>
   `,
+  standalone: false,
 })
 export class NetworkAdminAnalyticsKpiCardComponent {
   /** Value to be displayed. */

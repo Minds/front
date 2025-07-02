@@ -27,6 +27,7 @@ import * as _ from 'lodash';
     './users.component.ng.scss',
     '../../../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleRolesUsersComponent
   implements OnInit, OnDestroy

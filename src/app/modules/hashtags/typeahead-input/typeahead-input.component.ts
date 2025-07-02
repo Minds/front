@@ -20,6 +20,7 @@ import { MruService } from '../service/mru.service';
   selector: 'm-hashtags__typeaheadInput',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'typeahead-input.component.html',
+  standalone: false,
 })
 export class TypeaheadInputComponent implements OnInit {
   /**

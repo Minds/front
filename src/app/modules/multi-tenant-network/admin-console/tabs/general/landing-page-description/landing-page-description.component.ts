@@ -32,6 +32,7 @@ import {
   templateUrl: './landing-page-description.component.html',
   styleUrls: ['./landing-page-description.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NetworkAdminConsoleLandingPageDescriptionComponent
   implements OnInit, OnDestroy

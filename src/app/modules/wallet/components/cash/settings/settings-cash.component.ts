@@ -8,6 +8,7 @@ import { CashWalletService } from '../cash.service';
 @Component({
   selector: 'm-walletSettings--cash',
   templateUrl: './settings-cash.component.html',
+  standalone: false,
 })
 export class WalletSettingsCashComponent {
   constructor(protected cashService: CashWalletService) {}

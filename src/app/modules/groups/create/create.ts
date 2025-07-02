@@ -19,6 +19,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 @Component({
   selector: 'minds-groups-create',
   templateUrl: 'create.html',
+  standalone: false,
 })
 export class GroupsCreator {
   banner: File;

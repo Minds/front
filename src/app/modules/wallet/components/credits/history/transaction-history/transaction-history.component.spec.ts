@@ -21,7 +21,7 @@ import {
   MockGiftCardTransaction,
   MockGiftCardTransactionArray,
 } from '../../../../../../mocks/responses/gift-card.mock';
-import * as moment from 'moment';
+import moment from 'moment';
 
 describe('WalletV2CreditsTransactionHistoryComponent', () => {
   let fixture: ComponentFixture<WalletV2CreditsTransactionHistoryComponent>;

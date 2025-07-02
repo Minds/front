@@ -21,6 +21,7 @@ type SupermindReplyConfirmModalConfig = {
   selector: 'm-supermindReplyConfirmationModal',
   templateUrl: 'supermind-reply-confirm-modal.component.html',
   styleUrls: ['./supermind-reply-confirm-modal.component.ng.scss'],
+  standalone: false,
 })
 export class SupermindReplyConfirmModalComponent implements OnInit {
   public isTwitterReplyEnabled: boolean = false;

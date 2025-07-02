@@ -54,6 +54,7 @@ export type GroupMembershipChangeOuput = { isMember: boolean };
   templateUrl: './group-membership-button.component.html',
   styleUrls: ['./group-membership-button.component.ng.scss'],
   providers: [GroupMembershipService],
+  standalone: false,
 })
 export class GroupMembershipButtonComponent implements OnDestroy {
   buttonType: GroupMembershipButtonType = null;

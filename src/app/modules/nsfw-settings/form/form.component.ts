@@ -11,6 +11,7 @@ import { DiscoveryFeedsService } from '../../discovery/feeds/feeds.service';
   selector: 'm-nsfwSettings__form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.ng.scss'],
+  standalone: false,
 })
 export class NsfwSettingsFormComponent implements OnInit, OnDestroy {
   saving$: Observable<boolean> = this.discoveryFeedsService.saving$;

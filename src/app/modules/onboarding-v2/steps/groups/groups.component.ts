@@ -5,6 +5,7 @@ import { OnboardingV2Service } from '../../service/onboarding.service';
 @Component({
   selector: 'm-onboarding__groupsStep',
   templateUrl: 'groups.component.html',
+  standalone: false,
 })
 export class GroupsStepComponent {
   pendingItems: string[];

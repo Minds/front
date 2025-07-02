@@ -12,6 +12,7 @@ import { NetworkAdminConsoleInviteSendComponent } from './tabs/send/send.compone
     './invite.component.ng.scss',
     '../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleInviteComponent implements OnInit {
   /**

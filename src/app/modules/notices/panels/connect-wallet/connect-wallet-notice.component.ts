@@ -10,6 +10,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 @Component({
   selector: 'm-feedNotice--connectWallet',
   templateUrl: 'connect-wallet-notice.component.html',
+  standalone: false,
 })
 export class ConnectWalletNoticeComponent
   extends AbstractSubscriberComponent

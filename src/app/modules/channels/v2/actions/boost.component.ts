@@ -11,6 +11,7 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
   selector: 'm-channelActions__boost',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'boost.component.html',
+  standalone: false,
 })
 export class ChannelActionsBoostComponent implements OnInit {
   /** Whether the user has permission to boost. */

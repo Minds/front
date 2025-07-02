@@ -25,6 +25,7 @@ export type MonthName =
 @Component({
   selector: 'm-date__dropdowns',
   templateUrl: './date-dropdowns.component.html',
+  standalone: false,
 })
 export class DateDropdownsComponent implements OnInit {
   @Input() disabled: boolean = false;

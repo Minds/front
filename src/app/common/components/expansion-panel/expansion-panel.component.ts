@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
   selector: 'm-expansionPanel',
   templateUrl: './expansion-panel.component.html',
   styleUrls: ['./expansion-panel.component.ng.scss'],
+  standalone: false,
 })
 export class ExpansionPanelComponent {
   protected expanded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(

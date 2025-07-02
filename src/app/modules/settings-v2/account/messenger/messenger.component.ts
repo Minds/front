@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
   selector: 'm-settingsV2__messenger',
   templateUrl: './messenger.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2MessengerComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

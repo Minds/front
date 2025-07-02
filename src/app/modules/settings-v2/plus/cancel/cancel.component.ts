@@ -11,7 +11,7 @@ import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { PlusService } from '../../../plus/plus.service';
 
 /**
@@ -22,6 +22,7 @@ import { PlusService } from '../../../plus/plus.service';
   templateUrl: './cancel.component.html',
   styleUrls: ['./cancel.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2PlusCancelComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

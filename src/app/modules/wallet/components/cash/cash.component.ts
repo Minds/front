@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'm-walletV2__cash',
   templateUrl: './cash.component.html',
+  standalone: false,
 })
 export class WalletV2CashComponent implements OnInit, OnDestroy {
   public hasAccount: boolean = false;

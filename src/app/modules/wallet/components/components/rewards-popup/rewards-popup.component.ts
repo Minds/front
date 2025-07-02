@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { WalletV2Service } from '../../wallet-v2.service';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * Popup in token transactions table that displays details of
@@ -20,6 +20,7 @@ import * as moment from 'moment';
   selector: 'm-walletRewardsPopup',
   templateUrl: './rewards-popup.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class WalletRewardsPopupComponent implements OnInit {
   @Input() timestamp;

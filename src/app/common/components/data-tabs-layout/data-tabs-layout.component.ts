@@ -3,6 +3,7 @@ import { Component, Input, HostBinding } from '@angular/core';
 @Component({
   selector: 'm-dataTabsLayout',
   templateUrl: './data-tabs-layout.component.html',
+  standalone: false,
 })
 export class DataTabsLayoutComponent {
   @Input() scrollableHeader: boolean = true;

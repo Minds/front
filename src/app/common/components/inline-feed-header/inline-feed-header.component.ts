@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
   selector: 'm-feedHeader--inline',
   templateUrl: './inline-feed-header.component.html',
   styleUrls: ['./inline-feed-header.component.ng.scss'],
+  standalone: false,
 })
 export class InlineFeedHeaderComponent {
   /** Text to display in the inline feed header. */

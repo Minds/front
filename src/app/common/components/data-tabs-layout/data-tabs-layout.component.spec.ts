@@ -5,6 +5,7 @@ import { DataTabsLayoutComponent } from './data-tabs-layout.component';
 @Component({
   selector: 'm-dataTabsHeader',
   template: '',
+  standalone: false,
 })
 class DataTabsHeaderComponentMock {
   @Input() isScrollable;

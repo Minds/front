@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { ChatDatePipe } from './chat-date-pipe';
-import * as moment from 'moment';
+import moment from 'moment';
 
 describe('ChatDatePipe', () => {
   beforeEach(() => {

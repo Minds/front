@@ -18,7 +18,6 @@ import { ChatMembersListItemComponent } from './chat-members-list-item/chat-memb
   templateUrl: './chat-members-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgCommonModule, CommonModule, ChatMembersListItemComponent],
-  standalone: true,
 })
 export class ChatMembersListComponent {
   /** Chat room members. - should be initialized by calling service init in the parent component. */

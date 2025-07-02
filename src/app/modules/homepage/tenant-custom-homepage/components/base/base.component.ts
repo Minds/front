@@ -23,6 +23,7 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
   selector: 'm-homepage--customTenant',
   templateUrl: 'base.component.html',
   styleUrls: ['base.component.ng.scss'],
+  standalone: false,
 })
 export class TenantCustomHomepageBaseComponent implements OnInit, OnDestroy {
   /** Whether boosting is enabled for the network. */

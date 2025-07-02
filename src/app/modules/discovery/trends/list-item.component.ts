@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'm-discoveryTrends__listItem',
   templateUrl: './list-item.component.html',
+  standalone: false,
 })
 export class DiscoveryTrendsListItemComponent implements OnInit, OnDestroy {
   parentPathSubscription: Subscription;

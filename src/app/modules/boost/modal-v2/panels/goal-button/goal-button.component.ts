@@ -23,6 +23,7 @@ import { BoostModalPanel } from '../../boost-modal-v2.types';
   selector: 'm-boostModalV2__goalButtonSelector',
   templateUrl: './goal-button.component.html',
   styleUrls: ['goal-button.component.ng.scss'],
+  standalone: false,
 })
 export class BoostModalV2GoalButtonSelectorComponent
   implements OnInit, OnDestroy

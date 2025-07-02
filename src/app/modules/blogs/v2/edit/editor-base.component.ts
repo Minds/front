@@ -27,6 +27,7 @@ import { PopupService } from '../../../composer/components/popup/popup.service';
   templateUrl: 'editor-base.component.html',
   styleUrls: ['./editor-base.component.ng.scss'],
   providers: [BlogsEditService, ComposerService, PopupService],
+  standalone: false,
 })
 export class BlogEditorV2Component implements OnInit, OnDestroy {
   readonly cdnUrl: string;

@@ -6,6 +6,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
   selector: 'm-upsellButton',
   templateUrl: './upsell-button.component.html',
   styleUrls: ['./upsell-button.component.ng.scss'],
+  standalone: false,
 })
 export class UpsellButtonComponent {
   readonly upgrades;

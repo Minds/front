@@ -14,6 +14,7 @@ export const DYNAMIC_BOOST_HANDLER_USERNAME = 'mindsboost';
 @Component({
   selector: 'm-walletTransactionsTable',
   templateUrl: './transactions-table.component.html',
+  standalone: false,
 })
 export class WalletTransactionsTableComponent {
   @Input() currency: string;

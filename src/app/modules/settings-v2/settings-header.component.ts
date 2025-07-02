@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'm-settingsV2__header',
   templateUrl: './settings-header.component.html',
+  standalone: false,
 })
 export class SettingsV2HeaderComponent {
   constructor(

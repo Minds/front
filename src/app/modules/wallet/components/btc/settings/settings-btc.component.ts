@@ -26,6 +26,7 @@ import { WalletV2Service } from '../../wallet-v2.service';
   selector: 'm-walletSettings--btc',
   templateUrl: './settings-btc.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class WalletSettingsBTCComponent implements OnInit {
   showForm: boolean = false;

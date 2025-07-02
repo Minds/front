@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './title-overlay.component.html',
   styleUrls: ['./title-overlay.component.ng.scss'],
   animations: [MediumFadeAnimation],
+  standalone: false,
 })
 export class ActivityModalTitleOverlayComponent implements OnInit, OnDestroy {
   fullscreenHovering: boolean = false; // For fullscreen button animation

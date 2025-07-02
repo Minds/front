@@ -15,6 +15,7 @@ import { Observable, Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'upgrade-block.component.html',
   styleUrls: ['upgrade-block.component.ng.scss'],
+  standalone: false,
 })
 export class WireCreatorUpgradeBlockComponent implements OnInit, OnDestroy {
   upgradeTypeSubscription: Subscription;

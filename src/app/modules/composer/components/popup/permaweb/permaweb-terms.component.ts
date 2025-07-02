@@ -9,6 +9,7 @@ import { ComposerService } from '../../../services/composer.service';
   selector: 'm-composer__permawebTerms',
   templateUrl: 'permaweb-terms.component.html',
   styleUrls: ['permaweb-terms.component.ng.scss'],
+  standalone: false,
 })
 export class PermawebTermsComponent {
   /**

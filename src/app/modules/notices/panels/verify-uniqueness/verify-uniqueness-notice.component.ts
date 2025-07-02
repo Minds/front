@@ -16,6 +16,7 @@ import { VerifyUniquenessModalLazyService } from '../../../verify-uniqueness/mod
   selector: 'm-feedNotice--verifyUniqueness',
   templateUrl: 'verify-uniqueness-notice.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class VerifyUniquenessNoticeComponent
   extends AbstractSubscriberComponent

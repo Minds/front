@@ -11,6 +11,7 @@ import { ChannelEditService } from './edit.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'edit.component.html',
   providers: [ChannelEditService],
+  standalone: false,
 })
 export class ChannelEditComponent {
   /**

@@ -14,6 +14,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   selector: 'm-groups--tile',
   templateUrl: 'tile.component.html',
   styleUrls: ['tile.component.ng.scss'],
+  standalone: false,
 })
 export class GroupsTileComponent {
   cdnUrl: string;

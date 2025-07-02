@@ -11,6 +11,7 @@ import { TokenPricesService } from '../currency-value/token-prices.service';
   selector: 'm-wallet__tokenPriceBadge',
   templateUrl: './token-price-badge.component.html',
   styleUrls: ['./token-price-badge.component.ng.scss'],
+  standalone: false,
 })
 export class MindsWalletTokenPriceBadgeComponent {
   readonly cdnAssetsUrl: string;

@@ -10,6 +10,7 @@ import { ConfigsService } from '../../services/configs.service';
   selector: 'm-poweredBy',
   templateUrl: 'powered-by.component.html',
   styleUrls: ['powered-by.component.ng.scss'],
+  standalone: false,
 })
 export class PoweredByComponent {
   @Input() product;

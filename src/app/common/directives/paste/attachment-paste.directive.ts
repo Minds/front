@@ -1,6 +1,9 @@
 import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
 
-@Directive({ selector: '[m-attachment-paste]' })
+@Directive({
+  selector: '[m-attachment-paste]',
+  standalone: false,
+})
 export class AttachmentPasteDirective {
   @Output()
   filePaste: EventEmitter<File> = new EventEmitter<File>();

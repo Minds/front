@@ -18,6 +18,7 @@ import { GenericToggleValue } from '../../../../../../common/components/toggle/t
   templateUrl: './enable-landing-page-toggle.component.html',
   styleUrls: ['./enable-landing-page-toggle.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NetworkAdminConsoleEnableLandingPageToggleComponent
   implements OnInit, OnDestroy

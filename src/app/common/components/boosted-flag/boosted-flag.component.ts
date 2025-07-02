@@ -9,6 +9,7 @@ type BoostFlagSize = 'small' | 'medium';
   selector: 'm-boostedFlag',
   templateUrl: './boosted-flag.component.html',
   styleUrls: ['./boosted-flag.component.ng.scss'],
+  standalone: false,
 })
 export class BoostedFlagComponent {
   // text to display next to flag.

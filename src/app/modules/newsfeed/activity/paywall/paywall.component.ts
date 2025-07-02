@@ -14,6 +14,7 @@ import {
   selector: 'm-activity__paywall',
   templateUrl: './paywall.component.html',
   styleUrls: ['./paywall.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityPaywallComponent {
   @Input() mediaHeight: number | null = null;

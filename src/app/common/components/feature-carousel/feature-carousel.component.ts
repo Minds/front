@@ -35,6 +35,7 @@ export enum CarouselMoveDirection {
   selector: 'm-featureCarousel',
   templateUrl: './feature-carousel.component.html',
   styleUrls: ['feature-carousel.component.ng.scss'],
+  standalone: false,
 })
 export class FeatureCarouselComponent implements OnInit, OnDestroy {
   /** Move direction for carousel. */

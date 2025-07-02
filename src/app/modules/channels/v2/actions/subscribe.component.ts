@@ -13,6 +13,7 @@ import { ActivityService } from '../../../../common/services/activity.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'subscribe.component.html',
   providers: [PostMenuService, ActivityService],
+  standalone: false,
 })
 export class ChannelActionsSubscribeComponent {
   /**

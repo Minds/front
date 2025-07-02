@@ -22,6 +22,7 @@ import {
   selector: 'm-draggableList',
   styleUrls: ['list.component.ng.scss'],
   templateUrl: 'list.component.html',
+  standalone: false,
 })
 export class DraggableListComponent {
   @Input() data: Array<any>;

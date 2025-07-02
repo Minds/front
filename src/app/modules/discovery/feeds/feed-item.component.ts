@@ -5,6 +5,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   selector: 'm-discovery__feedItem',
   templateUrl: './feed-item.component.html',
   styleUrls: ['./feed-item.component.ng.scss'],
+  standalone: false,
 })
 export class DiscoveryFeedItemComponent {
   @Input() entity; // TODO add type

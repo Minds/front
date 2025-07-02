@@ -18,6 +18,7 @@ const REDACTED_SECRET_TEXT = 'redacted';
   selector: 'm-networkAdminConsoleAuth__edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleAuthEditComponent {
   /** Form group for the modal. */

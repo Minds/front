@@ -15,6 +15,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       </option>
     </select>
   `,
+  standalone: false,
 })
 export class CountryInputComponent {
   countries: Array<{ name: string; code: string }> = [

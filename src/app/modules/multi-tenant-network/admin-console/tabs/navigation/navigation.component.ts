@@ -8,6 +8,7 @@ import { MultiTenantNavigationService } from './services/navigation.service';
     './navigation.component.ng.scss',
     '../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleNavigationComponent implements OnInit {
   constructor(protected service: MultiTenantNavigationService) {}

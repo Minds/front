@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'm-networkAdminConsoleNavigation__menu',
   templateUrl: './menu.component.html',
+  standalone: false,
 })
 export class NetworkAdminConsoleNavigationMenuComponent {}

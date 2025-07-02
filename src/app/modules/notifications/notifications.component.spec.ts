@@ -33,6 +33,7 @@ import { FriendlyDateDiffPipe } from '../../common/pipes/friendlydatediff';
 @Component({
   selector: '',
   template: '',
+  standalone: false,
 })
 class BlankComponent {
   @Input() referrer: string;

@@ -12,6 +12,7 @@ type Hashtag = {
 @Component({
   selector: 'm-onboarding__hashtagsStep',
   templateUrl: 'hashtags.component.html',
+  standalone: false,
 })
 export class HashtagsStepComponent implements OnInit {
   hashtags: Array<Hashtag> = [];

@@ -27,6 +27,7 @@ export const TOPBAR_HEIGHT: number = 75;
  */
 @Directive({
   selector: '[m-hotkeyScroll]',
+  standalone: false,
 })
 export class HotkeyScrollDirective implements OnInit {
   // ViewChildren to be used as scrolling anchors.

@@ -15,5 +15,6 @@ import { Component } from '@angular/core';
       >Analytics are up to date as of 8:00 AM (UTC)</span
     >
   `,
+  standalone: false,
 })
 export class NetworkAdminAnalyticsUpdateTimestampComponent {}

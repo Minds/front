@@ -16,6 +16,7 @@ import {
   templateUrl: 'quote.component.html',
   styleUrls: ['quote.component.ng.scss'],
   providers: [ActivityService],
+  standalone: false,
 })
 export class ActivityQuoteComponent {
   @HostBinding('class.m-activity__quote--minimalMode')

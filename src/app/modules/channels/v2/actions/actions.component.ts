@@ -11,6 +11,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'actions.component.html',
   styleUrls: ['actions.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelActionsComponent {
   /**

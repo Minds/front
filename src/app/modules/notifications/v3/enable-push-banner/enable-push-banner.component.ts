@@ -10,6 +10,7 @@ import { PushNotificationService } from '../../../../common/services/push-notifi
   selector: 'm-notifications__enablePushBanner',
   templateUrl: './enable-push-banner.component.html',
   styleUrls: ['./enable-push-banner.component.ng.scss'],
+  standalone: false,
 })
 export class NotificationsEnablePushBannerComponent {
   // true when subscription attempt is in progress.

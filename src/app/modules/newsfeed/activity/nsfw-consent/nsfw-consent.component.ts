@@ -16,6 +16,7 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
   selector: 'm-activity__nsfwConsent',
   templateUrl: 'nsfw-consent.component.html',
   styleUrls: ['nsfw-consent.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityNsfwConsentComponent {
   entity: any;

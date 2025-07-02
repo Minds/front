@@ -43,7 +43,6 @@ type UserRow = {
     ReactiveFormsModule,
     EntityTypeaheadComponent,
   ],
-  standalone: true,
 })
 export class StartChatModalServiceComponent
   extends AbstractSubscriberComponent

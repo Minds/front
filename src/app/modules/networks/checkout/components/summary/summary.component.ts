@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
   selector: 'm-networksCheckout__summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.ng.scss'],
+  standalone: false,
 })
 export class NetworksCheckoutSummaryComponent {
   /** Enum for use in template. */

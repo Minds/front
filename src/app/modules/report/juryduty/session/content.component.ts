@@ -12,6 +12,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
   selector: 'm-juryDutySession__content',
   templateUrl: 'content.component.html',
   styleUrls: ['content.component.scss'],
+  standalone: false,
 })
 export class JuryDutySessionContentComponent {
   @Input() report;

@@ -4,6 +4,7 @@ import { Material as MaterialService } from '../../../../services/ui';
 @Directive({
   selector: '[mdlRadio]',
   inputs: ['mdlRadio', 'checked', 'mdlRadioValue'],
+  standalone: false,
 })
 export class MaterialRadio {
   mdlRadio: any;

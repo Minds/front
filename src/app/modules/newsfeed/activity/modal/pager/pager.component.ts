@@ -16,6 +16,7 @@ import { MediumFadeAnimation } from '../../../../../animations';
   templateUrl: './pager.component.html',
   styleUrls: ['./pager.component.ng.scss'],
   animations: [MediumFadeAnimation],
+  standalone: false,
 })
 export class ActivityModalPagerComponent implements OnInit, OnDestroy {
   currentIndex: number = 0;

@@ -15,7 +15,6 @@ import { CommonModule } from '../../../../common/common.module';
   templateUrl: 'site-membership-card.component.html',
   styleUrls: ['./site-membership-card.component.ng.scss'],
   imports: [NgCommonModule, CommonModule],
-  standalone: true,
 })
 export class SiteMembershipCardComponent {
   /** Enum for use in template. */

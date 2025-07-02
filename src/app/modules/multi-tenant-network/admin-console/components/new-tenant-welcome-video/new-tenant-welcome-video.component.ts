@@ -10,7 +10,6 @@ import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection
  */
 @Component({
   selector: 'm-newTenantWelcomeVideo',
-  standalone: true,
   imports: [CommonModule, VideoModule, PlyrModule],
   template: `
     <plyr

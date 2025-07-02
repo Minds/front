@@ -8,6 +8,7 @@ import { FastFadeAnimation } from '../../../animations';
   selector: 'm-loadingSpinner',
   templateUrl: './loading-spinner.component.html',
   animations: [FastFadeAnimation],
+  standalone: false,
 })
 export class LoadingSpinnerComponent {
   @Input() inProgress = false;

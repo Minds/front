@@ -23,6 +23,7 @@ import { SettingsV2Service } from '../../settings-v2.service';
   selector: 'm-settingsV2__nsfwContent',
   templateUrl: './nsfw-content.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2NsfwContentComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

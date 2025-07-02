@@ -23,6 +23,7 @@ import { Session } from '../../services/session';
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NotificationsToasterComponent implements OnInit {
   notifications: Array<any> = [];

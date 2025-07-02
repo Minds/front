@@ -39,7 +39,6 @@ import { NgxFloatUiContentComponent } from 'ngx-float-ui';
   templateUrl: './chat-room-members-list-item-dropdown.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgCommonModule, CommonModule],
-  standalone: true,
 })
 export class ChatRoomMembersListItemDropdownComponent implements OnInit {
   // Enums for use in template.

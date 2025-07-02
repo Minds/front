@@ -29,7 +29,6 @@ import { AudioPlaybackState } from '../../types/audio-player.types';
   styleUrl: './audio-player.component.ng.scss',
   imports: [AsyncPipe, AudioTimePipe, MatSliderModule, NgCommonModule],
   providers: [AudioPlayerService, AudioPlayerAnalyticsService],
-  standalone: true,
 })
 export class AudioPlayerComponent implements OnInit, OnDestroy {
   /** Enum for use in template. */

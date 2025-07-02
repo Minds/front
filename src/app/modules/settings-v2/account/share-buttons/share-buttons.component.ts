@@ -26,6 +26,7 @@ import { SettingsV2Service } from '../../settings-v2.service';
   selector: 'm-settingsV2__shareButtons',
   templateUrl: './share-buttons.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2ShareButtonsComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

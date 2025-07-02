@@ -17,6 +17,7 @@ import { ModalService } from '../../../services/ux/modal.service';
       <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
     </m-button>
   `,
+  standalone: false,
 })
 export class BoostButton {
   object = {

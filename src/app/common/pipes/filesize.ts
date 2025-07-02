@@ -5,6 +5,7 @@ import { Pipe } from '@angular/core';
  */
 @Pipe({
   name: 'filesize',
+  standalone: false,
 })
 export class FileSizePipe {
   /**

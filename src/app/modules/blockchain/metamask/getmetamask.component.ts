@@ -4,6 +4,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 @Component({
   selector: 'm-get-metamask',
   templateUrl: 'getmetamask.component.html',
+  standalone: false,
 })
 export class GetMetamaskComponent {
   public static ACTION_CREATE = 'create';

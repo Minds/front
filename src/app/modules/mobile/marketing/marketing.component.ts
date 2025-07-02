@@ -16,6 +16,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
     './marketing.component.ng.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class MobileMarketingComponent {
   readonly cdnAssetsUrl: string;

@@ -39,6 +39,7 @@ import { InMemoryCache } from '@apollo/client';
   templateUrl: './accordian.component.html',
   styleUrls: ['./accordian.component.ng.scss'],
   animations: [GrowShrinkFast],
+  standalone: false,
 })
 export class NetworkAdminMonetizationMembershipAccordianComponent {
   /** Enum for use in template. */

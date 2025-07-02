@@ -12,6 +12,7 @@ import { InteractionsModalService } from '../../../interactions-modal/interactio
   styleUrls: ['./mutual-subscriptions.component.ng.scss'],
   animations: [SlowFadeAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ActivityFlagMutualSubscriptionsComponent {
   /**

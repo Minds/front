@@ -9,7 +9,7 @@ import { ToasterService } from '../../../../../../common/services/toaster.servic
 import { MockService } from '../../../../../../utils/mock';
 import { of, take } from 'rxjs';
 import { mockGetAdminAnalyticsChartAndKpisQuery } from '../components/base/base.component.spec';
-import * as moment from 'moment';
+import moment from 'moment';
 
 describe('NetworkAdminAnalyticsKpisService', () => {
   let service: NetworkAdminAnalyticsKpisService;

@@ -10,6 +10,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 @Component({
   selector: 'm-settingsV2__recurringPayments',
   templateUrl: './recurring-payments.component.html',
+  standalone: false,
 })
 export class SettingsV2RecurringPaymentsComponent {
   init: boolean = false;

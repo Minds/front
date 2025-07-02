@@ -25,6 +25,7 @@ export type SingleSiteMembershipModalData = {
   selector: 'm-singleSiteMembershipModal',
   templateUrl: 'single-site-membership-modal.component.html',
   styleUrls: ['./single-site-membership-modal.component.ng.scss'],
+  standalone: false,
 })
 export class SingleSiteMembershipModalComponent implements OnInit, OnDestroy {
   /** Whether component can be considered as initialized. */

@@ -2,7 +2,7 @@
 
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ConfigsService } from './configs.service';
 import { SiteService } from './site.service';
 

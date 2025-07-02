@@ -10,6 +10,7 @@ import { BoostConsoleService } from '../../../../../boost/console-v2/services/co
   template: `
     <m-boostConsole__list [showFilterBar]="false"></m-boostConsole__list>
   `,
+  standalone: false,
 })
 export class NetworkAdminConsoleBoostsComponent implements OnInit {
   constructor(private boostConsoleService: BoostConsoleService) {}

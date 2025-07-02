@@ -17,6 +17,7 @@ const ALL_TIERS: Option = { label: 'All tiers', id: '' };
   templateUrl: 'members-modal.component.html',
   styleUrls: ['members-modal.component.ng.scss'],
   providers: [ChannelShopMembershipsMembersService, SupportTiersService],
+  standalone: false,
 })
 export class ChannelShopMembershipsMembersComponent {
   inProgress$: Observable<boolean> = this.service.inProgress$;

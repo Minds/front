@@ -24,6 +24,7 @@ import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 @Component({
   selector: 'minds-activity',
   template: '',
+  standalone: false,
 })
 class MindsActivityMockComponent {
   @Input() object: any;
@@ -32,6 +33,7 @@ class MindsActivityMockComponent {
 @Component({
   selector: 'm-sort-selector',
   template: '',
+  standalone: false,
 })
 class MindsSortSelectorMockComponent {
   @Input() algorithm: string;

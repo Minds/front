@@ -5,6 +5,7 @@ import { ChannelEditIntentService } from '../../services/edit-intent.service';
   selector: 'm-channel__addLinksTrigger',
   templateUrl: './add-links-trigger.component.html',
   styleUrls: ['./add-links-trigger.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelAddLinksTriggerComponent {
   constructor(protected channelEditIntent: ChannelEditIntentService) {}

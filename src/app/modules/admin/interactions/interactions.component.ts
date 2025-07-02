@@ -6,6 +6,7 @@ import { Client } from '../../../services/api';
   selector: 'm-admin--interactions',
   templateUrl: 'interactions.component.html',
   styleUrls: ['interactions.component.ng.scss'],
+  standalone: false,
 })
 export class AdminInteractions implements OnInit {
   metrics = [

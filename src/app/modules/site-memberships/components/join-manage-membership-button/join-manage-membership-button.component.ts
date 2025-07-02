@@ -30,6 +30,7 @@ import { ApolloQueryResult } from '@apollo/client';
   selector: 'm-joinManageSiteMembershipButton',
   templateUrl: './join-manage-membership-button.component.html',
   styleUrls: ['./join-manage-membership-button.component.ng.scss'],
+  standalone: false,
 })
 export class JoinManageSiteMembershipButtonComponent implements OnInit {
   @Input() membershipGuid: string;

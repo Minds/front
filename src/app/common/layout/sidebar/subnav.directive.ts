@@ -14,6 +14,7 @@ const MIN_FULL_NAV_WIDTH = 1172; // TODO make this a constant
 
 @Directive({
   selector: '[m-sidebarNavigation__subnav]',
+  standalone: false,
 })
 export class SidebarNavigationSubnavDirective {
   parentEl: Element;

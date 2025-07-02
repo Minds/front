@@ -28,6 +28,7 @@ import { ToasterService } from '../../../../../../../common/services/toaster.ser
     './assets.component.ng.scss',
     '../../stylesheets/network-admin-mobile.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleMobileAssetsComponent implements OnDestroy {
   // Enums for use in template.

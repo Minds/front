@@ -36,6 +36,7 @@ export type PublisherCardSize = 'xsmall' | 'small' | 'medium' | 'large';
   selector: 'm-publisherCard',
   templateUrl: './publisher-card.component.html',
   styleUrls: ['./publisher-card.component.ng.scss'],
+  standalone: false,
 })
 export class PublisherCardComponent implements AfterViewInit {
   @Input() publisher: any;

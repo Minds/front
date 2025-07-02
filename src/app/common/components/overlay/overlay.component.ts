@@ -10,6 +10,7 @@ import {
   selector: 'm-overlay',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'overlay.component.html',
+  standalone: false,
 })
 export class OverlayComponent {
   @Output() onClick: EventEmitter<any> = new EventEmitter<any>();

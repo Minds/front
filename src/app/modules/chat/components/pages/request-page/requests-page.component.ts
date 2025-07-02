@@ -18,6 +18,5 @@ import { ChatRequestListComponent } from '../../request-list/request-list.compon
     ChatRequestListComponent,
     ChatPageLayoutComponent,
   ],
-  standalone: true,
 })
 export class ChatRequestsPageComponent {}

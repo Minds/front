@@ -39,6 +39,7 @@ export type ButtonColor =
   selector: 'm-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.ng.scss'],
+  standalone: false,
 })
 export class ButtonComponent implements AfterViewChecked {
   /**

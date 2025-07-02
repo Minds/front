@@ -15,6 +15,7 @@ import { WalletV2Service } from '../../wallet-v2.service';
   selector: 'm-walletTokens__dropdownMenu',
   templateUrl: './dropdown-menu.component.html',
   styleUrls: ['./dropdown-menu.component.ng.scss'],
+  standalone: false,
 })
 export class WalletTokensDropdownMenu {
   address$: Observable<string> = this.walletService.wallet$.pipe(

@@ -13,6 +13,7 @@ import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
   selector: 'm-settings__twoFactorRoot',
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsTwoFactorV2RootComponent extends AbstractSubscriberComponent {
   constructor(

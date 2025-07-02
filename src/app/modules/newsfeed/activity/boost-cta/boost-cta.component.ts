@@ -19,6 +19,7 @@ import { ActivityEntity } from '../activity.service';
   selector: 'm-activity__boostCta',
   templateUrl: './boost-cta.component.html',
   styleUrls: ['./boost-cta.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityBoostCtaComponent {
   public BoostGoalButtonText: typeof BoostGoalButtonText = BoostGoalButtonText;

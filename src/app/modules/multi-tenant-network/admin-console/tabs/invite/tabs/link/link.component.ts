@@ -31,6 +31,7 @@ import { ConfigsService } from '../../../../../../../common/services/configs.ser
     './link.component.ng.scss',
     '../../../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleInviteLinkComponent
   implements OnInit, OnDestroy

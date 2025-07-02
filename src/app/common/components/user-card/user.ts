@@ -14,6 +14,7 @@ import { ConfigsService } from '../../services/configs.service';
   inputs: ['object', 'avatarSize'],
   templateUrl: 'user.html',
   styleUrls: ['user.ng.scss'],
+  standalone: false,
 })
 export class UserCard {
   user: any;

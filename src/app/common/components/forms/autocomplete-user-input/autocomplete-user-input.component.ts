@@ -51,6 +51,7 @@ export const FORM_INPUT_AUTOCOMPLETE_USER_INPUT_VALUE_ACCESSOR: any = {
   styleUrls: ['./autocomplete-user-input.component.ng.scss'],
   // providers: [FORM_INPUT_AUTOCOMPLETE_USER_INPUT_VALUE_ACCESSOR],
   animations: [FastFadeAnimation],
+  standalone: false,
 })
 export class AutocompleteUserInputComponent implements ControlValueAccessor {
   /**

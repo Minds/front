@@ -8,6 +8,7 @@ import { ConnectTwitterModalOpts } from './connect-twitter-modal.types';
   selector: 'm-connectTwitterModal',
   templateUrl: './connect-twitter-modal.component.html',
   styleUrls: ['./connect-twitter-modal.component.ng.scss'],
+  standalone: false,
 })
 export class ConnectTwitterModalComponent implements OnDestroy {
   // context text - provides additional context in mobile widths

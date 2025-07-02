@@ -35,6 +35,7 @@ export type PlayerV2Options = Partial<{
   styleUrls: ['./player-v2.component.ng.scss'],
   animations: PLAYER_ANIMATIONS,
   providers: [VideoPlayerService, Session],
+  standalone: false,
 })
 export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
   /**

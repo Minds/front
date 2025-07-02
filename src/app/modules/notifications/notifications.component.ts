@@ -18,6 +18,7 @@ import { InfiniteScroll } from '../../common/components/infinite-scroll/infinite
 @Component({
   selector: 'minds-notifications',
   templateUrl: 'notifications.component.html',
+  standalone: false,
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
   @Input() visible: boolean = true;

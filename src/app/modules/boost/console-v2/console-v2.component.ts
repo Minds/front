@@ -21,6 +21,7 @@ import { BoostModalV2LazyService } from '../modal-v2/boost-modal-v2-lazy.service
   selector: 'm-boostConsole',
   templateUrl: './console-v2.component.html',
   styleUrls: ['./console-v2.component.ng.scss'],
+  standalone: false,
 })
 export class BoostConsoleV2Component implements OnInit {
   private subscriptions: Array<Subscription> = [];

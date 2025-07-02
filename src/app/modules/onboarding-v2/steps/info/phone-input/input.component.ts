@@ -6,6 +6,7 @@ import { PhoneInputV2Component } from '../../../../../common/components/phone-in
 @Component({
   selector: 'm-onboarding__phoneVerification',
   templateUrl: 'input.component.html',
+  standalone: false,
 })
 export class PhoneVerificationComponent {
   @Input() disabled: boolean = false;

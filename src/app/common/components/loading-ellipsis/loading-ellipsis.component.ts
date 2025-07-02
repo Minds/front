@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
   selector: 'm-loadingEllipsis',
   templateUrl: './loading-ellipsis.component.html',
   styleUrls: ['./loading-ellipsis.component.ng.scss'],
+  standalone: false,
 })
 export class LoadingEllipsisComponent {
   @Input() inProgress: boolean = true;

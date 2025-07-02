@@ -11,6 +11,7 @@ export type MembersViewListType = 'members' | 'moderators';
   selector: 'm-group__members',
   templateUrl: './members.component.html',
   styleUrls: ['./members.component.ng.scss'],
+  standalone: false,
 })
 export class GroupMembersComponent {
   syncMembersList: any = null;

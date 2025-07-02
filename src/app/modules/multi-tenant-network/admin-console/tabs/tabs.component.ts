@@ -13,6 +13,7 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
     './tabs.component.ng.scss',
   ],
   host: { class: 'm-networkAdminConsole__container--noHorizontalPadding' },
+  standalone: false,
 })
 export class NetworkAdminConsoleTabsComponent {
   /** Whether the user is an admin. */

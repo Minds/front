@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'm-settingsV2__subscriptionTiers',
   template: ``,
+  standalone: false,
 })
 export class SettingsV2SubscriptionTiersComponent implements OnInit {
   isSaving = false;

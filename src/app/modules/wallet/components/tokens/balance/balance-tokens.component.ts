@@ -16,7 +16,7 @@ import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { WalletV2Service, Wallet } from '../../wallet-v2.service';
 import { ToasterService } from '../../../../../common/services/toaster.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { PhoneVerificationService } from '../../components/phone-verification/phone-verification.service';
 import { ConnectWalletModalService } from '../../../../blockchain/connect-wallet/connect-wallet-modal.service';
@@ -34,6 +34,7 @@ import { ApiService } from '../../../../../common/api/api.service';
   templateUrl: './balance-tokens.component.html',
   styleUrls: ['./balance-tokens.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   wallet: Wallet;

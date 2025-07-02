@@ -27,6 +27,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['thread.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CommentsService],
+  standalone: false,
 })
 export class CommentsThreadComponent implements OnInit, AfterViewInit {
   @Input() parent;

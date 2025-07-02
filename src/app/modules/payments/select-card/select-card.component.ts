@@ -33,6 +33,7 @@ import { SelectCardService } from './select-card.service';
   templateUrl: 'select-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [SelectCardService],
+  standalone: false,
 })
 export class PaymentsSelectCard {
   minds = (<any>window).Minds;

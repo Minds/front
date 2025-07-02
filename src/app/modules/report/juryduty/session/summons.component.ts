@@ -16,6 +16,7 @@ import { SocketsService } from '../../../../services/sockets';
 @Component({
   selector: 'm-juryDutySession__summons',
   templateUrl: 'summons.component.html',
+  standalone: false,
 })
 export class JuryDutySessionSummonsComponent {
   showModal: boolean = false;

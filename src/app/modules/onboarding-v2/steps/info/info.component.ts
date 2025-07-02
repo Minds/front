@@ -9,7 +9,7 @@ import { Session } from '../../../../services/session';
 import { MindsUser } from '../../../../interfaces/entities';
 import { Client } from '../../../../services/api';
 // import { PhoneVerificationComponent } from './phone-input/input.component';
-import * as moment from 'moment';
+import moment from 'moment';
 import { OnboardingV2Service } from '../../service/onboarding.service';
 import { DateDropdownsComponent } from '../../../../common/components/date-dropdowns/date-dropdowns.component';
 import { Subscription } from 'rxjs';
@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'm-onboarding__infoStep',
   templateUrl: 'info.component.html',
+  standalone: false,
 })
 export class InfoStepComponent implements OnInit, OnDestroy {
   user: MindsUser;

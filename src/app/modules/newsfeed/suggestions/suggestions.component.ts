@@ -18,6 +18,7 @@ import { ActivityEntity } from '../activity/activity.service';
   templateUrl: './suggestions.component.html',
   styleUrls: ['./suggestions.component.ng.scss'],
   providers: [RelatedContentService],
+  standalone: false,
 })
 export class NewsfeedActivitySuggestionsComponent {
   protected _baseEntity: ActivityEntity;

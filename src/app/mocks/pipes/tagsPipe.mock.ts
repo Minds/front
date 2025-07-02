@@ -1,6 +1,9 @@
 import { PipeTransform, Pipe } from '@angular/core';
 
-@Pipe({ name: 'tags' })
+@Pipe({
+  name: 'tags',
+  standalone: false,
+})
 export class TagsPipeMock implements PipeTransform {
   transform(value: any): any {
     return value;

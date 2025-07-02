@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   selector: 'm-settingsV2__affiliates',
   templateUrl: 'affiliates.component.html',
   styleUrls: ['affiliates.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsV2AffiliatesComponent {}

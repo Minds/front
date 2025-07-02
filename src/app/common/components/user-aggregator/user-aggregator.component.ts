@@ -9,6 +9,7 @@ import { MindsUser } from '../../../interfaces/entities';
   selector: 'm-userAggregator',
   templateUrl: './user-aggregator.component.html',
   styleUrls: ['./user-aggregator.component.ng.scss'],
+  standalone: false,
 })
 export class UserAggregatorComponent {
   /**

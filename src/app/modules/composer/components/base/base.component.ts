@@ -55,6 +55,7 @@ import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-in
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'base.component.html',
   providers: [PopupService],
+  standalone: false,
 })
 export class BaseComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges

@@ -9,6 +9,7 @@ import { OnboardingV3PanelService } from '../onboarding-panel.service';
   selector: 'm-onboardingV3__verifyUniqueness',
   templateUrl: './verify-uniqueness.component.html',
   styleUrls: ['./verify-uniqueness.component.ng.scss'],
+  standalone: false,
 })
 export class OnboardingV3VerifyUniquenessComponent {
   constructor(private panel: OnboardingV3PanelService) {}

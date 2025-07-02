@@ -14,6 +14,7 @@ import { debounceTime } from 'rxjs/operators';
 @Component({
   selector: 'm-discovery__feedsList',
   templateUrl: './feeds-list.component.html',
+  standalone: false,
 })
 export class DiscoveryFeedsListComponent implements OnInit, OnDestroy {
   entities$ = this.service.entities$;

@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { NoticeKey } from '../feed-notice.types';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ObjectLocalStorageService } from '../../../common/services/object-local-storage.service';
 
 /**

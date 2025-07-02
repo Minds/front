@@ -29,6 +29,7 @@ import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
   selector: 'm-activity__ownerBlock',
   templateUrl: 'owner-block.component.html',
   styleUrls: ['./owner-block.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];

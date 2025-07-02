@@ -13,6 +13,7 @@ import { NotificationDetails } from '../admin-push-notifications.component';
   selector: 'm-admin__pushNotifications--form',
   styleUrls: ['admin-push-notifications-form.component.ng.scss'],
   templateUrl: './admin-push-notifications-form.component.html',
+  standalone: false,
 })
 export class AdminPushNotificationsFormComponent {
   public pushNotificationsForm: UntypedFormGroup = this.formBuilder.group({

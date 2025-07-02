@@ -11,6 +11,7 @@ import { SiteService } from '../../services/site.service';
   inputs: ['_url: url', '_title: title', '_embed: embed'],
   templateUrl: 'social-icons.html',
   styleUrls: ['./social-icons.ng.scss'],
+  standalone: false,
 })
 export class SocialIcons {
   url: string = '';

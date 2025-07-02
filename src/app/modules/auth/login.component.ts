@@ -32,6 +32,7 @@ import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injectio
 @Component({
   selector: 'm-login',
   templateUrl: 'login.component.html',
+  standalone: false,
 })
 export class LoginComponent implements OnInit, OnDestroy {
   errorMessage: string = '';

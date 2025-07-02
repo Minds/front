@@ -13,6 +13,7 @@ import { SiteMembershipService } from '../../services/site-memberships.service';
   selector: 'm-siteMembershipPage',
   templateUrl: './site-membership-page.component.html',
   styleUrls: ['./site-membership-page.component.ng.scss'],
+  standalone: false,
 })
 export class SiteMembershipPageComponent implements OnInit {
   membership$: Observable<SiteMembership | null>;

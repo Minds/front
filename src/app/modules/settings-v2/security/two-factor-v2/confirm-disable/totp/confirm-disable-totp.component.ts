@@ -35,6 +35,7 @@ import {
     </m-button>
   `,
   styleUrls: ['../confirm-disable.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsTwoFactorDisableTOTPComponent {
   /**

@@ -2,6 +2,7 @@ import { Pipe } from '@angular/core';
 
 @Pipe({
   name: 'domain',
+  standalone: false,
 })
 export class DomainPipe {
   transform(value: string) {

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "dist/server",
     "baseUrl": "./",
-    "types": ["node"]
+    "types": ["node"],
+    "esModuleInterop": true
   },
   "files": ["server.ts", "src/main.server.ts"],
   "include": ["src/**/*.d.ts"],

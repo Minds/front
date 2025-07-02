@@ -9,6 +9,7 @@ import { ConfigsService } from '../../common/services/configs.service';
   selector: 'm-branding',
   templateUrl: 'branding.component.html',
   styleUrls: ['./branding.component.ng.scss'],
+  standalone: false,
 })
 export class BrandingComponent {
   readonly cdnAssetsUrl: string;

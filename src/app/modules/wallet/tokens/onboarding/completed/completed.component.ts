@@ -18,6 +18,7 @@ import { Storage } from '../../../../../services/storage';
   selector: 'm-token--onboarding--completed',
   templateUrl: 'completed.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TokenCompletedOnboardingComponent {
   @Output() next: EventEmitter<void> = new EventEmitter();

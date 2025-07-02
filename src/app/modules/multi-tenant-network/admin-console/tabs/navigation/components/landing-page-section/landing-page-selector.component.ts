@@ -42,6 +42,7 @@ const MOBILE_DEFAULT_LANDING_PAGE_ID: string = 'newsfeed';
     './landing-page-selector.component.ng.scss',
     '../../../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleLandingPageSelectorComponent
   implements OnInit, OnDestroy

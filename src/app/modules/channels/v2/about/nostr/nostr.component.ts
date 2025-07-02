@@ -12,6 +12,7 @@ import { ChannelsV2Service } from './../../channels-v2.service';
   templateUrl: './nostr.component.html',
   styleUrls: ['./nostr.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ChannelNostrComponent {
   constructor(

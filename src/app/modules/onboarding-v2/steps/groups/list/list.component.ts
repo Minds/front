@@ -7,6 +7,7 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
   selector: 'm-onboarding__groupList',
   templateUrl: 'list.component.html',
   providers: [FeedsService],
+  standalone: false,
 })
 export class GroupListComponent implements OnInit {
   readonly cdnUrl: string;

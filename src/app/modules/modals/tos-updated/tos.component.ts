@@ -10,6 +10,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
     'tos.component.ng.scss',
     '../../../common/components/modal/modal.component.ng.scss',
   ],
+  standalone: false,
 })
 export class TOSUpdatedModal {
   user;

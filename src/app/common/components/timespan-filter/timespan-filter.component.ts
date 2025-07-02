@@ -4,6 +4,7 @@ import { Timespan } from '../../../interfaces/dashboard';
 @Component({
   selector: 'm-timespanFilter',
   templateUrl: './timespan-filter.component.html',
+  standalone: false,
 })
 export class TimespanFilterComponent {
   @Input() timespans: Timespan[];

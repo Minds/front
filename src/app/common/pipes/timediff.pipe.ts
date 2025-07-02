@@ -2,6 +2,7 @@ import { Pipe } from '@angular/core';
 
 @Pipe({
   name: 'timediff',
+  standalone: false,
 })
 export class TimediffPipe {
   transform(time: number, displaySeconds: boolean = false) {

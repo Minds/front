@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
-import * as moment from 'moment';
+import moment from 'moment';
 
 export type ContributionMetric = {
   id: string;

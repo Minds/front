@@ -33,6 +33,7 @@ export const BOOST_PLACEHOLDER_TEXT: string =
   selector: 'm-composer__textArea',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'text-area.component.html',
+  standalone: false,
 })
 export class TextAreaComponent implements AfterViewInit, OnDestroy {
   /**

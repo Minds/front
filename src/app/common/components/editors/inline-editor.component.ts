@@ -37,6 +37,7 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
     change: 'propagateChange($event.target.value)',
   },
   providers: [MEDIUM_EDITOR_VALUE_ACCESSOR],
+  standalone: false,
 })
 export class InlineEditorComponent
   implements ControlValueAccessor, OnInit, OnDestroy, OnChanges

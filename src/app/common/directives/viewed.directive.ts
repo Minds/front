@@ -16,6 +16,7 @@ import { ElementVisibilityService } from './../services/element-visibility.servi
 @Directive({
   selector: '[mViewed]',
   providers: [ElementVisibilityService],
+  standalone: false,
 })
 export class ViewedDirective implements AfterViewInit {
   @Output()

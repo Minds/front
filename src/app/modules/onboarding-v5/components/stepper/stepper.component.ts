@@ -11,6 +11,7 @@ import { OnboardingStep } from '../../types/onboarding-v5.types';
   selector: 'm-onboardingV5__stepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['stepper.component.ng.scss'],
+  standalone: false,
 })
 export class OnboardingV5StepperComponent {
   /** Steps. */

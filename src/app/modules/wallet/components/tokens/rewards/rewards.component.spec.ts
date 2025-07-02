@@ -14,7 +14,7 @@ import { MockComponent, MockService } from '../../../../../utils/mock';
 import { WalletTokenRewardsComponent } from './rewards.component';
 import { BehaviorSubject } from 'rxjs';
 import { Session } from '../../../../../services/session';
-import * as moment from 'moment';
+import moment from 'moment';
 
 describe('WalletTokenRewardsComponent', () => {
   let comp: WalletTokenRewardsComponent;

@@ -24,6 +24,7 @@ import { PermissionsEnum } from '../../../../../graphql/generated.engine';
   templateUrl: 'content.component.html',
   providers: [ChannelContentService],
   host: { '[class.m-channelContent--nsfw]': 'channelIsNsfw' },
+  standalone: false,
 })
 export class ChannelContentComponent implements OnInit, OnDestroy {
   /**

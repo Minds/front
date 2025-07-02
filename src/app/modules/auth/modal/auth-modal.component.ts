@@ -31,6 +31,7 @@ export type AuthModalData = {
     '../../../../stylesheets/two-column-layout.ng.scss',
     '../auth.module.ng.scss',
   ],
+  standalone: false,
 })
 export class AuthModalComponent implements OnInit {
   formDisplay: AuthForm = 'register';

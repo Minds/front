@@ -8,5 +8,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'shop.component.html',
   styleUrls: ['shop.component.ng.scss'],
+  standalone: false,
 })
 export class ChannelShopComponent {}

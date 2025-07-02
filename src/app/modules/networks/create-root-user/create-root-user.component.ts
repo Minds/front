@@ -23,6 +23,7 @@ import { NetworksCreateRootUserService } from './create-root-user.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './create-root-user.component.html',
   styleUrls: ['./create-root-user.component.ng.scss'],
+  standalone: false,
 })
 export class NetworksCreateRootUserComponent implements OnInit, OnDestroy {
   /**

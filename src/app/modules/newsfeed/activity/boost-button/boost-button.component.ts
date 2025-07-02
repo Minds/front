@@ -9,6 +9,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   templateUrl: 'boost-button.html',
   styleUrls: ['./boost-button.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ActivityBoostButtonComponent {
   @Input() iconOnly = true;

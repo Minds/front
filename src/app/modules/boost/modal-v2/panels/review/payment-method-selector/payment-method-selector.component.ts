@@ -56,6 +56,7 @@ import { GiftCardProductIdEnum } from '../../../../../../../graphql/generated.en
     ></m-payments__selectCard>
   `,
   styleUrls: ['./payment-method-selector.component.ng.scss'],
+  standalone: false,
 })
 export class BoostModalV2PaymentMethodSelectorComponent
   implements OnInit, OnDestroy

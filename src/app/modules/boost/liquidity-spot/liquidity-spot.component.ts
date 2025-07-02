@@ -9,6 +9,7 @@ import { LiquiditySpotService } from './liquidity-spot.service';
   templateUrl: './liquidity-spot.component.html',
   styleUrls: ['./liquidity-spot.component.ng.scss'],
   providers: [LiquiditySpotService],
+  standalone: false,
 })
 export class LiquiditySpotComponent implements OnInit {
   entity$: Subject<MindsUser> = this.service.entity$;

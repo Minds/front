@@ -18,6 +18,7 @@ import { isPlatformBrowser } from '@angular/common';
   templateUrl: 'new-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./new-card.component.ng.scss'],
+  standalone: false,
 })
 export class PaymentsNewCard {
   @Output() completed: EventEmitter<void> = new EventEmitter();

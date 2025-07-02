@@ -17,6 +17,7 @@ import { AuthModalService } from '../auth/modal/auth-modal.service';
   selector: 'm-homepageContainer',
   templateUrl: 'homepage-container.component.html',
   styleUrls: ['homepage-container.component.ng.scss'],
+  standalone: false,
 })
 export class HomepageContainerComponent implements OnInit {
   /** Whether the custom tenant homepage variant should be shown. */

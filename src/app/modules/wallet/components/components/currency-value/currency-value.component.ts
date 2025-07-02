@@ -12,6 +12,7 @@ type Currency = 'tokens' | 'eth' | 'usd';
   selector: 'm-wallet__currencyValue',
   templateUrl: './currency-value.component.html',
   styleUrls: ['./currency-value.component.ng.scss'],
+  standalone: false,
 })
 export class WalletCurrencyValueComponent {
   /** The value in cent (base 2) */

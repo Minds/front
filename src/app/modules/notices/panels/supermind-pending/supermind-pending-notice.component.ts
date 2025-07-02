@@ -5,6 +5,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 @Component({
   selector: 'm-feedNotice--supermindPending',
   templateUrl: 'supermind-pending-notice.component.html',
+  standalone: false,
 })
 export class SupermindPendingNoticeComponent {
   @Input() public dismissible: boolean = false;

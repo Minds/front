@@ -26,6 +26,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   selector: 'm-searchBar__suggestions',
   templateUrl: 'suggestions.component.html',
   styleUrls: ['suggestions.component.ng.scss'],
+  standalone: false,
 })
 export class SearchBarSuggestionsComponent implements OnInit {
   @Output() mousedownEvent: EventEmitter<any> = new EventEmitter();

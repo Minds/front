@@ -18,6 +18,7 @@ import { PresentableValuePropCard } from '../../value-prop.types';
       [showBorderTop]="showBorderTop"
     ></m-valueProp__card>
   `,
+  standalone: false,
 })
 export class ValuePropCardOutletComponent implements OnInit, OnDestroy {
   /** Whether top border should be present on the card. */

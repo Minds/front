@@ -6,6 +6,7 @@ import { RoleId } from '../../tabs/roles/roles.types';
   selector: 'm-networkAdminConsoleRole__icon',
   templateUrl: './role-icon.component.html',
   styleUrls: ['./role-icon.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleRoleIconComponent {
   @Input() roleId: RoleId;

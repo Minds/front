@@ -13,7 +13,7 @@ import { DialogService } from '../../../../common/services/confirm-leave-dialog.
 import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * Settings form cancelling Pro subscription
@@ -24,6 +24,7 @@ import * as moment from 'moment';
   templateUrl: './cancel.component.html',
   styleUrls: ['./cancel.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SettingsV2ProCancelComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();

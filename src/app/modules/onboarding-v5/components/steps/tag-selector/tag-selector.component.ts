@@ -27,6 +27,7 @@ import { OnboardingStepContentInterface } from '../step-content.interface';
     'tag-selector.component.ng.scss',
     '../../../stylesheets/onboarding-v5-common.ng.scss',
   ],
+  standalone: false,
 })
 export class OnboardingV5TagSelectorContentComponent
   implements OnInit, OnboardingStepContentInterface

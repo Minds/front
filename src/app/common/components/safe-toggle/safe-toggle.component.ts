@@ -14,6 +14,7 @@ import { Client } from '../../../services/api/client';
       </label>
     </div>
   `,
+  standalone: false,
 })
 export class SafeToggleComponent {
   @Input('entity') entity: any;

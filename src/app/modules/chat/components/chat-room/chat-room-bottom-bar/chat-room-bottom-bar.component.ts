@@ -58,7 +58,6 @@ export const OPTIMISTIC_MESSAGE_FIELD_PLACEHOLDER: string = 'optimistic';
     ReactiveFormsModule,
     EmojiPickerModule,
   ],
-  standalone: true,
 })
 export class ChatRoomBottomBarComponent implements OnInit {
   /** Form group containing the text area. */

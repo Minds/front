@@ -27,6 +27,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
   selector: 'm-supermind__list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.ng.scss'],
+  standalone: false,
 })
 export class SupermindConsoleListComponent
   extends AbstractSubscriberComponent

@@ -14,6 +14,7 @@ import { MindsGroup } from '../group.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'header.component.html',
   styleUrls: ['header.component.ng.scss'],
+  standalone: false,
 })
 export class GroupHeaderComponent {
   /**

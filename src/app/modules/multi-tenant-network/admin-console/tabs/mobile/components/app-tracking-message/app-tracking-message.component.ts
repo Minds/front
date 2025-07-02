@@ -21,6 +21,7 @@ import { ToasterService } from '../../../../../../../common/services/toaster.ser
   templateUrl: './app-tracking-message.component.html',
   styleUrls: ['./app-tracking-message.component.ng.scss'],
   animations: [GrowShrinkFast],
+  standalone: false,
 })
 export class NetworkAdminConsoleMobileAppTrackingMessageComponent
   implements OnInit

@@ -25,5 +25,6 @@ import { Component } from '@angular/core';
       </ng-container></m-notice
     >
   `,
+  standalone: false,
 })
 export class DiscoveryEmptyGuestFeedNoticeComponent {}

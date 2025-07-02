@@ -34,6 +34,7 @@ import {
   templateUrl: './invite.component.html',
   styleUrls: ['./invite.component.ng.scss'],
   providers: [GroupInviteService],
+  standalone: false,
 })
 export class GroupInviteComponent implements OnInit, OnDestroy {
   /** Enum for use in template. */

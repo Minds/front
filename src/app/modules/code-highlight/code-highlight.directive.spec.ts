@@ -15,6 +15,7 @@ import { codeHighlightServiceMock } from '../../mocks/modules/code-highlight/cod
       <pre><div class="no-highlight">Should not highlight this</div></pre>
     </div>
   `,
+  standalone: false,
 })
 class MockComponent {}
 

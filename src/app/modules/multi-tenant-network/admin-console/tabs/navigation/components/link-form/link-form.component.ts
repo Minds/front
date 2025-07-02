@@ -32,6 +32,7 @@ export enum NavigationLinkFormView {
     './link-form.component.ng.scss',
     '../../../../stylesheets/console.component.ng.scss',
   ],
+  standalone: false,
 })
 export class NetworkAdminConsoleNavigationLinkFormComponent
   implements OnInit, OnDestroy

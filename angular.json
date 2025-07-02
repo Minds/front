@@ -67,14 +67,14 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/browser",
+            "outputPath": "dist",
             "index": "src/index.html",
             "baseHref": "/static/",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["src/polyfills.ts"],
             "localize": ["en"],
             "assets": [
               "src/assets",
@@ -93,28 +93,22 @@
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
               "node_modules/marked/marked.min.js"
             ],
+            "server": "src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "server.ts"
+            },
             "stylePreprocessorOptions": {
               "includePaths": ["src/stylesheets"]
             },
-            "vendorChunk": true,
+            "externalDependencies": [],
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
             "namedChunks": true,
             "progress": true,
-            "allowedCommonJsDependencies": [
-              "stream",
-              "os",
-              "http",
-              "https",
-              "crypto",
-              "util",
-              "assert"
-            ],
             "preserveSymlinks": true,
-            "serviceWorker": true,
-            "ngswConfigPath": "ngsw-config.json"
+            "serviceWorker": "ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -135,7 +129,6 @@
               "namedChunks": false,
               "localize": true,
               "extractLicenses": true,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

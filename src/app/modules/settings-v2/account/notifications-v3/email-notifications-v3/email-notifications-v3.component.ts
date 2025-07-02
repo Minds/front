@@ -17,6 +17,7 @@ import { IsTenantService } from '../../../../../common/services/is-tenant.servic
   selector: 'm-settingsV2__emailNotifications--v3',
   templateUrl: './email-notifications-v3.component.html',
   styleUrls: ['../notifications-settings-v3.ng.scss'],
+  standalone: false,
 })
 export class SettingsV2EmailNotificationsV3Component
   extends AbstractSubscriberComponent

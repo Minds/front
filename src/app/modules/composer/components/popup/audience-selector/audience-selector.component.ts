@@ -36,6 +36,7 @@ import {
   templateUrl: 'audience-selector.component.html',
   styleUrls: ['./audience-selector.component.ng.scss'],
   providers: [SupportTiersService, ComposerMonetizeV2Service],
+  standalone: false,
 })
 export class ComposerAudienceSelectorPanelComponent
   implements OnInit, OnDestroy

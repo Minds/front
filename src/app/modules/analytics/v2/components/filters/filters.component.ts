@@ -13,6 +13,7 @@ import { Filter } from '../../../../../interfaces/dashboard';
   selector: 'm-analytics__filters',
   templateUrl: './filters.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
   filterSubscription: Subscription;

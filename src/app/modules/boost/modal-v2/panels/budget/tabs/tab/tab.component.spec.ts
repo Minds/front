@@ -29,6 +29,7 @@ import { BoostModalV2BudgetTabComponent } from './tab.component';
       multi: true,
     },
   ],
+  standalone: false,
 })
 class FormInputSliderV2MockComponent implements ControlValueAccessor {
   // max value selectable with slider.

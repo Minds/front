@@ -1,6 +1,6 @@
 import { Pipe } from '@angular/core';
 import { AnalyticsMetricEnum } from '../../../../../../../graphql/generated.engine';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * Pipe for parsing metric values into human readable strings.

@@ -11,6 +11,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 @Component({
   selector: 'm-feedNotice--enablePushNotifications',
   templateUrl: 'enable-push-notifications-notice.component.html',
+  standalone: false,
 })
 export class EnablePushNotificationsNoticeComponent extends AbstractSubscriberComponent {
   @Input() public dismissible: boolean = true;

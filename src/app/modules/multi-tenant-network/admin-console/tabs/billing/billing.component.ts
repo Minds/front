@@ -51,7 +51,6 @@ import { ThemeService } from '../../../../../common/services/theme.service';
     LowerCasePipe,
     DatePipe,
   ],
-  standalone: true,
 })
 export class NetworkAdminConsoleBillingComponent implements OnInit, OnDestroy {
   /** Holds the data that will populate the product cards (mocked cms data) */

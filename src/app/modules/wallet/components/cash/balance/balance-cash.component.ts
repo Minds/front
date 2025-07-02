@@ -15,7 +15,7 @@ import {
   WalletCurrency,
   SplitBalance,
 } from '../../wallet-v2.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { PlusService } from '../../../../plus/plus.service';
 import { CashWalletService } from '../cash.service';
 
@@ -28,6 +28,7 @@ import { CashWalletService } from '../cash.service';
   selector: 'm-walletBalance--cash',
   templateUrl: './balance-cash.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class WalletBalanceCashComponent implements OnInit {
   cashWallet: WalletCurrency;

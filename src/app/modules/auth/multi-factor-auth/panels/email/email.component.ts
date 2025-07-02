@@ -14,6 +14,7 @@ import { AbstractMFAFormComponent } from '../abstract/abstract-mfa-form.componen
   selector: 'm-multiFactorAuth__email',
   templateUrl: './email.component.html',
   styleUrls: ['../mfa-panel.component.ng.scss'],
+  standalone: false,
 })
 export class MultiFactorAuthEmailComponent extends AbstractMFAFormComponent {
   /**

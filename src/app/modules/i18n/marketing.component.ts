@@ -8,5 +8,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     'marketing.component.ng.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class I18nMarketingComponent {}

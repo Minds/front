@@ -23,6 +23,7 @@ import { SITE_NAME } from '../../../../../common/injection-tokens/common-injecti
   selector: 'm-resetPasswordModal__form--request',
   templateUrl: './request.component.html',
   styleUrls: ['../../reset-password-modal.component.ng.scss'],
+  standalone: false,
 })
 export class ResetPasswordModalRequestFormComponent
   implements OnInit, OnDestroy

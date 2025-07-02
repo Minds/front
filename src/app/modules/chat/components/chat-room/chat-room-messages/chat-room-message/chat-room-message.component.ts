@@ -44,7 +44,6 @@ import { MarkdownModule } from 'ngx-markdown';
     ChatRoomMessageRichEmbedComponent,
     MarkdownModule,
   ],
-  standalone: true,
 })
 export class ChatRoomMessageComponent {
   /** Whether the message is from the currently logged in user. */

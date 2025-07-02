@@ -16,7 +16,7 @@ import { BehaviorSubject, Observable, Subscription, map, take } from 'rxjs';
 import { QueryRef } from 'apollo-angular';
 import { ApolloQueryResult } from '@apollo/client';
 import { GiftCardService } from '../../../../../gift-card/gift-card.service';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * Gift card transaction history component. Will load the transactions
@@ -26,6 +26,7 @@ import * as moment from 'moment';
   selector: 'm-walletV2__transactionHistorySummary',
   templateUrl: './transaction-history.component.html',
   styleUrls: ['./transaction-history.component.ng.scss'],
+  standalone: false,
 })
 export class WalletV2CreditsTransactionHistoryComponent
   implements OnInit, OnDestroy

@@ -9,6 +9,7 @@ import { ReadMoreButtonComponent } from './button.component';
 
 @Directive({
   selector: '[m-read-more]',
+  standalone: false,
 })
 export class ReadMoreDirective {
   _element: any;

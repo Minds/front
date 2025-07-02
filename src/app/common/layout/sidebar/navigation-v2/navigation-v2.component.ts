@@ -46,6 +46,7 @@ import { PermissionIntentsService } from '../../../services/permission-intents.s
   selector: 'm-sidebar__navigationV2',
   templateUrl: 'navigation-v2.component.html',
   styleUrls: ['./navigation-v2.component.ng.scss'],
+  standalone: false,
 })
 export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   /** Enum for use in template. */

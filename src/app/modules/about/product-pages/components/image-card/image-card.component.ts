@@ -21,6 +21,7 @@ import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection
     'image-card.component.ng.scss',
     '../../stylesheets/product.pages.ng.scss',
   ],
+  standalone: false,
 })
 export class ProductPageImageCardComponent {
   constructor(@Inject(STRAPI_URL) public strapiUrl: string) {}

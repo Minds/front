@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
   selector: 'm-discovery__buildYourAlgorithm',
   templateUrl: './build-your-algorithm.component.html',
   styleUrls: ['./build-your-algorithm.component.ng.scss'],
+  standalone: false,
 })
 export class DiscoveryBuildYourAlgorithmComponent {
   // true if section is expanded.

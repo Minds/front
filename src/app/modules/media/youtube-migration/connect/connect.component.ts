@@ -22,6 +22,7 @@ import { Element, Node } from '@angular/compiler';
   templateUrl: './connect.component.html',
   styleUrls: ['connect.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class YoutubeMigrationConnectComponent {
   form: UntypedFormGroup;

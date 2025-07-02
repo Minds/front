@@ -22,6 +22,7 @@ export const PHONE_INPUT_VALUE_ACCESSOR: any = {
   selector: 'm-phone-input',
   templateUrl: 'phone-input.component.html',
   providers: [PHONE_INPUT_VALUE_ACCESSOR],
+  standalone: false,
 })
 export class PhoneInputComponent
   implements ControlValueAccessor, OnInit, OnChanges

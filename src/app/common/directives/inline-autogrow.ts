@@ -9,6 +9,7 @@ import {
 
 @Directive({
   selector: '[inlineAutoGrow]',
+  standalone: false,
 })
 export class InlineAutoGrow {
   _element: HTMLInputElement;

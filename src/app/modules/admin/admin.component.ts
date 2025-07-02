@@ -25,6 +25,7 @@ export type Filter =
   selector: 'minds-admin',
   templateUrl: 'admin.component.html',
   providers: [ActivityService],
+  standalone: false,
 })
 export class AdminComponent {
   filter: Filter = '';

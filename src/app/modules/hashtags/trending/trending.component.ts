@@ -17,6 +17,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   selector: 'm-hashtags__trending',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'trending.component.html',
+  standalone: false,
 })
 export class TrendingComponent {
   @Input() decoration: boolean = true;

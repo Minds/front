@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Supermind } from '../../supermind.types';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * Service handling the getting of time till a Superminds expiration as a user

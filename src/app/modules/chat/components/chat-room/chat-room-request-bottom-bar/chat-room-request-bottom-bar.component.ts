@@ -36,7 +36,6 @@ import { ChatRequestsListService } from '../../../services/chat-requests-list.se
     ReactiveFormsModule,
     EmojiPickerModule,
   ],
-  standalone: true,
 })
 export class ChatRoomRequestBottomBarComponent {
   /** The GUID of the room. */

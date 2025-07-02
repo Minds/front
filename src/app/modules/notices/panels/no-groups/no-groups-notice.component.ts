@@ -8,6 +8,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   selector: 'm-feedNotice--noGroups',
   templateUrl: './no-groups-notice.component.html',
   styleUrls: ['./no-groups-notice.component.ng.scss'],
+  standalone: false,
 })
 export class NoGroupsNoticeComponent {
   @Input() public dismissible: boolean = false;

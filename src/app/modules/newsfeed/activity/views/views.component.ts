@@ -13,6 +13,7 @@ import { Session } from '../../../../services/session';
   selector: 'm-activity__views',
   templateUrl: './views.component.html',
   styleUrls: ['./views.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityViewsComponent implements OnInit {
   private entitySubscription: Subscription;

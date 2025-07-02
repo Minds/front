@@ -39,6 +39,7 @@ import { PermissionsEnum } from '../../../../../graphql/generated.engine';
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.ng.scss'],
   providers: [FeedService, FeedsService, ComposerService],
+  standalone: false,
 })
 export class ChannelFeedComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];

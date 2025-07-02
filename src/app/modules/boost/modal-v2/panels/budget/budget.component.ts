@@ -15,6 +15,7 @@ import { IS_TENANT_NETWORK } from '../../../../../common/injection-tokens/tenant
   selector: 'm-boostModalV2__budgetSelector',
   templateUrl: './budget.component.html',
   styleUrls: ['budget.component.ng.scss'],
+  standalone: false,
 })
 export class BoostModalV2BudgetSelectorComponent {
   // enums.

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
       <h2>Android App</h2>
     </a>
   `,
+  standalone: false,
 })
 export class AndroidAppDownloadComponent {
   constructor(private router: Router) {}

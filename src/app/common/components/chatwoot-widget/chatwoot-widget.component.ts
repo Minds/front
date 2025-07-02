@@ -30,6 +30,7 @@ import { WINDOW } from '../../injection-tokens/common-injection-tokens';
   template: ``,
   styleUrls: ['./chatwoot-widget.component.ng.scss'],
   encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class ChatwootWidgetComponent implements OnInit, OnDestroy {
   /** website token for chatwoot */

@@ -7,6 +7,7 @@ import { Pipe } from '@angular/core';
  */
 @Pipe({
   name: 'federation',
+  standalone: false,
 })
 export class FederationPipe {
   transform(federatedUsername: string) {

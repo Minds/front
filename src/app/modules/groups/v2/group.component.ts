@@ -28,6 +28,7 @@ import { DEFAULT_GROUP_VIEW } from './group.types';
   templateUrl: 'group.component.html',
   styleUrls: ['group.component.ng.scss'],
   providers: [GroupService, GroupSeoService],
+  standalone: false,
 })
 export class GroupComponent implements OnInit, OnDestroy {
   protected currentGroup: MindsGroup;

@@ -30,6 +30,7 @@ import truncateString from '../../../helpers/truncate-string';
   styleUrls: ['./notification.component.ng.scss'],
   providers: [NotificationsV3Service, ActivityService],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NotificationsV3NotificationComponent
   implements OnInit, AfterViewInit, OnDestroy

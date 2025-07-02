@@ -19,6 +19,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'm-settingsV2',
   templateUrl: './settings-v2.component.html',
+  standalone: false,
 })
 export class SettingsV2Component implements OnInit {
   init: boolean = false;

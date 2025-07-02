@@ -35,6 +35,7 @@ import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injectio
 @Component({
   selector: 'm-register',
   templateUrl: 'register.component.html',
+  standalone: false,
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string;

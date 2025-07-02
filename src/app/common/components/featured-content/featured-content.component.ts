@@ -25,6 +25,7 @@ import { BoostFeedOpts } from '../../../modules/newsfeed/services/boost-feed.ser
   templateUrl: 'featured-content.component.html',
   styleUrls: ['featured-content.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class FeaturedContentComponent implements OnInit {
   entity: any;

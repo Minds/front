@@ -14,6 +14,7 @@ import getMetaAutoCaption from '../../../../../helpers/meta-auto-caption';
   templateUrl: './multi-image.component.html',
   styleUrls: ['./multi-image.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ActivityMultiImageComponent {
   @Output() onClick: EventEmitter<any> = new EventEmitter();

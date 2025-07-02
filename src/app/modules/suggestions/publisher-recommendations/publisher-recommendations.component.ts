@@ -63,6 +63,7 @@ export type PublisherRecommendationsLocation =
   styleUrls: ['./publisher-recommendations.component.ng.scss'],
   animations: [listAnimation],
   providers: [ParseJson],
+  standalone: false,
 })
 export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   /**

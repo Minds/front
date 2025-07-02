@@ -10,6 +10,7 @@ import { MaterialRadio } from './material/radio/radio';
 @Directive({
   selector: '[mdl]',
   inputs: ['mdl'],
+  standalone: false,
 })
 export class Material {
   mdl: any;

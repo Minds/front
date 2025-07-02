@@ -8,6 +8,7 @@ import { OnboardingV2Service } from '../../service/onboarding.service';
 @Component({
   selector: 'm-onboarding__noticeStep',
   templateUrl: 'notice.component.html',
+  standalone: false,
 })
 export class NoticeStepComponent {
   user: MindsUser;

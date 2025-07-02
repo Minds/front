@@ -11,6 +11,7 @@ import { ModalService } from '../../../services/ux/modal.service';
   selector: 'm-btc__settings',
   templateUrl: 'settings.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class BTCSettingsComponent {
   btcAddress: string = '';

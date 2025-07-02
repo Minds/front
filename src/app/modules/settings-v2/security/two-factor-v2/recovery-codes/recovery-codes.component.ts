@@ -16,6 +16,7 @@ import {
   selector: 'm-twoFactor__recoveryCode',
   templateUrl: './recovery-codes.component.html',
   styleUrls: ['./recovery-codes.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsTwoFactorRecoveryCodeComponent
   extends AbstractSubscriberComponent

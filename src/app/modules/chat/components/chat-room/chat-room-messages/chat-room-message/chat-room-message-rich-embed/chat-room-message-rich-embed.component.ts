@@ -20,7 +20,6 @@ import { ToasterService } from '../../../../../../../common/services/toaster.ser
   host: { '(click)': 'handleRichEmbedClick($event)' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgCommonModule, CommonModule],
-  standalone: true,
 })
 export class ChatRoomMessageRichEmbedComponent {
   /** Thumbnail src. */

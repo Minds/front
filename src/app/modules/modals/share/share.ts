@@ -9,6 +9,7 @@ import { IsTenantService } from '../../../common/services/is-tenant.service';
 @Component({
   selector: 'm-modal-share',
   templateUrl: 'share.html',
+  standalone: false,
 })
 export class ShareModalComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string;

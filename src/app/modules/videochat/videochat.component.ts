@@ -20,6 +20,7 @@ declare const JitsiMeetExternalAPI: any;
 @Component({
   selector: 'm-videochat',
   templateUrl: './videochat.component.html',
+  standalone: false,
 })
 export class VideoChatComponent implements OnInit {
   isActive$;

@@ -9,6 +9,7 @@ import { ComponentCommonActionButton } from '../../../../../../graphql/generated
   selector: 'm-productPage__basicExplainer',
   templateUrl: 'basic-explainer.component.html',
   styleUrls: ['basic-explainer.component.ng.scss'],
+  standalone: false,
 })
 export class ProductPageBasicExplainerComponent {
   /** Title of the component. */

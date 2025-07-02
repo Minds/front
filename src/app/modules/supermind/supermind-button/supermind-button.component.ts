@@ -15,6 +15,7 @@ import { ComposerService } from '../../composer/services/composer.service';
   selector: 'm-supermind__button',
   templateUrl: './supermind-button.component.html',
   styleUrls: ['./supermind-button.component.ng.scss'],
+  standalone: false,
 })
 export class SupermindButtonComponent {
   /**

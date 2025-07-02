@@ -24,6 +24,7 @@ export type ActivityFlagType =
   selector: 'm-activity__flag',
   templateUrl: './flag.component.html',
   styleUrls: ['./flag.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityFlagComponent
   extends AbstractSubscriberComponent

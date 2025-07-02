@@ -5,6 +5,7 @@ import { Component, EventEmitter } from '@angular/core';
   inputs: ['open', 'yesButton', 'noButton', 'closeAfterAction'],
   outputs: ['actioned', 'closed'],
   templateUrl: 'confirm.html',
+  standalone: false,
 })
 export class ConfirmModal {
   open: boolean = false;

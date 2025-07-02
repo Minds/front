@@ -5,6 +5,7 @@ import { DiscoveryTag } from '../../../modules/discovery/tags/tags.service';
   selector: 'm-tagSelector',
   templateUrl: './tag-selector.component.html',
   styleUrls: ['./tag-selector.component.ng.scss'],
+  standalone: false,
 })
 export class TagSelectorComponent {
   public _tags: Array<DiscoveryTag>;

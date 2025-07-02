@@ -4,6 +4,7 @@ import { Material as MaterialService } from '../../../services/ui';
 @Directive({
   selector: '[mdlSwitch]',
   inputs: ['mdlSwitch', 'toggled'],
+  standalone: false,
 })
 export class MaterialSwitch {
   mdlSwitch: any;

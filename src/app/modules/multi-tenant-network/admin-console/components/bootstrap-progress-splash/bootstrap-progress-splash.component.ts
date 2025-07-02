@@ -15,7 +15,6 @@ import { NewTenantWelcomeVideoComponent } from '../new-tenant-welcome-video/new-
   selector: 'm-tenantBootstrapProgressSplash',
   templateUrl: './bootstrap-progress-splash.component.html',
   styleUrls: ['./bootstrap-progress-splash.component.ng.scss'],
-  standalone: true,
   imports: [AsyncPipe, NgIf, CommonModule, NewTenantWelcomeVideoComponent],
 })
 export class MultiTenantBootstrapProgressSplashComponent

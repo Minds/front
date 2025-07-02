@@ -11,7 +11,6 @@ import { PermissionsService } from '../../../services/permissions.service';
  * top of the list of the groups that you've joined
  */
 @Component({
-  standalone: true,
   selector: 'm-findGroupsButtons',
   imports: [CommonModule, NgCommonModule, RouterLink],
   templateUrl: './find-groups-buttons.component.html',

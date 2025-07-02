@@ -44,7 +44,6 @@ const LOADING_BUFFER_BOTTOM_PX: number = 300;
   templateUrl: './chat-room-messages.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgCommonModule, CommonModule, ChatRoomMessageComponent],
-  standalone: true,
 })
 export class ChatRoomMessagesComponent
   extends AbstractSubscriberComponent

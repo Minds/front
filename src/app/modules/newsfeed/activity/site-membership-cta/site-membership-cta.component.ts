@@ -16,6 +16,7 @@ import { map, Observable, Subscription } from 'rxjs';
   selector: 'm-activity__siteMembershipCta',
   templateUrl: './site-membership-cta.component.html',
   styleUrls: ['./site-membership-cta.component.ng.scss'],
+  standalone: false,
 })
 export class ActivitySiteMembershipCtaComponent
   implements OnInit, OnDestroy, AfterViewInit

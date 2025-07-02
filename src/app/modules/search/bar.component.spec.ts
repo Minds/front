@@ -29,6 +29,7 @@ import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injectio
 @Component({
   selector: 'm-searchBar__suggestions',
   template: '',
+  standalone: false,
 })
 class SearchBarSuggestionsMock {
   @Input() q: any;

@@ -22,6 +22,7 @@ import { SupermindConsoleService } from './services/console.service';
   selector: 'm-supermind__console',
   templateUrl: './console.component.html',
   styleUrls: ['./console.component.ng.scss'],
+  standalone: false,
 })
 export class SupermindConsoleComponent implements OnInit, OnDestroy {
   /** @type { Subscription } routeSubscription - subscription to ActivatedRoutes firstChild.url */

@@ -33,6 +33,7 @@ import { Session } from '../../../../services/session';
     </i>
   `,
   providers: [AudioRecordingService],
+  standalone: false,
 })
 export class ComposerRecordButtonComponent {
   /** Whether the user is recording audio. */

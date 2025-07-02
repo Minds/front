@@ -31,6 +31,7 @@ import { MutationResult } from 'apollo-angular';
   `,
   styleUrls: ['./excluded-hashtags-list-item.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NetworkAdminConsoleExcludedHashtagsListItemComponent {
   /** The hashtag edge. */

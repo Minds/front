@@ -68,6 +68,7 @@ import buildCanonicalUrl from '../../newsfeed/activity/utils/build-canonical-url
   templateUrl: 'comment.component.html',
   styleUrls: ['comment.component.ng.scss'],
   providers: [AttachmentService],
+  standalone: false,
 })
 export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   comment: any;

@@ -22,6 +22,7 @@ import { MultiTenantNetworkConfigService } from '../../../modules/multi-tenant-n
   templateUrl: './sidebar-more.component.html',
   styleUrls: ['./sidebar-more.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SidebarMoreComponent implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;

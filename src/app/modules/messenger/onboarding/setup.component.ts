@@ -21,6 +21,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
   selector: 'm-messenger--onboarding--setup',
   templateUrl: 'setup.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class MessengerOnboardingSetupComponent {
   @Input() skippable: boolean = true;

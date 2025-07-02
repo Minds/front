@@ -16,6 +16,7 @@ import { OnboardingStepContentInterface } from '../step-content.interface';
     'channel-recommendations.component.ng.scss',
     '../../../stylesheets/onboarding-v5-common.ng.scss',
   ],
+  standalone: false,
 })
 export class OnboardingV5ChannelRecommendationsContentComponent
   implements OnboardingStepContentInterface

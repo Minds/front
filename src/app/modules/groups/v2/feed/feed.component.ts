@@ -37,6 +37,7 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.ng.scss'],
   providers: [GroupFeedService, FeedsService, ComposerService],
+  standalone: false,
 })
 export class GroupFeedComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];

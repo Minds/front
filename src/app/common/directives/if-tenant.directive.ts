@@ -17,6 +17,7 @@ import { IsTenantService } from '../services/is-tenant.service';
  */
 @Directive({
   selector: '[mIfTenant]',
+  standalone: false,
 })
 export class IfTenantDirective implements OnInit {
   showIfTenant: boolean;

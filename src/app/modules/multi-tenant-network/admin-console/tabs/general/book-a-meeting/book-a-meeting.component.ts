@@ -23,7 +23,6 @@ import { CalDotComOpenButtonComponent } from '../../../components/caldotcom-open
     <m-calDotComOpenButton />
   `,
   styleUrls: ['./book-a-meeting.component.ng.scss'],
-  standalone: true,
   imports: [CalDotComOpenButtonComponent],
 })
 export class NetworkAdminBookAMeetingComponent {}

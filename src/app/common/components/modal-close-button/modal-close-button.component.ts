@@ -7,6 +7,7 @@ export type Color = 'white' | 'grey' | null;
   selector: 'm-modalCloseButton',
   templateUrl: './modal-close-button.component.html',
   styleUrls: ['./modal-close-button.component.ng.scss'],
+  standalone: false,
 })
 export class ModalCloseButtonComponent implements OnInit {
   @Input()

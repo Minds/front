@@ -9,6 +9,7 @@ import { Role } from '../../../../../../graphql/generated.engine';
   selector: 'm-role__chip',
   templateUrl: './role-chip.component.html',
   styleUrls: ['./role-chip.component.ng.scss'],
+  standalone: false,
 })
 export class RoleChipComponent {
   @Input() role: Role;

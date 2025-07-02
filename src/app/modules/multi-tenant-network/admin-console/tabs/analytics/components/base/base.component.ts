@@ -17,6 +17,7 @@ import {
   selector: 'm-networkAdminAnalytics__base',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminAnalyticsBaseComponent implements OnInit {
   /** Filters to be shown. */

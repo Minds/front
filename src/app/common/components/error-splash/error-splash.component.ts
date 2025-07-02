@@ -21,6 +21,7 @@ const DEFAULT_SUBHEADER_TYPE: ErrorSubheaderType = 'WE_HAVE_BEEN_NOTIFIED';
   selector: 'm-errorSplash',
   templateUrl: './error-splash.component.html',
   styleUrls: ['./error-splash.component.ng.scss'],
+  standalone: false,
 })
 export class ErrorSplashComponent {
   /**

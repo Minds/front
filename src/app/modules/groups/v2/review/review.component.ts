@@ -10,6 +10,7 @@ import { GroupMembershipLevel, GroupReviewView } from '../group.types';
   selector: 'm-group__review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.ng.scss'],
+  standalone: false,
 })
 export class GroupReviewComponent {
   // Allows us to use enum in template

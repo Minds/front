@@ -140,7 +140,7 @@ export class AttachmentValidatorService {
       maxLength = this.maxLengthPlus;
     }
 
-    return (video as any).duration <= maxLength ?? false;
+    return (video as any).duration <= (maxLength ?? false);
   }
 
   /**

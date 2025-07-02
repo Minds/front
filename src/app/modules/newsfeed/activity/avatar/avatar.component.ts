@@ -20,6 +20,7 @@ import { ExperimentsService } from '../../../experiments/experiments.service';
   selector: 'm-activity__avatar',
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.ng.scss'],
+  standalone: false,
 })
 export class ActivityAvatarComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];

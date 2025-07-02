@@ -11,6 +11,7 @@ import { Component, Input, OnInit } from '@angular/core';
   selector: 'm-hovercard',
   templateUrl: './hovercard.component.html',
   styleUrls: ['./hovercard.component.ng.scss'],
+  standalone: false,
 })
 export class HovercardComponent {
   @Input() publisher: any;

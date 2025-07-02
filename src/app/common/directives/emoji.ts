@@ -8,6 +8,7 @@ import { AnchorPosition } from '../../services/ux/anchor-position';
   host: {
     '(click)': 'toggle()',
   },
+  standalone: false,
 })
 export class Emoji {
   emoji: EventEmitter<any> = new EventEmitter();

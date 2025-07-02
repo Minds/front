@@ -13,14 +13,14 @@ type MarkedOptionsFactoryConfig = {
  */
 export function markedOptionsFactory(
   config: MarkedOptionsFactoryConfig
-): Function {
+): (...args: any[]) => MarkedOptions {
   return (): MarkedOptions => {
     const renderer = new MarkedRenderer();
     const linkRenderer = renderer.link;
 
     if (config.anchorTargets) {
-      renderer.link = (href, title, text) => {
-        const html = linkRenderer.call(renderer, href, title, text);
+      renderer.link = ({ href, title, tokens }) => {
+        const html = linkRenderer.call(renderer, href, title, tokens);
         return html.replace(/^<a /, `<a target="${config.anchorTargets}"`);
       };
     }

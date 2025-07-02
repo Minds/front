@@ -10,6 +10,7 @@ import { SiteService } from '../../../common/services/site.service';
 @Component({
   selector: 'minds-admin-reports',
   templateUrl: 'reports.html',
+  standalone: false,
 })
 export class AdminReports {
   filter: string = 'reports';

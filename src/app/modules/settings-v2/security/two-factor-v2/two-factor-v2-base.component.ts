@@ -12,6 +12,7 @@ import {
   selector: 'm-settings__twoFactorBase--V2',
   templateUrl: './two-factor-v2-base.component.html',
   styleUrls: ['./two-factor-v2-base.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsTwoFactorV2BaseComponent {
   // on browser back button, reset the service (so that it goes back to the root component fresh)

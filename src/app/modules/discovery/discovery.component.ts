@@ -10,6 +10,7 @@ import { ExperimentsService } from '../experiments/experiments.service';
   selector: 'm-discovery',
   templateUrl: './discovery.component.html',
   styleUrls: ['./discovery.component.ng.scss'],
+  standalone: false,
 })
 export class DiscoveryComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;

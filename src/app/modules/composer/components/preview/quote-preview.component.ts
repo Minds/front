@@ -18,6 +18,7 @@ import { ComposerService } from '../../services/composer.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'quote-preview.component.html',
   styleUrls: ['./quote-preview.component.ng.scss'],
+  standalone: false,
 })
 export class QuotePreviewComponent {
   @ViewChild(DynamicHostDirective, { static: true })

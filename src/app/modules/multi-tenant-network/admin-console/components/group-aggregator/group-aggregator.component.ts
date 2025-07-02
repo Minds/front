@@ -12,6 +12,7 @@ import { MindsGroup } from '../../../../groups/v2/group.model';
   selector: 'm-group__aggregator',
   templateUrl: './group-aggregator.component.html',
   styleUrls: ['./group-aggregator.component.ng.scss'],
+  standalone: false,
 })
 export class GroupAggregatorComponent implements OnInit {
   @Input() groups: any[];

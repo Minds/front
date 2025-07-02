@@ -19,6 +19,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'connections.component.html',
   providers: [FeedsService],
+  standalone: false,
 })
 export class ChannelListConnectionsComponent implements OnDestroy {
   /**

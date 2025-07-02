@@ -61,5 +61,6 @@ import { Component } from '@angular/core';
 
     <!-- SEE COMPONENTS FOR OTHER HEADERS -->
   `,
+  standalone: false,
 })
 export class SettingsV2I18nHack {}

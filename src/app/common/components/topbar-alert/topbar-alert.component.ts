@@ -14,6 +14,7 @@ import { IsTenantService } from '../../services/is-tenant.service';
   selector: 'm-topbarAlert',
   templateUrl: 'topbar-alert.component.html',
   styleUrls: ['./topbar-alert.component.ng.scss'],
+  standalone: false,
 })
 export class TopbarAlertComponent {
   /** Markdown text to display in alert. */

@@ -25,6 +25,7 @@ import { GrowShrinkFast } from '../../../../../../animations';
   templateUrl: './edit-domain-modal.component.html',
   styleUrls: ['./edit-domain-modal.component.ng.scss'],
   animations: [GrowShrinkFast],
+  standalone: false,
 })
 export class NetworkAdminConsoleEditDomainModalComponent {
   /**

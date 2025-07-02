@@ -49,6 +49,7 @@ export interface IFeedItem {
   providers: [FeaturedContentService],
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.ng.scss'],
+  standalone: false,
 })
 export class FeedComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input()

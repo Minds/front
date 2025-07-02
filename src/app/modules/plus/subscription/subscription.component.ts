@@ -22,7 +22,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ModalService } from '../../../services/ux/modal.service';
 
 /**

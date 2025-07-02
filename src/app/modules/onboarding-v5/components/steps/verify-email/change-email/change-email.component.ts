@@ -32,6 +32,7 @@ import { SettingsV2Service } from '../../../../../settings-v2/settings-v2.servic
     'change-email.component.ng.scss',
     '../../../../stylesheets/onboarding-v5-common.ng.scss',
   ],
+  standalone: false,
 })
 export class OnboardingV5ChangeEmailContentComponent
   implements OnInit, AfterViewInit, OnboardingStepContentInterface

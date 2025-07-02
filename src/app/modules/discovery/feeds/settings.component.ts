@@ -14,6 +14,7 @@ const noOp = () => {};
 @Component({
   selector: 'm-discovery__feedSettings',
   templateUrl: './settings.component.html',
+  standalone: false,
 })
 export class DiscoveryFeedsSettingsComponent implements Modal<any> {
   saving$: Observable<boolean> = this.service.saving$;

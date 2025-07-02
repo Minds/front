@@ -11,6 +11,7 @@ import { SettingsV2WalletService } from '../../../../modules/settings-v2/other/w
   selector: 'm-topbar__walletBalance',
   templateUrl: './topbar-wallet-balance.html',
   styleUrls: ['./topbar-wallet-balance.component.ng.scss'],
+  standalone: false,
 })
 export class TopbarWalletBalance {
   wallet: Wallet;

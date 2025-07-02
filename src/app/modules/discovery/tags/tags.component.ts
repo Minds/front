@@ -12,6 +12,7 @@ import { Session } from '../../../services/session';
 @Component({
   selector: 'm-discovery__tags',
   templateUrl: './tags.component.html',
+  standalone: false,
 })
 export class DiscoveryTagsComponent implements OnInit, OnDestroy {
   tags$: Observable<any> = this.service.tags$;

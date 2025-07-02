@@ -15,6 +15,7 @@ import { SettingsV2WalletService } from './wallet.service';
   selector: 'm-settingsV2__wallet',
   templateUrl: 'wallet.component.html',
   styleUrls: ['wallet.component.ng.scss'],
+  standalone: false,
 })
 export class SettingsV2WalletComponent implements OnInit {
   // user form.

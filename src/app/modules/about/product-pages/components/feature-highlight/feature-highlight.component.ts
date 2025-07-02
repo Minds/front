@@ -15,6 +15,7 @@ import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection
   selector: 'm-productPage__featureHighlight',
   templateUrl: 'feature-highlight.component.html',
   styleUrls: ['feature-highlight.component.ng.scss'],
+  standalone: false,
 })
 export class ProductPageFeatureHighlightComponent implements OnInit {
   /** Title to be displayed. */

@@ -14,6 +14,7 @@ import { debounceTime } from 'rxjs/operators';
   inputs: ['_emitter: emitter', 'enabled'],
   outputs: ['previous', 'next'],
   exportAs: 'commentsScroll',
+  standalone: false,
 })
 export class CommentsScrollDirective {
   emitter: EventEmitter<any>;

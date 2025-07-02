@@ -15,6 +15,7 @@ import { Session } from '../../../../../services/session';
   selector: 'm-analytics__layout--chart',
   templateUrl: './layout-chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
   user;

@@ -20,6 +20,7 @@ import { SupportTier, SupportTiersService } from '../../support-tiers.service';
   templateUrl: 'shop.component.html',
   styleUrls: ['shop.component.ng.scss'],
   providers: [ShopService],
+  standalone: false,
 })
 export class WireCreatorShopComponent {
   /**

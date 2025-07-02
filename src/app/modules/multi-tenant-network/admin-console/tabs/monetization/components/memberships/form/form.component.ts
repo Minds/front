@@ -46,6 +46,7 @@ import { SiteMembershipsCountService } from '../../../../../../../site-membershi
   selector: 'm-networkAdminMonetization__membershipForm',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.ng.scss'],
+  standalone: false,
 })
 export class NetworkAdminMonetizationMembershipFormComponent
   implements OnInit, OnInit

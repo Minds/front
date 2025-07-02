@@ -18,6 +18,7 @@ import { AppDownloadModalLazyService } from '../../modals/app-download/app-downl
   providers: [FeedsService],
   templateUrl: 'feed.component.html',
   styleUrls: ['./feed.component.ng.scss'],
+  standalone: false,
 })
 export class DefaultFeedComponent implements OnInit {
   /**

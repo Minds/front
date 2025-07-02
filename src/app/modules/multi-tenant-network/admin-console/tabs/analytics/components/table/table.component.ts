@@ -23,6 +23,7 @@ import { WINDOW } from '../../../../../../../common/injection-tokens/common-inje
   styleUrls: ['./table.component.ng.scss'],
   templateUrl: './table.component.html',
   providers: [NetworkAdminAnalyticsTableService],
+  standalone: false,
 })
 export class NetworkAdminAnalyticsTableComponent implements OnInit, OnDestroy {
   /** Enum for use in template. */

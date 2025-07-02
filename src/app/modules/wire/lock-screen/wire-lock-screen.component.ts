@@ -27,6 +27,7 @@ export type PaywallType = 'plus' | 'tier' | 'custom';
   templateUrl: 'wire-lock-screen.component.html',
   styleUrls: ['wire-lock-screen.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class WireLockScreenComponent implements OnInit {
   @Input() entity: any;

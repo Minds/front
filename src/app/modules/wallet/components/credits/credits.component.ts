@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'm-walletV2__credits',
   templateUrl: './credits.component.html',
+  standalone: false,
 })
 export class WalletV2CreditsComponent {}

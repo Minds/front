@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   selector: 'm-onboardingV3__welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.ng.scss'],
+  standalone: false,
 })
 export class OnboardingV3WelcomeComponent {}

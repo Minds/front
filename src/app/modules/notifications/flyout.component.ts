@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
   selector: 'm-notifications--flyout',
   templateUrl: 'flyout.component.html',
   styleUrls: ['./flyout.component.ng.scss'],
+  standalone: false,
 })
 export class NotificationsFlyoutComponent implements OnDestroy {
   @Input() visible: boolean = false;

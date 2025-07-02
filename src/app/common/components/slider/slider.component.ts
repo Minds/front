@@ -24,6 +24,7 @@ export const FORM_INPUT_SLIDER_VALUE_ACCESSOR: any = {
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.ng.scss'],
   providers: [FORM_INPUT_SLIDER_VALUE_ACCESSOR],
+  standalone: false,
 })
 export class FormInputSliderComponent implements ControlValueAccessor {
   @Input() id: string;

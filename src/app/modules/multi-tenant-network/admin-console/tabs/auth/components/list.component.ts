@@ -16,6 +16,7 @@ import { NetworkAdminConsoleAuthEditComponent } from './edit.component';
   selector: 'm-networkAdminConsoleAuth__list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
+  standalone: false,
 })
 export class NetworkAdminConsoleAuthListComponent implements OnInit {
   private oidcProviderGqlQuery: QueryRef<

@@ -35,6 +35,7 @@ import { groupMock } from '../../../../../../../mocks/responses/group.mock';
     },
   ],
   template: '',
+  standalone: false,
 })
 export class MockAutocompleteEntityInputComponent extends DefaultValueAccessor {
   @Input() entityType: any;

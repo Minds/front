@@ -5,6 +5,7 @@ import { Pipe } from '@angular/core';
  */
 @Pipe({
   name: 'replace',
+  standalone: false,
 })
 export class ReplacePipe {
   /**

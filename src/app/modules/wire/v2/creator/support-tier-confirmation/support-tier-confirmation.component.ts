@@ -30,6 +30,7 @@ import { map, debounceTime } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'support-tier-confirmation.component.html',
   styleUrls: ['support-tier-confirmation.component.ng.scss'],
+  standalone: false,
 })
 export class WireCreatorSupportTierConfirmationComponent {
   /**

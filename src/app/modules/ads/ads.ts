@@ -31,6 +31,7 @@ type BoostFeedAdsParams = {
   selector: 'm-ads-boost',
   templateUrl: 'ads.html',
   styleUrls: ['ads.ng.scss'],
+  standalone: false,
 })
 export class BoostAds implements OnInit {
   @Input() handler: string = 'content';

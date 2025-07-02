@@ -13,6 +13,7 @@ import {
   selector: 'm-contentSettings',
   templateUrl: './content-settings.component.html',
   styleUrls: ['./content-settings.component.ng.scss'],
+  standalone: false,
 })
 export class ContentSettingsComponent implements OnInit, OnDestroy {
   activeTab: ContentSettingsTab;

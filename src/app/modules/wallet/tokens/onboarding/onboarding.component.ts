@@ -18,6 +18,7 @@ import { Storage } from '../../../../services/storage';
   selector: 'm-token--onboarding',
   templateUrl: 'onboarding.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TokenOnboardingComponent {
   @ViewChild(DynamicHostDirective, { static: true }) host;

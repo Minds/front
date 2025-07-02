@@ -28,6 +28,7 @@ import { CodeHighlightService } from './code-highlight.service';
  */
 @Pipe({
   name: 'codeHighlight',
+  standalone: false,
 })
 export class CodeHighlightPipe implements PipeTransform {
   constructor(private codeHighlightService: CodeHighlightService) {}
