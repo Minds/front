@@ -42,6 +42,20 @@ gulp.task('build.sass', (done) => {
       sass({
         includePaths: [join(__dirname, 'src', 'stylesheets')],
         style: 'compressed',
+        quietDeps: true, // Silence deprecation warnings from dependencies
+        verbose: false,
+        logger: {
+          warn: (message, options) => {
+            // Suppress Bootstrap and node_modules warnings by checking file path
+            const url =
+              options.span && options.span.url ? String(options.span.url) : '';
+            if (url.indexOf('node_modules') !== -1) {
+              return; // Ignore node_modules warnings
+            }
+            // Show other warnings
+            console.warn(message);
+          },
+        },
       }).on('error', sass.logError)
     )
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS))

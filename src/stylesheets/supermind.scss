@@ -20,11 +20,16 @@ $supermindGradient: linear-gradient(
   $supermindColor3Hex $supermindColor3Pct
 );
 
+@use 'sass:color';
+
 $supermindLightenedGradient: linear-gradient(
   $supermindGradientRotation,
-  lighten($supermindColor1Hex, $supermindLightenPct) $supermindColor1Pct,
-  lighten($supermindColor2Hex, $supermindLightenPct) $supermindColor2Pct,
-  lighten($supermindColor3Hex, $supermindLightenPct) $supermindColor3Pct
+  color.adjust($supermindColor1Hex, $lightness: $supermindLightenPct)
+    $supermindColor1Pct,
+  color.adjust($supermindColor2Hex, $lightness: $supermindLightenPct)
+    $supermindColor2Pct,
+  color.adjust($supermindColor3Hex, $lightness: $supermindLightenPct)
+    $supermindColor3Pct
 );
 
 /**

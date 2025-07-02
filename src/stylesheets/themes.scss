@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use 'sass:color';
+
 @mixin m-on-theme($theme) {
   body.m-theme__#{$theme} &,
   body .m-theme--wrapper.m-theme--wrapper__#{$theme} & {
@@ -12,8 +15,8 @@
     @include m-on-theme($theme) {
       $theme-map: () !global;
       @each $color-name, $color in $colors {
-        $value: map-get(map-get($themes, $theme), '#{$color-name}');
-        $theme-map: map-merge(
+        $value: map.get(map.get($themes, $theme), '#{$color-name}');
+        $theme-map: map.merge(
           $theme-map,
           (
             $color-name: $value,
@@ -27,7 +30,7 @@
 }
 
 @function themed($color-name) {
-  @return map-get($theme-map, $color-name);
+  @return map.get($theme-map, $color-name);
 }
 
 /**
@@ -38,7 +41,7 @@
  * @returns requested color.
  */
 @function color-by-theme($color-name, $theme-name) {
-  @return map-get($themes, $theme-name, $color-name);
+  @return map.get($themes, $theme-name, $color-name);
 }
 
 // CSS variables can be changes programatically. Note that any colours
@@ -230,7 +233,7 @@ $themes: (
     m-twitter-2023: $twitter-2023,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
-    m-activity--hover: lighten($grey-500, $percent),
+    m-activity--hover: color.adjust($grey-500, $lightness: $percent),
   ),
   dark: (
     m-textColor--primary: $grey-50,
@@ -305,7 +308,7 @@ $themes: (
     m-twitter-2023: $twitter-2023,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
-    m-activity--hover: lighten($grey-400, $percent),
+    m-activity--hover: color.adjust($grey-400, $lightness: $percent),
   ),
 );
 

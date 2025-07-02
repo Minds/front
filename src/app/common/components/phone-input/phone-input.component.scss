@@ -18,11 +18,11 @@ m-phone-input {
 
   .m-phone-input--wrapper {
     display: flex;
+    margin-bottom: $minds-padding;
     @media (min-width: $max-mobile) {
       flex-flow: row wrap;
       justify-content: flex-end;
     }
-    margin-bottom: $minds-padding;
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
     }

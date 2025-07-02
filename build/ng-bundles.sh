@@ -12,7 +12,7 @@ export NODE_OPTIONS="--max_old_space_size=6442"
 npx gulp build.sass --deploy-url="/static/en/"
 
 # Build front
-npm run build minds -- --stats-json --output-path=$BROWSER_PATH --i18n-missing-translation=ignore
+npm run build -- --stats-json --output-path=$BROWSER_PATH --i18n-missing-translation=ignore
 if [ "$?" != "0" ]; then exit 1; fi
 
 # Build embed

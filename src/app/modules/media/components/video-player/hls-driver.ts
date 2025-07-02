@@ -4,7 +4,7 @@ import {
   PlyrDriverDestroyParams,
   PlyrDriverUpdateSourceParams,
 } from 'ngx-plyr-mg';
-import * as Plyr from 'plyr';
+import Plyr from 'plyr';
 import { Subject } from 'rxjs';
 
 export class HlsjsPlyrDriver implements PlyrDriver {

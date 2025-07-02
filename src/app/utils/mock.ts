@@ -24,7 +24,7 @@ export function MockComponent(options: Component, spies: string[] = []) {
     inputs: options.inputs,
     outputs: options.outputs,
     providers: options.providers,
-    standalone: options.standalone,
+    standalone: options.standalone ?? false,
   };
   const component = class _ {};
   if (options.outputs) {
@@ -43,7 +43,7 @@ export function MockDirective(options: Directive, spies: string[] = []) {
     selector: options.selector,
     inputs: options.inputs,
     outputs: options.outputs,
-    standalone: options.standalone,
+    standalone: options.standalone ?? false,
   };
   const directive = class _ {};
   if (options.outputs) {

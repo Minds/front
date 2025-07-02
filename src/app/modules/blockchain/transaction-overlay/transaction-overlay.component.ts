@@ -7,7 +7,7 @@ import {
   HostListener,
   OnInit,
 } from '@angular/core';
-import * as BN from 'bn.js';
+import BN from 'bn.js';
 
 import { TransactionOverlayService } from './transaction-overlay.service';
 import { TokenContractService } from '../contracts/token-contract.service';

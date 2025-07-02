@@ -50,8 +50,10 @@ $z-index: (
   body: 10
 );
 
+@use 'sass:map';
+
 @function z-index($key) {
-  @return map-get($z-index, $key);
+  @return map.get($z-index, $key);
 }
 
 @mixin z-index($key) {

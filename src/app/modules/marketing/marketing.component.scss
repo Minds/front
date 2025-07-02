@@ -141,6 +141,8 @@ m-marketing {
   .m-marketing--hero--slogans,
   .m-marketingHero__slogans {
     flex: 2;
+    z-index: 2;
+
     h1,
     h3,
     h4 {
@@ -176,7 +178,6 @@ m-marketing {
         font-size: 16px;
       }
     }
-    z-index: 2;
   }
 
   .m-marketing--hero--actions,

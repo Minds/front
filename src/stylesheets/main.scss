@@ -1,6 +1,7 @@
+@use 'sass:map';
 @import 'defaults';
 @import 'fonts';
-@import '~@danielmoncada/angular-datetime-picker/assets/style/picker.min.css';
+@import '@danielmoncada/angular-datetime-picker/assets/style/picker.min.css';
 @import '../app/common/layout/layout';
 
 html,
@@ -23,11 +24,11 @@ body .m-theme--wrapper.m-theme--wrapper__dark {
 // 2020 theme overrides
 body.m-theme__light.m-theme__2020,
 body.m-theme__2020 .m-theme--wrapper.m-theme--wrapper__light {
-  background-color: map-get(map-get($themes, 'light'), 'm-bgColor--primary');
+  background-color: map.get(map.get($themes, 'light'), 'm-bgColor--primary');
 }
 body.m-theme__dark.m-theme__2020,
 body.m-theme__2020 .m-theme--wrapper.m-theme--wrapper__dark {
-  background-color: map-get(map-get($themes, 'dark'), 'm-bgColor--primary');
+  background-color: map.get(map.get($themes, 'dark'), 'm-bgColor--primary');
 }
 
 h1,

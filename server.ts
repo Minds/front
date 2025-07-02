@@ -18,11 +18,11 @@ import './server-polyfills';
 import { TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
 import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
 import { AppServerModule } from './src/main.server';
-import * as express from 'express';
-import * as compression from 'compression';
-import * as cookieparser from 'cookie-parser';
+import express from 'express';
+import compression from 'compression';
+import cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
-import * as timeout from 'connect-timeout';
+import timeout from 'connect-timeout';
 import { REQUEST, RESPONSE } from './src/express.tokens';
 
 const browserDistFolder = join(process.cwd(), 'dist', 'browser');

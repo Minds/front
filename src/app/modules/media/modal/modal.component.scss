@@ -1,3 +1,5 @@
+@use 'sass:string';
+
 // TODO confirm whether this can be deleted
 body.m-overlay-modal--shown {
   m-overlay-modal {
@@ -80,12 +82,12 @@ m-overlay-modal {
 
 .m-mediaModal__loadingPanel .mdl-spinner {
   position: absolute;
-  top: unquote('-webkit-calc(50% - 14px)');
-  left: unquote('-webkit-calc(50% - 14px)');
-  top: unquote('-moz-calc(50% - 14px)');
-  left: unquote('-moz-calc(50% - 14px)');
-  top: unquote('calc(50% - 14px)');
-  left: unquote('calc(50% - 14px)');
+  top: string.unquote('-webkit-calc(50% - 14px)');
+  left: string.unquote('-webkit-calc(50% - 14px)');
+  top: string.unquote('-moz-calc(50% - 14px)');
+  left: string.unquote('-moz-calc(50% - 14px)');
+  top: string.unquote('calc(50% - 14px)');
+  left: string.unquote('calc(50% - 14px)');
 }
 
 .m-mediaModal__stageWrapper {
@@ -139,13 +141,14 @@ m-overlay-modal {
   }
 
   .minds-blog-body img {
-    @media screen and (max-width: 891px) {
-      width: 100vw;
-    }
     max-width: initial;
     height: auto;
     width: 80%;
     margin: 0 -100px;
+
+    @media screen and (max-width: 891px) {
+      width: 100vw;
+    }
   }
 
   .m-blog--image--caption {

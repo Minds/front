@@ -94,14 +94,14 @@
               "node_modules/marked/marked.min.js"
             ],
             "server": "src/main.server.ts",
-            "prerender": true,
+            "prerender": false,
             "ssr": {
               "entry": "server.ts"
             },
             "stylePreprocessorOptions": {
               "includePaths": ["src/stylesheets"]
             },
-            "externalDependencies": [],
+            "externalDependencies": ["domino-ext"],
             "extractLicenses": false,
             "sourceMap": true,
             "optimization": false,
@@ -135,6 +135,14 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "ssr": false,
+              "prerender": false
             },
             "hmr": {
               "fileReplacements": [

@@ -8,6 +8,7 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "target": "ES2022",
     "emitDecoratorMetadata": true,
     "typeRoots": ["node_modules/@types"],

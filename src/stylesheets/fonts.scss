@@ -2,10 +2,10 @@
  * NOTE: these are not relative to app path as we need preloading of the icons
  * IE is not supported
  */
-@import '~@fontsource/inter/400.css';
-@import '~@fontsource/inter/500.css';
-@import '~@fontsource/inter/700.css';
-@import '~@fontsource/inter/900.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/900.css';
 
 body {
   font-family: 'Inter', Helvetica, sans-serif;

@@ -5,7 +5,7 @@ import moment from 'moment';
 describe('ChatDatePipe', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ChatDatePipe],
+      imports: [ChatDatePipe],
     });
   });
 
