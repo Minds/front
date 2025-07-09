@@ -5,7 +5,7 @@ import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BlockListService {
   blocked: BehaviorSubject<string[]>;
 
@@ -63,14 +63,5 @@ export class BlockListService {
 
     this.blocked.next(guids);
     this.storage.set('blocked', JSON.stringify(this.blocked.getValue()));
-  }
-
-  static _(
-    client: Client,
-    session: Session,
-    storage: Storage,
-    recent: RecentService
-  ) {
-    return new BlockListService(client, session, storage, recent);
   }
 }

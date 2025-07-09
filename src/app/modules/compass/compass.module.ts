@@ -7,9 +7,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompassService } from './compass.service';
 
 import { CompassQuestionnaireModalComponent } from './questionnaire-modal/questionnaire-modal.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 @NgModule({
-  imports: [NgCommonModule, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ModalCloseButtonComponent,
+  ],
   declarations: [CompassFormComponent, CompassQuestionnaireModalComponent],
   exports: [CompassFormComponent, CompassQuestionnaireModalComponent],
   providers: [CompassService],

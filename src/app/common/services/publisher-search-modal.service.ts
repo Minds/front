@@ -2,7 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { PublisherSearchModalComponent } from '../components/publisher-search-modal/publisher-search-modal.component';
 import { ModalService } from '../../services/ux/modal.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PublisherSearchModalService {
   /**
    * Constructor

@@ -17,7 +17,7 @@ import { VIDEO_PERMISSIONS_ERROR_MESSAGE } from '../common/services/permissions.
 import { PermissionsEnum } from '../../graphql/generated.engine';
 import { PermissionIntentsService } from '../common/services/permission-intents.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AttachmentService {
   readonly maxVideoFileSize: number;
   readonly maxVideoLength: number;

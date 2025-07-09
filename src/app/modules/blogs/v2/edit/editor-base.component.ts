@@ -6,7 +6,6 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { Session } from '../../../../services/session';
-import { InlineEditorComponent } from '../../../../common/components/editors/inline-editor.component';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
@@ -36,9 +35,6 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
   private errorSubscription: Subscription;
 
   wideBannerDate: number = 1620000000;
-
-  @ViewChild('inlineEditor')
-  inlineEditor: InlineEditorComponent;
 
   protected time_created: any;
 

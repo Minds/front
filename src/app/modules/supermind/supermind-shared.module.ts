@@ -4,9 +4,16 @@ import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SupermindButtonComponent } from './supermind-button/supermind-button.component';
 import { SupermindBannerComponent } from './supermind-banner/supermind-banner.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
-  imports: [NgCommonModule, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    NgCommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    IfTenantDirective,
+  ],
   declarations: [SupermindButtonComponent, SupermindBannerComponent],
   exports: [SupermindButtonComponent, SupermindBannerComponent],
 })

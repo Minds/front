@@ -14,6 +14,7 @@ import { BoostModalV2ReviewComponent } from './panels/review/review.component';
 import { BoostModalV2PaymentMethodSelectorComponent } from './panels/review/payment-method-selector/payment-method-selector.component';
 import { BoostModalV2GoalSelectorComponent } from './panels/goal/goal.component';
 import { BoostModalV2GoalButtonSelectorComponent } from './panels/goal-button/goal-button.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 /**
  * Lazy loaded module.
@@ -25,6 +26,7 @@ import { BoostModalV2GoalButtonSelectorComponent } from './panels/goal-button/go
     FormsModule,
     ReactiveFormsModule,
     PaymentsModule,
+    ModalCloseButtonComponent,
   ],
   declarations: [
     BoostModalV2Component,

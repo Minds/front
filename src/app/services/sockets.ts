@@ -11,7 +11,7 @@ import { ConfigsService } from '../common/services/configs.service';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { isPlatformServer } from '@angular/common';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SocketsService {
   public readonly SOCKET_IO_SERVER = '/api/socket.io';
 

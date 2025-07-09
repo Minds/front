@@ -79,6 +79,7 @@ import { SettingsV2UserDataComponent } from './account/user-data/user-data.compo
 import { SettingsV2ApiKeysComponent } from './security/api-keys/api-keys.component';
 import { adminOnlyGuard } from '../../common/guards/admin-only.guard';
 import { QRCodeComponent } from '../../common/components/qr-code/qr-code.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -573,6 +574,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     MessengerModule,
     AffiliatesModule,
     QRCodeComponent,
+    IfTenantDirective,
   ],
   declarations: [
     SettingsV2Component,

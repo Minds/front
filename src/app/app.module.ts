@@ -1,17 +1,6 @@
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  ErrorHandler,
-  NgModule,
-  inject,
-  provideAppInitializer,
-} from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CaptchaModule } from './modules/captcha/captcha.module';
-
-import { Minds } from './app.component';
-
-import { MINDS_PROVIDERS } from './services/providers';
 
 import { CommonModule } from './common/common.module';
 import { I18nModule } from './modules/i18n/i18n.module';
@@ -39,42 +28,24 @@ import { BlockchainMarketingModule } from './modules/blockchain/marketing/market
 import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
-//import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
-import { ConfigsService } from './common/services/configs.service';
-import { AppRoutingModule } from './app-routing.module';
-import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
-import { SharedModule } from './common/shared.module';
 import { AboutModule } from './modules/about/about.module';
 import { CompassModule } from './modules/compass/compass.module';
 import { DevToolsModule } from './modules/devtools/devtools.module';
 import { SupermindModule } from './modules/supermind/supermind.module';
 import { AffiliatesModule } from './modules/affiliates/affiliates.module';
 import { GroupModule } from './modules/groups/v2/group.module';
-import { ApolloModule } from 'apollo-angular';
 import { MarkdownModule } from 'ngx-markdown';
 import { GiftCardModule } from './modules/gift-card/gift-card.module';
 import { ValuePropModule } from './modules/value-prop/value-prop.module';
-import * as Sentry from '@sentry/angular';
-import { Router } from '@angular/router';
-import { MindsSentryErrorHandler } from './common/services/diagnostics/sentry-error-handler';
 
 @NgModule({
-  bootstrap: [Minds],
-  declarations: [Minds, Pages],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
-    ApolloModule,
     MarkdownModule.forRoot(),
-    // TransferHttpCacheModule,
-    BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     CaptchaModule,
@@ -107,7 +78,6 @@ import { MindsSentryErrorHandler } from './common/services/diagnostics/sentry-er
     CommentsModule,
     JobsMarketingModule,
     CodeHighlightModule,
-    SharedModule,
     CompassModule,
     DevToolsModule,
     SupermindModule,
@@ -115,27 +85,6 @@ import { MindsSentryErrorHandler } from './common/services/diagnostics/sentry-er
     GroupModule,
     GiftCardModule,
     ValuePropModule,
-    //last due to :username route
-    AppRoutingModule,
-  ],
-  providers: [
-    MINDS_PROVIDERS,
-    {
-      provide: ErrorHandler,
-      useExisting: MindsSentryErrorHandler,
-    },
-    {
-      provide: Sentry.TraceService,
-      deps: [Router],
-    },
-    provideAppInitializer(() => {
-      const initializerFn = (
-        (configs) => () =>
-          configs.loadFromRemote()
-      )(inject(ConfigsService));
-      return initializerFn();
-    }),
-    provideHttpClient(withInterceptorsFromDi()),
   ],
 })
 export class MindsModule {}

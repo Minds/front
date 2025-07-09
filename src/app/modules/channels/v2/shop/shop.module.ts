@@ -10,9 +10,16 @@ import { ChannelShopMembershipsSupportTierComponent } from './memberships/suppor
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ChannelShopMembershipsMembersComponent } from './memberships/members-modal/members-modal.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 @NgModule({
-  imports: [NgCommonModule, RouterModule, FormsModule, CommonModule],
+  imports: [
+    NgCommonModule,
+    RouterModule,
+    FormsModule,
+    CommonModule,
+    ModalCloseButtonComponent,
+  ],
   declarations: [
     ChannelShopMembershipsComponent,
     ChannelShopMembershipsEditComponent,

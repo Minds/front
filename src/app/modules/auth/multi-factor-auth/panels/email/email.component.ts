@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CommonModule as NgCommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, Observable, timer } from 'rxjs';
 import { scan, take, takeWhile, throttleTime } from 'rxjs/operators';
 import {
@@ -6,6 +8,7 @@ import {
   MultiFactorPanel,
 } from '../../services/multi-factor-auth-service';
 import { AbstractMFAFormComponent } from '../abstract/abstract-mfa-form.component';
+import { CommonModule } from '~/common/common.module';
 
 /**
  * MFA input form for Email.
@@ -14,7 +17,7 @@ import { AbstractMFAFormComponent } from '../abstract/abstract-mfa-form.componen
   selector: 'm-multiFactorAuth__email',
   templateUrl: './email.component.html',
   styleUrls: ['../mfa-panel.component.ng.scss'],
-  standalone: false,
+  imports: [NgCommonModule, FormsModule, ReactiveFormsModule, CommonModule],
 })
 export class MultiFactorAuthEmailComponent extends AbstractMFAFormComponent {
   /**

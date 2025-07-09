@@ -26,7 +26,7 @@ export type ResetPasswordModalPanel =
 
 export const MIN_MS_BETWEEN_RESET_PASSWORD_EMAILS: number = 60000;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ResetPasswordModalService implements OnDestroy {
   /**
    * currently active modal panel

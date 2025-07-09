@@ -1,5 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
-import { RESPONSE } from '../../../express.tokens';
+import { Inject, Injectable, RESPONSE_INIT } from '@angular/core';
 
 @Injectable()
 export class HeadersService {
@@ -15,11 +14,11 @@ export class BrowserHeadersService extends HeadersService {
 
 @Injectable()
 export class ServerHeadersService extends HeadersService {
-  constructor(@Inject(RESPONSE) private res) {
+  constructor(@Inject(RESPONSE_INIT) private res: ResponseInit) {
     super();
   }
 
   setCode(code: number): void {
-    this.res.status(code);
+    this.res.status = code;
   }
 }

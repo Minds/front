@@ -10,7 +10,7 @@ export interface Toast {
 /** Default error message text. */
 export const DEFAULT_ERROR_MESSAGE: string = 'An unknown error has occurred';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ToasterService {
   toasts: Toast[] = [];
   timeoutIds: number[] = [];

@@ -1,19 +1,16 @@
-import { Inject, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Client } from './api';
 import { Storage } from './storage';
 import { isPlatformBrowser } from '@angular/common';
 
+@Injectable({ providedIn: 'root' })
 export class TranslationService {
   private defaultLanguage: string;
   private languagesReady: Promise<any>;
 
-  static _(client: Client, storage: Storage, platformId: Object) {
-    return new TranslationService(client, storage, platformId);
-  }
-
   constructor(
-    @Inject(Client) private clientService: Client,
-    @Inject(Storage) private storage: Storage,
+    private clientService: Client,
+    private storage: Storage,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.defaultLanguage = 'en'; // TODO: Set to get translated names (when i18n is in place)

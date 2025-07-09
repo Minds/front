@@ -1,7 +1,6 @@
 import { Injectable, Injector, createNgModule } from '@angular/core';
 import { ModalRef, ModalService } from '../../../services/ux/modal.service';
 import { ExplainerScreenModalComponent } from '../components/explainer-screen-modal.component';
-import { ExplainerScreenModalLazyModule } from '../explainer-screen-modal-lazy.module';
 import { ExplainerScreenWeb } from '../../../../graphql/generated.strapi';
 import { DismissalV2Service } from '../../../common/services/dismissal-v2.service';
 import { firstValueFrom } from 'rxjs';
@@ -25,14 +24,8 @@ export class ExplainerScreenModalService {
   public async open(
     explainerScreenData: ExplainerScreenWeb
   ): Promise<ModalRef<ExplainerScreenModalComponent>> {
-    const lazyComponent = createNgModule<ExplainerScreenModalLazyModule>(
-      (await import('../explainer-screen-modal-lazy.module'))
-        .ExplainerScreenModalLazyModule,
-      this.injector
-    ).instance.resolveComponent();
-
     const modal: ModalRef<ExplainerScreenModalComponent> = this.modal.present(
-      lazyComponent,
+      ExplainerScreenModalComponent,
       {
         data: {
           onDismissIntent: () => {

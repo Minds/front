@@ -20,9 +20,15 @@ import { FindGroupsButtonsComponent } from '../../common/standalone/groups/find-
 import { NoGroupsNoticeComponent } from './panels/no-groups/no-groups-notice.component';
 import { ProUpgradeNoticeComponent } from './panels/pro-upgrade/pro-upgrade-notice.component';
 import { CreateBoostNoticeComponent } from './panels/create-boost/create-boost-notice.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
-  imports: [CommonModule, NgCommonModule, FindGroupsButtonsComponent],
+  imports: [
+    CommonModule,
+    NgCommonModule,
+    FindGroupsButtonsComponent,
+    IfTenantDirective,
+  ],
   declarations: [
     FeedNoticeComponent,
     FeedNoticeOutletComponent,

@@ -9,14 +9,25 @@ import {
   OnDestroy,
   Injector,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import {
+  AsyncPipe,
+  isPlatformBrowser,
+  isPlatformServer,
+  NgIf,
+} from '@angular/common';
 import { Navigation as NavigationService } from '../../../../services/navigation';
 import { Session } from '../../../../services/session';
 import { DynamicHostDirective } from '../../../directives/dynamic-host.directive';
 import { SidebarNavigationService } from '../navigation.service';
 import { ConfigsService } from '../../../services/configs.service';
 import { Observable, Subscription, of } from 'rxjs';
-import { Router, NavigationEnd, Event } from '@angular/router';
+import {
+  Router,
+  NavigationEnd,
+  Event,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { ComposerModalService } from '../../../../modules/composer/components/modal/modal.service';
 import { ThemeService } from '../../../services/theme.service';
@@ -26,7 +37,6 @@ import { ExperimentsService } from '../../../../modules/experiments/experiments.
 import { IS_TENANT_NETWORK } from '../../../injection-tokens/tenant-injection-tokens';
 import { PermissionsService } from '../../../services/permissions.service';
 import { MultiTenantConfigImageService } from '../../../../modules/multi-tenant-network/services/config-image.service';
-import { SiteMembershipsCountService } from '../../../../modules/site-memberships/services/site-membership-count.service';
 import {
   NavigationItem,
   PermissionsEnum,
@@ -38,6 +48,8 @@ export type NavigationItemExtended = NavigationItem & {
 };
 import { ChatReceiptService } from '../../../../modules/chat/services/chat-receipt.service';
 import { PermissionIntentsService } from '../../../services/permission-intents.service';
+import { SidebarMoreTriggerComponent } from '../../sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 /**
  * V2 version of sidebar component.
@@ -46,7 +58,14 @@ import { PermissionIntentsService } from '../../../services/permission-intents.s
   selector: 'm-sidebar__navigationV2',
   templateUrl: 'navigation-v2.component.html',
   styleUrls: ['./navigation-v2.component.ng.scss'],
-  standalone: false,
+  imports: [
+    NgIf,
+    IfTenantDirective,
+    RouterLink,
+    RouterLinkActive,
+    SidebarMoreTriggerComponent,
+    AsyncPipe,
+  ],
 })
 export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   /** Enum for use in template. */
@@ -121,6 +140,8 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     }
   }
 
+  public isSsr: boolean;
+
   constructor(
     public navigation: NavigationService,
     public session: Session,
@@ -151,6 +172,8 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.onResize();
     }
+
+    this.isSsr = isPlatformServer(this.platformId);
 
     this.settingsLink = '/settings';
 

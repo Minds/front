@@ -1,4 +1,10 @@
-import { AppBrowserModule } from './app/app.browser.module';
-import bootstrap from './app/utils/bootstrap';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { Minds } from './app/app.component';
 
-bootstrap(AppBrowserModule);
+import { config } from './app/app.config.browser';
+import { TestComponent } from './app/test.component';
+
+bootstrapApplication(Minds, config).catch((err) => {
+  console.log('build error on bootstrap');
+  console.error(err);
+});

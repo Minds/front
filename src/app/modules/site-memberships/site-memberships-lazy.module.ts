@@ -11,6 +11,7 @@ import { SiteMembershipsRouteGuard } from './guards/site-memberships-route.guard
 import { SiteMembershipPageComponent } from './components/site-membership-page/site-membership-page.component';
 import { JoinManageSiteMembershipButtonComponent } from './components/join-manage-membership-button/join-manage-membership-button.component';
 import { SingleSiteMembershipModalComponent } from './components/single-site-membership-modal/single-site-membership-modal.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
     }),
     StarCardComponent,
     SiteMembershipCardComponent,
+    ModalCloseButtonComponent,
   ],
   declarations: [
     SiteMembershipsPageComponent,

@@ -62,8 +62,8 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
   ) {
     const chatwootConfig: ChatwootMindsConfig =
       this.config.get<ChatwootMindsConfig>('chatwoot');
-    this.websiteToken = chatwootConfig.website_token;
-    this.baseUrl = chatwootConfig.base_url;
+    this.websiteToken = chatwootConfig?.website_token;
+    this.baseUrl = chatwootConfig?.base_url;
     this.scriptUrl = '/static/en/assets/scripts/chatwoot.js';
   }
 

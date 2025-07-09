@@ -3,7 +3,7 @@ import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { ConfigsService } from './configs.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SsoService {
   constructor(
     protected client: Client,

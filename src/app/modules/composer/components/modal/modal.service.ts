@@ -18,7 +18,7 @@ export type ComposerData = {
 /**
  * Global service to open a composer modal
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ComposerModalService {
   protected injector: Injector;
   protected onPostFn = (_) => {};

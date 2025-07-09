@@ -3,6 +3,11 @@ import { ExplainerScreenWeb } from '../../../../graphql/generated.strapi';
 import { MarkdownService } from 'ngx-markdown';
 import { Session } from '../../../services/session';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { CommonModule as NgCommonModule } from '@angular/common';
+import { CommonModule } from '~/common/common.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 /**
  * Modal that shows explainers for various parts of the site.
@@ -12,7 +17,14 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
   selector: 'm-explainScreenModal',
   templateUrl: './explainer-screen-modal.component.html',
   styleUrls: ['./explainer-screen-modal.component.ng.scss'],
-  standalone: false,
+  imports: [
+    NgCommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MarkdownModule,
+    ModalCloseButtonComponent,
+  ],
 })
 export class ExplainerScreenModalComponent {
   // data from CMS.

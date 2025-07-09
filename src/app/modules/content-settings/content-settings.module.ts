@@ -7,6 +7,7 @@ import { ContentSettingsService } from './content-settings.service';
 import { NsfwSettingsModule } from '../nsfw-settings/nsfw-settings.module';
 import { TagSettingsModule } from '../tag-settings/tag-settings.module';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 const COMPONENTS = [ContentSettingsComponent];
 
@@ -18,6 +19,7 @@ const COMPONENTS = [ContentSettingsComponent];
     NsfwSettingsModule,
     TagSettingsModule,
     DiscoverySharedModule,
+    IfTenantDirective,
   ],
   declarations: COMPONENTS,
   exports: COMPONENTS,

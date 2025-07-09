@@ -18,3 +18,5 @@ export type WireThresholdStruc = {
   type: WireRewardsType;
   min: number | '';
 };
+
+export type PaywallType = 'plus' | 'tier' | 'custom';

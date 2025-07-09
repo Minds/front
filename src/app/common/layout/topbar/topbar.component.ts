@@ -13,10 +13,16 @@ import { NotificationsToasterComponent } from '../../../modules/notifications/to
 import { Session } from '../../../services/session';
 import { ThemeService } from '../../services/theme.service';
 import { ConfigsService } from '../../services/configs.service';
-import { isPlatformBrowser } from '@angular/common';
+import {
+  AsyncPipe,
+  isPlatformBrowser,
+  NgClass,
+  NgIf,
+  NgTemplateOutlet,
+} from '@angular/common';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { TopbarService } from '../topbar.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable, map, of, BehaviorSubject } from 'rxjs';
@@ -24,6 +30,7 @@ import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { TopbarAlertService } from '../../components/topbar-alert/topbar-alert.service';
 import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 import { MultiTenantConfigImageService } from '../../../modules/multi-tenant-network/services/config-image.service';
+import { CommonModule } from '~/common/common.module';
 
 /**
  * The topbar of the site, visible almost everywhere
@@ -33,7 +40,14 @@ import { MultiTenantConfigImageService } from '../../../modules/multi-tenant-net
 @Component({
   selector: 'm-topbar',
   templateUrl: 'topbar.component.html',
-  standalone: false,
+  imports: [
+    AsyncPipe,
+    CommonModule,
+    RouterLink,
+    NgClass,
+    NgIf,
+    NgTemplateOutlet,
+  ],
 })
 export class TopbarComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string;

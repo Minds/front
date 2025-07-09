@@ -24,6 +24,7 @@ import { BoostModule } from '../boost/boost.module';
 import { AdminAccountsComponent } from './accounts/admin-accounts.component';
 import { AdminAccountsFormComponent } from './accounts/form/admin-accounts-form.component';
 import { NetworkAdminExcludedHashtagsSharedModule } from '../multi-tenant-network/admin-console/tabs/moderation/excluded-hashtags/excluded-hashtags-shared.module';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 const routes: Routes = [
   {
@@ -46,6 +47,7 @@ const routes: Routes = [
     ActivityModule,
     BoostModule,
     NetworkAdminExcludedHashtagsSharedModule,
+    IfTenantDirective,
   ],
   declarations: [
     AdminComponent,

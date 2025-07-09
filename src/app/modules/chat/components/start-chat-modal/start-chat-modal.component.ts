@@ -24,6 +24,7 @@ import {
   DEFAULT_ERROR_MESSAGE,
   ToasterService,
 } from '../../../../common/services/toaster.service';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 /** User row object. */
 type UserRow = {
@@ -42,6 +43,7 @@ type UserRow = {
     CommonModule,
     ReactiveFormsModule,
     EntityTypeaheadComponent,
+    ModalCloseButtonComponent,
   ],
 })
 export class StartChatModalServiceComponent

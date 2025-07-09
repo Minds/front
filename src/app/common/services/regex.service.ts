@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 /**
  * Contains different common regex expressions for shared quick access.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RegexService {
   private regex: Object = {
     url: /(\b(https?|ftp|file):\/\/[^\s\]]+(?:[^!?\s]))/gim,

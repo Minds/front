@@ -12,6 +12,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
 import { PopoverComponent } from './popover-validation/popover.component';
 import { MultiFactorAuthLazyModule } from '../auth/multi-factor-auth/multi-factor-auth-lazy.module';
 import { OidcLoginButtons } from '../../common/standalone/oidc/oidc-login-buttons/oidc-login-buttons.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { OidcLoginButtons } from '../../common/standalone/oidc/oidc-login-button
     ExperimentsModule,
     MultiFactorAuthLazyModule,
     OidcLoginButtons, // standalone
+    IfTenantDirective,
   ],
   declarations: [LoginForm, RegisterForm, PopoverComponent],
   exports: [LoginForm, RegisterForm, PopoverComponent],

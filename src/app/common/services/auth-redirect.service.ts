@@ -7,7 +7,7 @@ import { TenantLoggedInLandingRedirectService } from '../../modules/multi-tenant
  * This service provides the default redirect URL
  * for logins and registrations.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthRedirectService {
   constructor(
     private router: Router,

@@ -5,7 +5,7 @@ import { Web3WalletService } from '../../web3-wallet.service';
 
 export type UniswapAction = 'swap' | 'add';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UniswapModalService {
   constructor(
     private modalService: ModalService,

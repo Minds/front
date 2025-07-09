@@ -3,12 +3,21 @@ import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { TopbarService } from '../../../common/layout/topbar.service';
 import { BehaviorSubject } from 'rxjs';
+import { TopbarComponent } from '~/common/layout/topbar/topbar.component';
+import { SearchSharedModule } from '~/modules/search/search-shared.module';
+import { AsyncPipe, NgIf, NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'm-topbarwrapper',
   templateUrl: 'topbar.component.html',
   styleUrls: ['topbar.component.ng.scss'],
-  standalone: false,
+  imports: [
+    AsyncPipe,
+    TopbarComponent,
+    SearchSharedModule,
+    NgIf,
+    NgTemplateOutlet,
+  ],
 })
 export class TopbarWrapperComponent {
   /** Whether topbar is being displayed in minimal light mode. */

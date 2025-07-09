@@ -1,7 +1,7 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { fromEvent, Observable } from 'rxjs';
 import { debounceTime, throttleTime } from 'rxjs/operators';
-
+@Injectable({ providedIn: 'root' })
 export class ScrollService {
   scroll: Observable<Event>;
   view: any;

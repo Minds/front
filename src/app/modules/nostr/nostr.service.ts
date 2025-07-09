@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { createHash } from 'crypto';
+// import { createHash } from 'crypto';
 import {
   combineLatest,
   Observable,
@@ -90,10 +90,11 @@ export class NostrService implements OnDestroy {
   public nip26DelegationTokenSha256Hash$: Observable<string> =
     this.nip26DelegationToken$.pipe(
       map((nip26DelegationToken) => {
-        const tokenHash = createHash('sha256')
-          .update(Buffer.from(nip26DelegationToken))
-          .digest();
-        return Buffer.from(tokenHash).toString('hex');
+        return '';
+        // const tokenHash = createHash('sha256')
+        //   .update(Buffer.from(nip26DelegationToken))
+        //   .digest();
+        // return Buffer.from(tokenHash).toString('hex');
       })
     );
 

@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { FeedService } from '../../../modules/channels/v2/feed/feed.service';
 import { FeedFilterDateRange } from '../feed-filter/feed-filter.component';
 import moment from 'moment';
+import { CommonModule } from '@angular/common';
+import { ModalCloseButtonComponent } from '../modal-close-button/modal-close-button.component';
 
 export type DateRange = {};
 /**
@@ -18,7 +20,7 @@ const noOp = () => {};
   selector: 'm-dateRangeModal',
   templateUrl: './date-range-modal.component.html',
   styleUrls: ['./date-range-modal.component.ng.scss'],
-  standalone: false,
+  imports: [CommonModule, ModalCloseButtonComponent],
 })
 export class DateRangeModalComponent implements OnInit, OnDestroy {
   defaultToDate;

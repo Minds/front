@@ -4,13 +4,19 @@ import { CommonModule } from '../../../common/common.module';
 import { ModalsModule } from '../../modals/modals.module';
 import { UpsellModalComponent } from './upsell-modal/upsell-modal.component';
 import { UpsellButtonComponent } from './upsell-button/upsell-button.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 /**
  * Module for UpsellModalComponent.
  * Can be used to lazy-load.
  */
 @NgModule({
-  imports: [NgCommonModule, CommonModule, ModalsModule],
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    ModalsModule,
+    ModalCloseButtonComponent,
+  ],
   declarations: [UpsellButtonComponent, UpsellModalComponent],
 })
 export class UpsellModalModule {

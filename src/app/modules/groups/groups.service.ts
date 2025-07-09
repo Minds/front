@@ -1,4 +1,4 @@
-import { Inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Client, Upload } from '../../services/api';
 import { UpdateMarkersService } from '../../common/services/update-markers.service';
 import { BehaviorSubject } from 'rxjs';
@@ -12,11 +12,9 @@ export interface MembershipUpdate {
 /**
  * Service for groups.
  */
+@Injectable({ providedIn: 'root' })
 export class GroupsService {
   private baseEndpoint: string = 'api/v1/groups/';
-
-  private infiniteInProgress: boolean = false;
-  private infiniteOffset: any;
 
   group = new BehaviorSubject(null);
   $group = this.group.asObservable();
@@ -28,18 +26,9 @@ export class GroupsService {
       guid: null,
     });
 
-  static _(
-    client: Client,
-    upload: Upload,
-    updateMarkers: UpdateMarkersService
-  ) {
-    return new GroupsService(client, upload, updateMarkers);
-  }
-
   constructor(
-    @Inject(Client) public clientService: Client,
-    @Inject(Upload) public uploadService: Upload,
-    @Inject(UpdateMarkersService)
+    public clientService: Client,
+    public uploadService: Upload,
     private updateMarkers: UpdateMarkersService
   ) {}
 

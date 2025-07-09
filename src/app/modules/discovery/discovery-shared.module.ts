@@ -41,6 +41,8 @@ import { AdsModule } from '../ads/ads.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DiscoveryEmptyGuestFeedNoticeComponent } from './empty-guest-feed-notice/empty-guest-feed-notice.component';
 import { DiscoveryAdminExcludeButtonComponent } from './tags/admin-exclude-button/admin-exclude-button.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
   imports: [
@@ -57,6 +59,8 @@ import { DiscoveryAdminExcludeButtonComponent } from './tags/admin-exclude-butto
     LiquiditySpotModule,
     LanguageModule,
     AdsModule,
+    ModalCloseButtonComponent,
+    IfTenantDirective,
   ],
   declarations: [
     DiscoverySidebarTagsComponent,

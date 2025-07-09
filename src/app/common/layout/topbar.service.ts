@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 type TopbarComponentT = TopbarComponent;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TopbarService {
   private container: TopbarComponentT;
 

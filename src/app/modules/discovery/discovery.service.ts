@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Data } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DiscoveryService {
   isPlusPage$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   parentPath$: BehaviorSubject<string> = new BehaviorSubject('/discovery');

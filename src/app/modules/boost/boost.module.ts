@@ -22,6 +22,7 @@ import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logge
 import { boostEnabledGuard } from '../../common/guards/can-boost.guard';
 import { permissionGuard } from '../../common/guards/permission.guard';
 import { PermissionsEnum } from '../../../graphql/generated.engine';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 const boostRoutes: Routes = [
   {
@@ -52,6 +53,7 @@ const boostRoutes: Routes = [
     MarketingModule,
     ActivityModule,
     NoticesModule,
+    IfTenantDirective,
   ],
   declarations: [
     BoostConsoleV2Component,

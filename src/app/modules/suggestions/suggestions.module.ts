@@ -6,6 +6,7 @@ import { CommonModule } from '../../common/common.module';
 import { AutocompleteSuggestionsService } from './services/autocomplete-suggestions.service';
 import { PublisherRecommendationsComponent } from './publisher-recommendations/publisher-recommendations.component';
 import { PublisherRecommendationsModalComponent } from './publisher-recommendations-modal/publisher-recommendations-modal.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { PublisherRecommendationsModalComponent } from './publisher-recommendati
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    ModalCloseButtonComponent,
   ],
   declarations: [
     PublisherRecommendationsComponent,

@@ -7,7 +7,7 @@ import { BlockListService } from './block-list.service';
 export type EntityObservable = BehaviorSubject<Object>;
 type EntityObservables = Map<string, EntityObservable>;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EntitiesService {
   entities: EntityObservables = new Map<string, EntityObservable>();
   castToActivites: boolean = false;
@@ -243,9 +243,5 @@ export class EntitiesService {
       status: 401,
       message: 'You must be logged in to view this content',
     });
-  }
-
-  static _(client: Client, blockListService: BlockListService) {
-    return new EntitiesService(client, blockListService);
   }
 }

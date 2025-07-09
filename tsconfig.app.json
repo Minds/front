@@ -1,17 +1,24 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/app",
+    "outDir": "./out-tsc/app",
     "baseUrl": "./",
     "types": ["node"],
     "sourceMap": false
   },
-  "files": ["main.ts", "main.server.ts", "../server.ts", "polyfills.ts"],
+  "files": [
+    "src/main.ts",
+    "src/main.server.ts",
+    "server.ts",
+    // "../server-polyfills.ts",
+    "src/polyfills.ts"
+  ],
   "include": ["**/*.d.ts"],
   "exclude": [
     "test.ts",
     "app/mocks",
     "app/utils/mock.ts",
+    "e2e",
     "**/*.spec.ts",
     "**/testing/*",
     "**/*.stories.*"

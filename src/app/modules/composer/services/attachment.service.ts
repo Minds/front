@@ -14,7 +14,7 @@ export interface Attachment {
   guid: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AttachmentService {
   /**
    * Constructor

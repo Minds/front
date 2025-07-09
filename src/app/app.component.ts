@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgIf } from '@angular/common';
 import { ServiceWorkerService } from './common/services/service-worker.service';
 import { ScrollRestorationService } from './services/scroll-restoration.service';
 import {
@@ -42,11 +42,25 @@ import { OnboardingV5Service } from './modules/onboarding-v5/services/onboarding
 import { ExplainerScreensService } from './modules/explainer-screens/services/explainer-screen.service';
 import { ChatInitService } from './modules/chat/services/chat-init.service';
 import { HeadElementInjectorService } from './common/services/head-element-injector.service';
+import { MindsModule } from './app.module';
+import { Pages } from './controllers/pages/pages';
+import { PageComponent } from './modules/layout/page/page.component';
+import { ComposerModule } from './modules/composer/composer.module';
+import { HomepageModule } from './modules/homepage/homepage.module';
+import { TopbarWrapperComponent } from './modules/layout/topbar-wrapper/topbar.component';
+import { IfTenantDirective } from './common/directives/if-tenant.directive';
 
 @Component({
   selector: 'm-app',
   templateUrl: 'app.component.html',
-  standalone: false,
+  imports: [
+    MindsModule,
+    PageComponent,
+    TopbarWrapperComponent,
+    NgIf,
+    HomepageModule,
+    IfTenantDirective,
+  ],
 })
 export class Minds implements OnInit, OnDestroy {
   name: string;

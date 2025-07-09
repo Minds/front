@@ -15,7 +15,7 @@ export interface AttachmentPreviewResource {
   guid?: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PreviewService {
   /**
    * Builds an attachment preview resource from a file, Attachment or a null value

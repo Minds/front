@@ -55,7 +55,7 @@ export interface ClientMetaData {
 /**
  * Helps with page token and API interaction
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ClientMetaService {
   /**
    * Constructor

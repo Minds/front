@@ -12,17 +12,19 @@ import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ConfigsService } from '../../services/configs.service';
 import { IsTenantService } from '../../services/is-tenant.service';
 import { MultiTenantNetworkConfigService } from '../../../modules/multi-tenant-network/services/config.service';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'm-sidebarMore',
   templateUrl: './sidebar-more.component.html',
   styleUrls: ['./sidebar-more.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [IfTenantDirective, NgIf, RouterLink],
 })
 export class SidebarMoreComponent implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;

@@ -15,6 +15,7 @@ import { SupermindConsoleExploreFeedComponent } from './console/explore-feed/exp
 import { NoticesModule } from '../notices/notices.module';
 import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
 import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
     CommonModule,
     ActivityModule,
     NoticesModule,
+    IfTenantDirective,
   ],
   declarations: [
     SupermindConsoleListComponent,

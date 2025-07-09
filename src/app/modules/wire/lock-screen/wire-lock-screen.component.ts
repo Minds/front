@@ -21,7 +21,6 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
  *
  * See it in a paywalled activity
  */
-export type PaywallType = 'plus' | 'tier' | 'custom';
 @Component({
   selector: 'm-wire--lock-screen',
   templateUrl: 'wire-lock-screen.component.html',

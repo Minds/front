@@ -18,7 +18,7 @@ export interface RichEmbed {
 /**
  * Service which helps resolving URLs onto rich embeds
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RichEmbedService {
   /**
    * Constructor

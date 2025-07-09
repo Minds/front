@@ -40,6 +40,7 @@ import { VirtualScrollerModule } from './feed/virtual-scroller';
 import { PathMatch } from '../../common/types/angular.types';
 import { NewsfeedTabsComponent } from './feeds/tabs/tabs.component';
 import { NewsfeedGqlComponent } from './feeds/newsfeed-gql.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 const routes: Routes = [
   {
@@ -107,6 +108,7 @@ const routes: Routes = [
     ExperimentsModule,
     CompassModule,
     VirtualScrollerModule,
+    IfTenantDirective,
   ],
   declarations: [
     NewsfeedComponent,

@@ -17,7 +17,7 @@ import {
   GiftCardProductIdEnum,
   GiftCardTargetInput,
 } from '../../../graphql/generated.engine';
-import { QueryOptionsAlone } from 'apollo-angular/types';
+import { QueryOptionsAlone } from 'apollo-angular';
 import { GiftRecipientGiftDuration } from '../wire/v2/creator/form/gift-recipient/gift-recipient-modal/gift-recipient-modal.types';
 import { ConfigsService } from '../../common/services/configs.service';
 import { GiftCardUpgradesConfig } from '../wallet/components/credits/send/product-upgrade-card/product-upgrade-card.types';

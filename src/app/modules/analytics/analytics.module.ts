@@ -12,12 +12,12 @@ import { AnalyticsTableComponent } from './v2/components/table/table.component';
 import { AnalyticsDashboardService } from './v2/dashboard.service';
 import { FormsModule } from '@angular/forms';
 import { AnalyticsBenchmarkComponent } from './v2/components/benchmark/benchmark.component';
-import { ChartV2Module } from './components/chart-v2/chart-v2.module';
 import { AnalyticsGlobalTokensComponent } from './global-tokens/global-tokens.component';
 import { AnalyticsGlobalTokensMetricItemComponent } from './global-tokens/metric-item/metric-item.component';
 import { WalletSharedModule } from '../wallet/wallet-shared.module';
 import { AnalyticsTabsComponent } from './v2/components/tabs/tabs.component';
 import { PathMatch } from '../../common/types/angular.types';
+import { ChartV2Component } from './components/chart-v2/chart-v2.component';
 
 const routes: Routes = [
   {
@@ -54,9 +54,9 @@ const routes: Routes = [
     NgCommonModule,
     CommonModule,
     RouterModule.forChild(routes),
-    ChartV2Module,
     FormsModule,
     WalletSharedModule,
+    ChartV2Component,
   ],
   declarations: [
     AnalyticsDashboardComponent,

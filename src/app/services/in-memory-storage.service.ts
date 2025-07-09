@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class InMemoryStorageService {
   protected entries: { [key: string]: any } = {};
 

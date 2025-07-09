@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BlockchainService {
   protected serverWalletAddressCache: string;
   protected serverBalanceCache: number | string;
@@ -59,11 +59,5 @@ export class BlockchainService {
     } catch (e) {
       return false;
     }
-  }
-
-  // Service provider
-
-  static _(client: Client, session: Session) {
-    return new BlockchainService(client, session);
   }
 }

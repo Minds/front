@@ -16,6 +16,7 @@ import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 import { TenantGuestModeFeedComponent } from './tenant-guest-mode-feed/tenant-guest-mode-feed.component';
 import { ComposerModule } from '../composer/composer.module';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { NewsfeedModule } from '../newsfeed/newsfeed.module';
     DiscoverySharedModule,
     ComposerModule,
     NewsfeedModule,
+    IfTenantDirective,
   ],
   declarations: [
     DefaultFeedComponent,

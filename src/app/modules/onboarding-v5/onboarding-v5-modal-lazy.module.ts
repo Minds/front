@@ -13,6 +13,7 @@ import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { OnboardingV5ChannelRecommendationsContentComponent } from './components/steps/channel-recommendations/channel-recommendations.component';
 import { OnboardingV5CompletedSplashComponent } from './components/completed-splash/completed-splash.component';
 import { OnboardingV5ChangeEmailContentComponent } from './components/steps/verify-email/change-email/change-email.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 /**
  * Lazy loaded module.
@@ -24,6 +25,7 @@ import { OnboardingV5ChangeEmailContentComponent } from './components/steps/veri
     ReactiveFormsModule,
     CommonModule,
     SuggestionsModule,
+    IfTenantDirective,
   ],
   declarations: [
     OnboardingV5Component,

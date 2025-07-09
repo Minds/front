@@ -5,7 +5,7 @@ import { ConfigsService } from '../../common/services/configs.service';
 
 export type WirePaymentHandler = 'plus' | 'pro';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WirePaymentHandlersService {
   readonly handlers; // TODO: add types
   constructor(

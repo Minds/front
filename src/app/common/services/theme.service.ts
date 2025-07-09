@@ -16,7 +16,7 @@ import { MultiTenantColorScheme } from '../../../graphql/generated.engine';
 import { ThemeConfig } from '../types/theme-config.types';
 import { IS_TENANT_NETWORK } from '../injection-tokens/tenant-injection-tokens';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ThemeService {
   renderer: Renderer2;
   isDark$: BehaviorSubject<boolean> = new BehaviorSubject(false);

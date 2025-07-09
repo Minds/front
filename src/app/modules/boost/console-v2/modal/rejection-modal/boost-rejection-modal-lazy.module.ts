@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { BoostRejectionModalComponent } from './boost-rejection-modal.component';
 import { CommonModule } from '../../../../../common/common.module';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 @NgModule({
-  imports: [NgCommonModule, CommonModule],
+  imports: [NgCommonModule, CommonModule, ModalCloseButtonComponent],
   declarations: [BoostRejectionModalComponent],
   exports: [BoostRejectionModalComponent],
   providers: [],

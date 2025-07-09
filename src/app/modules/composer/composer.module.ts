@@ -46,6 +46,8 @@ import { ComposerSiteMembershipPostPreview } from './components/site-membership-
 import { ComposerBoostToggleComponent } from './components/boost-button/boost-toggle.component';
 import { AttachmentPreviewAudioComponent } from './components/preview/audio/attachment-preview-audio.component';
 import { ComposerRecordButtonComponent } from './components/record-button/record-button.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 /**
  * Exported components
@@ -113,6 +115,8 @@ const PROVIDERS = [
     EmojiPickerModule,
     MatGridListModule,
     PaymentsModule,
+    ModalCloseButtonComponent,
+    IfTenantDirective,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

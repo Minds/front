@@ -11,7 +11,6 @@ import { PagesService } from '../../common/services/pages.service';
 @Component({
   selector: 'm-pages',
   templateUrl: 'pages.html',
-  standalone: false,
 })
 export class Pages {
   title: string = '';

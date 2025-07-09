@@ -6,18 +6,11 @@ import { filter, pairwise } from 'rxjs/operators';
 /** Parent routes that are disabled - a route matches if it starts with one of these routes. */
 const DISABLED_PARENT_ROUTES: string[] = ['/network/admin/analytics/'];
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ScrollToTopService {
   private _routerListener: Subscription;
 
-  static _(router: Router, route: ActivatedRoute) {
-    return new ScrollToTopService(router, route);
-  }
-
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private router: Router) {}
 
   listen(): this {
     this._routerListener = this.router.events

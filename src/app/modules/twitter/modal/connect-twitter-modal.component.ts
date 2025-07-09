@@ -1,5 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ConnectTwitterModalOpts } from './connect-twitter-modal.types';
+import { CommonModule as NgCommonModule } from '@angular/common';
+import { ModalsModule } from '~/modules/modals/modals.module';
+import { CommonModule } from '~/common/common.module';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 /**
  * Modal that prompts the user to connect to Twitter.
@@ -8,7 +12,12 @@ import { ConnectTwitterModalOpts } from './connect-twitter-modal.types';
   selector: 'm-connectTwitterModal',
   templateUrl: './connect-twitter-modal.component.html',
   styleUrls: ['./connect-twitter-modal.component.ng.scss'],
-  standalone: false,
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    ModalsModule,
+    ModalCloseButtonComponent,
+  ],
 })
 export class ConnectTwitterModalComponent implements OnDestroy {
   // context text - provides additional context in mobile widths

@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SidebarNavigationV2Component } from './navigation-v2/navigation-v2.component';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SidebarNavigationService {
   container: SidebarNavigationV2Component;
   visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();

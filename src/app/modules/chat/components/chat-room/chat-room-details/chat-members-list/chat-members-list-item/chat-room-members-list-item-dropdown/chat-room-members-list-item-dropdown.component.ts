@@ -27,7 +27,7 @@ import { Session } from '../../../../../../../../services/session';
 import { ChatRoomUserActionsService } from '../../../../../../services/chat-room-user-actions.service';
 import { ChatRoomMembersService } from '../../../../../../services/chat-room-members.service';
 import { TotalChatRoomMembersService } from '../../../../../../services/total-chat-room-members.service';
-import { NgxFloatUiContentComponent } from 'ngx-float-ui';
+import { NgxFloatUiContentComponent, NgxFloatUiModule } from 'ngx-float-ui';
 
 /**
  * Dropdown menu for chat members list item. Options vary depending on role
@@ -38,7 +38,7 @@ import { NgxFloatUiContentComponent } from 'ngx-float-ui';
   styleUrls: ['./chat-room-members-list-item-dropdown.component.ng.scss'],
   templateUrl: './chat-room-members-list-item-dropdown.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgCommonModule, CommonModule],
+  imports: [NgCommonModule, CommonModule, NgxFloatUiModule],
 })
 export class ChatRoomMembersListItemDropdownComponent implements OnInit {
   // Enums for use in template.

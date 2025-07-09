@@ -19,7 +19,7 @@ export interface CompassQuestion {
   minimumRangeValue: number;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CompassService {
   questions$: BehaviorSubject<Array<CompassQuestion>> = new BehaviorSubject<
     Array<CompassQuestion>

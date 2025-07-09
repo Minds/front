@@ -7,6 +7,15 @@ import {
   MultiFactorPanel,
   MultiFactorRootPanel,
 } from './services/multi-factor-auth-service';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
+import {
+  AsyncPipe,
+  NgIf,
+  NgStyle,
+  NgSwitch,
+  NgSwitchCase,
+} from '@angular/common';
+import { MultiFactorAuthEmailComponent } from './panels/email/email.component';
 
 /**
  * Multi-factor Authentication base component.
@@ -19,7 +28,15 @@ import {
   },
   templateUrl: './multi-factor-auth.component.html',
   styleUrls: ['./multi-factor-auth.component.ng.scss'],
-  standalone: false,
+  imports: [
+    AsyncPipe,
+    NgIf,
+    NgSwitchCase,
+    NgSwitch,
+    NgStyle,
+    ModalCloseButtonComponent,
+    MultiFactorAuthEmailComponent,
+  ],
 })
 export class MultiFactorAuthBaseComponent {
   public readonly cdnAssetsUrl: string;

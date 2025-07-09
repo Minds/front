@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { debounceTime, throttleTime } from 'rxjs/operators';
 
@@ -9,6 +9,7 @@ export type ScrollSubscription = {
   subscriptions: Array<Subscription>;
 };
 
+@Injectable({ providedIn: 'root' })
 export class GlobalScrollService {
   scroll: Observable<Event>;
   subscriptions: Array<ScrollSubscription> = [];

@@ -15,7 +15,7 @@ import posthog from 'posthog-js';
 @NgModule({
   imports: [EmbedModule],
   providers: [
-    { provide: 'ORIGIN_URL', useValue: location.origin },
+    { provide: 'ENGINE_URL', useValue: location.origin },
     { provide: 'QUERY_STRING', useValue: location.search || '' },
     {
       provide: RedirectService,

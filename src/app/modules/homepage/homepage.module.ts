@@ -12,28 +12,17 @@ import { MindsFormsModule } from '../forms/forms.module';
 
 import { MarketingModule } from '../marketing/marketing.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
-import { HomepageV3Module } from '../homepage-v3/homepage-v3.module';
 import { HomepageContainerComponent } from './homepage-container.component';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 import { DefaultFeedModule } from '../default-feed/default-feed.module';
 import { AboutModule } from '../about/about.module';
 import { TenantCustomHomepageModule } from './tenant-custom-homepage/tenant-custom-homepage.module';
 import { TenantCustomHomepageHeroComponent } from './tenant-custom-homepage/components/hero/hero.component';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: HomepageContainerComponent,
-    data: {
-      preventLayoutReset: true,
-    },
-  },
-];
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
   imports: [
     NgCommonModule,
-    RouterModule.forChild(routes),
     NgFormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -42,10 +31,10 @@ const routes: Routes = [
     MarketingModule,
     ExperimentsModule,
     DiscoverySharedModule,
-    HomepageV3Module,
     DefaultFeedModule,
     AboutModule,
     TenantCustomHomepageModule,
+    IfTenantDirective,
   ],
   declarations: [HomepageContainerComponent],
 })

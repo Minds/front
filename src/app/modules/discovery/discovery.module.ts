@@ -20,6 +20,7 @@ import { PathMatch } from '../../common/types/angular.types';
 import { SearchComponent } from '../search/search.component';
 import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
 import { tenantConditionalRedirectGuard } from '../../common/guards/tenant-conditional-redirect.guard';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
   imports: [
@@ -225,6 +226,7 @@ import { tenantConditionalRedirectGuard } from '../../common/guards/tenant-condi
     RouterModule,
     NewsfeedModule,
     ContentSettingsModule,
+    IfTenantDirective,
   ],
 })
 export class DiscoveryModule {}

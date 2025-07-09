@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { MindsHttpClient } from '../api/client.service';
 import { Session } from '../../../app/services/session';
 import { BehaviorSubject } from 'rxjs';
 import { SocketsService } from '../../services/sockets';
 
 import { map, concatAll } from 'rxjs/operators';
+import { ApiService } from '../api/api.service';
 
 @Injectable()
 export class UpdateMarkersService {
@@ -17,7 +17,7 @@ export class UpdateMarkersService {
   muted = [];
 
   constructor(
-    private http: MindsHttpClient,
+    private http: ApiService,
     private session: Session,
     private sockets: SocketsService
   ) {}

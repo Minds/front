@@ -3,6 +3,7 @@ import { Modal } from '../../../../../services/ux/modal.service';
 import { CommonModule } from '../../../../../common/common.module';
 import { Router } from '@angular/router';
 import { ToasterService } from '../../../../../common/services/toaster.service';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 /**
  * Content generation completed modal component.
@@ -11,7 +12,7 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
   selector: 'm-contentGenerationCompletedModal',
   templateUrl: './content-generation-completed-modal.component.html',
   styleUrls: ['./content-generation-completed-modal.component.ng.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, ModalCloseButtonComponent],
 })
 export class ContentGenerationCompletedModalComponent
   implements Modal<unknown>

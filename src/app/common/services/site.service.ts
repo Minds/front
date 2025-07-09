@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ConfigsService } from './configs.service';
 import { IsTenantService } from './is-tenant.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SiteService {
   get title(): string {
     if (this.isTenant.is()) {

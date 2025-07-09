@@ -5,7 +5,6 @@ import { APP_BASE_HREF } from '@angular/common';
 import { AnalyticsModuleLazyRoutes } from './modules/analytics/analytics.lazy';
 import { AdminModuleLazyRoutes } from './modules/admin/admin.lazy';
 import { WalletModuleLazyRoutes } from './modules/wallet/wallet.lazy';
-//import { MonetizationModuleLazyRoutes } from './modules/monetization/monetization.lazy';
 import { SettingsV2ModuleLazyRoutes } from './modules/settings-v2/settings-v2.lazy';
 import { Pages } from './controllers/pages/pages';
 import { ChannelContainerComponent } from './modules/channel-container/channel-container.component';
@@ -27,12 +26,19 @@ import { CustomPagesModuleLazyRoutes } from './modules/custom-pages/custom-pages
 import { TenantOnlyRedirectGuard } from './common/guards/tenant-only-redirect.guard';
 import { SiteMembershipsLazyRoutes } from './modules/site-memberships/site-memberships-lazy.routes';
 import { ChatModuleLazyRoutes } from './modules/chat/chat.lazy';
+import { HomepageContainerComponent } from './modules/homepage/homepage-container.component';
 
-const routes: Routes = [
+export const routes: Routes = [
+  {
+    path: '',
+    component: HomepageContainerComponent,
+    data: {
+      preventLayoutReset: true,
+    },
+  },
   AnalyticsModuleLazyRoutes,
   AdminModuleLazyRoutes,
   WalletModuleLazyRoutes,
-  // MonetizationModuleLazyRoutes,
   SettingsV2ModuleLazyRoutes,
   DiscoveryModuleLazyRoutes,
   CanaryModuleLazyRoutes,
@@ -61,19 +67,4 @@ const routes: Routes = [
   },
 ];
 
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      //initialNavigation: 'enabledBlocking',
-      initialNavigation: 'disabled',
-      onSameUrlNavigation: 'reload',
-    }),
-  ],
-  exports: [RouterModule],
-  providers: [
-    { provide: APP_BASE_HREF, useValue: '/' },
-    MindsOnlyRedirectGuard,
-    TenantOnlyRedirectGuard,
-  ],
-})
-export class AppRoutingModule {}
+export default routes;

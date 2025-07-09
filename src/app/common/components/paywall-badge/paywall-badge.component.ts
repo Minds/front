@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PaywallType } from '../../../modules/wire/lock-screen/wire-lock-screen.component';
 import { ConfigsService } from '../../services/configs.service';
+import { PaywallType } from '~/modules/wire/interfaces/wire.interfaces';
 
 /**
  * Determine whether to display a badge for various paywalls

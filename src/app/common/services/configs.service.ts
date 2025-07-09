@@ -8,10 +8,10 @@ import { Location } from '@angular/common';
 export class ConfigsService {
   private configs = {};
   public isReady$ = new BehaviorSubject(false);
-
+  private queryString = '';
   constructor(
     private client: Client,
-    @Inject('QUERY_STRING') private queryString: string,
+    // @Inject('QUERY_STRING') private queryString: string,
     private redirectService: RedirectService,
     private location: Location
   ) {}

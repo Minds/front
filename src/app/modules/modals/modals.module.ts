@@ -15,6 +15,9 @@ import { TextInputAutocompleteModule } from '../../common/components/autocomplet
 import { PhotoBannerModalComponent } from './photo-banner/photo-banner-modal.component';
 import { SupermindReplyConfirmModalComponent } from './supermind-reply-confirm/supermind-reply-confirm-modal.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
+import { Modal } from '~/common/components/modal/modal.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
   imports: [
@@ -27,6 +30,9 @@ import { MarkdownModule } from 'ngx-markdown';
     ReactiveFormsModule,
     MindsFormsModule,
     TextInputAutocompleteModule,
+    ModalCloseButtonComponent,
+    Modal,
+    IfTenantDirective,
   ],
   declarations: [
     ConfirmModal,

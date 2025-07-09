@@ -67,13 +67,12 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/minds",
             "index": "src/index.html",
-            "baseHref": "/static/",
-            "browser": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "baseHref": "/",
+            "tsConfig": "tsconfig.app.json",
             "polyfills": ["src/polyfills.ts"],
             "localize": ["en"],
             "assets": [
@@ -93,15 +92,18 @@
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
               "node_modules/marked/marked.min.js"
             ],
+            "outputMode": "server",
+            "browser": "src/main.ts",
             "server": "src/main.server.ts",
-            "prerender": false,
             "ssr": {
               "entry": "server.ts"
             },
             "stylePreprocessorOptions": {
-              "includePaths": ["src/stylesheets"]
+              "includePaths": ["src/stylesheets"],
+              "sass": {
+                "silenceDeprecations": ["import", "color-functions"]
+              }
             },
-            "externalDependencies": ["domino-ext"],
             "extractLicenses": false,
             "sourceMap": true,
             "optimization": false,
@@ -141,7 +143,9 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
-              "ssr": false,
+              "ssr": {
+                "entry": "server.ts"
+              },
               "prerender": false
             },
             "hmr": {
@@ -160,38 +164,20 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "minds:build"
+            "buildTarget": "minds:build",
+            "ssl": true
           },
           "configurations": {
             "production": {
               "buildTarget": "minds:build:production"
             },
-            "dev": {
-              "servePath": "/",
-              "sourceMap": true,
-              "deployUrl": "http://localhost:4200/",
-              "buildTarget": "minds:build:dev"
-            },
             "hmr": {
               "hmr": true,
               "buildTarget": "minds:build:hmr"
             },
-            "dev": {
+            "development": {
               "hmr": true,
-              "browserTarget": "minds:build:dev"
-            }
-          }
-        },
-        "serve-ssr": {
-          "builder": "@angular-devkit/build-angular:ssr-dev-server",
-          "options": {
-            "browserTarget": "minds:build",
-            "serverTarget": "minds:server"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "minds:build:production",
-              "serverTarget": "minds:server:production"
+              "buildTarget": "minds:build:development"
             }
           }
         },
@@ -206,7 +192,7 @@
           "options": {
             "main": "src/test.ts",
             "karmaConfig": "./karma.conf.js",
-            "tsConfig": "src/tsconfig.spec.json",
+            "tsConfig": "tsconfig.spec.json",
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js"
@@ -218,35 +204,6 @@
             },
             "preserveSymlinks": true
           }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "server.ts",
-            "tsConfig": "tsconfig.server.json",
-            "stylePreprocessorOptions": {
-              "includePaths": ["src/stylesheets"]
-            },
-            "sourceMap": true,
-            "optimization": false,
-            "buildOptimizer": false
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "sourceMap": true,
-              "optimization": true,
-              "preserveSymlinks": true,
-              "buildOptimizer": true
-            }
-          },
-          "defaultConfiguration": ""
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
@@ -280,7 +237,7 @@
             "index": "src/app/modules/embed/embed.html",
             "baseHref": "/embed-static/",
             "main": "src/app/modules/embed/main.ts",
-            "tsConfig": "src/app/modules/embed/tsconfig.json",
+            "tsConfig": "app/modules/embed/tsconfig.json",
             "polyfills": "src/polyfills.ts",
             "outputHashing": "bundles",
             "localize": ["en"],

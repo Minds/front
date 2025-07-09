@@ -17,7 +17,7 @@ import { ReportCreatorComponent } from '../../../../../../report/creator/creator
 import { ChatMessagesService } from '../../../../../services/chat-messages.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { SingleChatRoomService } from '../../../../../services/single-chat-room.service';
-import { NgxFloatUiContentComponent } from 'ngx-float-ui';
+import { NgxFloatUiContentComponent, NgxFloatUiModule } from 'ngx-float-ui';
 
 /**
  * Message component dropdown for the chat room. Allows a user to perform actions
@@ -28,7 +28,7 @@ import { NgxFloatUiContentComponent } from 'ngx-float-ui';
   styleUrls: ['./chat-room-message-dropdown.component.ng.scss'],
   templateUrl: './chat-room-message-dropdown.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgCommonModule, CommonModule],
+  imports: [NgCommonModule, CommonModule, NgxFloatUiModule],
 })
 export class ChatRoomMessageDropdownComponent {
   /** Whether the dropdown displayed is to be for the owner of the message. */

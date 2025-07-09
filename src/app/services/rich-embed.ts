@@ -1,10 +1,8 @@
+import { Injectable } from '@angular/core';
 import { Client } from './api';
 
+@Injectable({ providedIn: 'root' })
 export class RichEmbedService {
-  static _(client: Client) {
-    return new RichEmbedService(client);
-  }
-
   constructor(private client: Client) {}
 
   // Soundcloud

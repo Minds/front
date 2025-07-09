@@ -18,9 +18,7 @@ import {
   Output,
   PLATFORM_ID,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription, interval } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { FeedsService } from '../../services/feeds.service';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'm-seeLatestPostsButton',

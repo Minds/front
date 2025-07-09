@@ -21,7 +21,6 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 import { RecentService } from '../../services/ux/recent';
 import { recentServiceMock } from '../../mocks/services/ux/recent-mock.spec';
 import { MockDirective, MockService } from '../../utils/mock';
-import { SharedModule } from '../../common/shared.module';
 import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 // Mocks
@@ -65,7 +64,6 @@ describe('SearchBarComponent', () => {
         RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        SharedModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },

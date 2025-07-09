@@ -43,7 +43,7 @@ export enum FeedAlgorithm {
 /**
  * Enables the grabbing of data through observable feeds.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FeedsService implements OnDestroy {
   /**
    * a unique identifier for this feed that will change everytime the feed is refreshed.
@@ -459,26 +459,6 @@ export class FeedsService implements OnDestroy {
   }
 
   async destroy() {}
-
-  static _(
-    client: Client,
-    api: ApiService,
-    session: Session,
-    entitiesService: EntitiesService,
-    blockListService: BlockListService,
-    storage: StorageV2,
-    location: Location
-  ) {
-    return new FeedsService(
-      client,
-      api,
-      session,
-      entitiesService,
-      blockListService,
-      storage,
-      location
-    );
-  }
 
   /**
    * Checks for new posts and updates the counter

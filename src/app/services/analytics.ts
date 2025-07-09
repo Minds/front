@@ -33,7 +33,7 @@ export type ContextualizableEntity = {
   owner_guid: string;
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AnalyticsService implements OnDestroy {
   private defaultPrevented: boolean = false;
   private hasBeenLoggedIn = false;

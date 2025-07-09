@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { ConfigsService } from '../common/services/configs.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class Navigation {
   readonly navigation;
 

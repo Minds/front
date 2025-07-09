@@ -5,7 +5,7 @@ import { ConfigsService } from './configs.service';
  * Central service that says whether we're
  * on a tenant site or minds.com
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IsTenantService {
   isTenant: boolean;
   constructor(configs: ConfigsService) {

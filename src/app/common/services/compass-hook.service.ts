@@ -37,12 +37,4 @@ export class CompassHookService {
       }
     });
   }
-
-  static _(
-    session: Session,
-    cookieService: CookieService,
-    compassService: CompassService
-  ) {
-    return new CompassHookService(session, cookieService, compassService);
-  }
 }

@@ -50,6 +50,7 @@ import { ActivityDownvoteNoticeComponent } from './downvote-notice/downvote-noti
 import { SiteMembershipBadgeComponent } from '../../../common/components/site-membership-badge/site-membership-badge.component';
 import { ActivitySiteMembershipCtaComponent } from './site-membership-cta/site-membership-cta.component';
 import { AudioPlayerComponent } from '../../media/components/audio/components/audio-player/audio-player.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
   imports: [
@@ -73,6 +74,7 @@ import { AudioPlayerComponent } from '../../media/components/audio/components/au
     ComposerModule,
     SiteMembershipBadgeComponent,
     AudioPlayerComponent,
+    IfTenantDirective,
   ],
   declarations: [
     ActivityComponent,

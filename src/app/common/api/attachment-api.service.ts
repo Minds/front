@@ -141,7 +141,7 @@ export const httpEventToUploadEvent =
 /**
  * Service that handle video and image uploads as attachments
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AttachmentApiService {
   public readonly videoPermissionsError$: ReplaySubject<boolean> =
     new ReplaySubject<boolean>();

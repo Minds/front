@@ -1,7 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, Type } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { TopbarWrapperComponent } from './topbar-wrapper/topbar.component';
-import { PageComponent } from './page/page.component';
 import { OnboardingV2Module } from '../onboarding-v2/onboarding.module';
 import { CommonModule } from '../../common/common.module';
 import { SearchSharedModule } from '../search/search-shared.module';
@@ -14,8 +12,12 @@ import { RouterModule } from '@angular/router';
 import { ComposerModule } from '../composer/composer.module';
 import { AppPromptModule } from '../app-prompt/app-prompt.module';
 import { GlobalAudioPlayerComponent } from '../media/components/audio/components/global-audio-player/global-audio-player.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
-const STANDALONE_COMPONENTS: Type<unknown>[] = [GlobalAudioPlayerComponent];
+const STANDALONE_COMPONENTS: Type<unknown>[] = [
+  GlobalAudioPlayerComponent,
+  IfTenantDirective,
+];
 
 @NgModule({
   imports: [
@@ -33,8 +35,6 @@ const STANDALONE_COMPONENTS: Type<unknown>[] = [GlobalAudioPlayerComponent];
     AppPromptModule,
     ...STANDALONE_COMPONENTS,
   ],
-  exports: [TopbarWrapperComponent, PageComponent],
-  declarations: [TopbarWrapperComponent, PageComponent],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

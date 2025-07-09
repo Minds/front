@@ -8,6 +8,7 @@ import { GiftCardClaimRedeemPanelComponent } from './panels/redeem/redeem-panel.
 import { GiftCardClaimSuccessPanelComponent } from './panels/success-panel/success-panel.component';
 import { GiftCardClaimLoggedOutPanelComponent } from './panels/logged-out/logged-out-panel.component';
 import { GiftCardSharedModule } from '../gift-card.shared.module';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     GiftCardSharedModule,
+    IfTenantDirective,
   ],
   declarations: [
     GiftCardClaimComponent,

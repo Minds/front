@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { MarkdownModule } from 'ngx-markdown';
+import { CommonModule } from '~/common/common.module';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 const noOp = () => {};
 const DEFAULT_TITLE = 'Confirm';
@@ -11,7 +14,7 @@ const DEFAULT_BODY = 'Are you sure?';
   selector: 'm-confirmationModal',
   templateUrl: 'confirm.component.html',
   styleUrls: ['./confirm.component.ng.scss'],
-  standalone: false,
+  imports: [ModalCloseButtonComponent, CommonModule, MarkdownModule],
 })
 export class ConfirmV2Component {
   /**

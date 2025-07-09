@@ -11,6 +11,7 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
 import { ChatRoomEdge } from '../../../../../../graphql/generated.engine';
 import { BehaviorSubject } from 'rxjs';
 import { UpdateChatRoomNameService } from '../../../services/update-chat-room-name.service';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 /** Modal input data. */
 export type EditChatRoomModalData = {
@@ -26,7 +27,12 @@ export type EditChatRoomModalData = {
   templateUrl: './edit-chat-room-modal.component.html',
   styleUrls: ['./edit-chat-room-modal.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgCommonModule, CommonModule, ReactiveFormsModule],
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    ReactiveFormsModule,
+    ModalCloseButtonComponent,
+  ],
 })
 export class EditChatRoomModalComponent implements OnInit {
   /** Form group. */

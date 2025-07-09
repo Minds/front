@@ -24,7 +24,6 @@ import { WalletCashOnboardingExtrasComponent } from './components/cash/settings/
 import { WalletCashBankFormComponent } from './components/cash/settings/cash-bank-form/cash-bank-form.component';
 import { TokenContractService } from '../blockchain/contracts/token-contract.service';
 import { WithdrawContractService } from '../blockchain/contracts/withdraw-contract.service';
-import { ChartV2Module } from '../analytics/components/chart-v2/chart-v2.module';
 import { WalletV2TokensComponent } from './components/tokens/tokens.component';
 import { WalletV2CashComponent } from './components/cash/cash.component';
 import { WalletProEarningsCashComponent } from './components/cash/pro-earnings/pro-earnings.component';
@@ -47,6 +46,8 @@ import { WalletV2CreditsSendComponent } from './components/credits/send/send.com
 import { WalletV2CreditsProductUpgradeCardComponent } from './components/credits/send/product-upgrade-card/product-upgrade-card.component';
 import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
 import { WalletBridgeComponent } from './components/tokens/bridge/bridge.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
+import { ChartV2Component } from '../analytics/components/chart-v2/chart-v2.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' as PathMatch },
@@ -174,9 +175,10 @@ export const WALLET_ROUTES: Routes = [
     CommonModule,
     RouterModule,
     RouterModule.forChild(WALLET_ROUTES),
-    ChartV2Module,
     WalletSharedModule,
     NgOptimizedImage,
+    ModalCloseButtonComponent,
+    ChartV2Component,
   ],
   declarations: [
     WalletDashboardComponent,

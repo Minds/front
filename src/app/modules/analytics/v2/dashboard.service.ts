@@ -10,9 +10,9 @@ import {
   catchError,
 } from 'rxjs/operators';
 
-import { MindsHttpClient } from '../../../common/api/client.service';
 import fakeData from './fake-data';
 import { Response, UserState } from '../../../interfaces/dashboard';
+import { ApiService } from '~/common/api/api.service';
 
 // Populate state with fakeData because BehaviorSubject requires a starting value
 let _state: UserState = fakeData[0];
@@ -68,7 +68,7 @@ export class AnalyticsDashboardService {
    */
   vm$: Observable<UserState> = new BehaviorSubject(_state);
 
-  constructor(private http: MindsHttpClient) {
+  constructor(private http: ApiService) {
     this.loadFromRemote();
   }
 

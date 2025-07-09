@@ -1,204 +1,96 @@
-import './instrument-sentry';
-import * as Sentry from '@sentry/node';
-import { SSR_SENTRY_INTEGRATIONS } from './src/app/common/injection-tokens/common-injection-tokens';
+// import './instrument-sentry';
+// import * as Sentry from '@sentry/node';
+// import { SSR_SENTRY_INTEGRATIONS } from './src/app/common/injection-tokens/common-injection-tokens';
 
-/***************************************************************************************************
- * Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
- */
-import '@angular/localize/init';
-import 'zone.js/node';
-import { renderModule } from '@angular/platform-server';
+import {
+  AngularNodeAppEngine,
+  createNodeRequestHandler,
+  isMainModule,
+  writeResponseToNodeResponse,
+} from '@angular/ssr/node';
 
-import { join } from 'path';
-import { readFileSync, existsSync } from 'fs';
-import * as _url from 'url';
+// import { readFileSync, existsSync } from 'fs';
+import path, { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-import './server-polyfills';
+// import * as _url from 'url';
 
 import { TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
-import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
-import { AppServerModule } from './src/main.server';
+
 import express from 'express';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import compression from 'compression';
 import cookieparser from 'cookie-parser';
-import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 import timeout from 'connect-timeout';
-import { REQUEST, RESPONSE } from './src/express.tokens';
+import dotenv from 'dotenv';
 
-const browserDistFolder = join(process.cwd(), 'dist', 'browser');
-const embedDistFolder = join(process.cwd(), 'dist', 'embed');
-const PORT = process.env.PORT || 4200;
+const env = dotenv.config();
 
-export function app() {
-  // Express server
-  const server = express();
+// Express server
+const server = express();
 
-  // Timeout
-  server.use(timeout('6s'));
+// Ng paths
+const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+const browserDistFolder = resolve(serverDistFolder, '../browser');
 
-  // gzip
-  server.use(compression());
-  // cookies
-  server.use(cookieparser());
+// Timeout
+server.use(timeout('6s'));
 
-  // Server static files from dist folder
-  server.use('/embed-static', express.static(embedDistFolder));
-  server.get('*.*', express.static(browserDistFolder));
+// gzip
+server.use(compression());
+// cookies
+server.use(cookieparser());
 
-  // Socket.io hitting wrong endpoint (dev?)
-  server.get('/socket.io', (req, res) => {
-    res.send('You are using the wrong domain.');
-  });
+// SSR Engine
+const appEngine = new AngularNodeAppEngine();
 
-  // /undefined is an issue with angular
-  server.get('/undefined', (req, res) => {
-    res.send('There was problem');
-  });
+server.set('view engine', 'html');
+server.set('views', browserDistFolder);
 
-  // /api should not be getting called
-  server.get('/api/*', (req, res) => {
-    res.send('There was problem');
-    res.end();
-  });
+// Server static files from dist folder
+server.get('*.*', express.static(browserDistFolder));
 
-  const render =
-    (bootstrap: any, getDocument?: (locale: string) => string) =>
-    async (req: any, res: any) => {
-      const http =
-        req.headers['x-forwarded-proto'] === undefined
-          ? 'http'
-          : req.headers['x-forwarded-proto'];
+const engineHost = env.parsed['MINDS_FRONT_ENGINE_HOST'] || 'localhost';
 
-      const url = req.originalUrl;
-      const locale = getLocale(req);
+// Proxy the API requests to the engine
+server.use(
+  '/api',
+  createProxyMiddleware({
+    target: `https://${engineHost}/api`,
+    changeOrigin: env.parsed['MINDS_FRONT_ENGINE_CHANGE_ORIGIN'] === '1', // Changes the origin of the host header to the target URL
+  })
+);
 
-      // tslint:disable-next-line:no-console
-      console.time(`GET: ${url}`);
+server.use('*', (req, res, next) => {
+  // Log the request for debugging
+  console.log('request', req.url);
+  import('./server-polyfills');
 
-      let html: string;
+  appEngine
+    .handle(req, { server: 'express', expressRequest: req })
+    .then((response) => {
+      return response ? writeResponseToNodeResponse(response, res) : next();
+    })
+    .catch((err) => {
+      const browserIndex = path.join(browserDistFolder, 'index.html');
+      console.error(err);
+      console.log('Skipping SSR. Loading: ' + browserIndex);
 
-      try {
-        html = await renderModule(bootstrap, {
-          url: `${req.protocol}://${req.get('host') || ''}${req.originalUrl}`,
-          document: getDocument(locale),
-          extraProviders: [
-            // for http and cookies
-            {
-              provide: REQUEST,
-              useValue: req,
-            },
-            {
-              provide: RESPONSE,
-              useValue: res,
-            },
-            // for absolute path
-            {
-              provide: 'ORIGIN_URL',
-              useValue: `${http}://${req.headers.host}`,
-            },
-            // for initial query params before router loads
-            {
-              provide: 'QUERY_STRING',
-              useFactory: () => _url.parse(req.url, true).search || '',
-              deps: [],
-            },
-            {
-              provide: TRANSLATIONS,
-              useValue: getLocaleTranslations(locale),
-            },
-            { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
-            {
-              provide: SSR_SENTRY_INTEGRATIONS,
-              useValue: [
-                Sentry.requestDataIntegration(),
-                Sentry.nodeContextIntegration(),
-              ],
-            },
-            // { provide: LOCALE_ID, useValue: locale },
-          ],
-        });
-      } catch (err) {
-        html = err.toString();
-      } finally {
-        res.send(html);
-        console.timeEnd(`GET: ${url}`);
-        res.end();
-      }
-    };
+      console.log(serverDistFolder, import.meta);
+      res.sendFile(browserIndex, () => next());
+    });
+});
 
-  // embed route loads its own module
-  server.get(
-    `/embed/*`,
-    //cache(),
-    render(EmbedServerModule, (locale) =>
-      readFileSync(join(embedDistFolder, `${locale}/embed.html`)).toString()
-    )
-  );
+// Sentry.setupExpressErrorHandler(server);
 
-  // All regular routes use the Universal engine
-  server.get(
-    '*',
-    //cache(),
-    render(AppServerModule, (locale) =>
-      readFileSync(join(browserDistFolder, `${locale}/index.html`)).toString()
-    )
-  );
-
-  Sentry.setupExpressErrorHandler(server);
-
-  return server;
-}
-
-/**
- * Return a valid i18n locale
- */
-function getLocale(req): string {
-  const defaultLocale = 'en';
-
-  // Nginx should pass through Minds-Locale Header
-  const hostLanguage = req.headers['x-minds-locale'] || defaultLocale;
-
-  if (hostLanguage && hostLanguage.length === 2) {
-    const path = join(browserDistFolder, hostLanguage);
-    if (existsSync(path)) {
-      return hostLanguage;
-    }
-  }
-
-  return defaultLocale;
-}
-
-function getLocaleTranslations(locale: string): string {
-  let fileName: string;
-  if (locale === 'en') {
-    fileName = 'Base.xliff';
-  } else {
-    fileName = `Minds.${locale}.xliff`;
-  }
-  return require(`raw-loader!./src/locale/${fileName}`);
-}
-
-function run() {
-  // Start up the Node server
-  const server = app();
-
-  server.listen(PORT, () => {
-    console.log(
-      `Node Express server listening on http://localhost:${PORT} for the sole benefit of nginx and not your browser! Access on port 8080.`
-    );
+if (isMainModule(import.meta.url)) {
+  const port = process.env['PORT'] || 4200;
+  server.listen(port, () => {
+    console.log(`Node Express server listening on http://localhost:${port}`);
   });
 }
 
-run();
+console.warn('Node Express server started');
 
-// // Webpack will replace 'require' with '__webpack_require__'
-// // '__non_webpack_require__' is a proxy to Node 'require'
-// // The below code is to ensure that the server is run only when not requiring the bundle.
-// declare const __non_webpack_require__: NodeRequire;
-// const mainModule = __non_webpack_require__.main;
-// const moduleFilename = (mainModule && mainModule.filename) || '';
-// if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
-//   run();
-// }
-
-// export * from './src/main.server';
+// This exposes the RequestHandler
+export const reqHandler = createNodeRequestHandler(server);

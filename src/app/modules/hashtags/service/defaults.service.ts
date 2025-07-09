@@ -3,7 +3,7 @@ import { ApiService } from '../../../common/api/api.service';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class HashtagDefaultsService {
   /**
    * Tags list

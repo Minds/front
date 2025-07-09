@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ConfigsService } from './configs.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MediaProxyService {
   readonly cdnUrl: string;
   constructor(configs: ConfigsService) {

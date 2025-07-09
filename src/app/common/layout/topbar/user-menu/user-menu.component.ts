@@ -11,7 +11,7 @@ import { ThemeService } from '../../../services/theme.service';
 import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
-import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
+// import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { PermissionsService } from '../../../services/permissions.service';
 
 /**
@@ -40,7 +40,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     private helpdeskRedirectService: HelpdeskRedirectService,
-    private boostModalLazyService: BoostModalV2LazyService,
+    // private boostModalLazyService: BoostModalV2LazyService,
     private permissionsService: PermissionsService
   ) {}
 
@@ -87,6 +87,6 @@ export class UserMenuComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> }
    */
   public async openBoostChannelModal(): Promise<void> {
-    await this.boostModalLazyService.open(this.session.getLoggedInUser());
+    // await this.boostModalLazyService.open(this.session.getLoggedInUser());
   }
 }

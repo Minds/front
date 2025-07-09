@@ -1,4 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule as NgCommonModule } from '@angular/common';
+import { CommonModule } from '../../../common/common.module';
+import { QRCodeComponent } from '../../../common/components/qr-code/qr-code.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 /**
  * Verify uniqueness modal root level component.
@@ -7,7 +11,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   selector: 'm-verify_uniqueness_modal',
   templateUrl: './verify-uniqueness-modal.component.html',
   styleUrls: ['verify-uniqueness-modal.component.ng.scss'],
-  standalone: false,
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    QRCodeComponent,
+    ModalCloseButtonComponent,
+  ],
 })
 export class VerifyUniquenessModalComponent implements OnInit, OnDestroy {
   constructor() {}

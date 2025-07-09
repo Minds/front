@@ -20,6 +20,8 @@ import { BannedComponent } from './banned/banned.component';
 import { ModerationAppealComponent } from './console/appeal.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { ChatRoomMessageComponent } from '../chat/components/chat-room/chat-room-messages/chat-room-message/chat-room-message.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
   imports: [
@@ -55,6 +57,8 @@ import { ChatRoomMessageComponent } from '../chat/components/chat-room/chat-room
     ]),
     TokenOnboardingModule,
     ChatRoomMessageComponent,
+    ModalCloseButtonComponent,
+    IfTenantDirective,
   ],
   declarations: [
     ReportCreatorComponent,

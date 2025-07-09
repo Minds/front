@@ -40,11 +40,6 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
   providers: [
     SiteService,
     {
-      provide: MindsHttpClient,
-      useFactory: MindsHttpClient._,
-      deps: [HttpClient, CookieService],
-    },
-    {
       provide: Client,
       useFactory: Client._,
       deps: [
@@ -53,7 +48,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
         CookieService,
         PLATFORM_ID,
         TransferState,
-        'ORIGIN_URL',
+        'ENGINE_URL',
       ],
     },
     provideAppInitializer(() => {

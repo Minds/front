@@ -36,6 +36,9 @@ import { GroupMembersListService } from './members/list/list.service';
 import { GroupEditButton } from './edit-button/edit-button.component';
 import { GroupFeedService } from './feed/feed.service';
 import { GroupChatButton } from './chat-button/chat-button.component';
+import { Modal } from '~/common/components/modal/modal.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 const routes: Routes = [
   {
@@ -101,6 +104,9 @@ const INTERNAL_COMPONENTS = [
     SuggestionsModule,
     GroupsModule,
     ComposerModule,
+    Modal,
+    ModalCloseButtonComponent,
+    IfTenantDirective,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

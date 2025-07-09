@@ -1,22 +1,37 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Session } from '../../../services/session';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
 import { ChannelOnboardingService } from '../../onboarding/channel/onboarding.service';
-import { SiteService } from '../../../common/services/site.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
-import { Router } from '@angular/router';
-import { Storage } from '../../../services/storage';
+import { RouterOutlet } from '@angular/router';
 import { MessengerService } from '../../messenger/messenger.service';
-import { isPlatformBrowser } from '@angular/common';
+import {
+  CommonModule as NgCommonModule,
+  isPlatformBrowser,
+} from '@angular/common';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { TopbarAlertService } from '../../../common/components/topbar-alert/topbar-alert.service';
 import { Observable } from 'rxjs';
+import { CommonModule } from '~/common/common.module';
+import { SidebarNavigationV2Component } from '~/common/layout/sidebar/navigation-v2/navigation-v2.component';
 
 @Component({
   selector: 'm-page',
   templateUrl: 'page.component.html',
   styleUrls: ['page.component.ng.scss'],
-  standalone: false,
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    RouterOutlet,
+    SidebarNavigationV2Component,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PageComponent implements OnInit {
   showOnboarding: boolean = false;
@@ -34,10 +49,7 @@ export class PageComponent implements OnInit {
     public session: Session,
     private navigationService: SidebarNavigationService,
     private onboardingService: ChannelOnboardingService,
-    private site: SiteService,
     public pageLayoutService: PageLayoutService,
-    private router: Router,
-    private storage: Storage,
     private messengerService: MessengerService,
     private topbarAlertService: TopbarAlertService,
     @Inject(PLATFORM_ID) private platformId: Object

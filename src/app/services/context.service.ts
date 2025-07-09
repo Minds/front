@@ -26,7 +26,7 @@ export type ContextServiceResponse = {
   entity?: ContextServiceEntity;
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ContextService {
   context: ContextServiceResponse | null;
 
@@ -37,10 +37,6 @@ export class ContextService {
     private storage: Storage,
     private client: Client
   ) {}
-
-  static _(router: Router, storage: Storage, client: Client) {
-    return new ContextService(router, storage, client);
-  }
 
   listen() {
     this._routerListener = this.router.events.subscribe((event: Event) => {

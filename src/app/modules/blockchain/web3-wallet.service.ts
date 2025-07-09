@@ -24,7 +24,7 @@ import { isSafari } from '../../helpers/is-safari';
 
 type Address = string;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class Web3WalletService {
   public config; // TODO add types
   public provider: BrowserProvider | null = null;

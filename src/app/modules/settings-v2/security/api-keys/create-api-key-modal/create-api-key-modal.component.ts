@@ -16,6 +16,7 @@ import {
 } from '../../../../../../graphql/generated.engine';
 import { IS_TENANT_NETWORK } from '../../../../../common/injection-tokens/tenant-injection-tokens';
 import { Session } from '../../../../../services/session';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 /** Enum for expiry time periods */
 enum ExpireTimePeriodEnum {
@@ -36,7 +37,12 @@ enum ExpireTimePeriodEnum {
   templateUrl: './create-api-key-modal.component.html',
   styleUrls: ['./create-api-key-modal.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgCommonModule, CommonModule, ReactiveFormsModule],
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    ReactiveFormsModule,
+    ModalCloseButtonComponent,
+  ],
 })
 export class CreateApiKeyModalComponent implements OnInit {
   /** Enum for expiry time periods. */

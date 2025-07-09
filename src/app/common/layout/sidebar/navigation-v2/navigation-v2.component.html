@@ -1,6 +1,7 @@
 <div
   class="m-sidebarNavigation"
   [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
+  [class.m-sidebarNavigation--ssr]="isSsr"
   (click)="onSidebarNavClick($event)"
 >
   <nav>

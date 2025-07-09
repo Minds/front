@@ -10,16 +10,19 @@ import {
   ElementRef,
   HostBinding,
 } from '@angular/core';
+import { CommonModule as NgCommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { ThemeService } from '../../../../common/services/theme.service';
 import chartPalette from './chart-palette.default';
 import isMobileOrTablet from '../../../../helpers/is-mobile-or-tablet';
+import { CommonModule } from '~/common/common.module';
+import { PlotlyModule } from '@mindsorg/angular-plotly.js';
 
 @Component({
   selector: 'm-chartV2',
   templateUrl: './chart-v2.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [NgCommonModule, CommonModule, PlotlyModule],
 })
 export class ChartV2Component implements OnInit, OnDestroy {
   @ViewChild('hoverInfoDiv', { static: true }) hoverInfoDivEl: ElementRef;

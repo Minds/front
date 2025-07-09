@@ -7,13 +7,15 @@ import {
 } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { IsTenantService } from '../../../services/is-tenant.service';
-import { NgxFloatUiContentComponent } from 'ngx-float-ui';
+import { NgxFloatUiContentComponent, NgxFloatUiModule } from 'ngx-float-ui';
+import { NgIf } from '@angular/common';
+import { SidebarMoreComponent } from '../sidebar-more.component';
 
 @Component({
   selector: 'm-sidebarMore__trigger',
   templateUrl: './sidebar-more-trigger.component.html',
   styleUrls: ['./sidebar-more-trigger.component.ng.scss'],
-  standalone: false,
+  imports: [NgxFloatUiModule, NgIf, SidebarMoreComponent],
 })
 export class SidebarMoreTriggerComponent implements AfterViewInit {
   @Output('toggle') onToggle: EventEmitter<Boolean> =

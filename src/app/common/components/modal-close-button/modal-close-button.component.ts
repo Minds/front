@@ -1,5 +1,6 @@
+import { NgClass } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 export type Color = 'white' | 'grey' | null;
 
@@ -7,7 +8,7 @@ export type Color = 'white' | 'grey' | null;
   selector: 'm-modalCloseButton',
   templateUrl: './modal-close-button.component.html',
   styleUrls: ['./modal-close-button.component.ng.scss'],
-  standalone: false,
+  imports: [NgbModule, NgClass],
 })
 export class ModalCloseButtonComponent implements OnInit {
   @Input()

@@ -1,12 +1,5 @@
-import { Component, Input, OnDestroy, OnInit, SkipSelf } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { CashWalletService } from '../../../modules/wallet/components/cash/cash.service';
-import {
-  Wallet,
-  WalletCurrency,
-  WalletV2Service,
-} from '../../../modules/wallet/components/wallet-v2.service';
 import { ToasterService } from '../../services/toaster.service';
 import { ButtonComponent } from '../button/button.component';
 

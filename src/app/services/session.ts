@@ -7,7 +7,7 @@ import { Storage } from './storage';
 import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../interfaces/entities';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class Session {
   loggedinEmitter: EventEmitter<any> = new EventEmitter();
   userEmitter: EventEmitter<any> = new EventEmitter();

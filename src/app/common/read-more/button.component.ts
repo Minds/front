@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
-import { ReadMoreDirective } from './read-more.directive';
+import type { ReadMoreDirective } from './read-more.directive';
 import { Router } from '@angular/router';
 
 /**

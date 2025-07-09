@@ -6,6 +6,7 @@ import { ResetPasswordModalComponent } from './reset-password-modal.component';
 import { ResetPasswordModalRequestFormComponent } from './forms/request/request.component';
 import { ResetPasswordModalResetFormComponent } from './forms/reset/reset.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MindsFormsModule,
     FormsModule,
     ReactiveFormsModule,
+    ModalCloseButtonComponent,
   ],
   declarations: [
     ResetPasswordModalComponent,

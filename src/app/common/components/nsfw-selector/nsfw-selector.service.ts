@@ -55,11 +55,11 @@ export class NSFWSelectorService {
   }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NSFWSelectorCreatorService extends NSFWSelectorService {
   cacheKey: string = 'creator';
 }
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NSFWSelectorConsumerService extends NSFWSelectorService {
   cacheKey: string = 'consumer';
 }
@@ -67,7 +67,7 @@ export class NSFWSelectorConsumerService extends NSFWSelectorService {
 /**
  * Editing service, overrides build to allow pre-setting of values.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NSFWSelectorEditingService extends NSFWSelectorService {
   cacheKey: string = 'editing';
 

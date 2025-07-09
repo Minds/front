@@ -97,7 +97,7 @@ export * from './composer-data-types';
  * It should be injected into each component that uses it
  * (via the `providers` array), as it is used as a store.
  * */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ComposerService implements OnDestroy {
   /**
    * Message subject

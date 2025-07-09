@@ -10,7 +10,7 @@ type NavigateOptions = {
   defaultUrl?: string;
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LoginReferrerService {
   private static DEFAULT_URL = '/newsfeed/subscriptions';
   private url: string;

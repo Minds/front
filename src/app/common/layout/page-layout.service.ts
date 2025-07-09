@@ -4,7 +4,7 @@ import { Router, NavigationEnd, ActivationStart } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PageLayoutService {
   routerSubscription: Subscription;
 

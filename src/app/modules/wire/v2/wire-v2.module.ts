@@ -15,6 +15,7 @@ import { WireCreatorSupportTierConfirmationComponent } from './creator/support-t
 import { WireCreatorCurrencyToggleComponent } from './creator/currency-toggle/currency-toggle.component';
 import { WireCreatorTermsComponent } from './creator/terms/terms.component';
 import { WireCreatorGiftRecipientInputComponent } from './creator/form/gift-recipient/gift-recipient-input.component';
+import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 
 const COMPONENTS = [WireCreatorComponent];
 
@@ -41,6 +42,7 @@ const PROVIDERS = [
     FormsModule,
     RouterModule,
     PaymentsModule,
+    ModalCloseButtonComponent,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

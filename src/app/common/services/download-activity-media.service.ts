@@ -4,7 +4,7 @@ import { ConfigsService } from './configs.service';
 import { ToasterService } from './toaster.service';
 import { blobDownload } from '../../utils/blob-download';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DownloadActivityMediaService {
   entity: any;
 

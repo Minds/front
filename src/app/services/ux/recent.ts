@@ -4,7 +4,7 @@ import { Storage } from '../storage';
 
 export type SearchSuggestionType = 'text' | 'publisher';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RecentService {
   constructor(private storage: Storage) {}
 
@@ -101,11 +101,5 @@ export class RecentService {
 
   private delete(key: string) {
     this.storage.destroy(`recent:${key}`);
-  }
-
-  //
-
-  static _(storage: Storage) {
-    return new RecentService(storage);
   }
 }

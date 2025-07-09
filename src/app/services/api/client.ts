@@ -1,44 +1,17 @@
 import { CookieService } from '../../common/services/cookie.service';
-import {
-  PLATFORM_ID,
-  Inject,
-  forwardRef,
-  EventEmitter,
-  Injectable,
-} from '@angular/core';
-import { isPlatformServer } from '@angular/common';
+import { PLATFORM_ID, Inject, EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TransferState } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
-import { REQUEST, RESPONSE } from '../../../express.tokens';
-import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
 
 /**
  * API Class
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class Client {
   base: string = '/';
   onError: EventEmitter<any> = new EventEmitter<any>();
-
-  static _(
-    http: HttpClient,
-    location: Location,
-    cookie: CookieService,
-    platformId: Object,
-    transferState: TransferState,
-    @Inject('ORIGIN_URL') baseUrl: string
-  ) {
-    return new Client(
-      http,
-      location,
-      cookie,
-      platformId,
-      transferState,
-      baseUrl
-    );
-  }
 
   constructor(
     public http: HttpClient,
@@ -46,7 +19,7 @@ export class Client {
     private cookie: CookieService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private transferState: TransferState,
-    @Inject('ORIGIN_URL') public baseUrl: string
+    @Inject('ENGINE_URL') public baseUrl: string
   ) {
     this.base = `${baseUrl}/`;
   }

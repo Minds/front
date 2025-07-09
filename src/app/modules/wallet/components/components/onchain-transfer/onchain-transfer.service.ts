@@ -7,7 +7,7 @@ import { ModalService } from '../../../../../services/ux/modal.service';
 /**
  * Global service to open on-chain transfer modal
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class OnchainTransferModalService {
   protected injector: Injector;
 

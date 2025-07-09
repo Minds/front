@@ -11,6 +11,7 @@ import { AutoLoginService } from './auto-login.service';
 import { loggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
 import { PathMatch } from '../../common/types/angular.types';
 import { ExperimentsModule } from '../experiments/experiments.module';
+import { ModalCloseButtonComponent } from '../../common/components/modal-close-button/modal-close-button.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     ExperimentsModule,
+    ModalCloseButtonComponent,
   ],
   providers: [
     NetworksCreateRootUserModalService,

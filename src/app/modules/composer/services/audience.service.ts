@@ -21,7 +21,7 @@ export type ActivityContainer = {
  * Audience selector service. Used for the setting of audience (container) for an activity
  * and retrieval of possible entities that can be the audience (such as groups).
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ComposerAudienceSelectorService {
   /** Currently selected audience - null is interpreted as a standard channel post */
   public readonly selectedAudience$: BehaviorSubject<ActivityContainer> =

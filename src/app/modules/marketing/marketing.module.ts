@@ -21,6 +21,7 @@ import { MarketingAsFeaturedInV2Component } from './v2/as-featured-in.component'
 import { MarkdownModule } from 'ngx-markdown';
 import { MarketingOtherFeaturesSectionComponent } from './other-features-section/other-features-section.component';
 import { MarketingGeneralSectionComponent } from './general-section/general-section.component';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { MarketingGeneralSectionComponent } from './general-section/general-sect
     ModalsModule,
     LanguageModule,
     MarkdownModule.forRoot(),
+    IfTenantDirective,
   ],
   declarations: [
     MarketingComponent,

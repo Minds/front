@@ -12,6 +12,7 @@ import { OnboardingV3VerifyUniquenessComponent } from './panel/verify-uniqueness
 import { OnboardingV3VerifyPhoneComponent } from './panel/verify-uniqueness/verify-phone/verify-phone.component';
 import { OnboardingV3VerifyPhoneService } from './panel/verify-uniqueness/verify-phone/verify-phone.service';
 import { OnboardingV3ModalProgressService } from './modal/onboarding-modal-progress.service';
+import { ModalCloseButtonComponent } from '../../common/components/modal-close-button/modal-close-button.component';
 
 const COMPONENTS = [
   OnboardingV3ModalComponent,
@@ -30,7 +31,12 @@ const PROVIDERS = [
   OnboardingV3ModalProgressService,
 ];
 
-const MODULES = [NgCommonModule, CommonModule, ReactiveFormsModule];
+const MODULES = [
+  NgCommonModule,
+  CommonModule,
+  ReactiveFormsModule,
+  ModalCloseButtonComponent,
+];
 
 /**
  * Lazy loaded module

@@ -54,12 +54,12 @@ export type ApiRequestOptions = {
 /**
  * API client class that uses Angular/HttpClient observables with our custom headers. Supports normal requests and uploads via POST.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ApiService {
   protected baseUrl: string = '/';
 
   constructor(
-    @Inject('ORIGIN_URL') baseUrl: string,
+    @Inject('ENGINE_URL') baseUrl: string,
     protected httpClient: HttpClient,
     protected cookie: CookieService
   ) {

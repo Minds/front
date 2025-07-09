@@ -1,5 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
-import { RESPONSE } from '../../../express.tokens';
+import { Inject, Injectable, RESPONSE_INIT } from '@angular/core';
 
 @Injectable()
 export class RedirectService {
@@ -15,13 +14,13 @@ export class BrowserRedirectService extends RedirectService {
 
 @Injectable()
 export class ServerRedirectService extends RedirectService {
-  constructor(@Inject(RESPONSE) private res) {
+  constructor(@Inject(RESPONSE_INIT) private res: ResponseInit) {
     super();
   }
 
   redirect(url: string, permanent: boolean = false): void {
     const code = permanent ? 301 : 302;
-    this.res.redirect(code, url);
-    this.res.end();
+    this.res.status = code;
+    this.res.headers['Location'] = url;
   }
 }

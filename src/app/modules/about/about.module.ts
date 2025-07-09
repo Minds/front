@@ -5,7 +5,6 @@ import {
 } from '@angular/common';
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
-import { HomepageV3Module } from '../homepage-v3/homepage-v3.module';
 import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
 import { ProductPageBaseComponent } from './product-pages/components/base/base.component';
 import { ProductPageHeroComponent } from './product-pages/components/hero/hero.component';
@@ -86,7 +85,6 @@ const routes: Routes = [
     NgCommonModule,
     CommonModule,
     RouterModule.forChild(routes),
-    HomepageV3Module,
     MarketingModule,
     MarkdownModule.forChild(),
   ],
