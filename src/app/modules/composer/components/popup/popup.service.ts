@@ -5,7 +5,7 @@ import { PopupComponent } from './popup.component';
  * Popup service that acts as a bridge between the singleton popup component
  * and the caller.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PopupService implements OnDestroy {
   /**
    * Target popup component instance

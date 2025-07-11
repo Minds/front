@@ -30,7 +30,7 @@ import { DOCUMENT } from '@angular/common';
 /**
  * Service for networks checkout flow.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NetworksCheckoutService implements OnDestroy {
   /** Whether a summary change is in progress. */
   public readonly summaryChangeInProgress$: BehaviorSubject<boolean> =

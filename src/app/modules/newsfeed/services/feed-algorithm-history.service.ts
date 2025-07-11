@@ -8,7 +8,7 @@ const FEED_ALGORITHM_STORAGE_KEY = 'feed:algorithm';
 /**
  * Stores feed algorithm history in storage
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FeedAlgorithmHistoryService {
   constructor(private storage: Storage) {}
 

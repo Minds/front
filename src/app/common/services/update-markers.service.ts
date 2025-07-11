@@ -6,7 +6,7 @@ import { SocketsService } from '../../services/sockets';
 import { map, concatAll } from 'rxjs/operators';
 import { ApiService } from '../api/api.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UpdateMarkersService {
   isLoggedIn: boolean = false;
   markersSubject = new BehaviorSubject([]);

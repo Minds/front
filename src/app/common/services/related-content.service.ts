@@ -75,7 +75,7 @@ const DEFAULT_FILTER_VALUE = 'activities';
  *
  * @todo: Support other kind of contexts
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RelatedContentService {
   protected context: RelatedContentContext;
 

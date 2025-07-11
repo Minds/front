@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { WalletOnchainTransferComponent } from './onchain-transfer.component';
+// import { WalletOnchainTransferComponent } from './onchain-transfer.component';
 import { ModalService } from '../../../../../services/ux/modal.service';
 
 /**
@@ -41,14 +41,13 @@ export class OnchainTransferModalService {
       let modal;
 
       try {
-        modal = this.modalService.present(WalletOnchainTransferComponent, {
-          injector: this.injector,
-        });
-
-        modal.result.then(() => {
-          modal = null;
-          subscriber.complete();
-        });
+        // modal = this.modalService.present(WalletOnchainTransferComponent, {
+        //   injector: this.injector,
+        // });
+        // modal.result.then(() => {
+        //   modal = null;
+        //   subscriber.complete();
+        // });
       } catch (e) {
         subscriber.error(e);
       }

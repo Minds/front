@@ -19,7 +19,7 @@ import { NotificationCountSocketsService } from './notification-count-sockets.se
  * Service handling the getting and updating
  * of notification counts using sockets
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NotificationService implements OnDestroy {
   /** @deprecated - not in use. */
   public onReceive: EventEmitter<any> = new EventEmitter();

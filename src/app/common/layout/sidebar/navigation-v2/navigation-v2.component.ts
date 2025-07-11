@@ -50,6 +50,7 @@ import { ChatReceiptService } from '../../../../modules/chat/services/chat-recei
 import { PermissionIntentsService } from '../../../services/permission-intents.service';
 import { SidebarMoreTriggerComponent } from '../../sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
 import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
+import { CommonModule } from '~/common/common.module';
 
 /**
  * V2 version of sidebar component.
@@ -65,6 +66,7 @@ import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
     RouterLinkActive,
     SidebarMoreTriggerComponent,
     AsyncPipe,
+    CommonModule,
   ],
 })
 export class SidebarNavigationV2Component implements OnInit, OnDestroy {

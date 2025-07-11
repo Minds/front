@@ -5,7 +5,7 @@ import { MindsVideoPlayerComponent } from '../../video-player/player.component';
 import { ScrollService } from '../../../../../services/ux/scroll';
 import { Session } from '../../../../../services/session';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class VideoAutoplayService implements OnDestroy {
   public muted: boolean = true;
 

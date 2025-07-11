@@ -6,7 +6,7 @@ import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
 import { isPlatformServer } from '@angular/common';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SuggestionsService {
   error$: BehaviorSubject<string> = new BehaviorSubject(null);
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);

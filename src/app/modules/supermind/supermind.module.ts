@@ -17,25 +17,12 @@ import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logge
 import { MindsOnlyRedirectGuard } from '../../common/guards/minds-only-redirect.guard';
 import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
-const routes: Routes = [
-  {
-    path: 'supermind',
-    component: SupermindConsoleComponent,
-    canActivate: [MindsOnlyRedirectGuard, loggedOutExplainerScreenGuard()],
-    children: [
-      { path: '', redirectTo: 'explore', pathMatch: 'full' as PathMatch },
-      { path: 'explore', component: SupermindConsoleExploreFeedComponent },
-      { path: ':listType', component: SupermindConsoleListComponent },
-    ],
-  },
-];
-
 @NgModule({
   imports: [
     NgCommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes),
+    RouterModule,
     CommonModule,
     ActivityModule,
     NoticesModule,

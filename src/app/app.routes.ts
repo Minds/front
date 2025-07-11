@@ -1,6 +1,4 @@
-import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { APP_BASE_HREF } from '@angular/common';
 
 import { AnalyticsModuleLazyRoutes } from './modules/analytics/analytics.lazy';
 import { AdminModuleLazyRoutes } from './modules/admin/admin.lazy';
@@ -28,6 +26,21 @@ import { SiteMembershipsLazyRoutes } from './modules/site-memberships/site-membe
 import { ChatModuleLazyRoutes } from './modules/chat/chat.lazy';
 import { HomepageContainerComponent } from './modules/homepage/homepage-container.component';
 
+import { routes as aboutRoutes } from './modules/about/about.module';
+import { routes as authRoutes } from './modules/auth/auth.module';
+import { jobRoutes } from './modules/jobs/jobs.routes';
+import { mediaRoutes } from './modules/media/media.routes';
+import { newsfeedRoutes } from './modules/newsfeed/newsfeed.routes';
+import { notificationRoutes } from './modules/notifications/notification.routes';
+import { searchRoutes } from './modules/search/search.routes';
+import { supermindRoutes } from './modules/supermind/supermind.routes';
+import { i18nRoutes } from './modules/i18n/i18n.routes';
+import { groupRoutes } from './modules/groups/groups.routes';
+import { brandingRoutes } from './modules/branding/branding.routes';
+import { boostRoutes } from './modules/boost/boost.routes';
+import { blockchainRoutes } from './modules/blockchain/blockchain.routes';
+import { devtoolRoutes } from './modules/devtools/devtools.routes';
+
 export const routes: Routes = [
   {
     path: '',
@@ -36,6 +49,21 @@ export const routes: Routes = [
       preventLayoutReset: true,
     },
   },
+
+  ...newsfeedRoutes,
+  ...aboutRoutes,
+  ...authRoutes,
+  ...blockchainRoutes,
+  ...boostRoutes,
+  ...brandingRoutes,
+  ...devtoolRoutes,
+  ...groupRoutes,
+  ...i18nRoutes,
+  ...jobRoutes,
+  ...mediaRoutes,
+  ...notificationRoutes,
+  ...searchRoutes,
+  ...supermindRoutes,
   AnalyticsModuleLazyRoutes,
   AdminModuleLazyRoutes,
   WalletModuleLazyRoutes,
@@ -52,10 +80,17 @@ export const routes: Routes = [
   CustomPagesModuleLazyRoutes,
   SiteMembershipsLazyRoutes,
   ChatModuleLazyRoutes,
-  // TODO: Find a way to move channel routes onto its own Module. They take priority and groups/blogs cannot be accessed
+  {
+    path: 'email-confirmation',
+    redirectTo: '/',
+    pathMatch: 'full' as PathMatch,
+  },
   {
     path: ':username',
-    redirectTo: ':username/',
+    redirectTo: ({ params }) => {
+      const username = params['username'];
+      return username + '/';
+    },
     pathMatch: 'full' as PathMatch,
   },
   {

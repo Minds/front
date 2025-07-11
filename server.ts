@@ -38,7 +38,7 @@ server.use(timeout('6s'));
 
 // gzip
 server.use(compression());
-// cookies
+// // cookies
 server.use(cookieparser());
 
 // SSR Engine
@@ -64,21 +64,21 @@ server.use(
 server.use('*', (req, res, next) => {
   // Log the request for debugging
   console.log('request', req.url);
-  import('./server-polyfills');
+  import('./server-polyfills').then(() => {
+    appEngine
+      .handle(req, { server: 'express', expressRequest: req })
+      .then((response) => {
+        return response ? writeResponseToNodeResponse(response, res) : next();
+      })
+      .catch((err) => {
+        const browserIndex = path.join(browserDistFolder, 'index.html');
+        console.error(err);
+        console.log('Skipping SSR. Loading: ' + browserIndex);
 
-  appEngine
-    .handle(req, { server: 'express', expressRequest: req })
-    .then((response) => {
-      return response ? writeResponseToNodeResponse(response, res) : next();
-    })
-    .catch((err) => {
-      const browserIndex = path.join(browserDistFolder, 'index.html');
-      console.error(err);
-      console.log('Skipping SSR. Loading: ' + browserIndex);
-
-      console.log(serverDistFolder, import.meta);
-      res.sendFile(browserIndex, () => next());
-    });
+        console.log(serverDistFolder, import.meta);
+        res.sendFile(browserIndex, () => next());
+      });
+  });
 });
 
 // Sentry.setupExpressErrorHandler(server);

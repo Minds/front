@@ -6,12 +6,15 @@ import {
 import { Subscription } from 'rxjs';
 import { ConnectWalletModalService } from '../../../../modules/blockchain/connect-wallet/connect-wallet-modal.service';
 import { SettingsV2WalletService } from '../../../../modules/settings-v2/other/wallet/wallet.service';
+import { CommonModule } from '~/common/common.module';
+import { NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'm-topbar__walletBalance',
   templateUrl: './topbar-wallet-balance.html',
   styleUrls: ['./topbar-wallet-balance.component.ng.scss'],
-  standalone: false,
+  imports: [CommonModule, NgIf, RouterLink],
 })
 export class TopbarWalletBalance {
   wallet: Wallet;

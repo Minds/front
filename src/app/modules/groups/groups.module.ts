@@ -21,7 +21,7 @@ import { GroupsCreator } from './create/create';
 import { GroupsMembershipsComponent } from './memberships/memberships.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { PathMatch } from '../../common/types/angular.types';
-import { FindGroupsButtonsComponent } from '../../common/standalone/groups/find-groups-buttons/find-groups-buttons.component';
+import { FindGroupsButtonsComponent } from '~/common/standalone/groups/find-groups-buttons/find-groups-buttons.component';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { NoticesModule } from '../notices/notices.module';
 import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
@@ -29,40 +29,40 @@ import { GroupsMembershipsListComponent } from './memberships/list/list.componen
 
 const routes: Routes = [
   {
-    path: 'groups/profile/:guid',
+    path: 'profile/:guid',
     redirectTo: 'group/:guid',
   },
   {
-    path: 'groups/profile/:guid/feed',
+    path: 'profile/:guid/feed',
     redirectTo: 'group/:guid/latest',
     pathMatch: 'full' as PathMatch,
   },
   {
-    path: 'groups/profile/:guid/activity',
+    path: 'profile/:guid/activity',
     redirectTo: 'group/:guid/latest',
     pathMatch: 'full' as PathMatch,
   },
   {
-    path: 'groups/profile/:guid/feed/review',
+    path: 'profile/:guid/feed/review',
     redirectTo: 'group/:guid/review',
   },
   {
-    path: 'groups/profile/:guid/members',
+    path: 'profile/:guid/members',
     redirectTo: 'group/:guid/members',
   },
   {
-    path: 'groups/profile/:guid/requests',
+    path: 'profile/:guid/requests',
     redirectTo: 'group/:guid/review',
   },
   {
-    path: 'groups/create',
+    path: 'create',
     component: GroupsCreator,
     data: {
       title: 'Create a group',
     },
   },
   {
-    path: 'groups/memberships',
+    path: 'memberships',
     canActivate: [loggedOutExplainerScreenGuard()],
     component: GroupsMembershipsComponent,
     data: {
@@ -70,8 +70,8 @@ const routes: Routes = [
     },
   },
   {
-    path: 'groups',
-    redirectTo: '/groups/memberships',
+    path: '',
+    redirectTo: '/memberships',
     pathMatch: 'full' as PathMatch,
   },
 ];

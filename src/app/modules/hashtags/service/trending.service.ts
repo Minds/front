@@ -6,7 +6,7 @@ import { map, switchAll, tap, throttleTime } from 'rxjs/operators';
 /**
  * Trending service fetches and caches in memory the first 50 trending hashtags in Minds
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TrendingService implements OnDestroy {
   /**
    * Tags observable subject

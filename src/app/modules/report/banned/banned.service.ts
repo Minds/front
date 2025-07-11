@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { Session } from '../../../services/session';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BannedService {
   constructor(
     private router: Router,

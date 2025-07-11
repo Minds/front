@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, Type } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { OnboardingV2Module } from '../onboarding-v2/onboarding.module';
 import { CommonModule } from '../../common/common.module';
 import { SearchSharedModule } from '../search/search-shared.module';
 import { NotificationModule } from '../notifications/notification.module';
@@ -27,7 +26,6 @@ const STANDALONE_COMPONENTS: Type<unknown>[] = [
     SearchSharedModule,
     NotificationModule,
     ModalsModule,
-    OnboardingV2Module,
     ReportModule,
     BlockchainModule,
     MessengerModule,

@@ -7,7 +7,7 @@ import { DiagnosticsInterface, SENTRY } from './diagnostics.service';
 
 export { DiagnosticsService } from './diagnostics.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ServerDiagnosticsService implements DiagnosticsInterface {
   readonly environment: string;
   constructor(

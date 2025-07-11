@@ -13,7 +13,7 @@ export type ChannelFeedResponse = {
   entities: ActivityEntity[];
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BoostLatestPostNoticeService {
   /**
    * Logged in user guid

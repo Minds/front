@@ -8,7 +8,7 @@ import {
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SelectCardService {
   constructor(private fetchPaymentMethods: FetchPaymentMethodsGQL) {}
 

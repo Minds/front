@@ -1,11 +1,12 @@
+import Plyr from 'plyr';
+import { Subject } from 'rxjs';
+import Hls from 'hls.js';
 import {
   PlyrDriver,
   PlyrDriverCreateParams,
   PlyrDriverDestroyParams,
   PlyrDriverUpdateSourceParams,
-} from 'ngx-plyr-mg';
-import Plyr from 'plyr';
-import { Subject } from 'rxjs';
+} from './plyr/plyr-driver';
 
 export class HlsjsPlyrDriver implements PlyrDriver {
   /**
@@ -27,11 +28,11 @@ export class HlsjsPlyrDriver implements PlyrDriver {
   availableQualities$: Subject<number[]> = new Subject();
 
   constructor(private autoload: boolean) {
-    const Hls = require('hls.js');
     this.hls = new Hls();
   }
 
   create(params: PlyrDriverCreateParams) {
+    console.log('loading hls');
     this.hls.attachMedia(params.videoElement);
 
     this.plyr = new Plyr(params.videoElement, params.options);
@@ -55,6 +56,7 @@ export class HlsjsPlyrDriver implements PlyrDriver {
   }
 
   load(src: string) {
+    console.log('loading' + src);
     if (!this.loaded && src) {
       this.loaded = true;
       this.hls.loadSource(src);

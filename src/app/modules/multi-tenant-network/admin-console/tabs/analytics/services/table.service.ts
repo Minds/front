@@ -27,7 +27,7 @@ const PAGE_SIZE: number = 24;
 /**
  * Service for fetching network admin analytics table data.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NetworkAdminAnalyticsTableService extends AbstractSubscriberComponent {
   /** Internal subject to hold whether a request is in progress. */
   private readonly _inProgress$: BehaviorSubject<boolean> =

@@ -58,5 +58,5 @@ export type SupermindComposerPayloadType = {
   refund_policy_agreed: boolean;
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SupermindCreationService {}

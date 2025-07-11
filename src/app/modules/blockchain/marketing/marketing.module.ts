@@ -13,13 +13,9 @@ import { WalletV2Service } from '../../wallet/components/wallet-v2.service';
 import { MarkdownModule } from 'ngx-markdown';
 import { MindsOnlyRedirectGuard } from '../../../common/guards/minds-only-redirect.guard';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
-    path: 'reward',
-    redirectTo: 'rewards',
-  },
-  {
-    path: 'rewards',
+    path: '',
     component: BlockchainMarketingRewardsV2Component,
     canActivate: [MindsOnlyRedirectGuard],
     data: {

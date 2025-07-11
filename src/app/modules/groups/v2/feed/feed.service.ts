@@ -20,7 +20,7 @@ const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 /**
  * Group feed component service, handles filtering and pagination
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GroupFeedService implements OnDestroy {
   private subscriptions: Subscription[] = [];
 

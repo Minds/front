@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { WalletTabHistoryService } from '../tab-history.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DefaultRedirectGuard {
   constructor(
     private router: Router,

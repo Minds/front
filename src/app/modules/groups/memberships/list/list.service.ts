@@ -22,7 +22,7 @@ export type GroupsMembershipsListGetParams = {
 /**
  * Perform tasks related to the list of a user's groups
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GroupsMembershipsListService {
   constructor(private api: ApiService) {}
 

@@ -12,7 +12,7 @@ export interface TokenApproveAndCallParam {
 
 export type TokenApproveAndCallParams = TokenApproveAndCallParam[];
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TokenContractService {
   protected instance: any;
 

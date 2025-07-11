@@ -10,7 +10,7 @@ const SUPERMIND_BANNER_POPUP_STORAGE_KEY = 'supermind-banner-popup';
 /**
  * Handles whether and when to show the supermind banner popup
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SupermindBannerPopupService
   extends AbstractSubscriberComponent
   implements OnDestroy

@@ -34,7 +34,7 @@ export type GroupJoinOptions = {
  * Service that handles group membership changes
  * (a.k.a. join, leave, accept/decline invitation, cancel request)
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GroupMembershipService implements OnDestroy {
   private base: string = 'api/v1/groups/';
 

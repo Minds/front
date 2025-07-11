@@ -24,7 +24,7 @@ import {
 } from './multi-factor-auth-service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MultiFactorHttpInterceptorService implements HttpInterceptor {
   constructor(
     private multiFactorModalService: MultiFactorLazyService,

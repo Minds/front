@@ -29,7 +29,7 @@ interface WireModalPresentOptions {
 /**
  * Handles Wire modal display
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WireModalService {
   /**
    * Constructor

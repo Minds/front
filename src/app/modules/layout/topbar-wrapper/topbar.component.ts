@@ -6,6 +6,9 @@ import { BehaviorSubject } from 'rxjs';
 import { TopbarComponent } from '~/common/layout/topbar/topbar.component';
 import { SearchSharedModule } from '~/modules/search/search-shared.module';
 import { AsyncPipe, NgIf, NgTemplateOutlet } from '@angular/common';
+import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
+import { CommonModule } from '~/common/common.module';
+import { TopbarWalletBalance } from '~/common/layout/topbar/topbar-wallet-balance/topbar-wallet-balance.component';
 
 @Component({
   selector: 'm-topbarwrapper',
@@ -17,6 +20,9 @@ import { AsyncPipe, NgIf, NgTemplateOutlet } from '@angular/common';
     SearchSharedModule,
     NgIf,
     NgTemplateOutlet,
+    IfTenantDirective,
+    CommonModule,
+    TopbarWalletBalance,
   ],
 })
 export class TopbarWrapperComponent {

@@ -6,7 +6,7 @@ import { DiscoveryService } from '../discovery.service';
 
 export type DiscoveryTrend = any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DiscoveryTrendsService {
   isPlusPage$ = this.discoveryService.isPlusPage$;
   trends$: BehaviorSubject<DiscoveryTrend[]> = new BehaviorSubject([]);

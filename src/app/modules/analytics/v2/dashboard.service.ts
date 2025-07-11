@@ -20,7 +20,7 @@ let _state: UserState = fakeData[0];
 // Compare objs
 const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AnalyticsDashboardService {
   // Initialize the BehaviorSubject with fakeData
   private store = new BehaviorSubject<UserState>(_state);

@@ -8,7 +8,7 @@ import { GetPaymentsRequest, Payment } from './payment-history.types';
 /**
  * Service for retrieving payment history.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SettingsV2PaymentHistoryService {
   // whether there is more data to be requested.
   public readonly hasMore$: BehaviorSubject<boolean> =

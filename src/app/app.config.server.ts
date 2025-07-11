@@ -24,6 +24,7 @@ import {
 import { provideServiceWorker } from '@angular/service-worker';
 
 import { PlotlyModule } from '@mindsorg/angular-plotly.js';
+import { HTTP_TRANSFER_CACHE_ORIGIN_MAP } from '@angular/common/http';
 
 const serverConfig: ApplicationConfig = {
   providers: [
@@ -56,6 +57,13 @@ const serverConfig: ApplicationConfig = {
         return `${http}://${req.headers.get('host')}`;
       },
       deps: [REQUEST],
+    },
+    {
+      provide: HTTP_TRANSFER_CACHE_ORIGIN_MAP,
+      useValue: {
+        'https://localhost:4200': 'https://www.minds.com',
+        'https://www.minds.com': 'https://localhost:4200',
+      },
     },
     importProvidersFrom(
       PlotlyModule.forRoot({

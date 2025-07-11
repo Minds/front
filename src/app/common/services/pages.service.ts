@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
  *
  * @author Ben Hayward
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PagesService {
   private internalPageRegex: RegExp = /^\/?p\/./; // matches 'p/' in first and second position.
 

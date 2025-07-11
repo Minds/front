@@ -11,7 +11,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 /**
  * Service to create the network root user
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NetworksCreateRootUserService {
   public readonly inProgress$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);

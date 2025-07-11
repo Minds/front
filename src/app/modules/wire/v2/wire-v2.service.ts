@@ -240,7 +240,7 @@ interface DataValidation {
 /**
  * Wire v2 service, using v1 Wire as low-level implementation
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WireV2Service implements OnDestroy {
   /**
    * The entity that's going to receive the payment

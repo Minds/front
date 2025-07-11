@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { Client } from '../../services/api';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CommentsService {
   queryParamsSubscription$: Subscription;
   entityGuid: string;

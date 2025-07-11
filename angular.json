@@ -136,16 +136,14 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "prerender": false
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
-              "ssr": {
-                "entry": "server.ts"
-              },
               "prerender": false
             },
             "hmr": {

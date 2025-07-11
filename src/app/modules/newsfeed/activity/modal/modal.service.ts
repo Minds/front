@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
 import { AnalyticsService } from '../../../../services/analytics';
 import { ModalService } from '../../../../services/ux/modal.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ActivityModalService {
   protected modalPager$: Subscription;
   protected asyncEntity$: Subscription;

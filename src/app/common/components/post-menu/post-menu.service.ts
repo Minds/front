@@ -19,7 +19,7 @@ import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-token
 import { PermissionsService } from '../../services/permissions.service';
 import { BoostCancelModalService } from '../../../modules/boost/console-v2/services/cancel-modal.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PostMenuService {
   entityOwner: MindsUser;
   entity: any;

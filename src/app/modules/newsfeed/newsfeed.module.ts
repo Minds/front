@@ -42,52 +42,10 @@ import { NewsfeedTabsComponent } from './feeds/tabs/tabs.component';
 import { NewsfeedGqlComponent } from './feeds/newsfeed-gql.component';
 import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
-const routes: Routes = [
-  {
-    path: 'newsfeed',
-    component: NewsfeedComponent,
-    children: [
-      { path: '', redirectTo: 'subscriptions', pathMatch: 'full' as PathMatch },
-      { path: 'suggested', redirectTo: 'subscriptions' },
-      { path: 'top', redirectTo: 'global/top', pathMatch: 'full' as PathMatch },
-      {
-        path: 'global',
-        redirectTo: 'global/top',
-        pathMatch: 'full' as PathMatch,
-      },
-      { path: 'global/:algorithm', redirectTo: 'subscriptions' },
-      {
-        path: 'subscribed',
-        redirectTo: 'subscriptions',
-        pathMatch: 'full' as PathMatch,
-      },
-      {
-        path: 'subscriptions',
-        component: NewsfeedGqlComponent,
-        pathMatch: 'full' as PathMatch,
-        canActivate: [FeedAlgorithmRedirectGuard],
-      },
-      {
-        path: 'subscriptions/:algorithm',
-        component: NewsfeedGqlComponent,
-        canDeactivate: [CanDeactivateGuardService],
-        data: {
-          title: 'Newsfeed',
-          description: 'Posts from channels your subscribe to',
-          ogImage: '/assets/og-images/newsfeed-v3.png',
-          ogImageWidth: 1200,
-          ogImageHeight: 1200,
-        },
-      },
-    ],
-  },
-  { path: 'newsfeed/:guid', component: NewsfeedSingleComponent },
-];
-
 @NgModule({
   imports: [
     NgCommonModule,
-    RouterModule.forChild(routes),
+    RouterModule,
     NgFormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -123,11 +81,7 @@ const routes: Routes = [
     NewsfeedTabsComponent,
     NewsfeedGqlComponent,
   ],
-  providers: [
-    NewsfeedService,
-    FeedAlgorithmHistoryService,
-    FeedAlgorithmRedirectGuard,
-  ],
+  providers: [NewsfeedService, FeedAlgorithmHistoryService],
   exports: [NewsfeedEntityComponent, NewsfeedComponent, FeedGridComponent],
 })
 export class NewsfeedModule {}

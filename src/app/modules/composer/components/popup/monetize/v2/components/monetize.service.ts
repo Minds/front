@@ -5,7 +5,7 @@ import {
   SupportTiersService,
 } from '../../../../../../wire/v2/support-tiers.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ComposerMonetizeV2Service {
   supportTiers$: Observable<SupportTier[]> = this.supportTiersService.list$;
   loaded$: Observable<boolean> = this.supportTiersService.loaded$;

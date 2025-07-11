@@ -3,7 +3,7 @@ import { Client } from './api/client';
 import { PushNotificationService } from '../common/services/push-notification.service';
 import { Session } from './session';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(
     protected readonly client: Client,

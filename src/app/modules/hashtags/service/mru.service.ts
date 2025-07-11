@@ -4,7 +4,7 @@ import { Storage } from '../../../services/storage';
 /**
  * Most recently used hashtags service. Based off default storage service.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MruService {
   constructor(protected storage: Storage) {}
 

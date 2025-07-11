@@ -7,7 +7,7 @@ const MIN_AUDIO_LENGTH_SECONDS: number = 2;
 /**
  * Service for recording audio.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AudioRecordingService implements OnDestroy {
   /** Array of audio chunks. */
   private chunks: Blob[] = [];

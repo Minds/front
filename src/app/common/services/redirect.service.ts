@@ -1,18 +1,18 @@
 import { Inject, Injectable, RESPONSE_INIT } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RedirectService {
   public redirect(url: string): void {}
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BrowserRedirectService extends RedirectService {
   redirect(url: string): void {
     window.location.href = url;
   }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ServerRedirectService extends RedirectService {
   constructor(@Inject(RESPONSE_INIT) private res: ResponseInit) {
     super();

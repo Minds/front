@@ -20,7 +20,7 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 /**
  * Service that holds group information using Observables
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GroupService implements OnDestroy {
   private baseEndpoint: string = 'api/v1/groups/';
 

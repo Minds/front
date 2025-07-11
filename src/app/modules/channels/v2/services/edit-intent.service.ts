@@ -5,7 +5,7 @@ import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
 import { UserAvatarService } from '../../../../common/services/user-avatar.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChannelEditIntentService implements OnDestroy {
   /**
    * Open modal subscription

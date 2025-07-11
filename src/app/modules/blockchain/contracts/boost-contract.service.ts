@@ -4,7 +4,7 @@ import { TokenContractService } from './token-contract.service';
 import { isPlatformBrowser } from '@angular/common';
 import { toBeHex } from 'ethers';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BoostContractService {
   protected instance: any;
 

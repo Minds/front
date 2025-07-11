@@ -18,7 +18,7 @@ import { ApolloQueryResult } from '@apollo/client';
 /**
  * Service for getting a count of a chat rooms total members.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TotalChatRoomMembersService {
   /** Subject to reload count. */
   private readonly reload$: BehaviorSubject<void> = new BehaviorSubject<void>(

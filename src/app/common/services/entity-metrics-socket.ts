@@ -12,7 +12,7 @@ type MetricsChangedEvent = {
  * Service that can be used to subscribe to entity metrics event changes via sockets for a given
  * entity guid. To use, be sure to call listen, or you will not get any outputted values.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EntityMetricsSocketService implements OnDestroy {
   /** @type { BehaviorSubject<number> } - used within this instance to set new values for thumbs up count */
   private readonly thumbsUpCountSubject$: BehaviorSubject<number> =

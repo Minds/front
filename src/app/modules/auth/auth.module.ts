@@ -16,7 +16,7 @@ import { RegisterComponent } from './register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { MarketingModule } from '../marketing/marketing.module';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
@@ -50,7 +50,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     NgCommonModule,
-    RouterModule.forChild(routes),
+    RouterModule,
     NgFormsModule,
     ReactiveFormsModule,
     CommonModule,

@@ -148,7 +148,7 @@ export const ACTIVITY_V2_MEDIUM_STATUS_MAX_LENGTH = 250;
 // entity for which metrics events can be subscribed to.
 type MetricsSubscribableEntity = { guid: string };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ActivityService implements OnDestroy {
   protected subscriptions: Subscription[] = [];
   readonly siteUrl: string;

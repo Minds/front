@@ -7,9 +7,11 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { CommonModule as NgCommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { FeedService } from '../../../modules/channels/v2/feed/feed.service';
 import { DateRangeModalService } from '../date-range-modal/date-range-modal.service';
+import { CommonModule } from '~/common/common.module';
 
 /**
  * Feed filter options
@@ -57,7 +59,7 @@ export interface FeedFilterDateRange {
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'feed-filter.component.html',
   styleUrls: ['feed-filter.component.ng.scss'],
-  standalone: false,
+  imports: [NgCommonModule, CommonModule],
 })
 export class FeedFilterComponent implements OnInit {
   subscriptions: Array<Subscription>;

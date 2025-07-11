@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  OnDestroy,
-  Injector,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormControl,

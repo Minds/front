@@ -23,7 +23,7 @@ import {
 } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 import isMobile from '../../../helpers/is-mobile';
-import Macy from 'macy';
+import type Macy from 'macy';
 
 /**
  * Grid view for feeds. Used in pro and gallery mode.
@@ -53,37 +53,39 @@ export class FeedGridComponent
   ) {}
 
   ngOnInit() {
-    this.macyInstance = new Macy({
-      container: this.elementRef.nativeElement,
-      columns: this.maxColumns,
-      trueOrder: true,
-      margin: {
-        x: 16,
-        y: 16,
-      },
-      //mobileFirst: true,
-      breakAt: {
-        600: 1,
-        900: 2,
-        1028: 3,
-      },
-    });
-
-    this.macyInstance.runOnImageLoad(() => {
-      this.recalculate();
-    }, true);
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.recalculateSubscription = timer(0, 1000).subscribe(() =>
-        this.recalculate()
-      );
+    if (isPlatformServer(this.platformId)) {
+      return;
     }
-
-    this.windowResizeSubscription = fromEvent(window, 'resize')
-      .pipe(debounceTime(300))
-      .subscribe((event) => {
-        this.recalculate();
+    import('macy').then((macy: Macy) => {
+      this.macyInstance = new macy({
+        container: this.elementRef.nativeElement,
+        columns: this.maxColumns,
+        trueOrder: true,
+        margin: {
+          x: 16,
+          y: 16,
+        },
+        //mobileFirst: true,
+        breakAt: {
+          600: 1,
+          900: 2,
+          1028: 3,
+        },
       });
+      this.macyInstance.runOnImageLoad(() => {
+        this.recalculate();
+      }, true);
+      if (isPlatformBrowser(this.platformId)) {
+        this.recalculateSubscription = timer(0, 1000).subscribe(() =>
+          this.recalculate()
+        );
+      }
+      this.windowResizeSubscription = fromEvent(window, 'resize')
+        .pipe(debounceTime(300))
+        .subscribe((event) => {
+          this.recalculate();
+        });
+    });
   }
 
   ngAfterViewInit() {

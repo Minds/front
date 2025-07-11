@@ -20,11 +20,9 @@ import { Web3ModalModule } from '@mindsorg/web3modal-angular';
 import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 import { Modal } from '~/common/components/modal/modal.component';
 
-const cryptoRoutes: Routes = [];
-
 @NgModule({
   imports: [
-    RouterModule.forChild(cryptoRoutes),
+    RouterModule,
     NgCommonModule,
     CommonModule,
     FormsModule,

@@ -5,7 +5,7 @@ import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-sel
 import { AnalyticsService } from '../../../services/analytics';
 import { isPlatformBrowser } from '@angular/common';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NewsfeedService {
   allHashtags: boolean = false;
   onReloadFeed: EventEmitter<boolean> = new EventEmitter<boolean>();

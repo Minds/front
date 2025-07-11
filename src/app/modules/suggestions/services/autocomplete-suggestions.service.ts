@@ -3,7 +3,7 @@ import { Client } from '../../../services/api/client';
 import autobind from '../../../helpers/autobind';
 import { Session } from '../../../services/session';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AutocompleteSuggestionsService {
   constructor(
     private client: Client,

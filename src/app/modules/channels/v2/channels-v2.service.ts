@@ -23,7 +23,7 @@ import { ActivatedRoute } from '@angular/router';
 /**
  * Service that holds a channel information using Observables
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChannelsV2Service {
   /**
    * Channel GUID

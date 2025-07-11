@@ -9,7 +9,7 @@ import { CDN_URL } from '../../../../common/injection-tokens/url-injection-token
 /**
  * SEO meta headers service for groups
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GroupSeoService {
   /**
    * Constructor

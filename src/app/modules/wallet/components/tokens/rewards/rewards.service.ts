@@ -11,7 +11,7 @@ export type ContributionMetric = {
   score: number;
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WalletTokenRewardsService {
   /**
    * Date in unix seconds observable

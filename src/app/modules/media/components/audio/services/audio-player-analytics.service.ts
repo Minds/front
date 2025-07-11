@@ -17,7 +17,7 @@ const SEEK_EVENT_DEBOUNCE_TIME: number = 2000;
 /**
  * Analytics service for the audio player.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AudioPlayerAnalyticsService implements OnDestroy {
   /** The context for the analytics service. */
   private context: SnowplowContext;

@@ -9,7 +9,7 @@ import { Router, ChildActivationEnd } from '@angular/router';
 import { WalletTabHistoryService } from '../tab-history.service';
 import { filter, take } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TabStorageGuard {
   constructor(
     private tabHistory: WalletTabHistoryService,

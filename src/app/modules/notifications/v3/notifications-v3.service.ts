@@ -34,7 +34,7 @@ export type Notification = {
   read: boolean;
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NotificationsV3Service {
   /**
    * When in progress

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ConfigsService } from '../../common/services/configs.service';
+import { MarketingModule } from '../marketing/marketing.module';
 
 /**
  * Auxilliary page with download links for various
@@ -9,7 +10,7 @@ import { ConfigsService } from '../../common/services/configs.service';
   selector: 'm-branding',
   templateUrl: 'branding.component.html',
   styleUrls: ['./branding.component.ng.scss'],
-  standalone: false,
+  imports: [MarketingModule],
 })
 export class BrandingComponent {
   readonly cdnAssetsUrl: string;

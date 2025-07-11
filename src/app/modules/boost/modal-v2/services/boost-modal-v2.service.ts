@@ -59,7 +59,7 @@ import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-in
 /**
  * Service for creation and submission of boosts.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BoostModalV2Service implements OnDestroy {
   // selected entity for boosting.
   public readonly entity$: BehaviorSubject<BoostableEntity> =

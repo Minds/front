@@ -8,7 +8,7 @@ import {
 /**
  * SEO meta headers service
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SeoService {
   /**
    * Constructor

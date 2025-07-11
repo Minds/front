@@ -46,7 +46,7 @@ export interface GroupedSupportTiers {
 /**
  *
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SupportTiersService {
   /**
    * Current entity GUID

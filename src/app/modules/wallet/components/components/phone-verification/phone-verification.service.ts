@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Session } from '../../../../../services/session';
-import { WalletPhoneVerificationComponent } from './phone-verification.component';
+// import { WalletPhoneVerificationComponent } from './phone-verification.component';
 import { ModalService } from '../../../../../services/ux/modal.service';
 
 /**
@@ -31,15 +31,15 @@ export class PhoneVerificationService {
       return;
     }
 
-    const modal = this.modalService.present(WalletPhoneVerificationComponent, {
-      data: {
-        onComplete: () => {
-          this.phoneVerified$.next(true);
-          modal.close();
-        },
-      },
-    });
+    // const modal = this.modalService.present(WalletPhoneVerificationComponent, {
+    //   data: {
+    //     onComplete: () => {
+    //       this.phoneVerified$.next(true);
+    //       modal.close();
+    //     },
+    //   },
+    // });
 
-    return modal.result;
+    // return modal.result;
   }
 }

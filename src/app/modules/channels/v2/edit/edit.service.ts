@@ -11,7 +11,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 /**
  * Hold edit component state and interact with the API
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChannelEditService {
   /**
    * Channel subject, should be immutable; Used for display purposes

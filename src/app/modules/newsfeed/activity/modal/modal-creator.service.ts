@@ -7,7 +7,7 @@ import {
 } from '../../../../services/analytics';
 import { ActivityEntity } from '../../activity/activity.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ActivityModalCreatorService {
   constructor(
     private modalService: ModalService,

@@ -17,7 +17,7 @@ import { Session } from '../../services/session';
     NgCommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild([]),
+    RouterModule,
     CommonModule,
     TokenOnboardingModule,
     MessengerModule,

@@ -6,7 +6,7 @@ import { GroupInviteComponent } from './invite.component';
 /**
  * Service to present invite modal and handle its response
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GroupInviteModalService {
   constructor(
     protected modalService: ModalService,

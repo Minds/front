@@ -16,7 +16,7 @@ import { ContextualizableEntity } from '../../../../../services/analytics';
  * State is synced with the global audio player service such that only
  * one audio player can be active at any time.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AudioPlayerService {
   /** The current audio track. */
   public readonly audioTrack$: BehaviorSubject<AudioTrack> =

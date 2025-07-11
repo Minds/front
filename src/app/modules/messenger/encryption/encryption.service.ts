@@ -3,7 +3,7 @@ import { Storage } from '../../../services/storage';
 import { Injectable } from '@angular/core';
 import { Session } from '../../../services/session';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MessengerEncryptionService {
   public reKeying: boolean = false;
 

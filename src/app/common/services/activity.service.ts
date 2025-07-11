@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ActivityService {
   public allowComment$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true

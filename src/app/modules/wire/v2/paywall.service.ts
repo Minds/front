@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiService, ApiResponse } from '../../../common/api/api.service';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PaywallService {
   constructor(private api: ApiService) {}
 

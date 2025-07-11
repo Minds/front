@@ -6,7 +6,7 @@ import { GroupEditComponent } from './edit.component';
 /**
  * Service to present Edit modal and handle its response
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GroupEditModalService {
   constructor(
     protected modalService: ModalService,

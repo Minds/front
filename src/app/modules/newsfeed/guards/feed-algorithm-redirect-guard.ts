@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
  * Redirects to route set in FeedAlgorithmHistoryService
  * if one exists
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FeedAlgorithmRedirectGuard {
   constructor(
     private router: Router,

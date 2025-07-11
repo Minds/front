@@ -6,7 +6,7 @@ import { ApiService } from '../../../common/api/api.service';
 /**
  * Suggested hashtags lookup service. RxJS-ready!
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SuggestedService {
   constructor(protected api: ApiService) {}
 

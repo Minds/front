@@ -15,7 +15,7 @@ export interface YoutubeStatusCounts {
   transferring: number;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class YoutubeMigrationService {
   endpoint = 'api/v3/media/youtube-importer/';
   channels: YoutubeChannel[];

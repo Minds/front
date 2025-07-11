@@ -1,18 +1,18 @@
 import { Inject, Injectable, RESPONSE_INIT } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class HeadersService {
   public setCode(code: number): void {}
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BrowserHeadersService extends HeadersService {
   setCode(code: number): void {
     // nothing to do
   }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ServerHeadersService extends HeadersService {
   constructor(@Inject(RESPONSE_INIT) private res: ResponseInit) {
     super();

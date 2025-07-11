@@ -24,7 +24,7 @@ export type InteractionType =
   | 'subscribers'
   | 'mutual-subscribers';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class InteractionsModalDataService {
   /**
    * The entity guid

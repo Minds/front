@@ -15,7 +15,7 @@ export type VideoSource = {
   src: string;
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class VideoPlayerService implements OnDestroy {
   /**
    * @var string

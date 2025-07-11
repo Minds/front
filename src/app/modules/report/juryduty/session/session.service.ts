@@ -2,7 +2,7 @@ import { Client } from '../../../../services/api';
 import { Injectable } from '@angular/core';
 import { ReportService } from './../../../../common/services/report.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class JurySessionService {
   reportReasons = this.reportService.reasons;
 

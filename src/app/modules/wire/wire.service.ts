@@ -25,7 +25,7 @@ export interface WireStruc {
   sourceEntityGuid?: string | null;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WireService {
   public wireSent: EventEmitter<any> = new EventEmitter<any>();
 

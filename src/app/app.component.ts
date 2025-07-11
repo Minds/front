@@ -49,6 +49,7 @@ import { ComposerModule } from './modules/composer/composer.module';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { TopbarWrapperComponent } from './modules/layout/topbar-wrapper/topbar.component';
 import { IfTenantDirective } from './common/directives/if-tenant.directive';
+import { NewsfeedModule } from './modules/newsfeed/newsfeed.module';
 
 @Component({
   selector: 'm-app',
@@ -60,6 +61,9 @@ import { IfTenantDirective } from './common/directives/if-tenant.directive';
     NgIf,
     HomepageModule,
     IfTenantDirective,
+
+    // Modules
+    NewsfeedModule,
   ],
 })
 export class Minds implements OnInit, OnDestroy {

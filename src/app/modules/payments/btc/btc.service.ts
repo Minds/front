@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BTCComponent } from './btc.component';
 import { ModalService } from '../../../services/ux/modal.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BTCService {
   constructor(private modalService: ModalService) {}
 

@@ -19,7 +19,7 @@ const noOp = () => {};
 /**
  * Composer modal
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 @Component({
   selector: 'm-composer__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,

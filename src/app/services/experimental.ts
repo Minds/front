@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Session } from './session';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class Experimental {
   constructor(private session: Session) {}
 

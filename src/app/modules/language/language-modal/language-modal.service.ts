@@ -2,7 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { LanguageModalComponent } from './language-modal.component';
 import { ModalService } from '../../../services/ux/modal.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LanguageModalService {
   /**
    * Constructor

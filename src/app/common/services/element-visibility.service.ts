@@ -4,7 +4,7 @@ import { Observable, Subject, Subscription, firstValueFrom } from 'rxjs';
 
 import { ScrollService } from '../../services/ux/scroll';
 import { IntersectionObserverService } from './intersection-observer.service';
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ElementVisibilityService implements OnDestroy {
   /** The element that we are trying to observe the visibility of */
   protected elementRef: ElementRef;

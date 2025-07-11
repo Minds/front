@@ -6,7 +6,7 @@ import { SupportTier, SupportTiersService } from '../../support-tiers.service';
 /**
  * Two-way logic for shop subscription tier selector
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ShopService implements OnDestroy {
   /**
    * Currently selected ID, might be manually changed or auto-selected by changing Wire values

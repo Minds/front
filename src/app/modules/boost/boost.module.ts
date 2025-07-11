@@ -26,7 +26,7 @@ import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 const boostRoutes: Routes = [
   {
-    path: 'boost/boost-console',
+    path: 'boost-console',
     component: BoostConsoleV2Component,
     canActivate: [
       loggedOutExplainerScreenGuard(),

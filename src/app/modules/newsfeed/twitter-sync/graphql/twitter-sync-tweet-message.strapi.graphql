@@ -1,9 +1,0 @@
-query TwitterSyncTweetMessage {
-  twitterSyncTweetText {
-    data {
-      attributes {
-        tweetText
-      }
-    }
-  }
-}

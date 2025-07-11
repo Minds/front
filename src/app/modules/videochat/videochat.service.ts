@@ -9,7 +9,7 @@ export type JitsiConfig = {
   username: string;
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class VideoChatService {
   static heartBeatIntervalSeconds = 5;
 

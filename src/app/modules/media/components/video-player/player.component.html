@@ -16,7 +16,7 @@
       <ng-container *ngTemplateOutlet="placeholder"></ng-container>
     </ng-container>
     <plyr
-      *ngIf="(sources$ | async)?.length"
+      *ngIf="(sources$ | async)?.length && lazyModuleReady"
       style="display: block; width: 100%; height: 100%"
       [plyrDriver]="plyrDriver$ | async"
       [plyrPoster]="service.poster$ | async"

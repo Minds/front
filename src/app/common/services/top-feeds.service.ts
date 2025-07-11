@@ -6,7 +6,7 @@ import { FeedsService } from './feeds.service';
 /**
  * Wrapper for top feeds variant of feeds service.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TopFeedService extends FeedsService {
   endpoint = 'api/v3/newsfeed/feed/unseen-top';
   limit = new BehaviorSubject(12);

@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { MindsUser } from '../../../interfaces/entities';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LiquiditySpotService {
   entity$: Subject<MindsUser> = new Subject();
 

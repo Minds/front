@@ -367,7 +367,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
+      subscription?.unsubscribe();
     }
   }
 

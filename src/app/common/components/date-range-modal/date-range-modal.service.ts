@@ -3,7 +3,7 @@ import { DateRangeModalComponent } from './date-range-modal.component';
 import { FeedFilterDateRange } from '../feed-filter/feed-filter.component';
 import { ModalService } from '../../../services/ux/modal.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DateRangeModalService {
   /**
    * Constructor

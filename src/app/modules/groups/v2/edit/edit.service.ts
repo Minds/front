@@ -7,7 +7,7 @@ import { MindsGroup } from '../group.model';
 /**
  * Hold edit modal component state and interact with the API
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GroupEditService {
   baseEndpoint: string;
   /**

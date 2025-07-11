@@ -17,7 +17,7 @@ import { ConfirmV2Component } from '../modals/confirm-v2/confirm.component';
 /**
  * Service relating to actions of the supermind receiver (replies)
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SupermindReplyService implements OnDestroy {
   /**
    * We create a new injector so that there is a new ComposerService

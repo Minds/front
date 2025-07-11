@@ -42,17 +42,17 @@ import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
 
 const routes: Routes = [
   {
-    path: 'group/:guid',
-    redirectTo: 'group/:guid/latest',
+    path: ':guid',
+    redirectTo: ':guid/latest',
     pathMatch: 'full',
   },
   {
-    path: 'group/:guid/feed',
-    redirectTo: 'group/:guid/latest',
+    path: ':guid/feed',
+    redirectTo: ':guid/latest',
     pathMatch: 'full',
   },
   {
-    path: 'group/:guid/:view',
+    path: ':guid/:view',
     component: GroupComponent,
   },
 ];

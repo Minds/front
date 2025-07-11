@@ -12,7 +12,7 @@ import { IsTenantService } from '../services/is-tenant.service';
  * Prevents minds.com users from accessing
  * routes that are only relevant on tenant sites
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TenantOnlyRedirectGuard {
   constructor(
     private isTenant: IsTenantService,

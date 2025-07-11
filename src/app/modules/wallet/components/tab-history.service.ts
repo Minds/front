@@ -5,7 +5,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '../../../services/storage';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WalletTabHistoryService {
   constructor(private storage: Storage) {}
 

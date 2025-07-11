@@ -20,7 +20,7 @@ import { MindsGroup } from '../../group.model';
 /**
  * Perform tasks related to the list of a group's members
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GroupMembersListService {
   constructor(private api: ApiService) {}
 

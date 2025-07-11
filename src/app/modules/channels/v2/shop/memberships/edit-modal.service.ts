@@ -3,7 +3,7 @@ import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { ChannelShopMembershipsEditComponent } from './edit.component';
 import { ModalService } from '../../../../../services/ux/modal.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChannelShopMembershipsEditModalService {
   /**
    * Constructor

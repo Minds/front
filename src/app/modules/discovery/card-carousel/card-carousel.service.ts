@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Client } from '../../../services/api';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CardCarouselService {
   searchCards$: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);

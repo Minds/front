@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 /**
  * Service responsible to interact with Minds engine to fetch results on account quality
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class QualityScoreService {
   constructor(private apiService: ApiService) {}
 

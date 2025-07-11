@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenContractService } from './token-contract.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WireContractService {
   protected instance: any;
 

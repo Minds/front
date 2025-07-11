@@ -10,7 +10,7 @@ import {
  * Used to get a boosted post to be displayed
  * via the featured content component
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FeaturedContentService implements OnDestroy {
   offset = 0;
   maximumOffset = 0;

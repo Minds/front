@@ -31,7 +31,7 @@ const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 /**
  * Channel feed component service, handles filtering and pagination
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FeedService {
   /**
    * Channel GUID state

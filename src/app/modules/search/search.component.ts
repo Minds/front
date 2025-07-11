@@ -4,6 +4,15 @@ import {
   Component,
   Injector,
 } from '@angular/core';
+import { CommonModule as NgCommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
+import { CommonModule } from '../../common/common.module';
+
+import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
+import { SuggestionsModule } from '../suggestions/suggestions.module';
+import { SearchSharedModule } from './search-shared.module';
+
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ConfigsService } from '../../common/services/configs.service';
 import {
@@ -47,6 +56,7 @@ import { PermissionsService } from '../../common/services/permissions.service';
 import { ComposerModalService } from '../composer/components/modal/modal.service';
 import { SiteService } from '../../common/services/site.service';
 import { Session } from '../../services/session';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const PAGE_SIZE = 12;
 
@@ -61,7 +71,16 @@ const CHANNELS_AND_GROUPS_PAGE_SIZE = 36;
     FeedsService, // The settings modal relies on this
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [
+    NgCommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    DiscoverySharedModule,
+    SuggestionsModule,
+    SearchSharedModule,
+  ],
 })
 export class SearchComponent {
   query: string = '';

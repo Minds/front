@@ -300,15 +300,7 @@ const MINDS_DIRECTIVES = [
   ThrottledClickDirective,
   ShowOnHoverDirective,
 ];
-// ------------------------------------
-// ------------------------------------
-const routes: Routes = [
-  {
-    path: 'email-confirmation',
-    redirectTo: '/',
-    pathMatch: 'full' as PathMatch,
-  },
-];
+
 // ------------------------------------
 // ------------------------------------
 @NgModule({
@@ -320,7 +312,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    RouterModule.forChild(routes),
     MarkdownModule.forChild(),
     IfTenantDirective,
   ],

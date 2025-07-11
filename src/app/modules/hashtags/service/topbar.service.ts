@@ -6,7 +6,7 @@ type Hashtag = {
   selected: boolean;
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TopbarHashtagsService {
   selectionChange: EventEmitter<{
     hashtag: Hashtag;

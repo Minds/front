@@ -8,7 +8,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
  * Service to handle redirection to SendWyre pay.
  * @author Ben Hayward
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SendWyreService {
   // Amount to be purchased in USD.
   public amountUsd: string = '40';

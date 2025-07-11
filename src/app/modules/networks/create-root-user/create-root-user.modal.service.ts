@@ -16,7 +16,7 @@ export interface CreateRootUserEvent {
 /**
  * Service to present create network root user modal and handle its response
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NetworksCreateRootUserModalService {
   constructor(
     protected modalService: ModalService,

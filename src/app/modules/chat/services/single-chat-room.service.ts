@@ -20,7 +20,7 @@ import { QueryRef } from 'apollo-angular';
 /**
  * Service for management of data for a single chat room.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SingleChatRoomService implements OnDestroy {
   /** Chat room. */
   private _chatRoom$: BehaviorSubject<ChatRoomEdge> =

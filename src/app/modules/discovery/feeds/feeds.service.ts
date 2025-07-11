@@ -28,7 +28,7 @@ export type DiscoveryFeedsContentFilter =
   | 'preferred';
 export type DiscoveryFeedsNsfw = number[];
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DiscoveryFeedsService {
   entities$ = this.feedsService.feed;
   inProgress$ = this.feedsService.inProgress;

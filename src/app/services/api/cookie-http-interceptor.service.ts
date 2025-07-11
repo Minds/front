@@ -18,7 +18,7 @@ import * as xhr2 from 'xhr2';
 
 import * as express from 'express';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CookieHttpInterceptorService implements HttpInterceptor {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,

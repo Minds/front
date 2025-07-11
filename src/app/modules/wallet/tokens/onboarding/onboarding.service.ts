@@ -4,7 +4,7 @@ import { TokenOnChainOnboardingComponent } from './onchain/onchain.component';
 import { TokenCompletedOnboardingComponent } from './completed/completed.component';
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TokenOnboardingService {
   slides = [
     TokenIntroductionOnboardingComponent,

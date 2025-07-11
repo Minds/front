@@ -23,7 +23,7 @@ const POPULAR_LANGUAGE_CODES = ['en', 'es', 'de', 'fr', 'th', 'it'];
 /**
  * Language service
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LanguageService {
   /**
    * Current language selected by user

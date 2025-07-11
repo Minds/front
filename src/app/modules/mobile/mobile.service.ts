@@ -5,7 +5,7 @@ import { Session } from '../../services/session';
 const RELEASES_JSON_URL =
   'https://cdn-assets.minds.com/android/releases/releases.json';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MobileService {
   releases: any[] = [];
 

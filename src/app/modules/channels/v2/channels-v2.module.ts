@@ -46,6 +46,7 @@ import { ChannelAddLinksTriggerComponent } from './about/add-links-trigger/add-l
 import { ChannelActionsPostSubscriptionsComponent } from './actions/post-subscriptions.component';
 import { ModalCloseButtonComponent } from '~/common/components/modal-close-button/modal-close-button.component';
 import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
+import { FeedFilterComponent } from '~/common/components/feed-filter/feed-filter.component';
 
 /**
  * Generally available components
@@ -116,6 +117,7 @@ const PROVIDERS = [ChannelEditModalService];
     SupermindSharedModule,
     ModalCloseButtonComponent,
     IfTenantDirective,
+    FeedFilterComponent,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

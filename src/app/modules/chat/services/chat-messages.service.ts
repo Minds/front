@@ -35,7 +35,7 @@ import { isEqual } from 'lodash';
 /** Size of an individual page. */
 export const PAGE_SIZE: number = 24;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChatMessagesService extends AbstractSubscriberComponent {
   /** Whether request is in progress. */
   private readonly _inProgress$: BehaviorSubject<boolean> =

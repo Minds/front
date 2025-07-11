@@ -2,7 +2,7 @@ import { Storage } from '../../../services/storage';
 import { Injectable } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MessengerSounds {
   private sounds = {
     new: new Audio(),

@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CommonModule } from '~/common/common.module';
+import { MarketingModule } from '../marketing/marketing.module';
 
 @Component({
   selector: 'm-i18n__marketing',
@@ -8,6 +10,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     'marketing.component.ng.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [CommonModule, MarketingModule],
 })
 export class I18nMarketingComponent {}

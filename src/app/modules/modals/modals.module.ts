@@ -23,7 +23,7 @@ import { IfTenantDirective } from '~/common/directives/if-tenant.directive';
   imports: [
     NgCommonModule,
     CommonModule,
-    RouterModule.forChild([]),
+    RouterModule,
     MarkdownModule.forRoot(),
     FormsModule,
     NgbModalModule,

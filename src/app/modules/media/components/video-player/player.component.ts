@@ -1,9 +1,12 @@
 import {
   ChangeDetectorRef,
   Component,
+  ComponentRef,
+  createNgModule,
   ElementRef,
   EventEmitter,
   Inject,
+  Injector,
   Input,
   OnChanges,
   OnDestroy,
@@ -11,17 +14,18 @@ import {
   PLATFORM_ID,
   SimpleChanges,
   ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { PLAYER_ANIMATIONS } from './player.animations';
 import { VideoPlayerService, VideoSource } from './player.service';
-import * as Plyr from 'plyr';
-import { PlyrComponent } from 'ngx-plyr-mg';
+import type * as Plyr from 'plyr';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
-import { map, take } from 'rxjs/operators';
-import { HlsjsPlyrDriver } from './hls-driver';
+import { switchMap, take } from 'rxjs/operators';
+import type { HlsjsPlyrDriver } from './hls-driver';
 import { GlobalAudioPlayerService } from '../audio/services/global-audio-player.service';
+import { PlyrComponent } from './plyr/plyr.component';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -70,6 +74,11 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   player: PlyrComponent;
 
+  /**
+   * Dynamic Plyr component reference
+   */
+  dynamicPlyrRef: ComponentRef<any>;
+
   useEmptySource: boolean = false;
 
   emptySource = {
@@ -103,7 +112,8 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    * Plyr driver detrmined by source types (detects hls)
    */
   plyrDriver$: Observable<HlsjsPlyrDriver | null> = this.service.sources$.pipe(
-    map((sources) => {
+    switchMap(async (sources) => {
+      const driver = (await import('./hls-driver')).HlsjsPlyrDriver;
       if (
         sources[0].type === 'application/vnd.apple.mpegURL' &&
         isPlatformBrowser(this.platformId) &&
@@ -111,7 +121,8 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
           .createElement('video')
           .canPlayType('application/vnd.apple.mpegURL')
       ) {
-        return new HlsjsPlyrDriver(true);
+        console.log('trying to load hls driver');
+        return new driver(true);
       }
       return null;
     })
@@ -147,12 +158,15 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  lazyModuleReady = true;
+
   constructor(
     public elementRef: ElementRef,
     private service: VideoPlayerService,
     private cd: ChangeDetectorRef,
     private globalAudioPlayerService: GlobalAudioPlayerService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private injector: Injector
   ) {}
 
   ngOnInit() {
@@ -265,13 +279,15 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     this.options.hideControls = opts.hideControls;
 
     this.service.isPlayable$.next(true);
-
+    console.log(this.player);
     if (this.player) {
       try {
         this.player.player.muted = this.options.muted;
 
         await this.player.player.play();
-      } catch (e) {}
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 

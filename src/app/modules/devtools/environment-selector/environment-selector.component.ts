@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { CommonModule as NgCommonModule } from '@angular/common';
+import {
+  ReactiveFormsModule,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { EnvironmentSelectorService } from './environment-selector.service';
+import { CommonModule } from '~/common/common.module';
 
 /**
  * Allows user to switch between different environments.
@@ -9,7 +15,7 @@ import { EnvironmentSelectorService } from './environment-selector.service';
   selector: 'm-devTools__environmentSelector',
   templateUrl: 'environment-selector.component.html',
   styleUrls: ['environment-selector.component.ng.scss'],
-  standalone: false,
+  imports: [NgCommonModule, ReactiveFormsModule, CommonModule],
 })
 export class EnvironmentSelectorComponent implements OnInit {
   /** @type { boolean } - whether a switch is in progress */

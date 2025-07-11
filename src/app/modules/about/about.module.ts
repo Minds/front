@@ -21,7 +21,7 @@ import { PathMatch } from '../../common/types/angular.types';
 import { MarketingModule } from '../marketing/marketing.module';
 import { ProductPageImageCardComponent } from './product-pages/components/image-card/image-card.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'about/:slug',
     component: ProductPageBaseComponent,

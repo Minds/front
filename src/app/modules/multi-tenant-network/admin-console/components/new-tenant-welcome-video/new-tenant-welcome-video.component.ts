@@ -2,15 +2,16 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VideoModule } from '../../../../media/components/video/video.module';
 import { VideoSource } from '../../../../media/components/video-player/player.service';
-import { PlyrModule } from 'ngx-plyr-mg';
+
 import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
+import { PlyrComponent } from '~/modules/media/components/video-player/plyr/plyr.component';
 
 /**
  * Video shown to welcome a tenant to their network.
  */
 @Component({
   selector: 'm-newTenantWelcomeVideo',
-  imports: [CommonModule, VideoModule, PlyrModule],
+  imports: [CommonModule, VideoModule, PlyrComponent],
   template: `
     <plyr
       [plyrPlaysInline]="true"

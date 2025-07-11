@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../../../services/api';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RecommendedService {
   private recommended: Array<any>;
 

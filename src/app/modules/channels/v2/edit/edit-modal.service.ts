@@ -9,7 +9,7 @@ import { ModalService } from '../../../../services/ux/modal.service';
 /**
  * Help showing Edit modal and handling its response
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChannelEditModalService {
   /**
    * Constructor

@@ -52,7 +52,7 @@ export interface Wallet {
 
 export type CanWithdrawResponse = { canWithdraw: boolean; secret?: string };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WalletV2Service {
   readonly basePath: string = '/wallet';
 

@@ -17,7 +17,7 @@ export const NSFW_REASONS: NsfwReason[] = [
   { value: 6, label: 'Other', selected: false, locked: false },
 ];
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NSFWSelectorService {
   cacheKey: string = '';
 

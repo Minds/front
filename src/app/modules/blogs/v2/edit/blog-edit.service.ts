@@ -64,7 +64,7 @@ export interface BlogEditEntity {
 
 export const DEFAULT_BLOG_EDITOR_VERSION_VALUE = 2;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BlogsEditService {
   readonly error$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly title$: BehaviorSubject<string> = new BehaviorSubject<string>('');

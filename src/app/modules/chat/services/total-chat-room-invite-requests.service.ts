@@ -18,7 +18,7 @@ import { ApolloQueryResult } from '@apollo/client';
 /**
  * Service for getting the logged in users total chat room invite requests.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TotalChatRoomInviteRequestsService implements OnDestroy {
   /** Internal subject to hold total requests. */
   private readonly _totalRequests$: BehaviorSubject<number> =

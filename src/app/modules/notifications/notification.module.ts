@@ -31,14 +31,7 @@ import { AdsModule } from '../ads/ads.module';
   imports: [
     NgCommonModule,
     CommonModule,
-    RouterModule.forChild([
-      {
-        path: 'notifications/v3',
-        component: NotificationsV3ListFullscreenComponent,
-      },
-      { path: 'notifications/:filter', component: NotificationsComponent },
-      { path: 'notifications', component: NotificationsComponent },
-    ]),
+    RouterModule,
     NewsfeedModule, // For m-newsfeed__entity
     CommentsModule, // For m-comment
     AdsModule,

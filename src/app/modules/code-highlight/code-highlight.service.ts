@@ -18,7 +18,7 @@ export type CodeHighlightResult = {
  *
  * @author Jim Toth <jim@meme.coach>
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CodeHighlightService {
   static moduleWrapperClass: string = 'm-code-highlight';
 

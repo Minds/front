@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ConfigsService } from '../common/services/configs.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EmbedService {
   readonly siteUrl: string;
 

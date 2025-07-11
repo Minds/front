@@ -6,7 +6,7 @@ import { ApiService } from '../../../../../common/api/api.service';
 import { WalletV2Service } from '../../../../wallet/components/wallet-v2.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChannelShopMembershipsEditService {
   /**
    * Name subject

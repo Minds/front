@@ -7,7 +7,7 @@ import { DiagnosticsInterface } from './diagnostics.service';
 import { SENTRY_IGNORED_ERRORS } from './sentry-ignored-errors';
 export { DiagnosticsService } from './diagnostics.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BrowserDiagnosticsService implements DiagnosticsInterface {
   readonly environment: string;
   constructor(

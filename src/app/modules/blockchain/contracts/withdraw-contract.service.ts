@@ -3,7 +3,7 @@ import { parseUnits } from 'ethers';
 
 import { Web3WalletService } from '../web3-wallet.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WithdrawContractService {
   protected instance: any;
 

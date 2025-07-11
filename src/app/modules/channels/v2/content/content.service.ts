@@ -33,7 +33,7 @@ export enum TRIGGER_EXCEPTION {
  *
  * @author Ben Hayward
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChannelContentService {
   /**
    * Channel content state observable

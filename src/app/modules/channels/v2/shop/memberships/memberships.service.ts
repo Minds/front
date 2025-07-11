@@ -3,7 +3,7 @@ import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { Observable, of } from 'rxjs';
 import { ApiService } from '../../../../../common/api/api.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChannelShopMembershipsService {
   /**
    * Constructor

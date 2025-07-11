@@ -24,7 +24,7 @@ import { PermissionsService } from '../../../../common/services/permissions.serv
 /**
  * Service that handles logic for the boost console
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BoostConsoleService {
   endpoint: string = 'api/v3/boosts';
 

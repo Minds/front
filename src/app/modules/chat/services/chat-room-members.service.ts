@@ -25,7 +25,7 @@ const PAGE_SIZE: number = 24;
 /**
  * Service for handling chat room members.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChatRoomMembersService extends AbstractSubscriberComponent {
   /** Whether request is in progress. */
   private readonly _inProgress$: BehaviorSubject<boolean> =

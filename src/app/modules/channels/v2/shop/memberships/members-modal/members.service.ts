@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, Subject, of, combineLatest } from 'rxjs';
 import { ApiService } from '../../../../../../common/api/api.service';
 import { map, switchAll, tap, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChannelShopMembershipsMembersService {
   /**
    * InProgress reference

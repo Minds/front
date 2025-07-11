@@ -20,7 +20,7 @@ import { Session } from '../../../../services/session';
 /**
  * Hold invite modal component state and interact with the API
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GroupInviteService implements OnDestroy {
   /**
    * Group subject, should be immutable; Used for display purposes
