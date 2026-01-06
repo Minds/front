@@ -35,12 +35,12 @@ export class NewsfeedService {
     //   return;
     // }
 
-    if (isPlatformBrowser(this.platformId)) {
-      this.analyticsService.trackEntityView(entity, clientMeta);
-    }
-
     // if it's a boost we record the boost view AND the activity view
     if (entity.boosted_guid) {
+      if (isPlatformBrowser(this.platformId)) {
+        this.analyticsService.trackEntityView(entity, clientMeta);
+      }
+
       let url = `api/v2/analytics/views/boost/${entity.boosted_guid}`;
 
       if (channel) url += `/${channel.guid}`;
@@ -52,12 +52,12 @@ export class NewsfeedService {
       });
     }
 
-    return await this.client.post(
-      `api/v2/analytics/views/activity/${entity.guid}`,
-      {
-        client_meta: clientMeta,
-      }
-    );
+    // return await this.client.post(
+    //   `api/v2/analytics/views/activity/${entity.guid}`,
+    //   {
+    //     client_meta: clientMeta,
+    //   }
+    // );
   }
 
   public reloadFeed(allHashtags: boolean = false) {

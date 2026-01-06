@@ -105,12 +105,12 @@ export class ClientMetaService {
       return; // Browser will record too.
     }
 
-    await this.client.post('api/v2/analytics/views/entity/' + entity.guid, {
-      client_meta: {
-        ...(clientMetaDirective && clientMetaDirective.build()),
-        ...extraClientMetaData,
-      },
-    });
+    // await this.client.post('api/v2/analytics/views/entity/' + entity.guid, {
+    //   client_meta: {
+    //     ...(clientMetaDirective && clientMetaDirective.build()),
+    //     ...extraClientMetaData,
+    //   },
+    // });
   }
 
   /**
