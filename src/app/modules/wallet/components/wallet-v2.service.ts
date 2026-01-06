@@ -120,7 +120,6 @@ export class WalletV2Service {
   async loadWallet(): Promise<void> {
     this.getTokenAccounts();
     this.getEthAccount();
-    this.loadStripeAccount();
 
     this.wallet$.next(this.wallet);
   }
