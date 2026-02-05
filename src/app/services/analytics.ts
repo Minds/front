@@ -18,6 +18,7 @@ import { ActivityEntity } from '../modules/newsfeed/activity/activity.service';
 import { ConfigsService } from '../common/services/configs.service';
 import { POSTHOG_JS } from '../common/services/posthog/posthog-injection-tokens';
 import { ClientMetaData } from '../common/services/client-meta.service';
+import { IS_TENANT_NETWORK } from '../common/injection-tokens/tenant-injection-tokens';
 
 type PostHogI = PostHog;
 
@@ -111,6 +112,7 @@ export class AnalyticsService implements OnDestroy {
     const featureFlags = this.configService.get('posthog')['feature_flags'];
     this.posthog.init(this.configService.get('posthog')['api_key'], {
       api_host: this.configService.get('posthog')['host'],
+      person_profiles: IS_TENANT_NETWORK ? 'identified_only' : 'never',
       capture_pageview: false, // Do not send initial pageview, angular will
       autocapture: false, // Disable auto-capture by default
       advanced_disable_feature_flags: true, // We provide these from our backend
